@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Sistema informático para la administración de becas de postgrado</title>
-
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -29,7 +26,7 @@
 				<div class="col-md-8">
 				    <div class="col-xs-12" style="height:50px;"></div>
 					<h2 class="text-center">
-						<p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
+						<p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo De Becas E Investigaciones Científicas</p>
 					</h2>
 					<h3 class="text-center">
 						<p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
@@ -124,22 +121,60 @@
 				
 			</nav>
 			<div class="col-xs-12" style="height:50px;"></div>
-			<div class="jumbotron">
-			 <div class="row">
-			   <div class="col-md-4">				
-					<img alt="Bootstrap Image Preview" src="img/minerva.jpg" align="middle"  class="img-responsive center-block">
-			   </div>				  
-			   <div class="col-md-8">
-			    <h2>
-					Consejo de becas e investicaciones cientificas
-				</h2>
-				<p>
-					El Consejo de Becas ofrece becas de posgrado a docentes, profesionales no docentes que laboran en la universidad y a estudiantes graduados. Además, mantiene informada a la comunidad universitaria sobre las ofertas de becas que organismos internacionales o universidades extranjeras remiten a la Universidad de El Salvador. 
-				</p>
-			  </div>	
-			</div>
+			<div class="row">
+			    <h3 class="text-center">
+						<p>Ingresar nueva oferta de beca</p>
+			    </h3>
+				<div class="col-md-12">
+					<form role="form" style="border: 3px solid #ccc; padding: 6px 12px; border-radius: 4px; background-color:#FFF;">
+						<div class="form-group">							 
+							<label for="exampleInputEmail1">
+								Título de la oferta
+							</label>
+							<input type="email" class="form-control" id="exampleInputEmail1">
+						</div>
+						<div class="form-group">							 
+							<label for="exampleInputPassword1">
+								Nombre de la institución
+							</label>
+							<input type="password" class="form-control" id="exampleInputPassword1">
+						</div>
+						
+						<p>
+						 <strong> Tipo de beca</strong>						
+						</p>
+						
+						<div class="checkbox">
+							<label><input type="checkbox" value="">Beca externa</label>
+						</div>
+						<div class="checkbox">
+							<label><input type="checkbox" value="">Beca interna</label>
+						</div>	
+						
+						<p>
+						 <strong>Descripción de la beca</strong>						
+						</p>	
+						
+						<textarea class="form-control" rows="5" id="comment"></textarea>
+						<div class="form-group">	
+							<p>
+							</p>
+							<label for="exampleInputFile">
+								Selección de archivo
+							</label>
+							<input type="file" id="exampleInputFile">
+							<p class="help-block">
+								Seleccione el archivo con la  información de la oferta de beca
+							</p>
+						</div>
+						<button type="submit" class="btn btn-default">
+							Ingresar oferta
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
+		<div class="col-xs-12" style="height:50px;"></div>
 	</div>
 	
 	<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
