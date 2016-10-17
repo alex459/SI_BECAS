@@ -53,7 +53,8 @@
                                 <input class="form-control" placeholder="Contraseña" name="password" type="password" value="">
                             </div>
                         </fieldset> 
-                        <button class="btn btn-lg btn-danger btn-block" type="submit">Ingresar</button>
+                        <button class="btn btn-lg btn-danger btn-block" type="submit" >Ingresar</button> 
+                        <a href="principal.jsp"> ENTRAR </a>
                     </form>
                 </div>   
             </div>    
