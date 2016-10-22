@@ -37,7 +37,18 @@
 
 
 
-<p class="text-right">Rol: </p>
+
+<p class="text-right">Rol: 
+    <%
+        /*DAO.conexion instanciaDB = new DAO.conexion();
+        java.sql.Connection actualDB;
+        actualDB = instanciaDB.abrirConexion();
+        
+        if(actualDB != null)
+            out.println(actualDB);*/
+
+    %>
+</p>
 <p class="text-right">Usuario: </p>
 
 
