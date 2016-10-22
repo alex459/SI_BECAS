@@ -9,15 +9,13 @@ package POJO;
 public class Usuario{
 
     
-    private Integer idUsuario;    
+    private Integer idUsuario;  
+    private Integer tipoUsuario;
     private String nombreUsuario;    
     private String clave;
 
     
-    public Usuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
+    
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -40,6 +38,20 @@ public class Usuario{
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    /**
+     * @return the tipoUsuario
+     */
+    public Integer getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    /**
+     * @param tipoUsuario the tipoUsuario to set
+     */
+    public void setTipoUsuario(Integer tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
     
     

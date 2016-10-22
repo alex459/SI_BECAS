@@ -37,19 +37,19 @@
 
 
 
-
-<p class="text-right">Rol: 
     <%
-        /*DAO.conexion instanciaDB = new DAO.conexion();
-        java.sql.Connection actualDB;
-        actualDB = instanciaDB.abrirConexion();
+        /*
+        DAO.conexion instanciaDB = new DAO.conexion();        
+        POJO.Usuario usuario = new POJO.Usuario();
+        usuario = instanciaDB.consultarUsuario(1); 
+        instanciaDB.cerrarConexion();
+        out.println(usuario.getTipoUsuario());
+        out.println(usuario.getNombreUsuario());*/
         
-        if(actualDB != null)
-            out.println(actualDB);*/
-
     %>
-</p>
-<p class="text-right">Usuario: </p>
+    
+<p class="text-right">Rol:  </p>
+<p class="text-right">Usuario:  </p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
