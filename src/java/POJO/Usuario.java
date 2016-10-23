@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package POJO;
 
-
-public class Usuario{
+public class Usuario  {
 
     
-    private Integer idUsuario;  
-    private Integer tipoUsuario;
+    private Integer idUsuario;   
+    private Integer idTipoUsuario;
     private String nombreUsuario;    
     private String clave;
+    
 
-    
-    
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -40,19 +33,16 @@ public class Usuario{
         this.clave = clave;
     }
 
-    /**
-     * @return the tipoUsuario
-     */
-    public Integer getTipoUsuario() {
-        return tipoUsuario;
+    
+    public Integer getIdTipoUsuario() {
+        return idTipoUsuario;
     }
 
-    /**
-     * @param tipoUsuario the tipoUsuario to set
-     */
-    public void setTipoUsuario(Integer tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    
+    public void setIdTipoUsuario(Integer idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
     }
+
     
     
 }

@@ -1,6 +1,6 @@
 package DAO;
 
-import POJO.Usuario;
+//import POJO.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -48,7 +48,7 @@ public class conexion {
 
     }  
     
-    public Usuario consultarUsuario(int id){
+    /*public Usuario consultarUsuario(int id){
         Usuario usuario = new Usuario();        
         this.abrirConexion();
         try{
@@ -73,7 +73,7 @@ public class conexion {
         }
         
         return usuario;
-    }
+    }*/
     
     
 }
