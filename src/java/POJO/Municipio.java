@@ -5,7 +5,7 @@ public class Municipio{
 
     
     private Integer idMunicipio;
-    private Departamento idDepartamento;
+    private Integer idDepartamento;
     private String nombreMunicipio;
 
     /**
@@ -25,14 +25,14 @@ public class Municipio{
     /**
      * @return the idDepartamento
      */
-    public Departamento getIdDepartamento() {
+    public Integer getIdDepartamento() {
         return idDepartamento;
     }
 
     /**
      * @param idDepartamento the idDepartamento to set
      */
-    public void setIdDepartamento(Departamento idDepartamento) {
+    public void setIdDepartamento(Integer idDepartamento) {
         this.idDepartamento = idDepartamento;
     }
 
@@ -49,6 +49,8 @@ public class Municipio{
     public void setNombreMunicipio(String nombreMunicipio) {
         this.nombreMunicipio = nombreMunicipio;
     }
+
+    
     
     
     
