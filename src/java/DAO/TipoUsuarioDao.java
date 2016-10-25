@@ -12,7 +12,7 @@ import java.sql.ResultSet;
  *
  * @author next
  */
-public class TipoUsuarioDao extends Conexion{
+public class TipoUsuarioDao extends ConexionBD{
     
     //consultar por id
     public TipoUsuario consultarUsuario(int id){

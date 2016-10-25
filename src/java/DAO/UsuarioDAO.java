@@ -5,7 +5,7 @@ import POJO.TipoUsuario;
 import POJO.Usuario;
 import java.sql.ResultSet;
 
-public class UsuarioDAO extends Conexion {
+public class UsuarioDAO extends ConexionBD {
 
     //consultar por id
     public Usuario consultarUsuario(int id) {

@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class conexion {
+public class ConexionBD {
 
     private String enlace;
     private String controlador;
@@ -17,7 +17,7 @@ public class conexion {
     public Statement stmt = null;
     public ResultSet rs = null;
 
-    public conexion() {
+    public ConexionBD() {
         this.enlace = "jdbc:mariadb://localhost:3306/bd_becas";
         this.controlador = "org.mariadb.jdbc.Driver";
         this.error = " ";
