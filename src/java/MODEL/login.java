@@ -35,48 +35,14 @@ public class login extends HttpServlet {
         UsuarioDAO usuarioDao = new UsuarioDAO();
         TipoUsuario tipoUsuario = new TipoUsuario();
         
-        //las variables user y pass se envian desde la pagina login.jsp a este servlet
-        //donde son leidas y guardadas.
+        usuario.setNombreUsuario(request.getParameter("user"));
+        usuario.setClave(request.getParameter("pass"));
         
-               
-        String enlace = "jdbc:mariadb://localhost:3306/bd_becas";
-        String controlador = "org.mariadb.jdbc.Driver";
-        String error = " ";
-        String us = "root";
-        String contrasenia = "";
-        Connection conn = null;
-        Statement stmt = null;
-
-        try {
-            Class.forName(controlador);
-            conn = DriverManager.getConnection(enlace, us, contrasenia);
-            stmt = conn.createStatement();
-            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario";
-            
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                //Retrieve by column name
-                int ID_USUARIO = rs.getInt("ID_USUARIO");
-                int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
-                String NOMBRE_USUARIO = rs.getString("NOMBRE_USUARIO");
-                String CLAVE = rs.getString("CLAVE");
-
-                //Display values
-                System.out.print("ID_USUARIO: " + ID_USUARIO);
-                System.out.print(", ID_TIPO_USUARIO: " + ID_TIPO_USUARIO);
-                System.out.print(", NOMBRE_USUARIO: " + NOMBRE_USUARIO);
-                System.out.println(", CLAVE: " + CLAVE);
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-
+        if(usuarioDao.login(usuario.getNombreUsuario(), usuario.getClave())){
             response.sendRedirect("principal.jsp");
-            
-        } catch (Exception e) {
-            System.out.println("error "+e);
+        }else{
+            response.sendRedirect("login.jsp");
         }
-        
         
     }
 

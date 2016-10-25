@@ -3,6 +3,7 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -37,19 +38,10 @@
 
 
 
-    <%
-        /*
-        DAO.conexion instanciaDB = new DAO.conexion();        
-        POJO.Usuario usuario = new POJO.Usuario();
-        usuario = instanciaDB.consultarUsuario(1); 
-        instanciaDB.cerrarConexion();
-        out.println(usuario.getTipoUsuario());
-        out.println(usuario.getNombreUsuario());*/
-        
-    %>
     
-<p class="text-right">Rol:  </p>
-<p class="text-right">Usuario:  </p>
+    
+<p class="text-right">Rol: <%= variablesDeSesion.tipoUsuarioActual.getTipoUsuario() %> </p>
+<p class="text-right">Usuario: <%= variablesDeSesion.usuarioActual.getNombreUsuario() %></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
