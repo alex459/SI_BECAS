@@ -38,10 +38,14 @@
 
 
 
+
+
+<p class="text-right">Rol: 
     
-    
-<p class="text-right">Rol: <%= variablesDeSesion.tipoUsuarioActual.getTipoUsuario() %> </p>
-<p class="text-right">Usuario: <%= variablesDeSesion.usuarioActual.getNombreUsuario() %></p>
+</p>
+<p class="text-right">Usuario: 
+
+</p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -54,25 +58,25 @@
 
 
     <div class="container-fluid">
-        
+
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-            
+
             <h2>
                 <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
             </h2>
-            
+
             <br></br> 
         </div><!-- TITULO DE LA PANTALLA -->  
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         <div class="row"><!-- CONTENIDO DE LA PANTALLA -->
-            
+
             <br></br> 
             <br></br> 
             <br></br> 
@@ -90,14 +94,14 @@
 
         </div><!-- CONTENIDO DE LA PANTALLA -->
 
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
                 <h3>

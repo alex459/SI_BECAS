@@ -38,8 +38,12 @@
 
 
 
-<p class="text-right">Rol: <%= variablesDeSesion.tipoUsuarioActual.getTipoUsuario() %> </p>
-<p class="text-right">Usuario: <%= variablesDeSesion.usuarioActual.getNombreUsuario() %></p>
+<p class="text-right">Rol: 
+    
+</p>
+<p class="text-right">Usuario: 
+
+</p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
