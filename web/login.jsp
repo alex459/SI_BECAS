@@ -43,14 +43,14 @@
         <div class="container">
             <div class="modal-content">  
                 <div class="panel-body">
-                    <form class="form-signin">
+                    <form class="form-signin" action="loginServlet" method="post">
                         <h2 class="form-signin-heading">Ingrese sus datos:</h2>
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Carnet de empleado" name="carnet" autofocus="">
+                                <input class="form-control" placeholder="Usuario" name="user" autofocus="">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Contraseña" name="password" type="password" value="">
+                                <input class="form-control" placeholder="Contraseña" name="pass" type="password" value="">
                             </div>
                         </fieldset> 
                         <button class="btn btn-lg btn-danger btn-block" type="submit" >Ingresar</button> 
