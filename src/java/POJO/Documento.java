@@ -1,172 +1,127 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package POJO;
-
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-/**
- *
- * @author next
- */
-@Entity
-@Table(name = "documento")
-@NamedQueries({
-    @NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d")})
-public class Documento implements Serializable {
+public class Documento{
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_DOCUMENTO")
     private Integer idDocumento;
-    @Lob
-    @Column(name = "DOCUMENTO_DIGITAL")
-    private byte[] documentoDigital;
-    @Column(name = "FECHA_SOLICITUD")
-    @Temporal(TemporalType.DATE)
-    private Date fechaSolicitud;
-    @Size(max = 1024)
-    @Column(name = "OBSERVACION_O")
-    private String observacionO;
-    @Column(name = "FECHA_INGRESO")
-    @Temporal(TemporalType.DATE)
-    private Date fechaIngreso;
-    @Size(max = 15)
-    @Column(name = "ESTADO_DOCUMENTO")
-    private String estadoDocumento;
-    @JoinColumn(name = "ID_EXPEDIENTE", referencedColumnName = "ID_EXPEDIENTE")
-    @ManyToOne(optional = false)
-    private Expediente idExpediente;
-    @JoinColumn(name = "ID_TIPO_DOCUMENTO", referencedColumnName = "ID_TIPO_DOCUMENTO")
-    @ManyToOne
     private TipoDocumento idTipoDocumento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDocumento")
-    private Set<OfertaBeca> ofertaBecaSet;
+    private Expediente idExpediente;    
+    private byte[] documentoDigital;    
+    private Date fechaSolicitud;    
+    private String observacionO;    
+    private Date fechaIngreso;    
+    private String estadoDocumento;
 
-    public Documento() {
-    }
-
-    public Documento(Integer idDocumento) {
-        this.idDocumento = idDocumento;
-    }
-
+    /**
+     * @return the idDocumento
+     */
     public Integer getIdDocumento() {
         return idDocumento;
     }
 
+    /**
+     * @param idDocumento the idDocumento to set
+     */
     public void setIdDocumento(Integer idDocumento) {
         this.idDocumento = idDocumento;
     }
 
-    public byte[] getDocumentoDigital() {
-        return documentoDigital;
-    }
-
-    public void setDocumentoDigital(byte[] documentoDigital) {
-        this.documentoDigital = documentoDigital;
-    }
-
-    public Date getFechaSolicitud() {
-        return fechaSolicitud;
-    }
-
-    public void setFechaSolicitud(Date fechaSolicitud) {
-        this.fechaSolicitud = fechaSolicitud;
-    }
-
-    public String getObservacionO() {
-        return observacionO;
-    }
-
-    public void setObservacionO(String observacionO) {
-        this.observacionO = observacionO;
-    }
-
-    public Date getFechaIngreso() {
-        return fechaIngreso;
-    }
-
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-
-    public String getEstadoDocumento() {
-        return estadoDocumento;
-    }
-
-    public void setEstadoDocumento(String estadoDocumento) {
-        this.estadoDocumento = estadoDocumento;
-    }
-
-    public Expediente getIdExpediente() {
-        return idExpediente;
-    }
-
-    public void setIdExpediente(Expediente idExpediente) {
-        this.idExpediente = idExpediente;
-    }
-
+    /**
+     * @return the idTipoDocumento
+     */
     public TipoDocumento getIdTipoDocumento() {
         return idTipoDocumento;
     }
 
+    /**
+     * @param idTipoDocumento the idTipoDocumento to set
+     */
     public void setIdTipoDocumento(TipoDocumento idTipoDocumento) {
         this.idTipoDocumento = idTipoDocumento;
     }
 
-    public Set<OfertaBeca> getOfertaBecaSet() {
-        return ofertaBecaSet;
+    /**
+     * @return the idExpediente
+     */
+    public Expediente getIdExpediente() {
+        return idExpediente;
     }
 
-    public void setOfertaBecaSet(Set<OfertaBeca> ofertaBecaSet) {
-        this.ofertaBecaSet = ofertaBecaSet;
+    /**
+     * @param idExpediente the idExpediente to set
+     */
+    public void setIdExpediente(Expediente idExpediente) {
+        this.idExpediente = idExpediente;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idDocumento != null ? idDocumento.hashCode() : 0);
-        return hash;
+    /**
+     * @return the documentoDigital
+     */
+    public byte[] getDocumentoDigital() {
+        return documentoDigital;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Documento)) {
-            return false;
-        }
-        Documento other = (Documento) object;
-        if ((this.idDocumento == null && other.idDocumento != null) || (this.idDocumento != null && !this.idDocumento.equals(other.idDocumento))) {
-            return false;
-        }
-        return true;
+    /**
+     * @param documentoDigital the documentoDigital to set
+     */
+    public void setDocumentoDigital(byte[] documentoDigital) {
+        this.documentoDigital = documentoDigital;
     }
 
-    @Override
-    public String toString() {
-        return "POJO.Documento[ idDocumento=" + idDocumento + " ]";
+    /**
+     * @return the fechaSolicitud
+     */
+    public Date getFechaSolicitud() {
+        return fechaSolicitud;
     }
-    
+
+    /**
+     * @param fechaSolicitud the fechaSolicitud to set
+     */
+    public void setFechaSolicitud(Date fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
+    }
+
+    /**
+     * @return the observacionO
+     */
+    public String getObservacionO() {
+        return observacionO;
+    }
+
+    /**
+     * @param observacionO the observacionO to set
+     */
+    public void setObservacionO(String observacionO) {
+        this.observacionO = observacionO;
+    }
+
+    /**
+     * @return the fechaIngreso
+     */
+    public Date getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    /**
+     * @param fechaIngreso the fechaIngreso to set
+     */
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    /**
+     * @return the estadoDocumento
+     */
+    public String getEstadoDocumento() {
+        return estadoDocumento;
+    }
+
+    /**
+     * @param estadoDocumento the estadoDocumento to set
+     */
+    public void setEstadoDocumento(String estadoDocumento) {
+        this.estadoDocumento = estadoDocumento;
+    }
+        
 }

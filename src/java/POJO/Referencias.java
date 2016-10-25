@@ -1,166 +1,145 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package POJO;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-/**
- *
- * @author next
- */
-@Entity
-@Table(name = "referencias")
-@NamedQueries({
-    @NamedQuery(name = "Referencias.findAll", query = "SELECT r FROM Referencias r")})
-public class Referencias implements Serializable {
+public class Referencias {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_REFERENCIA")
+    
     private Integer idReferencia;
-    @Size(max = 15)
-    @Column(name = "NOMBRE1_DU")
+    private Integer idSolicitud;
+    private Integer idMunicipio;
     private String nombre1Du;
-    @Size(max = 15)
-    @Column(name = "NOMBRE2_DU")
     private String nombre2Du;
-    @Size(max = 15)
-    @Column(name = "APELLIDO1_DU")
-    private String apellido1Du;
-    @Size(max = 15)
-    @Column(name = "APELLIDO2_DU")
-    private String apellido2Du;
-    @Size(max = 50)
-    @Column(name = "DOMICILIO")
-    private String domicilio;
-    @Size(max = 9)
-    @Column(name = "TELEFONO_MOVIL")
-    private String telefonoMovil;
-    @JoinColumn(name = "ID_SOLICITUD", referencedColumnName = "ID_SOLICITUD")
-    @ManyToOne
-    private SolicitudDeBeca idSolicitud;
-    @JoinColumn(name = "ID_MUNICIPIO", referencedColumnName = "ID_MUNICIPIO")
-    @ManyToOne
-    private Municipio idMunicipio;
+    private String apellido1Du;    
+    private String apellido2Du;    
+    private String domicilio;   
+    private String telefonoMovil;    
 
-    public Referencias() {
-    }
-
-    public Referencias(Integer idReferencia) {
-        this.idReferencia = idReferencia;
-    }
-
+    /**
+     * @return the idReferencia
+     */
     public Integer getIdReferencia() {
         return idReferencia;
     }
 
+    /**
+     * @param idReferencia the idReferencia to set
+     */
     public void setIdReferencia(Integer idReferencia) {
         this.idReferencia = idReferencia;
     }
 
+    /**
+     * @return the idSolicitud
+     */
+    public Integer getIdSolicitud() {
+        return idSolicitud;
+    }
+
+    /**
+     * @param idSolicitud the idSolicitud to set
+     */
+    public void setIdSolicitud(Integer idSolicitud) {
+        this.idSolicitud = idSolicitud;
+    }
+
+    /**
+     * @return the idMunicipio
+     */
+    public Integer getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    /**
+     * @param idMunicipio the idMunicipio to set
+     */
+    public void setIdMunicipio(Integer idMunicipio) {
+        this.idMunicipio = idMunicipio;
+    }
+
+    /**
+     * @return the nombre1Du
+     */
     public String getNombre1Du() {
         return nombre1Du;
     }
 
+    /**
+     * @param nombre1Du the nombre1Du to set
+     */
     public void setNombre1Du(String nombre1Du) {
         this.nombre1Du = nombre1Du;
     }
 
+    /**
+     * @return the nombre2Du
+     */
     public String getNombre2Du() {
         return nombre2Du;
     }
 
+    /**
+     * @param nombre2Du the nombre2Du to set
+     */
     public void setNombre2Du(String nombre2Du) {
         this.nombre2Du = nombre2Du;
     }
 
+    /**
+     * @return the apellido1Du
+     */
     public String getApellido1Du() {
         return apellido1Du;
     }
 
+    /**
+     * @param apellido1Du the apellido1Du to set
+     */
     public void setApellido1Du(String apellido1Du) {
         this.apellido1Du = apellido1Du;
     }
 
+    /**
+     * @return the apellido2Du
+     */
     public String getApellido2Du() {
         return apellido2Du;
     }
 
+    /**
+     * @param apellido2Du the apellido2Du to set
+     */
     public void setApellido2Du(String apellido2Du) {
         this.apellido2Du = apellido2Du;
     }
 
+    /**
+     * @return the domicilio
+     */
     public String getDomicilio() {
         return domicilio;
     }
 
+    /**
+     * @param domicilio the domicilio to set
+     */
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
 
+    /**
+     * @return the telefonoMovil
+     */
     public String getTelefonoMovil() {
         return telefonoMovil;
     }
 
+    /**
+     * @param telefonoMovil the telefonoMovil to set
+     */
     public void setTelefonoMovil(String telefonoMovil) {
         this.telefonoMovil = telefonoMovil;
     }
-
-    public SolicitudDeBeca getIdSolicitud() {
-        return idSolicitud;
-    }
-
-    public void setIdSolicitud(SolicitudDeBeca idSolicitud) {
-        this.idSolicitud = idSolicitud;
-    }
-
-    public Municipio getIdMunicipio() {
-        return idMunicipio;
-    }
-
-    public void setIdMunicipio(Municipio idMunicipio) {
-        this.idMunicipio = idMunicipio;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idReferencia != null ? idReferencia.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Referencias)) {
-            return false;
-        }
-        Referencias other = (Referencias) object;
-        if ((this.idReferencia == null && other.idReferencia != null) || (this.idReferencia != null && !this.idReferencia.equals(other.idReferencia))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "POJO.Referencias[ idReferencia=" + idReferencia + " ]";
-    }
+    
+    
     
 }
