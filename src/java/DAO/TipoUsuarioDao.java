@@ -32,7 +32,6 @@ public class TipoUsuarioDao extends Conexion{
                 
                 tipoUsuario.setIdTipoUsuario(ID_TIPO_USUARIO);
                 tipoUsuario.setTipoUsuario(TIPO_USUARIO);
-                tipoUsuario.setDescripcionTipoUsuario(DESCRIPCION_TIPO_USUARIO);
                 
             }                        
         }catch(Exception e){
