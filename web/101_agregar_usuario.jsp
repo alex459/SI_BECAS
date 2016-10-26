@@ -75,7 +75,7 @@
 
         <div class="row"><!-- CONTENIDO DE LA PANTALLA -->
 
-            <form action="" method="post">
+            <form action="AgregarUsuarioServlet" method="post">
                 Codigo de empleado : <input type="text" name="CARNET" value="">
                 <br></br>
                 <input type="checkbox" name="ES_EMPLEADO" value=""> No es empleado.
@@ -92,7 +92,7 @@
                 <br></br>
                 Contraseña : <input type="text" name="CLAVE" value="">
                 <br></br>
-                Confirmar contraseña : <input type="text" name="CLAVE" value="">
+                Confirmar contraseña : <input type="text" name="CLAVE2" value="">
                 <br></br>
                 Rol del usuario :
 

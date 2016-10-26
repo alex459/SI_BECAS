@@ -37,7 +37,44 @@ public class UsuarioDAO extends ConexionBD {
         return usuario;
     }
     
+    //obtener el siguiente id (autoincremental)
+    public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT MAX(ID_USUARIO) AS ID_USUARIO FROM USUARIO";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("ID_USUARIO") + 1;                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
+    }
     
+    public boolean ingresar(Usuario usuario){
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "INSERT INTO USUARIO(ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE) VALUES("+usuario.getIdUsuario()+", "+usuario.getIdTipoUsuario()+", '"+usuario.getNombreUsuario()+"', '"+usuario.getClave()+"')";
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
     
 
     public boolean login(String nombre, String clave) {
