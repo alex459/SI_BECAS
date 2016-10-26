@@ -3,6 +3,8 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="POJO.TipoUsuario"%>
+<%@page import="DAO.TipoUsuarioDao"%>
 <%@page import="DAO.FacultadDAO"%>
 <%@page import="POJO.Facultad"%>
 <%@page import="java.util.ArrayList"%>
@@ -93,70 +95,74 @@
                 Confirmar contraseña : <input type="text" name="CLAVE" value="">
                 <br></br>
                 Rol del usuario :
-                                
+
                 <select name="ID_TIPO_USUARIO">
-                    <option value="volvo">ADMINISTRADOR</option>
-                    <option value="saab">DIRECTOR DEL CONSEJO DE BECAS</option>
-                    <option value="opel">FISCALIA</option>
-                    <option value="audi">CONSEJO SUPERIOR UNIVERSITARIO</option>
-                </select> 
-                
-                <br></br>                
-                Facultad : 
-                                
-                <select name="ID_FACULTAD">
-                <% 
-                    FacultadDAO facultadDao = new FacultadDAO();                    
+                <%
+                    TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
+                    ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
+                    listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();
+                    for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
+                        out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario()+ ">" + listaTiposDeUsuarios.get(i).getTipoUsuario()+ "</option>");
+                    }
+                %>    
+            </select> 
+
+            <br></br>                
+            Facultad : 
+
+            <select name="ID_FACULTAD">
+                <%
+                    FacultadDAO facultadDao = new FacultadDAO();
                     ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
                     listaFacultades = facultadDao.consultarTodos();
-                    for(int i = 0; i <listaFacultades.size(); i++){                        
-                        out.write("<option value="+listaFacultades.get(i).getIdFacultad()+">"+listaFacultades.get(i).getFacultad()+"</option>");
+                    for (int i = 0; i < listaFacultades.size(); i++) {
+                        out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
                     }
                 %>                    
-                </select>
-                
-                <br></br>
-                <input type="submit" name="submit" value="Crear usuario">
+            </select>
+
+            <br></br>
+            <input type="submit" name="submit" value="Crear usuario">
 
 
-            </form>
+        </form>
 
-        </div><!-- CONTENIDO DE LA PANTALLA -->
+    </div><!-- CONTENIDO DE LA PANTALLA -->
 
-        <br></br>
-
-
-
+    <br></br>
 
 
 
 
-        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-            <div class="col-md-6">
-                <h3>
-                    Dirección
-                </h3>
-                <p>
-                    2016 Universidad De El Salvador  <br/>
-                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                </p>
-            </div>
-            <div class="col-md-6">
-                <h3>
-                    Información de contacto
-                </h3>
-                <p>
-                    Universidad De El Salvador
-                    Tél: +(503) 2511-2000 <br/>
-                    Consejo de becas
-                    Tél: +(503) 2511- 2016
-                </p>
-            </div>
+
+
+
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
         </div>
     </div>
+</div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>

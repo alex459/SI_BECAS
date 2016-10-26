@@ -10,7 +10,7 @@ public class FacultadDAO extends ConexionBD{
     
     //consultar por id
     public Facultad consultarPorId(int id) {
-        Facultad facultad = new Facultad();
+        Facultad temp = new Facultad();
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
@@ -23,8 +23,8 @@ public class FacultadDAO extends ConexionBD{
                 int ID_FACULTAD = rs.getInt("ID_FACULTAD");                
                 String FACULTAD = rs.getString("FACULTAD");
 
-                facultad.setIdFacultad(ID_FACULTAD);
-                facultad.setFacultad(FACULTAD);
+                temp.setIdFacultad(ID_FACULTAD);
+                temp.setFacultad(FACULTAD);
                 
             }
 
@@ -32,13 +32,13 @@ public class FacultadDAO extends ConexionBD{
             System.out.println("Error: " + e);
         }
 
-        return facultad;
+        return temp;
     }
     
     //consultar todos
     public ArrayList<Facultad> consultarTodos() {
-        ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
-        Facultad facultad = new Facultad();
+        ArrayList<Facultad> lista = new ArrayList<Facultad>();
+        Facultad temp = new Facultad();
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
@@ -47,13 +47,13 @@ public class FacultadDAO extends ConexionBD{
             
 
             while (rs.next()) {
-                facultad = new Facultad();
+                temp = new Facultad();
                 int ID_FACULTAD = rs.getInt("ID_FACULTAD");                
                 String FACULTAD = rs.getString("FACULTAD");
 
-                facultad.setIdFacultad(ID_FACULTAD);
-                facultad.setFacultad(FACULTAD);
-                listaFacultades.add(facultad);
+                temp.setIdFacultad(ID_FACULTAD);
+                temp.setFacultad(FACULTAD);
+                lista.add(temp);
             }
             
             this.cerrarConexion();
@@ -62,7 +62,7 @@ public class FacultadDAO extends ConexionBD{
             System.out.println("Error: " + e);
         }
 
-        return listaFacultades;
+        return lista;
     }
     
     
