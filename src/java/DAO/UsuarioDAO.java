@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 public class UsuarioDAO extends ConexionBD {
 
     //consultar por id
-    public Usuario consultarUsuario(int id) {
+    public Usuario consultarPorId(int id) {
         Usuario usuario = new Usuario();
         this.abrirConexion();
         try {
@@ -31,11 +31,14 @@ public class UsuarioDAO extends ConexionBD {
             }
 
         } catch (Exception e) {
-            System.out.println("Error al consultar usuario con id: " + id);
+            System.out.println("Error " + e);
         }
 
         return usuario;
     }
+    
+    
+    
 
     public boolean login(String nombre, String clave) {
         boolean logeo = false;

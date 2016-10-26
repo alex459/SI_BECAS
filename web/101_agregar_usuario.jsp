@@ -3,6 +3,11 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="POJO.Facultad"%>
+<%@page import="java.util.ArrayList"%>
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -47,52 +52,85 @@
 
 </head>
 <body>
-    
+
     <div class="container-fluid">
-        
+
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-            
+
             <h2>
-                <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                <p class="text-center" style="color:#cf2a27">Agregar usuario</p>
             </h2>
-            
+
             <br></br> 
         </div><!-- TITULO DE LA PANTALLA -->  
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         <div class="row"><!-- CONTENIDO DE LA PANTALLA -->
-            
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
+
+            <form action="" method="post">
+                Codigo de empleado : <input type="text" name="CARNET" value="">
+                <br></br>
+                <input type="checkbox" name="ES_EMPLEADO" value=""> No es empleado.
+                <br></br>
+                Primer nombre : <input type="text" name="NOMBRE1_DU" value="">
+                <br></br>
+                Segundo nombre : <input type="text" name="NOMBRE2_DU" value="">
+                <br></br>
+                Segundo nombre : <input type="text" name="NOMBRE2_DU" value="">
+                <br></br>
+                Primer apellido : <input type="text" name="APELLIDO1_DU" value="">
+                <br></br>
+                Segundo apellido : <input type="text" name="APELLIDO2_DU" value="">
+                <br></br>
+                Contraseña : <input type="text" name="CLAVE" value="">
+                <br></br>
+                Confirmar contraseña : <input type="text" name="CLAVE" value="">
+                <br></br>
+                Rol del usuario :
+                                
+                <select name="ID_TIPO_USUARIO">
+                    <option value="volvo">ADMINISTRADOR</option>
+                    <option value="saab">DIRECTOR DEL CONSEJO DE BECAS</option>
+                    <option value="opel">FISCALIA</option>
+                    <option value="audi">CONSEJO SUPERIOR UNIVERSITARIO</option>
+                </select> 
+                
+                <br></br>                
+                Facultad : 
+                                
+                <select name="ID_FACULTAD">
+                <% 
+                    FacultadDAO facultadDao = new FacultadDAO();                    
+                    ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
+                    listaFacultades = facultadDao.consultarTodos();
+                    for(int i = 0; i <listaFacultades.size(); i++){                        
+                        out.write("<option value="+listaFacultades.get(i).getIdFacultad()+">"+listaFacultades.get(i).getFacultad()+"</option>");
+                    }
+                %>                    
+                </select>
+                
+                <br></br>
+                <input type="submit" name="submit" value="Crear usuario">
+
+
+            </form>
 
         </div><!-- CONTENIDO DE LA PANTALLA -->
 
-        
-        
-        
-        
-        
-        
-        
-        
+        <br></br>
+
+
+
+
+
+
+
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
                 <h3>

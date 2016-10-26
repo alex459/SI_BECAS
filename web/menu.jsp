@@ -21,7 +21,7 @@
                             <a style='background-color: #cf2a27; color:white' href="#">===Administración de usuarios===</a>
                         </li>
                         <li>
-                            <a style='background-color: #cf2a27; color:white' href="#">Agregar usuario</a>
+                            <a style='background-color: #cf2a27; color:white' href="101_agregar_usuario.jsp">Agregar usuario</a>
                         </li>
                         <li>
                             <a style='background-color: #cf2a27; color:white' href="#">Actualizar usuarios</a>
