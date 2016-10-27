@@ -69,96 +69,168 @@
 
 
 
+        <div class="col-md-12">
+            <div class = "panel panel-default" style="padding: 10px;">
+                <form class="form-horizontal" action="AgregarUsuarioServlet" method="post">
+                    <fieldset>
+                        <legend>Datos personales</legend>
+                        <div class="row"> 
+                            <div class="col-md-3">
+                                <label for="textinput">Codigo de empleado : </label>                                
+                            </div>
+                            <div class="col-md-3">
+                                <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md">                                                                
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Es empleado : </label>                                
+                            </div>
+                            <div class="col-md-3">
+                                <input type="checkbox" name="ES_EMPLEADO" value="">                               
+                            </div> 
+                        </div> 
 
+                        <br>
 
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Primer nombre : </label>                                
+                            </div>
+                            <div class="col-md-3">
+                                <input id="textinput" name="NOMBRE1_DU" type="text" placeholder="ingrese el primer nombre" class="form-control input-md">                                                                
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Segundo nombre</label>                                
+                            </div>
+                            <div class="col-md-3">
+                                <input id="textinput" name="NOMBRE2_DU" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md">                                
+                            </div>  
+                        </div>
 
+                        <br>
 
-        <div class="row"><!-- CONTENIDO DE LA PANTALLA -->
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Primer apellido</label>                                
+                            </div>
+                            <div class="col-md-3">                                
+                                <input id="textinput" name="APELLIDO1_DU" type="text" placeholder="ingrese el primer apellido" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Segundo apellido</label>                                
+                            </div>
+                            <div class="col-md-3">                                
+                                <input id="textinput" name="APELLIDO2_DU" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md">
+                            </div>              
+                        </div>                      
 
-            <form action="AgregarUsuarioServlet" method="post">
-                Codigo de empleado : <input type="text" name="CARNET" value="">
-                <br></br>
-                <input type="checkbox" name="ES_EMPLEADO" value=""> No es empleado.
-                <br></br>
-                Primer nombre : <input type="text" name="NOMBRE1_DU" value="">
-                <br></br>
-                Segundo nombre : <input type="text" name="NOMBRE2_DU" value="">
-                <br></br>
-                Segundo nombre : <input type="text" name="NOMBRE2_DU" value="">
-                <br></br>
-                Primer apellido : <input type="text" name="APELLIDO1_DU" value="">
-                <br></br>
-                Segundo apellido : <input type="text" name="APELLIDO2_DU" value="">
-                <br></br>
-                Contraseña : <input type="text" name="CLAVE" value="">
-                <br></br>
-                Confirmar contraseña : <input type="text" name="CLAVE2" value="">
-                <br></br>
-                Rol del usuario :
+                        <br>
 
-                <select name="ID_TIPO_USUARIO">
-                <%
-                    TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
-                    ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
-                    listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();
-                    for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
-                        out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario()+ ">" + listaTiposDeUsuarios.get(i).getTipoUsuario()+ "</option>");
-                    }
-                %>    
-            </select> 
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Contraseña</label>                                
+                            </div>
+                            <div class="col-md-3">                                
+                                <input id="textinput" name="CLAVE" type="password" placeholder="ingrese una contraseña" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Confirmar contraseña</label>                                
+                            </div>
+                            <div class="col-md-3">                                
+                                <input id="textinput" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md">
+                            </div>              
+                        </div>
 
-            <br></br>                
-            Facultad : 
+                        <br>
 
-            <select name="ID_FACULTAD">
-                <%
-                    FacultadDAO facultadDao = new FacultadDAO();
-                    ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
-                    listaFacultades = facultadDao.consultarTodos();
-                    for (int i = 0; i < listaFacultades.size(); i++) {
-                        out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
-                    }
-                %>                    
-            </select>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Rol del usuario</label>                                
+                            </div>
+                            <div class="col-md-3">                                
 
-            <br></br>
-            <input type="submit" name="submit" value="Crear usuario">
+                                <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control">
+                                <%
+                                    TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
+                                    ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
+                                    listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();
+                                    for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
+                                        out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");
+                                    }
+                                %>    
+                            </select> 
 
+                        </div>
+                        <div class="col-md-3">
+                            <label for="textinput">Facultad</label>                                
+                        </div>
+                        <div class="col-md-3">                                
 
-        </form>
-
-    </div><!-- CONTENIDO DE LA PANTALLA -->
-
-    <br></br>
-
-
-
-
-
-
-
-    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-        <div class="col-md-6">
-            <h3>
-                Dirección
-            </h3>
-            <p>
-                2016 Universidad De El Salvador  <br/>
-                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-            </p>
-        </div>
-        <div class="col-md-6">
-            <h3>
-                Información de contacto
-            </h3>
-            <p>
-                Universidad De El Salvador
-                Tél: +(503) 2511-2000 <br/>
-                Consejo de becas
-                Tél: +(503) 2511- 2016
-            </p>
+                            <select id="selectbasic" name="ID_FACULTAD" class="form-control">
+                                <%
+                                    FacultadDAO facultadDao = new FacultadDAO();
+                                    ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
+                                    listaFacultades = facultadDao.consultarTodos();
+                                    for (int i = 0; i < listaFacultades.size(); i++) {
+                                        out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
+                                    }
+                                %>                    
+                            </select>
+                        </div>              
+                    </div>
+                    
+                    <br>        
+                            
+                    <div class="row">
+                        <div class="col-md-4 col-lg-offset-4">
+                            
+                            <input type="submit" class="btn btn-primary" name="submit" value="Crear usuario">
+                            
+                        </div>
+                    </div>
+                            
+                </fieldset>
+            </form>                    
         </div>
     </div>
+</div>
+
+
+
+
+
+
+
+
+<br></br>
+
+
+
+
+
+
+
+<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+    <div class="col-md-6">
+        <h3>
+            Dirección
+        </h3>
+        <p>
+            2016 Universidad De El Salvador  <br/>
+            Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h3>
+            Información de contacto
+        </h3>
+        <p>
+            Universidad De El Salvador
+            Tél: +(503) 2511-2000 <br/>
+            Consejo de becas
+            Tél: +(503) 2511- 2016
+        </p>
+    </div>
+</div>
 </div>
 
 <script src="js/jquery.min.js"></script>
