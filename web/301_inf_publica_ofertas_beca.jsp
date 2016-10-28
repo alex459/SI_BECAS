@@ -18,6 +18,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -92,44 +93,42 @@
 <body>
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+<H3 class="text-center" style="color:#E42217;">Ofertas de beca</H3>
+        <fieldset class="custom-border">
+            <legend class="custom-border">Ofertas de beca</legend>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="success">
+                                <th>No</th>
+                                <th>Oferta</th>
+                                <th>Tipo</th>
+                                <th>Institución oferente</th>
+                                <th>Institución de estudio</th>
+                                <th>Duración</th>
+                                <th>Fecha de cierre de convocatoria</th>
+                                <th>Mas información</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="info">
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </div>
+        </fieldset>
 
-
-                <table class="table table-bordered">
-                    <caption> <H3>Ofertas de beca</H3> </caption>
-                    <thead>
-                        <tr class="success">
-                            <th>No</th>
-                            <th>Oferta</th>
-                            <th>Tipo</th>
-                            <th>Institución oferente</th>
-                            <th>Institución de estudio</th>
-                            <th>Duración</th>
-                            <th>Fecha de cierre de convocatoria</th>
-                            <th>Mas información</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="info">
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> 
-
-
-
-        </div>
-
-    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
                 <h3>
                     Dirección

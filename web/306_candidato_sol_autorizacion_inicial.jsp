@@ -18,6 +18,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -95,14 +96,15 @@
 </head>
 <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid">        
+                <H3 class="text-center" style="color:#E42217;">Solicitud de autorización inicial</H3>
+        <fieldset class="custom-border">
+                <legend class="custom-border">Solicitud de autorización inicial al Consejo De Becas</legend>
         <div class="row">
             <div class="col-md-12">
-                <H3>Solicitud de autorización inicial</H3>
-                <div class = "panel panel-default">
+                <fieldset class="custom-border">
+                <legend class="custom-border">Adjuntar documentación necesaria</legend>
                     <form class="form-horizontal">
-                        <fieldset>
-                            <legend>Adjuntar documentación necesaria</legend>
                             <div class="row">                       
                                 <div class="row">
                                   <div class="col-md-12 col-md-offset-2">
@@ -151,26 +153,15 @@
                                     </div>  
                                 </div>    
                             </div>  
-
                             </br></br>
                             <div class="row">   
                                 <div class="col-md-2 col-md-offset-5">
                                         <button id="button1id" name="enviar" class="btn btn-success">Enviar solicitud</button>
                                 </div>    
                             </div> </br>    
-
-                        </fieldset>
-                    </form>
-
-
-
-                </div>
+                    </form></fieldset>
             </div> 
-
-
-
-
-        </div>
+        </div></fieldset>
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">

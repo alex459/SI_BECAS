@@ -18,7 +18,9 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/menuSolicitudBeca.css" rel="stylesheet">
+    <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -97,7 +99,9 @@
 <body>
 
     <div class="container-fluid">
-        <H3>Solicitud de beca</H3>
+        <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
+        <fieldset class="custom-border">
+                <legend class="custom-border">Solicitud de beca de postgrado</legend>
         <div class="row">            
             <div class="col-md-2">
                 <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
@@ -111,10 +115,9 @@
                 </ul>
             </div>  
             <div class="col-md-10">
-                <div class = "panel panel-default" style="padding: 10px;">
                     <form class="form-horizontal">
-                        <fieldset>
-                            <legend>Información laboral</legend>
+                        <fieldset class="custom-border">
+                <legend class="custom-border">Información laboral</legend>
                             <div class="row">                                   
                             </div>
                             <div class="row">
@@ -145,15 +148,15 @@
                                 </div> 
                             </div></br>
                             <div class="row">
-                                <div class="col-md-4 col-md-offset-4">
-                                    <label for="textinput">Fecha de contratación</label>
-                                    <input type="text" name="fechaCont" placeholder="Seleccione fecha de su contratación" class="form-control input-md"/>
+                                 <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput" placeholder="Seleccione la fecha de contratación">Fecha de contratación</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
                                 </div>
                             </div></br>                            
                             <div class="row"></div>
-                        </fieldset>
-                    </form>                    
-                </div>
+                    </form> </fieldset>              
                 <div class="row">
                         <div class="col-md-4 col-lg-offset-4">
                             <button id="button1id" name="continuar" class="btn btn-primary">Continuar</button>
@@ -163,7 +166,7 @@
                 </div></br>
             </div> 
             </br>
-        </div>
+        </div></fieldset>
     </div>  
 
 
@@ -203,5 +206,15 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.input-group.date').datepicker({
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        });
+    });
+</script>
 </body>
 </html>

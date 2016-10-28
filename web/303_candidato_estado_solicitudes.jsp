@@ -18,6 +18,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -95,36 +96,43 @@
 </head>
 <body>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered">
-                    <H3>Estado de solicitudes</H3>
-                    <thead>
-                        <tr class="success">
-                            <th>No</th>
-                            <th>Solicitud</th>
-                            <th>Unidad</th>
-                            <th>Fecha solicitud</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="info">
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button></td>
-                            <td><button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> 
-        </div>
 
-    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+    <div class="container-fluid">
+        <H3 class="text-center" style="color:#E42217;">Estado de solicitudes</H3>
+        <form>
+            <fieldset class="custom-border">
+                <legend class="custom-border">Solicitudes realizadas</legend>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            
+                            <thead>
+                                <tr class="success">
+                                    <th>No</th>
+                                    <th>Solicitud</th>
+                                    <th>Unidad</th>
+                                    <th>Fecha solicitud</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="info">
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button></td>
+                                    <td><button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
                 <h3>
                     Dirección

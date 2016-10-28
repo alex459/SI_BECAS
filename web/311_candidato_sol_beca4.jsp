@@ -20,6 +20,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/menuSolicitudBeca.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -98,7 +99,9 @@
 <body>
 
     <div class="container-fluid">
-        <H3>Solicitud de beca</H3>
+        <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
+        <fieldset class="custom-border">
+                <legend class="custom-border">Solicitud de beca de postgrado</legend>
         <div class="row">            
             <div class="col-md-2">
                 <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
@@ -112,10 +115,9 @@
                 </ul>
             </div>  
             <div class="col-md-10">
-                <div class = "panel panel-default" style="padding: 10px;">
+                <fieldset class="custom-border">
+                <legend class="custom-border">Cargos desempeñados</legend>
                     <form class="form-horizontal">
-                        <fieldset>
-                            <legend>Cargos desempeñados</legend>
                               <div class="row">
                                 <div class="col-md-4">  
                                 <label for="textinput">Asociaciones profesionales a las que pertenece</label>
@@ -223,9 +225,7 @@
                                     </table>
                                 </div>                                    
                             </div></br>
-                        </fieldset>
-                    </form>                    
-                </div>
+                    </form>   </fieldset>        
                 <div class="row">
                     <div class="col-md-4 col-lg-offset-4">
                         <button id="button1id" name="continuar" class="btn btn-primary">Continuar</button>
@@ -233,19 +233,9 @@
                         <button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button>
                     </div>
                 </div></br>
-            </div> 
             </br>
         </div>
-    </div>  
-
-
-
-
-
-
-
-
-
+    </div>  </fieldset>
 </div>
 
 <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">

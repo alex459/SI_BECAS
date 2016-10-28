@@ -18,6 +18,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -96,7 +97,9 @@
 <body>
 
     <div class="container-fluid">
-        <H3>Estado del proceso</H3>
+        <H3 class="text-center" style="color:#E42217;">Estado del proceso de beca</H3>
+        <fieldset class="custom-border">
+                <legend class="custom-border">Becas</legend>
         <div class="row">            
             <div class="col-md-5">
                 <div class = "panel panel-default">
@@ -199,20 +202,9 @@
                          <button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar proceso</button>
                         </div>
                     </div></br>
-                   
-                   
                 </div>
             </div>  
-                
-                
-                
-             
-                
-
-
-
-
-        </div>
+        </div></fieldset>
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">

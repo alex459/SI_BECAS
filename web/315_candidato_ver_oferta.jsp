@@ -19,6 +19,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/formSquare.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -97,13 +98,12 @@
 <body>
 
     <div class="container-fluid">
+        <fieldset class="custom-border">
+                <legend class="custom-border">Detalle de oferta de beca</legend>
         <div class="row">
             <div class="col-md-12">
                 <div class="container">
-
-
-                    <h3>Información de la beca:</h3>
-
+                    <h3 class="text-center" style="color:#E42217;">Información de la beca</h3>
                     <div class="bootstrap-iso">
                         <form>
                             <div class="row no-gutter">
@@ -259,12 +259,9 @@
                                 </div>
                             </div>          
                         </form></div>
-
                 </div>
-
             </div> 
-
-        </div>
+        </div> </fieldset>
         </br></br>
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">

@@ -18,6 +18,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -96,12 +97,12 @@
 <body>
 
     <div class="container-fluid">
+        <H3 class="text-center" style="color:#E42217;">Ofertas de beca</H3> 
+        <fieldset class="custom-border">
+                <legend class="custom-border">Ofertas de beca</legend>
         <div class="row">
             <div class="col-md-12">
-
-
-                <table class="table table-bordered">
-                    <caption> <H3>Ofertas de beca</H3> </caption>
+                <table class="table table-bordered">                   
                     <thead>
                         <tr class="success">
                             <th>No</th>
@@ -128,10 +129,8 @@
                     </tbody>
                 </table>
             </div> 
-
-
-
         </div>
+                 </fieldset>
 
     <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">

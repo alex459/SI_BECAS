@@ -18,6 +18,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -95,10 +96,12 @@
 </head>
 <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid">        
+                <H3 class="text-center" style="color:#E42217;">Solicitud de permiso inicial</H3>
+        <fieldset class="custom-border">
+                <legend class="custom-border">Solicitud de permiso inicial</legend>
         <div class="row">
             <div class="col-md-12">
-                <H3>Solicitud de permiso inicial</H3>
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-4 col-md-offset-4">
@@ -110,13 +113,9 @@
                     </div>
                 </div></br>
                 <div class = "panel panel-default">
-
-
                     <form class="form-horizontal">
                         <fieldset>
-
                             <legend>Adjuntar documentación necesaria</legend>
-
                             <div class="row"> 
                                 <div class="col-md-12 col-md-offset-2">
                                     <div class="col-md-6">
@@ -168,21 +167,11 @@
                                         <button id="button1id" name="enviar" class="btn btn-success">Enviar solicitud</button>
                                 </div>    
                             </div> </br>
-
-
-
                         </fieldset>
                     </form>
-
-
-
                 </div>
             </div> 
-
-
-
-
-        </div>
+        </div></fieldset>
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
