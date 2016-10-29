@@ -137,20 +137,23 @@
                                     <label for="textinput">Nombre de la institución</label>
                                     <input id="textinput" name="textinput" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md">
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-6">
                                     <label for="textinput">Año</label>
+                                    <div class="row">
+                                    <div class="col-md-6">    
                                     <div class="input-group date">
                                         <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
+                                    </div>
+                                    <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="col-md-2">
                                             <div class="row"></div>
                                             <button id="button1id" name="agEducacion" class="btn btn-primary">Agregar información</button>
-                                        </div>
                                     </div>                                   
+                                </div>    
+                                    </div>    
                                 </div>
+                                
                             </div>
                             <div class="row">  
                                 <div class="col-md-12">
@@ -223,15 +226,19 @@
                                         <option value="2">Option two</option>
                                     </select>             
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <label for="textinput">Nivel de escritura</label>
+                                    <div class="row">
+                                    <div class="col-md-6">    
                                     <select id="selectbasic" name="selectbasic" class="form-control">
                                         <option value="1">Option one</option>
                                         <option value="2">Option two</option>
-                                    </select>             
-                                </div>
-                                <div class="col-md-2">
-                                    <button id="singlebutton" name="cargarArchivo" type="file" class="btn btn-primary">Agregar idioma</button>           
+                                    </select>        
+                                    </div>
+                                        <div class="col-md-6">
+                                          <button id="singlebutton" name="cargarArchivo" type="file" class="btn btn-primary">Agregar idioma</button>     
+                                        </div>    
+                                    </div>    
                                 </div>
                             </div></br>
                             <div class="row">

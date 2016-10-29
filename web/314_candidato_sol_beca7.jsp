@@ -150,18 +150,22 @@
                                         <option value="2">Option two</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-9">
+                                    <div class="row">
                                     <label for="textinput">Ruta del archivo</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
                                     <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo nombre" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput"></label>
+                                        </div>
+                                         <div class="col-md-2">
                                      <button id="button1id" name="Examinar" class="btn btn-primary">Examinar</button>
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="textinput"></label>
+                                    <div class="col-md-2">
                                      <button id="button1id" name="agregar" class="btn btn-primary">Agregar documento</button>
-                                </div>  
+                                </div>
+                                    </div>                                     
+                                </div>      
                             </div></br>
                             <div class="row">
                                 <div class="col-md-12">

@@ -192,16 +192,16 @@
                                         <option value="2">2</option>
                                     </select>
                                 </div>
-                                <div class="col-md-8">     
+                                <div class="col-md-10">     
                                     <label for="textinput">Programa de estudios:</label>
+                                    <div class="row">
+                                        <div class="col-md-6">    
                                     <textarea class="form-control" id="textarea" name="textarea"></textarea>
-                                </div>
-                                 <div class="col-md-2">
-                                    <div class="form-group">
+                                        </div>
                                         <div class="col-md-2">
                                             <button id="button1id" name="agEducacion" class="btn btn-primary">Agregar programa</button>
                                         </div>
-                                    </div>                                   
+                                    </div>
                                 </div>
                             </div></br>    
                             <div class="row">
