@@ -114,3 +114,27 @@
 .navbar-custom .navbar-link:hover {
   color: #bdbdbd;
 }
+
+th { background: #dddddd;
+  color: black;
+  text-align: center;
+  border:solid;
+  border-width: 1px;
+}
+
+tr:nth-child(even) { background: #dddddd;}
+
+tr:nth-child(odd) { background: #597eaa;
+  color: white;
+}
+
+table {
+  border:solid;
+  border-width: 1px;
+}
+
+td{
+  border:solid;
+  border-width: 1px;
+  border-color: black;
+}
