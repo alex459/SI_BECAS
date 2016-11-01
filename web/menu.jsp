@@ -33,13 +33,16 @@
                             <a style='background-color: #cf2a27; color:white' href="104_dar_de_baja_usuario.jsp">Dar de baja usuarios</a>
                         </li>
                         <li>
-                            <a style='background-color: #cf2a27; color:white' href="#">Modificar roles</a>
+                            <a style='background-color: #cf2a27; color:white' href="105_modificar_roles.jsp">Modificar roles</a>
                         </li>
                         <li>
                             <a style='background-color: #cf2a27; color:white' href="#">Bitacora</a>
                         </li>
                         <li>
                             <a style='background-color: #cf2a27; color:white' href="#">===Administración de becas===</a>
+                        </li>
+                        <li>
+                            <a style='background-color: #cf2a27; color:white' href="#">Agregar oferta de beca</a>
                         </li>
                         <li>
                             <a style='background-color: #cf2a27; color:white' href="#">Modificar oferta de beca</a>
