@@ -17,6 +17,8 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
+    
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -47,73 +49,117 @@
 
 </head>
 <body>
-    
+
     <div class="container-fluid">
-        
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-            
             <h2>
-                <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                <p class="text-center" style="color:#cf2a27">Dar de baja a usuario</p>
             </h2>
-            
-            <br></br> 
+
+            <br></br>
+
         </div><!-- TITULO DE LA PANTALLA -->  
-        
-        
-        
-        
-        
-        
-        
-        
-        <div class="row"><!-- CONTENIDO DE LA PANTALLA -->
-            
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
 
-        </div><!-- CONTENIDO DE LA PANTALLA -->
+        <div class="col-md-12">
 
-        
-        
-        
-        
-        
-        
-        
-        
-        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-            <div class="col-md-6">
-                <h3>
-                    Dirección
-                </h3>
-                <p>
-                    2016 Universidad De El Salvador  <br/>
-                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                </p>
-            </div>
-            <div class="col-md-6">
-                <h3>
-                    Información de contacto
-                </h3>
-                <p>
-                    Universidad De El Salvador
-                    Tél: +(503) 2511-2000 <br/>
-                    Consejo de becas
-                    Tél: +(503) 2511- 2016
-                </p>
-            </div>
+            <form class="form-horizontal" action="" method="post">
+                <fieldset class="custom-border">  
+                    <legend class="custom-border">Dar de baja a usuario</legend>
+
+
+                    <div class="row"> 
+                        <div class="col-md-3">                                                                                                                
+                        </div>
+                        <div class="col-md-3 text-right">                                   
+                            <label for="textinput">Codigo de empleado : </label>                            
+                        </div>
+                        <div class="col-md-3 text-center">                                                        
+                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md">                            
+                        </div>
+                        <div class="col-md-3">                                                                                                                
+                        </div>
+                    </div> 
+
+
+                    <br>
+
+
+                    <div class="row">   <!-- TABLA RESULTADOS -->
+                        <div class="col-md-2">                                                                                                                
+                        </div>
+                        <div class="col-md-8">
+
+                            <table class="table table-bordered"></br>                                                        
+                                <tbody>
+                                    <tr class="info">
+                                        <td>Nombre de usuario </td>
+                                        <td>datos </td>
+
+                                    </tr>
+                                    <tr class="info">
+                                        <td>Facultad </td>
+                                        <td>datos </td>
+
+                                    </tr>
+                                    <tr class="info">
+                                        <td>Tipo Usuarios </td>
+                                        <td>datos </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-2">                                                                                                                
+                        </div>
+                        
+                    </div>
+
+                    <br>
+
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" class="btn btn-success" name="submit" value="Cargar usuario">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Dar de baja">
+                            <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
+                        </div>
+                    </div>
+                    
+
+                </fieldset>
+            </form>                    
+        </div>
+    </div>
+
+    <br></br>
+
+
+
+
+
+
+
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
         </div>
     </div>
 

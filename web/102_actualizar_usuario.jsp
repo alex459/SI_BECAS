@@ -185,9 +185,9 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
 
-                        <input type="submit" class="btn btn-primary" name="submit" value="Cargar usuario">
+                        <input type="submit" class="btn btn-success" name="submit" value="Cargar usuario">
                         <input type="submit" class="btn btn-primary" name="submit" value="Actualizar usuario">
-                        <input type="submit" class="btn btn-primary" name="submit" value="Cancelar">
+                        <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
 
                     </div>
                 </div>

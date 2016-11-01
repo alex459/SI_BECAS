@@ -24,13 +24,13 @@
                             <a style='background-color: #cf2a27; color:white' href="101_agregar_usuario.jsp">Agregar usuario</a>
                         </li>
                         <li>
-                            <a style='background-color: #cf2a27; color:white' href="#">Actualizar usuarios</a>
+                            <a style='background-color: #cf2a27; color:white' href="102_actualizar_usuario.jsp">Actualizar usuarios</a>
                         </li>
                         <li>
-                            <a style='background-color: #cf2a27; color:white' href="#">Consultar usuarios</a>
+                            <a style='background-color: #cf2a27; color:white' href="103_consultar_usuario.jsp">Consultar usuarios</a>
                         </li>
                         <li>
-                            <a style='background-color: #cf2a27; color:white' href="#">Dar de baja usuarios</a>
+                            <a style='background-color: #cf2a27; color:white' href="104_dar_de_baja_usuario.jsp">Dar de baja usuarios</a>
                         </li>
                         <li>
                             <a style='background-color: #cf2a27; color:white' href="#">Modificar roles</a>
