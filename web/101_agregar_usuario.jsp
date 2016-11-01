@@ -25,7 +25,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/customfieldset.css" rel="stylesheet">
-    
+
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -63,131 +63,131 @@
                 <p class="text-center" style="color:#cf2a27">Agregar usuario</p>
             </h2>
 
-            <br></br> 
+            <br></br>
+
         </div><!-- TITULO DE LA PANTALLA -->  
- 
+
         <div class="col-md-12">
-            <div class = "panel panel-default" style="padding: 10px;">
-                <form class="form-horizontal" action="AgregarUsuarioServlet" method="post">
-                    <fieldset class="custom-border">  
-                            <legend class="custom-border">Datos personales</legend>
-                        <div class="row"> 
-                            <div class="col-md-3 text-right">                                   
-                                <label for="textinput">Codigo de empleado : </label>                                
-                            </div>
-                            <div class="col-md-3">
-                                <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md">                                                                
-                            </div>
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Es empleado : </label>                                
-                            </div>
-                            <div class="col-md-3">
-                                <input type="checkbox" name="ES_EMPLEADO" value="">                               
-                            </div> 
-                        </div> 
 
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Primer nombre : </label>                                
-                            </div>
-                            <div class="col-md-3">
-                                <input id="textinput" name="NOMBRE1_DU" type="text" placeholder="ingrese el primer nombre" class="form-control input-md">                                                                
-                            </div>
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Segundo nombre :</label>                                
-                            </div>
-                            <div class="col-md-3">
-                                <input id="textinput" name="NOMBRE2_DU" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md">                                
-                            </div>  
+            <form class="form-horizontal" action="AgregarUsuarioServlet" method="post">
+                <fieldset class="custom-border">  
+                    <legend class="custom-border">Datos personales</legend>
+                    <div class="row"> 
+                        <div class="col-md-3 text-right">                                   
+                            <label for="textinput">Codigo de empleado : </label>                                
                         </div>
-
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Primer apellido :</label>                                
-                            </div>
-                            <div class="col-md-3">                                
-                                <input id="textinput" name="APELLIDO1_DU" type="text" placeholder="ingrese el primer apellido" class="form-control input-md">
-                            </div>
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Segundo apellido :</label>                                
-                            </div>
-                            <div class="col-md-3">                                
-                                <input id="textinput" name="APELLIDO2_DU" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md">
-                            </div>              
-                        </div>                      
-
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Contraseña :</label>                                
-                            </div>
-                            <div class="col-md-3">                                
-                                <input id="textinput" name="CLAVE" type="password" placeholder="ingrese una contraseña" class="form-control input-md">
-                            </div>
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Confirmar contraseña :</label>                                
-                            </div>
-                            <div class="col-md-3">                                
-                                <input id="textinput" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md">
-                            </div>              
-                        </div>
-
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Rol del usuario :</label>                                
-                            </div>
-                            <div class="col-md-3">                                
-
-                                <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control">
-                                <%
-                                    TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
-                                    ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
-                                    listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();
-                                    for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
-                                        out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");
-                                    }
-                                %>    
-                            </select> 
-
+                        <div class="col-md-3">
+                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md">                                                                
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Facultad :</label>                                
+                            <label for="textinput">Es empleado : </label>                                
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="ES_EMPLEADO" value="">                               
+                        </div> 
+                    </div> 
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Primer nombre : </label>                                
+                        </div>
+                        <div class="col-md-3">
+                            <input id="textinput" name="NOMBRE1_DU" type="text" placeholder="ingrese el primer nombre" class="form-control input-md">                                                                
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Segundo nombre :</label>                                
+                        </div>
+                        <div class="col-md-3">
+                            <input id="textinput" name="NOMBRE2_DU" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md">                                
+                        </div>  
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Primer apellido :</label>                                
+                        </div>
+                        <div class="col-md-3">                                
+                            <input id="textinput" name="APELLIDO1_DU" type="text" placeholder="ingrese el primer apellido" class="form-control input-md">
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Segundo apellido :</label>                                
+                        </div>
+                        <div class="col-md-3">                                
+                            <input id="textinput" name="APELLIDO2_DU" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md">
+                        </div>              
+                    </div>                      
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Contraseña :</label>                                
+                        </div>
+                        <div class="col-md-3">                                
+                            <input id="textinput" name="CLAVE" type="password" placeholder="ingrese una contraseña" class="form-control input-md">
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Confirmar contraseña :</label>                                
+                        </div>
+                        <div class="col-md-3">                                
+                            <input id="textinput" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md">
+                        </div>              
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Rol del usuario :</label>                                
                         </div>
                         <div class="col-md-3">                                
 
-                            <select id="selectbasic" name="ID_FACULTAD" class="form-control">
-                                <%
-                                    FacultadDAO facultadDao = new FacultadDAO();
-                                    ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
-                                    listaFacultades = facultadDao.consultarTodos();
-                                    for (int i = 0; i < listaFacultades.size(); i++) {
-                                        out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
-                                    }
-                                %>                    
-                            </select>
-                        </div>              
+                            <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control">
+                            <%
+                                TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
+                                ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
+                                listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();
+                                for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
+                                    out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");
+                                }
+                            %>    
+                        </select> 
+
                     </div>
-                    
-                    <br>        
-                            
-                    <div class="row">
-                        <div class="col-md-4 col-lg-offset-4">
-                            
-                            <input type="submit" class="btn btn-primary" name="submit" value="Crear usuario">
-                            
-                        </div>
+                    <div class="col-md-3 text-right">
+                        <label for="textinput">Facultad :</label>                                
                     </div>
-                            
-                </fieldset>
-            </form>                    
-        </div>
+                    <div class="col-md-3">                                
+
+                        <select id="selectbasic" name="ID_FACULTAD" class="form-control">
+                            <%
+                                FacultadDAO facultadDao = new FacultadDAO();
+                                ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
+                                listaFacultades = facultadDao.consultarTodos();
+                                for (int i = 0; i < listaFacultades.size(); i++) {
+                                    out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
+                                }
+                            %>                    
+                        </select>
+                    </div>              
+                </div>
+
+                <br>        
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+
+                        <input type="submit" class="btn btn-primary" name="submit" value="Crear usuario">
+
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>                    
     </div>
 </div>
 

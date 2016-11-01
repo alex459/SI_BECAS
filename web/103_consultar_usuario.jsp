@@ -3,6 +3,11 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="POJO.Facultad"%>
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="POJO.TipoUsuario"%>
+<%@page import="DAO.TipoUsuarioDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -17,6 +22,8 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
+
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -47,78 +54,201 @@
 
 </head>
 <body>
-    
+
     <div class="container-fluid">
-        
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-            
             <h2>
-                <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                <p class="text-center" style="color:#cf2a27">Consultar usuario</p>
             </h2>
-            
-            <br></br> 
+
+            <br></br>
+
         </div><!-- TITULO DE LA PANTALLA -->  
-        
-        
-        
-        
-        
-        
-        
-        
-        <div class="row"><!-- CONTENIDO DE LA PANTALLA -->
-            
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
 
-        </div><!-- CONTENIDO DE LA PANTALLA -->
 
-        
-        
-        
-        
-        
-        
-        
-        
-        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-            <div class="col-md-6">
-                <h3>
-                    Dirección
-                </h3>
-                <p>
-                    2016 Universidad De El Salvador  <br/>
-                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                </p>
+        <div class="col-md-12">            
+            <fieldset class="custom-border">  
+                <legend class="custom-border">Consular usuario</legend> 
+
+
+                <div class="row">   <!-- FILTROS -->
+
+                    <div class="col-md-12">
+                        <form class="form-horizontal" action="" method="post">
+                            <fieldset class="custom-border">  
+                                <legend class="custom-border">Filtros</legend>                    
+                                <div class="row"> 
+                                    <div class="col-md-3 text-right">
+                                        <label for="textinput">Usuario : </label>                                
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input id="textinput" name="NOMBRE_USUARIO" type="text" placeholder="ingrese el carnet a buscar" class="form-control input-md">
+                                    </div> 
+                                    <div class="col-md-3 text-right">
+                                        <label for="textinput">Facultad :</label>                                
+                                    </div>
+                                    <div class="col-md-3">                                
+
+                                        <select id="selectbasic" name="ID_FACULTAD" class="form-control">
+                                        <%
+                                            FacultadDAO facultadDao = new FacultadDAO();
+                                            ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
+                                            listaFacultades = facultadDao.consultarTodos();
+                                            for (int i = 0; i < listaFacultades.size(); i++) {
+                                                out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
+                                            }
+                                        %>                    
+                                    </select>
+                                </div>        
+                            </div> 
+
+                            <br>
+
+                            <div class="row">
+                                <div class="col-md-3 text-right">
+                                    <label for="textinput">Codigo de empleado : </label>                                
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="textinput" name="CARNET" type="text" placeholder="ingrese el carnet a buscar" class="form-control input-md">
+                                </div>
+                                <div class="col-md-3 text-right">
+                                        <label for="textinput">Tipo de usuario :</label>                                
+                                    </div>
+                                <div class="col-md-3">                                
+                                    <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control">
+                                        <%
+                                            TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
+                                            ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
+                                            listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();
+                                            for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
+                                                out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");
+                                            }
+                                        %>    
+                                    </select> 
+                                </div> 
+                            </div>
+
+                            <br>        
+
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Buscar">                       
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>                         
+                </div>
+
             </div>
-            <div class="col-md-6">
-                <h3>
-                    Información de contacto
-                </h3>
-                <p>
-                    Universidad De El Salvador
-                    Tél: +(503) 2511-2000 <br/>
-                    Consejo de becas
-                    Tél: +(503) 2511- 2016
-                </p>
+
+
+
+
+            <div class="row">   <!-- TABLA RESULTADOS -->
+
+                <div class="col-md-12">
+
+                    <table class="table table-bordered"></br>                        
+                        <thead>
+                            <tr class="success">
+                                <th>No</th>
+                                <th>Nombre de empleado</th>
+                                <th>Codigo de empleado</th>
+                                <th>Facultad</th>
+                                <th>Tipo de empleado</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="info">
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td>
+                                    <input type="submit" class="btn btn-success" name="submit" value="Editar">
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Modificar Rol">
+                                    <input type="submit" class="btn btn-danger" name="submit" value="Dar de Baja">                                
+                                </td>
+                            </tr>
+                            <tr class="info">
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td>
+                                    <input type="submit" class="btn btn-success" name="submit" value="Editar">
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Modificar Rol">
+                                    <input type="submit" class="btn btn-danger" name="submit" value="Dar de Baja">                                
+                                </td>
+                            </tr>
+                            <tr class="info">
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td>
+                                    <input type="submit" class="btn btn-success" name="submit" value="Editar">
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Modificar Rol">
+                                    <input type="submit" class="btn btn-danger" name="submit" value="Dar de Baja">                                
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
             </div>
-        </div>
+
+
+        </fieldset>                       
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+
+
+
+
+
+
+
+</div>
+
+<br></br>
+
+
+
+
+
+
+
+<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+    <div class="col-md-6">
+        <h3>
+            Dirección
+        </h3>
+        <p>
+            2016 Universidad De El Salvador  <br/>
+            Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h3>
+            Información de contacto
+        </h3>
+        <p>
+            Universidad De El Salvador
+            Tél: +(503) 2511-2000 <br/>
+            Consejo de becas
+            Tél: +(503) 2511- 2016
+        </p>
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>
