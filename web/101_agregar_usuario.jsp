@@ -24,6 +24,8 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
+    
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -56,32 +58,27 @@
 <body>
 
     <div class="container-fluid">
-
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-
             <h2>
                 <p class="text-center" style="color:#cf2a27">Agregar usuario</p>
             </h2>
 
             <br></br> 
         </div><!-- TITULO DE LA PANTALLA -->  
-
-
-
-
+ 
         <div class="col-md-12">
             <div class = "panel panel-default" style="padding: 10px;">
                 <form class="form-horizontal" action="AgregarUsuarioServlet" method="post">
-                    <fieldset>
-                        <legend>Datos personales</legend>
+                    <fieldset class="custom-border">  
+                            <legend class="custom-border">Datos personales</legend>
                         <div class="row"> 
-                            <div class="col-md-3">
+                            <div class="col-md-3 text-right">                                   
                                 <label for="textinput">Codigo de empleado : </label>                                
                             </div>
                             <div class="col-md-3">
                                 <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md">                                                                
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 text-right">
                                 <label for="textinput">Es empleado : </label>                                
                             </div>
                             <div class="col-md-3">
@@ -92,14 +89,14 @@
                         <br>
 
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-3 text-right">
                                 <label for="textinput">Primer nombre : </label>                                
                             </div>
                             <div class="col-md-3">
                                 <input id="textinput" name="NOMBRE1_DU" type="text" placeholder="ingrese el primer nombre" class="form-control input-md">                                                                
                             </div>
-                            <div class="col-md-3">
-                                <label for="textinput">Segundo nombre</label>                                
+                            <div class="col-md-3 text-right">
+                                <label for="textinput">Segundo nombre :</label>                                
                             </div>
                             <div class="col-md-3">
                                 <input id="textinput" name="NOMBRE2_DU" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md">                                
@@ -109,14 +106,14 @@
                         <br>
 
                         <div class="row">
-                            <div class="col-md-3">
-                                <label for="textinput">Primer apellido</label>                                
+                            <div class="col-md-3 text-right">
+                                <label for="textinput">Primer apellido :</label>                                
                             </div>
                             <div class="col-md-3">                                
                                 <input id="textinput" name="APELLIDO1_DU" type="text" placeholder="ingrese el primer apellido" class="form-control input-md">
                             </div>
-                            <div class="col-md-3">
-                                <label for="textinput">Segundo apellido</label>                                
+                            <div class="col-md-3 text-right">
+                                <label for="textinput">Segundo apellido :</label>                                
                             </div>
                             <div class="col-md-3">                                
                                 <input id="textinput" name="APELLIDO2_DU" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md">
@@ -126,14 +123,14 @@
                         <br>
 
                         <div class="row">
-                            <div class="col-md-3">
-                                <label for="textinput">Contraseña</label>                                
+                            <div class="col-md-3 text-right">
+                                <label for="textinput">Contraseña :</label>                                
                             </div>
                             <div class="col-md-3">                                
                                 <input id="textinput" name="CLAVE" type="password" placeholder="ingrese una contraseña" class="form-control input-md">
                             </div>
-                            <div class="col-md-3">
-                                <label for="textinput">Confirmar contraseña</label>                                
+                            <div class="col-md-3 text-right">
+                                <label for="textinput">Confirmar contraseña :</label>                                
                             </div>
                             <div class="col-md-3">                                
                                 <input id="textinput" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md">
@@ -143,8 +140,8 @@
                         <br>
 
                         <div class="row">
-                            <div class="col-md-3">
-                                <label for="textinput">Rol del usuario</label>                                
+                            <div class="col-md-3 text-right">
+                                <label for="textinput">Rol del usuario :</label>                                
                             </div>
                             <div class="col-md-3">                                
 
@@ -160,8 +157,8 @@
                             </select> 
 
                         </div>
-                        <div class="col-md-3">
-                            <label for="textinput">Facultad</label>                                
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Facultad :</label>                                
                         </div>
                         <div class="col-md-3">                                
 
@@ -200,7 +197,6 @@
 
 
 
-
 <br></br>
 
 
@@ -230,7 +226,6 @@
             Tél: +(503) 2511- 2016
         </p>
     </div>
-</div>
 </div>
 
 <script src="js/jquery.min.js"></script>
