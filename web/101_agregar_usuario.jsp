@@ -74,17 +74,14 @@
                     <legend class="custom-border">Datos personales</legend>
                     <div class="row"> 
                         <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Codigo de empleado : </label>                                
+                            <label for="textinput">Codigo de usuario : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md">                                                                
+                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese un codigo para el usuario" class="form-control input-md">                                                                
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Es empleado : </label>                                
-                        </div>
-                        <div class="col-md-3">
-                            <input type="checkbox" name="ES_EMPLEADO" value="">                               
-                        </div> 
+                            
+                        </div>                        
                     </div> 
 
                     <br>

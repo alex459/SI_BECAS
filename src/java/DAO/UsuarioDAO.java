@@ -43,12 +43,12 @@ public class UsuarioDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT MAX(ID_USUARIO) AS ID_USUARIO FROM USUARIO";
+            String sql = "SELECT IFNULL(MAX(ID_USUARIO), 0) AS X FROM USUARIO";
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
 
             while (rs.next()) {
-                siguienteId = rs.getInt("ID_USUARIO") + 1;                
+                siguienteId = rs.getInt("X") + 1;                
             }
 
         } catch (Exception e) {

@@ -5,7 +5,9 @@
  */
 package MODEL;
 
+import DAO.DetalleUsuarioDAO;
 import DAO.UsuarioDAO;
+import POJO.DetalleUsuario;
 import POJO.Usuario;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -32,21 +34,31 @@ public class AgregarUsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         
         Usuario usuario = new Usuario();
+        DetalleUsuario detalleUsuario = new DetalleUsuario();
         UsuarioDAO usuarioDao = new UsuarioDAO();
+        DetalleUsuarioDAO detalleUsuarioDao = new DetalleUsuarioDAO();
         
-        //parte de lectura desde el jsp        
-        usuario.setIdUsuario(usuarioDao.getSiguienteId());
+        //parte de lectura desde el jsp y guardado en bd     
+        int idUsuario = usuarioDao.getSiguienteId();
+        usuario.setIdUsuario(idUsuario);
         usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
-        usuario.setNombreUsuario(request.getParameter("NOMBRE1_DU"));
+        usuario.setNombreUsuario(request.getParameter("CARNET"));
         usuario.setClave(request.getParameter("CLAVE"));
-        
-        //parte de validacion pendiente. posiblemente se hara con js
-        
-        
-        //parte de guardar datos        
-        usuarioDao.ingresar(usuario);
-        
+        usuarioDao.ingresar(usuario); //guardando usuario
+        int idDetalleUsuario = detalleUsuarioDao.getSiguienteId();
+        detalleUsuario.setIdDetalleUsuario(idDetalleUsuario);
+        detalleUsuario.setIdUsuario(idUsuario);
+        detalleUsuario.setIdFacultad(Integer.parseInt(request.getParameter("ID_FACULTAD")));
+        detalleUsuario.setCarnet(request.getParameter("CARNET"));
+        detalleUsuario.setNombre1Du(request.getParameter("NOMBRE1_DU"));
+        detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
+        detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));
+        detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
+        detalleUsuarioDao.ingresarOpcion2(detalleUsuario); //guardando detalle usuario
+         
         //enviar mensaje. aun pendiente.
+        
+        
         
     }
 
