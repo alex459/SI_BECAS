@@ -6,7 +6,7 @@ public class Observaciones{
     
     private Integer idObservacion;
     private Integer idExpediente;
-    private String observacionO;
+    private String observacion;
 
     /**
      * @return the idObservacion
@@ -39,15 +39,15 @@ public class Observaciones{
     /**
      * @return the observacionO
      */
-    public String getObservacionO() {
-        return observacionO;
+    public String getObservacion() {
+        return observacion;
     }
 
     /**
      * @param observacionO the observacionO to set
      */
-    public void setObservacionO(String observacionO) {
-        this.observacionO = observacionO;
+    public void setObservacion(String observacionO) {
+        this.observacion = observacionO;
     }
 
     
