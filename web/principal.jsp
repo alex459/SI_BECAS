@@ -3,7 +3,19 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+
 <%@page import="MODEL.variablesDeSesion"%>
+<% 
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String user=(String)actual.getAttribute("user");
+     if(user==null){
+     response.sendRedirect("login.jsp");
+        return;
+     }
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>

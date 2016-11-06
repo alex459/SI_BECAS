@@ -251,7 +251,7 @@
 
             <ul class="nav navbar-nav navbar-right">						
                 <li>
-                    <a href="#">Salir</a>
+                    <a href="logout.jsp">Salir</a>
                 </li>                            
             </ul>
         </div>

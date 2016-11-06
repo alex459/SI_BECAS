@@ -3,8 +3,18 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% 
+   response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String user=(String)actual.getAttribute("user");
+     if(user==null){
+     response.sendRedirect("login.jsp");
+        return;
+     }
+%>
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">

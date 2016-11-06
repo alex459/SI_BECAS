@@ -87,8 +87,8 @@ public class UsuarioDAO extends ConexionBD {
             String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre + "' AND CLAVE='" + clave + "'";
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
-            while (rs.next()) {
-
+            if (rs.next()) {
+                
                 int ID_USUARIO = rs.getInt("ID_USUARIO");
                 int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
                 String NOMBRE_USUARIO = rs.getString("NOMBRE_USUARIO");
@@ -99,7 +99,7 @@ public class UsuarioDAO extends ConexionBD {
                 usuario.setNombreUsuario(NOMBRE_USUARIO);
                 usuario.setClave(CLAVE);
                 logeo = true;
-
+                System.out.println("first logeo true");
             }
 
             if (logeo) {
@@ -129,6 +129,7 @@ public class UsuarioDAO extends ConexionBD {
                 variablesDeSesion.tipoUsuarioActual.setIdTipoUsuario(tipoUsuario.getIdTipoUsuario());
                 variablesDeSesion.tipoUsuarioActual.setTipoUsuario(tipoUsuario.getTipoUsuario());
                 variablesDeSesion.tipoUsuarioActual.setDescripcionTipoUsuario(tipoUsuario.getDescripcionTipoUsuario());
+                
             }
 
         } catch (Exception e) {

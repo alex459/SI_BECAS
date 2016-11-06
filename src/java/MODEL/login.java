@@ -5,19 +5,15 @@ import DAO.UsuarioDAO;
 import POJO.TipoUsuario;
 import POJO.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class login extends HttpServlet {
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,6 +25,8 @@ public class login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            
+        
         response.setContentType("text/html;charset=UTF-8");
         
         Usuario usuario = new Usuario();
@@ -38,9 +36,13 @@ public class login extends HttpServlet {
         usuario.setNombreUsuario(request.getParameter("user"));
         usuario.setClave(request.getParameter("pass"));
         
+        
         if(usuarioDao.login(usuario.getNombreUsuario(), usuario.getClave())){
-            response.sendRedirect("principal.jsp");
-        }else{
+            HttpSession sesion = request.getSession();
+            sesion.setMaxInactiveInterval(600); //600 segundos, 10 min max para sesion activa
+            sesion.setAttribute("user", usuario.getNombreUsuario());
+            response.sendRedirect("principal.jsp");            
+        }else{            
             response.sendRedirect("login.jsp");
         }
         
