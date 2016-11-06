@@ -42,10 +42,10 @@
                             <a style='background-color: #cf2a27; color:white' href="#">===Administración de becas===</a>
                         </li>
                         <li>
-                            <a style='background-color: #cf2a27; color:white' href="#">Agregar oferta de beca</a>
+                            <a style='background-color: #cf2a27; color:white' href="107_agregar_oferta_de_beca.jsp">Agregar oferta de beca</a>
                         </li>
                         <li>
-                            <a style='background-color: #cf2a27; color:white' href="#">Modificar oferta de beca</a>
+                            <a style='background-color: #cf2a27; color:white' href="108_modificar_oferta_de_beca.jsp">Modificar oferta de beca</a>
                         </li>
                         <li>
                             <a style='background-color: #cf2a27; color:white' href="#">Consultar oferta de beca</a>
