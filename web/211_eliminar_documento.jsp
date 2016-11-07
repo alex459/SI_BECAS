@@ -1,8 +1,9 @@
 <%-- 
-    Document   : principal
-    Created on : 10-17-2016, 06:14:37 AM
-    Author     : next
+    Document   : 211_eliminar_documento
+    Created on : 11-07-2016, 05:01:03 AM
+    Author     : Manuel Miranda
 --%>
+
 <%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -49,14 +50,14 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                    <p class="text-center" style="color:#cf2a27">Eliminar documento</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 <fieldset class="custom-border">
-                    <legend class="custom-border">Titulo</legend>
+                    <legend class="custom-border">Eliminar documento</legend>
                     <br>
                     <br>
                     <br>

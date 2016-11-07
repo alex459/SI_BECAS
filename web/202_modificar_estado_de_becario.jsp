@@ -1,8 +1,9 @@
 <%-- 
-    Document   : principal
-    Created on : 10-17-2016, 06:14:37 AM
-    Author     : next
+    Document   : 202_modificar_estado_de_becario
+    Created on : 11-07-2016, 04:11:25 AM
+    Author     : Manuel Miranda
 --%>
+
 <%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -49,14 +50,14 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                    <p class="text-center" style="color:#cf2a27">Modificar estado de becario</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 <fieldset class="custom-border">
-                    <legend class="custom-border">Titulo</legend>
+                    <legend class="custom-border">Modificar estado de becario</legend>
                     <br>
                     <br>
                     <br>
