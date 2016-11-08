@@ -1,0 +1,184 @@
+<div>
+    <div class="col-md-2">
+                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+                    <li><a href="#/">Datos personales</a></li>
+                    <li><a href="#/laboral">Información laboral</a></li>
+                    <li  class="active"><a href="#/educacion">Educación</a></li>
+                    <li><a href="#/cargos">Cargos desempeñados</a></li>
+                    <li><a href="#/oferta">Información de beca</a></li>
+                    <li><a href="#/referencias">Referencias personales</a></li>
+                    <li><a href="#/documentos">Adjuntar documentos</a></li>
+                </ul>
+            </div>  
+            <div class="col-md-10">
+                    <fieldset class="custom-border">
+                <legend class="custom-border">Educación</legend>
+                                           
+                            <div class="row">   
+                                <div class="col-md-2">
+                                    <label>Tipo de educación</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="edu.tipo_educacion">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Grado alcanzado</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="edu.grado_alcanzado">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Nombre de la institución</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="edu.nombre_institucion">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Año</label>
+                                    <div class="row">
+                                    <div class="col-md-6">    
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" ng-model="edu.anyo_educacion"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                            <div class="row"></div>
+                                            <a href=""><button id="button1id" name="agEducacion" class="btn btn-primary" ng-click="addEducacion()">Agregar información</button></a>
+                                    </div>                                   
+                                </div>    
+                                    </div>    
+                                </div>
+                                
+                            </div>
+                            <div class="row">  
+                                <div class="col-md-12">
+                                    <table class="table table-bordered"></br>
+                                        <label>información de educación ingresada</label>
+                                        <thead>
+                                            <tr class="success">
+                                                <th>No</th>
+                                                <th>Tipo de educación</th>
+                                                <th>Grado alcanzado</th>
+                                                <th>Institución</th>
+                                                <th>Año</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="info" ng-repeat="x in data.educacion">
+                                                <td></td>
+                                                <td> {{x.tipo_educacion}} </td>
+                                                <td>{{x.grado_alcanzado}} </td>
+                                                <td>{{x.nombre_institucion}} </td>
+                                                <td>{{x.anyo_educacion}}</td>
+                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div> 
+                            </div></br>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Trabajo de investigación o tesis realizada </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-md-offset-2">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input id="searchinput" name="busqueda" type="input" placeholder="Ruta del archivo" class="form-control input-md" disable>
+                                            <p class="help-block"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 ">
+                                        <label>  publicado: </label><input type="radio" name="publicado" value="si"><label>  Si </label><input type="radio" name="publicado" value="no"><label>  No </label>
+                                    </div>
+                                    <div class="col-md-2">    
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <a href=""><button id="singlebutton" name="cargarArchivo" type="file" class="btn btn-primary">Agregar proyecto</button ng-click="addProyecto()"></a>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Idioma</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>             
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Nivel de habla</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>           
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Nivel de lectura</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>             
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Nivel de escritura</label>
+                                    <div class="row">
+                                    <div class="col-md-6">    
+                                    <select id="selectbasic" name="selectbasic" class="form-control">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>        
+                                    </div>
+                                        <div class="col-md-6">
+                                          <button id="singlebutton" name="cargarArchivo" type="file" class="btn btn-primary">Agregar idioma</button>     
+                                        </div>    
+                                    </div>    
+                                </div>
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered">
+                                        <H5>Idiomas ingresados</H5>
+                                        <thead>
+                                            <tr class="success">
+                                                <th>No</th>
+                                                <th>Idioma</th>
+                                                <th>Nivel de habla</th>
+                                                <th>Nivel de lectura</th>
+                                                <th>Nivel de escritura</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="info">
+                                                <td> </td>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div> 
+                            </div>
+                            <div class="row">
+                            </div></br>
+                            <div class="row">
+                            </div></br>
+                        </fieldset>         
+                <div class="row">
+                    <div class="col-md-4 col-lg-offset-4">
+                        <a href="#/cargos"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a> 
+                        <a href="#/laboral"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
+                        <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+                    </div>
+                </div></br>
+            </br>
+        </div>
+</div>

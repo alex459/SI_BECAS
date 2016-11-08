@@ -1,0 +1,134 @@
+<div>
+    <div class="col-md-2">
+                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+                    <li><a href="#/">Datos personales</a></li>
+                    <li><a href="#/laboral">Información laboral</a></li>
+                    <li><a href="#/educacion">Educación</a></li>
+                    <li><a href="#/cargos">Cargos desempeñados</a></li>
+                    <li><a href="#/oferta">Información de beca</a></li>
+                    <li><a href="#/referencias">Referencias personales</a></li>
+                    <li><a href="#/documentos">Adjuntar documentos</a></li>
+                </ul>
+            </div>  
+            <div class="col-md-10">
+                <fieldset class="custom-border">
+                <legend class="custom-border">Cargos desempeñados</legend>
+                    
+                              <div class="row">
+                                <div class="col-md-4">  
+                                <label for="textinput">Asociaciones profesionales a las que pertenece</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-2">                                    
+                                    <input id="textinput" name="textinput" type="text" placeholder="Ruta del archivo" class="form-control input-md">
+                                </div> 
+                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <button id="button1id" name="agEducacion" class="btn btn-primary">Agregar asociación</button>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered"></br>
+                                        <label for="textinput">información de asociaciones ingresada</label>
+                                        <thead>
+                                            <tr class="success">
+                                                <th>No</th>
+                                                <th>Asociación profesional</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="info">
+                                                <td> </td>
+                                                <td></td>
+                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>                                    
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-4">  
+                                <label for="textinput">Empleos desempeñados en los ultimos 5 años</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">  
+                                    <label for="textinput">Lugar</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="Ingrese el nombre del lugar en el cual tuvo el cargo" class="form-control input-md">
+                                </div>
+                                <div class="col-md-4">  
+                                    <label for="textinput">Cargo</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="Ingrese el nombre del cargo" class="form-control input-md">
+                                </div>
+                                <div class="col-md-2">  
+                                    <label for="textinput">Fecha de inicio</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">  
+                                    <label for="textinput">Fecha de fin</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><div class="col-md-12"></div></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label" for="textarea">Responsabilidades</label>
+                                </div>                                    
+                            </div>                             
+                            <div class="row">
+                                <div class="col-md-10">                                                       
+                                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="button1id" name="agEducacion" class="btn btn-primary">Agregar cargo</button>
+                                </div>    
+                            </div>
+                            <div class="row"><div class="col-md-12"></div></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered"></br>
+                                        <label for="textinput">información de educación ingresada</label>
+                                        <thead>
+                                            <tr class="success">
+                                                <th>No</th>
+                                                <th>Lugar</th>
+                                                <th>Título del cargo</th>
+                                                <th>Fecha de inicio</th>
+                                                <th>Fecha de fin</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="info">
+                                                <td> </td>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td></td>
+                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>                                    
+                            </div></br>
+                        </fieldset>        
+                <div class="row">
+                    <div class="col-md-4 col-lg-offset-4">
+                        <a href="#/oferta"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a> 
+                        <a href="#/educacion"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
+                        <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+                    </div>
+                </div></br>
+            </br>
+        </div>
+</div>

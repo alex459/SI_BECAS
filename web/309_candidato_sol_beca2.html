@@ -1,0 +1,65 @@
+<div>
+                <div class="col-md-2">
+                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+                    <li><a href="#/">Datos personales</a></li>
+                    <li  class="active"><a href="#/laboral">Información laboral</a></li>
+                    <li><a href="#/educacion">Educación</a></li>
+                    <li><a href="#/cargos">Cargos desempeñados</a></li>
+                    <li><a href="#/oferta">Información de beca</a></li>
+                    <li><a href="#/referencias">Referencias personales</a></li>
+                    <li><a href="#/documentos">Adjuntar documentos</a></li>
+                </ul>
+            </div>  
+            <div class="col-md-10">
+                
+                        <fieldset class="custom-border">
+                <legend class="custom-border">Información laboral</legend>
+                            <div class="row">                                   
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput">Profesión</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el nombre de su profesión" class="form-control input-md" ng-model="data.profesion">
+                                </div> 
+                            </div></br>
+                             <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput">Cargo actual</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el nombre de su cargo actual" class="form-control input-md" ng-model="data.cargo">
+                                </div> 
+                            </div></br>
+                             <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput">Departamento (Unidad)</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el nombre de su departamento" class="form-control input-md" ng-model="data.unidad">
+                                </div> 
+                            </div></br>
+                             <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput">Facultad</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="data.facultad">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>
+                                </div> 
+                            </div></br>
+                            <div class="row">
+                                 <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput" placeholder="Seleccione la fecha de contratación">Fecha de contratación</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" ng-model="data.fecha_contratacion"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div></br>                            
+                            <div class="row"></div>
+                    </fieldset>              
+                <div class="row">
+                        <div class="col-md-4 col-lg-offset-4">
+                            <a href="#/educacion"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a>
+                            <a href="#/"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
+                            <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+                        </div>
+                </div></br>
+            </div> 
+            </br>
+</div>

@@ -1,0 +1,134 @@
+<div>
+    <div class="col-md-2">
+                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+                    <li class="active"><a href="#/">Datos personales</a></li>
+                    <li><a href="#/laboral">Información laboral</a></li>
+                    <li><a href="#/educacion">Educación</a></li>
+                    <li><a href="#/cargos">Cargos desempeñados</a></li>
+                    <li><a href="#/oferta">Información de beca</a></li>
+                    <li><a href="#/referencias">Referencias personales</a></li>
+                    <li><a href="#/documentos">Adjuntar documentos</a></li>
+                </ul>
+            </div>  
+            <div class="col-md-10">
+                    <fieldset class="custom-border">
+                <legend class="custom-border">Datos personales</legend>
+                            <div class="row">                                   
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="textinput">Primer nombre</label>
+                                    <input id="textinput" name="nombre1" placeholder="ingrese su primer nombre" class="form-control input-md" ng-model = "data.nombre" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="textinput">Segundo nombre</label>
+                                    <input id="textinput" name="nombre2"  placeholder="ingrese su segundo nombre" class="form-control input-md" ng-model = "data.nombre2">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="textinput">Primer apellido</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer apellido" class="form-control input-md" ng-model ="data.apellido1">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="textinput">Segundo apellido</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md" ng-model ="data.apellido2">
+                                </div>  
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="textinput">Fecha de nacimiento</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="textinput">Lugar de nacimiento, Departamento</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model ="data.departamento_nacimiento">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="textinput">Municipio</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model ="data.municipio_nacimiento">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>
+                                </div>  
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-12">        
+                                    <div class="col-md-2">
+                                        <label class="control-label" for="radios">Género</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="radio-inline" for="radios-0">
+                                            <input type="radio" name="radios" id="radios-0" value="1" checked="checked" ng-model ="data.genero">
+                                            Masculino
+                                        </label> 
+                                        <label class="radio-inline" for="radios-1">
+                                            <input type="radio" name="radios" id="radios-1" value="2" ng-model ="data.genero">
+                                            Femenino
+                                        </label> 
+                                    </div>    
+
+                                </div>
+                            </div></br>
+                            <legend></legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h4>Domicilio</h4>
+                                </div>
+                            </div>
+                            <div class="row">                                
+                                <div class="col-md-12">
+                                    <label class="control-label" for="textarea">Dirección</label>                    
+                                    <textarea class="form-control" id="textarea" name="textarea" ng-model ="data.direccion"></textarea>
+                                </div>
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="textinput">Lugar de nacimiento, Departamento</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model ="data.departamento_direccion">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="textinput">Municipio</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model ="data.municipio_direccion">
+                                        <option value="1">Option one</option>
+                                        <option value="2">Option two</option>
+                                    </select>
+                                </div>   
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h5>Teléfono</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="textinput">Casa</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono de casa" class="form-control input-md" ng-model = "data.tel_casa">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="textinput">Móvil</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono móvil" class="form-control input-md" ng-model = "data.tel_movil">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="textinput">Oficina</label>
+                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono de oficina" class="form-control input-md" ng-model = "data.tel_oficina">
+                                </div>
+                            </div></br>
+                            <div class="row"></div>
+                        </fieldset>              
+                <div class="row">
+                    <div class="col-md-4 col-lg-offset-4">
+                    
+                        <a href="#/laboral"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a>
+                        <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+                    </div>
+                </div></br>
+            </div> 
+            </br>
+</div>

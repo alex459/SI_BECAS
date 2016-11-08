@@ -1,0 +1,133 @@
+<div>
+    <div class="col-md-2">
+                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+                    <li><a href="#/">Datos personales</a></li>
+                    <li><a href="#/laboral">Información laboral</a></li>
+                    <li><a href="#/educacion">Educación</a></li>
+                    <li><a href="#/cargos">Cargos desempeñados</a></li>
+                    <li  class="active"><a href="#/oferta">Información de beca</a></li>
+                    <li><a href="#/referencias">Referencias personales</a></li>
+                    <li><a href="#/documentos">Adjuntar documentos</a></li>
+                </ul>
+            </div>  
+            <div class="col-md-10"> 
+                <fieldset class="custom-border">
+                <legend class="custom-border">Información de beca</legend>
+                                           
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="bootstrap-iso">
+                        <form>
+                            <div class="row no-gutter">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="labeltitulo" value="Titulo a obtener:" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="titulo" disabled>    
+                                    </div>
+                                </div>
+                            </div>   
+                            <div class="row no-gutter">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="labelinstestu" value="Institución de estudio:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="instEstudio" disabled>    
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="labelPais" value="País:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="pais" disabled>    
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row no-gutter">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="labelDuracion" value="Duración:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="duracion" disabled>    
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="labeltipo" value="Tipo de beca:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="tipoBeca" disabled>    
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row no-gutter">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="labelBecaAnt" value="Becas anteriores:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="becasAnt" disabled>    
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                                </div>
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-12">     
+                                    <label for="textinput">Beneficios que espera obtener:</label>
+                                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                                </div>
+                            </div></br>              
+                             <div class="row">
+                                 <div class="col-md-2">     
+                                    <label for="textinput">Semestre</label>
+                                    <select id="selectbasic" name="selectbasic" class="form-control">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-10">     
+                                    <label for="textinput">Programa de estudios:</label>
+                                    <div class="row">
+                                        <div class="col-md-6">    
+                                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button id="button1id" name="agEducacion" class="btn btn-primary">Agregar programa</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></br>    
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered"></br>
+                                        <label for="textinput">Programa de estudios</label>
+                                        <thead>
+                                            <tr class="success">
+                                                <th>Semestre</th>
+                                                <th>Programa de estudio</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="info">
+                                                <td> </td>
+                                                <td> </td>
+                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                    </form>      </fieldset>
+                <div class="row">
+                    <div class="col-md-4 col-lg-offset-4">
+                        <a href="#/referencias"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a> 
+                        <a href="#/cargos"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
+                        <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+                    </div>
+                </div></br>
+            </div> 
+            </br>
+</div>

@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,6 +22,7 @@
     <link href="css/menuSolicitudBeca.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
     <link href="css/customfieldset.css" rel="stylesheet">
+    
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -96,146 +98,20 @@
 
 </nav>
 </head>
-<body>
+
+
+<body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl">
 
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
         <fieldset class="custom-border">
                 <legend class="custom-border">Solicitud de beca de postgrado</legend>
-        <div class="row">            
-            <div class="col-md-2">
-                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
-                    <li class="active"><a href="308_candidato_sol_beca1.jsp">Datos personales</a></li>
-                    <li><a href="309_candidato_sol_beca2.jsp">Información laboral</a></li>
-                    <li><a href="310_candidato_sol_beca3.jsp">Educación</a></li>
-                    <li><a href="311_candidato_sol_beca4.jsp">Cargos desempeñados</a></li>
-                    <li><a href="312_candidato_sol_beca5.jsp">Información de beca</a></li>
-                    <li><a href="313_candidato_sol_beca6.jsp">Referencias personales</a></li>
-                    <li><a href="314_candidato_sol_beca7.jsp">Adjuntar documentos</a></li>
-                </ul>
-            </div>  
-            <div class="col-md-10">
-                    <fieldset class="custom-border">
-                <legend class="custom-border">Datos personales</legend>
-                    <form class="form-horizontal">
-                            <div class="row">                                   
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="textinput">Primer nombre</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer nombre" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput">Segundo nombre</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo nombre" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput">Primer apellido</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer apellido" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput">Segundo apellido</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md">
-                                </div>  
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="textinput">Fecha de nacimiento</label>
-                                    <div class="input-group date">
-                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="textinput">Lugar de nacimiento, Departamento</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="textinput">Municipio</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>  
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-12">        
-                                    <div class="col-md-2">
-                                        <label class="control-label" for="radios">Género</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="radio-inline" for="radios-0">
-                                            <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-                                            Masculino
-                                        </label> 
-                                        <label class="radio-inline" for="radios-1">
-                                            <input type="radio" name="radios" id="radios-1" value="2">
-                                            Femenino
-                                        </label> 
-                                    </div>    
-
-                                </div>
-                            </div></br>
-                            <legend></legend>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <h4>Domicilio</h4>
-                                </div>
-                            </div>
-                            <div class="row">                                
-                                <div class="col-md-12">
-                                    <label class="control-label" for="textarea">Dirección</label>                    
-                                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
-                                </div>
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="textinput">Lugar de nacimiento, Departamento</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="textinput">Municipio</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>   
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <h5>Teléfono</h5>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="textinput">Casa</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono de casa" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput">Móvil</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono móvil" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput">Oficina</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono de oficina" class="form-control input-md">
-                                </div>
-                            </div></br>
-                            <div class="row"></div>
-                    </form></fieldset>              
-                <div class="row">
-                    <div class="col-md-4 col-lg-offset-4">
-                        <button id="button1id" name="continuar" class="btn btn-primary">Continuar</button>
-                        <button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button>
-                    </div>
-                </div></br>
-            </div> 
-            </br>
-        </div></fieldset>
+        <form class="form-horizontal" name="solicitud" action="" method="POST">
+        <div class="row" ng-view>            
+            
+        </div>
+        </form>
+        </fieldset>
     </div>  
 
 
@@ -272,6 +148,9 @@
 </div>    
 </div>
 
+<script src="js/angular.min.js"></script>
+<script src="js/angular-route.min.js"></script>
+<script src="js/solicitudbeca.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
