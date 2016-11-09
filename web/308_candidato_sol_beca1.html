@@ -1,3 +1,9 @@
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/menuSolicitudBeca.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+    <link href="css/customfieldset.css" rel="stylesheet">
+
 <div>
     <div class="col-md-2">
                 <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
@@ -132,3 +138,21 @@
             </div> 
             </br>
 </div>
+    
+    
+<script src="js/angular.min.js"></script>
+<script src="js/angular-route.min.js"></script>
+<script src="js/solicitudbeca.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.input-group.date').datepicker({
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        });
+    });
+</script>    

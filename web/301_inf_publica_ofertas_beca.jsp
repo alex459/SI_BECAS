@@ -3,7 +3,18 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
-
+<%@page import="MODEL.variablesDeSesion"%>
+<% 
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String user=(String)actual.getAttribute("user");
+     if(user==null){
+     response.sendRedirect("login.jsp");
+        return;
+     }
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -36,59 +47,9 @@
         </h3>
     </div>
 </div>
-<nav class="navbar navbar-custom" role="navigation">
-    <div class="navbar-header">
-
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-        </button> <a class="navbar-brand active" href="index.html">Inicio</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inicio<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">Ejemplo menu desplegable</a>
-                    </li>								
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="documentos.jsp">Documentos</a>                                   
-            </li>
-        </ul>
-        <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Oferta de becas<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">Ejemplo menu desplegable</a>
-                    </li>								
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">						
-            <li>
-                <a href="#">Ayuda</a>
-            </li>
-            <li>
-                <a href="#">Contacto</a>
-            </li>
-            <li>
-                <a href="#">Acerca de</a>
-            </li>
-            <li>
-                <a href="login.jsp">Iniciar Sesión</a>
-            </li>
-        </ul>
-    </div>
-
-</nav>
+<p class="text-right">Rol: </p>
+<p class="text-right">Usuario: </p>
+<jsp:include page="menuCandidato.jsp"></jsp:include>
 </head>
 <body>
 

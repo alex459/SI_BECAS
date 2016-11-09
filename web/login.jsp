@@ -54,7 +54,6 @@
                             </div>
                         </fieldset> 
                         <button class="btn btn-lg btn-danger btn-block" type="submit" >Ingresar</button> 
-                        <a href="principal.jsp"> ENTRAR </a>
                     </form>
                 </div>   
             </div>    
