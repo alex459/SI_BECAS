@@ -10,6 +10,7 @@ import DAO.UsuarioDAO;
 import POJO.DetalleUsuario;
 import POJO.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author next
  */
-public class AgregarUsuarioServlet extends HttpServlet {
+public class ConsultarUsuarioServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,30 +33,17 @@ public class AgregarUsuarioServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Usuario usuario = new Usuario();
-        DetalleUsuario detalleUsuario = new DetalleUsuario();
-        UsuarioDAO usuarioDao = new UsuarioDAO();
+
+        String nombre1=request.getParameter("NOMBRE1");
+        String nombre2=request.getParameter("NOMBRE2");
+        String apellido1=request.getParameter("APELLIDO1");
+        String apellido2=request.getParameter("APELLIDO2");
+        String carnet=request.getParameter("CARNET");
+        Integer id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
+        Integer id_tipo_de_usuario = Integer.parseInt(request.getParameter("ID_TIPO_USUARIO"));        
         DetalleUsuarioDAO detalleUsuarioDao = new DetalleUsuarioDAO();
         
-        //parte de lectura desde el jsp y guardado en bd     
-        int idUsuario = usuarioDao.getSiguienteId();
-        usuario.setIdUsuario(idUsuario);
-        usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
-        usuario.setNombreUsuario(request.getParameter("CARNET"));
-        usuario.setClave(request.getParameter("CLAVE"));
-        usuarioDao.ingresar(usuario); //guardando usuario
-        int idDetalleUsuario = detalleUsuarioDao.getSiguienteId();
-        detalleUsuario.setIdDetalleUsuario(idDetalleUsuario);
-        detalleUsuario.setIdUsuario(idUsuario);
-        detalleUsuario.setIdFacultad(Integer.parseInt(request.getParameter("ID_FACULTAD")));
-        detalleUsuario.setCarnet(request.getParameter("CARNET"));
-        detalleUsuario.setNombre1Du(request.getParameter("NOMBRE1_DU"));
-        detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
-        detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));
-        detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
-        detalleUsuarioDao.ingresarOpcion2(detalleUsuario); //guardando detalle usuario
-        
+        detalleUsuarioDao.consultarPorParametros(nombre1, nombre2, apellido1, apellido2, carnet, id_facultad, id_tipo_de_usuario);
         
         
     }

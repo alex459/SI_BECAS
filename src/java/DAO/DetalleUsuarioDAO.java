@@ -3,6 +3,7 @@ package DAO;
 import POJO.DetalleUsuario;
 import java.sql.ResultSet;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class DetalleUsuarioDAO extends ConexionBD {
 
@@ -59,6 +60,44 @@ public class DetalleUsuarioDAO extends ConexionBD {
         }
 
         return temp;
+    }
+    
+    public ArrayList<DetalleUsuario> consultarPorParametros(String nombre1, String nombre2, String apellido1, String apellido2, String carnet, Integer id_facultad, Integer id_tipo_de_usuario){
+        ArrayList<DetalleUsuario> temp = new ArrayList<DetalleUsuario>();
+        DetalleUsuario temp2 = new DetalleUsuario();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql1 = "SELECT * FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U WHERE DU.NOMBRE1_DU LIKE '%"+nombre1+"%' OR DU.NOMBRE2_DU LIKE '%"+nombre2+"%' OR DU.APELLIDO1_DU LIKE '%"+apellido1+"%' OR DU.APELLIDO2_DU LIKE '%"+apellido2+"%' OR DU.CARNET LIKE '%"+carnet+"%'";
+            String sql2;
+            String sql3;
+            if(id_tipo_de_usuario==0){
+                sql2 = "";
+            }else{
+                sql2 = " OR U.ID_TIPO_USUARIO = "+id_facultad+" ";
+            }
+            if(id_facultad==0){
+                sql3 = "";
+            }else{
+                sql3 = " OR DU.ID_FACULTAD = "+id_facultad;
+            }
+            
+            String sql = sql1.concat(sql2).concat(sql3);
+            System.out.println("SENTENCIA SQL : "+sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            /*while (rs.next()) {
+
+                
+
+            }*/
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return null;        
     }
 
     //obtener el siguiente id (autoincremental)

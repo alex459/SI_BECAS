@@ -74,15 +74,24 @@
                 <div class="row">   <!-- FILTROS -->
 
                     <div class="col-md-12">
-                        <form class="form-horizontal" action="" method="post">
+                        <form class="form-horizontal" action="ConsultarUsuarioServlet" method="post">
                             <fieldset class="custom-border">  
                                 <legend class="custom-border">Filtros</legend>                    
                                 <div class="row"> 
-                                    <div class="col-md-3 text-right">
-                                        <label for="textinput">Usuario : </label>                                
+                                    <div class="col-md-2 text-right">
+                                        <label for="textinput">Nombre de Usuario : </label>                                
                                     </div>
-                                    <div class="col-md-3">
-                                        <input id="textinput" name="NOMBRE_USUARIO" type="text" placeholder="ingrese el carnet a buscar" class="form-control input-md">
+                                    <div class="col-md-1">                                                                                    
+                                        <input id="textinput" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md">                                            
+                                    </div> 
+                                    <div class="col-md-1">    
+                                        <input id="textinput" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md">                                            
+                                    </div> 
+                                    <div class="col-md-1">
+                                        <input id="textinput" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md">                                            
+                                    </div> 
+                                    <div class="col-md-1">
+                                        <input id="textinput" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md">
                                     </div> 
                                     <div class="col-md-3 text-right">
                                         <label for="textinput">Facultad :</label>                                
@@ -90,6 +99,7 @@
                                     <div class="col-md-3">                                
 
                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">
+                                            <option value="0">TODOS</option>    
                                         <%
                                             FacultadDAO facultadDao = new FacultadDAO();
                                             ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
@@ -106,16 +116,17 @@
 
                             <div class="row">
                                 <div class="col-md-3 text-right">
-                                    <label for="textinput">Codigo de empleado : </label>                                
+                                    <label for="textinput">Codigo de Usuario : </label>                                
                                 </div>
                                 <div class="col-md-3">
                                     <input id="textinput" name="CARNET" type="text" placeholder="ingrese el carnet a buscar" class="form-control input-md">
                                 </div>
                                 <div class="col-md-3 text-right">
-                                        <label for="textinput">Tipo de usuario :</label>                                
-                                    </div>
+                                    <label for="textinput">Tipo de usuario :</label>                                
+                                </div>
                                 <div class="col-md-3">                                
                                     <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control">
+                                        <option value="0">TODOS</option>
                                         <%
                                             TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
                                             ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
@@ -200,7 +211,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
 
 
