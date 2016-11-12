@@ -179,7 +179,7 @@
                     //formando la consulta
                     String consultaSql;
 
-                    consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.CARNET, F.FACULTAD, TU.TIPO_USUARIO  FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN FACULTAD F NATURAL JOIN TIPO_USUARIO TU WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'";
+                    consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.CARNET, F.FACULTAD, TU.TIPO_USUARIO, U.ID_USUARIO  FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN FACULTAD F NATURAL JOIN TIPO_USUARIO TU WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'";
 
                     if (id_tipo_de_usuario == 0) {
 
@@ -192,7 +192,7 @@
                         consultaSql = consultaSql.concat(" AND DU.ID_FACULTAD = " + id_facultad);
                     }
 
-                    //out.write(consultaSql);
+                    out.write(consultaSql);
                     
                     //realizando la consulta
                     conexionbd = new ConexionBD();
@@ -232,9 +232,9 @@
                                         out.write("<td>" + rs.getString(6) + "</td>");
                                         out.write("<td>" + rs.getString(7) + "</td>");
                                         out.write("<td>");
-                                        out.write("<input type='submit' class='btn btn-success' name='submit' value='Editar'>");
-                                        out.write("<input type='submit' class='btn btn-primary' name='submit' value='Modificar Rol'>");
-                                        out.write("<input type='submit' class='btn btn-danger' name='submit' value='Dar de Baja'>");
+                                        out.write("<form action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form>");
+                                        out.write("<form action='105_modificar_rol.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-primary' name='submit' value='Modificar Rol'></form>");
+                                        out.write("<form action='104_dar_de_baja_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-danger' name='submit' value='Dar de Baja'></form>");
                                         out.write("</td>");
                                         out.write("</tr>");
                                     }                                
@@ -248,8 +248,7 @@
                 </div>
 
             </div>
-
-
+      
         </fieldset>                       
     </div>
 

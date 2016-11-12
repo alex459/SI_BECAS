@@ -75,13 +75,8 @@
                         <div class="col-md-3 text-right">                                   
                             <label for="textinput">Codigo de empleado : </label>                                
                         </div>
-                        <div class="col-md-3">                                                        
-
-                            <select id="selectbasic" name="CARNET" class="form-control">                            
-                                <option value=0>usuarios</option>");                              
-                            </select> 
-
-
+                        <div class="col-md-3">                                                                                   
+                            <input id="textinput" name="CARNET" type="text" value="<%try{out.write(request.getParameter("ID_USUARIO"));}catch(Exception ex){System.out.println("error: "+ex);}%>" placeholder="ingrese el primer nombre" class="form-control input-md">
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Es empleado : </label>                                
