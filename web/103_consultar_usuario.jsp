@@ -3,11 +3,13 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="DAO.ConexionBD"%>
 <%@page import="POJO.Facultad"%>
 <%@page import="DAO.FacultadDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="POJO.TipoUsuario"%>
 <%@page import="DAO.TipoUsuarioDao"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -74,7 +76,7 @@
                 <div class="row">   <!-- FILTROS -->
 
                     <div class="col-md-12">
-                        <form class="form-horizontal" action="ConsultarUsuarioServlet" method="post">
+                        <form class="form-horizontal" action="103_consultar_usuario.jsp" method="post">
                             <fieldset class="custom-border">  
                                 <legend class="custom-border">Filtros</legend>                    
                                 <div class="row"> 
@@ -154,7 +156,53 @@
             </div>
 
 
+            <%
+                String nombre1;
+                String nombre2;
+                String apellido1;
+                String apellido2;
+                String carnet;
+                Integer id_facultad;
+                Integer id_tipo_de_usuario;
+                ConexionBD conexionbd = null;
+                ResultSet rs = null;
 
+                try {
+                    nombre1 = request.getParameter("NOMBRE1");
+                    nombre2 = request.getParameter("NOMBRE2");
+                    apellido1 = request.getParameter("APELLIDO1");
+                    apellido2 = request.getParameter("APELLIDO2");
+                    carnet = request.getParameter("CARNET");
+                    id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
+                    id_tipo_de_usuario = Integer.parseInt(request.getParameter("ID_TIPO_USUARIO"));
+
+                    //formando la consulta
+                    String consultaSql;
+
+                    consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.CARNET, F.FACULTAD, TU.TIPO_USUARIO  FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN FACULTAD F NATURAL JOIN TIPO_USUARIO TU WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'";
+
+                    if (id_tipo_de_usuario == 0) {
+
+                    } else {
+                        consultaSql = consultaSql.concat(" AND U.ID_TIPO_USUARIO = " + id_facultad + " ");
+                    }
+                    if (id_facultad == 0) {
+
+                    } else {
+                        consultaSql = consultaSql.concat(" AND DU.ID_FACULTAD = " + id_facultad);
+                    }
+
+                    //out.write(consultaSql);
+                    
+                    //realizando la consulta
+                    conexionbd = new ConexionBD();
+                    rs = conexionbd.consultaSql(consultaSql);
+
+                    //con el rs se llenara la tabla de resultados
+                } catch (Exception ex) {
+
+                }
+            %>                            
 
             <div class="row">   <!-- TABLA RESULTADOS -->
 
@@ -165,49 +213,36 @@
                             <tr class="success">
                                 <th>No</th>
                                 <th>Nombre de empleado</th>
-                                <th>Codigo de empleado</th>
+                                <th>Codigo de usuario</th>
                                 <th>Facultad</th>
                                 <th>Tipo de empleado</th>
                                 <th>Accion</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="info">
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td>
-                                    <input type="submit" class="btn btn-success" name="submit" value="Editar">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Modificar Rol">
-                                    <input type="submit" class="btn btn-danger" name="submit" value="Dar de Baja">                                
-                                </td>
-                            </tr>
-                            <tr class="info">
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td>
-                                    <input type="submit" class="btn btn-success" name="submit" value="Editar">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Modificar Rol">
-                                    <input type="submit" class="btn btn-danger" name="submit" value="Dar de Baja">                                
-                                </td>
-                            </tr>
-                            <tr class="info">
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td>
-                                    <input type="submit" class="btn btn-success" name="submit" value="Editar">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Modificar Rol">
-                                    <input type="submit" class="btn btn-danger" name="submit" value="Dar de Baja">                                
-                                </td>
-                            </tr>
+                        <tbody>                            
+                            <%
+                                try{
+                                    Integer i = 0;
+                                    while (rs.next()) {
+                                        i=i+1;
+                                        out.write("<tr class='info'>");
+                                        out.write("<td>" + i + "</td>");
+                                        out.write("<td>" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "</td>");
+                                        out.write("<td>" + rs.getString(5) + "</td>");
+                                        out.write("<td>" + rs.getString(6) + "</td>");
+                                        out.write("<td>" + rs.getString(7) + "</td>");
+                                        out.write("<td>");
+                                        out.write("<input type='submit' class='btn btn-success' name='submit' value='Editar'>");
+                                        out.write("<input type='submit' class='btn btn-primary' name='submit' value='Modificar Rol'>");
+                                        out.write("<input type='submit' class='btn btn-danger' name='submit' value='Dar de Baja'>");
+                                        out.write("</td>");
+                                        out.write("</tr>");
+                                    }                                
+                                }catch(Exception ex){
+                                    System.out.println("error: "+ex);
+                                }
+                                    
+                            %>                             
                         </tbody>
                     </table>
                 </div>
@@ -219,19 +254,9 @@
     </div>
 
 
-
-
-
-
-
-
 </div>
 
 <br></br>
-
-
-
-
 
 
 

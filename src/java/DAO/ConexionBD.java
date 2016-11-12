@@ -48,32 +48,21 @@ public class ConexionBD {
 
     }  
     
-    /*public Usuario consultarUsuario(int id){
-        Usuario usuario = new Usuario();        
+    //retorna un resulset de la consulta sql
+    public ResultSet consultaSql(String consulta){
+        ResultSet rs = null;
         this.abrirConexion();
-        try{
-            stmt = conn.createStatement();        
-            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where ID_USUARIO = "+id;
-            ResultSet rs = stmt.executeQuery(sql);
-            
-            while (rs.next()) {
-                
-                int ID_USUARIO = rs.getInt("ID_USUARIO");
-                int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
-                String NOMBRE_USUARIO = rs.getString("NOMBRE_USUARIO");
-                String CLAVE = rs.getString("CLAVE");
-                
-                usuario.setIdUsuario(ID_USUARIO);
-                usuario.setTipoUsuario(ID_TIPO_USUARIO);
-                usuario.setNombreUsuario(NOMBRE_USUARIO);
-                usuario.setClave(CLAVE);
-            }                        
-        }catch(Exception e){
-            System.out.println("Error al consultar usuario con id: " +id);
+        try {
+            stmt = conn.createStatement();                                    
+            rs = stmt.executeQuery(consulta);
+            this.cerrarConexion();            
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
         }
-        
-        return usuario;
-    }*/
+
+        return rs;      
+    }
     
     
 }
