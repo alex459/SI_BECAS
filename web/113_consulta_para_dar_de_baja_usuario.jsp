@@ -60,7 +60,7 @@
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
             <h2>
-                <p class="text-center" style="color:#cf2a27">Actualizar usuario</p>
+                <p class="text-center" style="color:#cf2a27">Dar de baja a usuario</p>
             </h2>
 
             <br></br>
@@ -70,13 +70,13 @@
 
         <div class="col-md-12">            
             <fieldset class="custom-border">  
-                <legend class="custom-border">Paso 1: Busque el usuario que desea actualizar</legend> 
+                <legend class="custom-border">Paso 1: Busque el usuario que desea dar de baja.</legend> 
 
 
                 <div class="row">   <!-- FILTROS -->
 
                     <div class="col-md-12">
-                        <form class="form-horizontal" action="112_consulta_para_actualizar_usuario.jsp" method="post">
+                        <form class="form-horizontal" action="113_consulta_para_dar_de_baja_usuario.jsp" method="post">
                             <fieldset class="custom-border">  
                                 <legend class="custom-border">Filtros</legend>                    
                                 <div class="row"> 
@@ -234,7 +234,7 @@
                                         out.write("<td>" + rs.getString(7) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='hidden' name='ID_DETALLE_USUARIO' value='"+rs.getString(9)+"'><input type='submit' class='btn btn-success' name='submit' value='Mostrar usuario'></form> ");                                        
+                                        out.write("<form style='display:inline;' action='104_dar_de_baja_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='hidden' name='ID_DETALLE_USUARIO' value='"+rs.getString(9)+"'><input type='submit' class='btn btn-success' name='submit' value='Mostrar usuario'></form> ");                                        
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");

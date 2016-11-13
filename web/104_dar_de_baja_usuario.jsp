@@ -3,6 +3,8 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -50,6 +52,34 @@
 </head>
 <body>
 
+    <%
+        
+        String id_usuario = request.getParameter("ID_USUARIO");
+        String id_detalle_usuario = request.getParameter("ID_DETALLE_USUARIO");
+        ConexionBD conexionBD = new ConexionBD();
+        String consultaSql = "SELECT CARNET, CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, F.FACULTAD, TU.TIPO_USUARIO FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN TIPO_USUARIO TU NATURAL JOIN FACULTAD F WHERE U.ID_USUARIO = "+id_usuario;
+        ResultSet rs = null;
+        //out.write(consultaSql);
+        String carnet=new String();
+        String nombres=new String();
+        String facultad=new String();
+        String tipo_usuario=new String();
+        
+        try{
+            rs = conexionBD.consultaSql(consultaSql);  
+            while(rs.next()){
+                carnet = rs.getString(1);
+                nombres = rs.getString(2);
+                facultad = rs.getString(3);
+                tipo_usuario = rs.getString(4);                
+            }
+        }catch(Exception ex){
+            System.err.println("error: "+ex);
+        }
+        
+    %>
+    
+    
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
             <h2>
@@ -62,19 +92,19 @@
 
         <div class="col-md-12">
 
-            <form class="form-horizontal" action="" method="post">
+            <form class="form-horizontal" action="DarDeBajaUsuarioServlet" method="post">
                 <fieldset class="custom-border">  
-                    <legend class="custom-border">Dar de baja a usuario</legend>
+                    <legend class="custom-border">Paso 2: Oprima el boton Dar de baja.</legend>
 
 
                     <div class="row"> 
                         <div class="col-md-3">                                                                                                                
                         </div>
                         <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Codigo de empleado : </label>                            
+                            <label for="textinput">Codigo de usuario : </label>                            
                         </div>
                         <div class="col-md-3 text-center">                                                        
-                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md">                            
+                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md" value = "<%=carnet%>">                            
                         </div>
                         <div class="col-md-3">                                                                                                                
                         </div>
@@ -93,17 +123,17 @@
                                 <tbody>
                                     <tr class="info">
                                         <td>Nombre de usuario </td>
-                                        <td>datos </td>
+                                        <td><%=nombres%> </td>
 
                                     </tr>
                                     <tr class="info">
                                         <td>Facultad </td>
-                                        <td>datos </td>
+                                        <td><%=facultad%> </td>
 
                                     </tr>
                                     <tr class="info">
                                         <td>Tipo Usuarios </td>
-                                        <td>datos </td>
+                                        <td><%=tipo_usuario%> </td>
 
                                     </tr>
                                 </tbody>
@@ -116,17 +146,13 @@
                     </div>
 
                     <br>
-
-
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <input type="submit" class="btn btn-success" name="submit" value="Cargar usuario">
-                            <input type="submit" class="btn btn-primary" name="submit" value="Dar de baja">
-                            <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
-                        </div>
-                    </div>
                     
-
+                    <div class="row">
+                        <div class="col-md-12 text-center">                            
+                            <input type="submit" class="btn btn-primary" name="submit" value="Dar de baja">                            
+                        </div>
+                        
+                    </div>                    
                 </fieldset>
             </form>                    
         </div>

@@ -153,4 +153,50 @@ public class UsuarioDAO extends ConexionBD {
         return exito;
     }
 
+    //cambia el rol del usuario a inactivo
+    public boolean darDeBajaUsuario(Usuario usuario) {
+        usuario.setIdTipoUsuario(0); //pasa a ser inactivo
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+usuario.getIdTipoUsuario()+" WHERE ID_USUARIO = '"+usuario.getIdUsuario()+"'";
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+
+    public Usuario consultarPorNombreUsuario(String nombre_usuario) {
+        Usuario usuario = new Usuario();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre_usuario+"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            while (rs.next()) {
+                int ID_USUARIO = rs.getInt("ID_USUARIO");
+                int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
+                String NOMBRE_USUARIO = rs.getString("NOMBRE_USUARIO");
+                String CLAVE = rs.getString("CLAVE");
+                usuario.setIdUsuario(ID_USUARIO);
+                usuario.setIdTipoUsuario(ID_TIPO_USUARIO);
+                usuario.setNombreUsuario(NOMBRE_USUARIO);
+                usuario.setClave(CLAVE);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return usuario;
+    }
+
 }
