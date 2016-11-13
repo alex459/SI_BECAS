@@ -135,4 +135,22 @@ public class UsuarioDAO extends ConexionBD {
         return logeo;
     }
 
+    public boolean actualizar(Usuario usuario){
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+usuario.getIdTipoUsuario()+", NOMBRE_USUARIO = '"+usuario.getNombreUsuario()+"', CLAVE ='"+usuario.getClave()+"' WHERE ID_USUARIO = "+usuario.getIdUsuario();
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+
 }

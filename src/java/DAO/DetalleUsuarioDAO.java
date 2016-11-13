@@ -159,4 +159,22 @@ public class DetalleUsuarioDAO extends ConexionBD {
         return exito;
     }
 
+    public boolean actualizarOpcion2(DetalleUsuario temp) {
+        boolean exito = false;
+
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "UPDATE DETALLE_USUARIO SET ID_FACULTAD = "+temp.getIdFacultad()+", CARNET = '"+temp.getCarnet()+"', NOMBRE1_DU = '"+temp.getNombre1Du()+"', NOMBRE2_DU ='"+temp.getNombre2Du()+"', APELLIDO1_DU ='"+temp.getApellido1Du()+"', APELLIDO2_DU ='"+temp.getApellido2Du()+"' WHERE ID_DETALLE_USUARIO ="+temp.getIdDetalleUsuario();                         
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        } finally {
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+
 }

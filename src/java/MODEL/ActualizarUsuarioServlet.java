@@ -10,6 +10,7 @@ import DAO.UsuarioDAO;
 import POJO.DetalleUsuario;
 import POJO.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,17 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author next
  */
-public class AgregarUsuarioServlet extends HttpServlet {
-    
+public class ActualizarUsuarioServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -30,23 +40,22 @@ public class AgregarUsuarioServlet extends HttpServlet {
         DetalleUsuarioDAO detalleUsuarioDao = new DetalleUsuarioDAO();
         
         //parte de lectura desde el jsp y guardado en bd     
-        int idUsuario = usuarioDao.getSiguienteId();
-        usuario.setIdUsuario(idUsuario);
+        
+        usuario.setIdUsuario(Integer.parseInt(request.getParameter("ID_USUARIO")));
         usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
         usuario.setNombreUsuario(request.getParameter("CARNET"));
         usuario.setClave(request.getParameter("CLAVE"));
-        usuarioDao.ingresar(usuario); //guardando usuario
-        int idDetalleUsuario = detalleUsuarioDao.getSiguienteId();
-        detalleUsuario.setIdDetalleUsuario(idDetalleUsuario);
-        detalleUsuario.setIdUsuario(idUsuario);
+        usuarioDao.actualizar(usuario); //guardando usuario
+        
+        detalleUsuario.setIdDetalleUsuario(Integer.parseInt(request.getParameter("ID_DETALLE_USUARIO")));
+        detalleUsuario.setIdUsuario(Integer.parseInt(request.getParameter("ID_USUARIO")));
         detalleUsuario.setIdFacultad(Integer.parseInt(request.getParameter("ID_FACULTAD")));
         detalleUsuario.setCarnet(request.getParameter("CARNET"));
         detalleUsuario.setNombre1Du(request.getParameter("NOMBRE1_DU"));
         detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
         detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));
         detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
-        detalleUsuarioDao.ingresarOpcion2(detalleUsuario); //guardando detalle usuario
-        
+        detalleUsuarioDao.actualizarOpcion2(detalleUsuario); //guardando detalle usuario
         
         
     }

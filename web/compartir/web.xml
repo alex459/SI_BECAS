@@ -24,6 +24,10 @@
         <servlet-name>ConsultarUsuarioServlet</servlet-name>
         <url-pattern>/ConsultarUsuarioServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarUsuarioServlet</servlet-name>
+        <url-pattern>/ActualizarUsuarioServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

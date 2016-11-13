@@ -76,7 +76,7 @@
                 <div class="row">   <!-- FILTROS -->
 
                     <div class="col-md-12">
-                        <form class="form-horizontal" action="103_consultar_usuario.jsp" method="post">
+                        <form class="form-horizontal" action="112_consulta_para_actualizar_usuario.jsp" method="post">
                             <fieldset class="custom-border">  
                                 <legend class="custom-border">Filtros</legend>                    
                                 <div class="row"> 
@@ -179,7 +179,7 @@
                     //formando la consulta
                     String consultaSql;
 
-                    consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.CARNET, F.FACULTAD, TU.TIPO_USUARIO, U.ID_USUARIO  FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN FACULTAD F NATURAL JOIN TIPO_USUARIO TU WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'";
+                    consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.CARNET, F.FACULTAD, TU.TIPO_USUARIO, U.ID_USUARIO, DU.ID_DETALLE_USUARIO FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN FACULTAD F NATURAL JOIN TIPO_USUARIO TU WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'";
 
                     if (id_tipo_de_usuario == 0) {
 
@@ -234,7 +234,7 @@
                                         out.write("<td>" + rs.getString(7) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-success' name='submit' value='Actualizar Usuario'></form> ");                                        
+                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='hidden' name='ID_DETALLE_USUARIO' value='"+rs.getString(9)+"'><input type='submit' class='btn btn-success' name='submit' value='Actualizar Usuario'></form> ");                                        
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");
