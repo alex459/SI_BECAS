@@ -65,7 +65,7 @@
         ConexionBD conexionBD = new ConexionBD();
         String consultaSql = "SELECT DU.CARNET, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, U.CLAVE, U.ID_TIPO_USUARIO, TU.TIPO_USUARIO, DU.ID_FACULTAD, F.FACULTAD FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN FACULTAD F NATURAL JOIN TIPO_USUARIO TU WHERE U.ID_USUARIO = "+id_usuario;
         ResultSet rs = null;
-        out.write(consultaSql);
+        //out.write(consultaSql);
         String carnet=new String();
         String nombre1=new String();
         String nombre2=new String();
