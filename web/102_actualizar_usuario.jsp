@@ -78,7 +78,7 @@
 
             <form class="form-horizontal" action="" method="post">
                 <fieldset class="custom-border">  
-                    <legend class="custom-border">Datos personales</legend>
+                    <legend class="custom-border">Paso 2: Actualize los datos del usuario</legend>
                     <div class="row"> 
                         <div class="col-md-3 text-right">                                   
                             <label for="textinput">Codigo de usuario : </label>                                

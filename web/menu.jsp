@@ -24,7 +24,7 @@
                             <a style='background-color: #cf2a27; color:white' href="101_agregar_usuario.jsp">Agregar usuario</a>
                         </li>
                         <li>
-                            <a style='background-color: #cf2a27; color:white' href="102_actualizar_usuario.jsp">Actualizar usuarios</a>
+                            <a style='background-color: #cf2a27; color:white' href="112_consulta_para_actualizar_usuario.jsp">Actualizar usuarios</a>
                         </li>
                         <li>
                             <a style='background-color: #cf2a27; color:white' href="103_consultar_usuario.jsp">Consultar usuarios</a>
