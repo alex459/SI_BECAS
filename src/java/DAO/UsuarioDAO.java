@@ -16,14 +16,11 @@ public class UsuarioDAO extends ConexionBD {
             String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where ID_USUARIO = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
-
             while (rs.next()) {
-
                 int ID_USUARIO = rs.getInt("ID_USUARIO");
                 int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
                 String NOMBRE_USUARIO = rs.getString("NOMBRE_USUARIO");
                 String CLAVE = rs.getString("CLAVE");
-
                 usuario.setIdUsuario(ID_USUARIO);
                 usuario.setIdTipoUsuario(ID_TIPO_USUARIO);
                 usuario.setNombreUsuario(NOMBRE_USUARIO);

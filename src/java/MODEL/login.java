@@ -1,10 +1,14 @@
 
 package MODEL;
 
+import DAO.ConexionBD;
 import DAO.UsuarioDAO;
 import POJO.TipoUsuario;
 import POJO.Usuario;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,11 +45,32 @@ public class login extends HttpServlet {
             HttpSession sesion = request.getSession();
             sesion.setMaxInactiveInterval(600); //600 segundos, 10 min max para sesion activa
             sesion.setAttribute("user", usuario.getNombreUsuario());
+            sesion.setAttribute("rol", getRol(usuario.getNombreUsuario(),usuarioDao));
             response.sendRedirect("principal.jsp");            
         }else{            
             response.sendRedirect("login.jsp");
         }
         
+    }
+    
+    public String getRol(String nombre, UsuarioDAO usuarioDao) {
+        Statement stmt;
+        ResultSet rs;
+        ConexionBD conexion=new ConexionBD();
+        usuarioDao.abrirConexion();
+        conexion.abrirConexion();
+        String rol="nadas";
+        try {
+            stmt = usuarioDao.conn.createStatement();
+            String sql = "SELECT TIPO_USUARIO FROM TIPO_USUARIO WHERE ID_TIPO_USUARIO = (SELECT ID_TIPO_USUARIO FROM USUARIO where NOMBRE_USUARIO = '"+nombre+"');";
+            rs = stmt.executeQuery(sql);
+            conexion.cerrarConexion();
+            System.out.println(rol);
+            if (rs.next()) {
+               rol=rs.getString("TIPO_USUARIO");}
+        } catch (Exception e) {
+            System.out.println("Error " + e);}
+        return rol;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

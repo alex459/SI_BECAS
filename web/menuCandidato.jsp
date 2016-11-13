@@ -59,7 +59,7 @@
                 <a href="#">Acerca de</a>
             </li>
             <li>
-                <a href="login.jsp">Iniciar Sesión</a>
+                 <a href="logout.jsp">Salir</a>
             </li>
         </ul>
     </div>
