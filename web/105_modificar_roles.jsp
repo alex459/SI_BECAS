@@ -3,6 +3,8 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
 <%@page import="POJO.TipoUsuario"%>
 <%@page import="DAO.TipoUsuarioDao"%>
 <%@page import="java.util.ArrayList"%>
@@ -53,6 +55,36 @@
 </head>
 <body>
 
+    <%
+        
+        String id_usuario = request.getParameter("ID_USUARIO");
+        String id_detalle_usuario = request.getParameter("ID_DETALLE_USUARIO");
+        ConexionBD conexionBD = new ConexionBD();
+        String consultaSql = "SELECT CARNET, CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, F.FACULTAD, TU.TIPO_USUARIO, TU.ID_TIPO_USUARIO FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN TIPO_USUARIO TU NATURAL JOIN FACULTAD F WHERE U.ID_USUARIO = "+id_usuario;
+        ResultSet rs = null;
+        //out.write(consultaSql);
+        String carnet=new String();
+        String nombres=new String();
+        String facultad=new String();
+        String tipo_usuario=new String();
+        String id_tipo_usuario = new String();
+        
+        try{
+            rs = conexionBD.consultaSql(consultaSql);  
+            while(rs.next()){
+                carnet = rs.getString(1);
+                nombres = rs.getString(2);
+                facultad = rs.getString(3);
+                tipo_usuario = rs.getString(4);
+                id_tipo_usuario = rs.getString(5);
+            }
+        }catch(Exception ex){
+            System.err.println("error: "+ex);
+        }
+        
+    %>
+    
+    
  <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
             <h2>
@@ -65,9 +97,9 @@
 
         <div class="col-md-12">
 
-            <form class="form-horizontal" action="" method="post">
+            <form class="form-horizontal" action="ModificarRolesServlet" method="post">
                 <fieldset class="custom-border">  
-                    <legend class="custom-border">Modificar Roles</legend>
+                    <legend class="custom-border">Paso 2: Seleccione el nuevo rol y de clic en Modificar rol</legend>
 
 
                     <div class="row"> 
@@ -77,7 +109,7 @@
                             <label for="textinput">Codigo de empleado : </label>                            
                         </div>
                         <div class="col-md-3 text-center">                                                        
-                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md">                            
+                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md" value="<%=carnet%>">                            
                         </div>
                         <div class="col-md-3">                                                                                                                
                         </div>
@@ -96,17 +128,17 @@
                                 <tbody>
                                     <tr class="info">
                                         <td>Nombre de usuario </td>
-                                        <td>datos </td>
+                                        <td><%=nombres%> </td>
 
                                     </tr>
                                     <tr class="info">
                                         <td>Facultad </td>
-                                        <td>datos </td>
+                                        <td><%=facultad%> </td>
 
                                     </tr>
                                     <tr class="info">
                                         <td>Tipo Usuarios </td>
-                                        <td>datos </td>
+                                        <td><%=tipo_usuario%> </td>
 
                                     </tr>
                                 </tbody>
@@ -133,6 +165,7 @@
                                 TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
                                 ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
                                 listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();
+                                out.write("<option value=" + id_tipo_usuario + ">" + tipo_usuario + "</option>");
                                 for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
                                     out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");
                                 }
@@ -148,9 +181,7 @@
                     
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <input type="submit" class="btn btn-success" name="submit" value="Cargar usuario">
-                            <input type="submit" class="btn btn-primary" name="submit" value="Actualizar Datos">
-                            <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Modificar rol">
                         </div>
                     </div>
                     
