@@ -192,7 +192,7 @@
                         consultaSql = consultaSql.concat(" AND DU.ID_FACULTAD = " + id_facultad);
                     }
 
-                    out.write(consultaSql);
+                    //out.write(consultaSql);
                     
                     //realizando la consulta
                     conexionbd = new ConexionBD();
@@ -232,9 +232,11 @@
                                         out.write("<td>" + rs.getString(6) + "</td>");
                                         out.write("<td>" + rs.getString(7) + "</td>");
                                         out.write("<td>");
-                                        out.write("<form action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form>");
-                                        out.write("<form action='105_modificar_rol.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-primary' name='submit' value='Modificar Rol'></form>");
-                                        out.write("<form action='104_dar_de_baja_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-danger' name='submit' value='Dar de Baja'></form>");
+                                        out.write("<center>");
+                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
+                                        out.write("<form style='display:inline;' action='105_modificar_rol.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-primary' name='submit' value='Modificar Rol'></form> ");
+                                        out.write("<form style='display:inline;' action='104_dar_de_baja_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='submit' class='btn btn-danger' name='submit' value='Dar de Baja'></form> ");
+                                        out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");
                                     }                                

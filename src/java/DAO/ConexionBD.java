@@ -64,5 +64,22 @@ public class ConexionBD {
         return rs;      
     }
     
+    //retorna un resulset de la consulta sql
+    public boolean ejecutarSql(String sentenciaSql){
+        boolean respuesta = false;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();            
+            stmt.execute(sentenciaSql);
+            respuesta = true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        } finally {
+            this.cerrarConexion();
+        }
+        return respuesta;    
+    }
+    
     
 }

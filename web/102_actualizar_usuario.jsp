@@ -3,6 +3,7 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="POJO.DetalleUsuario"%>
 <%@page import="POJO.Facultad"%>
 <%@page import="DAO.FacultadDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -55,6 +56,13 @@
 </head>
 <body>
 
+    <%
+        
+        
+        
+        //try{out.write(request.getParameter("ID_USUARIO"));}catch(Exception ex){System.out.println("error: "+ex);}
+    
+    %>
 
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
@@ -73,16 +81,16 @@
                     <legend class="custom-border">Datos personales</legend>
                     <div class="row"> 
                         <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Codigo de empleado : </label>                                
+                            <label for="textinput">Codigo de usuario : </label>                                
                         </div>
                         <div class="col-md-3">                                                                                   
-                            <input id="textinput" name="CARNET" type="text" value="<%try{out.write(request.getParameter("ID_USUARIO"));}catch(Exception ex){System.out.println("error: "+ex);}%>" placeholder="ingrese el primer nombre" class="form-control input-md">
+                            <input id="textinput" name="CARNET" type="text" value="" placeholder="ingrese el codigo de usuario" class="form-control input-md">
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Es empleado : </label>                                
+                                                        
                         </div>
                         <div class="col-md-3">
-                            <input type="checkbox" name="ES_EMPLEADO" value="">                               
+                                                         
                         </div> 
                     </div> 
 
