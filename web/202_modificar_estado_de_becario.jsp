@@ -58,18 +58,97 @@
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 <fieldset class="custom-border">
                     <legend class="custom-border">Modificar estado de becario</legend>
+                    <div class="col-md-6 col-md-offset-3">
+                        <fieldset class="custom-border">
+                            <legend class="custom-border">filtros</legend>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Id usuario : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input id="textinput" name="ID_USUARIO" type="text" placeholder="ingrese el Id del usuario" class="form-control input-md">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Nombre del becario : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input id="textinput" name="NOM_BECARIO" type="text" placeholder="ingrese el nombre del becario" class="form-control input-md">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Facultad : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="selectbasic" name="FACULTAD" class="form-control">                            
+                                        <option value=0>facultad</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Universidad de estudio : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input id="textinput" name="UNIV_ESTUDIO" type="text" placeholder="ingrese la universidad de estudio" class="form-control input-md">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Tipo de beca : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="selectbasic" name="TIPO_BECA" class="form-control">                            
+                                        <option value=0>Externa</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row text-center">
+                                <button class="btn btn-primary">Consultar</button><br>
+                            </div>
+                        </fieldset>
+                    </div>
                     <br>
-                    <br>
-                    <br>
-                    <br>
-                    TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION.
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+                    <div class="row">
+                       <table class="table">
+                            <thead>
+                                <th>Usuario</th>
+                                <th>Nombre del becario</th>
+                                <th>Facultad</th>
+                                <th>Universidad</th>
+                                <th>Tipo de beca</th>
+                                <th>Estado</th>
+                                <th>Opcion</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center"> <input type="button" name="modificar" value="Modificar" class="btn btn-success"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center"> <input type="button" name="modificar" value="Modificar" class="btn btn-success"></td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
                 </fieldset>
             </div><!-- CONTENIDO DE LA PANTALLA -->
         </div>
