@@ -8,6 +8,10 @@
         <servlet-name>AgregarUsuarioServlet</servlet-name>
         <servlet-class>MODEL.AgregarUsuarioServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarOfertaBecaServlet</servlet-name>
+        <servlet-class>MODEL.AgregarOfertaBecaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>AgregarUsuarioServlet</servlet-name>
         <url-pattern>/AgregarUsuarioServlet</url-pattern>
+    </servlet-mapping>    
+    <servlet-mapping>
+        <servlet-name>AgregarOfertaBecaServlet</servlet-name>
+        <url-pattern>/AgregarOfertaBecaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

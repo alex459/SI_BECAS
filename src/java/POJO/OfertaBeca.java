@@ -19,7 +19,7 @@ public class OfertaBeca {
     private String perfil;    
     private Date fechaIngreso;    
     private String tipoEstudio;    
-    private Boolean ofertaBecaActiva;
+    private int ofertaBecaActiva;
 
     /**
      * @return the idOfertaBeca
@@ -234,14 +234,14 @@ public class OfertaBeca {
     /**
      * @return the ofertaBecaActiva
      */
-    public Boolean getOfertaBecaActiva() {
+    public int getOfertaBecaActiva() {
         return ofertaBecaActiva;
     }
 
     /**
      * @param ofertaBecaActiva the ofertaBecaActiva to set
      */
-    public void setOfertaBecaActiva(Boolean ofertaBecaActiva) {
+    public void setOfertaBecaActiva(int ofertaBecaActiva) {
         this.ofertaBecaActiva = ofertaBecaActiva;
     }
 

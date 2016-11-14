@@ -3,6 +3,13 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="POJO.OfertaBeca"%>
+<%@page import="DAO.BecaDAO"%>
+<%@page import="DAO.InstitucionDAO"%>
+<%@page import="POJO.Institucion"%>
+<%@page import="DAO.IdiomaDAO"%>
+<%@page import="POJO.Idioma"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -18,6 +25,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/customfieldset.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
 
 <div class="row">
     <div class="col-md-4">
@@ -63,46 +71,49 @@
 
         <div class="col-md-12">
 
-            <form class="form-horizontal" action="AgregarUsuarioServlet" method="post">
+            <form class="form-horizontal" action="AgregarOfertaBecaServlet" method="post">
                 <fieldset class="custom-border">  
                     <legend class="custom-border">Agregar oferta de beca</legend>
                     <div class="row"> 
                         <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Nombre de la oferta : </label>                                
+                            <label for="nombreOferta">Nombre de la oferta : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="textinput" name="" type="text" placeholder="ingrese el nombre de la oferta" class="form-control input-md">                                                                
+                            <input id="nombreOferta" name="nombreOferta" type="text" placeholder="ingrese el nombre de la oferta" class="form-control input-md">                                                                
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Duracion (Meses) : </label>                                
+                            <label for="duracion">Duracion (Meses) : </label>                                
                         </div>
                         <div class="col-md-3 text-right">
-                            <input id="textinput" name="" type="text" placeholder="cambiar" class="form-control input-md">                                                                
+                            <input id="duracion" name="duracion" type="text" placeholder="cambiar" class="form-control input-md">                                                                
                         </div>                        
                     </div> 
-
                     <br>
-
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Institucion ofertante : </label>                                
+                            <label for="institucionOfertante">Institucion ofertante : </label>                                
                         </div>
                         <div class="col-md-3">
-
-                            <select id="selectbasic" name="" class="form-control">
-                                <option value=""> a </option>);                                
-                            </select> 
-
+                        <select id="institucionOferente" name="institucionOferente" class="form-control">
+                            <%
+                                InstitucionDAO institucionDAO = new InstitucionDAO();
+                                ArrayList<Institucion> listaInstitucion = new ArrayList();
+                                listaInstitucion = institucionDAO.consultarPorTipo("ofertante");
+                                for (int i = 0; i < listaInstitucion.size(); i++) { %>
+                                    <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
+                                    <%   }
+                            %>    
+                        </select>     
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Modalidad :</label>                                
+                            <label for="modalidad">Modalidad :</label>                                
                         </div>
                         <div class="col-md-3">
-
-                            <select id="selectbasic" name="" class="form-control">
-                                <option value=""> a </option>);                                
-                            </select> 
-
+                         <select id="modalidad" name="modalidad" class="form-control">
+                                <option value="Presencial">Presencial</option>  
+                                <option value="Semipresencial">Semipresencial</option>
+                                <option value="Virtual">Virtual</option>
+                         </select>  
                         </div>  
                     </div>
 
@@ -110,117 +121,112 @@
 
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Institucion de estudio :</label>                                
+                            <label for="institucionEstudio">Institucion de estudio :</label>                                
                         </div>
                         <div class="col-md-3">                                
-
-                            <select id="selectbasic" name="" class="form-control">
-                                <option value=""> a </option>);                                
-                            </select> 
-
+                            <select id="institucionEstudio" name="institucionEstudio" class="form-control">
+                            <%
+                                InstitucionDAO institucionDAO2 = new InstitucionDAO();
+                                ArrayList<Institucion> listaInstitucion2 = new ArrayList();
+                                listaInstitucion2 = institucionDAO2.consultarPorTipo("estudio");
+                                for (int i = 0; i < listaInstitucion2.size(); i++) {  %>
+                                    <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
+                               <% }
+                            %>    
+                            </select>
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Fecha inicio de estudio :</label>                                
+                            <label for="fechaInicio">Fecha inicio de estudio :</label>                                
                         </div>
                         <div class="col-md-3">                                                            
                             <div class="input-group date">
-                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            </div>
+                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                        </div>
                         </div>              
-                    </div>                      
-
+                    </div>   
                     <br>
-
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Tipo de estudio :</label>                                
+                            <label for="tipoEstudio">Tipo de estudio :</label>                                
                         </div>
                         <div class="col-md-3"> 
-
-                            <select id="selectbasic" name="" class="form-control">
-                                <option value=""> a </option>);                                
+                            <select id="tipoEstudio" name="tipoEstudio" class="form-control">
+                               <option value="Maestria">Maestria</option>
+                               <option value="Doctorado">Doctorado</option>
+                               <option value="Especialización">Especialización</option>
                             </select>
-
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Fecha limite para aplicar :</label>                                
+                            <label for="fechaCierre">Fecha limite para aplicar :</label>                                
                         </div>
                         <div class="col-md-3">                                
                             <div class="input-group date">
-                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            </div>
+                                        <input type="text" name="fechaCierre" id="fechaCierre" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                        </div>
                         </div>              
                     </div>
-
                     <br>
-
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Tipo de beca: </label>                                
+                            <label for="tipoBeca">Tipo de beca: </label>                                
                         </div>
-                        <div class="col-md-3">                                
-
-                            <select id="selectbasic" name="" class="form-control">
-                                <option value=""> a </option>);                                
+                        <div class="col-md-3">    
+                            <select id="tipoBeca" name="tipoBeca" class="form-control">
+                                <option value="Interna">Interna</option>
+                                <option value="Externa">Externa</option>                                
                             </select>
-
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Idioma :</label>                                
+                            <label for="idioma">Idioma :</label>                                
                         </div>
-                        <div class="col-md-3">                                
-
-                            <select id="selectbasic" name="" class="form-control">
-                                <option value=""> a </option>);                                
+                        <div class="col-md-3"> 
+                            <select id="idioma" name="idioma" class="form-control">
+                             <%
+                                IdiomaDAO idiomaDAO = new IdiomaDAO();
+                                ArrayList<Idioma> listaIdioma = new ArrayList<Idioma>();
+                                listaIdioma = idiomaDAO.consultarTodos();
+                                for (int i = 0; i < listaIdioma.size(); i++) { %>
+                                <option value="<%=listaIdioma.get(i).getIdioma()%>"><%=listaIdioma.get(i).getIdioma()%></option>
+                             <%   }
+                            %>                              
                             </select>
-
                         </div>              
                     </div>
-
                     <br> 
-
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Financiamiento: </label>                                
+                            <label for="financiamiento">Financiamiento: </label>                                
                         </div>
-                        <div class="col-md-3">                                
-
-                            <select id="selectbasic" name="" class="form-control">
-                                <option value=""> a </option>);                                
+                        <div class="col-md-3">         
+                            <select id="financiamiento" name="financiamiento" class="form-control">
+                                <option value="Beca completa">Beca completa</option>
+                                <option value="Media beca">Media beca</option>
+                                <option value="Cuarto de beca">Cuarto de beca</option>
                             </select>
-
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Archivo de la oferta :</label>                                
                         </div>
-                        <div class="col-md-3">                                
-
+                        <div class="col-md-3">      
                             <input type="submit" class="btn btn-primary" name="submit" value="Seleccionar archivo">
-
                         </div>              
                     </div>
-
                     <br>
-
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Perfil de la beca: </label>                                
+                            <label for="perfil">Perfil de la beca: </label>                                
                         </div>
                         <div class="col-md-9">                                
-                            <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                            <textarea class="form-control" id="perfilBeca" name="perfilBeca"></textarea>
                         </div>                                    
                     </div>
-
                     <br>
-
                     <div class="row">
                         <div class="col-md-12 text-center">
-
                             <input type="submit" class="btn btn-primary" name="submit" value="Agregar oferta">
                             <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
                         </div>
                     </div>
-
                 </fieldset>
             </form>                    
         </div>
@@ -263,5 +269,16 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.input-group.date').datepicker({            
+           // format: 'dd-mm-yy',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        });
+    });
+</script>
 </body>
 </html>

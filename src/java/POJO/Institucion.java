@@ -9,7 +9,7 @@ public class Institucion{
     private String pais;    
     private String paginaWeb;    
     private String email;    
-    private Boolean institucionActiva;
+    private Integer institucionActiva;
 
     /**
      * @return the idInstitucion
@@ -98,14 +98,14 @@ public class Institucion{
     /**
      * @return the institucionActiva
      */
-    public Boolean getInstitucionActiva() {
+    public Integer getInstitucionActiva() {
         return institucionActiva;
     }
 
     /**
      * @param institucionActiva the institucionActiva to set
      */
-    public void setInstitucionActiva(Boolean institucionActiva) {
+    public void setInstitucionActiva(Integer institucionActiva) {
         this.institucionActiva = institucionActiva;
     }
     

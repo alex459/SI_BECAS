@@ -22,29 +22,23 @@ public class IdiomaDAO extends ConexionBD{
             String sql = "SELECT ID_DETALLE_USUARIO, IDIOMA, NIVEL_HABLA, NIVEL_LECTURA, NIVEL_ESCRITO FROM IDIOMA WHERE ID_IDIOMA = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
-
             while (rs.next()) {
-
                 int ID_IDIOMA=id;      
                 int ID_DETALLE_USUARIO=rs.getInt("ID_DETALLE_USUARIO");                        
                 String IDIOMA=rs.getString("IDIOMA");
                 String NIVEL_HABLA=rs.getString("NIVEL_HABLA");
                 String NIVEL_LECTURA=rs.getString("NIVEL_LECTURA");
-                String NIVEL_ESCRITO=rs.getString("NIVEL_ESCRITO");
-                
+                String NIVEL_ESCRITO=rs.getString("NIVEL_ESCRITO");                
                 temp.setIdIdioma(ID_IDIOMA);
                 temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
                 temp.setIdioma(IDIOMA);
                 temp.setNivelHabla(NIVEL_HABLA);
                 temp.setNivelEscrito(NIVEL_ESCRITO);
-                temp.setNivelLectura(NIVEL_LECTURA);
-                
+                temp.setNivelLectura(NIVEL_LECTURA);                
             }
-
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
-
         return temp;
     }
     
@@ -55,10 +49,8 @@ public class IdiomaDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_IDIOMA, ID_DETALLE_USUARIO, IDIOMA, NIVEL_HABLA, NIVEL_LECTURA, NIVEL_ESCRITO FROM REFERENCIAS;" ;
+            String sql = "SELECT ID_IDIOMA, ID_DETALLE_USUARIO, IDIOMA, NIVEL_HABLA, NIVEL_LECTURA, NIVEL_ESCRITO FROM IDIOMA;" ;
             ResultSet rs = stmt.executeQuery(sql);
-            
-
             while (rs.next()) {
                 temp = new Idioma();
                 int ID_IDIOMA=rs.getInt("ID_IDIOMA");  ;      
@@ -66,24 +58,19 @@ public class IdiomaDAO extends ConexionBD{
                 String IDIOMA=rs.getString("IDIOMA");
                 String NIVEL_HABLA=rs.getString("NIVEL_HABLA");
                 String NIVEL_LECTURA=rs.getString("NIVEL_LECTURA");
-                String NIVEL_ESCRITO=rs.getString("NIVEL_ESCRITO");
-                
+                String NIVEL_ESCRITO=rs.getString("NIVEL_ESCRITO");                
                 temp.setIdIdioma(ID_IDIOMA);
                 temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
                 temp.setIdioma(IDIOMA);
                 temp.setNivelHabla(NIVEL_HABLA);
                 temp.setNivelEscrito(NIVEL_ESCRITO);
-                temp.setNivelLectura(NIVEL_LECTURA);
-                
+                temp.setNivelLectura(NIVEL_LECTURA);                
                 lista.add(temp);
-            }
-            
-            this.cerrarConexion();
-            
+            }            
+            this.cerrarConexion();            
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
-
         return lista;
     }
     
