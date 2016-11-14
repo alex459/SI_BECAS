@@ -10,6 +10,7 @@
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
      if(user==null){
      response.sendRedirect("login.jsp");
@@ -52,12 +53,8 @@
 
 
 
-<p class="text-right">Rol: 
-    
-</p>
-<p class="text-right">Usuario: 
-
-</p>
+<p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
+<p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -70,49 +67,15 @@
 
 
     <div class="container-fluid">
-
-        <div class="row"><!-- TITULO DE LA PANTALLA -->
-
-            <h2>
-                <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
-            </h2>
-
-            <br></br> 
-        </div><!-- TITULO DE LA PANTALLA -->  
-
-
-
-
-
-
-
-
-        <div class="row"><!-- CONTENIDO DE LA PANTALLA -->
-
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-
-        </div><!-- CONTENIDO DE LA PANTALLA -->
-
-
-
-
-
-
-
-
+        
+        <div style="width: 100%">
+            <center>
+            
+            <img src="img/portada2.jpg">                        
+        </center>
+        </div>
+        
+        <br></br> 
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
