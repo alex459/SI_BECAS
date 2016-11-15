@@ -47,6 +47,16 @@ public class AgregarUsuarioServlet extends HttpServlet {
         detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
         detalleUsuarioDao.ingresarOpcion2(detalleUsuario); //guardando detalle usuario
         
+        //Redireccionando a la pagina de mensaje general        
+        //1-exito, 2-info, 3-warning, 4-error
+        request.setAttribute("TIPO_MENSAJE", "1"); 
+        //titulo del mensaje
+        request.setAttribute("TITULO", "EXITO"); 
+        //mensaje
+        request.setAttribute("MENSAJE", "Se ingreso el usuario correctamente."); 
+        //url donde redireccionara el boton del mensaje
+        request.setAttribute("URL_BOTON", "principal.jsp"); 
+        request.getRequestDispatcher("115_mensaje_general.jsp").forward(request, response);
         
         
     }
