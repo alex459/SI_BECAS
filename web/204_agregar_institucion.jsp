@@ -58,18 +58,68 @@
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 <fieldset class="custom-border">
                     <legend class="custom-border">Agregar institucion</legend>
+                    <div class="row col-md-6 col-md-offset-3">
+                    <div class="row">
+                        <div class="col-md-4 text-right">
+                            <label for="textinput">Nombre de la institucion : </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input id="text_NomInstitucion" name="NOM_INSTITUCION" type="text" placeholder="ingrese el nombre" class="form-control input-md">
+                        </div>
+                    </div>
                     <br>
+                    <div class="row">
+                        <div class="col-md-4 text-right">
+                            <label for="textinput">Pais : </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input id="tex_paisInstitucion" name="PAIS_INSITUCION" type="text" placeholder="ingrese el pais" class="form-control input-md">
+                        </div>
+                    </div>
                     <br>
+                    <div class="row">
+                        <div class="col-md-4 text-right">
+                            <label for="textinput">Pagina web : </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input id="tex_webInstitucion" name="WEB_INSITUCION" type="text" placeholder="ingrese la url" class="form-control input-md">
+                        </div>
+                    </div>
                     <br>
+                    <div class="row">
+                        <div class="col-md-4 text-right">
+                            <label for="textinput">Correo electronico : </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input id="tex_correoInstitucion" name="CORREO_INSITUCION" type="text" placeholder="ingrese el correo electronico" class="form-control input-md">
+                        </div>
+                    </div>
                     <br>
-                    TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION.
+                    <div class="row">
+                        <div class="col-md-4 text-right">
+                            <label for="textinput">Telefono : </label>
+                        </div>
+                        <div class="col-md-6">
+                            <input id="tex_telefonoInstitucion" name="TELEFONO_INSITUCION" type="text" placeholder="ingrese el telefono" class="form-control input-md">
+                        </div>
+                    </div>
                     <br>
+                    <div class="row">
+                        <div class="col-md-4 text-right">
+                            <label for="textinput">Tipo de institucion : </label>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="select_tipoInstitucion" name="TIPO_INSTITUCION" class="form-control">                            
+                                <option value=0>Seleccione el tipo de institucion</option>
+                            </select>
+                        </div>
+                    </div>
                     <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+                    <div class="row text-center">
+                        <button class="btn btn-primary">Guardar</button>
+                        <button class="btn btn-danger">Cancelar</button><br>
+                    </div>
+                    </div>
                 </fieldset>
             </div><!-- CONTENIDO DE LA PANTALLA -->
         </div>

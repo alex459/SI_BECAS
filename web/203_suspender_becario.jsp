@@ -63,7 +63,7 @@
                             <legend class="custom-border">filtros</legend>
                             <div class="row">
                                 <div class="col-md-4 text-right">
-                                    <label for="textinput">Id usuario : </label>
+                                    <label for="textinput">Codigo : </label>
                                 </div>
                                 <div class="col-md-6">
                                     <input id="textinput" name="ID_USUARIO" type="text" placeholder="ingrese el Id del usuario" class="form-control input-md">
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <select id="selectbasic" name="FACULTAD" class="form-control">                            
-                                        <option value=0>facultad</option>
+                                        <option value=0>Seleccione facultad</option>
                                     </select>
                                 </div>
                             </div>
@@ -95,7 +95,9 @@
                                     <label for="textinput">Universidad de estudio : </label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input id="textinput" name="UNIV_ESTUDIO" type="text" placeholder="ingrese la universidad de estudio" class="form-control input-md">
+                                    <select id="selectbasic" name="UNIV_ESTUDIO" class="form-control">                            
+                                        <option value=0>Seleccione universidad de estudio</option>
+                                    </select>
                                 </div>
                             </div>
                             <br>
@@ -105,7 +107,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <select id="selectbasic" name="TIPO_BECA" class="form-control">                            
-                                        <option value=0>Externa</option>
+                                        <option value=0>Seleccone tipo de beca</option>
                                     </select>
                                 </div>
                             </div>

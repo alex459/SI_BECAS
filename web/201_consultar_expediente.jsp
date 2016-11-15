@@ -92,27 +92,31 @@
                                 <label for="textinput">Facultad : </label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectbasic" name="FACULTAD" class="form-control">                            
-                                    <option value=0>facultad</option>
+                                <select id="selectbasic" name="FACULTAD" class="form-control" >                            
+                                    <option value=0>Seleccione facultad</option>
                                 </select>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Fecha inicio : </label>
+                                <label for="textinput">Estado : </label>
                             </div>
-                            <div class="input-group date col-md-6">
-                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            <div class="col-md-6">
+                                <select id="selectbasic" name="ESTADO" class="form-control">                            
+                                    <option value=0>Seleccione estado</option>
+                                </select>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Fecha fin : </label>
+                                <label for="textinput">Progreso : </label>
                             </div>
-                            <div class="input-group date col-md-6">
-                                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            <div class="col-md-6">
+                                <select id="selectbasic" name="PROGRESO" class="form-control">                            
+                                    <option value=0>Seleccione progreso</option>
+                                </select>
                             </div>
                         </div>
                         <br>
@@ -128,10 +132,8 @@
                             <th>No. Expediente</th>
                             <th>Nombre del becario</th>
                             <th>Facultad</th>
-                            <th>Fecha inicio</th>
-                            <th>Fecha fin</th>
-                            <th>Facultad</th>
-                            <th>Duracion</th>
+                            <th>Progreso</th>
+                            <th>Estado</th>
                             <th>Opcion</th>
                         </thead>
                         <tbody>
@@ -141,14 +143,10 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
                                 <td class="text-center"> <input type="button" name="ver" value="Ver" class="btn btn-success"></td>
                             </tr>
                             <tr>
                                 <td> #</td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
