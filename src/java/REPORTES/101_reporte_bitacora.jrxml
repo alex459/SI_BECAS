@@ -60,7 +60,7 @@
 		<band height="195" splitType="Stretch">
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="87" height="95" uuid="d9c4c6ae-7f1b-49ef-b68a-9f12d3823893"/>
-				<imageExpression><![CDATA["src\\java\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\src\\java\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="87" y="0" width="628" height="95" uuid="b8029f3c-966d-4bec-9b51-3ec68d9c8c0e"/>
@@ -78,7 +78,7 @@
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="715" y="0" width="87" height="95" uuid="7e11a4d3-b731-45a3-ad19-5625966e6055"/>
-				<imageExpression><![CDATA["src\\java\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\src\\java\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="700" y="143" width="100" height="21" uuid="a1c9485f-9394-456d-b62e-f0257b796a10"/>

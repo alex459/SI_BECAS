@@ -62,7 +62,7 @@ public class ReporteBitacoraServlet extends HttpServlet {
             parametersMap.put("ID_ACCION_MAYOR", 10);
             parametersMap.put("NOMBRE_USUARIO", "JOSE ALEXIS BELTRAN SERRANO");
             parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");
-            JasperReport jasperReport=JasperCompileManager.compileReport("web\\REPORTES\\101_reporte_bitacora.jrxml");
+            JasperReport jasperReport=JasperCompileManager.compileReport("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\src\\java\\REPORTES\\101_reporte_bitacora.jrxml");
             ConexionBD conexionBD = new ConexionBD();
             conexionBD.abrirConexion();
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametersMap, conexionBD.conn);            
@@ -70,6 +70,7 @@ public class ReporteBitacoraServlet extends HttpServlet {
             conexionBD.cerrarConexion();
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println("Error: "+ex);
         }
 
