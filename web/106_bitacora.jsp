@@ -272,7 +272,7 @@
                         consultaSql = consultaSql.concat(" AND A.ID_ACCION = " + id_accion);
                     }
 
-                    //out.write(consultaSql);
+                    out.write(consultaSql);
                     //realizando la consulta
                     rs = conexionBD.consultaSql(consultaSql);
 
