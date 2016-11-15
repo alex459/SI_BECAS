@@ -24,6 +24,10 @@
         <servlet-name>ModificarRolesServlet</servlet-name>
         <servlet-class>MODEL.ModificarRolesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReporteBitacoraServlet</servlet-name>
+        <servlet-class>MODEL.ReporteBitacoraServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>ModificarRolesServlet</servlet-name>
         <url-pattern>/ModificarRolesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReporteBitacoraServlet</servlet-name>
+        <url-pattern>/ReporteBitacoraServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

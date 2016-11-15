@@ -4,6 +4,7 @@
     Author     : next
 --%>
 
+
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
@@ -23,6 +24,69 @@
         response.sendRedirect("login.jsp");
         return;
     }
+%>
+
+
+<%
+    //variables para la tabla de resultados
+    String nombre1 = new String();
+    String nombre2 = new String();
+    String apellido1 = new String();
+    String apellido2 = new String();
+    String nombre_usuario = new String();
+    String accion = new String(); //tipo_operacion                
+    String tabla_afectada = new String();; //descripcion
+    String fecha1 = new String();
+    String fecha2 = new String();
+    String id_accion = new String();
+    ConexionBD conexionBD = new ConexionBD();
+    ResultSet rs = null;
+
+    //otras variables para el reporte
+    AccionDAO accionDao = new AccionDAO();
+    Date date = new Date();
+    String modifiedDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
+    String id_accion_menor = new String(); //tipo_operacion            
+    String id_accion_mayor = new String(); //tipo_operacion            
+
+    try { //intentando leer datos enviados desde la misma pagina.
+        id_accion = request.getParameter("ID_ACCION");
+        nombre1 = request.getParameter("NOMBRE1");
+        nombre2 = request.getParameter("NOMBRE2");
+        apellido1 = request.getParameter("APELLIDO1");
+        apellido2 = request.getParameter("APELLIDO2");
+
+        //formando la consulta
+        String consultaSql = "select CONCAT(DU.NOMBRE1_DU, ' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, A.ACCION, B.TABLA_AFECTADA, B.FECHA_BITACORA, B.ID_BITACORA from DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN BITACORA B NATURAL JOIN ACCION A WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%'";
+        if (!request.getParameter("FECHA1").equals("") && !request.getParameter("FECHA2").equals("")) {
+            fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA1")));
+            fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA2")));
+            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
+        } else {
+            fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse("01/01/2016"));
+            fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(modifiedDate));
+            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
+        }
+        if (!id_accion.equals("0")) {
+            id_accion_menor = id_accion;
+            id_accion_mayor = id_accion;
+            consultaSql = consultaSql.concat(" AND A.ID_ACCION BETWEEN " + id_accion_menor + " AND " + id_accion_mayor);
+        } else {
+            id_accion_menor = "0";
+            id_accion_mayor = accionDao.getSiguienteId().toString();
+            consultaSql = consultaSql.concat(" AND A.ID_ACCION BETWEEN " + id_accion_menor + " AND " + id_accion_mayor);
+            
+        }
+
+        out.write(consultaSql);
+        //realizando la consulta
+        rs = conexionBD.consultaSql(consultaSql);
+
+    } catch (Exception ex) {
+        System.out.print("Error: " + ex);
+    }
+
+
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -91,8 +155,8 @@
 
                 <div class="row">   
 
+                    <!-- FORMULARIO 1 PARA REALIZAR LA BUSQUEDA -->                    
                     <form class="form-horizontal" action="106_bitacora.jsp" method="post">
-
                         <div class="col-md-8"> <!-- FILTROS -->
                             <fieldset class="custom-border">
                                 <legend class="custom-border">Filtros</legend>
@@ -115,8 +179,7 @@
                                     <div class="col-md-3">
                                         <select id="selectbasic" name="ID_ACCION" class="form-control"> 
                                             <option value="0">TODOS</option>
-                                        <%
-                                            AccionDAO accionDao = new AccionDAO();
+                                        <%                                            
                                             ArrayList<Accion> listaAccion = new ArrayList<Accion>();
                                             listaAccion = accionDao.consultarTodos();
                                             for (int i = 0; i < listaAccion.size(); i++) {
@@ -175,6 +238,23 @@
                             </div>                                
                         </fieldset>
                     </div>
+                </form> 
+
+                                    
+                <!-- FORMULARIO 2 PARA GENERAR EL REPORTE -->                    
+                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
+                    
+                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
+                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
+                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
+                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
+                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
+                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
+                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
+                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
+                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
+                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
+                    
                     <div class="col-md-4"> <!-- ACCIONES -->
                         <fieldset class="custom-border">
                             <legend class="custom-border">Acciones</legend>
@@ -192,10 +272,11 @@
 
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img src="img/106_icono_de_pdf.png" alt="Obtener en PDF" width="30" height="30">
+                                    <input type="submit" class="btn btn-primary" name="submit1" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
                                 </div>
                                 <div class="col-md-6 text-center">
-                                    <img src="img/106_icono_de_excel.png" alt="Obtener en Excel" width="30" height="30">
+                                    <input type="submit" class="btn btn-primary" name="submit2" value=" " style="background-image: url(img/106_icono_de_excel.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+
                                 </div>
                             </div>
 
@@ -214,10 +295,10 @@
 
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <img src="img/106_icono_de_correo.png" alt="Enviar por correo" width="30" height="30">
+                                    <input type="submit" class="btn btn-primary" name="submit3" value=" " style="background-image: url(img/106_icono_de_correo.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">                                
                                 </div>
                                 <div class="col-md-6 text-center">
-                                    <img src="img/106_icono_de_imprimir.png" alt="Imprimir" width="30" height="30">
+                                    <input type="submit" class="btn btn-primary" name="submit4" value=" " style="background-image: url(img/106_icono_de_imprimir.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">                                                                
                                 </div>
                             </div>
 
@@ -225,66 +306,20 @@
 
                         </fieldset>
                     </div>
+                </form>                    
 
-                </form>    
 
 
             </div>
 
-
+            <!-- TABLA RESULTADOS -->
+                                    
             <div class="row">
                 <div class="col-md-12">
                     <label for="textinput">Resultados de la busqueda</label>
                 </div>                    
-            </div>
-
-
-            <%
-                String nombre1;
-                String nombre2;
-                String apellido1;
-                String apellido2;
-                String nombre_usuario;
-                String accion; //tipo_operacion            
-                String tabla_afectada; //operacion realizada
-                String fecha1;
-                String fecha2;
-                String id_accion;
-                ConexionBD conexionBD = new ConexionBD();
-                ResultSet rs = null;
-
-                try {
-                    id_accion = request.getParameter("ID_ACCION");
-                    nombre1 = request.getParameter("NOMBRE1");
-                    nombre2 = request.getParameter("NOMBRE2");
-                    apellido1 = request.getParameter("APELLIDO1");
-                    apellido2 = request.getParameter("APELLIDO2");
-
-                    //formando la consulta
-                    String consultaSql = "select CONCAT(DU.NOMBRE1_DU, ' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, A.ACCION, B.TABLA_AFECTADA, B.FECHA_BITACORA, B.ID_BITACORA from DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN BITACORA B NATURAL JOIN ACCION A WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%'";
-                    if (!request.getParameter("FECHA1").equals("") && !request.getParameter("FECHA2").equals("")) {
-                        fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA1")));
-                        fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA2")));
-                        consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
-
-                    }
-                    if (!id_accion.equals("0")) {
-                        consultaSql = consultaSql.concat(" AND A.ID_ACCION = " + id_accion);
-                    }
-
-                    out.write(consultaSql);
-                    //realizando la consulta
-                    rs = conexionBD.consultaSql(consultaSql);
-
-                } catch (Exception ex) {
-                    System.out.print("Error: " + ex);
-                }
-
-
-            %>
-
-
-            <div class="row">   <!-- TABLA RESULTADOS -->
+            </div>           
+            <div class="row">   
 
                 <div class="col-md-12">
 
@@ -312,7 +347,7 @@
                                             out.write("<td>" + rs.getString(1) + "</td>");
                                             out.write("<td>" + rs.getString(2) + "</td>");
                                             out.write("<td>" + rs.getString(3) + "</td>");
-                                            out.write("<td>" + rs.getString(4) + "</td>");                                            
+                                            out.write("<td>" + rs.getString(4) + "</td>");
                                             out.write("<td>" + rs.getDate(5).getMonth() + "/" + rs.getDate(5).getDay() + "/" + rs.getDate(5).getYear() + "</td>");
                                             out.write("<td>" + rs.getTimestamp(5).getHours() + ":" + rs.getTimestamp(5).getMinutes() + ":" + rs.getTimestamp(5).getSeconds() + "</td>");
                                             out.write("</tr>");

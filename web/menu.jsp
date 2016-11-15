@@ -83,6 +83,21 @@
                         <li>
                             <a style='background-color: #cf2a27; color:white' href="#">Eliminar institución</a>
                         </li>
+                        <li>
+                            <a style='background-color: #cf2a27; color:white' href="#">===Administración de documentos===</a>
+                        </li>
+                        <li>
+                            <a style='background-color: #cf2a27; color:white' href="#">Agregar documento</a>
+                        </li>
+                        <li>
+                            <a style='background-color: #cf2a27; color:white' href="#">Modificar documento</a>
+                        </li>
+                        <li>
+                            <a style='background-color: #cf2a27; color:white' href="#">Consultar documento</a>
+                        </li>
+                        <li>
+                            <a style='background-color: #cf2a27; color:white' href="#">Eliminar documento</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

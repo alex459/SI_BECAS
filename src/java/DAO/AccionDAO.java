@@ -45,5 +45,25 @@ public class AccionDAO extends ConexionBD{
 
         return lista;
     }
+    
+    public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_ACCION), 0) AS X FROM ACCION";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("X") + 1;                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
+    }
 
 }
