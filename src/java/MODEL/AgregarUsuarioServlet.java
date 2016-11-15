@@ -29,13 +29,16 @@ public class AgregarUsuarioServlet extends HttpServlet {
         UsuarioDAO usuarioDao = new UsuarioDAO();
         DetalleUsuarioDAO detalleUsuarioDao = new DetalleUsuarioDAO();
         
+        boolean bandera1 = false;
+        boolean bandera2 = false;
+        
         //parte de lectura desde el jsp y guardado en bd     
         int idUsuario = usuarioDao.getSiguienteId();
         usuario.setIdUsuario(idUsuario);
         usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
         usuario.setNombreUsuario(request.getParameter("CARNET"));
         usuario.setClave(request.getParameter("CLAVE"));
-        usuarioDao.ingresar(usuario); //guardando usuario
+        bandera1 = usuarioDao.ingresar(usuario); //guardando usuario
         int idDetalleUsuario = detalleUsuarioDao.getSiguienteId();
         detalleUsuario.setIdDetalleUsuario(idDetalleUsuario);
         detalleUsuario.setIdUsuario(idUsuario);
@@ -45,20 +48,13 @@ public class AgregarUsuarioServlet extends HttpServlet {
         detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
         detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));
         detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
-        detalleUsuarioDao.ingresarOpcion2(detalleUsuario); //guardando detalle usuario
-        
-        //Redireccionando a la pagina de mensaje general        
-        //1-exito, 2-info, 3-warning, 4-error
-        request.setAttribute("TIPO_MENSAJE", "1"); 
-        //titulo del mensaje
-        request.setAttribute("TITULO", "EXITO"); 
-        //mensaje
-        request.setAttribute("MENSAJE", "Se ingreso el usuario correctamente."); 
-        //url donde redireccionara el boton del mensaje
-        request.setAttribute("URL_BOTON", "principal.jsp"); 
-        request.getRequestDispatcher("115_mensaje_general.jsp").forward(request, response);
-        
-        
+        bandera2 = detalleUsuarioDao.ingresarOpcion2(detalleUsuario); //guardando detalle usuario
+                
+        //Redireccionando a la pagina de mensaje general    
+        if(bandera1 && bandera2)
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el usuario correctamente.");
+        else
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el usuario.");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

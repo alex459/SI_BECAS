@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 public class ModificarRolesServlet extends HttpServlet {
 
     /**
@@ -28,16 +27,24 @@ public class ModificarRolesServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
-                Usuario usuario = new Usuario();
-                UsuarioDAO usuarioDao = new UsuarioDAO();
-                usuarioDao.darDeBajaUsuario(usuario);
-                
-                String nombre_usuario = request.getParameter("CARNET");
-                usuario = usuarioDao.consultarPorNombreUsuario(nombre_usuario);
-                usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
-                usuarioDao.actualizar(usuario);
-                        
+
+        Usuario usuario = new Usuario();
+        UsuarioDAO usuarioDao = new UsuarioDAO();
+        usuarioDao.darDeBajaUsuario(usuario);
+
+        boolean bandera=false;
+        
+        String nombre_usuario = request.getParameter("CARNET");
+        usuario = usuarioDao.consultarPorNombreUsuario(nombre_usuario);
+        usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
+        bandera = usuarioDao.actualizar(usuario);
+
+        if (bandera) {
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se cambio el rol del usuario "+nombre_usuario+" correctamente.");
+        } else {
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo cambiar el rol del usuario " + nombre_usuario + ".");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

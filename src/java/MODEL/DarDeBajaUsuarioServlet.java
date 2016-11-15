@@ -31,13 +31,21 @@ public class DarDeBajaUsuarioServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                Usuario usuario = new Usuario();
-                UsuarioDAO usuarioDao = new UsuarioDAO();
-                usuarioDao.darDeBajaUsuario(usuario);
-                
-                String nombre_usuario = request.getParameter("CARNET");
-                usuario = usuarioDao.consultarPorNombreUsuario(nombre_usuario);
-                usuarioDao.darDeBajaUsuario(usuario);
+        Usuario usuario = new Usuario();
+        UsuarioDAO usuarioDao = new UsuarioDAO();
+        usuarioDao.darDeBajaUsuario(usuario);
+
+        boolean bandera;
+        
+        String nombre_usuario = request.getParameter("CARNET");
+        usuario = usuarioDao.consultarPorNombreUsuario(nombre_usuario);
+        bandera = usuarioDao.darDeBajaUsuario(usuario);
+
+        if (bandera) {
+            Utilidades.mostrarMensaje(response, 1, "Exito", "El usuario "+nombre_usuario+" se ha desactivado.");
+        } else {
+            Utilidades.mostrarMensaje(response, 2, "Error", "El usuario "+nombre_usuario+" no pudo ser desactivado.");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

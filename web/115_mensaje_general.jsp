@@ -20,14 +20,12 @@
             int tipo_mensaje = 2;
             String titulo = "Mensaje";
             String mensaje = "";
-            String url_boton = "principal.jsp";
             String var1 = new String();
 
             try {
                 tipo_mensaje = Integer.parseInt(request.getParameter("TIPO_MENSAJE"));
                 titulo = request.getParameter("TITULO");
                 mensaje = request.getParameter("MENSAJE");
-                url_boton = request.getParameter("URL_BOTON");
             } catch (Exception ex) {
 
             }
@@ -57,7 +55,7 @@
             <br>
             <br>
             <br>
-            <form class="form-horizontal" action="<%=url_boton%>" method="post">
+            <form class="form-horizontal" action="principal.jsp" method="post">
                 <fieldset class="custom-border">
                     <br>
                     <br>

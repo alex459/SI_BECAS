@@ -39,13 +39,16 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         UsuarioDAO usuarioDao = new UsuarioDAO();
         DetalleUsuarioDAO detalleUsuarioDao = new DetalleUsuarioDAO();
         
+        boolean bandera1 = false;
+        boolean bandera2 = false;
+        
         //parte de lectura desde el jsp y guardado en bd     
         
         usuario.setIdUsuario(Integer.parseInt(request.getParameter("ID_USUARIO")));
         usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
         usuario.setNombreUsuario(request.getParameter("CARNET"));
         usuario.setClave(request.getParameter("CLAVE"));
-        usuarioDao.actualizar(usuario); //guardando usuario
+        bandera1 = usuarioDao.actualizar(usuario); //guardando usuario
         
         detalleUsuario.setIdDetalleUsuario(Integer.parseInt(request.getParameter("ID_DETALLE_USUARIO")));
         detalleUsuario.setIdUsuario(Integer.parseInt(request.getParameter("ID_USUARIO")));
@@ -55,9 +58,12 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
         detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));
         detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
-        detalleUsuarioDao.actualizarOpcion2(detalleUsuario); //guardando detalle usuario
+        bandera2 = detalleUsuarioDao.actualizarOpcion2(detalleUsuario); //guardando detalle usuario
         
-        
+        if(bandera1 && bandera2)
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizo el usuario correctamente.");
+        else
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario.");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
