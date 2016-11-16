@@ -9,8 +9,20 @@
         <servlet-class>MODEL.AgregarUsuarioServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AgregarOfertaBecaServlet</servlet-name>
-        <servlet-class>MODEL.AgregarOfertaBecaServlet</servlet-class>
+        <servlet-name>ConsultarUsuarioServlet</servlet-name>
+        <servlet-class>MODEL.ConsultarUsuarioServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActualizarUsuarioServlet</servlet-name>
+        <servlet-class>MODEL.ActualizarUsuarioServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DarDeBajaUsuarioServlet</servlet-name>
+        <servlet-class>MODEL.DarDeBajaUsuarioServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarRolesServlet</servlet-name>
+        <servlet-class>MODEL.ModificarRolesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
@@ -19,10 +31,22 @@
     <servlet-mapping>
         <servlet-name>AgregarUsuarioServlet</servlet-name>
         <url-pattern>/AgregarUsuarioServlet</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AgregarOfertaBecaServlet</servlet-name>
-        <url-pattern>/AgregarOfertaBecaServlet</url-pattern>
+        <servlet-name>ConsultarUsuarioServlet</servlet-name>
+        <url-pattern>/ConsultarUsuarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarUsuarioServlet</servlet-name>
+        <url-pattern>/ActualizarUsuarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DarDeBajaUsuarioServlet</servlet-name>
+        <url-pattern>/DarDeBajaUsuarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarRolesServlet</servlet-name>
+        <url-pattern>/ModificarRolesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
