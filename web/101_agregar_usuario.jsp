@@ -91,7 +91,8 @@
                             <label for="textinput">Codigo de usuario : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese un codigo para el usuario" class="form-control input-md">                                                                
+                            <input id="CARNET" name="CARNET" type="text" onFocus="mostrarMensajeAlEnfocar('help1','Ingrese solo numeros y letras. Maximo 10')" onBlur="ocultarMensajeAlEnfocar('help1')" onkeypress="return validarAlfanumerico('CARNET',event,10)" placeholder="ingrese un codigo para el usuario" class="form-control input-md">                                                                
+                            <small id="help1"></small>
                         </div>
                         <div class="col-md-3 text-right">
                             
@@ -105,13 +106,15 @@
                             <label for="textinput">Primer nombre : </label>                             
                         </div>
                         <div class="col-md-3">
-                            <input id="textinput" name="NOMBRE1_DU" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" onselect="">                                                                                            
+                            <input id="NOMBRE1_DU" name="NOMBRE1_DU" type="text" onFocus="mostrarMensajeAlEnfocar('help2','Ingrese solo letras. Maximo 15')" onBlur="ocultarMensajeAlEnfocar('help2')" onkeypress="return validarTexto('NOMBRE1_DU',event,15)" placeholder="ingrese el primer nombre" class="form-control input-md">                                                                                            
+                            <small id="help2"></small>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Segundo nombre :</label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="textinput" name="NOMBRE2_DU" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md">                                
+                            <input id="NOMBRE2_DU" name="NOMBRE2_DU" type="text" onFocus="mostrarMensajeAlEnfocar('help3','Ingrese solo letras. Maximo 15')" onBlur="ocultarMensajeAlEnfocar('help3')" onkeypress="return validarTexto('NOMBRE2_DU',event,15)" placeholder="ingrese el segundo nombre" class="form-control input-md">                                
+                            <small id="help3"></small>
                         </div>  
                     </div>
 
@@ -122,13 +125,15 @@
                             <label for="textinput">Primer apellido :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="textinput" name="APELLIDO1_DU" type="text" placeholder="ingrese el primer apellido" class="form-control input-md">
+                            <input id="APELLIDO1_DU" name="APELLIDO1_DU" type="text" onFocus="mostrarMensajeAlEnfocar('help4','Ingrese solo letras. Maximo 15')" onBlur="ocultarMensajeAlEnfocar('help4')" onkeypress="return validarTexto('APELLIDO1_DU',event,15)" placeholder="ingrese el primer apellido" class="form-control input-md">
+                            <small id="help4"></small>
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Segundo apellido :</label>                                
+                            <label for="textinput">Segundo apellido :</label>                                                            
                         </div>
                         <div class="col-md-3">                                
-                            <input id="textinput" name="APELLIDO2_DU" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md">
+                            <input id="APELLIDO2_DU" name="APELLIDO2_DU" type="text" onFocus="mostrarMensajeAlEnfocar('help5','Ingrese solo letras. Maximo 15')" onBlur="ocultarMensajeAlEnfocar('help5')" onkeypress="return validarTexto('APELLIDO2_DU',event,15)" placeholder="ingrese el segundo apellido" class="form-control input-md">
+                            <small id="help5"></small>
                         </div>              
                     </div>                      
 
@@ -139,13 +144,15 @@
                             <label for="textinput">Contraseña :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="textinput" name="CLAVE" type="password" placeholder="ingrese una contraseña" class="form-control input-md">
+                            <input id="CLAVE" name="CLAVE" type="password" onFocus="mostrarMensajeAlEnfocar('help6','Ingrese solo letras y numeros. Maximo 10')" onBlur="ocultarMensajeAlEnfocar('help6')" onkeypress="return validarTexto('CLAVE',event,10)" placeholder="ingrese una contraseña" class="form-control input-md">
+                            <small id="help6"></small>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Confirmar contraseña :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="textinput" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md">
+                            <input id="CLAVE2" name="CLAVE2" type="password" onFocus="mostrarMensajeAlEnfocar('help7','Repita la misma clave.')" onBlur="clavesIguales('help7','CLAVE', 'CLAVE2')" onkeypress="return validarTexto('CLAVE2',event,10)" placeholder="ingrese nuevamente la contraseña" class="form-control input-md">
+                            <small id="help7"></small>
                         </div>              
                     </div>
 
@@ -242,5 +249,6 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
+<script src="js/validaciones.js"></script>
 </body>
 </html>
