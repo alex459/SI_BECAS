@@ -75,7 +75,7 @@
             id_accion_menor = "0";
             id_accion_mayor = accionDao.getSiguienteId().toString();
             consultaSql = consultaSql.concat(" AND A.ID_ACCION BETWEEN " + id_accion_menor + " AND " + id_accion_mayor);
-            
+
         }
 
         out.write(consultaSql);
@@ -179,7 +179,7 @@
                                     <div class="col-md-3">
                                         <select id="selectbasic" name="ID_ACCION" class="form-control"> 
                                             <option value="0">TODOS</option>
-                                        <%                                            
+                                        <%
                                             ArrayList<Accion> listaAccion = new ArrayList<Accion>();
                                             listaAccion = accionDao.consultarTodos();
                                             for (int i = 0; i < listaAccion.size(); i++) {
@@ -240,80 +240,119 @@
                     </div>
                 </form> 
 
-                                    
-                <!-- FORMULARIO 2 PARA GENERAR EL REPORTE -->                    
-                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
-                    
-                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
-                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
-                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
-                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
-                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
-                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
-                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
-                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
-                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
-                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
-                    
-                    <div class="col-md-4"> <!-- ACCIONES -->
-                        <fieldset class="custom-border">
-                            <legend class="custom-border">Acciones</legend>
-                            <div class="row">
 
-                                <div class="col-md-6 text-center">
-                                    <label for="textinput">PDF</label>
-                                </div>                                                                        
-                                <div class="col-md-6 text-center">
-                                    <label for="textinput">Hoja de calculo</label>
-                                </div>
+                <!-- FORMULARIO 2 PARA GENERAR EL REPORTE -->                                   
+
+                <div class="col-md-4"> <!-- ACCIONES -->
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Acciones</legend>
+                        <div class="row">
+
+                            <div class="col-md-6 text-center">
+                                <label for="textinput">PDF</label>
+                            </div>                                                                        
+                            <div class="col-md-6 text-center">
+                                <label for="textinput">Hoja de calculo</label>
                             </div>
+                        </div>
 
-                            <br>
+                        <br>
 
-                            <div class="row">
-                                <div class="col-md-6 text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit1" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
-                                </div>
-                                <div class="col-md-6 text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit2" value=" " style="background-image: url(img/106_icono_de_excel.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
-
-                                </div>
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
+                                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
+                                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
+                                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
+                                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
+                                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
+                                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
+                                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
+                                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
+                                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
+                                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
+                                    <input type="hidden" name="OPCION_DE_SALIDA" value="1">
+                                    <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                                </form>                                    
                             </div>
-
-                            <br>
-
-                            <div class="row">
-                                <div class="col-md-6 text-center">
-                                    <label for="textinput">Enviar por correo</label>
-                                </div>
-                                <div class="col-md-6 text-center">
-                                    <label for="textinput">Imprimir</label>
-                                </div>
+                            <div class="col-md-6 text-center">
+                                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
+                                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
+                                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
+                                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
+                                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
+                                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
+                                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
+                                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
+                                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
+                                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
+                                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
+                                    <input type="hidden" name="OPCION_DE_SALIDA" value="2">
+                                    <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_excel.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                                </form> 
                             </div>
+                        </div>
 
-                            <br>
+                        <br>
 
-                            <div class="row">
-                                <div class="col-md-6 text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit3" value=" " style="background-image: url(img/106_icono_de_correo.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">                                
-                                </div>
-                                <div class="col-md-6 text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit4" value=" " style="background-image: url(img/106_icono_de_imprimir.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">                                                                
-                                </div>
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <label for="textinput">Enviar por correo</label>
                             </div>
+                            <div class="col-md-6 text-center">
+                                <label for="textinput">Imprimir</label>
+                            </div>
+                        </div>
 
-                            <br>
+                        <br>
 
-                        </fieldset>
-                    </div>
-                </form>                    
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
+                                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
+                                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
+                                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
+                                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
+                                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
+                                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
+                                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
+                                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
+                                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
+                                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
+                                    <input type="hidden" name="OPCION_DE_SALIDA" value="3">
+                                    <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_correo.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                                </form>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
+                                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
+                                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
+                                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
+                                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
+                                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
+                                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
+                                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
+                                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
+                                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
+                                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
+                                    <input type="hidden" name="OPCION_DE_SALIDA" value="4">
+                                    <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_imprimir.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                                </form>
+                            </div>
+                        </div>
+
+                        <br>
+
+                    </fieldset>
+                </div>
+
 
 
 
             </div>
 
             <!-- TABLA RESULTADOS -->
-                                    
+
             <div class="row">
                 <div class="col-md-12">
                     <label for="textinput">Resultados de la busqueda</label>

@@ -1,19 +1,31 @@
 package MODEL;
 
 import DAO.ConexionBD;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -47,6 +59,7 @@ public class ReporteBitacoraServlet extends HttpServlet {
             String reporte_id_accion_mayor = request.getParameter("REPORTE_ID_ACCION_MAYOR");
             String reporte_reporte_nombre_usuario = request.getParameter("REPORTE_NOMBRE_USUARIO");
             String reporte_reporte_rol_usuario = request.getParameter("REPORTE_ROL_USUARIO");
+            String opcion_de_salida = request.getParameter("OPCION_DE_SALIDA");
 
             //preparando parametros para el reporte
             Map parametersMap = new HashMap();
@@ -62,16 +75,44 @@ public class ReporteBitacoraServlet extends HttpServlet {
             parametersMap.put("ID_ACCION_MAYOR", 10);
             parametersMap.put("NOMBRE_USUARIO", "JOSE ALEXIS BELTRAN SERRANO");
             parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");
-            JasperReport jasperReport=JasperCompileManager.compileReport("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\src\\java\\REPORTES\\101_reporte_bitacora.jrxml");
-            ConexionBD conexionBD = new ConexionBD();
-            conexionBD.abrirConexion();
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametersMap, conexionBD.conn);            
-            JasperViewer.viewReport(jasperPrint); 
-            conexionBD.cerrarConexion();
+
+            if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF                
+                ConexionBD conexionBD = new ConexionBD();
+                conexionBD.abrirConexion();
+                byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\101_reporte_bitacora.jasper", parametersMap, conexionBD.conn);
+                conexionBD.cerrarConexion();
+                response.setContentType("application/pdf");
+                response.setContentLength(bytes.length);
+                ServletOutputStream outputstream = response.getOutputStream();
+                outputstream.write(bytes, 0, bytes.length);
+                outputstream.flush();
+                outputstream.close();
+            }
+
+            if ("2".equals(opcion_de_salida)) { //SALIDA EN XLS
+                /*JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\101_reporte_bitacora.jrxml");
+                ConexionBD conexionBD = new ConexionBD();
+                conexionBD.abrirConexion();
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametersMap, conexionBD.conn);
+                conexionBD.cerrarConexion();
+                JRXlsExporter exporter = new JRXlsExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "C:\\a.xls");
+                exporter.exportReport();*/
+
+            }
+
+            if ("3".equals(opcion_de_salida)) { //SALIDA EN XLS
+
+            }
+
+            if ("4".equals(opcion_de_salida)) { //SALIDA EN XLS
+
+            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println("Error: "+ex);
+            System.out.println("Error: " + ex);
         }
 
     }
