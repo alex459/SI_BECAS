@@ -65,7 +65,7 @@
         
         <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA --> 
             <fieldset class="custom-border">
-                <legend class="custom-border">Consultar expediiente</legend>
+                <legend class="custom-border">Consultar expediente</legend>
                 <div class="col-md-6 col-md-offset-3">
                     <fieldset class="custom-border">
                         <legend class="custom-border">filtros</legend>

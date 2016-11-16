@@ -58,18 +58,80 @@
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 <fieldset class="custom-border">
                     <legend class="custom-border">Consultar institucion</legend>
+                    <div class="col-md-6 col-md-offset-3">
+                        <fieldset class="custom-border">
+                            <legend class="custom-border">filtros</legend>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Institución : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input id="textinput" name="NOMB_INST" type="text" class="form-control input-md">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">País : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input id="textinput" name="PAIS_INST" type="text" class="form-control input-md">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Tipo institución : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="selectbasic" name="TIPO_INST" class="form-control" >                            
+                                        <option value=0>Seleccione tipo de institución</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row text-center">
+                                <button class="btn btn-primary">Consultar</button><br>
+                            </div>
+                        </fieldset>
+                    </div>
                     <br>
-                    <br>
-                    <br>
-                    <br>
-                    TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION.
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+                    <div class="row">
+                       <table class="table">
+                            <thead>
+                                <th>No</th>
+                                <th>Nombre de la institución</th>
+                                <th>Tipo institución</th>
+                                <th>País</th>
+                                <th>Página web</th>
+                                <th>Correo electronico</th>
+                                <th>Telefono</th>
+                                <th>Opción</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> #</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center"> <input type="button" name="Editar" value="Editar" class="btn btn-success"></td>
+                                </tr>
+                                <tr>
+                                    <td> #</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center"> <input type="button" name="Editar" value="Editar" class="btn btn-success"></td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
                 </fieldset>
             </div><!-- CONTENIDO DE LA PANTALLA -->
         </div>
