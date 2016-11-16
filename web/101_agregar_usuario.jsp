@@ -102,10 +102,10 @@
 
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Primer nombre : </label>                                
+                            <label for="textinput">Primer nombre : </label>                             
                         </div>
                         <div class="col-md-3">
-                            <input id="textinput" name="NOMBRE1_DU" type="text" placeholder="ingrese el primer nombre" class="form-control input-md">                                                                
+                            <input id="textinput" name="NOMBRE1_DU" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" onselect="">                                                                                            
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Segundo nombre :</label>                                
