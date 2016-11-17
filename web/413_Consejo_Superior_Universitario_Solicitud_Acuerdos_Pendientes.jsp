@@ -119,8 +119,18 @@
                                             <div class="col-md-10">
                                                 <label>Facultad:</label><select class="form-control">
                                                     <option>Seleccione Facultad</option>
-                                                    <option>Ingeneria y Aquitectura</option>
+                                                    <option>Jurisprudencia y Ciencias Sociales</option>
+                                                    <option>Ingeniería y Arquitectura</option>
                                                     <option>Medicina</option>
+                                                    <option>Odontología</option>
+                                                    <option>Multidisciplinaria Paracentral</option>
+                                                    <option>Multidisciplinaria Oriental</option>
+                                                    <option>Multidisciplinaria de Occidente</option>
+                                                    <option>Química y Farmacia</option>
+                                                    <option>Ciencias Agronómicas</option>
+                                                    <option>Ciencias y Humanidades</option>
+                                                       <option>Ciencias Naturales Matemática</option>
+                                                    <option>Ciencias Económicas</option>
                                                 </select><br> 
                                                 <label>Tipo de Documento:</label><select class="form-control">
                                                     <option>Seleccione Tipo Documento</option>
