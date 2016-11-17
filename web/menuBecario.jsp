@@ -43,7 +43,6 @@
                         <a href="404_Becario_Sol_Inicio_Servicio_Contractual.jsp">Solicitar inicio de servicio contractual</a>
                         <a href="405_Becario_Sol_Acuerdo_Gestion_Compromiso_Contractual.jsp">Solicitar acuerdo de de gestión de compromiso contractual</a>
                         <a href="406_Becario_Sol_Acuerdo_Gestion_Liberacion.jsp">Solicitar acuerdo de gestión de liberación</a>
-                  
                     </li>								
                 </ul>
             </li>
