@@ -47,58 +47,110 @@
         <jsp:include page="menu.jsp"></jsp:include>
     </head>
     <body>
-        <div class="container-fluid">
-            <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27">Modificar documento</p>
-                </h2>
-                <br></br> 
-            </div><!-- TITULO DE LA PANTALLA -->  
 
-            <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <fieldset class="custom-border">
-                    <legend class="custom-border">Modificar documento</legend>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION.
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                </fieldset>
-            </div><!-- CONTENIDO DE LA PANTALLA -->
+    <div class="container-fluid">
+        <H3 class="text-center" style="color:#E42217;">Modificar Documento</H3>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <fieldset class="custom-border">
+                <legend class="custom-border">Datos del Documento</legend>
+                <h5 style="color:#E42217;">Ingrese la informacion del documento</h5><br>
+                <form>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Documento:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <select class="form-control">
+                                <option>Doc 1</option>
+                                <option>Doc 2</option>
+                            </select><br>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row text-center">
+                        <button class="btn btn-primary">Cargar</button><br><br>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Documento Digital:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="file" name="documento" class=""><br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Observacion:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <textarea class="form-control"></textarea><br>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row text-center">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">
+                                <input type="button" name="guardar" value="Guardar" class="btn btn-primary">
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-danger">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>   
+                    </div>
+                </form>
+                
+
+            </fieldset>
         </div>
+        <div class="col-md-3"></div>
+       
+    </div>  
 
-            <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-                    <div class="col-md-6">
-                            <h3>
-                                    Dirección
-                            </h3>
-                            <p>
-                                    2016 Universidad De El Salvador  <br/>
-                                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                            </p>
-                    </div>
-                    <div class="col-md-6">
-                            <h3>
-                                    Información de contacto
-                            </h3>
-                            <p>
-                                    Universidad De El Salvador
-                                    Tél: +(503) 2511-2000 <br/>
-                                    Consejo de becas
-                                    Tél: +(503) 2511- 2016
-                            </p>
-                    </div>
-            </div>
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+
+
+
+
+
+
+
+</div>
+
+<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+    <div class="col-md-6">
+        <h3>
+            Dirección
+        </h3>
+        <p>
+            2016 Universidad De El Salvador  <br/>
+            Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h3>
+            Información de contacto
+        </h3>
+        <p>
+            Universidad De El Salvador
+            Tél: +(503) 2511-2000 <br/>
+            Consejo de becas
+            Tél: +(503) 2511- 2016
+        </p>
+    </div>
+</div>    
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+
+</body>
 </html>

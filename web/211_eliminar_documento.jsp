@@ -4,11 +4,37 @@
     Author     : Manuel Miranda
 --%>
 
+
+<%@page import="java.io.ByteArrayInputStream"%>
+<%@page import="java.io.InputStream"%>
+<%@page import="DAO.TipoDocumentoDAO"%>
+<%@page import="POJO.TipoDocumento"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="DAO.DocumentoDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="POJO.Documento"%>
+<%@page import="java.util.ArrayList"%>
+
+<%
+    DocumentoDAO docDao = new DocumentoDAO();
+    TipoDocumentoDAO tipDocDao= new TipoDocumentoDAO();
+    ArrayList<Documento> publicos = new ArrayList<Documento>();
+    publicos =  docDao.consultarTodos();
+    Gson gson = new Gson();
+    String documentosJSON1 = gson.toJson(publicos);
+    String documentosJSON =  documentosJSON1.replace("\"", "'");
+    ArrayList<TipoDocumento> tiposDoc = new ArrayList<TipoDocumento>();
+    tiposDoc = tipDocDao.consultarTodos();
+    Gson gson2 = new Gson();
+    String tiposJSON1 = gson.toJson(tiposDoc);
+    String tiposJSON =  tiposJSON1.replace("\"", "'");
+    
+%>
 <!DOCTYPE html>
-<html>
+<html ng-app="DocumentoApp">
     <head>
+        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,59 +72,120 @@
              el menu puede ser cambiado en la pagina menu.jsp --%>
         <jsp:include page="menu.jsp"></jsp:include>
     </head>
-    <body>
-        <div class="container-fluid">
-            <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27">Eliminar documento</p>
-                </h2>
-                <br></br> 
-            </div><!-- TITULO DE LA PANTALLA -->  
+    <body  ng-controller="EliminarCtrl" ng-init="documentos=<%=documentosJSON%>">
 
-            <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <fieldset class="custom-border">
-                    <legend class="custom-border">Eliminar documento</legend>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION.
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                </fieldset>
-            </div><!-- CONTENIDO DE LA PANTALLA -->
+    <div class="container-fluid">
+        <H3 class="text-center" style="color:#E42217;">Eliminar Documento</H3>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <fieldset class="custom-border">
+                <legend class="custom-border">Eliminar Documento</legend>
+                
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <fieldset class="custom-border">
+                            <legend class="custom-border">Filtro</legend>
+                            
+                            
+                                <div class="row" ng-init="tipos=<%=tiposJSON%>">
+                                    <div class="col-md-4">
+                                        <label>Tipo Documento:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <select class="form-control" ng-model = "idTipo">
+                                            <option ng-repeat="option in tipos" value="{{option.idTipoDocumento}}">{{option.tipoDocumento}}</option>
+                                        </select><br>
+                                    </div>
+                                </div>
+
+                                <div class="row text-center">
+                                    <button class="btn btn-primary">Buscar</button>
+                                </div>
+                            
+                        </fieldset>
+
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <table class="table text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th><th>Observaciones</th><th>Accion</th>
+                                        </tr>   
+                                    </thead>
+                                    <%int i =0;%>
+                                    <tbody ng-repeat="x in documentos |filter:{idTipoDocumento:{idTipoDocumento:idTipo}}">
+                                    
+                                        <tr>
+                                            <td>{{documentos.indexOf(x)+1}}</td>
+                                            <td>{{x.idTipoDocumento.tipoDocumento}}</td>
+                                            <td><form action="Documento" method="post"  target="_blank">
+                                                    <input type="hidden" name="id" value="{{x.idDocumento}}">
+                                                    <input type="submit" class="btn btn-success" value="Ver Documento">
+                                                </form>
+                                            </td>
+                                            <td>{{x.observacion}}</td>
+                                            <td><a  href="EliminarDocumentoServlet?id={{x.idDocumento}}"><button class="btn btn-danger">Eliminar</button></a></td>
+                                            <%i++;%>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+
+            </fieldset>
         </div>
+        <div class="col-md-3"></div>
+       
+    </div>  
 
-            <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-                    <div class="col-md-6">
-                            <h3>
-                                    Dirección
-                            </h3>
-                            <p>
-                                    2016 Universidad De El Salvador  <br/>
-                                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                            </p>
-                    </div>
-                    <div class="col-md-6">
-                            <h3>
-                                    Información de contacto
-                            </h3>
-                            <p>
-                                    Universidad De El Salvador
-                                    Tél: +(503) 2511-2000 <br/>
-                                    Consejo de becas
-                                    Tél: +(503) 2511- 2016
-                            </p>
-                    </div>
-            </div>
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+
+
+
+
+
+
+
+</div>
+
+<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+    <div class="col-md-6">
+        <h3>
+            Dirección
+        </h3>
+        <p>
+            2016 Universidad De El Salvador  <br/>
+            Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h3>
+            Información de contacto
+        </h3>
+        <p>
+            Universidad De El Salvador
+            Tél: +(503) 2511-2000 <br/>
+            Consejo de becas
+            Tél: +(503) 2511- 2016
+        </p>
+    </div>
+</div>    
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/eliminarDocumento.js"></script>
+
+</body>
+
 </html>

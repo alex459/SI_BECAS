@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author MauricioBC
  */
 public class TipoDocumentoDAO extends ConexionBD{
-     public TipoDocumento consultarPorId(int id) {
+     public TipoDocumento consultarPorId(Integer id) {
         TipoDocumento temp = new TipoDocumento();
         this.abrirConexion();
         try {
@@ -28,6 +28,7 @@ public class TipoDocumentoDAO extends ConexionBD{
                 String TIPO_DOCUMENTO=rs.getString("TIPO_DOCUMENTO");
                 String DEPARTAMENTO=rs.getString("DEPARTAMENTO");
                 String DESCRIPCION=rs.getString("DESCRIPCION");
+                temp.setIdTipoDocumento(id);
                 temp.setTipoDocumento(TIPO_DOCUMENTO);
                 temp.setDepartamento(DEPARTAMENTO);
                 temp.setDescripcion(DESCRIPCION);

@@ -1,4 +1,5 @@
 package POJO;
+import java.io.InputStream;
 import java.util.Date;
 
 public class Documento{
@@ -6,9 +7,9 @@ public class Documento{
     private Integer idDocumento;
     private TipoDocumento idTipoDocumento;
     private Expediente idExpediente;    
-    private byte[] documentoDigital;    
+    private InputStream documentoDigital;    
     private Date fechaSolicitud;    
-    private String observacionO;    
+    private String observacion;    
     private Date fechaIngreso;    
     private String estadoDocumento;
 
@@ -57,14 +58,14 @@ public class Documento{
     /**
      * @return the documentoDigital
      */
-    public byte[] getDocumentoDigital() {
+    public InputStream getDocumentoDigital() {
         return documentoDigital;
     }
 
     /**
      * @param documentoDigital the documentoDigital to set
      */
-    public void setDocumentoDigital(byte[] documentoDigital) {
+    public void setDocumentoDigital(InputStream documentoDigital) {
         this.documentoDigital = documentoDigital;
     }
 
@@ -85,15 +86,15 @@ public class Documento{
     /**
      * @return the observacionO
      */
-    public String getObservacionO() {
-        return observacionO;
+    public String getObservacion() {
+        return observacion;
     }
 
     /**
-     * @param observacionO the observacionO to set
+     * @param observacion the observacionO to set
      */
-    public void setObservacionO(String observacionO) {
-        this.observacionO = observacionO;
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     /**
