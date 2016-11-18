@@ -1,23 +1,23 @@
 
 //escribir un mensaje en un elemento mediente el id
-function mostrarMensajeAlEnfocar(id_elemento, mensaje) {
+function mostrarMensaje(id_elemento, mensaje) {
     document.getElementById(id_elemento.toString()).innerHTML = mensaje.toString();
 }
 
 //limpiar el mensaje de un elemento por su id
-function ocultarMensajeAlEnfocar(id_elemento) {
+function ocultarMensaje(id_elemento) {
     document.getElementById(id_elemento.toString()).innerHTML = "";
 }
 
 //validar las entradas de los formularios para que
 //solo acepten caracteres alfanumericos
 function validarAlfanumerico(id_del_input, e, numero_de_caracteres) {
-
+    if (document.getElementById(id_del_input.toString()).value.length >= numero_de_caracteres)
+        return false;
     key = e.keyCode || e.which;
     tecla = String.fromCharCode(key).toLowerCase();
     letras = "áéíóúabcdefghijklmnñopqrstuvwxyz1234567890";
     especiales = [];
-
     tecla_especial = false
     for (var i in especiales) {
         if (key == especiales[i]) {
@@ -27,8 +27,7 @@ function validarAlfanumerico(id_del_input, e, numero_de_caracteres) {
     }
     if (letras.indexOf(tecla) == -1 && !tecla_especial)
         return false;
-    if (document.getElementById(id_del_input.toString()).value.length > numero_de_caracteres)
-        return false;
+    
 }
 
 //validar las entradas de los formularios para que
@@ -36,8 +35,7 @@ function validarAlfanumerico(id_del_input, e, numero_de_caracteres) {
 function validarTexto(id_del_input, e, numero_de_caracteres) {
     key = e.keyCode || e.which;
     tecla = String.fromCharCode(key).toLowerCase();
-    letras = "áéíóúabcdefghijklmnñopqrstuvwxyz";
-    especiales = [8, 37, 39, 46];
+    letras = "áéíóúabcdefghijklmnñopqrstuvwxyz";    
 
     tecla_especial = false
     for (var i in especiales) {
@@ -48,7 +46,7 @@ function validarTexto(id_del_input, e, numero_de_caracteres) {
     }
     if (letras.indexOf(tecla) == -1 && !tecla_especial)
         return false;
-    if (document.getElementById(id_del_input.toString()).value.length > numero_de_caracteres)
+    if (document.getElementById(id_del_input.toString()).value.length >= numero_de_caracteres)
         return false;
 }
 
@@ -57,8 +55,7 @@ function validarTexto(id_del_input, e, numero_de_caracteres) {
 function validarNumeros(id_del_input, e, numero_de_caracteres) {
     key = e.keyCode || e.which;
     tecla = String.fromCharCode(key).toLowerCase();
-    letras = "1234567890";
-    especiales = [8, 37, 39, 46];
+    letras = "1234567890";    
 
     tecla_especial = false
     for (var i in especiales) {
@@ -69,7 +66,7 @@ function validarNumeros(id_del_input, e, numero_de_caracteres) {
     }
     if (letras.indexOf(tecla) == -1 && !tecla_especial)
         return false;
-    if (document.getElementById(id_del_input.toString()).value.length > numero_de_caracteres)
+    if (document.getElementById(id_del_input.toString()).value.length >= numero_de_caracteres)
         return false;
 }
 

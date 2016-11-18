@@ -47,10 +47,12 @@
                         <h2 class="form-signin-heading">Ingrese sus datos:</h2>
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Usuario" name="user" autofocus="">
+                                <input id="user" class="form-control" placeholder="Usuario" name="user" autofocus="" onFocus="mostrarMensaje('help1','Ingrese el usuario. Maximo 10 numeros o letas.')" onBlur="ocultarMensaje('help1')" onkeypress="return validarAlfanumerico('user',event,10)">
+                                <small id="help1"></small>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Contraseña" name="pass" type="password" value="">
+                                <input id="pass" class="form-control" placeholder="Contraseña" name="pass" type="password" value="" onFocus="mostrarMensaje('help2','Ingrese la constraseña. Maximo 10 numeros o letas.')" onBlur="ocultarMensaje('help2')" onkeypress="return validarAlfanumerico('pass',event,10)">
+                                <small id="help2"></small>
                             </div>
                         </fieldset> 
                         <button class="btn btn-lg btn-danger btn-block" type="submit" >Ingresar</button> 
@@ -63,5 +65,6 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/validaciones.js"></script>
 </body>
 </html>

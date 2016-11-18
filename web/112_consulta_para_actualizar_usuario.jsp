@@ -5,17 +5,17 @@
 --%>
 
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String rol=(String)actual.getAttribute("rol");
-    String user=(String)actual.getAttribute("user");
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }
+    }
 %>
 
 <%@page import="DAO.ConexionBD"%>
@@ -39,7 +39,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/customfieldset.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">        
 
 <div class="row">
     <div class="col-md-4">
@@ -61,8 +61,8 @@
 
 
 
-<p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-<p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+<p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+<p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -95,21 +95,15 @@
                             <fieldset class="custom-border">  
                                 <legend class="custom-border">Filtros</legend>                    
                                 <div class="row"> 
-                                    <div class="col-md-2 text-right">
-                                        <label for="textinput">Nombre de Usuario : </label>                                
+
+                                    <div class="col-md-3 text-right">
+                                        <label for="textinput">Codigo de Usuario : </label>                                
                                     </div>
-                                    <div class="col-md-1">                                                                                    
-                                        <input id="textinput" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md">                                            
-                                    </div> 
-                                    <div class="col-md-1">    
-                                        <input id="textinput" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md">                                            
-                                    </div> 
-                                    <div class="col-md-1">
-                                        <input id="textinput" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md">                                            
-                                    </div> 
-                                    <div class="col-md-1">
-                                        <input id="textinput" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md">
-                                    </div> 
+                                    <div class="col-md-3">
+                                        <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" onFocus="mostrarMensaje('help5', 'ingrese el usuario a buscar. Maximo 10 letras o numeros.')" onBlur="ocultarMensaje('help5')" onkeypress="return validarAlfanumerico('CARNET', event, 10)">
+                                        <small id="help5"></small>
+                                    </div>                                    
+
                                     <div class="col-md-3 text-right">
                                         <label for="textinput">Facultad :</label>                                
                                     </div>
@@ -132,12 +126,27 @@
                             <br>
 
                             <div class="row">
-                                <div class="col-md-3 text-right">
-                                    <label for="textinput">Codigo de Usuario : </label>                                
+
+                                <div class="col-md-2 text-right">
+                                    <label for="textinput">Nombre de Usuario : </label>                                
                                 </div>
-                                <div class="col-md-3">
-                                    <input id="textinput" name="CARNET" type="text" placeholder="ingrese el carnet a buscar" class="form-control input-md">
-                                </div>
+                                <div class="col-md-1">                                                                                    
+                                    <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" onFocus="mostrarMensaje('help1', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help1')" onkeypress="return validarTexto('NOMBRE1', event, 15)">                                            
+                                    <small id="help1"></small>
+                                </div> 
+                                <div class="col-md-1">    
+                                    <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" onFocus="mostrarMensaje('help2', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help2')" onkeypress="return validarTexto('NOMBRE2', event, 15)">                                            
+                                    <small id="help2"></small>
+                                </div> 
+                                <div class="col-md-1">
+                                    <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" onFocus="mostrarMensaje('help3', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help3')" onkeypress="return validarTexto('APELLIDO1', event, 15)">                                            
+                                    <small id="help3"></small>
+                                </div> 
+                                <div class="col-md-1">
+                                    <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" onFocus="mostrarMensaje('help4', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help4')" onkeypress="return validarTexto('APELLIDO2', event, 15)">
+                                    <small id="help4"></small>
+                                </div> 
+
                                 <div class="col-md-3 text-right">
                                     <label for="textinput">Tipo de usuario :</label>                                
                                 </div>
@@ -156,7 +165,7 @@
                                 </div> 
                             </div>
 
-                            <br>        
+                            <br>      
 
                             <div class="row">
                                 <div class="col-md-12 text-center">
@@ -208,8 +217,6 @@
                     }
 
                     //out.write(consultaSql);
-                    
-                    
                     //realizando la consulta
                     conexionbd = new ConexionBD();
                     rs = conexionbd.consultaSql(consultaSql);
@@ -237,10 +244,10 @@
                         </thead>
                         <tbody>                            
                             <%
-                                try{
+                                try {
                                     Integer i = 0;
                                     while (rs.next()) {
-                                        i=i+1;
+                                        i = i + 1;
                                         out.write("<tr class='info'>");
                                         out.write("<td>" + i + "</td>");
                                         out.write("<td>" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "</td>");
@@ -249,22 +256,22 @@
                                         out.write("<td>" + rs.getString(7) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='"+rs.getString(8)+"'><input type='hidden' name='ID_DETALLE_USUARIO' value='"+rs.getString(9)+"'><input type='submit' class='btn btn-success' name='submit' value='Mostrar usuario'></form> ");                                        
+                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='ID_DETALLE_USUARIO' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-success' name='submit' value='Mostrar usuario'></form> ");
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");
-                                    }                                
-                                }catch(Exception ex){
-                                    System.out.println("error: "+ex);
+                                    }
+                                } catch (Exception ex) {
+                                    System.out.println("error: " + ex);
                                 }
-                                    
+
                             %>                             
                         </tbody>
                     </table>
                 </div>
 
             </div>
-      
+
         </fieldset>                       
     </div>
 
@@ -302,4 +309,5 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
 </body>
+<script type="text/javascript" src="js/validaciones.js"></script> <!-- para hacer funcionar las validaciones javascript -->
 </html>
