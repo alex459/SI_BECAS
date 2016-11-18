@@ -8,6 +8,7 @@ package DAO;
 import POJO.Documento;
 import POJO.TipoDocumento;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -42,13 +43,23 @@ public class DocumentoDAO extends ConexionBD{
         
         this.abrirConexion();
         try {
-            stmt = conn.createStatement();
-            String sql = "INSERT INTO DOCUMENTO(ID_DOCUMENTO, ID_TIPO_DOCUMENTO,DOCUMENTO_DIGITAL, OBSERVACION_O,ID_EXPEDIENTE,ESTADO_DOCUMENTO) VALUES("+documento.getIdDocumento()+", "+documento.getIdTipoDocumento().getIdTipoDocumento()+", '"+documento.getDocumentoDigital()+"', '"+documento.getObservacion()+"', '"+documento.getIdExpediente().getIdExpediente()+"', '"+documento.getEstadoDocumento()+"')";
-            stmt.execute(sql);
+            
+            String sql = "INSERT INTO DOCUMENTO(ID_DOCUMENTO, ID_TIPO_DOCUMENTO,DOCUMENTO_DIGITAL, OBSERVACION_O,ID_EXPEDIENTE,ESTADO_DOCUMENTO) VALUES(?,?,?,?,?,?)";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, documento.getIdDocumento());
+            statement.setInt(2, documento.getIdTipoDocumento().getIdTipoDocumento());     
+            if (documento.getDocumentoDigital() != null) {
+                statement.setBlob(3, documento.getDocumentoDigital());
+            }
+            statement.setString(4, documento.getObservacion());
+            statement.setInt(5, documento.getIdExpediente().getIdExpediente());
+            statement.setString(6, documento.getEstadoDocumento());
+            int row = statement.executeUpdate();
+            
             exito = true;
             this.cerrarConexion();
         }catch (Exception e) {
-            System.out.println("Error " + e);
+            e.printStackTrace();
         }finally{
             this.cerrarConexion();
         }
