@@ -8,6 +8,7 @@ package DAO;
 import POJO.Documento;
 import POJO.TipoDocumento;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO,D.DOCUMENTO_DIGITAL, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO = \"Publico\"" ;
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO = \"Publico\"" ;
             ResultSet rs = stmt.executeQuery(sql);
             
 
@@ -83,7 +84,6 @@ public class DocumentoDAO extends ConexionBD{
                 int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
                 Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
                 String OBSERVACION=rs.getString("OBSERVACION_O");
-                InputStream DOCUMENTO_DIGITAL = rs.getBinaryStream("DOCUMENTO_DIGITAL");
                 String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
                 
                 temp.setIdDocumento(ID_DOCUMENTO);
@@ -91,7 +91,7 @@ public class DocumentoDAO extends ConexionBD{
                 temp2.setTipoDocumento(TIPO_DOCUMENTO);
                 temp.setIdTipoDocumento(temp2);
                 temp.setObservacion(OBSERVACION);
-                temp.setDocumentoDigital(DOCUMENTO_DIGITAL);
+                
                 
                 
                 lista.add(temp);
@@ -134,8 +134,8 @@ public class DocumentoDAO extends ConexionBD{
             String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO,D.DOCUMENTO_DIGITAL, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO = \"Publico\" AND D.ID_DOCUMENTO=" +id;
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
-            
-            InputStream DOCUMENTO_DIGITAL = rs.getBinaryStream("DOCUMENTO_DIGITAL");
+            Blob blob = rs.getBlob("D.DOCUMENTO_DIGITAL");
+            InputStream DOCUMENTO_DIGITAL = blob.getBinaryStream();
             doc.setDocumentoDigital(DOCUMENTO_DIGITAL);
             
             
