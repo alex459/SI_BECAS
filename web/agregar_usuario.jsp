@@ -138,20 +138,20 @@
                             <label for="textinput">Contraseña :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="CLAVE" name="CLAVE" type="password"  placeholder="ingrese una contraseña" class="form-control input-md" ng-model="datos.contrasena1" ng-required="true" ng-pattern="/^[a-zA-Z]*$/" maxlength="10" minlength="6">
+                            <input id="CLAVE" name="CLAVE" type="password"  placeholder="ingrese una contraseña" class="form-control input-md" ng-model="datos.contrasena1" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/" maxlength="10" minlength="6">
                             <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CLAVE.$error.required">La Contraseña es requerida.</span>
                             <span class="text-danger" ng-show="agregarUsuario.CLAVE.$error.minlength">Minimo 6 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CLAVE.$error.pattern">Solo se permiten caracteres alfabeticos (A-Z).</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CLAVE.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
                             <small id="help6"></small>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Confirmar contraseña :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="CLAVE2" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md" ng-model="datos.contrasena2" ng-required="true" ng-pattern="/^[a-zA-Z]*$/" maxlength="10" minlength="6">
+                            <input id="CLAVE2" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md" ng-model="datos.contrasena2" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/" maxlength="10" minlength="6">
                             <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CLAVE2.$error.required">Debe Confirmar la Contraseña.</span>
                             <span class="text-danger" ng-show="agregarUsuario.CLAVE2.$error.minlength">Minimo 6 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CLAVE2.$error.pattern">Solo se permiten caracteres alfabeticos (A-Z).</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CLAVE2.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
                             <small id="help7"></small>
                         </div>              
                     </div>
