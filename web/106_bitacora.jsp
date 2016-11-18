@@ -213,17 +213,21 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <input id="textinput" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md">
+                                        <div class="col-md-3">                                            
+                                            <input id="NOMBRE1" name="NOMBRE1" type="text" onFocus="mostrarMensaje('help1', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help1')" onkeypress="return validarTexto('NOMBRE1', event, 15)" placeholder="primer nombre" class="form-control input-md">                                                                                            
+                                            <small id="help1"></small>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input id="textinput" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md">
+                                        <div class="col-md-3">                                            
+                                            <input id="NOMBRE2" name="NOMBRE2" type="text" onFocus="mostrarMensaje('help2', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help2')" onkeypress="return validarTexto('NOMBRE2', event, 15)" placeholder="segundo nombre" class="form-control input-md">                                                                                            
+                                            <small id="help2"></small>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input id="textinput" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md">
+                                        <div class="col-md-3">                                            
+                                            <input id="APELLIDO1" name="APELLIDO1" type="text" onFocus="mostrarMensaje('help3', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help3')" onkeypress="return validarTexto('APELLIDO1', event, 15)" placeholder="primer apellido" class="form-control input-md">                                                                                            
+                                            <small id="help3"></small>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input id="textinput" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md">
+                                        <div class="col-md-3">                                            
+                                            <input id="APELLIDO2" name="APELLIDO2" type="text" onFocus="mostrarMensaje('help4', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help4')" onkeypress="return validarTexto('APELLIDO2', event, 15)" placeholder="segundo apellido" class="form-control input-md">                                                                                            
+                                            <small id="help4"></small>
                                         </div>
                                     </div>
                                 </div>
@@ -454,13 +458,13 @@
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $('.input-group.date').datepicker({
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        });
-    });
+                                                $(function () {
+                                                    $('.input-group.date').datepicker({
+                                                        calendarWeeks: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true
+                                                    });
+                                                });
 </script>
 <script>
     $.validator.setDefaults({
@@ -546,4 +550,5 @@
     });
 </script>
 </body>
+<script src="js/validaciones.js"></script> <!-- para hacer funcionar las validaciones javascript -->
 </html>
