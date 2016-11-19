@@ -155,7 +155,7 @@ public class UsuarioDAO extends ConexionBD {
 
     //cambia el rol del usuario a inactivo
     public boolean darDeBajaUsuario(Usuario usuario) {
-        usuario.setIdTipoUsuario(0); //pasa a ser inactivo
+        usuario.setIdTipoUsuario(10); //pasa a ser inactivo
         boolean exito = false;
         
         this.abrirConexion();
