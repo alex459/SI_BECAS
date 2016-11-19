@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +33,7 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author next
  */
+@WebServlet("/ReporteBitacoraServlet")
 public class ReporteBitacoraServlet extends HttpServlet {
 
     /**
@@ -45,7 +47,9 @@ public class ReporteBitacoraServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
+        request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
+        
         //servlet encargado de generar reportes de bitacora
         try {
             //leyendo parametros del jsp

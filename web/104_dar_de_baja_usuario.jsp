@@ -119,7 +119,8 @@
                             <label for="textinput">Codigo de usuario : </label>                            
                         </div>
                         <div class="col-md-3 text-center">                                                        
-                            <input id="textinput" name="CARNET" type="text" placeholder="ingrese el codigo de empleado" class="form-control input-md" value = "<%=carnet%>" disabled>                            
+                            <input id="textinput" name="textinput" type="text" class="form-control input-md" value = "<%=carnet%>" disabled>                            
+                            <input id="CARNET" name="CARNET" type="hidden" value = "<%=carnet%>">                            
                         </div>
                         <div class="col-md-3">                                                                                                                
                         </div>
