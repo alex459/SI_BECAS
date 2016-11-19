@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f39f72de-dec7-40c6-b06e-142d417d8718">
-	<property name="ireport.zoom" value="0.750000000000001"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="153"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -43,15 +43,23 @@
 	<parameter name="NOMBRE_USUARIO" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="FECHA1_T" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHA2_T" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select CONCAT(DU.NOMBRE1_DU, ' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO AS 'USUARIO', A.ACCION, B.TABLA_AFECTADA AS DESCRIPCION, B.FECHA_BITACORA AS 'FECHA' from DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN BITACORA B NATURAL JOIN ACCION A WHERE DU.NOMBRE1_DU LIKE $P{NOMBRE1} AND DU.NOMBRE2_DU LIKE $P{NOMBRE2} AND DU.APELLIDO1_DU LIKE $P{APELLIDO1} AND DU.APELLIDO2_DU LIKE $P{APELLIDO2} AND B.FECHA_BITACORA BETWEEN $P{FECHA1} AND $P{FECHA2} AND A.ID_ACCION BETWEEN $P{ID_ACCION_MENOR} AND $P{ID_ACCION_MAYOR}]]>
+		<![CDATA[select CONCAT(DU.NOMBRE1_DU, ' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO AS 'USUARIO', A.ACCION, B.DESCRIPCION, B.FECHA_BITACORA AS 'FECHA' from DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN BITACORA B NATURAL JOIN ACCION A WHERE DU.NOMBRE1_DU LIKE $P{NOMBRE1} AND DU.NOMBRE2_DU LIKE $P{NOMBRE2} AND DU.APELLIDO1_DU LIKE $P{APELLIDO1} AND DU.APELLIDO2_DU LIKE $P{APELLIDO2} AND B.FECHA_BITACORA BETWEEN $P{FECHA1} AND $P{FECHA2} AND A.ID_ACCION BETWEEN $P{ID_ACCION_MENOR} AND $P{ID_ACCION_MAYOR}]]>
 	</queryString>
 	<field name="NOMBRES" class="java.lang.String"/>
 	<field name="USUARIO" class="java.lang.String"/>
 	<field name="ACCION" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="FECHA" class="java.sql.Timestamp"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -142,19 +150,19 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="0" y="0" width="198" height="15" forecolor="#736343" uuid="58ecf8e0-1771-46b5-8dcd-4442ffd95de0"/>
+				<reportElement style="Column header" x="0" y="0" width="230" height="15" forecolor="#736343" uuid="58ecf8e0-1771-46b5-8dcd-4442ffd95de0"/>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="198" y="0" width="122" height="15" forecolor="#736343" uuid="a2dee5d3-0634-4bb4-9cf3-fd567672eb01"/>
+				<reportElement style="Column header" x="230" y="0" width="90" height="15" forecolor="#736343" uuid="a2dee5d3-0634-4bb4-9cf3-fd567672eb01"/>
 				<text><![CDATA[USUARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="320" y="0" width="102" height="15" forecolor="#736343" uuid="c4d1cc20-1a30-4a6e-93cf-e6ef5a0764d8"/>
+				<reportElement style="Column header" x="320" y="0" width="87" height="15" forecolor="#736343" uuid="c4d1cc20-1a30-4a6e-93cf-e6ef5a0764d8"/>
 				<text><![CDATA[ACCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="422" y="0" width="249" height="15" forecolor="#736343" uuid="d83c2207-3a3b-4022-8bd6-51bd8e961c23"/>
+				<reportElement style="Column header" x="407" y="0" width="264" height="15" forecolor="#736343" uuid="d83c2207-3a3b-4022-8bd6-51bd8e961c23"/>
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
@@ -168,23 +176,38 @@
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="d9bcab56-4c7e-49a0-ac56-f1cfab98e1d6"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="0" y="0" width="198" height="15" uuid="f4effa8c-cb77-429a-83d6-630249a510f4"/>
+					<reportElement style="Detail" x="0" y="0" width="230" height="15" uuid="f4effa8c-cb77-429a-83d6-630249a510f4"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="198" y="0" width="122" height="15" uuid="ba544c4d-5c88-44a3-9851-b6920d376ee8"/>
+					<reportElement style="Detail" x="230" y="0" width="90" height="15" uuid="ba544c4d-5c88-44a3-9851-b6920d376ee8"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{USUARIO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="320" y="0" width="102" height="15" uuid="d12d92f6-6c0e-41a0-bd42-186a6a330580"/>
+					<reportElement style="Detail" x="320" y="0" width="87" height="15" uuid="d12d92f6-6c0e-41a0-bd42-186a6a330580"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{ACCION}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="422" y="0" width="249" height="15" uuid="01f56042-6e1e-40dc-8059-b10cf16f9e65"/>
+					<reportElement style="Detail" x="407" y="0" width="264" height="15" uuid="01f56042-6e1e-40dc-8059-b10cf16f9e65"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="671" y="0" width="129" height="15" uuid="10784dc3-9c62-4057-8f96-8823f4ba4617"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
 				</textField>
 			</frame>

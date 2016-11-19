@@ -48,6 +48,7 @@ public class DarDeBajaUsuarioServlet extends HttpServlet {
         bandera = usuarioDao.darDeBajaUsuario(usuario);
 
         if (bandera) {
+            Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se dio de baja al usuario "+nombre_usuario+".");
             Utilidades.mostrarMensaje(response, 1, "Exito", "El usuario "+nombre_usuario+" se ha desactivado.");
         } else {
             Utilidades.mostrarMensaje(response, 2, "Error", "El usuario "+nombre_usuario+" no pudo ser desactivado.");

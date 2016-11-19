@@ -57,15 +57,15 @@
         apellido2 = request.getParameter("APELLIDO2");
 
         //formando la consulta
-        String consultaSql = "select CONCAT(DU.NOMBRE1_DU, ' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, A.ACCION, B.TABLA_AFECTADA, B.FECHA_BITACORA, B.ID_BITACORA from DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN BITACORA B NATURAL JOIN ACCION A WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%'";
+        String consultaSql = "select CONCAT(DU.NOMBRE1_DU, ' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, A.ACCION, B.DESCRIPCION, B.FECHA_BITACORA, B.ID_BITACORA from DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN BITACORA B NATURAL JOIN ACCION A WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%'";
         if (!request.getParameter("FECHA1").equals("") && !request.getParameter("FECHA2").equals("")) {
             fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA1")));
-            fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA2")));
-            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
+            fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA2")));            
+            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + " 00:00:00' AND '" + fecha2 + " 11:59:59'");
         } else {
             fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse("01/01/2016"));
             fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(modifiedDate));
-            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
+            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + " 00:00:00' AND '" + fecha2 + " 11:59:59'");
         }
         if (!id_accion.equals("0")) {
             id_accion_menor = id_accion;

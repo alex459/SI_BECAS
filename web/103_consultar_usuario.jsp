@@ -4,6 +4,7 @@
     Author     : next
 --%>
 
+<%@page import="MODEL.Utilidades"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -244,13 +245,16 @@
                         </thead>
                         <tbody>                            
                             <%
+                                String usuarios_consultados = new String();                                
                                 try {
+                                    
                                     Integer i = 0;
                                     while (rs.next()) {
                                         i = i + 1;
                                         out.write("<tr class='info'>");
                                         out.write("<td>" + i + "</td>");
                                         out.write("<td>" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "</td>");
+                                        usuarios_consultados = usuarios_consultados.concat(rs.getString(5).toString()+", ");
                                         out.write("<td>" + rs.getString(5) + "</td>");
                                         out.write("<td>" + rs.getString(6) + "</td>");
                                         out.write("<td>" + rs.getString(7) + "</td>");
@@ -263,6 +267,7 @@
                                         out.write("</td>");
                                         out.write("</tr>");
                                     }
+                                    Utilidades.nuevaBitacora(3, request.getSession().getAttribute("user").toString(), "Se consulto los usuarios: "+usuarios_consultados);
                                 } catch (Exception ex) {
                                     System.out.println("error: " + ex);
                                 }

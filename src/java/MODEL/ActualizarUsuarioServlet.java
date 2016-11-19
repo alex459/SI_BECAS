@@ -64,8 +64,10 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
         bandera2 = detalleUsuarioDao.actualizarOpcion2(detalleUsuario); //guardando detalle usuario
         
-        if(bandera1 && bandera2)
+        if(bandera1 && bandera2){
+            Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se actualizo el usuario "+usuario.getNombreUsuario()+".");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizo el usuario correctamente.");
+        }
         else
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario.");
     }

@@ -5,17 +5,17 @@
 --%>
 
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String rol=(String)actual.getAttribute("rol");
-    String user=(String)actual.getAttribute("user");
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }
+    }
 %>
 
 <%@page import="java.sql.ResultSet"%>
@@ -38,7 +38,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/customfieldset.css" rel="stylesheet">
-    
+
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -59,8 +59,8 @@
 
 
 
-<p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-<p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+<p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+<p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -70,112 +70,112 @@
 </head>
 <body>
 
-    <%
-        
-        String id_usuario = request.getParameter("ID_USUARIO");
-        String id_detalle_usuario = request.getParameter("ID_DETALLE_USUARIO");
-        ConexionBD conexionBD = new ConexionBD();
-        String consultaSql = "SELECT CARNET, CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, F.FACULTAD, TU.TIPO_USUARIO, TU.ID_TIPO_USUARIO FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN TIPO_USUARIO TU NATURAL JOIN FACULTAD F WHERE U.ID_USUARIO = "+id_usuario;
-        ResultSet rs = null;
-        //out.write(consultaSql);
-        String carnet=new String();
-        String nombres=new String();
-        String facultad=new String();
-        String tipo_usuario=new String();
-        String id_tipo_usuario = new String();
-        
-        try{
-            rs = conexionBD.consultaSql(consultaSql);  
-            while(rs.next()){
-                carnet = rs.getString(1);
-                nombres = rs.getString(2);
-                facultad = rs.getString(3);
-                tipo_usuario = rs.getString(4);
-                id_tipo_usuario = rs.getString(5);
-            }
-        }catch(Exception ex){
-            System.err.println("error: "+ex);
+<%
+
+    String id_usuario = request.getParameter("ID_USUARIO");
+    String id_detalle_usuario = request.getParameter("ID_DETALLE_USUARIO");
+    ConexionBD conexionBD = new ConexionBD();
+    String consultaSql = "SELECT CARNET, CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, F.FACULTAD, TU.TIPO_USUARIO, TU.ID_TIPO_USUARIO FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN TIPO_USUARIO TU NATURAL JOIN FACULTAD F WHERE U.ID_USUARIO = " + id_usuario;
+    ResultSet rs = null;
+    //out.write(consultaSql);
+    String carnet = new String();
+    String nombres = new String();
+    String facultad = new String();
+    String tipo_usuario = new String();
+    String id_tipo_usuario = new String();
+
+    try {
+        rs = conexionBD.consultaSql(consultaSql);
+        while (rs.next()) {
+            carnet = rs.getString(1);
+            nombres = rs.getString(2);
+            facultad = rs.getString(3);
+            tipo_usuario = rs.getString(4);
+            id_tipo_usuario = rs.getString(5);
         }
-        
-    %>
-    
-    
- <div class="container-fluid">
-        <div class="row"><!-- TITULO DE LA PANTALLA -->
-            <h2>
-                <p class="text-center" style="color:#cf2a27">Modificar Roles</p>
-            </h2>
+    } catch (Exception ex) {
+        System.err.println("error: " + ex);
+    }
 
-            <br></br>
-
-        </div><!-- TITULO DE LA PANTALLA -->  
-
-        <div class="col-md-12">
-
-            <form class="form-horizontal" action="ModificarRolesServlet" method="post">
-                <fieldset class="custom-border">  
-                    <legend class="custom-border">Paso 2: Seleccione el nuevo rol y de clic en Modificar rol</legend>
+%>
 
 
-                    <div class="row"> 
-                        <div class="col-md-3">                                                                                                                
-                        </div>
-                        <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Codigo de empleado : </label>                            
-                        </div>
-                        <div class="col-md-3 text-center">                                                        
-                            <input id="textinput" name="textinput" type="text" class="form-control input-md" value = "<%=carnet%>" disabled>                            
-                            <input id="CARNET" name="CARNET" type="hidden" value = "<%=carnet%>">                            
-                        </div>
-                        <div class="col-md-3">                                                                                                                
-                        </div>
-                    </div> 
+<div class="container-fluid">
+    <div class="row"><!-- TITULO DE LA PANTALLA -->
+        <h2>
+            <p class="text-center" style="color:#cf2a27">Modificar Roles</p>
+        </h2>
+
+        <br></br>
+
+    </div><!-- TITULO DE LA PANTALLA -->  
+
+    <div class="col-md-12">
+
+        <form class="form-horizontal" action="ModificarRolesServlet" method="post">
+            <fieldset class="custom-border">  
+                <legend class="custom-border">Paso 2: Seleccione el nuevo rol y de clic en Modificar rol</legend>
 
 
-                    <br>
+                <div class="row"> 
+                    <div class="col-md-3">                                                                                                                
+                    </div>
+                    <div class="col-md-3 text-right">                                   
+                        <label for="textinput">Codigo de empleado : </label>                            
+                    </div>
+                    <div class="col-md-3 text-center">                                                        
+                        <input id="textinput" name="textinput" type="text" class="form-control input-md" value = "<%=carnet%>" disabled>                            
+                        <input id="CARNET" name="CARNET" type="hidden" value = "<%=carnet%>">                            
+                    </div>
+                    <div class="col-md-3">                                                                                                                
+                    </div>
+                </div> 
 
 
-                    <div class="row">   <!-- TABLA RESULTADOS -->
-                        <div class="col-md-2">                                                                                                                
-                        </div>
-                        <div class="col-md-8">
+                <br>
 
-                            <table class="table table-bordered"></br>                                                        
-                                <tbody>
-                                    <tr class="info">
-                                        <td>Nombre de usuario </td>
-                                        <td><%=nombres%> </td>
 
-                                    </tr>
-                                    <tr class="info">
-                                        <td>Facultad </td>
-                                        <td><%=facultad%> </td>
+                <div class="row">   <!-- TABLA RESULTADOS -->
+                    <div class="col-md-2">                                                                                                                
+                    </div>
+                    <div class="col-md-8">
 
-                                    </tr>
-                                    <tr class="info">
-                                        <td>Tipo Usuarios </td>
-                                        <td><%=tipo_usuario%> </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="col-md-2">                                                                                                                
-                        </div>
-                        
+                        <table class="table table-bordered"></br>                                                        
+                            <tbody>
+                                <tr class="info">
+                                    <td>Nombre de usuario </td>
+                                    <td><%=nombres%> </td>
+                                </tr>
+                                
+                                <tr class="info">
+                                    <td>Facultad </td>
+                                    <td><%=facultad%> </td>
+                                </tr>
+                                
+                                <tr class="info">
+                                    <td>Tipo Usuarios </td>
+                                    <td><%=tipo_usuario%> <input type="hidden" name="TIP_USUARIO_ANTERIOR" value="<%=tipo_usuario%>"></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
                     </div>
 
-                    <br>
+                    <div class="col-md-2">                                                                                                                
+                    </div>
 
-                    <div class="row"> 
-                        <div class="col-md-3">                                                                                                                
-                        </div>
-                        <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Tipo de usuario : </label>                            
-                        </div>
-                        <div class="col-md-3 text-center">                                                        
-                            
+                </div>
+
+                <br>
+
+                <div class="row"> 
+                    <div class="col-md-3">                                                                                                                
+                    </div>
+                    <div class="col-md-3 text-right">                                   
+                        <label for="textinput">Tipo de usuario : </label>                            
+                    </div>
+                    <div class="col-md-3 text-center">                                                        
+
                         <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control">
                             <%
                                 TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
@@ -187,58 +187,58 @@
                                 }
                             %>    
                         </select> 
-                            
-                        </div>
-                        <div class="col-md-3">                                                                                                                
-                        </div>
+
                     </div>
-                    
-                    <br>
-                    
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <input type="submit" class="btn btn-primary" name="submit" value="Modificar rol">
-                        </div>
+                    <div class="col-md-3">                                                                                                                
                     </div>
-                    
+                </div>
 
-                </fieldset>
-            </form>                    
-        </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Modificar rol">
+                    </div>
+                </div>
+
+
+            </fieldset>
+        </form>                    
     </div>
+</div>
 
-    <br></br>
-
-
-
+<br></br>
 
 
 
-    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-        <div class="col-md-6">
-            <h3>
-                Dirección
-            </h3>
-            <p>
-                2016 Universidad De El Salvador  <br/>
-                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-            </p>
-        </div>
-        <div class="col-md-6">
-            <h3>
-                Información de contacto
-            </h3>
-            <p>
-                Universidad De El Salvador
-                Tél: +(503) 2511-2000 <br/>
-                Consejo de becas
-                Tél: +(503) 2511- 2016
-            </p>
-        </div>
+
+
+
+<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+    <div class="col-md-6">
+        <h3>
+            Dirección
+        </h3>
+        <p>
+            2016 Universidad De El Salvador  <br/>
+            Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+        </p>
     </div>
+    <div class="col-md-6">
+        <h3>
+            Información de contacto
+        </h3>
+        <p>
+            Universidad De El Salvador
+            Tél: +(503) 2511-2000 <br/>
+            Consejo de becas
+            Tél: +(503) 2511- 2016
+        </p>
+    </div>
+</div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>

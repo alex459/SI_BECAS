@@ -5,7 +5,9 @@
  */
 package MODEL;
 
+import DAO.TipoUsuarioDao;
 import DAO.UsuarioDAO;
+import POJO.TipoUsuario;
 import POJO.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,19 +31,32 @@ public class ModificarRolesServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
+        request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
+        
         Usuario usuario = new Usuario();
-        UsuarioDAO usuarioDao = new UsuarioDAO();
-        usuarioDao.darDeBajaUsuario(usuario);
+        UsuarioDAO usuarioDao = new UsuarioDAO();        
 
         boolean bandera=false;
+        
+        //actualizando usuario
         
         String nombre_usuario = request.getParameter("CARNET");
         usuario = usuarioDao.consultarPorNombreUsuario(nombre_usuario);
         usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
         bandera = usuarioDao.actualizar(usuario);
 
+        
+        
+        
         if (bandera) {
+            //parte de bitacora            
+            TipoUsuario temp1 = new TipoUsuario();
+            TipoUsuarioDao temp2 = new TipoUsuarioDao();
+            temp1 = temp2.consultarPorId(usuario.getIdTipoUsuario());
+            String rol_anterior = request.getParameter("TIP_USUARIO_ANTERIOR");
+            String rol_nuevo = temp1.getTipoUsuario();                    
+            Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se actualizo el rol del usuario "+nombre_usuario+" de "+rol_anterior+" a "+rol_nuevo+".");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se cambio el rol del usuario "+nombre_usuario+" correctamente.");
         } else {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo cambiar el rol del usuario " + nombre_usuario + ".");

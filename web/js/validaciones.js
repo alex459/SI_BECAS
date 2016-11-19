@@ -90,8 +90,7 @@ function ValidarCamposVacios(ids_elementos) {
         if(document.getElementById(elementos[a].toString()).value.length<=0){
             exito=false;            
         }       
-    }
-    alert("RESULTADO "+exito);
+    }    
     return exito;
 }
 
