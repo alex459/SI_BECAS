@@ -3,7 +3,29 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="POJO.OfertaBeca"%>
+<%@page import="DAO.BecaDAO"%>
+<%@page import="DAO.InstitucionDAO"%>
+<%@page import="DAO.OfertaBecaDAO"%>
+<%@page import="POJO.Institucion"%>
+<%@page import="DAO.IdiomaDAO"%>
+<%@page import="POJO.Idioma"%>
+<%@page import="DAO.ConexionBD"%>
+<%@page import="POJO.Facultad"%>
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="POJO.TipoUsuario"%>
+<%@page import="DAO.TipoUsuarioDao"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%  OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
+    ArrayList<OfertaBeca> lista = ofertaBecaDAO.consultarTodos();
+    AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
+%>
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -17,6 +39,8 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -47,78 +71,325 @@
 
 </head>
 <body>
-    
+
     <div class="container-fluid">
-        
+
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-            
+
             <h2>
-                <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                <p class="text-center" style="color:#cf2a27">Elimnar ofertas de beca</p>
             </h2>
-            
+
             <br></br> 
         </div><!-- TITULO DE LA PANTALLA -->  
-        
-        
-        
-        
-        
-        
-        
-        
-        <div class="row"><!-- CONTENIDO DE LA PANTALLA -->
-            
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
-            <br></br> 
 
-        </div><!-- CONTENIDO DE LA PANTALLA -->
+        <div class="row"><!-- CONTENIDO DE LA PANTALLA -->  
+            <fieldset class="custom-border"> 
+            <legend class="custom-border">Eliminar oferta de beca</legend>   
+            <div class="row">   <!-- FILTROS -->
 
-        
-        
-        
-        
-        
-        
-        
-        
-        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-            <div class="col-md-6">
-                <h3>
-                    Dirección
-                </h3>
-                <p>
-                    2016 Universidad De El Salvador  <br/>
-                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                </p>
+                <div class="col-md-12">
+                    <form class="form-horizontal" action="110_eliminar_oferta_de_beca.jsp" method="post">
+                        <fieldset class="custom-border">  
+                            <legend class="custom-border">Filtros</legend>                    
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-6  text-right">                                   
+                                        <label for="nombreOferta">Nombre de la oferta : </label>                                
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input id="nombreOferta" name="nombreOferta" type="text" placeholder="ingrese el nombre de la oferta" class="form-control input-md">                                                                
+                                    </div>
+
+                                </div>    
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="col-md-6 text-right">
+                                                <label for="fIngresoIni">Fecha de ingreso (inicio) :</label>                                
+                                            </div>
+                                            <div class="col-md-6">                                
+                                                <div class="input-group date">
+                                                    <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-6 text-right">
+                                                <label for="fIngresoFin">Fecha de ingreso (fin):</label>                                
+                                            </div>
+                                            <div class="col-md-6">                                
+                                                <div class="input-group date">
+                                                    <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>   
+                                </div>
+                            </div>    
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-6 text-right">
+                                        <label for="institucionOfertante">Institucion ofertante : </label>                                
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select id="institucionOferente" name="institucionOferente" class="form-control">
+                                        <%
+                                            InstitucionDAO institucionDAO = new InstitucionDAO();
+                                            ArrayList<Institucion> listaInstitucion = new ArrayList();
+                                            listaInstitucion = institucionDAO.consultarPorTipo("ofertante");
+                                            for (int i = 0; i < listaInstitucion.size(); i++) {%>
+                                        <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
+                                        <%   }
+                                        %>    
+                                    </select>     
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6 text-right">
+                                            <label for="fCierreIni">Fecha de cierre (inicio) :</label>                                
+                                        </div>
+                                        <div class="col-md-6">                                
+                                            <div class="input-group date">
+                                                <input type="text" name="fCierreIni" id="fCierreIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-6 text-right">
+                                            <label for="fCierreFin">Fecha de cierre (fin) :</label>                                
+                                        </div>
+                                        <div class="col-md-6">                                
+                                            <div class="input-group date">
+                                                <input type="text" name="fCierreFin" id="fCierreFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>      
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6 text-right">
+                                    <label for="institucionEstudio">Institucion de estudio :</label>                                
+                                </div>
+                                <div class="col-md-6">                                
+                                    <select id="institucionEstudio" name="institucionEstudio" class="form-control">
+                                        <%
+                                            InstitucionDAO institucionDAO2 = new InstitucionDAO();
+                                            ArrayList<Institucion> listaInstitucion2 = new ArrayList();
+                                            listaInstitucion2 = institucionDAO2.consultarPorTipo("estudio");
+                                            for (int i = 0; i < listaInstitucion2.size(); i++) {%>
+                                        <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
+                                        <% }
+                                        %>    
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6 text-right">
+                                    <label for="tipoEstudio">Tipo de estudio :</label>                                
+                                </div>
+                                <div class="col-md-6"> 
+                                    <select id="tipoEstudio" name="tipoEstudio" class="form-control">
+                                        <option value="Maestria">Maestria</option>
+                                        <option value="Doctorado">Doctorado</option>
+                                        <option value="Especialización">Especialización</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <input type="submit" class="btn btn-primary" name="submit" value="Buscar">                       
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>                         
             </div>
-            <div class="col-md-6">
-                <h3>
-                    Información de contacto
-                </h3>
-                <p>
-                    Universidad De El Salvador
-                    Tél: +(503) 2511-2000 <br/>
-                    Consejo de becas
-                    Tél: +(503) 2511- 2016
-                </p>
-            </div>
+        </div>    
+        <%
+            InstitucionDAO institucionDAO3 = new InstitucionDAO();
+            Integer id_ofertaa_beca;
+            ConexionBD conexionbd = null;
+            ResultSet rs = null;
+            ArrayList<OfertaBeca> lista2 = new ArrayList();
+            ArrayList<Institucion> listaPais = new ArrayList();
+            OfertaBeca temp = new OfertaBeca();            
+            Institucion temp2 = new Institucion();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                String nombre = request.getParameter("nombreOferta");
+                String instOfertante = request.getParameter("institucionOferente");
+                String instEstudio = request.getParameter("institucionEstudio");
+                String tipoEstudio = request.getParameter("tipoEstudio");
+                String fIngresoIni = request.getParameter("fIngresoIni");
+                String fIngresoFin = request.getParameter("fIngresoFin");
+                String fCierreIni = request.getParameter("fCierreIni");
+                String fCierreFin = request.getParameter("fCierreFin");
+                //formando la consulta
+                String consultaSql="";
+                    consultaSql = "SELECT ID_OFERTA_BECA, NOMBRE_OFERTA,IDIOMA,TIPO_OFERTA_BECA,TIPO_ESTUDIO,FECHA_CIERRE, "
+                            + " ID_INSTITUCION_ESTUDIO, ID_INSTITUCION_FINANCIERA, "
+                            + " NOMBRE_INSTITUCION, PAIS FROM OFERTA_BECA, INSTITUCION WHERE "
+                            + "OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
+                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'";                 
+                if(!instEstudio.isEmpty()){
+                    int idEst = institucionDAO.consultarIdPorNombre(instEstudio);
+                    consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=" +idEst+ " ");
+                }
+                if(!instOfertante.isEmpty()){
+                    int idFin = institucionDAO.consultarIdPorNombre(instOfertante);
+                    consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
+                }
+                if(!fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
+                   java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                   java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
+                   consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '"+sqlFIngresoIni+"' AND '"+sqlFIngresoFin+"' ");
+                }
+                if(!fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
+                   java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
+                   java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
+                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '"+sqlFCierreIni+"' AND '"+sqlFCierreFin+"' ");
+                }
+                System.out.println(consultaSql);  
+                //realizando la consulta
+                conexionbd = new ConexionBD();
+                rs = conexionbd.consultaSql(consultaSql);
+                while (rs.next()) {
+                    temp = new OfertaBeca();
+                    temp2 = new Institucion();
+                    temp2.setPais(rs.getString("PAIS"));
+                    temp.setIdOfertaBeca(rs.getInt("ID_OFERTA_BECA"));
+                    temp.setNombreOferta(rs.getString("NOMBRE_OFERTA"));
+                    temp.setTipoOfertaBeca(rs.getString("TIPO_OFERTA_BECA"));
+                    temp.setTipoEstudio(rs.getString("TIPO_ESTUDIO"));
+                    temp.setFechaCierre(rs.getDate("FECHA_CIERRE"));
+                    temp.setIdInstitucionEstudio(rs.getInt("ID_INSTITUCION_ESTUDIO"));
+                    temp.setIdInstitucionFinanciera(rs.getInt("ID_INSTITUCION_FINANCIERA"));
+                    temp.setIdioma(rs.getString("IDIOMA"));
+                    temp.setTipoEstudio(rs.getString("TIPO_ESTUDIO"));                    
+                    System.out.println(temp.getNombreOferta());
+                    lista2.add(temp);
+                    listaPais.add(temp2);
+                }
+                //con el rs se llenara la tabla de resultados
+            } catch (Exception ex) {
+
+            }
+        %>                            
+
+        <div class="row">    
+            <form class="form-horizontal">
+                <fieldset class="custom-border">
+                    <legend class="custom-border">Ofertas de beca en el sistema</legend>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+
+                                <thead>
+                                    <tr class="success">
+                                        <th>Nombre de la oferta</th>
+                                        <th>Tipo de beca</th>
+                                        <th>Fecha limite</th>
+                                        <th>País</th>
+                                        <th>Tipo estudio</th>
+                                        <th>Institución de estudio</th>
+                                        <th>Institución financiera</th>
+                                        <th>Documento</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="info">
+                                        <%
+                                            System.out.println(lista2.size());
+                                            if (lista2.size() >= 0) {
+                                                int i = 0;
+                                                while (i < lista2.size()) {
+                                                    System.out.println(i);
+                                        %><tr class="bg-primary"><%
+                                        %><td><%=lista2.get(i).getNombreOferta()%></td><%
+                                            %><td><%=lista2.get(i).getTipoOfertaBeca()%></td><%
+                                        %><td><%=df.format(lista2.get(i).getFechaCierre())%></td><%
+                                        %><td><%=listaPais.get(i).getPais()%></td><%
+                                        %><td><%=lista2.get(i).getTipoEstudio()%></td><%                                         
+                                        %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion()%></td><% 
+                                        %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion()%></td><% 
+                                        %><td><% %></td><%    
+                                                    out.write("<td>");
+                                                    out.write("<center>");
+                                                    out.write("<form style='display:inline;' action='EliminarOfertaBecaServlet' method='post'><input type='hidden' name='ID_OFERTA_BECA' value='"+lista2.get(i).getIdOfertaBeca()+"'><input type='submit' class='btn btn-danger' name='submit' value='Eliminar oferta'></form> ");
+                                                    out.write("</center>");
+                                                    out.write("</td>");
+                                                    i++;
+                                                }
+                                            }
+                                            %>   
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> 
+                    </div>
+                </fieldset>
+            </form>
+        </div>                    
+    </fieldset>                                        
+    </div><!-- CONTENIDO DE LA PANTALLA -->
+
+
+
+
+
+
+
+
+
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
         </div>
     </div>
+</div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+                                                        $(function () {
+                                                            $('.input-group.date').datepicker({
+                                                                format: 'yyyy-mm-dd',
+                                                                calendarWeeks: true,
+                                                                todayHighlight: true,
+                                                                autoclose: true
+                                                            });
+                                                        });
+</script>
 </body>
 </html>

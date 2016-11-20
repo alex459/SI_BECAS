@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MauricioBC
  */
-public class AgregarOfertaBecaServlet extends HttpServlet {
+public class ModificarOfertaBecaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,18 +37,21 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());        
 
         //parte de lectura desde el jsp y guardado en bd     
-        int idOfertaBeca = ofertaBecaDAO.getSiguienteId();
-        ofertaBeca.setIdOfertaBeca(idOfertaBeca);
+        ofertaBeca.setIdOfertaBeca(Integer.parseInt(request.getParameter("idOferta")));
         ofertaBeca.setIdInstitucionEstudio(institucionDAO.consultarIdPorNombre(request.getParameter("institucionEstudio")));
         ofertaBeca.setIdInstitucionFinanciera(institucionDAO.consultarIdPorNombre(request.getParameter("institucionOferente")));
         ofertaBeca.setIdDocumento(1);
         ofertaBeca.setNombreOferta(request.getParameter("nombreOferta"));
         ofertaBeca.setTipoOfertaBeca(request.getParameter("tipoBeca"));
         ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
+        
         java.sql.Date sqlDate2 = new java.sql.Date(StringAFecha(request.getParameter("fechaCierre")).getTime());
+       
         ofertaBeca.setFechaCierre(sqlDate2);
         ofertaBeca.setModalidad(request.getParameter("modalidad"));
+        System.out.println(request.getParameter("fechaCierre"));
         java.sql.Date sqlDate3 = new java.sql.Date(StringAFecha(request.getParameter("fechaInicio")).getTime());
+         
         ofertaBeca.setFechaInicio(sqlDate3);
         ofertaBeca.setIdioma(request.getParameter("idioma"));
         ofertaBeca.setPerfil(request.getParameter("perfilBeca"));
@@ -56,11 +59,11 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         ofertaBeca.setFechaIngreso(sqlDate);
         ofertaBeca.setTipoEstudio(request.getParameter("tipoEstudio"));
         ofertaBeca.setOfertaBecaActiva(1);
-        Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);
+        Boolean exito=ofertaBecaDAO.modificar(ofertaBeca);
         if(exito){
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la oferta correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se modifico la oferta correctamente.");
         }else{
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la oferta");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo modificar la oferta de beca");
         } 
     }
 
@@ -68,7 +71,8 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
         try {
-            fecha = formatoDelTexto.parse(Sfecha);           
+            fecha = formatoDelTexto.parse(Sfecha);
+           
         } catch (ParseException ex) {
 
             ex.printStackTrace();

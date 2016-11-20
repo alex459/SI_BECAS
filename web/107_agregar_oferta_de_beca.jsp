@@ -273,7 +273,7 @@
 <script type="text/javascript">
     $(function () {
         $('.input-group.date').datepicker({            
-           // format: 'dd-mm-yy',
+            format: 'yyyy-mm-dd',
             calendarWeeks: true,
             todayHighlight: true,
             autoclose: true

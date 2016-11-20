@@ -19,7 +19,7 @@ public class InstitucionDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT NOMBRE_INSTITUCION, TIPO_INSITUCION, PAIS, PAGINA_WEB, EMAIL, INSTITUCION_ACTIVA FROM INSTITUCION WHERE ID_INSTITUCION = " + id;
+            String sql = "SELECT NOMBRE_INSTITUCION, TIPO_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, INSTITUCION_ACTIVA FROM INSTITUCION WHERE ID_INSTITUCION = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
 
@@ -27,7 +27,7 @@ public class InstitucionDAO extends ConexionBD{
 
                 int ID_INSTITUCION=id;                                
                 String NOMBRE_INSTITUCION=rs.getString("NOMBRE_INSTITUCION");
-                String TIPO_INSITUCION=rs.getString("TIPO_INSITUCION");
+                String TIPO_INSITUCION=rs.getString("TIPO_INSTITUCION");
                 String PAIS=rs.getString("PAIS");
                 String PAGINA_WEB=rs.getString("PAGINA_WEB");
                 String EMAIL=rs.getString("EMAIL");
@@ -119,6 +119,7 @@ public class InstitucionDAO extends ConexionBD{
     
     //consultar nombre de insitucion por tipo de insitucion
     public int consultarIdPorNombre(String nombre) {
+        System.out.println("AAAAAAAAAAAAAAA ----"+nombre);
         Institucion temp = new Institucion();        
         this.abrirConexion();        
         try {

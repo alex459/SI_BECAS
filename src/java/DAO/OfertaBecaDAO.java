@@ -6,12 +6,90 @@
 package DAO;
 import POJO.OfertaBeca;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
  * @author MauricioBC
  */
 public class OfertaBecaDAO extends ConexionBD{
+    
+    public ArrayList<OfertaBeca> consultarTodos() {
+        ArrayList<OfertaBeca> lista = new ArrayList<OfertaBeca>();
+        OfertaBeca temp = new OfertaBeca();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_OFERTA_BECA,ID_INSTITUCION_ESTUDIO,ID_INSTITUCION_FINANCIERA,ID_DOCUMENTO,NOMBRE_OFERTA,"
+                    + "TIPO_OFERTA_BECA,DURACION,FECHA_CIERRE,MODALIDAD,FECHA_INICIO,IDIOMA,FINANCIAMIENTO,"
+                    + "PERFIL,FECHA_INGRESO,TIPO_ESTUDIO,OFERTA_BECA_ACTIVA FROM OFERTA_BECA";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                temp = new OfertaBeca();
+                temp.setIdOfertaBeca(rs.getInt("ID_OFERTA_BECA"));
+                temp.setIdInstitucionEstudio(rs.getInt("ID_INSTITUCION_ESTUDIO"));
+                temp.setIdInstitucionFinanciera(rs.getInt("ID_INSTITUCION_FINANCIERA"));
+                temp.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
+                temp.setNombreOferta(rs.getString("NOMBRE_OFERTA"));
+                temp.setTipoOfertaBeca(rs.getString("TIPO_OFERTA_BECA"));
+                temp.setDuracion(rs.getInt("DURACION"));
+                temp.setFechaCierre(rs.getDate("FECHA_CIERRE"));
+                temp.setModalidad(rs.getString("MODALIDAD"));
+                temp.setFechaInicio(rs.getDate("FECHA_INICIO"));
+                temp.setIdioma(rs.getString("IDIOMA"));
+                temp.setFinanciamiento(rs.getString("FINANCIAMIENTO"));
+                temp.setPerfil(rs.getString("PERFIL"));
+                temp.setFechaIngreso(rs.getDate("FECHA_INGRESO"));
+                temp.setTipoEstudio(rs.getString("TIPO_ESTUDIO"));
+                temp.setOfertaBecaActiva(rs.getInt("OFERTA_BECA_ACTIVA"));          
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+     public OfertaBeca consultarPorId(int id) {
+        OfertaBeca temp = new OfertaBeca();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_INSTITUCION_ESTUDIO,ID_INSTITUCION_FINANCIERA,ID_DOCUMENTO,NOMBRE_OFERTA,"
+                    + "TIPO_OFERTA_BECA,DURACION,FECHA_CIERRE,MODALIDAD,FECHA_INICIO,IDIOMA,FINANCIAMIENTO,"
+                    + "PERFIL,FECHA_INGRESO,TIPO_ESTUDIO,OFERTA_BECA_ACTIVA FROM OFERTA_BECA WHERE ID_OFERTA_BECA = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+
+                int ID_OFERTA_BECA=id;
+                temp.setIdOfertaBeca(ID_OFERTA_BECA);
+                temp.setIdInstitucionEstudio(rs.getInt("ID_INSTITUCION_ESTUDIO"));
+                temp.setIdInstitucionFinanciera(rs.getInt("ID_INSTITUCION_FINANCIERA"));
+                temp.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
+                temp.setNombreOferta(rs.getString("NOMBRE_OFERTA"));
+                temp.setTipoOfertaBeca(rs.getString("TIPO_OFERTA_BECA"));
+                temp.setDuracion(rs.getInt("DURACION"));
+                temp.setFechaCierre(rs.getDate("FECHA_CIERRE"));
+                temp.setModalidad(rs.getString("MODALIDAD"));
+                temp.setFechaInicio(rs.getDate("FECHA_INICIO"));
+                temp.setIdioma(rs.getString("IDIOMA"));
+                temp.setFinanciamiento(rs.getString("FINANCIAMIENTO"));
+                temp.setPerfil(rs.getString("PERFIL"));
+                temp.setFechaIngreso(rs.getDate("FECHA_INGRESO"));
+                temp.setTipoEstudio(rs.getString("TIPO_ESTUDIO"));
+                temp.setOfertaBecaActiva(rs.getInt("OFERTA_BECA_ACTIVA"));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return temp;
+    }
+    
      public boolean ingresar(OfertaBeca ofertaBeca){
         boolean exito = false;        
         this.abrirConexion();
@@ -22,9 +100,8 @@ public class OfertaBecaDAO extends ConexionBD{
                     + "IDIOMA,FINANCIAMIENTO,PERFIL,FECHA_INGRESO,TIPO_ESTUDIO,OFERTA_BECA_ACTIVA)"
                     + " VALUES("+ofertaBeca.getIdOfertaBeca()+", "+ofertaBeca.getIdInstitucionEstudio()+", "+ofertaBeca.getIdInstitucionFinanciera()+","
                     + ""+ofertaBeca.getIdDocumento()+",'"+ofertaBeca.getNombreOferta()+"','"+ofertaBeca.getTipoOfertaBeca()+"',"
-                    + ""+ofertaBeca.getDuracion()+",'"+ofertaBeca.getFechaCierre().toString()+"','"+ofertaBeca.getModalidad()+"',"
-                    + "'"+ofertaBeca.getFechaInicio()+"','"+ofertaBeca.getIdioma()+"','"+ofertaBeca.getFinanciamiento()+"',"
-                    + "'"+ofertaBeca.getPerfil()+"','"+ofertaBeca.getFechaIngreso()+"','"+ofertaBeca.getTipoEstudio()+"',"+ofertaBeca.getOfertaBecaActiva()+");";
+                    + ""+ofertaBeca.getDuracion()+",'"+ofertaBeca.getFechaCierre()+"','"+ofertaBeca.getModalidad()+"',"
+                    + "'"+ofertaBeca.getFechaInicio()+"','"+ofertaBeca.getIdioma()+"','"+ofertaBeca.getFinanciamiento()+"','"+ofertaBeca.getPerfil()+"','"+ofertaBeca.getFechaIngreso()+"','"+ofertaBeca.getTipoEstudio()+"',"+ofertaBeca.getOfertaBecaActiva()+");";
             System.out.println(sql);
             stmt.execute(sql);
             exito = true;
@@ -36,6 +113,51 @@ public class OfertaBecaDAO extends ConexionBD{
         }
         return exito;
     }
+     
+    public boolean modificar(OfertaBeca ofertaBeca){
+        boolean exito = false;        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement(); 
+            String sql = "UPDATE OFERTA_BECA SET ID_INSTITUCION_ESTUDIO="+ofertaBeca.getIdInstitucionEstudio()
+                    +",ID_INSTITUCION_FINANCIERA="+ofertaBeca.getIdInstitucionFinanciera()
+                    +",ID_DOCUMENTO="+ofertaBeca.getIdDocumento()+",NOMBRE_OFERTA='"+ofertaBeca.getNombreOferta()
+                    +"',TIPO_OFERTA_BECA='"+ofertaBeca.getTipoOfertaBeca()+"',DURACION="+ofertaBeca.getDuracion()
+                    +",FECHA_CIERRE='"+ofertaBeca.getFechaCierre()+"',MODALIDAD='"+ofertaBeca.getModalidad()+"'"
+                    +",FECHA_INICIO='"+ofertaBeca.getFechaInicio()+"',IDIOMA='"+ofertaBeca.getIdioma()+"'"
+                    +",FINANCIAMIENTO='"+ofertaBeca.getFinanciamiento()+"',PERFIL='"+ofertaBeca.getPerfil()+"'"
+                    +",FECHA_INGRESO='"+ofertaBeca.getFechaIngreso()+"',TIPO_ESTUDIO='"+ofertaBeca.getTipoEstudio()+"'"
+                    +",OFERTA_BECA_ACTIVA="+ofertaBeca.getOfertaBecaActiva()+" WHERE ID_OFERTA_BECA="+ofertaBeca.getIdOfertaBeca()+";";
+                 
+            System.out.println(sql);
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    } 
+    
+     public boolean eliminar(OfertaBeca ofertaBeca){
+        boolean exito = false;        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement(); 
+            String sql = "DELETE FROM OFERTA_BECA WHERE ID_OFERTA_BECA="+ofertaBeca.getIdOfertaBeca()+";";                 
+            System.out.println(sql);
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    } 
     
     public Integer getSiguienteId() {
         Integer siguienteId = -1;
