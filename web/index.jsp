@@ -40,21 +40,11 @@
 
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                             <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                        </button> <a class="navbar-brand active" href="">Inicio</a>
+                        </button> <a class="navbar-brand active" href="index.jsp">Inicio</a>
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inicio<strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#">Ejemplo menu desplegable</a>
-                                    </li>								
-                                </ul>
-                            </li>
-                        </ul>
+                        
                         <ul class="nav navbar-nav">
                             <li>
                                         <a href="documentos.jsp">Documentos</a>                                   
