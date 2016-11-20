@@ -6,27 +6,29 @@
 package MODEL;
 
 import DAO.DocumentoDAO;
+import DAO.ExpedienteDAO;
+import DAO.TipoDocumentoDAO;
 import POJO.Documento;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import POJO.Expediente;
+import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author adminPC
  */
-@WebServlet("/Documento")
-public class VerDocumento extends HttpServlet {
+@WebServlet(name = "ModificarDocumentoServlet", urlPatterns = {"/ModificarDocumentoServlet"})
+@MultipartConfig(maxFileSize = 16177215)
+public class ModificarDocumentoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,40 +43,34 @@ public class VerDocumento extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        DocumentoDAO docdao = new DocumentoDAO();
-        Integer idDoc = Integer.parseInt(request.getParameter("id"));
-        Documento doc = new Documento();
-        doc = docdao.consultarPorId(idDoc);
-        String PdfName = doc.getIdTipoDocumento().getTipoDocumento() +".pdf";
-        ServletOutputStream  outs;
-        response.setContentType( "application/pdf" );
-        response.setHeader("Content-disposition","inline; filename=" +PdfName );
-        outs=  response.getOutputStream ();
-        InputStream is = null; 
-        BufferedInputStream  bis = null; 
-        BufferedOutputStream bos = null;
-        
-        try{
-            
-            is= doc.getDocumentoDigital();
-            
-            bis = new BufferedInputStream(is);
-            bos = new BufferedOutputStream(outs);
-            byte[] buff = new byte[8192];
-            int bytesRead;
-    // leyendo el archivo 
-            while(-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
-                bos.write(buff, 0, bytesRead);
-                int id=0;
-            }
-        }catch(Exception e){
-              System.out.println(e);          
-        }finally{
-            if (bis != null)
-             bis.close();
-             if (bos != null)
-             bos.close();
+        String obs = request.getParameter("observacion");
+        InputStream archivo = null;
+        Part filePart = request.getPart("doc_digital");
+        if (filePart != null) {
+            archivo = filePart.getInputStream();
         }
+        
+        Documento documento = new Documento();
+        DocumentoDAO documentoDao = new DocumentoDAO();    
+        Integer idDoc = Integer.parseInt(request.getParameter("id"));
+        
+        documento.setIdDocumento(idDoc);
+        documento.setDocumentoDigital(archivo);
+        documento.setObservacion(obs);
+
+        boolean act = false;
+        if (filePart.getSize() >0){
+        act = documentoDao.ActualizarDocumentoObservacion(documento);
+        } else{
+            act = documentoDao.ActualizarObservacion(documento);
+        }
+        
+        if(act= true){
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ha actualizado el Documento correctamente.");
+        }
+        else
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el Documento.");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -104,8 +100,6 @@ public class VerDocumento extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-            
     }
 
     /**
