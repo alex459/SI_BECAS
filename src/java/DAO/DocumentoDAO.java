@@ -12,6 +12,7 @@ import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -44,8 +45,10 @@ public class DocumentoDAO extends ConexionBD{
         
         this.abrirConexion();
         try {
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
             
-            String sql = "INSERT INTO DOCUMENTO(ID_DOCUMENTO, ID_TIPO_DOCUMENTO,DOCUMENTO_DIGITAL, OBSERVACION_O,ID_EXPEDIENTE,ESTADO_DOCUMENTO) VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO DOCUMENTO(ID_DOCUMENTO, ID_TIPO_DOCUMENTO,DOCUMENTO_DIGITAL, OBSERVACION_O,ID_EXPEDIENTE,ESTADO_DOCUMENTO,FECHA_INGRESO) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, documento.getIdDocumento());
             statement.setInt(2, documento.getIdTipoDocumento().getIdTipoDocumento());     
@@ -55,6 +58,7 @@ public class DocumentoDAO extends ConexionBD{
             statement.setString(4, documento.getObservacion());
             statement.setInt(5, documento.getIdExpediente().getIdExpediente());
             statement.setString(6, documento.getEstadoDocumento());
+            statement.setDate(7, sqlDate);
             int row = statement.executeUpdate();
             
             exito = true;

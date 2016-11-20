@@ -14,6 +14,7 @@ import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -64,13 +65,15 @@ public class AgregarDocumentoServlet extends HttpServlet {
         String Estado = "Publico";
         
         
+        
         documento.setIdDocumento(idDoc);
         documento.setIdTipoDocumento(tipo);
         documento.setDocumentoDigital(archivo);
         documento.setIdExpediente(idexpediente);
         documento.setObservacion(obs);
         documento.setEstadoDocumento(Estado);
-       
+        
+        
         boolean ing = documentoDao.Ingresar(documento);
         
         if(ing= true){
