@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author MauricioBC
+ * @author Mauricio
  */
 public class TipoDocumentoDAO extends ConexionBD{
      public TipoDocumento consultarPorId(Integer id) {
