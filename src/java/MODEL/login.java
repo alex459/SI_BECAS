@@ -39,13 +39,14 @@ public class login extends HttpServlet {
         
         usuario.setNombreUsuario(request.getParameter("user"));
         usuario.setClave(request.getParameter("pass"));
-        
+        usuario = usuarioDao.consultarPorNombreUsuario(usuario.getNombreUsuario());
         
         if(usuarioDao.login(usuario.getNombreUsuario(), usuario.getClave())){
             HttpSession sesion = request.getSession();
             sesion.setMaxInactiveInterval(600); //600 segundos, 10 min max para sesion activa
             sesion.setAttribute("user", usuario.getNombreUsuario());
             sesion.setAttribute("rol", getRol(usuario.getNombreUsuario(),usuarioDao));
+            sesion.setAttribute("id_tipo_usuario", usuario.getIdTipoUsuario());
             response.sendRedirect("principal.jsp");            
         }else{            
             response.sendRedirect("login.jsp");

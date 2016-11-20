@@ -12,7 +12,8 @@
     HttpSession actual = request.getSession();
     String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
-     if(user==null){
+    Integer t_usuario = (Integer) actual.getAttribute("id_tipo_usuario");
+     if(user==null || t_usuario==10){
      response.sendRedirect("login.jsp");
         return;
      }
