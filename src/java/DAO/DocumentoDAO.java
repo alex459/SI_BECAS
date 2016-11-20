@@ -77,14 +77,16 @@ public class DocumentoDAO extends ConexionBD{
         
         this.abrirConexion();
         try {
-            
-            String sql = "UPDATE DOCUMENTO SET DOCUMENTO_DIGITAL=?,OBSERVACION_O=? WHERE ID_DOCUMENTO=?";
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
+            String sql = "UPDATE DOCUMENTO SET DOCUMENTO_DIGITAL=?,OBSERVACION_O=?, FECHA_INGRESO=? WHERE ID_DOCUMENTO=?";
             PreparedStatement statement = conn.prepareStatement(sql);
             if (documento.getDocumentoDigital() != null) {
                 statement.setBlob(1, documento.getDocumentoDigital());
             }
             statement.setString(2, documento.getObservacion());
-            statement.setInt(3, documento.getIdDocumento());     
+            statement.setDate(3, sqlDate);
+            statement.setInt(4, documento.getIdDocumento());     
       
             int row = statement.executeUpdate();
             
