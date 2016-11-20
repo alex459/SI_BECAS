@@ -198,5 +198,26 @@ public class UsuarioDAO extends ConexionBD {
 
         return usuario;
     }
+    
+    //sirve para detectar si el nombre de usuario ya esta repetido en la base de datos.
+    public boolean nombreDeUsuarioRepetido(String nombre_usuario){
+        boolean respuesta = false;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT NOMBRE_USUARIO FROM usuario where NOMBRE_USUARIO = '" + nombre_usuario+"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            while (rs.next()) {                
+                respuesta = true;
+                break;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }                
+        return respuesta;
+    }
+    
 
 }
