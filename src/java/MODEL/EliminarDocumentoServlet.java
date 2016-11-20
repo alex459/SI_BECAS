@@ -9,6 +9,7 @@ import DAO.DocumentoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author adminPC
  */
+@WebServlet("/EliminarDocumentoServlet")
+
 public class EliminarDocumentoServlet extends HttpServlet {
 
     /**
@@ -33,20 +36,14 @@ public class EliminarDocumentoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Integer idDoc = Integer.parseInt(request.getParameter("id"));
         DocumentoDAO documentoDao = new DocumentoDAO();
-        documentoDao.eliminarDocumento(idDoc);
+        boolean eli = documentoDao.eliminarDocumento(idDoc);
         int id=0;
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Eliminando</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Eliminando Documento...</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        if(eli= true){
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se elimino el Documento correctamente.");
         }
+        else
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo eliminar el Documento.");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

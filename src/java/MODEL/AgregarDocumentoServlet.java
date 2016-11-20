@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,7 @@ import javax.servlet.http.Part;
  *
  * @author adminPC
  */
+@WebServlet("/AgregarDocumentoServlet")
 @MultipartConfig(maxFileSize = 16177215)
 public class AgregarDocumentoServlet extends HttpServlet {
 
@@ -40,19 +42,43 @@ public class AgregarDocumentoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AgregarDocumentoServlet</title><br>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>INGRESANDO REGISTRO</h1>");
-            out.println("<h3>ESPERE...</h3>");
-            out.println("</body>");
-            out.println("</html>");
+        Integer tip = Integer.parseInt(request.getParameter("tipo"));
+        String obs = request.getParameter("observacion");
+        InputStream archivo = null;
+        Part filePart = request.getPart("doc_digital");
+        if (filePart != null) {
+            archivo = filePart.getInputStream();
         }
+        
+        Documento documento = new Documento();
+        DocumentoDAO documentoDao = new DocumentoDAO();
+        TipoDocumento tipo = new TipoDocumento();
+        TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
+        ExpedienteDAO expDao = new ExpedienteDAO();
+        
+        Integer idDoc =  documentoDao.getSiguienteId();
+        
+        tipo = tipoDao.consultarPorId(tip);
+        Integer idexp = 0;
+        Expediente idexpediente = expDao.consultarPorId(idexp);  
+        String Estado = "Publico";
+        
+        
+        documento.setIdDocumento(idDoc);
+        documento.setIdTipoDocumento(tipo);
+        documento.setDocumentoDigital(archivo);
+        documento.setIdExpediente(idexpediente);
+        documento.setObservacion(obs);
+        documento.setEstadoDocumento(Estado);
+       
+        boolean ing = documentoDao.Ingresar(documento);
+        
+        if(ing= true){
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el Documento correctamente.");
+        }
+        else
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el Documento.");
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -83,38 +109,7 @@ public class AgregarDocumentoServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        Integer tip = Integer.parseInt(request.getParameter("tipo"));
-        String obs = request.getParameter("observacion");
-        InputStream archivo = null;
-        Part filePart = request.getPart("doc_digital");
-        if (filePart != null) {
-            archivo = filePart.getInputStream();
-        }
         
-        Documento documento = new Documento();
-        DocumentoDAO documentoDao = new DocumentoDAO();
-        TipoDocumento tipo = new TipoDocumento();
-        TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
-        ExpedienteDAO expDao = new ExpedienteDAO();
-        
-        Integer idDoc =  documentoDao.getSiguienteId();
-        
-        tipo = tipoDao.consultarPorId(tip);
-        Integer idexp = 0;
-        Expediente idexpediente = expDao.consultarPorId(idexp);  
-        String Estado = "Publico";
-        
-        
-        documento.setIdDocumento(idDoc);
-        documento.setIdTipoDocumento(tipo);
-        documento.setDocumentoDigital(archivo);
-        documento.setIdExpediente(idexpediente);
-        documento.setObservacion(obs);
-        documento.setEstadoDocumento(Estado);
-
-
-        
-        boolean ing = documentoDao.Ingresar(documento);
     }
 
     /**
