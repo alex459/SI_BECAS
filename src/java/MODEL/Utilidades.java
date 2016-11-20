@@ -46,7 +46,7 @@ public class Utilidades {
         temp1.setIdBitacora(temp4.getSiguienteId());
         temp1.setIdAccion(Id_accion);
         temp2 = temp3.consultarPorNombreUsuario(usuario_sesion);
-        temp1.setIdUsuario(temp2.getIdTipoUsuario());
+        temp1.setIdUsuario(temp2.getIdUsuario());
         Calendar calendar = Calendar.getInstance();
         java.util.Date now = calendar.getTime();
         java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
@@ -56,18 +56,8 @@ public class Utilidades {
         temp4.ingresar(temp1);
     }
     
-    /**
-     * Metodo para registrar una bitacora nueva.
-     * Id_Accion puede ser 1-INGRESAR, 2-ACTUALIZAR, 3-CONSULTAR, 4-ELIMINAR, 5-LOGIN, 6-LOGOUT, 7-REPORTE.
-     * usuario_sesion es el usuario logeado, en jsp o en servlet se pude obtener con request.getSession().getAttribute("user").toString().
-     * Ejemplo de Descripcion: "Se ingreso un nuevo usuario al sistema con carnet xxxx".
-     * Sql debe contener la sentencia sql.
-     * 
-     * @param Id_accion
-     * @param usuario_sesion
-     * @param Descripcion 
-     */
-    public static void nuevaBitacora(Integer Id_accion, String usuario_sesion, String Descripcion, String Sql) {
+    
+    /*public static void nuevaBitacora(Integer Id_accion, String usuario_sesion, String Descripcion, String Sql) {
         Bitacora temp1 = new Bitacora();
         Usuario temp2 = new Usuario();
         UsuarioDAO temp3 = new UsuarioDAO();
@@ -83,6 +73,6 @@ public class Utilidades {
         temp1.setDescripcion(Descripcion);
         temp1.setSqlScript(Sql);
         temp4.ingresar(temp1);
-    }
+    }*/
 
 }
