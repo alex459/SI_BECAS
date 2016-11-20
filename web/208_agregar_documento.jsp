@@ -75,7 +75,7 @@
                             <label>Documento Digital:</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="file" name="doc_digital" accept="application/pdf"><br>
+                            <input type="file" name="doc_digital" ><br>
                         </div>
                     </div>
 

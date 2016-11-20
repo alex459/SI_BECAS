@@ -3,6 +3,7 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="POJO.OfertaBeca"%>
@@ -14,6 +15,18 @@
 <%@page import="POJO.Idioma"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% 
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String rol=(String)actual.getAttribute("rol");
+    String user=(String)actual.getAttribute("user");
+     if(user==null){
+     response.sendRedirect("login.jsp");
+        return;
+     }
+%>
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -50,8 +63,8 @@
 
 
 
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
+<p class="text-right">Rol: <%= rol %></p>
+<p class="text-right">Usuario: <%= user %></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -78,12 +91,13 @@
                 <% OfertaBeca ofertaActual = new OfertaBeca();
     OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
     String id_oferta = request.getParameter("ID_OFERTA_BECA");
+    System.out.println("ID RECIBIDO PARA MODIFICAR: "+id_oferta);
     ofertaActual = ofertaBecaDAO.consultarPorId(Integer.parseInt(id_oferta));
     InstitucionDAO InstitucionDAO3 = new InstitucionDAO();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     
 %>
-                <input value="<%=2 %>" id="idOferta" name="idOferta" hidden>
+                <input value="<%=id_oferta%>" id="idOferta" name="idOferta" hidden>
                 <fieldset class="custom-border">  
                     <legend class="custom-border">Modificar oferta de beca</legend>
                     <div class="row"> 
@@ -91,13 +105,13 @@
                             <label for="nombreOferta">Nombre de la oferta : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="nombreOferta" name="nombreOferta" value="<%= ofertaActual.getNombreOferta()%>" type="text" placeholder="ingrese el nombre de la oferta" class="form-control input-md">                                                                
+                            <input id="nombreOferta" name="nombreOferta" value="<%= ofertaActual.getNombreOferta()%>" type="text" maxlength="100" placeholder="ingrese el nombre de la oferta" required class="form-control input-md">                                                                
                     </div>
                     <div class="col-md-3 text-right">
                         <label for="duracion">Duracion (Meses) : </label>                                
                     </div>
                     <div class="col-md-3 text-right">
-                        <input id="duracion" name="duracion" value="<%= ofertaActual.getDuracion()%>" type="text" placeholder="cambiar" class="form-control input-md">                                                                
+                        <input id="duracion" name="duracion" value="<%= ofertaActual.getDuracion()%>" type="number" min="1" max="60" placeholder="cambiar" required class="form-control input-md">                                                                
                     </div>                        
                 </div> 
                 <br>
@@ -292,8 +306,8 @@
                         <label for="textinput">Archivo de la oferta :</label>                                
                     </div>
                     <div class="col-md-3">      
-                        <input type="submit" class="btn btn-primary" name="submit" value="Seleccionar archivo">
-                    </div>              
+                            <input type="file" name="doc_digital" accept="application/pdf" >
+                    </div>               
                 </div>
                 <br>
                 <div class="row">
@@ -301,7 +315,7 @@
                         <label for="perfilBeca">Perfil de la beca: </label>                                
                     </div>
                     <div class="col-md-9">                                
-                        <textarea class="form-control" id="perfilBeca" name="perfilBeca" value="">
+                        <textarea class="form-control" id="perfilBeca" name="perfilBeca" maxlength="2000" value="" required>
                         <%= ofertaActual.getPerfil()%>
                         </textarea>
                     </div>                                    
@@ -309,7 +323,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <input type="submit" class="btn btn-primary" name="submit" value="Agregar oferta">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Modificar oferta">
                         <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
                     </div>
                 </div>

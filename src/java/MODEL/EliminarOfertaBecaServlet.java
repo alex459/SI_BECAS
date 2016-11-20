@@ -11,6 +11,7 @@ import POJO.OfertaBeca;
 import java.io.IOException;
 import java.util.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MauricioBC
  */
+@WebServlet("/ModificarOfertaBecaServlet")
 public class EliminarOfertaBecaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -30,7 +32,8 @@ public class EliminarOfertaBecaServlet extends HttpServlet {
         java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());        
 
         //parte de lectura desde el jsp y guardado en bd     
-        ofertaBeca.setIdOfertaBeca(Integer.parseInt(request.getParameter("ID_OFERTA_BECA")));        
+        ofertaBeca.setIdOfertaBeca(Integer.parseInt(request.getParameter("ID_OFERTA_BECA")));     
+        System.out.println("ID RECIBIDO "+Integer.parseInt(request.getParameter("ID_OFERTA_BECA")));
         Boolean exito=ofertaBecaDAO.eliminar(ofertaBeca);
         if(exito){
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se elimino la oferta correctamente.");

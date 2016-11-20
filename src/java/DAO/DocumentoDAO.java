@@ -8,8 +8,6 @@ package DAO;
 import POJO.Documento;
 import POJO.TipoDocumento;
 import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -44,23 +42,14 @@ public class DocumentoDAO extends ConexionBD{
         
         this.abrirConexion();
         try {
-            
-            String sql = "INSERT INTO DOCUMENTO(ID_DOCUMENTO, ID_TIPO_DOCUMENTO,DOCUMENTO_DIGITAL, OBSERVACION_O,ID_EXPEDIENTE,ESTADO_DOCUMENTO) VALUES(?,?,?,?,?,?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, documento.getIdDocumento());
-            statement.setInt(2, documento.getIdTipoDocumento().getIdTipoDocumento());     
-            if (documento.getDocumentoDigital() != null) {
-                statement.setBlob(3, documento.getDocumentoDigital());
-            }
-            statement.setString(4, documento.getObservacion());
-            statement.setInt(5, documento.getIdExpediente().getIdExpediente());
-            statement.setString(6, documento.getEstadoDocumento());
-            int row = statement.executeUpdate();
-            
+            stmt = conn.createStatement();
+            String sql = "INSERT INTO DOCUMENTO(ID_DOCUMENTO, ID_TIPO_DOCUMENTO,DOCUMENTO_DIGITAL, OBSERVACION_O,ID_EXPEDIENTE,ESTADO_DOCUMENTO) VALUES("+documento.getIdDocumento()+", "+documento.getIdTipoDocumento().getIdTipoDocumento()+", '"+documento.getDocumentoDigital()+"', '"+documento.getObservacion()+"', '"+documento.getIdExpediente().getIdExpediente()+"', '"+documento.getEstadoDocumento()+"')";
+            stmt.execute(sql);
             exito = true;
+            System.out.println(sql);
             this.cerrarConexion();
         }catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error " + e);
         }finally{
             this.cerrarConexion();
         }
@@ -73,7 +62,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO = \"Publico\"" ;
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO,D.DOCUMENTO_DIGITAL, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO = \"Publico\"" ;
             ResultSet rs = stmt.executeQuery(sql);
             
 
@@ -84,6 +73,7 @@ public class DocumentoDAO extends ConexionBD{
                 int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
                 Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
                 String OBSERVACION=rs.getString("OBSERVACION_O");
+                InputStream DOCUMENTO_DIGITAL = rs.getBinaryStream("DOCUMENTO_DIGITAL");
                 String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
                 
                 temp.setIdDocumento(ID_DOCUMENTO);
@@ -91,7 +81,7 @@ public class DocumentoDAO extends ConexionBD{
                 temp2.setTipoDocumento(TIPO_DOCUMENTO);
                 temp.setIdTipoDocumento(temp2);
                 temp.setObservacion(OBSERVACION);
-                
+                temp.setDocumentoDigital(DOCUMENTO_DIGITAL);
                 
                 
                 lista.add(temp);
@@ -134,8 +124,8 @@ public class DocumentoDAO extends ConexionBD{
             String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO,D.DOCUMENTO_DIGITAL, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO = \"Publico\" AND D.ID_DOCUMENTO=" +id;
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
-            Blob blob = rs.getBlob("D.DOCUMENTO_DIGITAL");
-            InputStream DOCUMENTO_DIGITAL = blob.getBinaryStream();
+            
+            InputStream DOCUMENTO_DIGITAL = rs.getBinaryStream("DOCUMENTO_DIGITAL");
             doc.setDocumentoDigital(DOCUMENTO_DIGITAL);
             
             

@@ -8,43 +8,89 @@ package MODEL;
 import DAO.OfertaBecaDAO;
 import DAO.InstitucionDAO;
 import DAO.DocumentoDAO;
+import DAO.ExpedienteDAO;
+import DAO.TipoDocumentoDAO;
 import POJO.Institucion;
 import POJO.OfertaBeca;
 import POJO.Documento;
+import POJO.Expediente;
+import POJO.TipoDocumento;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author MauricioBC
  */
+@WebServlet("/AgregarOfertaBecaServlet")
+@MultipartConfig(maxFileSize = 16177215)
 public class AgregarOfertaBecaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Agarrando el pdf
+        Integer tip = 2; //id del tipo de documento = oferta de beca
+        String obs = "Oferta de Beca de Postgrado";
+        InputStream archivo = null;
+        Part filePart = request.getPart("doc_digital");
+        if (filePart != null) {
+            archivo = filePart.getInputStream();
+        }
+        
         Date fechaHoy = new Date();
         OfertaBeca ofertaBeca = new OfertaBeca();
         OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
         InstitucionDAO institucionDAO = new InstitucionDAO();
-        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());        
+        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());  
+        Documento documento = new Documento();
+        DocumentoDAO docdao = new DocumentoDAO();
+        TipoDocumento tipo = new TipoDocumento();
+        TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
+        ExpedienteDAO expDao = new ExpedienteDAO();
+
 
         //parte de lectura desde el jsp y guardado en bd     
         int idOfertaBeca = ofertaBecaDAO.getSiguienteId();
         ofertaBeca.setIdOfertaBeca(idOfertaBeca);
         ofertaBeca.setIdInstitucionEstudio(institucionDAO.consultarIdPorNombre(request.getParameter("institucionEstudio")));
         ofertaBeca.setIdInstitucionFinanciera(institucionDAO.consultarIdPorNombre(request.getParameter("institucionOferente")));
-        ofertaBeca.setIdDocumento(1);
+        //Insertando el pdf
+        int idDoc=docdao.getSiguienteId();
+        tipo = tipoDao.consultarPorId(tip);
+        Integer idexp = 0;
+        Expediente idexpediente = expDao.consultarPorId(idexp);  
+        String Estado = "Difusion";        
+        documento.setIdDocumento(idDoc);
+        documento.setIdTipoDocumento(tipo);
+        documento.setDocumentoDigital(archivo);
+        documento.setIdExpediente(idexpediente);
+        documento.setObservacion(obs);
+        documento.setEstadoDocumento(Estado);     
+        boolean ing = docdao.Ingresar(documento);
+        System.out.println("resultado de doc "+ing);
+        
+        //asignar valores a oferta de beca
+        ofertaBeca.setIdDocumento(idDoc);
         ofertaBeca.setNombreOferta(request.getParameter("nombreOferta"));
         ofertaBeca.setTipoOfertaBeca(request.getParameter("tipoBeca"));
+        
+        
         ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
+         System.out.println(request.getParameter("fechaCierre"));
+        ofertaBeca.setFechaCierre(StringAFecha(request.getParameter("fechaCierre")));
+       ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
         java.sql.Date sqlDate2 = new java.sql.Date(StringAFecha(request.getParameter("fechaCierre")).getTime());
         ofertaBeca.setFechaCierre(sqlDate2);
         ofertaBeca.setModalidad(request.getParameter("modalidad"));

@@ -4,10 +4,30 @@
     Author     : Manuel Miranda
 --%>
 
+<%@page import="POJO.TipoDocumento"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="POJO.Documento"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.TipoDocumentoDAO"%>
+<%@page import="DAO.DocumentoDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    DocumentoDAO docDao = new DocumentoDAO();
+    TipoDocumentoDAO tipDocDao= new TipoDocumentoDAO();
+    ArrayList<Documento> publicos = new ArrayList<Documento>();
+    publicos =  docDao.consultarTodos();
+    Gson gson = new Gson();
+    String documentosJSON1 = gson.toJson(publicos);
+    String documentosJSON =  documentosJSON1.replace("\"", "'");
+    ArrayList<TipoDocumento> tiposDoc = new ArrayList<TipoDocumento>();
+    tiposDoc = tipDocDao.consultarTodosPublicos();
+    Gson gson2 = new Gson();
+    String tiposJSON1 = gson2.toJson(tiposDoc);
+    String tiposJSON =  tiposJSON1.replace("\"", "'"); 
+%>
 <!DOCTYPE html>
-<html>
+<html ng-app="DocumentoApp">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,8 +66,8 @@
              el menu puede ser cambiado en la pagina menu.jsp --%>
         <jsp:include page="menu.jsp"></jsp:include>
     </head>
-    <body>
-
+    
+    <body ng-controller="BuscarCtrl "ng-init="documentos=<%=documentosJSON%>">
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Consultar Documento</H3>
         <div class="col-md-2"></div>
@@ -61,14 +81,13 @@
                         <fieldset class="custom-border">
                             <legend class="custom-border">Filtro</legend>
                             <form>
-                                <div class="row">
+                                <div class="row" ng-init="tipos=<%=tiposJSON%>">
                                     <div class="col-md-4">
                                         <label>Tipo Documento:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select class="form-control">
-                                            <option>Doc 1</option>
-                                            <option>Doc 2</option>
+                                        <select class="form-control" ng-model = "idTipo">
+                                            <option ng-repeat="option in tipos" value="{{option.idTipoDocumento}}">{{option.tipoDocumento}}</option>
                                         </select><br>
                                     </div>
                                 </div>
@@ -92,21 +111,25 @@
                                             <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th><th>Observaciones</th><th>Accion</th>
                                         </tr>   
                                     </thead>
-                                    <tbody>
+                                    <%int i =0;%>
+                                    <tbody ng-repeat="x in documentos |filter:{idTipoDocumento:{idTipoDocumento:idTipo}}">
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><button class="btn btn-success">Editar</button></td>
+                                            <td>{{documentos.indexOf(x)+1}}</td>
+                                            <td>{{x.idTipoDocumento.tipoDocumento}}</td>
+                                            <td><form action="VerDocumento" method="post"  target="_blank">
+                                                    <input type="hidden" name="id" value="{{x.idDocumento}}">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                </form>
+                                            </td>
+                                            <td>{{x.observacion}}</td>
+                                            <td>
+                                                <form action="209_modificar_documento.jsp" method="post">
+                                                    <input type="hidden" name="id" value="{{x.idDocumento}}">
+                                                    <input type="submit" class="btn btn-success" value="Editar">
+                                                </form>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><button class="btn btn-success">Editar</button></td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                     </div>
@@ -156,6 +179,8 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/buscarDocumento.js"></script>
 
 
 </body>

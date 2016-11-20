@@ -22,7 +22,20 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%  OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
+<% 
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String rol=(String)actual.getAttribute("rol");
+    String user=(String)actual.getAttribute("user");
+     if(user==null){
+     response.sendRedirect("login.jsp");
+        return;
+     }
+    response.setContentType("text/html;charset=UTF-8"); 
+    request.setCharacterEncoding("UTF-8");
+    OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
     ArrayList<OfertaBeca> lista = ofertaBecaDAO.consultarTodos();
     AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
 %>
@@ -61,8 +74,8 @@
 
 
 
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
+<p class="text-right">Rol: <%= rol %></p>
+<p class="text-right">Usuario: <%= user %></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -138,6 +151,7 @@
                                             InstitucionDAO institucionDAO = new InstitucionDAO();
                                             ArrayList<Institucion> listaInstitucion = new ArrayList();
                                             listaInstitucion = institucionDAO.consultarPorTipo("ofertante");
+                                              %><option value="" disabled selected>Seleccione una institución</option><%                                      
                                             for (int i = 0; i < listaInstitucion.size(); i++) {%>
                                         <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
                                         <%   }
@@ -181,6 +195,7 @@
                                             InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                             ArrayList<Institucion> listaInstitucion2 = new ArrayList();
                                             listaInstitucion2 = institucionDAO2.consultarPorTipo("estudio");
+                                            %><option value="" disabled selected>Seleccione una institución</option><% 
                                             for (int i = 0; i < listaInstitucion2.size(); i++) {%>
                                         <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
                                         <% }
@@ -196,6 +211,7 @@
                                 </div>
                                 <div class="col-md-6"> 
                                     <select id="tipoEstudio" name="tipoEstudio" class="form-control">
+                                        <option value="">Seleccione una opción</option>
                                         <option value="Maestria">Maestria</option>
                                         <option value="Doctorado">Doctorado</option>
                                         <option value="Especialización">Especialización</option>
@@ -223,10 +239,13 @@
             Institucion temp2 = new Institucion();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                String nombre = request.getParameter("nombreOferta");
-                String instOfertante = request.getParameter("institucionOferente");
-                String instEstudio = request.getParameter("institucionEstudio");
-                String tipoEstudio = request.getParameter("tipoEstudio");
+                String nombre= "",tipoEstudio="", instOfertante="", instEstudio="";
+                if(!request.getParameter("nombreOferta").isEmpty())
+                   nombre = request.getParameter("nombreOferta");
+                instOfertante = request.getParameter("institucionOferente");                
+                instEstudio = request.getParameter("institucionEstudio");
+                if(!request.getParameter("tipoEstudio").isEmpty())
+                   tipoEstudio = request.getParameter("tipoEstudio");
                 String fIngresoIni = request.getParameter("fIngresoIni");
                 String fIngresoFin = request.getParameter("fIngresoFin");
                 String fCierreIni = request.getParameter("fCierreIni");
@@ -237,12 +256,12 @@
                             + " ID_INSTITUCION_ESTUDIO, ID_INSTITUCION_FINANCIERA, "
                             + " NOMBRE_INSTITUCION, PAIS FROM OFERTA_BECA, INSTITUCION WHERE "
                             + "OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
-                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'";                 
-                if(!instEstudio.isEmpty()){
+                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'"; 
+                if(instEstudio!=null){                    
                     int idEst = institucionDAO.consultarIdPorNombre(instEstudio);
                     consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=" +idEst+ " ");
                 }
-                if(!instOfertante.isEmpty()){
+                if(instOfertante!=null){
                     int idFin = institucionDAO.consultarIdPorNombre(instOfertante);
                     consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
                 }
@@ -256,10 +275,11 @@
                    java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
                    consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '"+sqlFCierreIni+"' AND '"+sqlFCierreFin+"' ");
                 }
+                consultaSql=consultaSql.concat(";");
                 System.out.println(consultaSql);  
                 //realizando la consulta
                 conexionbd = new ConexionBD();
-                rs = conexionbd.consultaSql(consultaSql);
+                rs = conexionbd.consultaSql(consultaSql);              
                 while (rs.next()) {
                     temp = new OfertaBeca();
                     temp2 = new Institucion();
@@ -276,10 +296,11 @@
                     System.out.println(temp.getNombreOferta());
                     lista2.add(temp);
                     listaPais.add(temp2);
+                    System.out.println("GGGGGGGGTTTTTTTTT");
                 }
                 //con el rs se llenara la tabla de resultados
             } catch (Exception ex) {
-
+                System.out.println(ex);
             }
         %>                            
 
@@ -311,7 +332,7 @@
                                             if (lista2.size() >= 0) {
                                                 int i = 0;
                                                 while (i < lista2.size()) {
-                                                    System.out.println(i);
+                                                    System.out.println(lista2.get(i).getIdOfertaBeca()+"ELLLLLLL ID");
                                         %><tr class="bg-primary"><%
                                         %><td><%=lista2.get(i).getNombreOferta()%></td><%
                                             %><td><%=lista2.get(i).getTipoOfertaBeca()%></td><%
@@ -323,7 +344,7 @@
                                         %><td><% %></td><%    
                                                     out.write("<td>");
                                                     out.write("<center>");
-                                                    out.write("<form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'><input type='hidden' name='ID_OFERTA_BECA' value='" + lista2.get(i).getIdOfertaBeca() + "'><input type='submit' class='btn btn-success' name='submit' value='Modificar oferta'></form> ");
+                                                    %><form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'><input type='hidden' name='ID_OFERTA_BECA' value='<%=lista2.get(i).getIdOfertaBeca()%>'><input type='submit' class='btn btn-success' name='submit' value='Modificar oferta'></form><%
                                                     out.write("</center>");
                                                     out.write("</td>");
                                                     i++;

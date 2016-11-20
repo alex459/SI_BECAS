@@ -11,6 +11,18 @@
 <%@page import="POJO.Idioma"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% 
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String rol=(String)actual.getAttribute("rol");
+    String user=(String)actual.getAttribute("user");
+     if(user==null){
+     response.sendRedirect("login.jsp");
+        return;
+     }
+%>
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -47,8 +59,8 @@
 
 
 
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
+<p class="text-right">Rol: <%= rol %></p>
+<p class="text-right">Usuario: <%= user %></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -71,7 +83,7 @@
 
         <div class="col-md-12">
 
-            <form class="form-horizontal" action="AgregarOfertaBecaServlet" method="post">
+            <form class="form-horizontal" action="AgregarOfertaBecaServlet" method="post" enctype="multipart/form-data">
                 <fieldset class="custom-border">  
                     <legend class="custom-border">Agregar oferta de beca</legend>
                     <div class="row"> 
@@ -79,13 +91,13 @@
                             <label for="nombreOferta">Nombre de la oferta : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="nombreOferta" name="nombreOferta" type="text" placeholder="ingrese el nombre de la oferta" class="form-control input-md">                                                                
+                            <input id="nombreOferta" name="nombreOferta" type="text" maxlength="100" placeholder="ingrese el nombre de la oferta" required class="form-control input-md">                                                                
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="duracion">Duracion (Meses) : </label>                                
                         </div>
                         <div class="col-md-3 text-right">
-                            <input id="duracion" name="duracion" type="text" placeholder="cambiar" class="form-control input-md">                                                                
+                            <input id="duracion" name="duracion" type="number" placeholder="cambiar" min="1" max="60" required class="form-control input-md">                                                                
                         </div>                        
                     </div> 
                     <br>
@@ -94,11 +106,12 @@
                             <label for="institucionOfertante">Institucion ofertante : </label>                                
                         </div>
                         <div class="col-md-3">
-                        <select id="institucionOferente" name="institucionOferente" class="form-control">
+                        <select id="institucionOferente" name="institucionOferente" class="form-control" required>
                             <%
                                 InstitucionDAO institucionDAO = new InstitucionDAO();
                                 ArrayList<Institucion> listaInstitucion = new ArrayList();
                                 listaInstitucion = institucionDAO.consultarPorTipo("ofertante");
+                                 %><option value="" disabled selected required>Seleccione una institución</option><%  
                                 for (int i = 0; i < listaInstitucion.size(); i++) { %>
                                     <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
                                     <%   }
@@ -109,7 +122,8 @@
                             <label for="modalidad">Modalidad :</label>                                
                         </div>
                         <div class="col-md-3">
-                         <select id="modalidad" name="modalidad" class="form-control">
+                         <select id="modalidad" name="modalidad" class="form-control" required>
+                                <option value="">Seleccione una opción</option>
                                 <option value="Presencial">Presencial</option>  
                                 <option value="Semipresencial">Semipresencial</option>
                                 <option value="Virtual">Virtual</option>
@@ -124,11 +138,12 @@
                             <label for="institucionEstudio">Institucion de estudio :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <select id="institucionEstudio" name="institucionEstudio" class="form-control">
+                            <select id="institucionEstudio" name="institucionEstudio" class="form-control" required="">
                             <%
                                 InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                 ArrayList<Institucion> listaInstitucion2 = new ArrayList();
                                 listaInstitucion2 = institucionDAO2.consultarPorTipo("estudio");
+                                 %><option value="" disabled selected required>Seleccione una opción</option><% 
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {  %>
                                     <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
                                <% }
@@ -140,7 +155,7 @@
                         </div>
                         <div class="col-md-3">                                                            
                             <div class="input-group date">
-                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control" required><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                         </div>
                         </div>              
                     </div>   
@@ -150,7 +165,8 @@
                             <label for="tipoEstudio">Tipo de estudio :</label>                                
                         </div>
                         <div class="col-md-3"> 
-                            <select id="tipoEstudio" name="tipoEstudio" class="form-control">
+                            <select id="tipoEstudio" name="tipoEstudio" class="form-control" required>
+                                <option value="">Seleccione una opción</option>
                                <option value="Maestria">Maestria</option>
                                <option value="Doctorado">Doctorado</option>
                                <option value="Especialización">Especialización</option>
@@ -161,7 +177,7 @@
                         </div>
                         <div class="col-md-3">                                
                             <div class="input-group date">
-                                        <input type="text" name="fechaCierre" id="fechaCierre" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" required><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                         </div>
                         </div>              
                     </div>
@@ -171,7 +187,8 @@
                             <label for="tipoBeca">Tipo de beca: </label>                                
                         </div>
                         <div class="col-md-3">    
-                            <select id="tipoBeca" name="tipoBeca" class="form-control">
+                            <select id="tipoBeca" name="tipoBeca" class="form-control" required>
+                                <option value="">Seleccione una opción</option>
                                 <option value="Interna">Interna</option>
                                 <option value="Externa">Externa</option>                                
                             </select>
@@ -180,15 +197,17 @@
                             <label for="idioma">Idioma :</label>                                
                         </div>
                         <div class="col-md-3"> 
-                            <select id="idioma" name="idioma" class="form-control">
-                             <%
+                            <select id="idioma" name="idioma" class="form-control" required>
+                                <option value="">Seleccione Idioma</option> 
+                                 <%
                                 IdiomaDAO idiomaDAO = new IdiomaDAO();
                                 ArrayList<Idioma> listaIdioma = new ArrayList<Idioma>();
                                 listaIdioma = idiomaDAO.consultarTodos();
-                                for (int i = 0; i < listaIdioma.size(); i++) { %>
-                                <option value="<%=listaIdioma.get(i).getIdioma()%>"><%=listaIdioma.get(i).getIdioma()%></option>
-                             <%   }
-                            %>                              
+                                for (int i = 0; i < listaIdioma.size(); i++) {
+                                        %><option value="<%=listaIdioma.get(i).getIdioma()%>"><%=listaIdioma.get(i).getIdioma()%></option><%
+                                    
+                                }
+                            %>
                             </select>
                         </div>              
                     </div>
@@ -198,7 +217,8 @@
                             <label for="financiamiento">Financiamiento: </label>                                
                         </div>
                         <div class="col-md-3">         
-                            <select id="financiamiento" name="financiamiento" class="form-control">
+                            <select id="financiamiento" name="financiamiento" class="form-control" required>
+                                <option value="">Seleccione una opción</option>
                                 <option value="Beca completa">Beca completa</option>
                                 <option value="Media beca">Media beca</option>
                                 <option value="Cuarto de beca">Cuarto de beca</option>
@@ -208,7 +228,7 @@
                             <label for="textinput">Archivo de la oferta :</label>                                
                         </div>
                         <div class="col-md-3">      
-                            <input type="submit" class="btn btn-primary" name="submit" value="Seleccionar archivo">
+                            <input type="file" name="doc_digital" accept="application/pdf" >
                         </div>              
                     </div>
                     <br>
@@ -217,7 +237,7 @@
                             <label for="perfil">Perfil de la beca: </label>                                
                         </div>
                         <div class="col-md-9">                                
-                            <textarea class="form-control" id="perfilBeca" name="perfilBeca"></textarea>
+                            <textarea class="form-control" id="perfilBeca" maxlength="2000" name="perfilBeca" required></textarea>
                         </div>                                    
                     </div>
                     <br>
