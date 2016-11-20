@@ -1,13 +1,27 @@
 <%-- 
     Document   : 208_agregar_documento
     Created on : 11-07-2016, 04:53:51 AM
-    Author     : Manuel Miranda
+    Author     : Mauricio
 --%>
 
+
+<%@page import="POJO.TipoDocumento"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.TipoDocumentoDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    TipoDocumentoDAO tipDocDao= new TipoDocumentoDAO();
+    Gson gson = new Gson();
+    ArrayList<TipoDocumento> tiposDoc = new ArrayList<TipoDocumento>();
+    tiposDoc = tipDocDao.consultarTodosPublicosPendientes();
+    String tiposJSON1 = gson.toJson(tiposDoc);
+    String tiposJSON =  tiposJSON1.replace("\"", "'");
+    
+%>
 <!DOCTYPE html>
-<html>
+<html ng-app="DocumentoApp">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,7 +61,7 @@
     <jsp:include page="menu.jsp"></jsp:include>
 </head>
 
-<body>
+<body ng-controller="AgregarCtrl">
 
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Agregar Documento</H3>
@@ -56,16 +70,17 @@
             <fieldset class="custom-border">
                 <legend class="custom-border">Datos del Documento</legend>
                 <h5 style="color:#E42217;">Ingrese la informacion del documento</h5><br>
-                <form  action="AgregarDocumentoServlet" method="POST" enctype="multipart/form-data">
-                    <div class="row">
+                <form  name="agregarDocumento" action="AgregarDocumentoServlet" method="POST" enctype="multipart/form-data">
+                    <div class="row" ng-init="tipos=<%=tiposJSON%>">
                         <div class="col-md-4">
                             <label>Tipo de Documento:</label>
                         </div>
                         <div class="col-md-7">
-                            <select class="form-control" name="tipo">
-                                <option value="1">Doc 1</option>
-                                <option value="2">Doc 2</option>
+                            <select class="form-control" name="tipo" ng-model = "idTipo" ng-required="true">
+                                <option ng-repeat="option in tipos" value="{{option.idTipoDocumento}}">{{option.tipoDocumento}}</option>
+
                             </select><br>
+                            <span class="text-danger" ng-show="!agregarDocumento.$pristine && agregarDocumento.tipo.$error.required">Debe seleccionar el Tipo de Documento a Ingresar.</span>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -75,7 +90,9 @@
                             <label>Documento Digital:</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="file" name="doc_digital" ><br>
+                            <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true"><br>
+                            <span class="text-danger" ng-show="!agregarDocumento.$pristine && agregarDocumento.doc_digital.$error.required">Debe Agregar un Documento PDF.</span>
+                            
                         </div>
                     </div>
 
@@ -84,7 +101,7 @@
                             <label>Observacion:</label>
                         </div>
                         <div class="col-md-7">
-                            <textarea class="form-control" name="observacion"></textarea><br>
+                            <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024"></textarea><br>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -93,10 +110,10 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <div class="col-md-6">
-                                <input type="submit" name="guardar" value="Guardar" class="btn btn-primary">
+                                <input type="submit" name="guardar" value="Guardar" class="btn btn-primary" ng-disabled="!agregarDocumento.$valid">
                             </div>
                             <div class="col-md-6">
-                                <button class="btn btn-danger">Cancelar</button>
+                                <a href=""><button class="btn btn-danger">Cancelar</button></a>
                             </div>
                         </div>
                         <div class="col-md-3"></div>   
@@ -147,6 +164,8 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/agregarDocumento.js"></script>
 
 
 </body>

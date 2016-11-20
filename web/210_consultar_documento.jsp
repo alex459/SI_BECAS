@@ -1,7 +1,7 @@
 <%-- 
     Document   : 210_consultar_documento
     Created on : 11-07-2016, 04:58:22 AM
-    Author     : Manuel Miranda
+    Author     : Mauricio
 --%>
 
 <%@page import="POJO.TipoDocumento"%>
@@ -21,7 +21,7 @@
     String documentosJSON1 = gson.toJson(publicos);
     String documentosJSON =  documentosJSON1.replace("\"", "'");
     ArrayList<TipoDocumento> tiposDoc = new ArrayList<TipoDocumento>();
-    tiposDoc = tipDocDao.consultarTodosPublicos();
+    tiposDoc = tipDocDao.consultarTodosPublicosIngresados();
     Gson gson2 = new Gson();
     String tiposJSON1 = gson2.toJson(tiposDoc);
     String tiposJSON =  tiposJSON1.replace("\"", "'"); 
@@ -67,7 +67,7 @@
         <jsp:include page="menu.jsp"></jsp:include>
     </head>
     
-    <body ng-controller="BuscarCtrl "ng-init="documentos=<%=documentosJSON%>">
+    <body ng-controller="BuscarCtrl" ng-init="documentos=<%=documentosJSON%>">
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Consultar Documento</H3>
         <div class="col-md-2"></div>
@@ -92,9 +92,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row text-center">
-                                    <button class="btn btn-primary">Buscar</button>
-                                </div>
+                               
                             </form>
                         </fieldset>
 
@@ -116,7 +114,7 @@
                                         <tr>
                                             <td>{{documentos.indexOf(x)+1}}</td>
                                             <td>{{x.idTipoDocumento.tipoDocumento}}</td>
-                                            <td><form action="VerDocumento" method="post"  target="_blank">
+                                            <td><form action="Documento" method="post"  target="_blank">
                                                     <input type="hidden" name="id" value="{{x.idDocumento}}">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                 </form>

@@ -1,13 +1,58 @@
 <%-- 
     Document   : 209_modificar_documento
     Created on : 11-07-2016, 04:55:43 AM
-    Author     : Manuel Miranda
+    Author     : Mauricio
 --%>
 
+<%@page import="POJO.Documento"%>
+<%@page import="DAO.DocumentoDAO"%>
+<%@page import="POJO.TipoDocumento"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="DAO.TipoDocumentoDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    Integer id=0;
+    Integer idtipo=0;
+    TipoDocumentoDAO tipDocDao= new TipoDocumentoDAO();
+    Gson gson = new Gson();
+    ArrayList<TipoDocumento> tiposDoc = new ArrayList<TipoDocumento>();
+    
+    DocumentoDAO docDao = new DocumentoDAO();
+    String observacion="";
+    String nombreTipo ="";
+    
+try{
+    id=Integer.parseInt(request.getParameter("id"));
+} catch(Exception e){
+    e.printStackTrace();
+}
+try{
+    idtipo=Integer.parseInt(request.getParameter("idTipo"));
+    id = docDao.ObtenerIdDocumento(idtipo);
+} catch(Exception e){
+    e.printStackTrace();
+}
+
+if (id !=0){
+    Documento publicos = new Documento();
+    tiposDoc = tipDocDao.consultarPorIdDocumento(id);
+    publicos =  docDao.consultarPorId(id);
+    observacion = publicos.getObservacion();
+    idtipo = publicos.getIdTipoDocumento().getIdTipoDocumento();
+    nombreTipo = publicos.getIdTipoDocumento().getTipoDocumento();
+    
+}else{
+    tiposDoc = tipDocDao.consultarTodosPublicosIngresados();
+    
+}
+    String tiposJSON1 = gson.toJson(tiposDoc);
+    String tiposJSON =  tiposJSON1.replace("\"", "'");
+    
+%>
 <!DOCTYPE html>
-<html>
+<html ng-app="DocumentoApp">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,7 +91,7 @@
              el menu puede ser cambiado en la pagina menu.jsp --%>
         <jsp:include page="menu.jsp"></jsp:include>
     </head>
-    <body>
+    <body ng-controller="ModificarCtrl" >
 
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Modificar Documento</H3>
@@ -55,30 +100,27 @@
             <fieldset class="custom-border">
                 <legend class="custom-border">Datos del Documento</legend>
                 <h5 style="color:#E42217;">Ingrese la informacion del documento</h5><br>
-                <form>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>Documento:</label>
+                <%
+                    if (id !=0){%>
+                    <form action="ModificarDocumentoServlet" method = post enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-4">
+                              <label>Documento:</label>
+                            </div>
+                            <div class="col-md-7">
+                                <span><%=nombreTipo%></span>
+                                <input type="hidden" name="id" value="<%=id%>" />
+                                <br>
+                            
+                            </div>
+                            <div class="col-md-1"></div>
                         </div>
-                        <div class="col-md-7">
-                            <select class="form-control">
-                                <option>Doc 1</option>
-                                <option>Doc 2</option>
-                            </select><br>
-                        </div>
-                        <div class="col-md-1"></div>
-                    </div>
-
-                    <div class="row text-center">
-                        <button class="btn btn-primary">Cargar</button><br><br>
-                    </div>
-
-                    <div class="row">
+                        <div class="row">
                         <div class="col-md-4">
                             <label>Documento Digital:</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="file" name="documento" class=""><br>
+                            <input type="file" name="doc_digital" accept="application/pdf"><br>
                         </div>
                     </div>
 
@@ -87,7 +129,7 @@
                             <label>Observacion:</label>
                         </div>
                         <div class="col-md-7">
-                            <textarea class="form-control"></textarea><br>
+                            <textarea name="observacion" class="form-control" ><%=observacion%></textarea><br>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -96,7 +138,7 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <div class="col-md-6">
-                                <input type="button" name="guardar" value="Guardar" class="btn btn-primary">
+                                <input type="submit" name="guardar" value="Guardar" class="btn btn-primary">
                             </div>
                             <div class="col-md-6">
                                 <button class="btn btn-danger">Cancelar</button>
@@ -104,7 +146,30 @@
                         </div>
                         <div class="col-md-3"></div>   
                     </div>
-                </form>
+                    </form>
+                 <%   } else{%>
+                    <form action="209_modificar_documento.jsp" method = post>
+                        <div class="row" ng-init="tipos=<%=tiposJSON%>">
+                            <div class="col-md-4">
+                                <label>Documento:</label>
+                            </div>
+                            <div class="col-md-7">
+                                <select  name="idTipo" class="form-control" ng-model = "idTipo">
+                                    <option ng-repeat="option in tipos" value="{{option.idTipoDocumento}}">{{option.tipoDocumento}}</option>
+                                </select><br>
+                            
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+
+                        <div class="row text-center">
+                            
+                            <input type="submit" name="cargar" value="Cargar" class="btn btn-primary"/><br><br>
+                        </div>
+                    </form> 
+                 <%   }
+                %>
+                              
                 
 
             </fieldset>
@@ -150,6 +215,8 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/modificarDocumento.js"></script>
 
 
 </body>

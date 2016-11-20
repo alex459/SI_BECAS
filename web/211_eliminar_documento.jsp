@@ -1,7 +1,7 @@
 <%-- 
     Document   : 211_eliminar_documento
     Created on : 11-07-2016, 05:01:03 AM
-    Author     : Manuel Miranda
+    Author     : Mauricio
 --%>
 
 
@@ -25,11 +25,10 @@
     String documentosJSON1 = gson.toJson(publicos);
     String documentosJSON =  documentosJSON1.replace("\"", "'");
     ArrayList<TipoDocumento> tiposDoc = new ArrayList<TipoDocumento>();
-    tiposDoc = tipDocDao.consultarTodos();
+    tiposDoc = tipDocDao.consultarTodosPublicosIngresados();
     Gson gson2 = new Gson();
     String tiposJSON1 = gson.toJson(tiposDoc);
-    String tiposJSON =  tiposJSON1.replace("\"", "'");
-    
+    String tiposJSON =  tiposJSON1.replace("\"", "'"); 
 %>
 <!DOCTYPE html>
 <html ng-app="DocumentoApp">
@@ -99,9 +98,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row text-center">
-                                    <button class="btn btn-primary">Buscar</button>
-                                </div>
                             
                         </fieldset>
 
@@ -130,7 +126,12 @@
                                                 </form>
                                             </td>
                                             <td>{{x.observacion}}</td>
-                                            <td><a  href="EliminarDocumentoServlet?id={{x.idDocumento}}"><button class="btn btn-danger">Eliminar</button></a></td>
+                                            <td>
+                                                <form action="EliminarDocumentoServlet" method="post">
+                                                    <input type="hidden" name="id" value="{{x.idDocumento}}">
+                                                    <input type="submit" class="btn btn-danger" value="Eliminar">
+                                                </form>
+                                            </td>
                                             <%i++;%>
                                         </tr>
                                         
