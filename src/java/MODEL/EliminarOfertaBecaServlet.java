@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MauricioBC
  */
-@WebServlet("/ModificarOfertaBecaServlet")
+@WebServlet("/EliminarOfertaBecaServlet")
 public class EliminarOfertaBecaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
