@@ -131,32 +131,23 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO = \"Publico\"" ;
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO" ;
             ResultSet rs = stmt.executeQuery(sql);
-            
-
             while (rs.next()) {
                 Documento temp = new Documento();
-                TipoDocumento temp2 = new TipoDocumento();
-                
+                TipoDocumento temp2 = new TipoDocumento();                
                 int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
                 Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
                 String OBSERVACION=rs.getString("OBSERVACION_O");
-                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
-                
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
                 temp.setIdDocumento(ID_DOCUMENTO);
                 temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
                 temp2.setTipoDocumento(TIPO_DOCUMENTO);
                 temp.setIdTipoDocumento(temp2);
-                temp.setObservacion(OBSERVACION);
-                
-                
-                
+                temp.setObservacion(OBSERVACION);               
                 lista.add(temp);
-            }
-            
-            this.cerrarConexion();
-            
+            }            
+            this.cerrarConexion();            
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
