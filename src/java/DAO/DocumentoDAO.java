@@ -124,6 +124,27 @@ public class DocumentoDAO extends ConexionBD{
         return exito;
     }
     
+     //Actualiza la observacion de un Documento
+    public boolean ActualizarDocDig(Documento documento) {
+        boolean exito = false;
+        System.out.println(documento.getIdDocumento()+" "+documento.getDocumentoDigital());
+        this.abrirConexion();
+        try {            
+            String sql = "UPDATE DOCUMENTO SET DOCUMENTO_DIGITAL=? WHERE ID_DOCUMENTO=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setBinaryStream(1, documento.getDocumentoDigital());
+            statement.setInt(2, documento.getIdDocumento());    
+            int row = statement.executeUpdate();
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+    
     //Consulta Todos los Documentos Publicos
     public ArrayList<Documento> consultarTodos() {
         ArrayList<Documento> lista = new ArrayList<Documento>();
@@ -235,6 +256,43 @@ public class DocumentoDAO extends ConexionBD{
         try {
             stmt = conn.createStatement();
             String sql = "SELECT D.ID_DOCUMENTO, D.DOCUMENTO_DIGITAL,D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO = \"Publico\" AND D.ID_DOCUMENTO=" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            
+
+            while (rs.next()) {
+                
+                TipoDocumento temp2 = new TipoDocumento();
+                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
+                Blob blob= rs.getBlob("DOCUMENTO_DIGITAL");
+                InputStream DOCUMENTO_DIGITAL = blob.getBinaryStream();
+                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);
+                temp.setDocumentoDigital(DOCUMENTO_DIGITAL);
+                
+            }
+            
+            this.cerrarConexion();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return temp;
+    }
+    
+    public Documento consultarOfertaPorId(Integer id) {
+        this.abrirConexion();
+        Documento temp = new Documento();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.DOCUMENTO_DIGITAL,D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_DOCUMENTO=" +id;
             ResultSet rs = stmt.executeQuery(sql);
             
 

@@ -296,9 +296,11 @@
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
             todayHighlight: true,
-            autoclose: true
+            autoclose: true,
+            startDate: new Date()
         });
     });
+    
 </script>
 </body>
 </html>
