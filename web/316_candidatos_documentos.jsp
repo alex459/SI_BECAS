@@ -3,18 +3,48 @@
     Created on : 10-16-2016, 05:11:54 PM
     Author     : MauricioBC
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
+<%@page import="POJO.Documento"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <% 
-    response.setHeader("Cache-Control", "no-store");
+   response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
      if(user==null){
      response.sendRedirect("login.jsp");
         return;
-     }
-%>
+     }  
+    response.setContentType("text/html;charset=UTF-8"); 
+    request.setCharacterEncoding("UTF-8");
+            ConexionBD conexionbd = null;
+            ResultSet rs = null;
+            ArrayList<Documento> listaDocs = new ArrayList();
+            Documento temp3 = new Documento();
+            try {
+                //formando la consulta
+                String consultaSql="";
+                    consultaSql = "SELECT ID_DOCUMENTO,OBSERVACION_O FROM DOCUMENTO WHERE ESTADO_DOCUMENTO='Publico'";                
+                System.out.println(consultaSql);  
+                //realizando la consulta
+                conexionbd = new ConexionBD();
+                rs = conexionbd.consultaSql(consultaSql);              
+                while (rs.next()) {
+                    temp3 = new Documento();
+                    temp3.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
+                    temp3.setObservacion(rs.getString("OBSERVACION_O"));
+                    listaDocs.add(temp3);
+                    System.out.println("GGGGGGGGTTTTTTTTT");
+                }
+                //con el rs se llenara la tabla de resultados
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        %> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -47,8 +77,8 @@
         </h3>
     </div>
 </div>
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
+<p class="text-right">Rol: <%= rol %></p>
+<p class="text-right">Usuario: <%= user %></p>
 <jsp:include page="menuCandidato.jsp"></jsp:include>
 </head>
 
@@ -57,12 +87,11 @@
         <div class="col-md-12">
 
             <div class="col-xs-12" style="height:50px;"></div>
-            <div class="jumbotron">
+            <div class="jumbotron" style="background-color:white; ">
                 <div class="row">
-                    <div class="container">
                         <h2>Documentos publicos</h2>
-                        <p>A continuación se muestran documentos que pueden ser utiles para el proceso de obtención de beca:</p>
-                        <table class="table">
+                        <fieldset class="custom-border"> 
+            <legend class="custom-border">Documentos disponibles</legend>   <table class="table">
                             <thead>
                                 <tr>
                                     <th>Nombre del documento</th>
@@ -71,24 +100,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Solicitud de beca</td>
-                                    <td>Info</td>
-                                    <td>pdf</td>
-                                </tr>
-                                <tr>
-                                    <td>Reglamento de la Universidad De El Salvador</td>
-                                    <td>Info</td>
-                                    <td>pdf</td>
-                                </tr>
-                                <tr>
-                                    <td>Formato para</td>
-                                    <td>Info</td>
-                                    <td>pdf</td>
-                                </tr>
+                                <%
+                                            if (listaDocs.size() >= 0) {
+                                                int i = 0;
+                                                while (i < listaDocs.size()) {
+                                        %><tr class="bg-primary"><%
+                                        %><td></td><%
+                                        %><td><%=listaDocs.get(i).getObservacion()%></td><%
+                                        %><td>
+                                            <center><form action="Documento" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="id" value="<%=listaDocs.get(i).getIdDocumento()%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></center></td><%    
+                                                    i++;
+                                                }
+                                            }
+                                            %>   
+                                    </tr>
                             </tbody>
                         </table>
-                    </div>	
+                     </fieldset>   
                 </div>
             </div>
         </div>

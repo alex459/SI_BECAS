@@ -3,6 +3,7 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="POJO.Documento"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="POJO.OfertaBeca"%>
@@ -236,9 +237,11 @@
                 ConexionBD conexionbd = null;
                 ResultSet rs = null;
                 ArrayList<OfertaBeca> lista2 = new ArrayList();
-                ArrayList<Institucion> listaPais = new ArrayList();
+                ArrayList<Institucion> listaPais = new ArrayList();                
+                ArrayList<Documento> listaDocs = new ArrayList();
                 OfertaBeca temp = new OfertaBeca();
                 Institucion temp2 = new Institucion();
+                Documento temp3 = new Documento();
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     String nombre= "",tipoEstudio="", instOfertante="", instEstudio="";
@@ -254,12 +257,13 @@
                 String fCierreFin = request.getParameter("fCierreFin");
                     //formando la consulta
                     String consultaSql = "";
-                    consultaSql = "SELECT ID_OFERTA_BECA, NOMBRE_OFERTA,IDIOMA,TIPO_OFERTA_BECA,TIPO_ESTUDIO,FECHA_CIERRE, "
+                   consultaSql = "SELECT ID_OFERTA_BECA, NOMBRE_OFERTA,IDIOMA,TIPO_OFERTA_BECA,TIPO_ESTUDIO,FECHA_CIERRE, "
                             + " ID_INSTITUCION_ESTUDIO, ID_INSTITUCION_FINANCIERA, "
-                            + " NOMBRE_INSTITUCION, PAIS FROM OFERTA_BECA, INSTITUCION WHERE "
-                            + "OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
-                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'";
-                    if (instEstudio!=null) {
+                            + " NOMBRE_INSTITUCION, OFERTA_BECA.ID_DOCUMENTO AS ID_DOCUMENTO, PAIS FROM "
+                            + " OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_DOCUMENTO "
+                            + " AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
+                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'"; 
+                 if (instEstudio!=null) {
                         int idEst = institucionDAO.consultarIdPorNombre(instEstudio);
                         consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=" + idEst + " ");
                     }
@@ -284,7 +288,9 @@
                     while (rs.next()) {
                         temp = new OfertaBeca();
                         temp2 = new Institucion();
+                        temp3 = new Documento();
                         temp2.setPais(rs.getString("PAIS"));
+                        temp3.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
                         temp.setIdOfertaBeca(rs.getInt("ID_OFERTA_BECA"));
                         temp.setNombreOferta(rs.getString("NOMBRE_OFERTA"));
                         temp.setTipoOfertaBeca(rs.getString("TIPO_OFERTA_BECA"));
@@ -297,6 +303,7 @@
                         System.out.println(temp.getNombreOferta());
                         lista2.add(temp);
                         listaPais.add(temp2);
+                        listaDocs.add(temp3);
                     }
                     //con el rs se llenara la tabla de resultados
                 } catch (Exception ex) {
@@ -340,7 +347,10 @@
                                             %><td><%=lista2.get(i).getTipoEstudio()%></td><%
                                             %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion()%></td><%
                                             %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion()%></td><%
-                                            %><td><% %></td><%
+                                            %><td><form action="Documento" method="post"  target="_blank"> 
+                                                    <input type="text" name="id" value="<%=listaDocs.get(i).getIdDocumento()%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></td><%    
                                                         out.write("<td>");
                                                         out.write("<center>");
                                                         out.write("<form style='display:inline;' action='EliminarOfertaBecaServlet' method='post'><input type='hidden' name='ID_OFERTA_BECA' value='"+lista2.get(i).getIdOfertaBeca()+"'><input type='submit' class='btn btn-danger' name='submit' value='Eliminar oferta'></form> ");

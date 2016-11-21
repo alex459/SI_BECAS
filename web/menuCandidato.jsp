@@ -56,9 +56,6 @@
                 <a href="#">Contacto</a>
             </li>
             <li>
-                <a href="#">Acerca de</a>
-            </li>
-            <li>
                  <a href="logout.jsp">Salir</a>
             </li>
         </ul>
