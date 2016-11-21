@@ -181,6 +181,8 @@
 
 
             <%
+                response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
+                request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
                 String nombre1;
                 String nombre2;
                 String apellido1;
@@ -208,7 +210,7 @@
                     if (id_tipo_de_usuario == 0) {
 
                     } else {
-                        consultaSql = consultaSql.concat(" AND U.ID_TIPO_USUARIO = " + id_facultad + " ");
+                        consultaSql = consultaSql.concat(" AND U.ID_TIPO_USUARIO = " + id_tipo_de_usuario + " ");
                     }
                     if (id_facultad == 0) {
 
