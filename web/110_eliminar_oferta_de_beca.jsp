@@ -91,7 +91,7 @@
         <div class="row"><!-- TITULO DE LA PANTALLA -->
 
             <h2>
-                <p class="text-center" style="color:#cf2a27">Elimnar ofertas de beca</p>
+                <p class="text-center" style="color:#cf2a27">Deshabilitar ofertas de beca</p>
             </h2>
 
             <br></br> 
@@ -99,7 +99,7 @@
 
         <div class="row"><!-- CONTENIDO DE LA PANTALLA -->  
             <fieldset class="custom-border"> 
-                <legend class="custom-border">Eliminar oferta de beca</legend>   
+                <legend class="custom-border">Deshabilitar oferta de beca</legend>   
                 <div class="row">   <!-- FILTROS -->
 
                     <div class="col-md-12">
@@ -261,6 +261,7 @@
                             + " ID_INSTITUCION_ESTUDIO, ID_INSTITUCION_FINANCIERA, "
                             + " NOMBRE_INSTITUCION, OFERTA_BECA.ID_DOCUMENTO AS ID_DOCUMENTO, PAIS FROM "
                             + " OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_DOCUMENTO "
+                           + " AND OFERTA_BECA_ACTIVA=1 "
                             + " AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
                             + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'"; 
                  if (instEstudio!=null) {
@@ -353,7 +354,7 @@
                                                     </form></td><%    
                                                         out.write("<td>");
                                                         out.write("<center>");
-                                                        out.write("<form style='display:inline;' action='EliminarOfertaBecaServlet' method='post'><input type='hidden' name='ID_OFERTA_BECA' value='"+lista2.get(i).getIdOfertaBeca()+"'><input type='submit' class='btn btn-danger' name='submit' value='Eliminar oferta'></form> ");
+                                                        out.write("<form style='display:inline;' action='EliminarOfertaBecaServlet' method='post'><input type='hidden' name='ID_OFERTA_BECA' value='"+lista2.get(i).getIdOfertaBeca()+"'><input type='submit' class='btn btn-danger' name='submit' value='Deshabilitar oferta'></form> ");
                                                         out.write("</center>");
                                                         out.write("</td>");
                                                         System.out.println("ID MANDADO: " + lista2.get(i).getIdOfertaBeca());

@@ -36,9 +36,9 @@ public class EliminarOfertaBecaServlet extends HttpServlet {
         System.out.println("ID RECIBIDO "+Integer.parseInt(request.getParameter("ID_OFERTA_BECA")));
         Boolean exito=ofertaBecaDAO.eliminar(ofertaBeca);
         if(exito){
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se elimino la oferta correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se deshabilito la oferta correctamente.");
         }else{
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo eliminar la oferta de beca");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo deshabilitar la oferta de beca");
         } 
     }
 

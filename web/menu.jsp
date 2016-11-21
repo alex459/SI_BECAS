@@ -59,9 +59,11 @@
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='114_consulta_para_modificar_roles.jsp'>Modificar roles</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='106_bitacora.jsp'>Bitacora</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de becas===</a></li>");                    
-                    if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='107_agregar_oferta_de_beca.jsp'>Agregar oferta de beca</a></li>");
-                    if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='108_modificar_oferta_de_beca.jsp'>Modificar oferta de beca</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='109_consultar_oferta_de_beca.jsp'>Consultar oferta de beca</a></li>");
+                    if(t==id_director_consejo || t==id_admin)
+                    {out.write("<li><a style='background-color: #cf2a27; color:white' href='107_agregar_oferta_de_beca.jsp'>Agregar oferta de beca</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='109_consultar_oferta_de_beca.jsp'>Consultar/Modificar oferta de beca</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='110_eliminar_oferta_de_beca.jsp'>Deshabilitar oferta de beca</a></li>");}
+                    
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='111_reporte_de_beca.jsp'>Reporte de oferta de becas</a></li>");
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de becarios===</a></li>");
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='201_consultar_expediente.jsp'>Consultar expediente</a></li>");

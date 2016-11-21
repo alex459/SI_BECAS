@@ -169,7 +169,7 @@ public class OfertaBecaDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement(); 
-            String sql = "DELETE FROM OFERTA_BECA WHERE ID_OFERTA_BECA="+ofertaBeca.getIdOfertaBeca()+";";                 
+            String sql = "UPDATE OFERTA_BECA SET OFERTA_BECA_ACTIVA=0 WHERE ID_OFERTA_BECA="+ofertaBeca.getIdOfertaBeca()+";";                 
             System.out.println(sql);
             stmt.execute(sql);
             exito = true;
