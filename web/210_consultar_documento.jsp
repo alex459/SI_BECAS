@@ -13,6 +13,17 @@
 <%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String rol=(String)actual.getAttribute("rol");
+    String user=(String)actual.getAttribute("user");
+    if(user==null){
+     response.sendRedirect("login.jsp");
+        return;
+     }
+
     DocumentoDAO docDao = new DocumentoDAO();
     TipoDocumentoDAO tipDocDao= new TipoDocumentoDAO();
     ArrayList<Documento> publicos = new ArrayList<Documento>();
@@ -59,12 +70,13 @@
             </div>
         </div>
 
-        <p class="text-right">Rol: </p>
-        <p class="text-right">Usuario: </p>
+        <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
+        <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+
 
         <%-- todo el menu esta contenido en la siguiente linea
              el menu puede ser cambiado en la pagina menu.jsp --%>
-        <jsp:include page="menu.jsp"></jsp:include>
+        <jsp:include page="menu_corto.jsp"></jsp:include>
     </head>
     
     <body ng-controller="BuscarCtrl" ng-init="documentos=<%=documentosJSON%>">
