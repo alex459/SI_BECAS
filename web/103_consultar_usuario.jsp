@@ -71,7 +71,7 @@
 <jsp:include page="menu_corto.jsp"></jsp:include>
 
 </head>
-<body>
+<body ng-app="consultarInstitucionApp" ng-controller="consultarInstitucionCtrl">
 
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
@@ -93,7 +93,7 @@
 
                     <div class="col-md-12">
 
-                        <form class="form-horizontal" action="103_consultar_usuario.jsp" method="post">
+                        <form class="form-horizontal" action="103_consultar_usuario.jsp" method="post" novalidate>
                             <fieldset class="custom-border">  
                                 <legend class="custom-border">Filtros</legend>  
 
@@ -234,9 +234,9 @@
 
                 <div class="col-md-12">
 
-                    <table class="table table-bordered"></br>                        
+                    <table class="table"></br>                        
                         <thead>
-                            <tr class="success">
+                            <tr>
                                 <th>No</th>
                                 <th>Nombre de empleado</th>
                                 <th>Codigo de usuario</th>
@@ -253,7 +253,7 @@
                                     Integer i = 0;
                                     while (rs.next()) {
                                         i = i + 1;
-                                        out.write("<tr class='info'>");
+                                        out.write("<tr>");
                                         out.write("<td>" + i + "</td>");
                                         out.write("<td>" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "</td>");
                                         usuarios_consultados = usuarios_consultados.concat(rs.getString(5).toString()+", ");
@@ -262,7 +262,7 @@
                                         out.write("<td>" + rs.getString(7) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
+                                        out.write("<form style='display:inline;' action='actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
                                         out.write("<form style='display:inline;' action='105_modificar_roles.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='ID_DETALLE_USUARIO' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-primary' name='submit' value='Modificar Rol'></form> ");
                                         out.write("<form style='display:inline;' action='104_dar_de_baja_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='ID_DETALLE_USUARIO' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-danger' name='submit' value='Dar de baja'></form> ");
                                         out.write("</center>");

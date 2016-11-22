@@ -3,9 +3,11 @@
     Created on : 11-07-2016, 04:42:46 AM
     Author     : Manuel Miranda
 --%>
+<%@page import="POJO.Institucion"%>
+<%@page import="DAO.InstitucionDAO"%>
 
 <%@page import="MODEL.variablesDeSesion"%>
-<%
+<% 
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
@@ -17,6 +19,7 @@
         return;
      }
 %>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,6 +37,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/customfieldset.css" rel="stylesheet">
+        
         <div class="row">
             <div class="col-md-4">
                 <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -57,10 +61,11 @@
 
 
         <%-- todo el menu esta contenido en la siguiente linea
-             el menu puede ser cambiado en la pagina menu.jsp --%>
+         el menu puede ser cambiado en la pagina menu.jsp --%>
         <jsp:include page="menu_corto.jsp"></jsp:include>
+        
     </head>
-    <body>
+    <body ng-app="AgregarInstitucionApp" ng-controller="AgregarInstitucionCtrl">
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
@@ -70,15 +75,22 @@
             </div><!-- TITULO DE LA PANTALLA -->  
 
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <fieldset class="custom-border">
-                    <legend class="custom-border">Datos de Institucion</legend>
+                
+                <form class="form-horizontal" name="agregarInst" action="AgregarInstitucionServlet" method="post" novalidate >
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Datos de Institucion</legend>
+                    
                     <div class="row col-md-6 col-md-offset-3">
                         <div class="row">
+                            
                             <div class="col-md-4 text-right">
                                 <label for="textinput">Nombre de la institucion : </label>
                             </div>
                             <div class="col-md-8">
-                                <input id="text_NomInstitucion" name="NOM_INSTITUCION" type="text" placeholder="ingrese el nombre" class="form-control input-md">
+                                <input id="text_NomInstitucion" name="text_NomInstitucion" type="text"  placeholder="ingrese el nombre de instirucion" class="form-control input-md" ng-model="datos.nombreInst" ng-required="true" ng-pattern="/^[a-zA-ZáÁéÉíÍóÓúÚñÑ ]*$/" minlength="3" maxlength="100" >
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.text_NomInstitucion.$error.required">El nombre de la Institucion es requerido.</span>
+                                <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.minlength">Minimo 3 caracteres</span>
+                                <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.pattern">Solo se permiten caracteres alfabeticos .</span>
                             </div>
                         </div>
                         <br>
@@ -87,7 +99,11 @@
                                 <label for="textinput">Pais : </label>
                             </div>
                             <div class="col-md-6">
-                                <input id="tex_paisInstitucion" name="PAIS_INSITUCION" type="text" placeholder="ingrese el pais" class="form-control input-md">
+                                <input id="tex_paisInstitucion" name="tex_paisInstitucion" type="text"  placeholder="ingrese el pais" class="form-control input-md" ng-model="datos.pais" ng-required="true" ng-pattern="/^[a-zA-ZáÁéÉíÍóÓúÚñÑ ]*$/" minlength="3" maxlength="20" >
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_paisInstitucion.$error.required">El nombre del pais es requerido.</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_paisInstitucion.$error.minlength">Minimo 3 caracteres</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_paisInstitucion.$error.pattern">Solo se permiten caracteres alfabeticos .</span>
+                                <small id="help2"></small>
                             </div>
                         </div>
                         <br>
@@ -96,7 +112,11 @@
                                 <label for="textinput">Pagina web : </label>
                             </div>
                             <div class="col-md-6">
-                                <input id="tex_webInstitucion" name="WEB_INSITUCION" type="text" placeholder="ingrese la url" class="form-control input-md">
+                                <input id="tex_webInstitucion" name="tex_webInstitucion" type="url" placeholder="ingrese la url"  class="form-control input-md" ng-model="datos.url" ng-required="true"  minlength="3" maxlength="100" >
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_webInstitucion.$error.required">El nombre de la ULR es requerido.</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_webInstitucion.$error.minlength">Minimo 3 caracteres</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_webInstitucion.$error.url">Solo se permiten formato url: http://ejemplo.com.</span> 
+                                <small id="help3"></small>
                             </div>
                         </div>
                         <br>
@@ -105,36 +125,39 @@
                                 <label for="textinput">Correo electronico : </label>
                             </div>
                             <div class="col-md-6">
-                                <input id="tex_correoInstitucion" name="CORREO_INSITUCION" type="text" placeholder="ingrese el correo electronico" class="form-control input-md">
+                                <input id="tex_correoInstitucion" name="tex_correoInstitucion" type="email"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_correoInstitucion.$error.required">El correo electronico requerido.</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_correoInstitucion.$error.minlength">Minimo 3 caracteres</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_correoInstitucion.$error.email">Solo permite formato: ejemplo algo@algo.com).</span>
+                                <small id="help4"></small>
                             </div>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-md-4 text-right">
-                                <label for="textinput">Telefono : </label>
-                            </div>
-                            <div class="col-md-6">
-                                <input id="tex_telefonoInstitucion" name="TELEFONO_INSITUCION" type="text" placeholder="ingrese el telefono" class="form-control input-md">
-                            </div>
-                        </div>
-                        <br>
+                        
+                        
                         <div class="row">
                             <div class="col-md-4 text-right">
                                 <label for="textinput">Tipo de institucion : </label>
                             </div>
                             <div class="col-md-6">
-                                <select id="select_tipoInstitucion" name="TIPO_INSTITUCION" class="form-control">                            
-                                    <option value=0>Seleccione el tipo de institucion</option>
-                                </select>
+                                <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control" ng-model="datos.tipoInst" ng-required="true"> 
+                                    <option value="">Seleccione tipo de institucion</option>
+                                    <option value="Ofertante">Ofertante</option>
+                                    <option value="Estudio">Estudio</option>
+                                    
+                               </select>
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.select_tipoInstitucion.$error.required">La Tipo es requerida.</span>
+                  
                             </div>
                         </div>
                         <br>
                         <div class="row text-center">
-                            <button class="btn btn-primary">Guardar</button>
-                            <button class="btn btn-danger">Cancelar</button><br>
+                            <input type="submit" class="btn btn-primary" name="submit"  value="Guardar" ng-disabled="!agregarInst.$valid">
+                            <a href="principal.jsp"  <button class="btn btn-danger">Cancelar</button> </a>  <br>
                         </div>
                     </div>
                 </fieldset>
+                </form>    
             </div><!-- CONTENIDO DE LA PANTALLA -->
         </div>
 
@@ -163,6 +186,9 @@
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/scripts.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/agregarInstitucion.js"></script>
+        
+       
     </body>
 </html>

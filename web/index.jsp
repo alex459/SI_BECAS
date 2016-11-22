@@ -50,27 +50,9 @@
                                         <a href="documentos.jsp">Documentos</a>                                   
                             </li>
                         </ul>
-                        <ul class="nav navbar-nav">
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Oferta de becas<strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#">Ejemplo menu desplegable</a>
-                                    </li>								
-                                </ul>
-                            </li>
-                        </ul>
+                        
                         <ul class="nav navbar-nav navbar-right">						
-                            <li>
-                                <a href="#">Ayuda</a>
-                            </li>
-                            <li>
-                                <a href="#">Contacto</a>
-                            </li>
-                            <li>
-                                <a href="#">Acerca de</a>
-                            </li>
+                            
                             <li>
                                 <a href="login.jsp">Iniciar Sesión</a>
                             </li>

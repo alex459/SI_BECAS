@@ -19,7 +19,7 @@ public class InstitucionDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT NOMBRE_INSTITUCION, TIPO_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, INSTITUCION_ACTIVA FROM INSTITUCION WHERE ID_INSTITUCION = " + id;
+            String sql = "SELECT NOMBRE_INSTITUCION, TIPO_INSITUCION, PAIS, PAGINA_WEB, EMAIL, INSTITUCION_ACTIVA FROM INSTITUCION WHERE ID_INSTITUCION = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
 
@@ -27,7 +27,7 @@ public class InstitucionDAO extends ConexionBD{
 
                 int ID_INSTITUCION=id;                                
                 String NOMBRE_INSTITUCION=rs.getString("NOMBRE_INSTITUCION");
-                String TIPO_INSITUCION=rs.getString("TIPO_INSTITUCION");
+                String TIPO_INSITUCION=rs.getString("TIPO_INSITUCION");
                 String PAIS=rs.getString("PAIS");
                 String PAGINA_WEB=rs.getString("PAGINA_WEB");
                 String EMAIL=rs.getString("EMAIL");
@@ -119,7 +119,6 @@ public class InstitucionDAO extends ConexionBD{
     
     //consultar nombre de insitucion por tipo de insitucion
     public int consultarIdPorNombre(String nombre) {
-        System.out.println("AAAAAAAAAAAAAAA ----"+nombre);
         Institucion temp = new Institucion();        
         this.abrirConexion();        
         try {
@@ -139,13 +138,34 @@ public class InstitucionDAO extends ConexionBD{
         return temp.getIdInstitucion();
     }
     
+     //obtener el siguiente id (autoincremental)
+    public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_INSTITUCION), 0) AS X FROM INSTITUCION";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("X") + 1;                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
+    }
+    
     public boolean ingresar(Institucion insitucion){
         boolean exito = false;
         
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "INSERT INTO INSTITUCION(NOMBRE_INSTITUCION,TIPO_INSTITUCION,PAIS,PAGINA_WEB,EMAIL,INSTITUCION_ACTIVA) VALUES ('"+insitucion.getNombreInstitucion()+"','"+insitucion.getTipoInstitucion()+"','"+insitucion.getPais()+"', '"+insitucion.getPaginaWeb()+"','"+insitucion.getEmail()+"',"+insitucion.getInstitucionActiva()+");";
+            String sql = "INSERT INTO INSTITUCION(ID_INSTITUCION,NOMBRE_INSTITUCION,TIPO_INSTITUCION,PAIS,PAGINA_WEB,EMAIL,INSTITUCION_ACTIVA) VALUES ('"+insitucion.getIdInstitucion()+"','"+insitucion.getNombreInstitucion()+"','"+insitucion.getTipoInstitucion()+"','"+insitucion.getPais()+"', '"+insitucion.getPaginaWeb()+"','"+insitucion.getEmail()+"',"+insitucion.getInstitucionActiva()+");";
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();

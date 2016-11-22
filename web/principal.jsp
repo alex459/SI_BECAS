@@ -72,7 +72,7 @@
         <div style="width: 100%">
             <center>
             
-            <img src="img/portada2.jpg">                        
+            <img src="img/portada1.jpg">                        
         </center>
         </div>
         

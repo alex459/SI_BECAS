@@ -231,9 +231,9 @@
 
                 <div class="col-md-12">
 
-                    <table class="table table-bordered"></br>                        
+                    <table class="table"></br>                        
                         <thead>
-                            <tr class="success">
+                            <tr>
                                 <th>No</th>
                                 <th>Nombre de empleado</th>
                                 <th>Codigo de usuario</th>
@@ -248,7 +248,7 @@
                                     Integer i = 0;
                                     while (rs.next()) {
                                         i = i + 1;
-                                        out.write("<tr class='info'>");
+                                        out.write("<tr>");
                                         out.write("<td>" + i + "</td>");
                                         out.write("<td>" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "</td>");
                                         out.write("<td>" + rs.getString(5) + "</td>");

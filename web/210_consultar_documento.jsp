@@ -121,7 +121,7 @@
                                     </thead>
                                     <%int i =0;%>
                                     <tbody ng-repeat="x in documentos |filter:{idTipoDocumento:{idTipoDocumento:idTipo}}">
-                                        <tr>
+                                        <tr ng-class-even="'even'" ng-class-odd="'odd'">
                                             <td>{{documentos.indexOf(x)+1}}</td>
                                             <td>{{x.idTipoDocumento.tipoDocumento}}</td>
                                             <td><form action="Documento" method="post"  target="_blank">

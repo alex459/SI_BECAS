@@ -42,9 +42,14 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         DetalleUsuario detalleUsuario = new DetalleUsuario();
         UsuarioDAO usuarioDao = new UsuarioDAO();
         DetalleUsuarioDAO detalleUsuarioDao = new DetalleUsuarioDAO();
+        String clave2 = new String();
         
         boolean bandera1 = false;
         boolean bandera2 = false;
+        
+        boolean validacion2 = false; //claves iguales
+        boolean validacion3 = false; //tipo usuario con facultad
+        String mensaje = new String();
         
         //parte de lectura desde el jsp y guardado en bd     
         
@@ -52,7 +57,7 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
         usuario.setNombreUsuario(request.getParameter("CARNET"));
         usuario.setClave(request.getParameter("CLAVE"));
-        bandera1 = usuarioDao.actualizar(usuario); //guardando usuario
+        clave2 = request.getParameter("CLAVE2");
         
         detalleUsuario.setIdDetalleUsuario(Integer.parseInt(request.getParameter("ID_DETALLE_USUARIO")));
         detalleUsuario.setIdUsuario(Integer.parseInt(request.getParameter("ID_USUARIO")));
@@ -62,14 +67,51 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
         detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));
         detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
-        bandera2 = detalleUsuarioDao.actualizarOpcion2(detalleUsuario); //guardando detalle usuario
         
-        if(bandera1 && bandera2){
-            Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se actualizo el usuario "+usuario.getNombreUsuario()+".");
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizo el usuario correctamente.");
+        
+        //validacion 2
+        if (clave2.equals(usuario.getClave())) {
+            validacion2 = true;
+        } else {
+            mensaje = mensaje.concat("  Las claves no coniciden. ");
         }
-        else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario.");
+        
+        //validacion 3
+        Integer t_u = usuario.getIdTipoUsuario();
+        Integer fac = detalleUsuario.getIdFacultad();
+        if(t_u==1 || t_u==2 || t_u==3 || t_u==4){
+            if(fac == 13){
+                mensaje = mensaje.concat("  Los candidatos, becarios, comisiones o juntas directivas deben tener una facultad.");
+            }else{
+                validacion3 = true;
+            }
+        }else{
+            if(fac != 13){
+                validacion3 = true;
+                detalleUsuario.setIdFacultad(13);
+            }
+        }
+        
+        
+        
+        if (validacion2 && validacion3) {
+            
+            bandera1 = usuarioDao.actualizar(usuario); //guardando usuario
+            bandera2 = detalleUsuarioDao.actualizarOpcion2(detalleUsuario); //guardando detalle usuario
+
+            //Redireccionando a la pagina de mensaje general    
+            if (bandera1 && bandera2) {
+                Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se actualizo el usuario "+usuario.getNombreUsuario()+".");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizo el usuario correctamente.");
+            } else {
+                Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario.");
+            }
+
+        }else{
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario. " + mensaje);
+        }
+        
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

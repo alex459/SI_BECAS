@@ -125,7 +125,7 @@
                                 <input type="submit" name="guardar" value="Guardar" class="btn btn-primary" ng-disabled="!agregarDocumento.$valid">
                             </div>
                             <div class="col-md-6">
-                                <a href=""><button class="btn btn-danger">Cancelar</button></a>
+                                <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
                             </div>
                         </div>
                         <div class="col-md-3"></div>   

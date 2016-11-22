@@ -55,7 +55,8 @@
                                 <small id="help2"></small>
                             </div>
                         </fieldset> 
-                        <button class="btn btn-lg btn-danger btn-block" type="submit" >Ingresar</button> 
+                        <button class="btn btn-lg btn-success btn-block" type="submit" >Ingresar</button>
+                        <a class="btn btn-lg btn-danger btn-block" href="index.jsp" >Salir</a>
                     </form>
                 </div>   
             </div>    

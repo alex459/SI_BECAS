@@ -138,3 +138,12 @@ td{
   border-width: 1px;
   border-color: black;
 }
+
+.odd{
+    background: #597eaa;
+    color: white;
+}
+
+.even{
+    background: #dddddd;
+}
