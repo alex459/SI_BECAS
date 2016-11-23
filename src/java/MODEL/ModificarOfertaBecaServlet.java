@@ -53,8 +53,29 @@ public class ModificarOfertaBecaServlet extends HttpServlet {
         TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
         ExpedienteDAO expDao = new ExpedienteDAO();
         
+        
+        ////////////////////---------------------------
+         InputStream archivo = null;
+        Part filePart = request.getPart("doc_digital");
+        if (filePart != null) {
+            archivo = filePart.getInputStream();
+        }
+        DocumentoDAO documentoDao = new DocumentoDAO();    
+        int idDoc=Integer.parseInt(request.getParameter("ID_DOCUMENTO"));        
+        documento.setIdDocumento(idDoc);
+        documento.setDocumentoDigital(archivo);
+        boolean act = false;
+        if (filePart.getSize() >0){
+        act = documentoDao.ActualizarDocumentoObservacion(documento);
+        } else{
+            act = documentoDao.ActualizarObservacion(documento);
+        }
+        ///////////////---------------------
+        
+        
+        
         //Agarrando el pdf       
-        int idDoc=Integer.parseInt(request.getParameter("ID_DOCUMENTO"));
+    /*    int idDoc=Integer.parseInt(request.getParameter("ID_DOCUMENTO"));
         Integer tip = 2; //id del tipo de documento = oferta de beca
         String obs = "Oferta de Beca de Postgrado";
         InputStream archivo = null;
@@ -68,7 +89,7 @@ public class ModificarOfertaBecaServlet extends HttpServlet {
         documento.setDocumentoDigital(archivo);
         boolean ing = docdao.ActualizarDocDig(documento);
         System.out.println("resultado de doc "+ing);
-        }
+        }*/
         //asignar valores a oferta de beca
         ofertaBeca.setIdDocumento(idDoc);
         

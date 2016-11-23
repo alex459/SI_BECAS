@@ -288,9 +288,10 @@
                 while (rs.next()) {
                     temp = new OfertaBeca();
                     temp2 = new Institucion();
-                    temp3 = new Documento();
+                  //  temp3 = new Documento();
                     temp2.setPais(rs.getString("PAIS"));
-                    temp3.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
+                   // temp3.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
+                    temp.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
                     temp.setIdOfertaBeca(rs.getInt("ID_OFERTA_BECA"));
                     temp.setNombreOferta(rs.getString("NOMBRE_OFERTA"));
                     temp.setTipoOfertaBeca(rs.getString("TIPO_OFERTA_BECA"));
@@ -303,7 +304,7 @@
                     System.out.println(temp.getNombreOferta());
                     lista2.add(temp);
                     listaPais.add(temp2);
-                    listaDocs.add(temp3);
+                  //  listaDocs.add(temp3);
                     System.out.println("GGGGGGGGTTTTTTTTT");
                 }
                 //con el rs se llenara la tabla de resultados
@@ -349,14 +350,14 @@
                                         %><td><%=lista2.get(i).getTipoEstudio()%></td><%                                         
                                         %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion()%></td><% 
                                         %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion()%></td><% 
-                                        %><td><form action="DocumentoOferta" method="post"  target="_blank"> 
-                                                    <input type="hidden" name="id" value="<%=listaDocs.get(i).getIdDocumento()%>">
+                                        %><td><form name ="verDocForm" action="DocumentoOferta" method="post"  target="_blank"> 
+                                                    <input type="text" name="id" value="<%=lista2.get(i).getIdDocumento()%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    
                                                     out.write("<td>");
                                                     out.write("<center>");
-                                                    %><form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'>
-                                                        <input type='hidden' name='ID_DOC' value='<%=listaDocs.get(i).getIdDocumento()%>'>
+                                                    %><form name="modificarForm" style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'>
+                                                        <input type='hidden' name='ID_DOC' value='<%=lista2.get(i).getIdDocumento()%>'>
                                     <input type='hidden' name='ID_OFERTA_BECA' value='<%=lista2.get(i).getIdOfertaBeca()%>'>
                                     <input type='submit' class='btn btn-success' name='submit' value='Modificar oferta'></form><%
                                                     out.write("</center>");

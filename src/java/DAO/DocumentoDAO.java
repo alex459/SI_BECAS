@@ -294,7 +294,7 @@ public class DocumentoDAO extends ConexionBD{
             stmt = conn.createStatement();
             String sql = "SELECT D.ID_DOCUMENTO, D.DOCUMENTO_DIGITAL,D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_DOCUMENTO=" +id;
             ResultSet rs = stmt.executeQuery(sql);
-            
+            System.out.println(sql);
 
             while (rs.next()) {
                 
