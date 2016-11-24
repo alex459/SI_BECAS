@@ -270,10 +270,29 @@
                     int idFin = institucionDAO.consultarIdPorNombre(instOfertante);
                     consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
                 }
+                //fecha inicio fin no vacia buscar fechas menores
+                if(!fIngresoIni.isEmpty()&&fIngresoFin.isEmpty()){
+                   java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                   consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO >= '"+sqlFIngresoIni+"' ");
+                }
+                //fecha inicio no vacia buscar fechas mayores
+                if(fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
+                   java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
+                   consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO <= '"+sqlFIngresoFin+"' ");
+                }
+                //ambas fechas no vacias buscar en rango
                 if(!fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
                    java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                    java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
                    consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '"+sqlFIngresoIni+"' AND '"+sqlFIngresoFin+"' ");
+                }
+                if(fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
+                   java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
+                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE <= '"+sqlFCierreFin+"' ");
+                }
+                if(!fCierreIni.isEmpty()&&fCierreFin.isEmpty()){
+                   java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
+                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE >= '"+sqlFCierreIni+"' ");
                 }
                 if(!fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
                    java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
@@ -351,7 +370,7 @@
                                         %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion()%></td><% 
                                         %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion()%></td><% 
                                         %><td><form name ="verDocForm" action="DocumentoOferta" method="post"  target="_blank"> 
-                                                    <input type="text" name="id" value="<%=lista2.get(i).getIdDocumento()%>">
+                                                    <input type="hidden" name="id" value="<%=lista2.get(i).getIdDocumento()%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    
                                                     out.write("<td>");

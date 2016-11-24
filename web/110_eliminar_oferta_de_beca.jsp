@@ -272,16 +272,35 @@
                         int idFin = institucionDAO.consultarIdPorNombre(instOfertante);
                         consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
                     }
-                    if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
-                        java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
-                        java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
-                    }
-                    if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
-                        java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
-                        java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
-                    }
+                    //fecha inicio fin no vacia buscar fechas menores
+                if(!fIngresoIni.isEmpty()&&fIngresoFin.isEmpty()){
+                   java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                   consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO >= '"+sqlFIngresoIni+"' ");
+                }
+                //fecha inicio no vacia buscar fechas mayores
+                if(fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
+                   java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
+                   consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO <= '"+sqlFIngresoFin+"' ");
+                }
+                //ambas fechas no vacias buscar en rango
+                if(!fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
+                   java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                   java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
+                   consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '"+sqlFIngresoIni+"' AND '"+sqlFIngresoFin+"' ");
+                }
+                if(fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
+                   java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
+                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE <= '"+sqlFCierreFin+"' ");
+                }
+                if(!fCierreIni.isEmpty()&&fCierreFin.isEmpty()){
+                   java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
+                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE >= '"+sqlFCierreIni+"' ");
+                }
+                if(!fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
+                   java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
+                   java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
+                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '"+sqlFCierreIni+"' AND '"+sqlFCierreFin+"' ");
+                }
                     System.out.println(consultaSql);
                     //realizando la consulta
                     conexionbd = new ConexionBD();
