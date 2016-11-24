@@ -81,9 +81,9 @@
 
         </div><!-- TITULO DE LA PANTALLA -->  
 
-        <div class="col-md-12">
+        <div class="col-md-12" ng-app="AgregarModificarOfertaApp" ng-controller="AgregarModificarOfertaCtrl">
 
-            <form class="form-horizontal" action="AgregarOfertaBecaServlet" method="post" enctype="multipart/form-data">
+            <form  class="form-horizontal" name="AgregarOfertaBeca" action="AgregarOfertaBecaServlet" method="post" enctype="multipart/form-data" novalidate>
                 <fieldset class="custom-border">  
                     <legend class="custom-border">Agregar oferta de beca</legend>
                     <div class="row"> 
@@ -91,13 +91,15 @@
                             <label for="nombreOferta">Nombre de la oferta : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="nombreOferta" name="nombreOferta" type="text" maxlength="100" placeholder="ingrese el nombre de la oferta" required class="form-control input-md">                                                                
+                            <input id="nombreOferta" name="nombreOferta" type="text" maxlength="100" placeholder="ingrese el nombre de la oferta" class="form-control input-md" ng-model="datos.nombreOferta" ng-required="true">                                                                
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.nombreOferta.$error.required">Debe ingresar un nombre para la oferta de beca.</span>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="duracion">Duracion (Meses) : </label>                                
                         </div>
                         <div class="col-md-3 text-right">
-                            <input id="duracion" name="duracion" type="number" placeholder="cambiar" min="1" max="60" required class="form-control input-md">                                                                
+                            <input id="duracion" name="duracion" type="number" placeholder="cambiar" min="1" max="60" class="form-control input-md" ng-model="datos.dur" ng-required="true">    
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.duracion.$error.required">Debe ingresar la duración de la oferta.</span>
                         </div>                        
                     </div> 
                     <br>
@@ -106,7 +108,7 @@
                             <label for="institucionOfertante">Institucion ofertante : </label>                                
                         </div>
                         <div class="col-md-3">
-                        <select id="institucionOferente" name="institucionOferente" class="form-control" required>
+                        <select id="institucionOferente" name="institucionOferente" class="form-control" ng-model="datos.instOfer" ng-required="true">
                             <%
                                 InstitucionDAO institucionDAO = new InstitucionDAO();
                                 ArrayList<Institucion> listaInstitucion = new ArrayList();
@@ -116,18 +118,21 @@
                                     <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
                                     <%   }
                             %>    
-                        </select>     
+                        </select>    
+                        <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.institucionOferente.$error.required">Seleccione una institución oferente.</span>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="modalidad">Modalidad :</label>                                
                         </div>
                         <div class="col-md-3">
-                         <select id="modalidad" name="modalidad" class="form-control" required>
+                         <select id="modalidad" name="modalidad" class="form-control" ng-model="datos.mod" ng-required="true">
                                 <option value="">Seleccione una opción</option>
                                 <option value="Presencial">Presencial</option>  
                                 <option value="Semipresencial">Semipresencial</option>
                                 <option value="Virtual">Virtual</option>
                          </select>  
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.modalidad.$error.required">Seleccione una modalidad.</span>
+
                         </div>  
                     </div>
 
@@ -138,7 +143,7 @@
                             <label for="institucionEstudio">Institucion de estudio :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <select id="institucionEstudio" name="institucionEstudio" class="form-control" required="">
+                            <select id="institucionEstudio" name="institucionEstudio" class="form-control" ng-model="datos.instEst" ng-required="true">
                             <%
                                 InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                 ArrayList<Institucion> listaInstitucion2 = new ArrayList();
@@ -148,15 +153,18 @@
                                     <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
                                <% }
                             %>    
-                            </select>
+                            </select><span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.institucionEstudio.$error.required">Seleccione una institución de estudio.</span>
+
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="fechaInicio">Fecha inicio de estudio :</label>                                
                         </div>
                         <div class="col-md-3">                                                            
                             <div class="input-group date">
-                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control" required><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
-                        </div>
+                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control" ng-model="datos.fechaIni" ng-required="true" disabled><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                             </div>
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.fechaInicio.$error.required">Ingrese fecha de inicio de estudio.</span>
+
                         </div>              
                     </div>   
                     <br>
@@ -165,20 +173,24 @@
                             <label for="tipoEstudio">Tipo de estudio :</label>                                
                         </div>
                         <div class="col-md-3"> 
-                            <select id="tipoEstudio" name="tipoEstudio" class="form-control" required>
+                            <select id="tipoEstudio" name="tipoEstudio" class="form-control" ng-model="datos.tipoEst" ng-required="true">
                                 <option value="">Seleccione una opción</option>
                                <option value="Maestria">Maestria</option>
                                <option value="Doctorado">Doctorado</option>
                                <option value="Especialización">Especialización</option>
                             </select>
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.tipoEstudio.$error.required">Seleccione un tipo de estudio.</span>
+
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="fechaCierre">Fecha limite para aplicar :</label>                                
                         </div>
                         <div class="col-md-3">                                
                             <div class="input-group date">
-                                <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" required><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
-                        </div>
+                                <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="true" disabled><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                               </div>
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.fechaCierre.$error.required">Ingrese una fecha de cierre.</span>
+    
                         </div>              
                     </div>
                     <br>
@@ -187,17 +199,19 @@
                             <label for="tipoBeca">Tipo de beca: </label>                                
                         </div>
                         <div class="col-md-3">    
-                            <select id="tipoBeca" name="tipoBeca" class="form-control" required>
+                            <select id="tipoBeca" name="tipoBeca" class="form-control" ng-model="datos.tipoB" ng-required="true">
                                 <option value="">Seleccione una opción</option>
                                 <option value="Interna">Interna</option>
                                 <option value="Externa">Externa</option>                                
                             </select>
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.tipoBeca.$error.required">Seleccione un tipo de beca.</span>
+
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="idioma">Idioma :</label>                                
                         </div>
                         <div class="col-md-3"> 
-                            <select id="idioma" name="idioma" class="form-control" required>
+                            <select id="idioma" name="idioma" class="form-control" ng-model="datos.idi" ng-required="true">
                                 <option value="">Seleccione Idioma</option> 
                                  <%
                                 IdiomaDAO idiomaDAO = new IdiomaDAO();
@@ -209,6 +223,8 @@
                                 }
                             %>
                             </select>
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.idioma.$error.required">Seleccione un idioma.</span>
+
                         </div>              
                     </div>
                     <br> 
@@ -217,18 +233,21 @@
                             <label for="financiamiento">Financiamiento: </label>                                
                         </div>
                         <div class="col-md-3">         
-                            <select id="financiamiento" name="financiamiento" class="form-control" required>
+                            <select id="financiamiento" name="financiamiento" class="form-control" ng-model="datos.finan" ng-required="true">
                                 <option value="">Seleccione una opción</option>
                                 <option value="Beca completa">Beca completa</option>
                                 <option value="Media beca">Media beca</option>
                                 <option value="Cuarto de beca">Cuarto de beca</option>
                             </select>
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.financiamiento.$error.required">Seleccione un tipo de financiamiento.</span>
+
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Archivo de la oferta :</label>                                
                         </div>
                         <div class="col-md-3">      
-                            <input type="file" name="doc_digital" accept="application/pdf" >
+                            <input type="file" name="doc_digital" accept="application/pdf">
+                      
                         </div>              
                     </div>
                     <br>
@@ -237,13 +256,15 @@
                             <label for="perfil">Perfil de la beca: </label>                                
                         </div>
                         <div class="col-md-9">                                
-                            <textarea class="form-control" id="perfilBeca" maxlength="2000" name="perfilBeca" required></textarea>
+                            <textarea class="form-control" id="perfilBeca" maxlength="2000" name="perfilBeca" ng-model="datos.instOfer" ng-required="true"></textarea>
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.perfilBeca.$error.required">Ingrese información para el perfil de la oferta.</span>
+
                         </div>                                    
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <input type="submit" class="btn btn-primary" name="submit" value="Agregar oferta">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Agregar oferta" ng-disabled="!AgregarOfertaBeca.$valid">
                             <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
                         </div>
                     </div>
@@ -290,6 +311,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+    <script src="js/angular.min.js"></script>
+        <script src="js/agregarModificarOferta.js"></script>
 <script type="text/javascript">
     $(function () {
         $('.input-group.date').datepicker({            
