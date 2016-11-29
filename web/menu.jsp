@@ -114,7 +114,7 @@
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Ofertas de becas</a></li>");                    
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Estado de solicitudes</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Estado de proceso de beca</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitud de Permiso Inicial</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='304_candidato_sol_permiso_inicial.jsp'>Solicitud de Permiso Inicial</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitud de autorizacion inicial</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitud de dictamen de propuesta</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitud de beca</a></li>");

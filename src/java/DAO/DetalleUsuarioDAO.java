@@ -176,5 +176,26 @@ public class DetalleUsuarioDAO extends ConexionBD {
         }
         return exito;
     }
+    
+    public Integer obtenerFacultad (String user){
+        int idFacultad = 0;
+        this.abrirConexion();
+        
+        try{
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_FACULTAD FROM DETALLE_USUARIO DU JOIN USUARIO US ON DU.ID_USUARIO = US.ID_USUARIO WHERE US.NOMBRE_USUARIO =\"" + user +"\"" ;                         
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idFacultad = rs.getInt("ID_FACULTAD");
+            }
+            
+        } catch (Exception e){
+            
+        }
+        
+        return idFacultad;
+    }
 
 }

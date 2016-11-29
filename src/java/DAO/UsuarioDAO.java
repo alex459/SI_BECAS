@@ -219,5 +219,26 @@ public class UsuarioDAO extends ConexionBD {
         return respuesta;
     }
     
+    
+    public Integer obtenerIdUsuario(String nombre_usuario) {
+        Integer idUsuario=0;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_USUARIO FROM usuario where NOMBRE_USUARIO = '" + nombre_usuario+"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            while (rs.next()) {
+                idUsuario = rs.getInt("ID_USUARIO");
+                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return idUsuario;
+    }
+    
 
 }

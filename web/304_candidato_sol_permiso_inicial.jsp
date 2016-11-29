@@ -3,6 +3,8 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
+<%@page import="DAO.ExpedienteDAO"%>
+<%@page import="DAO.DetalleUsuarioDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <% 
     response.setHeader("Cache-Control", "no-store");
@@ -10,6 +12,16 @@
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
     String user=(String)actual.getAttribute("user");
+    Integer idFacultad = 0;
+    boolean expedienteAbierto = false;
+    try{
+        DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
+        idFacultad = DetUsDao.obtenerFacultad(user);
+        ExpedienteDAO expDao = new ExpedienteDAO();
+        expedienteAbierto = expDao.expedienteAbierto(user);
+    } catch (Exception e){
+        e.printStackTrace();
+    }
      if(user==null){
      response.sendRedirect("login.jsp");
         return;
@@ -33,8 +45,8 @@
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
+        <h3 class="text-center text-danger" >
+            Universidad De El Salvador
         </h3>
     </div>
     <div class="col-md-8">
@@ -59,74 +71,36 @@
                 <legend class="custom-border">Solicitud de permiso inicial</legend>
         <div class="row">
             <div class="col-md-12">
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-4 col-md-offset-4">
-                            <select id="facultad" name="facultad" class="form-control">
-                                <option value="1">Seleccione una facultad</option>
-                                <option value="2">facultad2</option>
-                            </select>
-                        </div>
-                    </div>
-                </div></br>
-                <div class = "panel panel-default">
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <legend>Adjuntar documentación necesaria</legend>
-                            <div class="row"> 
-                                <div class="col-md-12 col-md-offset-2">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input id="searchinput" name="busqueda" type="input" placeholder="Ruta del archivo" class="form-control input-md" disable>
-                                            <p class="help-block"></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">    
-                                        <div class="form-group">
-                                            <div class="col-md-4">
-                                                <button id="singlebutton" name="cargarArchivo" type="file" class="btn btn-primary">Examinar</button>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-offset-5">
-                                    <button id="button1id" name="nuevoDoc" class="btn btn-success">Agregar nuevo documento</button>
-                                </div>
-                            </div></br>    
-
-                            <div class="row">   
-                                <div class="col-md-12">
-                                    <div class="col-md-4 col-md-offset-1">
-                                        <div class="form-group">
-                                            <select id="facultad" name="tipoDoc" class="form-control">
-                                                <option value="1">Seleccione el tipo de documento</option>
-                                                <option value="2">ejemplo</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control" id="labelDurac" placeholder="Ruta del archivo" disable>    
-
-                                    </div> 
-                                    <div class="col-md-3">
-                                        <button id="button1id" name="examinar" class="btn btn-success">Examinar</button>
-                                        <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
-                                    </div>  
-                                </div>    
-                            </div>  
-                            
-                            </br></br>
-                            <div class="row">   
-                                <div class="col-md-2 col-md-offset-5">
-                                        <button id="button1id" name="enviar" class="btn btn-success">Enviar solicitud</button>
-                                </div>    
-                            </div> </br>
-                        </fieldset>
-                    </form>
+                
+            <%if (expedienteAbierto == true){%>
+            <div class="text-center">
+                    <h3 class="text-danger">Ya ha iniciado un Proceso de Solicitud de Beca </h3>
+                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                 </div>
+                
+            <%}else{%>
+            <fieldset class="custom-border">
+                <legend class="custom-border">Adjuntar documentación necesaria</legend>
+                <form name="solicitudPermisoInicial" action="PermisoInicial" method="post" enctype="multipart/form-data">
+                <div class="row"> 
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3">
+                        <label> Carta de Solicitud de permiso inicial:</label>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="file" class="" name="cartaSolicitud" accept="application/pdf">
+                    </div>
+                    <div class="col-md-2"></div>
+                                    
+                </div>
+                    <div class="row text-center">
+                        <br>
+                        <input type="hidden" name="user" value="<%=user%>">
+                        <input type="submit" name="guardar" value="Enviar" class="btn btn-success">
+                    </div> 
+                </form>
+            </fieldset>          
+            <%}%>
             </div> 
         </div></fieldset>
 

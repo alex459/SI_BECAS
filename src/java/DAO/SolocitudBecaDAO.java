@@ -15,6 +15,30 @@ import java.util.Date;
  * @author MauricioBC
  */
 public class SolocitudBecaDAO extends ConexionBD{
+    
+    //Permite obtener el Id de la nueva solicitud
+    public Integer getSiguienteId() {
+        Integer siguiente = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_SOLICITUD), 0) AS X FROM SOLICITUD_DE_BECA";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            
+            while (rs.next()) {
+                siguiente = rs.getInt("X") + 1;
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        
+        return siguiente;
+    }
+    
+    
+    //
      public SolicitudDeBeca consultarPorId(int id) {
         SolicitudDeBeca temp = new SolicitudDeBeca();
         this.abrirConexion();

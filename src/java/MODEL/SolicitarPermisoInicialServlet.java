@@ -7,9 +7,12 @@ package MODEL;
 
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
+import DAO.SolocitudBecaDAO;
 import DAO.TipoDocumentoDAO;
+import DAO.UsuarioDAO;
 import POJO.Documento;
 import POJO.Expediente;
+import POJO.SolicitudDeBeca;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,9 +30,9 @@ import javax.servlet.http.Part;
  *
  * @author adminPC
  */
-@WebServlet("/AgregarDocumentoServlet")
+@WebServlet(name = "SolicitarPermisoInicialServlet", urlPatterns = {"/PermisoInicial"})
 @MultipartConfig(maxFileSize = 16177215)
-public class AgregarDocumentoServlet extends HttpServlet {
+public class SolicitarPermisoInicialServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,36 +46,65 @@ public class AgregarDocumentoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Integer tip = Integer.parseInt(request.getParameter("tipo"));
-        String obs = request.getParameter("observacion");
-        InputStream archivo = null;
-        Part filePart = request.getPart("doc_digital");
+        
+        //Recuperando datos del formulario
+        InputStream cartaSolicitud = null;
+        String user = request.getParameter("user");
+        Part filePart = request.getPart("cartaSolicitud");
         if (filePart != null) {
-            archivo = filePart.getInputStream();
+            cartaSolicitud = filePart.getInputStream();
         }
         
+        //Creando el expediente
+        ExpedienteDAO expDao = new ExpedienteDAO();
+        Expediente expediente = new Expediente();
+        Integer idExpediente = expDao.getSiguienteId();
+        Integer idProgreso = 1;
+        
+        expediente.setIdExpediente(idExpediente);
+        expediente.setEstadoExpediente("ABIERTO");
+        expediente.setIdProgreso(idProgreso);
+        expediente.setEstadoProgreso("EN PROCESO");
+        
+        boolean exito = expDao.ingresar(expediente);
+                
+        //Ingresando el documento
         Documento documento = new Documento();
         DocumentoDAO documentoDao = new DocumentoDAO();
         TipoDocumento tipo = new TipoDocumento();
         TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
-        ExpedienteDAO expDao = new ExpedienteDAO();
         
         Integer idDoc =  documentoDao.getSiguienteId();
-        
+        String obs = "CARTA DE SOLICITUD DEL USUARIO " + user;
+        Integer tip = 100;
         tipo = tipoDao.consultarPorId(tip);
-        Integer idexp = 0;
-        Expediente idexpediente = expDao.consultarPorId(idexp);  
-        String Estado = "PUBLICO";
-        
-        
         
         documento.setIdDocumento(idDoc);
         documento.setIdTipoDocumento(tipo);
-        documento.setDocumentoDigital(archivo);
-        documento.setIdExpediente(idexpediente);
+        documento.setDocumentoDigital(cartaSolicitud);
+        documento.setIdExpediente(expediente);
         documento.setObservacion(obs);
-        documento.setEstadoDocumento(Estado);
+        documento.setEstadoDocumento("Ingresado");
         
+        boolean ingresarDocumento = documentoDao.Ingresar(documento);
+        
+        //creando Solicitud de beca
+        SolocitudBecaDAO solDao = new SolocitudBecaDAO();
+        SolicitudDeBeca solicitud = new SolicitudDeBeca();
+        UsuarioDAO usuDao = new UsuarioDAO();
+        Integer idSolicitud = solDao.getSiguienteId();
+        Integer idUsuario = usuDao.obtenerIdUsuario(user);
+        Integer idOfertaBeca = 4;
+        Date fechaHoy = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime()); 
+        
+        solicitud.setIdSolicitud(idSolicitud);
+        solicitud.setIdExpediente(idExpediente);
+        solicitud.setIdUsuario(idUsuario);
+        solicitud.setIdOfertaBeca(idOfertaBeca);
+        solicitud.setFechaSolicitud(sqlDate);
+        
+        boolean ingresarSolicitud = solDao.ingresar(solicitud);
         
         boolean ing = documentoDao.Ingresar(documento);
         
@@ -81,7 +113,6 @@ public class AgregarDocumentoServlet extends HttpServlet {
         }
         else
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el Documento.");
-    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -111,8 +142,6 @@ public class AgregarDocumentoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
     }
 
     /**

@@ -7,6 +7,7 @@ public class Expediente{
     private Integer idExpediente;
     private Integer idProgreso;
     private String estadoExpediente;
+    private String estadoProgreso;
 
     /**
      * @return the idExpediente
@@ -50,7 +51,13 @@ public class Expediente{
         this.estadoExpediente = estadoExpediente;
     }
 
-    
+    public String getEstadoProgreso() {
+        return estadoProgreso;
+    }
+
+    public void setEstadoProgreso(String estadoProgreso) {
+        this.estadoProgreso = estadoProgreso;
+    }
     
     
 }
