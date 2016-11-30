@@ -270,29 +270,10 @@
                     int idFin = institucionDAO.consultarIdPorNombre(instOfertante);
                     consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
                 }
-                //fecha inicio fin no vacia buscar fechas menores
-                if(!fIngresoIni.isEmpty()&&fIngresoFin.isEmpty()){
-                   java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
-                   consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO >= '"+sqlFIngresoIni+"' ");
-                }
-                //fecha inicio no vacia buscar fechas mayores
-                if(fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
-                   java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
-                   consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO <= '"+sqlFIngresoFin+"' ");
-                }
-                //ambas fechas no vacias buscar en rango
                 if(!fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
                    java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                    java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
                    consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '"+sqlFIngresoIni+"' AND '"+sqlFIngresoFin+"' ");
-                }
-                if(fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
-                   java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE <= '"+sqlFCierreFin+"' ");
-                }
-                if(!fCierreIni.isEmpty()&&fCierreFin.isEmpty()){
-                   java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
-                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE >= '"+sqlFCierreIni+"' ");
                 }
                 if(!fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
                    java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
@@ -307,10 +288,9 @@
                 while (rs.next()) {
                     temp = new OfertaBeca();
                     temp2 = new Institucion();
-                  //  temp3 = new Documento();
+                    temp3 = new Documento();
                     temp2.setPais(rs.getString("PAIS"));
-                   // temp3.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
-                    temp.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
+                    temp3.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
                     temp.setIdOfertaBeca(rs.getInt("ID_OFERTA_BECA"));
                     temp.setNombreOferta(rs.getString("NOMBRE_OFERTA"));
                     temp.setTipoOfertaBeca(rs.getString("TIPO_OFERTA_BECA"));
@@ -323,7 +303,7 @@
                     System.out.println(temp.getNombreOferta());
                     lista2.add(temp);
                     listaPais.add(temp2);
-                  //  listaDocs.add(temp3);
+                    listaDocs.add(temp3);
                     System.out.println("GGGGGGGGTTTTTTTTT");
                 }
                 //con el rs se llenara la tabla de resultados
@@ -369,14 +349,14 @@
                                         %><td><%=lista2.get(i).getTipoEstudio()%></td><%                                         
                                         %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion()%></td><% 
                                         %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion()%></td><% 
-                                        %><td><form name ="verDocForm" action="DocumentoOferta" method="post"  target="_blank"> 
-                                                    <input type="hidden" name="id" value="<%=lista2.get(i).getIdDocumento()%>">
+                                        %><td><form action="DocumentoOferta" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="id" value="<%=listaDocs.get(i).getIdDocumento()%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    
                                                     out.write("<td>");
                                                     out.write("<center>");
-                                                    %><form name="modificarForm" style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'>
-                                                        <input type='hidden' name='ID_DOC' value='<%=lista2.get(i).getIdDocumento()%>'>
+                                                    %><form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'>
+                                                        <input type='hidden' name='ID_DOC' value='<%=listaDocs.get(i).getIdDocumento()%>'>
                                     <input type='hidden' name='ID_OFERTA_BECA' value='<%=lista2.get(i).getIdOfertaBeca()%>'>
                                     <input type='submit' class='btn btn-success' name='submit' value='Modificar oferta'></form><%
                                                     out.write("</center>");
