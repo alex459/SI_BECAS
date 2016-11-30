@@ -346,4 +346,23 @@ public class DocumentoDAO extends ConexionBD{
         return idDoc;
     }
     
+    //Permite crear un nuevo expediente
+        public boolean solicitarDocumento(Documento acuerdo){
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "INSERT INTO DOCUMENTO (ID_DOCUMENTO, ID_TIPO_DOCUMENTO, ID_EXPEDIENTE, FECHA_SOLICITUD, OBSERVACION_O, ESTADO_DOCUMENTO) VALUES ( " + acuerdo.getIdDocumento()+"," + acuerdo.getIdTipoDocumento().getIdTipoDocumento()+"," + acuerdo.getIdExpediente().getIdExpediente()+",'" + acuerdo.getFechaSolicitud()+"','" + acuerdo.getObservacion()+"','" + acuerdo.getEstadoDocumento()+"')";
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+    
 }

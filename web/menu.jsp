@@ -93,7 +93,7 @@
                     out.write("<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Información pública<strong class='caret'></strong></a>");
                     out.write("<ul class='dropdown-menu'>");
                     
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Ofertas de becas</a></li>");                    
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='301_inf_publica_ofertas_beca.jsp'>Ofertas de becas</a></li>");                    
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Documentos</a></li>");                    
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Acerca de</a></li>");                    
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Ofertas de becas</a></li>");                    

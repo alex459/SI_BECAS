@@ -14,16 +14,26 @@
     String user=(String)actual.getAttribute("user");
     Integer idFacultad = 0;
     boolean expedienteAbierto = false;
+    Integer idOferta =0;
+    //Obteniendo su facultad
     try{
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         idFacultad = DetUsDao.obtenerFacultad(user);
+        // Comprobando si tiene un proceso de beca abierto
         ExpedienteDAO expDao = new ExpedienteDAO();
         expedienteAbierto = expDao.expedienteAbierto(user);
+        // Obteniendo el id de la oferta
+        idOferta = Integer.parseInt(request.getParameter("ID_OFERTA_BECA"));
     } catch (Exception e){
         e.printStackTrace();
     }
      if(user==null){
      response.sendRedirect("login.jsp");
+        return;
+     }
+     //Si no ha seleccionado una oferta lo envia a la pagina de las ofertas de becas
+     if(idOferta == 0){
+     response.sendRedirect("301_inf_publica_ofertas_beca.jsp");
         return;
      }
 %>
@@ -96,6 +106,7 @@
                     <div class="row text-center">
                         <br>
                         <input type="hidden" name="user" value="<%=user%>">
+                        <input type="hidden" name="idOferta" value="<%=idOferta%>">
                         <input type="submit" name="guardar" value="Enviar" class="btn btn-success">
                     </div> 
                 </form>

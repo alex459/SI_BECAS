@@ -50,6 +50,7 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
         //Recuperando datos del formulario
         InputStream cartaSolicitud = null;
         String user = request.getParameter("user");
+        Integer idOfertaBeca = Integer.parseInt(request.getParameter("idOferta"));
         Part filePart = request.getPart("cartaSolicitud");
         if (filePart != null) {
             cartaSolicitud = filePart.getInputStream();
@@ -84,7 +85,7 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
         documento.setDocumentoDigital(cartaSolicitud);
         documento.setIdExpediente(expediente);
         documento.setObservacion(obs);
-        documento.setEstadoDocumento("Ingresado");
+        documento.setEstadoDocumento("INGRESADO`");
         
         boolean ingresarDocumento = documentoDao.Ingresar(documento);
         
@@ -94,7 +95,6 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
         UsuarioDAO usuDao = new UsuarioDAO();
         Integer idSolicitud = solDao.getSiguienteId();
         Integer idUsuario = usuDao.obtenerIdUsuario(user);
-        Integer idOfertaBeca = 4;
         Date fechaHoy = new Date();
         java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime()); 
         
@@ -103,12 +103,28 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
         solicitud.setIdUsuario(idUsuario);
         solicitud.setIdOfertaBeca(idOfertaBeca);
         solicitud.setFechaSolicitud(sqlDate);
-        
         boolean ingresarSolicitud = solDao.ingresar(solicitud);
         
-        boolean ing = documentoDao.Ingresar(documento);
+        //Solicitando nuevo documento
+        Documento acuerdo = new Documento();
+        idDoc = documentoDao.getSiguienteId();
+        tip = 103;
+        tipo = tipoDao.consultarPorId(tip);
+        String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
         
-        if(ing= true){
+        acuerdo.setIdDocumento(idDoc);
+        acuerdo.setIdTipoDocumento(tipo);
+        acuerdo.setIdExpediente(expediente);
+        acuerdo.setFechaSolicitud(sqlDate);
+        acuerdo.setObservacion(observacion);
+        acuerdo.setEstadoDocumento("PENDIENTE");
+        boolean solicitar = documentoDao.solicitarDocumento(acuerdo);
+        
+        
+        
+        
+        
+        if(ingresarDocumento= true){
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el Documento correctamente.");
         }
         else
