@@ -72,8 +72,8 @@
         </div>
     </div>
 
-    <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-    <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
 
     <%-- todo el menu esta contenido en la siguiente linea
@@ -90,7 +90,7 @@
             <div class="col-md-12">
                 
             <%if (expedienteAbierto == true){%>
-            <div class="text-center">
+                <div class="text-center">
                     <h3 class="text-danger">Ya ha iniciado un Proceso de Solicitud de Beca </h3>
                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                 </div>

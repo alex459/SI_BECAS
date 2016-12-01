@@ -13,6 +13,8 @@ import java.sql.ResultSet;
  * @author adminPC
  */
 public class ExpedienteDAO extends ConexionBD {
+    
+    //Obtener un expediente por Id
         public Expediente consultarPorId(Integer id) {
         Expediente expediente = new Expediente();
         this.abrirConexion();
@@ -113,6 +115,55 @@ public class ExpedienteDAO extends ConexionBD {
             System.out.println("Error " + e);
         }
         
+        return exito;
+    }
+        
+    //Permite obtener el expediente abierto de un usuario
+        public Expediente obtenerExpedienteAbierto(String user){
+            Expediente expediente = new Expediente();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ex.ID_EXPEDIENTE, ex.ID_PROGRESO,ex.ESTADO_EXPEDIENTE, ex.ESTADO_PROGRESO from expediente ex join solicitud_de_beca sb on ex.ID_EXPEDIENTE = sb.ID_EXPEDIENTE join usuario u on u.ID_USUARIO = sb.ID_USUARIO where ex.ESTADO_EXPEDIENTE = \"ABIERTO\" and u.NOMBRE_USUARIO =\"" +user +"\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+
+                Integer ID_EXPEDIENTE = rs.getInt("ID_EXPEDIENTE");
+                Integer ID_PROGRESO = rs.getInt("ID_PROGRESO");
+                String EstadoExpediente = rs.getString("ESTADO_EXPEDIENTE");
+                String EstadoProgreso = rs.getString("ESTADO_PROGRESO");
+                
+                expediente.setIdExpediente(ID_EXPEDIENTE);
+                expediente.setIdProgreso(ID_PROGRESO);
+                expediente.setEstadoExpediente(EstadoExpediente);
+                expediente.setEstadoProgreso(EstadoProgreso);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return expediente;
+        }
+        
+        public boolean actualizarExpediente(Expediente expediente){
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            
+            String sql = "UPDATE EXPEDIENTE SET ID_PROGRESO = "+ expediente.getIdProgreso()+ ", ESTADO_PROGRESO = '"+expediente.getEstadoProgreso()+"',ESTADO_EXPEDIENTE ='"+ expediente.getEstadoExpediente()+"' WHERE ID_EXPEDIENTE =" +expediente.getIdExpediente();
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
         return exito;
     }
     

@@ -7,12 +7,9 @@ package MODEL;
 
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
-import DAO.SolocitudBecaDAO;
 import DAO.TipoDocumentoDAO;
-import DAO.UsuarioDAO;
 import POJO.Documento;
 import POJO.Expediente;
-import POJO.SolicitudDeBeca;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,9 +26,9 @@ import javax.servlet.http.Part;
  *
  * @author adminPC
  */
-@WebServlet(name = "SolicitarPermisoInicialServlet", urlPatterns = {"/PermisoInicial"})
+@WebServlet(name = "SolicitarAutorizacionInicialServlet", urlPatterns = {"/AutorizacionInicial"})
 @MultipartConfig(maxFileSize = 16177215)
-public class SolicitarPermisoInicialServlet extends HttpServlet {
+public class SolicitarAutorizacionInicialServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,43 +42,32 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         //Recuperando datos del formulario
         InputStream cartaSolicitud = null;
         String user = request.getParameter("user");
-        Integer idOfertaBeca = Integer.parseInt(request.getParameter("idOferta"));
+        Integer idExpediente = Integer.parseInt(request.getParameter("idExpediente"));
         Integer nAnexos = Integer.parseInt(request.getParameter("nAnexos"));
         Part filePart = request.getPart("cartaSolicitud");
         if (filePart != null) {
             cartaSolicitud = filePart.getInputStream();
         }
-        
-        //Crear expediente
-        ExpedienteDAO expDao = new ExpedienteDAO();
-        Expediente expediente = new Expediente();
-        Integer idExpediente = expDao.getSiguienteId();
-        Integer idProgreso = 1;
-        
-        expediente.setIdExpediente(idExpediente);
-        expediente.setEstadoExpediente("ABIERTO");
-        expediente.setIdProgreso(idProgreso);
-        expediente.setEstadoProgreso("EN PROCESO");
-        
-        boolean expedienteCreado = expDao.ingresar(expediente);
-        boolean ingresarDocumento = false;
-        boolean ingresarSolicitud = false;
         boolean solicitarAcuerdo = false;
         
-        if(expedienteCreado == true){
-            //Ingresar Carta de Solicitud
+        //obtener Expediente
+        ExpedienteDAO expDao = new ExpedienteDAO();
+        Expediente expediente = expDao.consultarPorId(idExpediente);
+        
+        if (expediente != null){
+        //Ingresar carta de solicitud
             Documento documento = new Documento();
             DocumentoDAO documentoDao = new DocumentoDAO();
             TipoDocumento tipo = new TipoDocumento();
             TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
         
             Integer idDoc =  documentoDao.getSiguienteId();
-            String obs = "CARTA DE SOLICITUD DEL USUARIO " + user;
-            Integer tip = 100;
+            Integer idCarta = idDoc;
+            String obs = "CARTA DE SOLICITUD DE AUTORIZACION INICIAL DEL USUARIO " + user;
+            Integer tip = 104;
             tipo = tipoDao.consultarPorId(tip);
         
             documento.setIdDocumento(idDoc);
@@ -90,10 +76,10 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
             documento.setIdExpediente(expediente);
             documento.setObservacion(obs);
             documento.setEstadoDocumento("INGRESADO");
-            ingresarDocumento = documentoDao.Ingresar(documento);
-            
+            boolean ingresarDocumento = documentoDao.Ingresar(documento);
+        
             if(ingresarDocumento == true){
-                //Ingresando Documentacion Anexada si la hay
+            //Ingresar anexos
                 if(nAnexos >0){
                     InputStream archivoAnexo = null;
                     for (int i = 1; i < nAnexos+1; i++) {
@@ -121,71 +107,47 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
                 }else{
                     //Nada NO hay Documentacion Anexada
                 }
-                
-                //Crear Solicitud
-                SolocitudBecaDAO solDao = new SolocitudBecaDAO();
-                SolicitudDeBeca solicitud = new SolicitudDeBeca();
-                UsuarioDAO usuDao = new UsuarioDAO();
-                Integer idSolicitud = solDao.getSiguienteId();
-                Integer idUsuario = usuDao.obtenerIdUsuario(user);
+            //Solicitar Documento
+                Documento acuerdo = new Documento();
                 Date fechaHoy = new Date();
-                java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime()); 
+                java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
+                idDoc = documentoDao.getSiguienteId();
+                tip = 105;
+                tipo = tipoDao.consultarPorId(tip);
+                String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
         
-                solicitud.setIdSolicitud(idSolicitud);
-                solicitud.setIdExpediente(idExpediente);
-                solicitud.setIdUsuario(idUsuario);
-                solicitud.setIdOfertaBeca(idOfertaBeca);
-                solicitud.setFechaSolicitud(sqlDate);
-                ingresarSolicitud = solDao.ingresar(solicitud);
+                acuerdo.setIdDocumento(idDoc);
+                acuerdo.setIdTipoDocumento(tipo);
+                acuerdo.setIdExpediente(expediente);
+                acuerdo.setFechaSolicitud(sqlDate);
+                acuerdo.setObservacion(observacion);
+                acuerdo.setEstadoDocumento("PENDIENTE");
+                solicitarAcuerdo = documentoDao.solicitarDocumento(acuerdo);
                 
-                if(ingresarSolicitud == true){
-                    //Solicitar Documento
-                    Documento acuerdo = new Documento();
-                    idDoc = documentoDao.getSiguienteId();
-                    tip = 103;
-                    tipo = tipoDao.consultarPorId(tip);
-                    String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
-        
-                    acuerdo.setIdDocumento(idDoc);
-                    acuerdo.setIdTipoDocumento(tipo);
-                    acuerdo.setIdExpediente(expediente);
-                    acuerdo.setFechaSolicitud(sqlDate);
-                    acuerdo.setObservacion(observacion);
-                    acuerdo.setEstadoDocumento("PENDIENTE");
-                    solicitarAcuerdo = documentoDao.solicitarDocumento(acuerdo);
-                    
-                    if (solicitarAcuerdo == false){
-                        //Borrar Solicitud
-                        solDao.eliminarDocumentosExpediente(expediente.getIdExpediente());
-                        //Borrar Documentos
-                        documentoDao.eliminarDocumentosExpediente(expediente.getIdExpediente());
-                        //Borrar Expediente
-                        expDao.eliminarPermanentemente(expediente.getIdExpediente());
-                    }else{}
+                if (solicitarAcuerdo == true){
+                //Cambiar Estado de Progreso 
+                    expediente.setEstadoProgreso("EN PROCESO");
+                    expDao.actualizarExpediente(expediente);
                 }else{
-                    //Borrar documentos del expediente
-                    documentoDao.eliminarDocumentosExpediente(expediente.getIdExpediente());
-                    
-                    //Borrar Expediente
-                    expDao.eliminarPermanentemente(expediente.getIdExpediente());
-                }
+                //eliminar Carta de solicitud
+                    documentoDao.eliminarDocumento(idCarta);
+                
+                }       
             }else{
-                //Borrar Expediente
-                expDao.eliminarPermanentemente(expediente.getIdExpediente());
+                //NADA no se ingreso ningun documento
             }
-        
+
         }else{
-            //Agregar a bitacora accion
-            Utilidades.nuevaBitacora(1, request.getSession().getAttribute("user").toString(), "Error al ingresar solicitud de Permiso Inicial");
+        //Nada no se obtuvo expediente
         }
-        
         
         if(solicitarAcuerdo== true){
             
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Acuerdo de Permiso Inicial correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Acuerdo de Autorizacion Inicial correctamente.");
         }
         else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud del Acuerdo de Permiso Inicial.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud del Acuerdo de Autorizacion Inicial.");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

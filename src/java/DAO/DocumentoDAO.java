@@ -175,6 +175,7 @@ public class DocumentoDAO extends ConexionBD{
         return lista;
     }
     
+    //Elimina un documento por su id
     public Boolean eliminarDocumento(Integer id) {
         this.abrirConexion();
         Boolean exito =false;
@@ -381,5 +382,5 @@ public class DocumentoDAO extends ConexionBD{
         
         return exito;
     }
-    
+           
 }
