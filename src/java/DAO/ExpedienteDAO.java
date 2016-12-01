@@ -98,5 +98,22 @@ public class ExpedienteDAO extends ConexionBD {
         }
         return exito;
     }
+        
+        //Elimina un expediente PERMANENTEMENTE de la BD
+        public Boolean eliminarPermanentemente(Integer id) {
+        this.abrirConexion();
+        Boolean exito =false;
+        try {
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM EXPEDIENTE WHERE ID_EXPEDIENTE =" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            exito=true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        
+        return exito;
+    }
     
 }

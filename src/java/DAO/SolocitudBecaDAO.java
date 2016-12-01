@@ -151,4 +151,21 @@ public class SolocitudBecaDAO extends ConexionBD{
         return exito;
     }
     
+    //Elimina una solicitud de beca con el id de expediente enviado PERMANENTEMENTE de la BD
+        public Boolean eliminarDocumentosExpediente(Integer id) {
+        this.abrirConexion();
+        Boolean exito =false;
+        try {
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM SOLICITUD_DE_BECA WHERE ID_EXPEDIENTE =" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            exito=true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        
+        return exito;
+    }
+    
 }

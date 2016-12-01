@@ -16,7 +16,6 @@ import POJO.SolicitudDeBeca;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -51,12 +50,13 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
         InputStream cartaSolicitud = null;
         String user = request.getParameter("user");
         Integer idOfertaBeca = Integer.parseInt(request.getParameter("idOferta"));
+        Integer nAnexos = Integer.parseInt(request.getParameter("nAnexos"));
         Part filePart = request.getPart("cartaSolicitud");
         if (filePart != null) {
             cartaSolicitud = filePart.getInputStream();
         }
         
-        //Creando el expediente
+        //Crear expediente
         ExpedienteDAO expDao = new ExpedienteDAO();
         Expediente expediente = new Expediente();
         Integer idExpediente = expDao.getSiguienteId();
@@ -67,68 +67,125 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
         expediente.setIdProgreso(idProgreso);
         expediente.setEstadoProgreso("EN PROCESO");
         
-        boolean exito = expDao.ingresar(expediente);
+        boolean expedienteCreado = expDao.ingresar(expediente);
+        boolean ingresarDocumento = false;
+        boolean ingresarSolicitud = false;
+        boolean solicitarAcuerdo = false;
+        
+        if(expedienteCreado == true){
+            //Ingresar Documento
+            Documento documento = new Documento();
+            DocumentoDAO documentoDao = new DocumentoDAO();
+            TipoDocumento tipo = new TipoDocumento();
+            TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
+        
+            Integer idDoc =  documentoDao.getSiguienteId();
+            String obs = "CARTA DE SOLICITUD DEL USUARIO " + user;
+            Integer tip = 100;
+            tipo = tipoDao.consultarPorId(tip);
+        
+            documento.setIdDocumento(idDoc);
+            documento.setIdTipoDocumento(tipo);
+            documento.setDocumentoDigital(cartaSolicitud);
+            documento.setIdExpediente(expediente);
+            documento.setObservacion(obs);
+            documento.setEstadoDocumento("INGRESADO");
+            ingresarDocumento = documentoDao.Ingresar(documento);
+            
+            if(ingresarDocumento == true){
+                //Ingresando Documentacion Anexada si la hay
+                if(nAnexos >0){
+                    InputStream archivoAnexo = null;
+                    for (int i = 1; i < nAnexos+1; i++) {
+                        String varTipo = "tipoAnexo" +i;
+                        String varNombreDocumento = "anexo" +i;
+                        Documento anexo = new Documento();
+                        Integer idAnexo = documentoDao.getSiguienteId();
+                        tip = Integer.parseInt(request.getParameter(varTipo));
+                        tipo = tipoDao.consultarPorId(tip);
+                        filePart = null;
+                        filePart = request.getPart(varNombreDocumento);
+                        if (filePart != null) {
+                            archivoAnexo = filePart.getInputStream();
+                        }
+                        obs = "ANEXO DEL USUARIO: " + user;
                 
-        //Ingresando el documento
-        Documento documento = new Documento();
-        DocumentoDAO documentoDao = new DocumentoDAO();
-        TipoDocumento tipo = new TipoDocumento();
-        TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
+                        anexo.setIdDocumento(idAnexo);
+                        anexo.setIdTipoDocumento(tipo);
+                        anexo.setIdExpediente(expediente);
+                        anexo.setDocumentoDigital(archivoAnexo);
+                        anexo.setObservacion(obs);
+                        anexo.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(anexo);
+                    }
+                }else{
+                    //Nada NO hay Documentacion Anexada
+                }
+                
+                //Crear Solicitud
+                SolocitudBecaDAO solDao = new SolocitudBecaDAO();
+                SolicitudDeBeca solicitud = new SolicitudDeBeca();
+                UsuarioDAO usuDao = new UsuarioDAO();
+                Integer idSolicitud = solDao.getSiguienteId();
+                Integer idUsuario = usuDao.obtenerIdUsuario(user);
+                Date fechaHoy = new Date();
+                java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime()); 
         
-        Integer idDoc =  documentoDao.getSiguienteId();
-        String obs = "CARTA DE SOLICITUD DEL USUARIO " + user;
-        Integer tip = 100;
-        tipo = tipoDao.consultarPorId(tip);
+                solicitud.setIdSolicitud(idSolicitud);
+                solicitud.setIdExpediente(idExpediente);
+                solicitud.setIdUsuario(idUsuario);
+                solicitud.setIdOfertaBeca(idOfertaBeca);
+                solicitud.setFechaSolicitud(sqlDate);
+                ingresarSolicitud = solDao.ingresar(solicitud);
+                
+                if(ingresarSolicitud == true){
+                    //Solicitar Documento
+                    Documento acuerdo = new Documento();
+                    idDoc = documentoDao.getSiguienteId();
+                    tip = 103;
+                    tipo = tipoDao.consultarPorId(tip);
+                    String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
         
-        documento.setIdDocumento(idDoc);
-        documento.setIdTipoDocumento(tipo);
-        documento.setDocumentoDigital(cartaSolicitud);
-        documento.setIdExpediente(expediente);
-        documento.setObservacion(obs);
-        documento.setEstadoDocumento("INGRESADO`");
+                    acuerdo.setIdDocumento(idDoc);
+                    acuerdo.setIdTipoDocumento(tipo);
+                    acuerdo.setIdExpediente(expediente);
+                    acuerdo.setFechaSolicitud(sqlDate);
+                    acuerdo.setObservacion(observacion);
+                    acuerdo.setEstadoDocumento("PENDIENTE");
+                    solicitarAcuerdo = documentoDao.solicitarDocumento(acuerdo);
+                    
+                    if (solicitarAcuerdo == false){
+                        //Borrar Solicitud
+                        solDao.eliminarDocumentosExpediente(expediente.getIdExpediente());
+                        //Borrar Documentos
+                        documentoDao.eliminarDocumentosExpediente(expediente.getIdExpediente());
+                        //Borrar Expediente
+                        expDao.eliminarPermanentemente(expediente.getIdExpediente());
+                    }else{}
+                }else{
+                    //Borrar documentos del expediente
+                    documentoDao.eliminarDocumentosExpediente(expediente.getIdExpediente());
+                    
+                    //Borrar Expediente
+                    expDao.eliminarPermanentemente(expediente.getIdExpediente());
+                }
+            }else{
+                //Borrar Expediente
+                expDao.eliminarPermanentemente(expediente.getIdExpediente());
+            }
         
-        boolean ingresarDocumento = documentoDao.Ingresar(documento);
-        
-        //creando Solicitud de beca
-        SolocitudBecaDAO solDao = new SolocitudBecaDAO();
-        SolicitudDeBeca solicitud = new SolicitudDeBeca();
-        UsuarioDAO usuDao = new UsuarioDAO();
-        Integer idSolicitud = solDao.getSiguienteId();
-        Integer idUsuario = usuDao.obtenerIdUsuario(user);
-        Date fechaHoy = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime()); 
-        
-        solicitud.setIdSolicitud(idSolicitud);
-        solicitud.setIdExpediente(idExpediente);
-        solicitud.setIdUsuario(idUsuario);
-        solicitud.setIdOfertaBeca(idOfertaBeca);
-        solicitud.setFechaSolicitud(sqlDate);
-        boolean ingresarSolicitud = solDao.ingresar(solicitud);
-        
-        //Solicitando nuevo documento
-        Documento acuerdo = new Documento();
-        idDoc = documentoDao.getSiguienteId();
-        tip = 103;
-        tipo = tipoDao.consultarPorId(tip);
-        String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
-        
-        acuerdo.setIdDocumento(idDoc);
-        acuerdo.setIdTipoDocumento(tipo);
-        acuerdo.setIdExpediente(expediente);
-        acuerdo.setFechaSolicitud(sqlDate);
-        acuerdo.setObservacion(observacion);
-        acuerdo.setEstadoDocumento("PENDIENTE");
-        boolean solicitar = documentoDao.solicitarDocumento(acuerdo);
+        }else{
+            //Agregar a bitacora accion
+            Utilidades.nuevaBitacora(1, request.getSession().getAttribute("user").toString(), "Error al ingresar solicitud de Permiso Inicial");
+        }
         
         
-        
-        
-        
-        if(ingresarDocumento= true){
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el Documento correctamente.");
+        if(solicitarAcuerdo== true){
+            
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Acuerdo de Permiso Inicial correctamente.");
         }
         else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el Documento.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud del Acuerdo de Permiso Inicial.");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

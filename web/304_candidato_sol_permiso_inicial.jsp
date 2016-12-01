@@ -11,6 +11,7 @@
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
     Integer idFacultad = 0;
     boolean expedienteAbierto = false;
@@ -32,48 +33,54 @@
         return;
      }
      //Si no ha seleccionado una oferta lo envia a la pagina de las ofertas de becas
-     if(idOferta == 0){
+     if(idOferta == 0 && expedienteAbierto == false){
      response.sendRedirect("301_inf_publica_ofertas_beca.jsp");
         return;
      }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistema informático para la administración de becas de postgrado</title>
+        <title>Sistema informático para la administración de becas de postgrado</title>
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
+        <meta name="description" content="Source code generated using layoutit.com">
+        <meta name="author" content="LayoutIt!">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/customfieldset.css" rel="stylesheet">
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center text-danger" >
-            Universidad De El Salvador
-        </h3>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/customfieldset.css" rel="stylesheet">
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center text-danger" >
+                Universidad De El Salvador
+            </h3>
+        </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador
+            </h2>
+            <h3 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Sistema informático para la administración de becas de postgrado
+            </h3>
+        </div>
     </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
-<jsp:include page="menuCandidato.jsp"></jsp:include>
+
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+
+
+    <%-- todo el menu esta contenido en la siguiente linea
+         el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>
 </head>
-<body>
+<body ng-app = "solicitudApp" ng-controller="SolicitarPermisoCtrl">
 
     <div class="container-fluid">        
                 <H3 class="text-center" style="color:#E42217;">Solicitud de permiso inicial</H3>
@@ -103,10 +110,43 @@
                     <div class="col-md-2"></div>
                                     
                 </div>
+                    
+                    <div class="row">
+                        <div class="row text-right">
+                            <div class="col-md-10">
+                                <a ng-click="agregar()" ng-show="verAgregar">Agregar Otro Documento</a><br>
+                            </div>
+                            <div class="col-md-2"></div>
+                                                       
+                        </div>
+                            <div class="row text-left" ng-repeat="x in anexos">
+                                <div class="col-md-1"></div>  
+                                <div class="col-md-2">
+                                    <label>Tipo de Documento: </label><br>
+                                </div>
+                                <div class="col-md-4">
+                                        <select  name="{{x.tipo}}" class="form-control">
+                                            <option value="">Seleccione el tipo de documento</option>
+                                            <option value="101">Carta de Solicitud de la Escuela o Departamento</option>
+                                            <option value="102">Carta de solicitud de la institución que Oferta la Beca</option>
+                                        </select><br>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="file" name="{{x.nombre}}" accept="application/pdf"><br>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a class="btn btn-danger" ng-click="eliminar(item)">Eliminar</a><br>
+                                    </div>
+                                <div class="col-md-1"></div>  
+                                </div>
+                        <div class="col-md-2"></div>
+                         
+                    </div>
                     <div class="row text-center">
                         <br>
                         <input type="hidden" name="user" value="<%=user%>">
                         <input type="hidden" name="idOferta" value="<%=idOferta%>">
+                        <input type="hidden" name="nAnexos" value="{{Nanexos-1}}">
                         <input type="submit" name="guardar" value="Enviar" class="btn btn-success">
                     </div> 
                 </form>
@@ -141,6 +181,7 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/solicitudPermisoInicial.js"></script>
 </body>
 </html>
