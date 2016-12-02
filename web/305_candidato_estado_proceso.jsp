@@ -20,11 +20,14 @@
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
      if(user==null){
      response.sendRedirect("login.jsp");
         return;
      }
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
    //
    int idUser, idSol, idExp, idProg;
             ConexionBD conexionbd = null;
@@ -115,8 +118,8 @@
         </h3>
     </div>
 </div>
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
+<p class="text-right">Rol: <%= rol %></p>
+<p class="text-right">Usuario: <%= user %></p>
 <jsp:include page="menuCandidato.jsp"></jsp:include>
 </head>
 <body>

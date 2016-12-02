@@ -3,17 +3,86 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
+<%@page import="DAO.UsuarioDAO"%>
+<%@page import="POJO.Usuario"%>
+<%@page import="DAO.SolocitudBecaDAO"%>
+<%@page import="POJO.SolicitudDeBeca"%>
+<%@page import="DAO.ExpedienteDAO"%>
+<%@page import="POJO.Expediente"%>
+<%@page import="DAO.ProgresoDAO"%>
+<%@page import="POJO.Progreso"%>
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String user=(String)actual.getAttribute("user");
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }
+    }
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    int idUser, idSol, idExp, idProg;
+    ConexionBD conexionbd = null;
+    ResultSet rs = null;
+    Usuario temp1 = new Usuario();
+    SolicitudDeBeca temp2 = new SolicitudDeBeca();
+    Expediente temp3 = new Expediente();
+    Progreso temp4 = new Progreso();
+    //////////Obtener el id del usuario
+    try {
+        //formando la consulta
+        String consultaSql = "SELECT ID_USUARIO FROM USUARIO WHERE NOMBRE_USUARIO='" + user + "';";
+        //realizando la consulta
+        conexionbd = new ConexionBD();
+        rs = conexionbd.consultaSql(consultaSql);
+        temp1 = new Usuario();
+        if (rs.next()) {
+            temp1.setIdUsuario(rs.getInt("ID_USUARIO"));
+        }
+        //con el rs se llenara la tabla de resultados
+    } catch (Exception ex) {
+        System.out.println(ex);
+    }
+    idUser = temp1.getIdUsuario();
+    ////////Obtener el id del expediente
+    try {
+        //formando la consulta
+        String consultaSql = "SELECT ID_EXPEDIENTE FROM SOLICITUD_DE_BECA WHERE ID_USUARIO=" + idUser;
+        //realizando la consulta
+        conexionbd = new ConexionBD();
+        rs = conexionbd.consultaSql(consultaSql);
+        temp2 = new SolicitudDeBeca();
+        if (rs.next()) {
+            temp2.setIdExpediente(rs.getInt("ID_EXPEDIENTE"));
+        }
+        //con el rs se llenara la tabla de resultados
+    } catch (Exception ex) {
+        System.out.println(ex);
+    }
+    idExp = temp2.getIdExpediente();
+    ////////Obtener el id del progreso actual del candidato
+    try {
+        //formando la consulta
+        String consultaSql = "SELECT ID_PROGRESO FROM EXPEDIENTE WHERE ID_EXPEDIENTE=" + idExp;
+        //realizando la consulta
+        conexionbd = new ConexionBD();
+        rs = conexionbd.consultaSql(consultaSql);
+        temp3 = new Expediente();
+        if (rs.next()) {
+            temp3.setIdProgreso(rs.getInt("ID_PROGRESO"));
+        }
+        //con el rs se llenara la tabla de resultados
+    } catch (Exception ex) {
+        System.out.println(ex);
+    }
+    idProg = temp3.getIdProgreso();
+    System.out.println("IDUS: " + idUser + " IDEXP: " + idExp + " ID_PROG: " + idProg);
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,8 +116,8 @@
         </h3>
     </div>
 </div>
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
+<p class="text-right">Rol: <%= rol%></p>
+<p class="text-right">Usuario: <%= user%></p>
 <jsp:include page="menuCandidato.jsp"></jsp:include>
 </head>
 <body>
@@ -62,7 +131,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-bordered">
-                            
+
                             <thead>
                                 <tr class="success">
                                     <th>No</th>
@@ -75,46 +144,176 @@
                             </thead>
                             <tbody>
                                 <tr class="info">
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button></td>
-                                    <td><button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> 
-                </div>
-            </fieldset>
-        </form>
-
-        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-            <div class="col-md-6">
-                <h3>
-                    Dirección
-                </h3>
-                <p>
-                    2016 Universidad De El Salvador  <br/>
-                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                </p>
+                                    <td style="color:black;">1</>
+                                    <td style="color:black;">Permiso Inicial</td>
+                                    <td style="color:black;">Junta directiva de la facultad</td>
+                                    <td style="color:black;"> </td>
+                                <%
+                                    if (idProg == 1) {
+                                        out.write("<td style='color:black;'>Pendiente</td>");
+                                    } else {
+                                        out.write("<td  style='color:black;'>Finalizado</td>");
+                                    }
+                                    if (idProg > 1) 
+                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
+                                    else{
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                %> 
+                            </tr>
+                            <tr class="info">
+                                <td style="color:black;">2</>
+                                <td>Autorización inicial</td>
+                                <td>Consejo de becas</td>
+                                <td style="color:black;"> </td>
+                                <%
+                                    if (idProg < 2) {
+                                        out.write("<td style=' color:black;'>Pendiente</td>");
+                                    } else if (idProg == 2) {
+                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                    } else {
+                                        out.write("<td style=' color:black;'>Finalizado</td>");
+                                    }
+                                if (idProg > 2) 
+                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
+                                    else{
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                %> 
+                            </tr>
+                            <tr class="info">
+                                <td style="color:black;">3</>
+                                <td style="color:black;">Dictamen</td>
+                                <td style="color:black;">Comisión de beca</td>
+                                <td style="color:black;"> </td>
+                                <%
+                                    if (idProg < 3) {
+                                        out.write("<td style=' color:black;'>Pendiente</td>");
+                                    } else if (idProg == 3) {
+                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                    } else {
+                                        out.write("<td style=' color:black;'>Finalizado</td>");
+                                    }
+                                if (idProg > 3) 
+                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
+                                    else{
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                %> 
+                            </tr>
+                            <tr class="info">
+                                <td style="color:black;">4</>
+                                <td>Acuerdo de permiso inicial</td>
+                                <td>Junta directiva</td>
+                                <td> </td>
+                                <%
+                                    if (idProg < 4) {
+                                        out.write("<td style=' color:black;'>Pendiente</td>");
+                                    } else if (idProg == 4) {
+                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                    } else {
+                                        out.write("<td style=' color:black;'>Finalizado</td>");
+                                    }
+                                if (idProg > 4) 
+                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
+                                    else{
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                %> 
+                            </tr>
+                            <tr class="info">
+                                <td style="color:black;">5</>
+                                <td style="color:black;">Solicitud de beca</td>
+                                <td style="color:black;">Consejo de becas</td>
+                                <td style="color:black;"> </td>
+                                <%
+                                    if (idProg < 5) {
+                                        out.write("<td style=' color:black;'>Pendiente</td>");
+                                    } else if (idProg == 5) {
+                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                    } else {
+                                        out.write("<td style=' color:black;'>Finalizado</td>");
+                                    }
+                                if (idProg > 5) 
+                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
+                                    else{
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                %> 
+                            </tr>
+                            <tr class="info">
+                                <td style="color:black;">6</>
+                                <td>Resolución de expediente de beca</td>
+                                <td>Consejo de becas</td>
+                                <td> </td>
+                                <%
+                                    if (idProg < 6) {
+                                        out.write("<td style=' color:black;'>Pendiente</td>");
+                                    } else if (idProg == 6) {
+                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                    } else {
+                                        out.write("<td style=' color:black;'>Finalizado</td>");
+                                    }
+                                if (idProg > 6) 
+                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
+                                    else{
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                %> 
+                            </tr>
+                            <tr class="info">
+                                <td style="color:black;">7</>
+                                <td style="color:black;">Acuerdos de beca</td>
+                                <td style="color:black;">Consejo universitario</td>
+                                <td style="color:black;"> </td>
+                                <%
+                                    if (idProg < 7) {
+                                        out.write("<td style=' color:black;'>Pendiente</td>");
+                                    } else if (idProg == 7) {
+                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                    } else {
+                                        out.write("<td style=' color:black;'>Finalizado</td>");
+                                    }
+                                if (idProg > 7) 
+                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
+                                    else{
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                %> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
             </div>
-            <div class="col-md-6">
-                <h3>
-                    Información de contacto
-                </h3>
-                <p>
-                    Universidad De El Salvador
-                    Tél: +(503) 2511-2000 <br/>
-                    Consejo de becas
-                    Tél: +(503) 2511- 2016
-                </p>
-            </div>
-        </div>    
-    </div>
+        </fieldset>
+    </form>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
+        </div>
+    </div>    
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>
