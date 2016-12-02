@@ -42,6 +42,7 @@ public class VerDocumentoOferta extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");        
         DocumentoDAO docdao = new DocumentoDAO();
         Integer idDoc = Integer.parseInt(request.getParameter("id"));
+        System.out.println("id documento "+idDoc);
         Documento doc = new Documento();
         doc = docdao.consultarOfertaPorId(idDoc);
         String PdfName = doc.getIdTipoDocumento().getTipoDocumento() +".pdf";

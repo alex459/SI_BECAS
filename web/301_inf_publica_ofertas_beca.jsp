@@ -91,7 +91,7 @@
         <div class="row"><!-- TITULO DE LA PANTALLA -->
 
             <h2>
-                <p class="text-center" style="color:#cf2a27">Consultar ofertas de beca</p>
+                <p class="text-center" style="color:#cf2a27">Ofertas de beca</p>
             </h2>
 
             <br></br> 
@@ -99,7 +99,7 @@
 
         <div class="row"><!-- CONTENIDO DE LA PANTALLA -->  
             <fieldset class="custom-border"> 
-            <legend class="custom-border">Consultar oferta de beca</legend>   
+            <legend class="custom-border">Ofertas de beca disponibles</legend>   
             <div class="row">   <!-- FILTROS -->
 
                 <div class="col-md-12">
@@ -329,7 +329,6 @@
                                         <th>Tipo estudio</th>
                                         <th>Institución de estudio</th>
                                         <th>Institución financiera</th>
-                                        <th>Documento</th>
                                         <th>Acción</th>
                                     </tr>
                                 </thead>
@@ -349,13 +348,9 @@
                                         %><td><%=lista2.get(i).getTipoEstudio()%></td><%                                         
                                         %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion()%></td><% 
                                         %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion()%></td><% 
-                                        %><td><form action="DocumentoOferta" method="post"  target="_blank"> 
-                                                    <input type="hidden" name="id" value="<%=listaDocs.get(i).getIdDocumento()%>">
-                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
-                                                    </form></td><%    
-                                                    out.write("<td>");
+                                                   out.write("<td>");
                                                     out.write("<center>");
-                                                    %><form style='display:inline;' action='304_candidato_sol_permiso_inicial.jsp' method='post'>
+                                                    %><form style='display:inline;' action='302_inf_publica_ver_oferta.jsp' method='post'>
                                                         <input type='hidden' name='ID_DOC' value='<%=listaDocs.get(i).getIdDocumento()%>'>
                                     <input type='hidden' name='ID_OFERTA_BECA' value='<%=lista2.get(i).getIdOfertaBeca()%>'>
                                     <input type='submit' class='btn btn-success' name='submit' value='Aplicar a Beca'></form><%
