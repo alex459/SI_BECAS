@@ -3,7 +3,13 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
-
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
+<%@page import="POJO.TipoUsuario"%>
+<%@page import="DAO.TipoUsuarioDao"%>
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="POJO.Facultad"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <% 
     response.setHeader("Cache-Control", "no-store");
@@ -18,13 +24,6 @@
      }
 %>
 
-<%@page import="POJO.Facultad"%>
-<%@page import="DAO.FacultadDAO"%>
-<%@page import="POJO.TipoUsuario"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="DAO.TipoUsuarioDao"%>
-<%@page import="DAO.ConexionBD"%>
-<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -59,10 +58,8 @@
     </div>
 </div>
 
-
-
-<p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-<p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+<p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+<p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -70,8 +67,9 @@
 <jsp:include page="menu_corto.jsp"></jsp:include>
 
 </head>
-<body>
+<body ng-app="ActualizarUsuarioApp" ng-controller="ActualizarUsuarioCtrl">
 
+    
     <%
         
         String id_usuario = request.getParameter("ID_USUARIO");
@@ -114,7 +112,7 @@
         
     
     %>
-
+    
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
             <h2>
@@ -127,40 +125,45 @@
 
         <div class="col-md-12">
 
-            <form class="form-horizontal" action="ActualizarUsuarioServlet" method="post">
+            <form name= "ActualizarUsuario" class="form-horizontal" action="ActualizarUsuarioServlet" method="post" novalidate>
                 <fieldset class="custom-border">  
-                    <legend class="custom-border">Paso 2: Actualize los datos del usuario</legend>
+                    <legend class="custom-border">Datos personales</legend>
                     <div class="row"> 
                         <div class="col-md-3 text-right">                                   
                             <label for="textinput">Codigo de usuario : </label>                                
                         </div>
-                        <div class="col-md-3">                                                                                                               
-                            <input id="CARNET" name="CARNET" type="text" value="<%=carnet%>" onFocus="mostrarMensaje('help1','Ingrese solo numeros y letras. Maximo 10')" onBlur="ocultarMensaje('help1')" onkeypress="$(window).(return validarAlfanumerico('CARNET',event,10))" placeholder="ingrese un codigo para el usuario" class="form-control input-md">                                                                
+                        <div class="col-md-3">
+                            <input id="CARNET" name="CARNET" ng-init="datos.codigo = '<%=carnet%>'" type="text" placeholder="ingrese un codigo para el usuario" class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
+                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.CARNET.$error.required">El codigo es requerido.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.CARNET.$error.minlength">Minimo 7 caracteres.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
                             <small id="help1"></small>
                         </div>
                         <div class="col-md-3 text-right">
-                                                        
-                        </div>
-                        <div class="col-md-3">
-                                                         
-                        </div> 
+                            
+                        </div>                        
                     </div> 
 
                     <br>
 
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Primer nombre : </label>                                
+                            <label for="textinput">Primer nombre : </label>                             
                         </div>
-                        <div class="col-md-3">                            
-                            <input id="NOMBRE1_DU" name="NOMBRE1_DU" type="text" value="<%=nombre1%>" onFocus="mostrarMensaje('help2','Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help2')" onkeypress="return validarTexto('NOMBRE1_DU',event,15)" placeholder="ingrese el primer nombre" class="form-control input-md">                                                                                            
+                        <div class="col-md-3">
+                            <input id="NOMBRE1_DU" name="NOMBRE1_DU" type="text" ng-init="datos.nombre1 = '<%=nombre1%>'" placeholder="ingrese el primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
+                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.NOMBRE1_DU.$error.required">El Primer Nombre es requerido.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.NOMBRE1_DU.$error.minlength">Minimo 3 caracteres.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.NOMBRE1_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             <small id="help2"></small>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Segundo nombre :</label>                                
                         </div>
-                        <div class="col-md-3">                            
-                            <input id="NOMBRE2_DU" name="NOMBRE2_DU" type="text" value="<%=nombre2%>" onFocus="mostrarMensaje('help3','Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help3')" onkeypress="return validarTexto('NOMBRE2_DU',event,15)" placeholder="ingrese el segundo nombre" class="form-control input-md">                                
+                        <div class="col-md-3">
+                            <input id="NOMBRE2_DU" name="NOMBRE2_DU" type="text" ng-init="datos.nombre2 = '<%=nombre2%>'" placeholder="ingrese el segundo nombre" class="form-control input-md" ng-model="datos.nombre2"  ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">    
+                            <span class="text-danger" ng-show="ActualizarUsuario.NOMBRE2_DU.$error.minlength">Minimo 3 caracteres</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.NOMBRE2_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             <small id="help3"></small>
                         </div>  
                     </div>
@@ -171,15 +174,20 @@
                         <div class="col-md-3 text-right">
                             <label for="textinput">Primer apellido :</label>                                
                         </div>
-                        <div class="col-md-3">                                                            
-                            <input id="APELLIDO1_DU" name="APELLIDO1_DU" type="text" value="<%=apellido1%>" onFocus="mostrarMensaje('help4','Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help4')" onkeypress="return validarTexto('APELLIDO1_DU',event,15)" placeholder="ingrese el primer apellido" class="form-control input-md">
+                        <div class="col-md-3">                                
+                            <input id="APELLIDO1_DU" name="APELLIDO1_DU" type="text" ng-init="datos.apellido1 = '<%=apellido1%>'" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
+                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.APELLIDO1_DU.$error.required">El Primer Apellido es requerido.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.APELLIDO1_DU.$error.minlength">Minimo 3 caracteres.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.APELLIDO1_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             <small id="help4"></small>
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Segundo apellido :</label>                                
+                            <label for="textinput">Segundo apellido :</label>                                                            
                         </div>
-                        <div class="col-md-3">                                                            
-                            <input id="APELLIDO2_DU" name="APELLIDO2_DU" type="text" value="<%=apellido2%>" onFocus="mostrarMensaje('help5','Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help5')" onkeypress="return validarTexto('APELLIDO2_DU',event,15)" placeholder="ingrese el segundo apellido" class="form-control input-md">
+                        <div class="col-md-3">                                
+                            <input id="APELLIDO2_DU" name="APELLIDO2_DU" type="text" ng-init="datos.apellido2 = '<%=apellido2%>'" placeholder="ingrese el segundo apellido" class="form-control input-md"ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
+                            <span class="text-danger" ng-show="ActualizarUsuario.APELLIDO2_DU.$error.minlength">Minimo 3 caracteres.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.APELLIDO2_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             <small id="help5"></small>
                         </div>              
                     </div>                      
@@ -190,15 +198,21 @@
                         <div class="col-md-3 text-right">
                             <label for="textinput">Contraseña :</label>                                
                         </div>
-                        <div class="col-md-3">                                                            
-                            <input id="CLAVE" name="CLAVE" type="password" value="<%=clave%>" onFocus="mostrarMensaje('help6','Ingrese solo letras y numeros. Maximo 10')" onBlur="ocultarMensaje('help6')" onkeypress="return validarAlfanumerico('CLAVE',event,10)" placeholder="ingrese una contraseña" class="form-control input-md">
+                        <div class="col-md-3">                                
+                            <input id="CLAVE" name="CLAVE" type="password" ng-init="datos.contrasena1 = '<%=clave%>'" placeholder="ingrese una contraseña" class="form-control input-md" ng-model="datos.contrasena1" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">
+                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.CLAVE.$error.required">La Contraseña es requerida.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.CLAVE.$error.minlength">Minimo 6 caracteres.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.CLAVE.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
                             <small id="help6"></small>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Confirmar contraseña :</label>                                
                         </div>
-                        <div class="col-md-3">                                                            
-                            <input id="CLAVE2" name="CLAVE2" type="password" value="<%=clave%>" onFocus="mostrarMensaje('help7','Ingrese solo letras y numeros. Maximo 10')" onBlur="clavesIguales('help7', 'CLAVE', 'CLAVE2')" onkeypress="return validarAlfanumerico('CLAVE2',event,10)" placeholder="ingrese una contraseña" class="form-control input-md">
+                        <div class="col-md-3">                                
+                            <input id="CLAVE2" name="CLAVE2" type="password" ng-init="datos.contrasena2 = '<%=clave%>'" placeholder="ingrese nuevamente la contraseña" class="form-control input-md" ng-model="datos.contrasena2" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">
+                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.CLAVE2.$error.required">Debe Confirmar la Contraseña.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.CLAVE2.$error.minlength">Minimo 6 caracteres.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.CLAVE2.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
                             <small id="help7"></small>
                         </div>              
                     </div>
@@ -222,7 +236,6 @@
                                 }
                             %>    
                         </select> 
-
                     </div>
                     <div class="col-md-3 text-right">
                         <label for="textinput">Facultad :</label>                                
@@ -248,8 +261,9 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <input type="hidden" name="ID_USUARIO" value="<%=id_usuario%>">
-                        <input type="hidden" name="ID_DETALLE_USUARIO" value="<%=id_detalle_usuario%>">                        
-                        <input type="submit" onclick="return ValidarCamposVacios('CARNET,NOMBRE1_DU,NOMBRE2_DU,APELLIDO1_DU,APELLIDO2_DU,CLAVE,CLAVE2')" class="btn btn-primary" name="submit" value="Actualizar usuario">                        
+                        <input type="hidden" name="ID_DETALLE_USUARIO" value="<%=id_detalle_usuario%>">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Actualizar usuario" ng-disabled="!ActualizarUsuario.$valid">
+
                     </div>
                 </div>
 
@@ -258,7 +272,17 @@
     </div>
 </div>
 
+
+
+
+
+
+
 <br></br>
+
+
+
+
 
 
 
@@ -285,10 +309,9 @@
     </div>
 </div>
 
-
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
-<script src="js/validaciones.js"></script> <!-- para hacer funcionar las validaciones javascript -->
+<script src="js/angular.min.js"></script>
+<script src="js/actualizarUsuario.js"></script>
 </body>
 </html>

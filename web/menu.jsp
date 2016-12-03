@@ -52,7 +52,7 @@
                     out.write("<ul class='dropdown-menu'>");
                     
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#' >===Administración de usuarios===</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='agregar_usuario.jsp'>Agregar usuario</a></li>");                    
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='101_agregar_usuario.jsp'>Agregar usuario</a></li>");                    
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='112_consulta_para_actualizar_usuario.jsp'>Actualizar usuarios</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='103_consultar_usuario.jsp'>Consultar usuarios</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='113_consulta_para_dar_de_baja_usuario.jsp'>Dar de baja usuarios</a></li>");

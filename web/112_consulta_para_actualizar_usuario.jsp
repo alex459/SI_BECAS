@@ -258,7 +258,7 @@
                                         out.write("<td>" + rs.getString(7) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='ID_DETALLE_USUARIO' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-success' name='submit' value='Mostrar usuario'></form> ");
+                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='ID_DETALLE_USUARIO' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-success' name='submit' value='Mostrar usuario'></form> ");
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");

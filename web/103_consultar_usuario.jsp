@@ -262,7 +262,7 @@
                                         out.write("<td>" + rs.getString(7) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
+                                        out.write("<form style='display:inline;' action='102_actualizar_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
                                         out.write("<form style='display:inline;' action='105_modificar_roles.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='ID_DETALLE_USUARIO' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-primary' name='submit' value='Modificar Rol'></form> ");
                                         out.write("<form style='display:inline;' action='104_dar_de_baja_usuario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='ID_DETALLE_USUARIO' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-danger' name='submit' value='Dar de baja'></form> ");
                                         out.write("</center>");
