@@ -70,7 +70,7 @@
 <jsp:include page="menu_corto.jsp"></jsp:include>
 
 </head>
-<body>
+<body ng-app="consultarUsuarioApp" ng-controller="consultarUsuarioCtrl">
 
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
@@ -91,20 +91,22 @@
                 <div class="row">   <!-- FILTROS -->
 
                     <div class="col-md-12">
-                        <form class="form-horizontal" action="112_consulta_para_actualizar_usuario.jsp" method="post">
+                        
+                        <form name= "consultarUsuario" class="form-horizontal" action="112_consulta_para_actualizar_usuario.jsp" method="post" novalidate>
                             <fieldset class="custom-border">  
-                                <legend class="custom-border">Filtros</legend>                    
-                                <div class="row"> 
+                                <legend class="custom-border">Filtros</legend>  
 
-                                    <div class="col-md-3 text-right">
+                                <div class="row"> 
+                                    <div class="col-md-1 text-right">
                                         <label for="textinput">Codigo de Usuario : </label>                                
                                     </div>
-                                    <div class="col-md-3">
-                                        <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" onFocus="mostrarMensaje('help5', 'ingrese el usuario a buscar. Maximo 10 letras o numeros.')" onBlur="ocultarMensaje('help5')" onkeypress="return validarAlfanumerico('CARNET', event, 10)">
+                                    <div class="col-md-7">
+                                        <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
+                                        <span class="text-danger" ng-show="consultarUsuario.CARNET.$error.minlength">Minimo 7 caracteres.</span>
+                                        <span class="text-danger" ng-show="consultarUsuario.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
                                         <small id="help5"></small>
-                                    </div>                                    
-
-                                    <div class="col-md-3 text-right">
+                                    </div>
+                                    <div class="col-md-1 text-right">
                                         <label for="textinput">Facultad :</label>                                
                                     </div>
                                     <div class="col-md-3">                                
@@ -126,28 +128,38 @@
                             <br>
 
                             <div class="row">
-
-                                <div class="col-md-2 text-right">
+                                <div class="col-md-1 text-right">
                                     <label for="textinput">Nombre de Usuario : </label>                                
                                 </div>
-                                <div class="col-md-1">                                                                                    
-                                    <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" onFocus="mostrarMensaje('help1', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help1')" onkeypress="return validarTexto('NOMBRE1', event, 15)">                                            
-                                    <small id="help1"></small>
-                                </div> 
-                                <div class="col-md-1">    
-                                    <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" onFocus="mostrarMensaje('help2', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help2')" onkeypress="return validarTexto('NOMBRE2', event, 15)">                                            
-                                    <small id="help2"></small>
-                                </div> 
-                                <div class="col-md-1">
-                                    <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" onFocus="mostrarMensaje('help3', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help3')" onkeypress="return validarTexto('APELLIDO1', event, 15)">                                            
-                                    <small id="help3"></small>
-                                </div> 
-                                <div class="col-md-1">
-                                    <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" onFocus="mostrarMensaje('help4', 'Ingrese solo letras. Maximo 15')" onBlur="ocultarMensaje('help4')" onkeypress="return validarTexto('APELLIDO2', event, 15)">
-                                    <small id="help4"></small>
-                                </div> 
 
-                                <div class="col-md-3 text-right">
+                                <div class="col-md-7">    
+                                    <div class="row">
+
+                                        <div class="col-md-3">                                                                                    
+                                            <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
+                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                        </div>
+                                        <div class="col-md-3">    
+                                            <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
+                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                        </div> 
+                                        <div class="col-md-3">
+                                            <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
+                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                        </div> 
+                                        <div class="col-md-3">
+                                            <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
+                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-1 text-right">
                                     <label for="textinput">Tipo de usuario :</label>                                
                                 </div>
                                 <div class="col-md-3">                                
@@ -165,16 +177,17 @@
                                 </div> 
                             </div>
 
-                            <br>      
+                            <br>        
 
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Buscar">                       
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!consultarUsuario.$valid">                       
                                 </div>
                             </div>
 
                         </fieldset>
-                    </form>                         
+                    </form>    
+                                             
                 </div>
 
             </div>
@@ -309,7 +322,9 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/consultarUsuario.js"></script>
+
 </body>
-<script type="text/javascript" src="js/validaciones.js"></script> <!-- para hacer funcionar las validaciones javascript -->
+
 </html>
