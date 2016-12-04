@@ -69,14 +69,13 @@
                             <div class="row">                       
                                 <div class="row">
                                     <div class="col-md-12 col-md-offset-2">
-                                        <label>Carta de Solicitud del Becario:</label>
+                                        <label>Seleccione la carta de solicitud del acuerdo de año fiscal</label>
                                     </div>
-                                </div>
+                                </div></br>
                                 <div class="col-md-12 col-md-offset-2">
-                                    <div class="col-md-6">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <input id="searchinput" name="busqueda" type="input" placeholder="Ruta del archivo" class="form-control input-md" disable>
-                                            <p class="help-block"></p>
+                                           <label>Carta de Solicitud del Becario-</label>  <p class="help-block"></p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">    
@@ -97,7 +96,9 @@
                             </br></br>
                             <div class="row">   
                                 <div class="col-md-2 col-md-offset-5">
-                                    <button id="button1id" name="enviar" class="btn btn-success">Enviar solicitud</button>
+                                    <form style='display:inline;' action='SolAcuerdoAnioFiscalServlet.jsp' method='post'>
+                                                        <input type='hidden' name='user' value='<%=user%>'>
+                                    <input type='submit' class='btn btn-success' name='submit' value='Enviar Solicitud'></form>
                                 </div>    
                             </div> </br>
                         </form></fieldset>

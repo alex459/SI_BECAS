@@ -89,10 +89,10 @@ public class SolicitarProrroga extends HttpServlet {
         ///////////////////////////////////////////////////////////////////
         
         //Agarrando el pdf
-        int tip1 = 2; //id del tipo de documento = oferta de beca
-        int tip2 = 2;
-        int tip3 = 2;
-        String obs = "Oferta de Beca de Postgrado";        
+        int tip1 = 113;
+        int tip2 = 114;
+        int tip3 = 115;
+        String obs = "Solicitud de prorroga ingresada";        
         //1er archivo, 1ra carta de sol de prorroga
         InputStream archivo1 = null;
         Part filePart1 = request.getPart("doc_digital1");
@@ -121,18 +121,22 @@ public class SolicitarProrroga extends HttpServlet {
         Documento documento2 = new Documento();
         Documento documento3 = new Documento();
         DocumentoDAO docdao = new DocumentoDAO();
-        TipoDocumento tipo = new TipoDocumento();
+        TipoDocumento tipo1 = new TipoDocumento();
+        TipoDocumento tipo2 = new TipoDocumento();
+        TipoDocumento tipo3 = new TipoDocumento();
         TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
         ExpedienteDAO expDao = new ExpedienteDAO();
 
 
         //Insertando el pdf 1
         int idDoc1=docdao.getSiguienteId();
-        tipo = tipoDao.consultarPorId(tip1);
+        tipo1 = tipoDao.consultarPorId(tip1);
         Expediente idexpediente = expDao.consultarPorId(idExp);  
-        String Estado = "Difusion";        
+        String Estado = "Pendiente";        
         documento1.setIdDocumento(idDoc1);
-        documento1.setIdTipoDocumento(tipo);
+        documento1.setFechaIngreso(sqlDate);
+        documento1.setFechaSolicitud(sqlDate);
+        documento1.setIdTipoDocumento(tipo1);
         documento1.setDocumentoDigital(archivo1);
         documento1.setIdExpediente(idexpediente);
         documento1.setObservacion(obs);
@@ -141,10 +145,12 @@ public class SolicitarProrroga extends HttpServlet {
         System.out.println("resultado de doc "+ing1);
         //Insertando el pdf 2
         int idDoc2=docdao.getSiguienteId();
-        tipo = tipoDao.consultarPorId(tip1);
-        Estado = "Difusion";        
+        tipo2 = tipoDao.consultarPorId(tip2);
+        Estado = "Pendiente";        
         documento2.setIdDocumento(idDoc2);
-        documento2.setIdTipoDocumento(tipo);
+        documento2.setFechaIngreso(sqlDate);
+        documento2.setFechaSolicitud(sqlDate);
+        documento2.setIdTipoDocumento(tipo2);
         documento2.setDocumentoDigital(archivo2);
         documento2.setIdExpediente(idexpediente);
         documento2.setObservacion(obs);
@@ -153,13 +159,15 @@ public class SolicitarProrroga extends HttpServlet {
         System.out.println("resultado de doc "+ing2);
         //Insertando el pdf 3
         int idDoc3=docdao.getSiguienteId();
-        tipo = tipoDao.consultarPorId(tip1);
-        Estado = "Difusion";        
+        tipo3 = tipoDao.consultarPorId(tip3);
+        Estado = "Pendiente";        
         documento3.setIdDocumento(idDoc3);
-        documento3.setIdTipoDocumento(tipo);
+        documento3.setFechaIngreso(sqlDate);
+        documento3.setFechaSolicitud(sqlDate);
+        documento3.setIdTipoDocumento(tipo3);
         documento3.setDocumentoDigital(archivo3);
         documento3.setIdExpediente(idexpediente);
-        documento3.setObservacion(obs);
+        documento3.setObservacion("Carta de institucion para prorroga");
         documento3.setEstadoDocumento(Estado);     
         boolean ing3 = docdao.Ingresar(documento3);
         System.out.println("resultado de doc "+ing3);

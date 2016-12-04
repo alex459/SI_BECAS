@@ -9,11 +9,14 @@
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
     if (user == null) {
         response.sendRedirect("login.jsp");
         return;
     }
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -48,9 +51,9 @@
         </h3>
     </div>
 </div>
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
-<jsp:include page="menuBecario.jsp"></jsp:include>
+<p class="text-right">Rol: <%= rol%></p>
+<p class="text-right">Usuario: <%= user%></p>
+<jsp:include page="menu.jsp"></jsp:include>
 </head>
 <body>
 
@@ -153,7 +156,7 @@
                             </br></br>
                             <div class="row">   
                                 <div class="col-md-2 col-md-offset-5">
-                                    <form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'>
+                                    <form style='display:inline;' action='SolicitarProrroga' method='post'>
                                                         <input type='hidden' name='user' value='<%=user%>'>
                                     <input type='submit' class='btn btn-success' name='submit' value='Enviar Solicitud'></form>
                                 </div>    

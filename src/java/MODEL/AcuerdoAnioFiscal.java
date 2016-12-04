@@ -5,22 +5,20 @@
  */
 package MODEL;
 
-import DAO.OfertaBecaDAO;
-import DAO.InstitucionDAO;
+import DAO.ConexionBD;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.TipoDocumentoDAO;
-import POJO.Institucion;
-import POJO.OfertaBeca;
 import POJO.Documento;
 import POJO.Expediente;
+import POJO.SolicitudDeBeca;
 import POJO.TipoDocumento;
+import POJO.Usuario;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
+import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -40,46 +38,84 @@ public class AcuerdoAnioFiscal extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Obtener el id del expediente del usuario actual
+        int idUser, idExp;
+        String user=request.getParameter("user");
+            ConexionBD conexionbd = null;
+            ResultSet rs = null;
+            Usuario temp1=new Usuario();
+            SolicitudDeBeca temp2=new SolicitudDeBeca();
+            //////////Obtener el id del usuario
+             try {
+                //formando la consulta
+                String consultaSql="SELECT ID_USUARIO FROM USUARIO WHERE NOMBRE_USUARIO='"+user+"';";
+                //realizando la consulta
+                conexionbd = new ConexionBD();
+                rs = conexionbd.consultaSql(consultaSql); 
+                temp1 = new Usuario();
+                if(rs.next()) {
+                    temp1.setIdUsuario(rs.getInt("ID_USUARIO"));
+                }
+                //con el rs se llenara la tabla de resultados
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            idUser=temp1.getIdUsuario();
+            ////////Obtener el id del expediente
+             try {
+                //formando la consulta
+                String consultaSql= "SELECT ID_EXPEDIENTE FROM SOLICITUD_DE_BECA WHERE ID_USUARIO="+idUser;
+                //realizando la consulta
+                conexionbd = new ConexionBD();
+                rs = conexionbd.consultaSql(consultaSql); 
+                temp2 = new SolicitudDeBeca();
+                if(rs.next()) {
+                    temp2.setIdExpediente(rs.getInt("ID_EXPEDIENTE"));
+                }
+                //con el rs se llenara la tabla de resultados
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            idExp=temp2.getIdExpediente();
+        ///////////////////////////////////////////////////////////////////
+        
         //Agarrando el pdf
-        Integer tip = 2; //id del tipo de documento = oferta de beca
-        String obs = "Oferta de Beca de Postgrado";
-        InputStream archivo = null;
-        Part filePart = request.getPart("doc_digital");
-        if (filePart != null) {
-            archivo = filePart.getInputStream();
+        int tip1 = 116;
+        String obs = "Solicitud de acuerdo de año fiscal ingresada";        
+        //1er archivo, 1ra carta de sol de prorroga
+        InputStream archivo1 = null;
+        Part filePart1 = request.getPart("doc_digital");
+        if (filePart1 != null) {
+            archivo1 = filePart1.getInputStream();
         }
         
         Date fechaHoy = new Date();
-        OfertaBeca ofertaBeca = new OfertaBeca();
-        OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
-        InstitucionDAO institucionDAO = new InstitucionDAO();
         java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());  
-        Documento documento = new Documento();
+        Documento documento1 = new Documento();
         DocumentoDAO docdao = new DocumentoDAO();
-        TipoDocumento tipo = new TipoDocumento();
+        TipoDocumento tipo1 = new TipoDocumento();
         TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
         ExpedienteDAO expDao = new ExpedienteDAO();
-
-
-           //Insertando el pdf
-        int idDoc=docdao.getSiguienteId();
-        tipo = tipoDao.consultarPorId(tip);
-        Integer idexp = 0;
-        Expediente idexpediente = expDao.consultarPorId(idexp);  
-        String Estado = "Difusion";        
-        documento.setIdDocumento(idDoc);
-        documento.setIdTipoDocumento(tipo);
-        documento.setDocumentoDigital(archivo);
-        documento.setIdExpediente(idexpediente);
-        documento.setObservacion(obs);
-        documento.setEstadoDocumento(Estado);     
-        boolean ing = docdao.Ingresar(documento);
-        System.out.println("resultado de doc "+ing);
+        //Insertando el pdf 1
+        int idDoc1=docdao.getSiguienteId();
+        tipo1 = tipoDao.consultarPorId(tip1);
+        Expediente idexpediente = expDao.consultarPorId(idExp);  
+        String Estado = "Pendiente";        
+        documento1.setIdDocumento(idDoc1);
+        documento1.setFechaIngreso(sqlDate);
+        documento1.setFechaSolicitud(sqlDate);
+        documento1.setIdTipoDocumento(tipo1);
+        documento1.setDocumentoDigital(archivo1);
+        documento1.setIdExpediente(idexpediente);
+        documento1.setObservacion(obs);
+        documento1.setEstadoDocumento(Estado);     
+        boolean ing1 = docdao.Ingresar(documento1);
+        System.out.println("resultado de doc "+ing1);
         
-            if(ing){
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la oferta correctamente.");
+            if(ing1==true){
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la solicitud correctamente.");
         }else{
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la oferta");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la solicitud");
         } 
     }
 
