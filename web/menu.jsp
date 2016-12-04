@@ -67,7 +67,7 @@
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='111_reporte_de_beca.jsp'>Reporte de oferta de becas</a></li>");
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de becarios===</a></li>");
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='201_consultar_expediente.jsp'>Consultar expediente</a></li>");
-                    if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='202_modificar_estado_de_becario.jsp'>Modificar estado de becario</a></li>");
+                    if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='202_consulta_modificar_estado_de_becario.jsp'>Modificar estado de becario</a></li>");
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='203_suspender_becario.jsp'>Suspender becario</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de instituciones===</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='204_agregar_institucion.jsp'>Agregar institución</a></li>");

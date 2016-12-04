@@ -142,9 +142,9 @@
                             <div class="col-md-6">
                                 <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control" ng-model="datos.tipoInst" ng-required="true"> 
                                     <option value="">Seleccione tipo de institucion</option>
-                                    <option value="Ofertante">Ofertante</option>
-                                    <option value="Estudio">Estudio</option>
-                                    
+                                    <option value="OFERENTE">Oferente</option>
+                                    <option value="ESTUDIO">Estudio</option>
+                                    <option value="AMBOS">Oferente y Estudio</option>
                                </select>
                                 <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.select_tipoInstitucion.$error.required">La Tipo es requerida.</span>
                   
