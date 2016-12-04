@@ -4,16 +4,16 @@
     Author     : aquel
 --%>
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String user=(String)actual.getAttribute("user");
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }
+    }
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -30,7 +30,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-     <link href="css/customfieldset.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -55,28 +55,20 @@
 <body>
 
     <div class="container-fluid">        
-            <H3 class="text-center" style="color:#E42217;">Solicitar Prórroga</H3>
+        <H3 class="text-center" style="color:#E42217;">Solicitar Prórroga</H3>
         <fieldset class="custom-border">
-                <legend class="custom-border">Solcitar Prórroga</legend>
-        <div class="row">
-            <div class="col-md-12">                
-                <fieldset class="custom-border">
-                <legend class="custom-border">Adjuntar documentación necesaria</legend>
-                    <form class="form-horizontal">
-                            
-                         <div class="row">   
+            <legend class="custom-border">Solcitar Prórroga</legend>
+            <div class="row">
+                <div class="col-md-12">                
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Adjuntar documentación necesaria</legend>
+                        <form class="form-horizontal" action="SolicitarProrroga" method="post" enctype="multipart/form-data">
+                            <div class="row">   
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <label>Carta de Solicitud de Prórroga:</label>
-                                    </div> 
+                                        <label>Carta de Solicitud de Prórroga - Unidad:</label>
+                                    </div>  
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="labelDurac" placeholder="Ruta del archivo" disable>    
-
-                                    </div> 
-                                    <div class="col-md-1">
-                                        <label>Para:</label>
-                                    </div> 
-                                    <div class="col-md-2 col-md-offset-1">
                                         <div class="form-group">
                                             <select id="facultad" name="tipoDoc" class="form-control">
                                                 <option value="1">Seleccione Unidad </option>
@@ -85,26 +77,30 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <button id="button1id" name="examinar" class="btn btn-success">Examinar</button>
-                                        <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
-                                    </div>  
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="col-md-2 text-right">
+                                                <label for="textinput">Archivo de la oferta :</label>                                
+                                            </div>
+                                            <div class="col-md-4">      
+                                                    <input type="file" name="doc_digital1" accept="application/pdf">   
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
+                                        </div>
+                                    </div> 
                                 </div>    
                             </div>  
-                        
+
                             <div class="row">   
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <label>Carta de Solicitud de Prórroga:</label>
+                                        <label>Carta de Solicitud de Prórroga - Unidad:</label>
                                     </div> 
-                                    <div class="col-md-3 ">
-                                        <input type="text" class="form-control" id="labelDurac" placeholder="Ruta del archivo" disable>    
-
-                                    </div> 
-                                    <div class="col-md-1">
-                                        <label>Para:</label>
-                                    </div> 
-                                    <div class="col-md-2 col-md-offset-1">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <select id="facultad" name="tipoDoc" class="form-control">
                                                 <option value="1">Seleccione Unidad </option>
@@ -113,40 +109,58 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <button id="button1id" name="examinar" class="btn btn-success">Examinar</button>
-                                        <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="col-md-2 text-right">
+                                                <label for="textinput">Archivo de la oferta :</label>                                
+                                            </div>
+                                            <div class="col-md-4">      
+                                                    <input type="file" name="doc_digital2" accept="application/pdf">   
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
+                                        </div>
                                     </div>  
                                 </div>    
                             </div>  
-                           
+
                             <div class="row">   
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <label>Constancia de la Institución:</label>
-                                    </div> 
-                                    <div class="col-md-3 ">
-                                        <input type="text" class="form-control" id="labelDurac" placeholder="Ruta del archivo" disable>    
-
-                                    </div> 
-                                    
-                                    
-                                    <div class="col-md-2 col-md-offset-4">
-                                        <button id="button1id" name="examinar" class="btn btn-success">Examinar</button>
-                                        <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
+                                        <label>Constancia de la Institución - Unidad:</label>
                                     </div>  
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="col-md-2 text-right">
+                                                <label for="textinput">Archivo de la oferta :</label>                                
+                                            </div>
+                                            <div class="col-md-4">      
+                                                    <input type="file" name="doc_digital3" accept="application/pdf">   
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
+                                        </div>
+                                    </div> 
                                 </div>    
                             </div>  
 
                             </br></br>
                             <div class="row">   
                                 <div class="col-md-2 col-md-offset-5">
-                                        <button id="button1id" name="enviar" class="btn btn-success">Enviar solicitud</button>
+                                    <form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'>
+                                                        <input type='hidden' name='user' value='<%=user%>'>
+                                    <input type='submit' class='btn btn-success' name='submit' value='Enviar Solicitud'></form>
                                 </div>    
                             </div> </br>
-                    </form></fieldset>
-            </div> 
-        </div></fieldset>
+                        </form></fieldset>
+                </div> 
+            </div></fieldset>
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">

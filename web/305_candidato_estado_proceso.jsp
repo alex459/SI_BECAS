@@ -120,7 +120,7 @@
 </div>
 <p class="text-right">Rol: <%= rol %></p>
 <p class="text-right">Usuario: <%= user %></p>
-<jsp:include page="menuCandidato.jsp"></jsp:include>
+<jsp:include page="menu.jsp"></jsp:include>
 </head>
 <body>
 

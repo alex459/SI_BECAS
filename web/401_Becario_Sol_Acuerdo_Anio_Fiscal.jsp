@@ -4,16 +4,19 @@
     Author     : aquel
 --%>
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String user=(String)actual.getAttribute("user");
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }
+    }
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -30,7 +33,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-     <link href="css/customfieldset.css" rel="stylesheet">
+    <link href="css/customfieldset.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -48,26 +51,26 @@
         </h3>
     </div>
 </div>
-<p class="text-right">Rol: </p>
-<p class="text-right">Usuario: </p>
-<jsp:include page="menuBecario.jsp"></jsp:include>
+<p class="text-right">Rol: <%= rol%></p>
+<p class="text-right">Usuario: <%= user%></p>
+<jsp:include page="menu.jsp"></jsp:include>
 </head>
 <body>
 
     <div class="container-fluid">        
-            <H3 class="text-center" style="color:#E42217;">Solicitar Acuerdo de Año Fiscal</H3>
+        <H3 class="text-center" style="color:#E42217;">Solicitar Acuerdo de Año Fiscal</H3>
         <fieldset class="custom-border">
-                <legend class="custom-border">Solicitar Acuerdo de Año Fiscal</legend>
-        <div class="row">
-            <div class="col-md-12">                
-                <fieldset class="custom-border">
-                <legend class="custom-border">Adjuntar documentación necesaria</legend>
-                    <form class="form-horizontal">
+            <legend class="custom-border">Solicitar Acuerdo de Año Fiscal</legend>
+            <div class="row">
+                <div class="col-md-12">                
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Adjuntar documentación necesaria</legend>
+                        <form class="form-horizontal"  name="SolAnioFiscal" action="SolAcuerdoAnioFiscalServlet" method="post" enctype="multipart/form-data">
                             <div class="row">                       
                                 <div class="row">
-                                  <div class="col-md-12 col-md-offset-2">
-                                      <label>Carta de Solicitud del Becario:</label>
-                                  </div>
+                                    <div class="col-md-12 col-md-offset-2">
+                                        <label>Carta de Solicitud del Becario:</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-12 col-md-offset-2">
                                     <div class="col-md-6">
@@ -78,25 +81,28 @@
                                     </div>
                                     <div class="col-md-6">    
                                         <div class="form-group">
-                                            <div class="col-md-4">
-                                                <button id="singlebutton" name="cargarArchivo" type="file" class="btn btn-primary">Examinar</button>
-                                            </div>
+                                                <div class="col-md-3 text-right">
+                                                    <label for="textinput">Archivo de la oferta :</label>                                
+                                                </div>
+                                                <div class="col-md-3">      
+                                                    <input type="file" name="doc_digital" accept="application/pdf">
+                                                </div> 
                                         </div>
                                     </div> 
                                 </div>
                             </div>
 
-                           
+
 
                             </br></br>
                             <div class="row">   
                                 <div class="col-md-2 col-md-offset-5">
-                                        <button id="button1id" name="enviar" class="btn btn-success">Enviar solicitud</button>
+                                    <button id="button1id" name="enviar" class="btn btn-success">Enviar solicitud</button>
                                 </div>    
                             </div> </br>
-                    </form></fieldset>
-            </div> 
-        </div></fieldset>
+                        </form></fieldset>
+                </div> 
+            </div></fieldset>
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
