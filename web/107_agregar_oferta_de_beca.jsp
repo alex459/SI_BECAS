@@ -161,7 +161,7 @@
                         </div>
                         <div class="col-md-3">                                                            
                             <div class="input-group date">
-                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control" ng-model="datos.fechaIni" ng-required="true" disabled><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control" ng-model="datos.fechaIni" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                                              </div>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.fechaInicio.$error.required">Ingrese fecha de inicio de estudio.</span>
 
@@ -187,7 +187,7 @@
                         </div>
                         <div class="col-md-3">                                
                             <div class="input-group date">
-                                <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="true" disabled><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                                </div>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.fechaCierre.$error.required">Ingrese una fecha de cierre.</span>
     
@@ -256,7 +256,7 @@
                             <label for="perfil">Perfil de la beca: </label>                                
                         </div>
                         <div class="col-md-9">                                
-                            <textarea class="form-control" id="perfilBeca" maxlength="2000" name="perfilBeca" ng-model="datos.instOfer" ng-required="true"></textarea>
+                            <textarea class="form-control" id="perfilBeca" maxlength="2000" name="perfilBeca" ng-model="datos.Perfil" ng-required="true"></textarea>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.perfilBeca.$error.required">Ingrese información para el perfil de la oferta.</span>
 
                         </div>                                    

@@ -40,6 +40,8 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8"); 
+        request.setCharacterEncoding("UTF-8");
         //Agarrando el pdf
         Integer tip = 2; //id del tipo de documento = oferta de beca
         String obs = "Oferta de Beca de Postgrado";
@@ -86,23 +88,25 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         ofertaBeca.setNombreOferta(request.getParameter("nombreOferta"));
         ofertaBeca.setTipoOfertaBeca(request.getParameter("tipoBeca"));
         
-        
+        System.out.println("PRUEBA");
         ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
-         System.out.println(request.getParameter("fechaCierre"));
-        ofertaBeca.setFechaCierre(StringAFecha(request.getParameter("fechaCierre")));
+       //  System.out.println(request.getParameter("fechaCierre"));
        ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
         java.sql.Date sqlDate2 = new java.sql.Date(StringAFecha(request.getParameter("fechaCierre")).getTime());
         ofertaBeca.setFechaCierre(sqlDate2);
         ofertaBeca.setModalidad(request.getParameter("modalidad"));
         java.sql.Date sqlDate3 = new java.sql.Date(StringAFecha(request.getParameter("fechaInicio")).getTime());
         ofertaBeca.setFechaInicio(sqlDate3);
+        
         ofertaBeca.setIdioma(request.getParameter("idioma"));
         ofertaBeca.setPerfil(request.getParameter("perfilBeca"));
         ofertaBeca.setFinanciamiento(request.getParameter("financiamiento"));        
         ofertaBeca.setFechaIngreso(sqlDate);
         ofertaBeca.setTipoEstudio(request.getParameter("tipoEstudio"));
         ofertaBeca.setOfertaBecaActiva(1);
+        
         Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);
+        
         if(exito){
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la oferta correctamente.");
         }else{
@@ -120,6 +124,7 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
             ex.printStackTrace();
 
         }
+        System.out.println("fechanice!");
         return fecha;
     }
 
