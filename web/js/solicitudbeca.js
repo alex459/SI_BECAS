@@ -24,6 +24,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     });
 })
 .controller('solicitudCtrl', function($scope) {
+    
     $scope.data = {nombre:"",
     nombre2: "",
     apellido1: "",
@@ -45,38 +46,254 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     facultad:"",
     fecha_contratacion:"",
 
-    educacion:[],
-    proyectos:[]
-
-
-
+    educacion:[{
+        id: 1,
+        tipo: "tipoEducacion1",
+        grado: "grado1",
+        institucion: "institucion1",
+        anyo: "anyo1"
+    }],
+    proyectos:[{
+         id: 1,
+         titulo: "tituloProyecto1",
+            publicado: "publicado1"
+        }],
+    idiomas:[{
+            id: 1,
+            idioma: "idioma1",
+            nivelHabla: "nivelHabla1",
+            nivelEscritura: "nivelEscritura1",
+            nivelLectura: "nivelLectura1"
+        }],
+    asociaciones:[{
+            id: 1,
+            asociacion: "asociacion1"
+        }],
+    cargos:[{
+            id: 1,
+            lugar: "lugarCargo1",
+            cargo: "cargoAnterior1",
+            fechaInicio: "fechaInicioCargo1",
+            fechaFin: "fechaFinCargo1",
+            responsabilidades: "responsabilidad1"
+        }],
+    beneficios:"",
+    
+    programas:[{
+            semestre: "semestre1",
+            programa: "programa1"
+    }]
     };
 
-    $scope.edu={};
-    $scope.proy={};
-
-    $scope.addEducacion = function(){
+    $scope.aux={
+        auxTipoEdu :{},
+        auxGradoEdu : {},
+        auxInstitucionEdu : {},
+        auxAnyoEdu :{},
+        
+        auxTituloProy:{},
+        auxPublicado:{},
+        
+        auxIdioma:{},
+        auxNivelHabla:{},
+        auxNivelEscritura:{},
+        auxNivelLectura:{},
+        
+        auxAsociacion:{},
+        
+        auxLugar: {},
+        auxCargo: {},
+        auxFechaInicio: {},
+        auxFechaFin: {},
+        auxResponsabilidades: {},
+        
+        auxSemestre:{},
+        auxPrograma:{}
+        
+    };
+    
+    $scope.edu={};  
+    $scope.Nedu= 2;
+    $scope.verAgregarEducacion= true;
+    $scope.agregarEducacion = function(){
+    if($scope.Nedu <=7){
         $scope.data.educacion.push({
-            tipo_educacion: $scope.edu.tipo_educacion,
-            grado_alcanzado: $scope.edu.grado_alcanzado,
-            nombre_institucion: $scope.edu.nombre_institucion,
-            anyo_educacion: $scope.edu.anyo_educacion
+            id: $scope.Nedu,
+            tipo: "tipoEducacion"+$scope.Nedu,
+            grado: "grado"+$scope.Nedu,
+            institucion: "institucion"+$scope.Nedu,
+            anyo: "anyo"+$scope.Nedu
         });
-
-        $scope.edu.tipo_educacion ="";
-        $scope.edu.grado_alcanzado ="";
-        $scope.edu.nombre_institucion ="";
-        $scope.edu.anyo_educacion ="";
+    }
+        $scope.Nedu=$scope.Nedu+1;
+        if($scope.Nedu >7){
+           $scope.verAgregarEducacion = $scope.verAgregarEducacion = false;
+       }
     };
-
-    $scope.addProyecto = function(){
+    $scope.eliminarEducacion = function (item){
+        if($scope.Nedu <=1){
+            
+        }else{
+            var index = $scope.data.educacion.indexOf(item);
+            $scope.data.educacion.splice(index, 1);
+            $scope.Nedu=$scope.Nedu-1;
+            if($scope.Nedu <=7){
+                $scope.verAgregarEducacion = $scope.verAgregarEducacion = true;
+            }
+        }
+    };
+    
+    $scope.proy={};
+    $scope.Nproy= 2;
+    $scope.verAgregarProyecto= true;
+    $scope.checkProyecto = false;
+    $scope.agregarProyecto = function(){
+    if($scope.Nproy <=4){
         $scope.data.proyectos.push({
-            titulo_proyecto: $scope.proy.titulo_proyecto,
-            publicado: $scope.proy.publicado
+            id: $scope.Nproy,
+            titulo: "tituloProyecto"+$scope.Nproy,
+            publicado: "publicado"+$scope.Nproy
         });
+    }
+        $scope.Nproy=$scope.Nproy+1;
+        if($scope.Nproy >4){
+           $scope.verAgregarProyecto = $scope.verAgregarProyecto = false;
+       }
+       $scope.proy.titulo_proyecto ="";
+       $scope.proy.publicado ="";
+ 
+    };
+    $scope.eliminarProyecto = function (item){
+        if($scope.Nproy <=1){
+            
+        }else{
+            var index = $scope.data.proyectos.indexOf(item);
+            $scope.data.proyectos.splice(index, 1);
+            $scope.Nproy=$scope.Nproy-1;
+            if($scope.Nproy <=4){
+                $scope.verAgregarProyecto = $scope.verAgregarProyecto = true;
+            }
+        }
+    };
+    
+    $scope.idi={};  
+    $scope.Nidi= 2;
+    $scope.verAgregarIdioma= true;
+    $scope.agregarIdioma = function(){
+    if($scope.Nidi <=7){
+        $scope.data.idiomas.push({
+            id: $scope.Nidi,
+            idioma: "idioma"+$scope.Nidi,
+            nivelHabla: "nivelHabla"+$scope.Nidi,
+            nivelEscritura: "nivelEscritura"+$scope.Nidi,
+            nivelLectura: "nivelLectura"+$scope.Nidi
+        });
+    }
+        $scope.Nidi=$scope.Nidi+1;
+        if($scope.Nidi >7){
+           $scope.verAgregarIdioma = $scope.verAgregarIdioma = false;
+       }
+    };
+    $scope.eliminarIdioma = function (item){
+        if($scope.Nedu <=1){
+            
+        }else{
+            var index = $scope.data.idiomas.indexOf(item);
+            $scope.data.idiomas.splice(index, 1);
+            $scope.Nidi=$scope.Nidi-1;
+            if($scope.Nidi <=7){
+                $scope.verAgregarIdioma = $scope.verAgregarIdioma = true;
+            }
+        }
+    };
+    
+    $scope.aso={};  
+    $scope.checkAsociacion = false;
+    $scope.Naso= 2;
+    $scope.verAgregarAsociacion= true;
+    $scope.agregarAsociacion = function(){
+    if($scope.Nedu <=3){
+        $scope.data.asociaciones.push({
+            id: $scope.Naso,
+            asociacion: "asociacion"+$scope.Naso
+        });
+    }
+        $scope.Naso=$scope.Naso+1;
+        if($scope.Naso >3){
+           $scope.verAgregarAsociacion = $scope.verAgregarAsociacion = false;
+       }
+    };
+    $scope.eliminarAsociacion = function (item){
+        if($scope.Naso <=1){
+            
+        }else{
+            var index = $scope.data.asociaciones.indexOf(item);
+            $scope.data.asociaciones.splice(index, 1);
+            $scope.Naso=$scope.Naso-1;
+            if($scope.Naso <=3){
+                $scope.verAgregarAsociacion = $scope.verAgregarAsociacion = true;
+            }
+        }
+    };
+    
+    $scope.car={};  
+    $scope.Ncar= 2;
+    $scope.verAgregarCargo= true;
+    $scope.agregarCargo = function(){
+    if($scope.Ncar <=3){
+        $scope.data.cargos.push({
+            id: $scope.Ncar,
+            lugar: "lugarCargo"+$scope.Ncar,
+            cargo: "cargoAnterior"+$scope.Ncar,
+            fechaInicio: "fechaInicioCargo"+$scope.Ncar,
+            fechaFin: "fechaFinCargo"+$scope.Ncar,
+            responsabilidades: "responsabilidad"+$scope.Ncar
+        });
+    }
+        $scope.Ncar=$scope.Ncar+1;
+        if($scope.Ncar >3){
+           $scope.verAgregarCargo = $scope.verAgregarCargo = false;
+       }
+    };
+    $scope.eliminarCargo = function (item){
+        if($scope.Ncar <=1){
+            
+        }else{
+            var index = $scope.data.cargos.indexOf(item);
+            $scope.data.cargos.splice(index, 1);
+            $scope.Ncar=$scope.Ncar-1;
+            if($scope.Ncar <=3){
+                $scope.verAgregarCargo = $scope.verAgregarCargo = true;
+            }
+        }
+    };
+    
 
-        $scope.proy.titulo_proyecto ="";
-        $scope.proy.publicado ="";
+    $scope.Npro= 2;
+    $scope.verAgregarPrograma= true;
+    $scope.agregarPrograma = function(){
+    if($scope.Npro <=12){
+        $scope.data.programas.push({
+            semestre: "semestre"+$scope.Npro,
+            programa: "programa"+$scope.Npro
+        });
+    }
+        $scope.Npro=$scope.Npro+1;
+        if($scope.Npro >12){
+           $scope.verAgregarPrograma = $scope.verAgregarPrograma = false;
+       }
+    };
+    $scope.eliminarPrograma = function (item){
+        if($scope.Npro <=1){
+            
+        }else{
+            var index = $scope.data.programas.indexOf(item);
+            $scope.data.programas.splice(index, 1);
+            $scope.Npro=$scope.Npro-1;
+            if($scope.Npro <=12){
+                $scope.verAgregarPrograma = $scope.verAgregarPrograma = true;
+            }
+        }
     };
 
 });

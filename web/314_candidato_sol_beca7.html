@@ -9,6 +9,62 @@
                     <li  class="active"><a href="#/documentos">Adjuntar documentos</a></li>
                 </ul>
             </div>  
+
+            <div>
+                <input type="hidden" name="nombre1" ng-value = "data.nombre" >
+                <input type="hidden" name="nombre2" ng-value = "data.nombre2">
+                <input type="hidden" name="apellido1" ng-value ="data.apellido1">
+                <input type="hidden" name="apellido2" ng-value ="data.apellido2">
+                <input type="hidden" name="fechaNacimiento" ng-value="data.fecha_nacimiento">
+                <input type="hidden" name="departamentoNacimiento" ng-value="data.departamento_nacimiento">
+                <input type="hidden" name="municipioNacimiento" ng-value="data.municipio_nacimiento">
+                <input type="hidden" name="genero" ng-value="data.genero">
+                <input type="hidden" name="direccion" ng-value="data.direccion">
+                <input type="hidden" name="departamentoDireccion" ng-value="data.departamento_direccion">
+                <input type="hidden" name="municipioDireccion" ng-value="data.municipio_direccion">
+                <input type="hidden" name="telCasa" ng-value="data.tel_casa">
+                <input type="hidden" name="telMovil" ng-value="data.tel_movil">
+                <input type="hidden" name="telOficina" ng-value="data.tel_oficina">
+                
+                <input type="hidden" name="profesion" ng-value="data.profesion">
+                <input type="hidden" name="cargo" ng-value="data.cargo">
+                <input type="hidden" name="unidad" ng-value="data.unidad">
+                <input type="hidden" name="facultad" ng-value="data.facultad">
+                <input type="hidden" name="fechaContratacion" ng-value="data.fecha_contratacion">
+                
+                <input type="hidden" name="beneficios" ng-value="data.beneficios">
+                
+                <div class="row" ng-repeat="x in data.educacion">
+                    <input type="text" name="{{x.tipo}}" ng-model="aux.auxTipoEdu[$index +1]">
+                    <input type="text" name="{{x.grado}}" ng-model="aux.auxGradoEdu[$index +1]">
+                    <input type="text" name="{{x.institucion}}" ng-model="aux.auxInstitucionEdu[$index +1]">
+                    <input type="text" name="{{x.anyo}}" ng-model="aux.auxAnyoEdu[$index +1]"><br>
+                </div>
+                <div class="row" ng-repeat="x in data.proyectos">
+                    <input type="text" name="{{x.titulo}}" ng-model="aux.auxTituloProy[$index +1]">
+                    <input type="text" name="{{x.publicado}}" ng-model="aux.auxPublicado[$index +1]">
+                </div>
+                <div class="row" ng-repeat="x in data.idiomas">
+                    <input type="text" name="{{x.idioma}}" ng-model="aux.auxIdioma[$index +1]">
+                    <input type="text" name="{{x.nivelHabla}}" ng-model="aux.auxNivelHabla[$index +1]">
+                    <input type="text" name="{{x.nivelLectura}}" ng-model="aux.auxNivelLectura[$index +1]">
+                    <input type="text" name="{{x.nivelEscritura}}" ng-model="aux.auxNivelEscritura[$index +1]"><br>
+                </div>
+                <div class="row" ng-repeat="x in data.asociaciones">
+                    <input type="text" name="{{x.asociacion}}" ng-model="aux.auxAsociacion[$index +1]">
+                </div>
+                <div class="row" ng-repeat="x in data.cargos">
+                    <input type="text" name="{{x.lugar}}" ng-model="aux.auxLugar[$index +1]">
+                    <input type="text" name="{{x.cargo}}" ng-model="aux.auxCargo[$index +1]">
+                    <input type="text" name="{{x.fechaInicio}}" ng-model="aux.auxFechaInicio[$index +1]">
+                    <input type="text" name="{{x.fechaFin}}" ng-model="aux.auxFechaFin[$index +1]">
+                    <input type="text" name="{{x.responsabilidades}}" ng-model="aux.auxResponsabilidades[$index +1]">
+                </div>
+                <div class="row" ng-repeat="x in data.programas">
+                    <input type="text" name="{{x.semestre}}" ng-value="{{$index +1}}">
+                    <input type="text" name="{{x.programa}}" ng-model="aux.auxPrograma[$index +1]">
+                </div>
+            </div>
             <div class="col-md-10">
                 <div class="row">   
                                 <div class="row">
@@ -89,7 +145,7 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-offset-4">
                         <a href=""><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>                        
-                        <a href=""><button id="button2id" name="enviar" class="btn btn-success">Enviar</button></a>
+                        <input type="submit" name="enviar" class="btn btn-success" value="Enviar">
                         <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
                     </div>
                 </div></br>

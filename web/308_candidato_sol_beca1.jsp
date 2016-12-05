@@ -11,10 +11,10 @@
     HttpSession actual = request.getSession();
     String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
-     if(user==null){
+     /*if(user==null){
      response.sendRedirect("login.jsp");
         return;
-     }
+     }*/
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -64,7 +64,7 @@
         <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
         <fieldset class="custom-border">
                 <legend class="custom-border">Solicitud de beca de postgrado</legend>
-        <form class="form-horizontal" name="solicitud" action="" method="POST">
+        <form class="form-horizontal" name="solicitud" action="SolicitarBecaServlet" method="POST">
         <div class="row" ng-view>            
             
         </div>

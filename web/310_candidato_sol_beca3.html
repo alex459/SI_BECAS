@@ -12,49 +12,11 @@
             </div>  
             <div class="col-md-10">
                     <fieldset class="custom-border">
-                <legend class="custom-border">Educación</legend>
-                                           
-                            <div class="row">   
-                                <div class="col-md-2">
-                                    <label>Tipo de educación</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="edu.tipo_educacion">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Grado alcanzado</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="edu.grado_alcanzado">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Nombre de la institución</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="edu.nombre_institucion">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Año</label>
-                                    <div class="row">
-                                    <div class="col-md-6">    
-                                    <div class="input-group date">
-                                        <input type="text" class="form-control" ng-model="edu.anyo_educacion"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
-                                    </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                    <div class="form-group">
-                                            <div class="row"></div>
-                                            <a href=""><button id="button1id" name="agEducacion" class="btn btn-primary" ng-click="addEducacion()">Agregar información</button></a>
-                                    </div>                                   
-                                </div>    
-                                    </div>    
-                                </div>
-                                
-                            </div>
+                <legend class="custom-border">Educación</legend>            
                             <div class="row">  
                                 <div class="col-md-12">
-                                    <table class="table table-bordered"></br>
-                                        <label>información de educación ingresada</label>
+                                    <table class="table table-bordered">
+                                        <label>Estudios Realizados</label>
                                         <thead>
                                             <tr class="success">
                                                 <th>No</th>
@@ -66,84 +28,77 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="info" ng-repeat="x in data.educacion">
-                                                <td></td>
-                                                <td> {{x.tipo_educacion}} </td>
-                                                <td>{{x.grado_alcanzado}} </td>
-                                                <td>{{x.nombre_institucion}} </td>
-                                                <td>{{x.anyo_educacion}}</td>
-                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                            
+                                            <tr ng-repeat="x in data.educacion">
+                                                <td>{{$index + 1}}</td>
+                                                <td> 
+                                                    <select name="{{x.tipo}}" class="form-control" ng-model="aux.auxTipoEdu[$index +1]">
+                                                        <option value="1">Tecnico</option>
+                                                        <option value="2">Titulo Universitario</option>
+                                                    </select> </td>
+                                                    <td>
+                                                        <select name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index +1]">
+                                                            <option value="1">Option one</option>
+                                                            <option value="2">Option two</option>
+                                                        </select>
+                                                    </td>
+                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index +1]"> </td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-1"></div>
+                                                        <div class="col-sm-7"><input name="{{x.anyo}}" type="text" class="form-control" ng-model="aux.auxAnyoEdu[$index +1]"></div>
+                                                        <div class="col-sm-3"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span></div>
+                                                        <div class="col-sm-1"></div>
+                                                    </div>
+                                                    
+                                                    
+                                                </td>
+                                                <td>
+                                                    <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarEducacion()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="row text-center">
+                                        <a href="" class="btn btn-primary" ng-click="agregarEducacion()" ng-show="verAgregarEducacion">Agregar Nueva Educacion</a>
+                                    </div>
                                 </div> 
                             </div></br>
                             <div class="row">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <table class="table table-bordered">
                                         <label>Trabajo de investigación o tesis realizada </label>
+                                        <thead>
+                                            <tr class="success">
+                                                <th>No</th>
+                                                <th>Titulo de Proyecto</th>
+                                                <th>Publicado</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr ng-repeat="x in data.proyectos" >
+                                                <td>{{$index + 1}}</td>
+                                                <td><input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index +1]"></td>
+                                                <td><input type="radio" name="{{x.publicado}}" value="si" ng-model="aux.auxPublicado[$index +1]"><label>  Si </label><input type="radio" name="{{x.publicado}}" value="no" ng-model="aux.auxPublicado[$index +1]"><label>  No </label></td>
+                                                <td>
+                                                    <input type="checkBox" ng-show="$first&&$last" ng-model="checkProyecto"> <label ng-show="$first&&$last">Ninguno</label>
+                                                    <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarProyecto()">Eliminar</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row text-center">
+                                        <a href="" class="btn btn-primary" ng-click="agregarProyecto()" ng-show="verAgregarProyecto" >Agregar Nuevo Proyecto</a>
+                                    </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-md-offset-2">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input id="searchinput" name="busqueda" type="input" placeholder="Ruta del archivo" class="form-control input-md" disable>
-                                            <p class="help-block"></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 ">
-                                        <label>  publicado: </label><input type="radio" name="publicado" value="si"><label>  Si </label><input type="radio" name="publicado" value="no"><label>  No </label>
-                                    </div>
-                                    <div class="col-md-2">    
-                                        <div class="form-group">
-                                            <div class="col-md-4">
-                                                <a href=""><button id="singlebutton" name="cargarArchivo" type="file" class="btn btn-primary">Agregar proyecto</button ng-click="addProyecto()"></a>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label>Idioma</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>             
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Nivel de habla</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>           
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Nivel de lectura</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>             
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Nivel de escritura</label>
-                                    <div class="row">
-                                    <div class="col-md-6">    
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>        
-                                    </div>
-                                        <div class="col-md-6">
-                                          <button id="singlebutton" name="cargarArchivo" type="file" class="btn btn-primary">Agregar idioma</button>     
-                                        </div>    
-                                    </div>    
-                                </div>
+                                
                             </div></br>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <label>Idiomas Manejados </label>
                                     <table class="table table-bordered">
-                                        <H5>Idiomas ingresados</H5>
                                         <thead>
                                             <tr class="success">
                                                 <th>No</th>
@@ -155,16 +110,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="info">
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                            <tr ng-repeat="x in data.idiomas">
+                                                <td>{{$index + 1}} </td>
+                                                <td> <select name="{{x.idioma}}" ng-model="aux.auxIdioma[$index +1]" class="form-control">
+                                                        <option value="1">Option one</option>
+                                                        <option value="2">Option two</option>
+                                                     </select> </td>
+                                                <td> <select name="{{x.nivelHabla}}" class="form-control" ng-model="aux.auxNivelHabla[$index +1]">
+                                                        <option value="1">Option one</option>
+                                                        <option value="2">Option two</option>
+                                                     </select> </td>
+                                                <td> <select name="{{x.nivelLectura}}" class="form-control" ng-model="aux.auxNivelLectura[$index +1]">
+                                                        <option value="1">Option one</option>
+                                                        <option value="2">Option two</option>
+                                                     </select>   </td>
+                                                <td> <select name="{{x.nivelEscritura}}" class="form-control" ng-model="aux.auxNivelEscritura[$index +1]">
+                                                        <option value="1">Option one</option>
+                                                        <option value="2">Option two</option>
+                                                     </select></td>
+                                                <td><a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarIdioma()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="row text-center">
+                                        <a href="" class="btn btn-primary" ng-click="agregarIdioma()" ng-show="verAgregarIdioma" >Agregar Nuevo Idioma</a>
+                                    </div>
                                 </div> 
                             </div>
                             <div class="row">

@@ -14,27 +14,11 @@
                 <fieldset class="custom-border">
                 <legend class="custom-border">Cargos desempeñados</legend>
                     
-                              <div class="row">
-                                <div class="col-md-4">  
-                                <label for="textinput">Asociaciones profesionales a las que pertenece</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-md-offset-2">                                    
-                                    <input id="textinput" name="textinput" type="text" placeholder="Ruta del archivo" class="form-control input-md">
-                                </div> 
-                                 <div class="col-md-2">
-                                    <div class="form-group">
-                                        <div class="col-md-2">
-                                            <button id="button1id" name="agEducacion" class="btn btn-primary">Agregar asociación</button>
-                                        </div>
-                                    </div>                                   
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table class="table table-bordered"></br>
-                                        <label for="textinput">información de asociaciones ingresada</label>
+                                    <label>Asociaciones Profecionales a las que pertenece</label>
+                                    <table class="table table-bordered">
+                                        
                                         <thead>
                                             <tr class="success">
                                                 <th>No</th>
@@ -43,82 +27,60 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="info">
-                                                <td> </td>
-                                                <td></td>
-                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                            <tr ng-repeat="x in data.asociaciones">
+                                                <td>{{$index + 1}}</td>
+                                                <td><input name="{{x.asociacion}}" type="text" placeholder="Ingrese el nombre de la Asociación Profecional a la que pertenece" class="form-control input-md" ng-model="aux.auxAsociacion[$index +1]"></td>
+                                                <td>
+                                                    <input type="checkBox" ng-show="$first&&$last" ng-model="checkAsociacion"> <label ng-show="$first&&$last">Ninguno</label>
+                                                    <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarAsociacion()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="row text-center">
+                                        <a href="" class="btn btn-primary" ng-click="agregarAsociacion()" ng-show="verAgregarAsociacion">Agregar Nueva Asociacion</a>
+                                    </div>
                                 </div>                                    
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-4">  
-                                <label for="textinput">Empleos desempeñados en los ultimos 5 años</label>
-                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">  
-                                    <label for="textinput">Lugar</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="Ingrese el nombre del lugar en el cual tuvo el cargo" class="form-control input-md">
-                                </div>
-                                <div class="col-md-4">  
-                                    <label for="textinput">Cargo</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="Ingrese el nombre del cargo" class="form-control input-md">
-                                </div>
-                                <div class="col-md-2">  
-                                    <label for="textinput">Fecha de inicio</label>
-                                    <div class="input-group date">
-                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">  
-                                    <label for="textinput">Fecha de fin</label>
-                                    <div class="input-group date">
-                                        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row"><div class="col-md-12"></div></div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label class="control-label" for="textarea">Responsabilidades</label>
-                                </div>                                    
-                            </div>                             
-                            <div class="row">
-                                <div class="col-md-10">                                                       
-                                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
-                                </div>
-                                <div class="col-md-2">
-                                    <button id="button1id" name="agEducacion" class="btn btn-primary">Agregar cargo</button>
-                                </div>    
-                            </div>
-                            <div class="row"><div class="col-md-12"></div></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table table-bordered"></br>
-                                        <label for="textinput">información de educación ingresada</label>
+                                    <label>Empleos desempeñados en los ultimos 5 años</label>
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr class="success">
                                                 <th>No</th>
-                                                <th>Lugar</th>
-                                                <th>Título del cargo</th>
-                                                <th>Fecha de inicio</th>
-                                                <th>Fecha de fin</th>
+                                                <th>Lugar y Título del cargo</th>
+                                                <th>Periodo</th>
+                                                <th>Responsabilidades</th>
                                                 <th>Acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="info">
+                                            <tr ng-repeat="x in data.cargos">
                                                 <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td></td>
-                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
+                                                <td>
+                                                    <label>Lugar del Cargo:</label>
+                                                    <input  name="{{x.lugar}}" type="text" placeholder="Ingrese el nombre del lugar en el cual tuvo el cargo" class="form-control input-md" ng-model="aux.auxLugar[$index +1]">
+                                                    <label>Titulo del Cargo:</label>
+                                                    <input  name="{{x.cargo}}" type="text" placeholder="Ingrese el nombre del cargo" class="form-control input-md" ng-model="aux.auxCargo[$index +1]">
+                                                </td>
+                                                <td>
+                                                    <label>Fecha de Inicio:</label>
+                                                    <div class="input-group date">
+                                                        <input name="{{x.fechaInicio}}" type="text" class="form-control" ng-model="aux.auxFechaInicio[$index +1]"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div> 
+                                                    <label>Fecha de Fin</label>
+                                                    <div class="input-group date">
+                                                        <input name="{{x.fechaFin}}" type="text" class="form-control" ng-model="aux.auxFechaFin[$index +1]"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div> 
+                                                </td>
+                                                <td><textarea name="{{x.responsabilidades}}" class="form-control" ng-model="aux.auxResponsabilidades[$index +1]"></textarea></td>
+                                                <td><a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarCargo()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="row text-center">
+                                        <a href="" class="btn btn-primary" ng-click="agregarCargo()" ng-show="verAgregarCargo">Agregar Otro Cargo</a>
+                                    </div>
                                 </div>                                    
                             </div></br>
                         </fieldset>        

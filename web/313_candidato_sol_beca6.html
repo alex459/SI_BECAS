@@ -1,108 +1,199 @@
 <div>
     <div class="col-md-2">
-                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
-                    <li><a href="#/">Datos personales</a></li>
-                    <li><a href="#/laboral">Información laboral</a></li>
-                    <li><a href="#/educacion">Educación</a></li>
-                    <li><a href="#/cargos">Cargos desempeñados</a></li>
-                    <li><a href="#/oferta">Información de beca</a></li>
-                    <li  class="active"><a href="#/referencias">Referencias personales</a></li>
-                    <li><a href="#/documentos">Adjuntar documentos</a></li>
-                </ul>
-            </div>  
-            <div class="col-md-10">
-                <fieldset class="custom-border">
-                <legend class="custom-border">Referencias universitarias</legend>
+        <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+            <li><a href="#/">Datos personales</a></li>
+            <li><a href="#/laboral">Información laboral</a></li>
+            <li><a href="#/educacion">Educación</a></li>
+            <li><a href="#/cargos">Cargos desempeñados</a></li>
+            <li><a href="#/oferta">Información de beca</a></li>
+            <li  class="active"><a href="#/referencias">Referencias personales</a></li>
+            <li><a href="#/documentos">Adjuntar documentos</a></li>
+        </ul>
+    </div>  
+    <div class="col-md-10">
+        <fieldset class="custom-border">
+            <legend class="custom-border">Referencias universitarias</legend>
+
+            <div class="row">   
+                <div class="col-md-12">
+                    <label for="textinput">Universitarios que puedan dar referencia sobre su persona</label>
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Referencia 1</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Primer nombre</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer nombre" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Segundo nombre</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo nombre" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Primer apellido</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer apellido" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Segundo apellido</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md">
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h4>Domicilio</h4>
+                            </div>
+                        </div>
+                        <div class="row">                                
+                            <div class="col-md-12">
+                                <label class="control-label" for="textarea">Dirección</label>                    
+                                <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                            </div>
+                        </div></br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="textinput">Departamento</label>
+                                <select id="selectbasic" name="selectbasic" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="textinput">Municipio</label>
+                                <select id="selectbasic" name="selectbasic" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>  
+                        </div></br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Número de teléfono</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md">
+                            </div>
+                        </div>
+
+                    </fieldset>
                     
-                            <div class="row">   
-                                <div class="col-md-6">
-                                  <label for="textinput">Universitarios que puedan dar referencia sobre su persona</label>   
-                                </div> 
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Referencia 2</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Primer nombre</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer nombre" class="form-control input-md">
                             </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="textinput">Primer nombre</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer nombre" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput">Segundo nombre</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo nombre" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput">Primer apellido</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer apellido" class="form-control input-md">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="textinput">Segundo apellido</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md">
-                                </div>  
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <h4>Domicilio</h4>
-                                </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Segundo nombre</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo nombre" class="form-control input-md">
                             </div>
-                            <div class="row">                                
-                                <div class="col-md-12">
-                                    <label class="control-label" for="textarea">Dirección</label>                    
-                                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
-                                </div>
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="textinput">Lugar de nacimiento, Departamento</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="textinput">Municipio</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>  
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="textinput">Número de teléfono</label>
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md">
-                                </div>
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table table-bordered"></br>
-                                        <label for="textinput">Referencias</label>
-                                        <thead>
-                                            <tr class="success">
-                                                <th>No</th>
-                                                <th>Nombre</th>
-                                                <th>Dirección</th>
-                                                <th>Teléfono</th>
-                                                <th>Acción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="info">
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div></br>
-                             </fieldset> 
-                <div class="row">
-                    <div class="col-md-4 col-lg-offset-4">
-                        <a href="#/documentos"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a> 
-                        <a href="#/oferta"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
-                        <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
-                    </div>
-                </div></br>
-            </div> 
-            </br>
+                            <div class="col-md-3">
+                                <label for="textinput">Primer apellido</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer apellido" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Segundo apellido</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md">
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h4>Domicilio</h4>
+                            </div>
+                        </div>
+                        <div class="row">                                
+                            <div class="col-md-12">
+                                <label class="control-label" for="textarea">Dirección</label>                    
+                                <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                            </div>
+                        </div></br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="textinput">Departamento</label>
+                                <select id="selectbasic" name="selectbasic" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="textinput">Municipio</label>
+                                <select id="selectbasic" name="selectbasic" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>  
+                        </div></br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Número de teléfono</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Referencia 3</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Primer nombre</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer nombre" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Segundo nombre</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo nombre" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Primer apellido</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su primer apellido" class="form-control input-md">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="textinput">Segundo apellido</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md">
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h4>Domicilio</h4>
+                            </div>
+                        </div>
+                        <div class="row">                                
+                            <div class="col-md-12">
+                                <label class="control-label" for="textarea">Dirección</label>                    
+                                <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                            </div>
+                        </div></br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="textinput">Departamento</label>
+                                <select id="selectbasic" name="selectbasic" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="textinput">Municipio</label>
+                                <select id="selectbasic" name="selectbasic" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>  
+                        </div></br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="textinput">Número de teléfono</label>
+                                <input id="textinput" name="textinput" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+        </fieldset> 
+        <div class="row">
+            <div class="col-md-4 col-lg-offset-4">
+                <a href="#/documentos"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a> 
+                <a href="#/oferta"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
+                <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+            </div>
+        </div></br>
+    </div> 
+    </br>
 </div>
