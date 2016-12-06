@@ -1,8 +1,9 @@
 <%-- 
-    Document   : principal
-    Created on : 10-17-2016, 06:14:37 AM
-    Author     : next
+    Document   : 801_agregar_documeto_finalizaciom_beca
+    Created on : 12-04-2016, 07:03:26 AM
+    Author     : Manuel Miranda
 --%>
+
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -58,31 +59,39 @@
              el menu puede ser cambiado en la pagina menu.jsp --%>
         <jsp:include page="menu_corto.jsp"></jsp:include>
     </head>
-    <body>
+    <body ng-app="AgregarDocFinalizacionbeca">
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                    <p class="text-center" style="color:#cf2a27">Agregar documentos finalización de beca</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
-            <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <form class="form-horizontal" action="" method="post">
+            <div class="col-md-12"  ng-controller="MyCtrl"><!-- CONTENIDO DE LA PANTALLA -->
+                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Titulo</legend>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION.
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
+                        <legend class="custom-border">Adjuntar documentos necesarios</legend>
+                        <div class="col-md-8 col-md-offset-2 row">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    Titulo obtenido:
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
+                                </div>
+                            </div>
+                            
+                            <ng-portlet></ng-portlet>
+                            <div class="text-right">
+                                <div id="container">
+                                    <a ng-click="add()" href="#">Agregar otro documeto</a>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                    <input type="submit" class="btn btn-success" name="submit" value="Emviar">
+                                </div>
+                        </div>
                     </fieldset>
                 </form>
             </div><!-- CONTENIDO DE LA PANTALLA -->
@@ -115,5 +124,6 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
         <script src="js/angular.min.js"></script>
+        <script src="js/agregarDocumentoFinalizacionBeca.js"></script>
     </body>
 </html>

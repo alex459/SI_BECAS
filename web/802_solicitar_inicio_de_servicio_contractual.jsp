@@ -1,8 +1,15 @@
 <%-- 
-    Document   : principal
-    Created on : 10-17-2016, 06:14:37 AM
-    Author     : next
+    Document   : 802_solicitar_inicio_de_servicio_contractual
+    Created on : 12-04-2016, 06:27:01 PM
+    Author     : Manuel Miranda
 --%>
+
+<%-- 
+    Document   : 801_agregar_documeto_finalizaciom_beca
+    Created on : 12-04-2016, 07:03:26 AM
+    Author     : Manuel Miranda
+--%>
+
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -62,27 +69,68 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                    <p class="text-center" style="color:#cf2a27">Solicitar inicio de servicio contractual</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <form class="form-horizontal" action="" method="post">
+                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Titulo</legend>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION.
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
+                        <legend class="custom-border">Adjuntar documentos necesarios</legend>
+                        <div class="col-md-8 col-md-offset-2 row">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    Acta de toma de posesión:
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    Proyecto en que apoyara:
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="col-md-5" style="padding-left: 0px;">Carta Solicitud:</div>
+                                    <div class="col-md-7">para:
+                                        <select>
+                                            <option>Junta Directiva</option>
+                                            <option>Consejo de Becas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="col-md-5" style="padding-left: 0px;">Carta Solicitud:</div>
+                                    <div class="col-md-7">para:
+                                        <select>
+                                            <option>Junta Directiva</option>
+                                            <option>Consejo de Becas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row text-center">
+                                <input type="submit" class="btn btn-success" name="submit" value="Emviar">
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div><!-- CONTENIDO DE LA PANTALLA -->

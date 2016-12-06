@@ -1,8 +1,9 @@
 <%-- 
-    Document   : principal
-    Created on : 10-17-2016, 06:14:37 AM
-    Author     : next
+    Document   : 804_solicitar_acuerdo_de_gestion_de_liberacion
+    Created on : 12-05-2016, 05:01:14 PM
+    Author     : Manuel Miranda
 --%>
+
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -62,7 +63,7 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Titulo de la pantalla</p>
+                    <p class="text-center" style="color:#cf2a27">Solicitar acuerdo de gestion de liberacion</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -70,19 +71,21 @@
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 <form class="form-horizontal" action="" method="post">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Titulo</legend>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        TODO EL CONTENIDO DE LA PANTALLA EN ESTA SECCION.
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
+                        <legend class="custom-border">Adjuntar documentos necesarios</legend>
+                        <div class="col-md-8 col-md-offset-2 row">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    Carta de solicitud:
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row text-center">
+                                <input type="submit" class="btn btn-success" name="submit" value="Emviar">
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div><!-- CONTENIDO DE LA PANTALLA -->

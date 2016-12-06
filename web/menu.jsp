@@ -133,10 +133,10 @@
                     
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitud acuerdo de año fiscal</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitud prorroga</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Agregar documentos de finalizacion de beca</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitar inicio de servicio contractual</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitar acuerdo de gestion de compromiso contractual</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Solicitar Acuerdo de gestion de liberacion</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='801_agregar_documento_finalizacion_beca.jsp'>Agregar documentos de finalizacion de beca</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='802_solicitar_inicio_de_servicio_contractual.jsp'>Solicitar inicio de servicio contractual</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='803_solicitar_acuerdo_de_gestion_de_compromiso_contractual.jsp'>Solicitar acuerdo de gestion de compromiso contractual</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='804_solicitar_acuerdo_de_gestion_de_liberacion.jsp'>Solicitar Acuerdo de gestion de liberacion</a></li>");
                     
                     out.write("</ul>");
                     out.write("</li>");
