@@ -4,8 +4,27 @@
     Author     : adminPC
 --%>
 
+<%@page import="POJO.Facultad"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="MODEL.variablesDeSesion"%>
+<%
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<head>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,9 +37,8 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
     <link href="css/customfieldset.css" rel="stylesheet">
+
 <div class="row">
     <div class="col-md-4">
         <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -38,139 +56,173 @@
         </h3>
     </div>
 </div>
-<nav class="navbar navbar-custom" role="navigation">
-    <div class="navbar-header">
 
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-        </button> <a class="navbar-brand active" href="index.html">Inicio</a>
-    </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-       <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Información pública<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="315_candidato_ofertas_beca.jsp">Ofertas de beca</a>
-                        <a href="316_candidatos_documentos.jsp">Documentos</a>
-                        <a href="317_candidatos_acercade.jsp">Acerca de</a>
-                        <a href="#">Login/Logout</a>
-                    </li>								
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Solicitudes y Acuerdos<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="501_Solicitudes_Asesoria_Contrato.jsp">Solicitudes de Asesoria de Contrato de Beca</a>
-                        <a href="502_Resolver_Solicitudes_Asesoria_Contrato.jsp">Resolver Solicitudes de Asesoria de Contrato de Beca</a>
-                        <a href="503_Solicitudes_Reintegro_Beca.jsp">Solicitudes de Reintegracion de Beca</a>
-                        <a href="504_Resolver_Solicitudes_Reintegro_Beca.jsp">Resolver Solicitudes de Reintegracion de Beca</a>
-                        <a href="505_Buscar_Contrato.jsp">Buscar Contrato Beca</a>
-                        <a href="506_Buscar_Acta_Reintegro.jsp">Buscar Acta de Reintegro de Beca</a>
 
-                    </li>								
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">						
-            <li>
-                <a href="#">Ayuda</a>
-            </li>
-            <li>
-                <a href="login.jsp">Cerrar Sesión</a>
-            </li>
-        </ul>
-    </div>
+<p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+<p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
-</nav>
+
+<%-- todo el menu esta contenido en la siguiente linea
+     el menu puede ser cambiado en la pagina menu.jsp --%>
+<jsp:include page="menu_corto.jsp"></jsp:include>
+
+
 </head>
 
 
 
-<body>
+<body ng-app="solicitudAsesoriaContratoApp" ng-controller="solicitudAsesoriaContratoCtrl">
 
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Solicitudes de Asesoria de Contrato de Beca</H3>
         <fieldset class="custom-border">
-                <legend class="custom-border">Solicitudes</legend>
-                    <div class="row">            
-                        <div class="col-md-2"></div> 
-                        <div class="col-md-8"> 
-                            <fieldset class="custom-border">
-                                <legend class="custom-border">Filtros</legend>
-                                <form>
-                                    <div class="row"> 
-                                        <div class="col-md-6">
-                                            <div class="col-md-1"></div>
-                                            <div class="col-md-10">
-                                                <label>Becario:</label><input type="text" class="form-control" name="becario"><br>
-                                                <label>Codigo Empleado:</label><input type="text" class="form-control" name="codigo_empleado"><br>
-                                                <label>Expediente:</label><input type="number" class="form-control" name="expediente">
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="col-md-1"></div>
-                                            <div class="col-md-10">
-                                                <label>Facultad:</label><select class="form-control">
-                                                    <option>Seleccione Facultad</option>
-                                                    <option>Medicina</option>
-                                                    <option>Economia</option>
-                                                </select><br>                                                
-                                                <label>Fecha Solicitud:</label><input type="text" class="form-control" name="fecha_solicitud"><br>
-                                                
-                                            </div>
-                                            <div class="col-md-1"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row text-center"> 
-                                    <input type="button" name="buscar" value="Buscar" class="btn btn-primary">
-                                    </div>
-                                </form>
-                                    
-                            </fieldset>              
-                        </div>
-                        <div class="col-md-2"></div> 
+            <legend class="custom-border">Solicitudes</legend>
+            <div class="row">            
+
+
+                <fieldset class="custom-border">
+                    <legend class="custom-border">Filtros</legend>
+                    <form name= "solicitudAsesoriaContrato" class="form-horizontal" action="" method="post" novalidate>
+
+                        <div class="row">
+                            <div class="col-md-1 text-right">
+                                <label for="textinput">Codigo de Usuario : </label>                                
+                            </div>
+                            <div class="col-md-3">
+                                <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
+                                <span class="text-danger" ng-show="solicitudAsesoriaContrato.CARNET.$error.minlength">Minimo 7 caracteres.</span>
+                                <span class="text-danger" ng-show="solicitudAsesoriaContrato.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
+                                <small id="help5"></small>
+                            </div>
+                            <div class="col-md-1 text-right">
+                                <label for="textinput">Numero de Expediente : </label>                                
+                            </div>
+                            <div class="col-md-3">
+                                <input id="ID_EXPEDIENTE" name="ID_EXPEDIENTE" type="text" placeholder="ingrese numero de expediente a buscar" class="form-control input-md" ng-model="datos.idexpediente" ng-pattern="/^[0-9]*$/" minlength="1" maxlength="4">
+                                <span class="text-danger" ng-show="solicitudAsesoriaContrato.ID_EXPEDIENTE.$error.minlength">Minimo 1 caracteres.</span>
+                                <span class="text-danger" ng-show="solicitudAsesoriaContrato.ID_EXPEDIENTE.$error.pattern">Solo se permiten numeros. (0-9).</span>
+                                <small id="help5"></small>
+                            </div>
+                            <div class="col-md-1">
+                                <label for="textinput">Facultad :</label>                                
+                            </div>
+                            <div class="col-md-3">
+
+                                <select id="selectbasic" name="ID_FACULTAD" class="form-control">
+                                    <option value="0">TODOS</option>    
+                                <%
+                                    FacultadDAO facultadDao = new FacultadDAO();
+                                    ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
+                                    listaFacultades = facultadDao.consultarTodos();
+                                    for (int i = 0; i < listaFacultades.size(); i++) {
+                                        out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
+                                    }
+                                %>                    
+                            </select>
+
+                        </div>         
                     </div>
+
+                    <BR>
+
                     <div class="row">
-                        <h5>Resultados</h5>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <table class="table text-center">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Codigo Empleado</th>
-                                        <th>Becario</th>
-                                        <th>Unidad</th>
-                                        <th>Expediente</th>
-                                        <th>Fecha Solicitud</th>
-                                        <th>Acción</th>
-                                    </tr>  
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><input type="button" name="resolver" value="Resolver" class="btn btn-success"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="col-md-1 text-right">
+                            <label for="textinput">Nombres : </label>
                         </div>
-                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
+
+                            <div class="row">
+
+                                <div class="col-md-3">                                                                                    
+                                    <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                </div>
+                                <div class="col-md-3">    
+                                    <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                </div> 
+                                <div class="col-md-3">
+                                    <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                </div> 
+                                <div class="col-md-3">
+                                    <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-1">
+                            <label for="textinput">Fecha de solicitud : </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="FECHA" placeholder="MM/DD/AAAA"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>         
                     </div>
-        </fieldset>
-    </div>  
+
+                    <br>        
+
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Realizar busqueda">
+                        </div>
+                    </div>
+
+                </form>
+
+            </fieldset>              
+
+
+        </div>
+
+
+        <!---------------    TABLA DE RESULTADOS ----------------------->
+
+
+
+
+        <div class="row">
+            <h5>Resultados</h5>
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Usuario</th>
+                            <th>Nombre</th>
+                            <th>Unidad</th>
+                            <th>Expediente</th>
+                            <th>Fecha Solicitud</th>
+                            <th>Acción</th>
+                        </tr>  
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input type="button" name="resolver" value="Resolver" class="btn btn-success"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </fieldset>
+</div>  
 
 
 
@@ -205,8 +257,19 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
 <script src="js/scripts.js"></script>
+<script src="js/solicitudAsesoriaContrato.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+                                        $(function () {
+                                            $('.input-group.date').datepicker({
+                                                calendarWeeks: true,
+                                                todayHighlight: true,
+                                                autoclose: true
+                                            });
+                                        });
+</script>
 
 </body>
 </html>
