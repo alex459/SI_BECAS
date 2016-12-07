@@ -25,6 +25,8 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
 })
 .controller('solicitudCtrl', function($scope) {
     
+    $scope.action= "";
+    $scope.oferta={};
     $scope.data = {nombre:"",
     nombre2: "",
     apellido1: "",
@@ -82,7 +84,33 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     programas:[{
             semestre: "semestre1",
             programa: "programa1"
-    }]
+    }],
+    nombre1R1:"",
+    nombre2R1:"",
+    apellido1R1:"",
+    apellido2R1:"",
+    direccionR1:"",
+    departamentoR1:"",
+    municipioR1:"",
+    telefonoR1:"",
+    
+    nombre1R2:"",
+    nombre2R2:"",
+    apellido1R2:"",
+    apellido2R2:"",
+    direccionR2:"",
+    departamentoR2:"",
+    municipioR2:"",
+    telefonoR2:"",
+    
+    nombre1R3:"",
+    nombre2R3:"",
+    apellido1R3:"",
+    apellido2R3:"",
+    direccionR3:"",
+    departamentoR3:"",
+    municipioR3:"",
+    telefonoR3:""
     };
 
     $scope.aux={

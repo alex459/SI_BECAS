@@ -3,6 +3,10 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
+<%@page import="POJO.Usuario"%>
+<%@page import="DAO.UsuarioDAO"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <% 
     response.setHeader("Cache-Control", "no-store");
@@ -15,6 +19,31 @@
      response.sendRedirect("login.jsp");
         return;
      }*/
+     //Obtener usuario completo
+     String nombreOferta = "";
+     String nombreInstitucion = "";
+     Integer duracion = 0;
+     String pais = "";
+     String tipoBeca = "";
+     try{
+     UsuarioDAO usDao = new UsuarioDAO();
+     Usuario usuario = usDao.consultarPorNombreUsuario(user);
+     
+     //Obteniendo oferta solicitada
+     ConexionBD conexionBD = new ConexionBD();
+     String consultaSql = "SELECT NOMBRE_OFERTA,NOMBRE_INSTITUCION,DURACION,PAIS,TIPO_OFERTA_BECA FROM EXPEDIENTE EX JOIN SOLICITUD_DE_BECA SB ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN OFERTA_BECA OF ON OF.ID_OFERTA_BECA = SB.ID_OFERTA_BECA JOIN INSTITUCION I ON I.ID_INSTITUCION = OF.ID_INSTITUCION_ESTUDIO JOIN USUARIO US ON US.ID_USUARIO = SB.ID_USUARIO WHERE US.NOMBRE_USUARIO = '" + user +"'";
+     ResultSet rs = conexionBD.consultaSql(consultaSql);
+     nombreOferta = rs.getString("NOMBRE_OFERTA");
+     nombreInstitucion = rs.getNString("NOMBRE_INSTITUCION");
+     duracion = rs.getInt("DURACION");
+     pais = rs.getString("PAIS");
+     tipoBeca = rs.getString("TIPO_OFERTA_BECA");
+     conexionBD.cerrarConexion();
+     }catch(Exception e){
+         e.printStackTrace();
+     }
+     
+     
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -60,11 +89,12 @@
 
 <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl">
 
-    <div class="container-fluid">
+    <div class="container-fluid" ng-init="oferta={nombre:'<%=nombreOferta%>',institucion: '<%=nombreInstitucion%>'}" >
         <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
         <fieldset class="custom-border">
                 <legend class="custom-border">Solicitud de beca de postgrado</legend>
-        <form class="form-horizontal" name="solicitud" action="SolicitarBecaServlet" method="POST">
+        <form class="form-horizontal" name="solicitud" action="{{action}}" method="POST">
+            <input type="hidden" ng-model="oferta.nombre">
         <div class="row" ng-view>            
             
         </div>

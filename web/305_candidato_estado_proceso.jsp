@@ -15,6 +15,8 @@
 <%@page import="POJO.Progreso"%>
 <%@page import="MODEL.variablesDeSesion"%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <% 
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
@@ -28,102 +30,66 @@
      }
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
-   //
-   int idUser, idSol, idExp, idProg;
-            ConexionBD conexionbd = null;
-            ResultSet rs = null;
-            Usuario temp1=new Usuario();
-            SolicitudDeBeca temp2=new SolicitudDeBeca();
-            Expediente temp3=new Expediente();
-            Progreso temp4=new Progreso();
-            //////////Obtener el id del usuario
-             try {
-                //formando la consulta
-                String consultaSql="SELECT ID_USUARIO FROM USUARIO WHERE NOMBRE_USUARIO='"+user+"';";
-                //realizando la consulta
-                conexionbd = new ConexionBD();
-                rs = conexionbd.consultaSql(consultaSql); 
-                temp1 = new Usuario();
-                if(rs.next()) {
-                    temp1.setIdUsuario(rs.getInt("ID_USUARIO"));
-                }
-                //con el rs se llenara la tabla de resultados
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
-            idUser=temp1.getIdUsuario();
-            ////////Obtener el id del expediente
-             try {
-                //formando la consulta
-                String consultaSql= "SELECT ID_EXPEDIENTE FROM SOLICITUD_DE_BECA WHERE ID_USUARIO="+idUser;
-                //realizando la consulta
-                conexionbd = new ConexionBD();
-                rs = conexionbd.consultaSql(consultaSql); 
-                temp2 = new SolicitudDeBeca();
-                if(rs.next()) {
-                    temp2.setIdExpediente(rs.getInt("ID_EXPEDIENTE"));
-                }
-                //con el rs se llenara la tabla de resultados
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
-            idExp=temp2.getIdExpediente();
-            ////////Obtener el id del progreso actual del candidato
-             try {
-                //formando la consulta
-                String consultaSql= "SELECT ID_PROGRESO FROM EXPEDIENTE WHERE ID_EXPEDIENTE="+idExp;
-                //realizando la consulta
-                conexionbd = new ConexionBD();
-                rs = conexionbd.consultaSql(consultaSql); 
-                temp3 = new Expediente();
-                if(rs.next()) {
-                    temp3.setIdProgreso(rs.getInt("ID_PROGRESO"));
-                }
-                //con el rs se llenara la tabla de resultados
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
-            idProg=temp3.getIdProgreso();
-            System.out.println("IDUS: "+idUser+" IDEXP: "+idExp+" ID_PROG: "+idProg);
+   
+    boolean expedienteAbierto = false; 
+    Expediente expediente = new Expediente();
+    //Obtener Expediente Abierto
+    try{
+        // Comprobando si tiene un proceso de beca abierto
+        ExpedienteDAO expDao = new ExpedienteDAO();
+        expedienteAbierto = expDao.expedienteAbierto(user);
+        if(expedienteAbierto == true){
+            //obtener el expediente
+            expDao = new ExpedienteDAO();
+            expediente = expDao.obtenerExpedienteAbierto(user);
+        }
+    } catch (Exception e){
+        e.printStackTrace();
+    }
+    
 %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistema informático para la administración de becas de postgrado</title>
+        <title>Sistema informático para la administración de becas de postgrado</title>
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
+        <meta name="description" content="Source code generated using layoutit.com">
+        <meta name="author" content="LayoutIt!">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/customfieldset.css" rel="stylesheet">
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
-        </h3>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/customfieldset.css" rel="stylesheet">
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center text-danger" >
+                Universidad De El Salvador
+            </h3>
+        </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador
+            </h2>
+            <h3 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Sistema informático para la administración de becas de postgrado
+            </h3>
+        </div>
     </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
-<p class="text-right">Rol: <%= rol %></p>
-<p class="text-right">Usuario: <%= user %></p>
-<jsp:include page="menu.jsp"></jsp:include>
+
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+
+
+    <%-- todo el menu esta contenido en la siguiente linea
+         el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>
 </head>
-<body>
 
+<body>
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Estado del proceso de beca</H3>
         <fieldset class="custom-border">
@@ -143,7 +109,7 @@
                         <tr>                            
                             <td style="background-color:#728FCE; color:white">Sin iniciar</td>
                             <%
-                            if(idProg==1)    
+                            if(expedienteAbierto == false)    
                             out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                             else
                             out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
@@ -152,7 +118,7 @@
                                 <center>                                    
                                 <form style='display:inline;' >
                                     <%
-                                    if(idProg==1)    
+                                    if(expedienteAbierto == false)    
                                     out.write("<input type='submit' class='btn btn-success' name='submit' value='Ver -opción-'>");
                                     else
                                     out.write("<input type='submit' class='btn btn-success' name='submit' value='Ver -opción-' disabled>");
@@ -162,11 +128,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Permiso inicial de junta directova</td>
+                            <td style="background-color:#728FCE; color:white">Permiso inicial de junta directiva</td>
                             <%
-                             if(idProg<2)
+                             if(expediente.getIdProgreso()<1)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                             else if(idProg==2)
+                             else if(expediente.getIdProgreso()==1)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
@@ -174,26 +140,26 @@
                             <td class="text-center" style="background-color:white;">
                             <form style='display:inline; color:black;' >
                               <%
-                             if(idProg<2){
+                             if(expediente.getIdProgreso()<1){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(idProg==2){
+                             }else if(expediente.getIdProgreso()==1){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
                              }%>  
-                                    </button>                                
+                                                                   
                             </form>
                             </td>
                         </tr>
                         <tr>
                             <td style="background-color:#728FCE; color:white">Autorización inicial del consejo de becas</td>
                             <%
-                             if(idProg<3)
+                             if(expediente.getIdProgreso()<2)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                             else if(idProg==3)
+                             else if(expediente.getIdProgreso() ==2)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
@@ -201,26 +167,26 @@
                             <td class="text-center" style="background-color:white;">
                             <form style='display:inline; color:black;' >
                               <%
-                             if(idProg<3){
+                             if(expediente.getIdProgreso()<2){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(idProg==3){
+                             }else if(expediente.getIdProgreso()==2){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
                              }%>
-                                    </button>
+                                    
                             </form>
                             </td>
                         </tr>
                         <tr>
                             <td style="background-color:#728FCE; color:white">Dictamen de la comisión de beca</td>
                             <%
-                             if(idProg<4)
+                             if(expediente.getIdProgreso()<3)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                             else if(idProg==4)
+                             else if(expediente.getIdProgreso()==3)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
@@ -228,26 +194,25 @@
                             <td class="text-center" style="background-color:white;">
                             <form style='display:inline; color:black;' >
                               <%
-                             if(idProg<4){
+                             if(expediente.getIdProgreso()<3){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(idProg==4){
+                             }else if(expediente.getIdProgreso()==3){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
                              }%>
-                                    </button>
                             </form>
                             </td>
                         </tr>
                         <tr>
                             <td style="background-color:#728FCE; color:white">Acuerdos de permisos de beca de junta directiva</td>
                             <%
-                             if(idProg<5)
+                             if(expediente.getIdProgreso()<4)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                             else if(idProg==5)
+                             else if(expediente.getIdProgreso()==4)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
@@ -255,26 +220,25 @@
                             <td class="text-center" style="background-color:white;">
                             <form style='display:inline; color:black;' >
                               <%
-                             if(idProg<5){
+                             if(expediente.getIdProgreso()<4){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(idProg==5){
+                             }else if(expediente.getIdProgreso()==4){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
                              }%>
-                                    </button>
                             </form>
                             </td>
                         </tr>
                         <tr>
                             <td style="background-color:#728FCE; color:white">Solicitud de beca</td>
                             <%
-                             if(idProg<6)
+                             if(expediente.getIdProgreso()<5)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                             else if(idProg==6)
+                             else if(expediente.getIdProgreso()==5)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
@@ -282,26 +246,26 @@
                             <td class="text-center" style="background-color:white;">
                             <form style='display:inline; color:black;' >
                               <%
-                             if(idProg<6){
+                             if(expediente.getIdProgreso()<5){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(idProg==6){
+                             }else if(expediente.getIdProgreso()==5){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
                              }%>
-                                    </button>
+                                    
                             </form>
                             </td>
                         </tr>
                         <tr>
                             <td style="background-color:#728FCE; color:white">Resolución del expediente de beca</td>
                             <%
-                             if(idProg<7)
+                             if(expediente.getIdProgreso()<6)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                             else if(idProg==7)
+                             else if(expediente.getIdProgreso()==6)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
@@ -309,26 +273,25 @@
                             <td class="text-center" style="background-color:white;">
                             <form style='display:inline; color:black;' >
                               <%
-                             if(idProg<7){
+                             if(expediente.getIdProgreso()<6){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(idProg==7){
+                             }else if(expediente.getIdProgreso()==6){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
                              }%>
-                                    </button>
                             </form>
                             </td>
                         </tr>
                         <tr>
                             <td style="background-color:#728FCE; color:white">Acuerdos de beca del consejo superior universitario</td>
                             <%
-                             if(idProg<8)
+                             if(expediente.getIdProgreso()<7)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                             else if(idProg==8)
+                             else if(expediente.getIdProgreso()==7)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
@@ -336,17 +299,16 @@
                             <td class="text-center" style="background-color:white;">
                             <form style='display:inline; color:black;' >
                               <%
-                             if(idProg<8){
+                             if(expediente.getIdProgreso()<7){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(idProg==8){
+                             }else if(expediente.getIdProgreso()==7){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
                              }%>
-                                    </button>
                             </form>
                             </td>
                         </tr>
@@ -357,21 +319,133 @@
             <div class="col-md-5">
                 <h3>Detalle</h3>
                 <div class = "panel panel-default">
-                    </br><div class="row">
-                        <div class="col-md-12 col-md-offset-1">
-                        colocar aqui descripcion del proceso 
-                        </div>
-                    </div></br>
                     <div class="row">
-                        <div class="col-md-12 col-md-offset-4">
-                        <button id="solicitar" name="solicitar" class="btn btn-success">Solicitar ahora</button>
+                        <div class="col-md-12 col-md-offset-1">
+                            <%if(expedienteAbierto == false){%>
+                                <br>
+                                <p>Aun no has iniciado el proceso para adquirir una beca de postgrado, 
+                                    para ver las ofertas disponibles presiona el botón “ver ofertas”.</p><br>
+                                <div class="row text-center">
+                                    <a href="315_candidato_ofertas_beca.jsp" class="btn btn-success">Ver Ofertas</a>
+                                </div>
+                                
+                            <%}else if(expediente.getIdProgreso() == 1){%>
+                                <br>
+                                <p>En esta etapa debe de solicitar el Acuerdo de Permiso Inicial para poder gestionar la beca ante el Consejo de Becas.</p><br>
+                                <p>Los documentos que debe adjuntar son:</p><br>
+                                <p>Obligatorios</p><br>
+                                <ul>
+                                    <li>Carta de solicitud de permiso para poder aplicar a la beca seleccionada dirigida a Junta Directiva de su Facultad</li>
+                                </ul>
+                                <p>Opcionales</p><br>
+                                <ul>
+                                    <li>Carta de Solicitud o recomendación de la Escuela o Departamento en que labora</li>
+                                    <li>Carta de solicitud de la institución que oferta la beca).</li>
+                                </ul>
+                                <div class="row text-center">
+                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
+                                    <%}else{%>
+                                    <a href="304_candidato_sol_permiso_inicial.jsp" class="btn btn-success">Solicitar Ahora</a>
+                                    <%}%>
+                                </div>
+                                
+                            <%}else if(expediente.getIdProgreso() == 2){%>
+                                <br>
+                                <p>En esta etapa debe de solicitar el Acuerdo de Autorización Inicial al Consejo de Becas.</p><br>
+                                <p>Los documentos que debe adjuntar son:</p><br>
+                                <p>Obligatorios</p><br>
+                                <ul>
+                                    <li>Carta de solicitud de Autorización Inicial para poder gestionar el Dictamen de propuesta a Junta Directiva a la Comisión de Becas de su Facultad.</li>
+                                </ul>
+                                <p>Opcionales</p><br>
+                                <ul>
+                                    <li>Carta de Solicitud o recomendación de la Escuela o Departamento en que labora</li>
+                                    <li>Carta de solicitud de la institución que oferta la beca).</li>
+                                </ul>
+                                <div class="row text-center">
+                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
+                                    <%}else{%>
+                                    <a href="306_candidato_sol_autorizacion_inicial.jsp" class="btn btn-success">Solicitar Ahora</a>
+                                    <%}%>
+                                </div>
+                                
+                            <%}else if(expediente.getIdProgreso() == 3){%>
+                                <br>
+                                <p>En esta etapa debe de solicitar el Dictamen de Propuesta a la Comisión de Becas de su Facultad.</p><br>
+                                <p>Los documentos que debe adjuntar son:</p><br>
+                                <ul>
+                                    <li>Carta de solicitud de dictamen de propuesta ante Junta Directiva dirigida a la Comisión de Becas de su Facultad.</li>
+                                    <li>Carta de recomendación de la Escuela o Departamento al que pertenece.</li>
+                                    <li>Carta  de aceptación de la institución que ofrece la beca.</li>
+                                    <li>Plan de Estudios.</li>
+                                    <li>Carta de Constancia de la Unidad de Recursos Humanos del tiempo de servicio.</li>
+                                    <li>Carta de legalización de maestría ante el MINED. (solo para becas internas)</li>
+                                </ul>
+                                <div class="row text-center">
+                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
+                                    <%}else{%>
+                                    <a href="307_candidato_sol_dictamen_propuesta.jsp" class="btn btn-success">Solicitar Ahora</a>
+                                    <%}%>
+                                </div>
+                                
+                            <%}else if(expediente.getIdProgreso() == 4){%>
+                                <br>
+                                <p>Se ha emitido el Dictamen de la Comisión de Becas, se ha iniciado el proceso de Resolución de los Permisos de Beca por parte Junta Directiva de su Facultad.</p><br>
+                                                                
+                            <%}else if(expediente.getIdProgreso() == 5){%>
+                                <br>
+                                <p>En esta etapa debe de llenar la Solicitud de Beca para obtener una resolución por el Consejo de Becas.</p><br>
+                                <p>Los documentos que debe adjuntar son:</p><br>
+                                <ul>
+                                    <li>Dictamen del jefe del departamento o Escuela que manifieste que el candidato fue elegido por concurso de oposición</li>
+                                    <li>Solicitud de Beca Firmada</li>
+                                    <li>Título Académico</li>
+                                    <li>Partida de Nacimiento</li>
+                                    <li>Notas Globales</li>
+                                    <li>DUI</li>
+                                    <li>Currículum Vitae</li>
+                                    <li>Certificado de Salud</li>
+                                    <li>Poder Judicial otorgado a su apoderado.</li>
+                                </ul>
+                                <div class="row text-center">
+                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
+                                    <%}else{%>
+                                    <a href="308_candidato_sol_beca1.jsp" class="btn btn-success">Solicitar Ahora</a>
+                                    <%}%>
+                                </div>
+                                
+                            <%}else if(expediente.getIdProgreso() == 6){%>
+                                <br>
+                                <p>Su solicitud de beca ha sido realizada al Consejo de Becas, su Expediente se encuentra en proceso de revisión para poder emitir la resolución de su solicitud.</p><br>                                
+                            <%}else if(expediente.getIdProgreso() == 7){%>
+                                <br>
+                                <p>Se ha realizado la solicitud al Consejo Superior Universitario para que pueda emitir los Acuerdo de beca.</p><br>
+                                
+                                
+                            <%}else if(expediente.getIdProgreso() == 8){%>
+                                <br>
+                                
+                                <p>En esta etapa debe presentarse a las oficinas de Fiscalía Universitaria para el asesoramiento y validación del contrato de beca.</p><br>
+                                
+                            <%}else {%>
+                                <br>
+                                <p>Felicidades, es un becario de la Universidad de El Salvador.</p><br>
+                                <p>Se le recomienda cumplir con sus obligaciones contractuales.</p><br>
+                                
+                                
+                            <%}%>
                         </div>
-                    </div></br>
+                    </div>
+                    
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
                          <button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar proceso</button>
                         </div>
-                    </div></br>
+                    </div>
                 </div>
             </div>  
         </div></fieldset>
