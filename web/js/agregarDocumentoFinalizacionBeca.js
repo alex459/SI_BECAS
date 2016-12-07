@@ -1,29 +1,43 @@
 angular.module('AgregarDocFinalizacionbeca', [])
         
-.controller("MyCtrl", function($scope) {
-    $scope.test = 'Test Message';
-})
-        
-.directive("ngPortlet", function ($compile) {
-	return {
-		template: '<br><div class="row">'+
-                                '<div class="col-md-5">'+
-                                    '<select id="selectbasic" name="AG_DOCUMENTOS" class="form-control">'+
-                                            '<option value=0></option>'+
-                                    '</select>'+
-                                '</div>'+
-                                '<div class="col-md-7">'+
-                                    '<input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">'+
-                                '</div>'+
-                            '</div>',
-		restrict: 'E',
-        link: function (scope, elm) {
-            scope.add = function(){
-                console.log(elm);
-               elm.after($compile('<ng-portlet></ng-portlet>')(scope));
+.controller("AgregarDocFinalizacionBecaCtrl", function($scope) {
+    
+    $scope.verFila = false;
+    $scope.verAgregar= true;
+    $scope.anexos =[];
+    $scope.anexo = {};
+    $scope.Nanexos= 1;
+    
+    $scope.agregar = function (){
+     if($scope.Nanexos <=3){
+        $scope.verFila = $scope.verFila = true;
+        $scope.anexos.push({
+           id: $scope.Nanexos,
+           nombre: "anexo"+$scope.Nanexos,
+           tipo: "tipoAnexo"+$scope.Nanexos
+       });
+
+       $scope.Nanexos=$scope.Nanexos+1;
+       if($scope.Nanexos >3){
+           $scope.verAgregar = $scope.verAgregar = false;
+       }
+     }else{
+         $scope.verFila = $scope.verFila = false;   
+        }
+    };
+    
+    $scope.eliminar = function (item){
+        if($scope.Nanexos <=0){
+            
+        }else{
+            var index = $scope.anexos.indexOf(item);
+            $scope.anexos.splice(index, 1);
+            $scope.Nanexos=$scope.Nanexos-1;
+            if($scope.Nanexos <=3){
+                $scope.verFila = $scope.verAgregar = true;
             }
         }
-	};
+    };
 });
 
 
