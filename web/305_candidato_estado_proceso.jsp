@@ -42,6 +42,8 @@
             //obtener el expediente
             expDao = new ExpedienteDAO();
             expediente = expDao.obtenerExpedienteAbierto(user);
+        }else{
+        expediente.setIdProgreso(0);
         }
     } catch (Exception e){
         e.printStackTrace();
