@@ -46,7 +46,7 @@ public class DepartamentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_MUNICIPIO, ID_DEPARTAMENTO, NOMBRE_MUNICIPIO FROM MUNICIPIO;" ;
+            String sql = "SELECT  ID_DEPARTAMENTO, NOMBRE_DEPARTAMENTO FROM DEPARTAMENTO;" ;
             ResultSet rs = stmt.executeQuery(sql);
             
 

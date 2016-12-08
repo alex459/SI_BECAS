@@ -32,26 +32,31 @@
                                             <tr ng-repeat="x in data.educacion">
                                                 <td>{{$index + 1}}</td>
                                                 <td> 
-                                                    <select name="{{x.tipo}}" class="form-control" ng-model="aux.auxTipoEdu[$index +1]">
-                                                        <option value="1">Tecnico</option>
-                                                        <option value="2">Titulo Universitario</option>
-                                                    </select> </td>
+                                                    <select name="{{x.tipo}}" class="form-control" ng-model="aux.auxTipoEdu[$index +1]" ng-required="true">
+                                                        <option value="PRIMARIA">PRIMARIA</option>
+                                                        <option value="SECUNDARIA">SECUNDARIA</option>
+                                                        <option value="UNIVERSITARIA">UNIVERSITARIA</option>
+                                                        <option value="POSTGRADO">POSTGRADO</option>
+                                                        <option value="OTRA">OTRA</option>
+                                                    </select>
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.tipo}}.$error.required">Seleccione el tipo de Educacion.</span>
+                                                </td>
                                                     <td>
-                                                        <select name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index +1]">
-                                                            <option value="1">Option one</option>
-                                                            <option value="2">Option two</option>
-                                                        </select>
+                                                        <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index +1]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/">
+                                                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.grado}}.$error.required">Ingrese el grado alcanzado.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.minlength">Minimo 10 caracteres.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                                     </td>
-                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index +1]"> </td>
+                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index +1]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/">
+                                                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.institucion}}.$error.required">Ingrese el nombre de la Institucion.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.minlength">Minimo 10 caracteres.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                </td>
                                                 <td>
-                                                    <div class="row">
-                                                        <div class="col-sm-1"></div>
-                                                        <div class="col-sm-7"><input name="{{x.anyo}}" type="text" class="form-control" ng-model="aux.auxAnyoEdu[$index +1]"></div>
-                                                        <div class="col-sm-3"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span></div>
-                                                        <div class="col-sm-1"></div>
-                                                    </div>
-                                                    
-                                                    
+                                                    <input name="{{x.anyo}}" type="number" class="form-control" ng-model="aux.auxAnyoEdu[$index +1]" ng-required="true" ng-pattern="/^[0-9]*$/" min="1940" max="2030">
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.anyo}}.$error.required">Ingrese el Año de graduacion del Estudio.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.min">Año minimo permitido 1940.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.pattern">Solo se permiten letras digitos. (0-9).</span>
                                                 </td>
                                                 <td>
                                                     <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarEducacion()">Eliminar</a></td>
@@ -80,8 +85,27 @@
                                             
                                             <tr ng-repeat="x in data.proyectos" >
                                                 <td>{{$index + 1}}</td>
-                                                <td><input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index +1]"></td>
-                                                <td><input type="radio" name="{{x.publicado}}" value="si" ng-model="aux.auxPublicado[$index +1]"><label>  Si </label><input type="radio" name="{{x.publicado}}" value="no" ng-model="aux.auxPublicado[$index +1]"><label>  No </label></td>
+                                                <td>
+                                                    <input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/">
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.titulo}}.$error.required">Ingrese el nombre del proyecto.</span>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.minlength">Minimo 10 caracteres.</span>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                </td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-2"></div>
+                                                        <div class="col-sm-4">
+                                                            <input type="radio" name="{{x.publicado}}" value="1" ng-model="aux.auxPublicado[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto">
+                                                            <label>  Si </label>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <input type="radio" name="{{x.publicado}}" value="0" ng-model="aux.auxPublicado[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto">
+                                                            <label>  No </label>
+                                                        </div>
+                                                        <div class="col-sm-2"></div>
+                                                    </div>
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.publicado}}.$error.required">Seleccione si fue publicado</span>
+                                                </td>
                                                 <td>
                                                     <input type="checkBox" ng-show="$first&&$last" ng-model="checkProyecto"> <label ng-show="$first&&$last">Ninguno</label>
                                                     <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarProyecto()">Eliminar</a></td>
@@ -112,22 +136,40 @@
                                         <tbody>
                                             <tr ng-repeat="x in data.idiomas">
                                                 <td>{{$index + 1}} </td>
-                                                <td> <select name="{{x.idioma}}" ng-model="aux.auxIdioma[$index +1]" class="form-control">
-                                                        <option value="1">Option one</option>
-                                                        <option value="2">Option two</option>
-                                                     </select> </td>
-                                                <td> <select name="{{x.nivelHabla}}" class="form-control" ng-model="aux.auxNivelHabla[$index +1]">
-                                                        <option value="1">Option one</option>
-                                                        <option value="2">Option two</option>
-                                                     </select> </td>
-                                                <td> <select name="{{x.nivelLectura}}" class="form-control" ng-model="aux.auxNivelLectura[$index +1]">
-                                                        <option value="1">Option one</option>
-                                                        <option value="2">Option two</option>
-                                                     </select>   </td>
-                                                <td> <select name="{{x.nivelEscritura}}" class="form-control" ng-model="aux.auxNivelEscritura[$index +1]">
-                                                        <option value="1">Option one</option>
-                                                        <option value="2">Option two</option>
-                                                     </select></td>
+                                                <td> <select name="{{x.idioma}}" ng-model="aux.auxIdioma[$index +1]" class="form-control" ng-required="true">
+                                                        <option value="ESPANOL">ESPAÑOL</option>
+                                                        <option value="INGLES">INGLES</option>
+                                                        <option value="FRANCES">FRANCES</option>
+                                                        <option value="PORTUGUES">PORTUGUES</option>
+                                                        <option value="ALEMAN">ALEMAN</option>
+                                                        <option value="ITALIANO">ITALIANO</option>
+                                                        <option value="MANDARIN">MANDARIN</option>
+                                                        <option value="JAPONES">JAPONES</option>
+                                                        <option value="RUSO">RUSO</option>
+                                                    </select> 
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.idioma}}.$error.required">Seleccione un idioma.</span>
+                                                </td>
+                                                <td> <select name="{{x.nivelHabla}}" class="form-control" ng-model="aux.auxNivelHabla[$index +1]" ng-required="true">
+                                                        <option value="REGULAR">REGULAR</option>
+                                                        <option value="BIEN">BIEN</option>
+                                                        <option value="EXCELENTE">EXCELENTE</option>
+                                                     </select> 
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelHabla}}.$error.required">Seleccione un nivel.</span>
+                                                </td>
+                                                <td> <select name="{{x.nivelLectura}}" class="form-control" ng-model="aux.auxNivelLectura[$index +1]" ng-required="true">
+                                                        <option value="REGULAR">REGULAR</option>
+                                                        <option value="BIEN">BIEN</option>
+                                                        <option value="EXCELENTE">EXCELENTE</option>
+                                                     </select>  
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelLectura}}.$error.required">Seleccione un nivel.</span>
+                                                </td>
+                                                <td> <select name="{{x.nivelEscritura}}" class="form-control" ng-model="aux.auxNivelEscritura[$index +1]" ng-required="true">
+                                                        <option value="REGULAR">REGULAR</option>
+                                                        <option value="BIEN">BIEN</option>
+                                                        <option value="EXCELENTE">EXCELENTE</option>
+                                                     </select>
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelEscritura}}.$error.required">Seleccione un nivel.</span>
+                                                </td>
                                                 <td><a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarIdioma()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
@@ -144,9 +186,9 @@
                         </fieldset>         
                 <div class="row">
                     <div class="col-md-4 col-lg-offset-4">
-                        <a href="#/cargos"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a> 
-                        <a href="#/laboral"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
-                        <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+                        <a href="#/cargos" class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</a> 
+                        <a href="#/laboral" class="btn btn-primary">Regresar</a>
+                        <a href="" class="btn btn-danger">Cancelar</a>
                     </div>
                 </div></br>
             </br>

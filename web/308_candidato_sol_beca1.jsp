@@ -3,102 +3,135 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
+<%@page import="POJO.Facultad"%>
+<%@page import="DAO.DetalleUsuarioDAO"%>
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="POJO.Municipio"%>
+<%@page import="DAO.MunicipioDAO"%>
+<%@page import="POJO.Departamento"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.DepartamentoDAO"%>
 <%@page import="POJO.Usuario"%>
 <%@page import="DAO.UsuarioDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String rol=(String)actual.getAttribute("rol");
-    String user=(String)actual.getAttribute("user");
-     /*if(user==null){
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    /*if(user==null){
      response.sendRedirect("login.jsp");
         return;
      }*/
-     //Obtener usuario completo
-     String nombreOferta = "";
-     String nombreInstitucion = "";
-     Integer duracion = 0;
-     String pais = "";
-     String tipoBeca = "";
-     try{
-     UsuarioDAO usDao = new UsuarioDAO();
-     Usuario usuario = usDao.consultarPorNombreUsuario(user);
-     
-     //Obteniendo oferta solicitada
-     ConexionBD conexionBD = new ConexionBD();
-     String consultaSql = "SELECT NOMBRE_OFERTA,NOMBRE_INSTITUCION,DURACION,PAIS,TIPO_OFERTA_BECA FROM EXPEDIENTE EX JOIN SOLICITUD_DE_BECA SB ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN OFERTA_BECA OF ON OF.ID_OFERTA_BECA = SB.ID_OFERTA_BECA JOIN INSTITUCION I ON I.ID_INSTITUCION = OF.ID_INSTITUCION_ESTUDIO JOIN USUARIO US ON US.ID_USUARIO = SB.ID_USUARIO WHERE US.NOMBRE_USUARIO = '" + user +"'";
-     ResultSet rs = conexionBD.consultaSql(consultaSql);
-     nombreOferta = rs.getString("NOMBRE_OFERTA");
-     nombreInstitucion = rs.getNString("NOMBRE_INSTITUCION");
-     duracion = rs.getInt("DURACION");
-     pais = rs.getString("PAIS");
-     tipoBeca = rs.getString("TIPO_OFERTA_BECA");
-     conexionBD.cerrarConexion();
-     }catch(Exception e){
-         e.printStackTrace();
-     }
-     
-     
+    //Obtener usuario completo
+    String nombreOferta = "";
+    String nombreInstitucion = "";
+    int duracion = 0;
+    int idFacultad = 0;
+    Facultad facultad = new Facultad();
+    String pais = "";
+    String tipoBeca = "";
+    ArrayList<Departamento> departamentos = new ArrayList<Departamento>();
+    ArrayList<Municipio> municipios = new ArrayList<Municipio>();
+    String departamentosJSON ="";
+    String municipiosJSON ="";
+    try {
+        UsuarioDAO usDao = new UsuarioDAO();
+        Usuario usuario = usDao.consultarPorNombreUsuario(user);
+        //Obteniendo su facultad
+        DetalleUsuarioDAO detDao = new DetalleUsuarioDAO();
+        idFacultad = detDao.obtenerFacultad(user);
+        FacultadDAO facDao = new FacultadDAO();
+        facultad = facDao.consultarPorId(idFacultad);
+        
+        //Obteniendo oferta solicitada
+        ConexionBD conexionBD = new ConexionBD();
+        String consultaSql = "SELECT NOMBRE_OFERTA,NOMBRE_INSTITUCION,DURACION,PAIS,TIPO_OFERTA_BECA FROM EXPEDIENTE EX JOIN SOLICITUD_DE_BECA SB ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN OFERTA_BECA OF ON OF.ID_OFERTA_BECA = SB.ID_OFERTA_BECA JOIN INSTITUCION I ON I.ID_INSTITUCION = OF.ID_INSTITUCION_ESTUDIO JOIN USUARIO US ON US.ID_USUARIO = SB.ID_USUARIO WHERE US.NOMBRE_USUARIO = '" + user + "'";
+        ResultSet rs = conexionBD.consultaSql(consultaSql);
+        while (rs.next()){
+        nombreOferta = rs.getString("NOMBRE_OFERTA");
+        nombreInstitucion = rs.getString("NOMBRE_INSTITUCION");
+        duracion = rs.getInt("DURACION");
+        pais = rs.getString("PAIS");
+        tipoBeca = rs.getString("TIPO_OFERTA_BECA");
+        }
+        conexionBD.cerrarConexion();
+        
+        DepartamentoDAO depDao = new DepartamentoDAO();
+        departamentos = depDao.consultarTodos();
+        MunicipioDAO munDao= new MunicipioDAO();
+        municipios = munDao.consultarTodos();
+        Gson gson = new Gson();
+        String departamentosJSON1 = gson.toJson(departamentos);
+        departamentosJSON =  departamentosJSON1.replace("\"", "'");
+        String municipiosJSON1 = gson.toJson(municipios);
+        municipiosJSON =  municipiosJSON1.replace("\"", "'");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistema informático para la administración de becas de postgrado</title>
+        <title>Sistema informático para la administración de becas de postgrado</title>
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
+        <meta name="description" content="Source code generated using layoutit.com">
+        <meta name="author" content="LayoutIt!">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/menuSolicitudBeca.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
-    <link href="css/customfieldset.css" rel="stylesheet">
-    
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
-        </h3>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+        <link href="css/customfieldset.css" rel="stylesheet">
+
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center" >
+                <p class="text-danger">Universidad De El Salvador</p>
+            </h3>
+        </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center">
+                <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
+            </h2>
+            <h3 class="text-center">
+                <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
+            </h3>
+        </div>
     </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
-<p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-<p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
-<jsp:include page="menuCandidato.jsp"></jsp:include>
-</head>
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
+    <jsp:include page="menuCandidato.jsp"></jsp:include>
+    </head>
 
 
-<body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl">
+    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos=<%=departamentosJSON%>; municipios=<%=municipiosJSON%>; facultad='<%=facultad.getFacultad()%>'">
 
-    <div class="container-fluid" ng-init="oferta={nombre:'<%=nombreOferta%>',institucion: '<%=nombreInstitucion%>'}" >
+        <div class="container-fluid" ng-init="oferta={nombre:'<%=nombreOferta%>',institucion: '<%=nombreInstitucion%>'}" >
         <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
         <fieldset class="custom-border">
-                <legend class="custom-border">Solicitud de beca de postgrado</legend>
-        <form class="form-horizontal" name="solicitud" action="{{action}}" method="POST">
-            <input type="hidden" ng-model="oferta.nombre">
-        <div class="row" ng-view>            
+            <legend class="custom-border">Solicitud de beca de postgrado</legend>
+            <form class="form-horizontal" name="solicitud" action="{{action}}" method="POST">
+                <input type="hidden" ng-model="oferta.nombre">
             
-        </div>
-        </form>
+                <div class="row" ng-view>            
+
+                </div>
+            </form>
         </fieldset>
     </div>  
 
@@ -110,131 +143,50 @@
 
 
 
-</div>
 
-<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-    <div class="col-md-6">
-        <h3>
-            Dirección
-        </h3>
-        <p>
-            2016 Universidad De El Salvador  <br/>
-            Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-        </p>
-    </div>
-    <div class="col-md-6">
-        <h3>
-            Información de contacto
-        </h3>
-        <p>
-            Universidad De El Salvador
-            Tél: +(503) 2511-2000 <br/>
-            Consejo de becas
-            Tél: +(503) 2511- 2016
-        </p>
-    </div>
-</div>    
-</div>
 
-<script src="js/angular.min.js"></script>
-<script src="js/angular-route.min.js"></script>
-<script src="js/solicitudbeca.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
-<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="js/jquery.validate.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('.input-group.date').datepicker({
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        });
-    });
-</script>
-<script>
-	$.validator.setDefaults({
-		submitHandler: function() {
-			alert("submitted!");
-		}
-	});
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
+        </div>
+    </div>    
 
-	$().ready(function() {
-		// validate the comment form when it is submitted
-		$("#formulario").validate();
 
-		// validate signup form on keyup and submit
-		$("#signupForm").validate({
-			rules: {
-				primernombre: "required",
-				lastname: "required",
-				username: {
-					required: true,
-					minlength: 2
-				},
-				password: {
-					required: true,
-					minlength: 5
-				},
-				confirm_password: {
-					required: true,
-					minlength: 5,
-					equalTo: "#password"
-				},
-				email: {
-					required: true,
-					email: true
-				},
-				topic: {
-					required: "#newsletter:checked",
-					minlength: 2
-				},
-				agree: "required"
-			},
-			messages: {
-				primernombre: "Please enter your firstname",
-				lastname: "Please enter your lastname",
-				username: {
-					required: "Please enter a username",
-					minlength: "Your username must consist of at least 2 characters"
-				},
-				password: {
-					required: "Please provide a password",
-					minlength: "Your password must be at least 5 characters long"
-				},
-				confirm_password: {
-					required: "Please provide a password",
-					minlength: "Your password must be at least 5 characters long",
-					equalTo: "Please enter the same password as above"
-				},
-				email: "Please enter a valid email address",
-				agree: "Please accept our policy",
-				topic: "Please select at least 2 topics"
-			}
-		});
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/solicitudbeca.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+                        $(function () {
+                            $('.input-group.date').datepicker({
+                                format: 'yyyy-mm-dd',
+                                calendarWeeks: true,
+                                todayHighlight: true,
+                                autoclose: true,
+                                startDate: new Date()
+                            });
+                        });
 
-		// propose username by combining first- and lastname
-		$("#username").focus(function() {
-			var firstname = $("#firstname").val();
-			var lastname = $("#lastname").val();
-			if (firstname && lastname && !this.value) {
-				this.value = firstname + "." + lastname;
-			}
-		});
-
-		//code to hide topic selection, disable for demo
-		var newsletter = $("#newsletter");
-		// newsletter topics are optional, hide at first
-		var inital = newsletter.is(":checked");
-		var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
-		var topicInputs = topics.find("input").attr("disabled", !inital);
-		// show when newsletter is checked
-		newsletter.click(function() {
-			topics[this.checked ? "removeClass" : "addClass"]("gray");
-			topicInputs.attr("disabled", !this.checked);
-		});
-	});
-	</script>
+    </script>
 </body>
 </html>

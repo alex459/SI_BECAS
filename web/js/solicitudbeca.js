@@ -45,7 +45,6 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     profesion:"",
     cargo:"",
     unidad:"",
-    facultad:"",
     fecha_contratacion:"",
 
     educacion:[{
