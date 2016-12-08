@@ -91,7 +91,7 @@
             <div class="col-md-12"  ng-controller="AgregarDocFinalizacionBecaCtrl"><!-- CONTENIDO DE LA PANTALLA -->
                 <fieldset class="custom-border">
                     <legend class="custom-border">Adjuntar documentos necesarios</legend>
-                    <%if(expediente.getIdProgreso() == 3){%>
+                    <%if(expediente.getIdProgreso() == 11){%>
                     <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
                         <div class="text-center">
                             <h3 class="text-danger"> Ya ha realizado una Solicitud de Dictamen de Propuesta ante Junta Directiva</h3>
@@ -105,14 +105,15 @@
                                     Titulo obtenido:
                                 </div>
                                 <div class="col-md-7">
-                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
+                                    <input type="file" name="tituloObtenido" accept="application/pdf">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="row text-right">
                                     <div class="col-md-10">
-                                        <a ng-click="agregar()" ng-show="verAgregar">Agregar Otro Documento</a><br>
+                                        <br>
+                                        <a ng-click="agregar()" ng-show="verAgregar">Agregar Otro Documento</a><br><br>
                                     </div>
                                     <div class="col-md-2"></div>                    
                                 </div>
@@ -139,6 +140,10 @@
                                 </div>   
                             </div>
                             <div class="row text-center">
+                                <br>
+                                <input type="hidden" name="idExpediente" value="<%=expediente.getIdExpediente()%>">
+                                <input type="hidden" name="user" value="<%=user%>">
+                                <input type="hidden" name="nAnexos" value="{{Nanexos-1}}">
                                 <input type="submit" class="btn btn-success" name="submit" value="Emviar">
                             </div>
                         </div>

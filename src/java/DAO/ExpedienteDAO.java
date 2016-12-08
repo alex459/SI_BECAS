@@ -20,7 +20,7 @@ public class ExpedienteDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_Expediente,ID_PROGRESO,ESTADO_EXPEDIENTE  FROM expediente where ID_EXPEDIENTE     = " + id;
+            String sql = "SELECT ID_Expediente,ID_PROGRESO,ESTADO_EXPEDIENTE,ESTADO_PROGRESO FROM expediente where ID_EXPEDIENTE     = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
 
@@ -29,10 +29,12 @@ public class ExpedienteDAO extends ConexionBD {
                 Integer ID_EXPEDIENTE = rs.getInt("ID_EXPEDIENTE");
                 Integer ID_PROGRESO = rs.getInt("ID_PROGRESO");
                 String EstadoExpediente = rs.getString("ESTADO_EXPEDIENTE");
+                String EstadoProgreso = rs.getString("ESTADO_PROGRESO");
                 
                 expediente.setIdExpediente(ID_EXPEDIENTE);
                 expediente.setIdProgreso(ID_PROGRESO);
                 expediente.setEstadoExpediente(EstadoExpediente);
+                expediente.setEstadoProgreso(EstadoProgreso);
 
             }
 
