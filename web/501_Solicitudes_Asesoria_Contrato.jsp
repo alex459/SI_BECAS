@@ -4,6 +4,8 @@
     Author     : adminPC
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
 <%@page import="POJO.Facultad"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="DAO.FacultadDAO"%>
@@ -83,13 +85,13 @@
 
                 <fieldset class="custom-border">
                     <legend class="custom-border">Filtros</legend>
-                    <form name= "solicitudAsesoriaContrato" class="form-horizontal" action="" method="post" novalidate>
+                    <form name= "solicitudAsesoriaContrato" class="form-horizontal" action="501_Solicitudes_Asesoria_Contrato.jsp" method="post" novalidate>
 
                         <div class="row">
                             <div class="col-md-1 text-right">
                                 <label for="textinput">Codigo de Usuario : </label>                                
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
                                 <span class="text-danger" ng-show="solicitudAsesoriaContrato.CARNET.$error.minlength">Minimo 7 caracteres.</span>
                                 <span class="text-danger" ng-show="solicitudAsesoriaContrato.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
@@ -98,13 +100,72 @@
                             <div class="col-md-1 text-right">
                                 <label for="textinput">Numero de Expediente : </label>                                
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <input id="ID_EXPEDIENTE" name="ID_EXPEDIENTE" type="text" placeholder="ingrese numero de expediente a buscar" class="form-control input-md" ng-model="datos.idexpediente" ng-pattern="/^[0-9]*$/" minlength="1" maxlength="4">
                                 <span class="text-danger" ng-show="solicitudAsesoriaContrato.ID_EXPEDIENTE.$error.minlength">Minimo 1 caracteres.</span>
                                 <span class="text-danger" ng-show="solicitudAsesoriaContrato.ID_EXPEDIENTE.$error.pattern">Solo se permiten numeros. (0-9).</span>
                                 <small id="help5"></small>
                             </div>
-                            <div class="col-md-1">
+
+
+                            <div class="col-md-1 text-right">
+                                <label for="textinput">Fecha inicial : </label>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" name="FECHA1" placeholder="MM/DD/AAAA"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>  
+
+                            <div class="col-md-1 text-right">
+                                <label for="textinput">Fecha final : </label>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" name="FECHA2" placeholder="MM/DD/AAAA"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div> 
+
+
+                        </div>
+
+                        <BR>
+
+                        <div class="row">
+                            <div class="col-md-1 text-right">
+                                <label for="textinput">Nombres : </label>
+                            </div>
+                            <div class="col-md-7">
+
+                                <div class="row">
+
+                                    <div class="col-md-3">                                                                                    
+                                        <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                        <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
+                                        <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                    </div>
+                                    <div class="col-md-3">    
+                                        <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                        <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
+                                        <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                    </div> 
+                                    <div class="col-md-3">
+                                        <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                        <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
+                                        <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                    </div> 
+                                    <div class="col-md-3">
+                                        <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                        <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
+                                        <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-1 text-right">
                                 <label for="textinput">Facultad :</label>                                
                             </div>
                             <div class="col-md-3">
@@ -121,51 +182,8 @@
                                 %>                    
                             </select>
 
-                        </div>         
-                    </div>
+                        </div>   
 
-                    <BR>
-
-                    <div class="row">
-                        <div class="col-md-1 text-right">
-                            <label for="textinput">Nombres : </label>
-                        </div>
-                        <div class="col-md-7">
-
-                            <div class="row">
-
-                                <div class="col-md-3">                                                                                    
-                                    <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
-                                </div>
-                                <div class="col-md-3">    
-                                    <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
-                                </div> 
-                                <div class="col-md-3">
-                                    <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
-                                </div> 
-                                <div class="col-md-3">
-                                    <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
-                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="col-md-1">
-                            <label for="textinput">Fecha de solicitud : </label>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="input-group date">
-                                <input type="text" class="form-control" name="FECHA" placeholder="MM/DD/AAAA"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            </div>
-                        </div>         
                     </div>
 
                     <br>        
@@ -187,7 +205,38 @@
 
         <!---------------    TABLA DE RESULTADOS ----------------------->
 
+        <%
+            String CARNET;
+            String ID_EXPEDIENTE;
+            String ID_FACULTAD;
+            String NOMBRE1;
+            String NOMBRE2;
+            String APELLIDO1;
+            String APELLIDO2;
+            String FECHA1;
+            String FECHA2;
+            ConexionBD conexionbd = null;
+            ResultSet rs = null;
 
+            try {
+                CARNET = request.getParameter("CARNET");
+                ID_EXPEDIENTE = request.getParameter("ID_EXPEDIENTE");
+                ID_FACULTAD = request.getParameter("ID_FACULTAD");
+                NOMBRE1 = request.getParameter("NOMBRE1");
+                NOMBRE2 = request.getParameter("NOMBRE2");
+                APELLIDO1 = request.getParameter("APELLIDO1");
+                APELLIDO2 = request.getParameter("APELLIDO2");
+                FECHA1 = request.getParameter("FECHA1");
+                FECHA2 = request.getParameter("FECHA2");
+
+                String consultaSql = "SELECT DU.CARNET, CONCAT(DU.NOMBRE1_DU, ' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, F.FACULTAD, E.ID_EXPEDIENTE, SB.FECHA_SOLICITUD FROM EXPEDIENTE E NATURAL JOIN SOLICITUD_DE_BECA SB NATURAL JOIN USUARIO U NATURAL JOIN DETALLE_USUARIO DU NATURAL JOIN FACULTAD F WHERE DU.NOMBRE1_DU LIKE '%"+NOMBRE1+"%' AND DU.NOMBRE2_DU LIKE '%"+NOMBRE2+"%' AND DU.APELLIDO1_DU LIKE '%"+APELLIDO1+"%' AND DU.APELLIDO2_DU LIKE '%"+APELLIDO2+"%' AND U.NOMBRE_USUARIO LIKE '%"+CARNET+"%' AND E.ID_EXPEDIENTE LIKE '%"+ID_EXPEDIENTE+"%' AND ID_FACULTAD LIKE "+ID_FACULTAD+" AND SB.FECHA_SOLICITUD BETWEEN '2015-01-01' AND '2016-01-01' AND E.ID_PROGRESO = 8";
+                out.write(consultaSql);
+                
+            } catch (Exception ex) {
+                System.out.println();
+            }
+
+        %>
 
 
         <div class="row">
@@ -262,13 +311,13 @@
 <script src="js/solicitudAsesoriaContrato.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
-                                        $(function () {
-                                            $('.input-group.date').datepicker({
-                                                calendarWeeks: true,
-                                                todayHighlight: true,
-                                                autoclose: true
+                                            $(function () {
+                                                $('.input-group.date').datepicker({
+                                                    calendarWeeks: true,
+                                                    todayHighlight: true,
+                                                    autoclose: true
+                                                });
                                             });
-                                        });
 </script>
 
 </body>
