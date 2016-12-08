@@ -1,7 +1,7 @@
 <%-- 
-    Document   : 205_modificar_institucion
-    Created on : 11-07-2016, 04:45:15 AM
-    Author     : Manuel Miranda
+    
+    Created on : 12-08-2016, 09:39:54 AM
+    Author     : jose
 --%>
 
 <%@page import="java.sql.ResultSet"%>
@@ -30,15 +30,18 @@
     String URL="";
     String EMAIL="";
     String TIPO_INSTITUCION="";
+    String INSTITUCION_ACTIVA = "";
 
     ConexionBD conexionbd = null;
     ResultSet rs = null;
 
     try {
         ID_INSTITUCION = request.getParameter("ID_INSTITUCION");
-        
+        if (ID_INSTITUCION == null) {
+            response.sendRedirect("213_consulta_para_modificar_institucion.jsp");
+        }
         String consultaSql;
-        consultaSql = "SELECT NOMBRE_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, TIPO_INSTITUCION FROM INSTITUCION WHERE ID_INSTITUCION = " + ID_INSTITUCION;
+        consultaSql = "SELECT NOMBRE_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, TIPO_INSTITUCION, INSTITUCION_ACTIVA FROM INSTITUCION WHERE ID_INSTITUCION = " + ID_INSTITUCION;
         System.out.println(consultaSql);
         conexionbd = new ConexionBD();
         rs = conexionbd.consultaSql(consultaSql);
@@ -49,11 +52,11 @@
         URL = rs.getString(3);
         EMAIL = rs.getString(4);
         TIPO_INSTITUCION = rs.getString(5);
+        INSTITUCION_ACTIVA = rs.getString(6);
         }
 
     } catch (Exception ex) {
         System.out.println("Error "+ex);
-        //response.sendRedirect("213_consulta_para_modificar_institucion.jsp");
     }
 
 %>
@@ -181,9 +184,29 @@
                             <div class="col-md-6">
                                 <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control"> 
                                     <option value="<%=TIPO_INSTITUCION%>"><%=TIPO_INSTITUCION%></option>
-                                    <option value="OFERENTE">Oferente</option>
-                                    <option value="ESTUDIO">Estudio</option>
-                                    <option value="AMBOS">Oferente y Estudio</option>
+                                    <option value="OFERENTE">OFERENTE</option>
+                                    <option value="ESTUDIO">ESTUDIO</option>
+                                    <option value="AMBOS">AMBOS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4 text-right">
+                                <label for="textinput">Estado : </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="select_InstitucionActiva" name="select_InstitucionActiva"  class="form-control"> 
+                                    <%
+                                        if("1".equalsIgnoreCase(INSTITUCION_ACTIVA)){
+                                            out.write("<option value='1'>ACTIVA</option>");
+                                            out.write("<option value='2'>INACTIVA</option>");
+                                        }else{
+                                            out.write("<option value='2'>INACTIVA</option>");
+                                            out.write("<option value='1'>ACTIVA</option>");                                            
+                                        }
+                                    
+                                    %>                                    
                                 </select>
                             </div>
                         </div>

@@ -4,6 +4,12 @@
     Author     : jose
 --%>
 
+<%-- 
+    Document   : 213_consulta_para_modificar_institucion
+    Created on : 12-08-2016, 09:39:54 AM
+    Author     : jose
+--%>
+
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -77,7 +83,7 @@
         <div class="container-fluid" >
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Modificar institucion</p>
+                    <p class="text-center" style="color:#cf2a27">Eliminar institucion</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -85,9 +91,9 @@
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
 
 
-                <form class="form-horizontal" name="consultaParaModificarInstitucion" action="213_consulta_para_modificar_institucion.jsp" method="post" novalidate>
+                <form class="form-horizontal" name="consultaParaModificarInstitucion" action="214_consulta_para_eliminar_institucion.jsp" method="post" novalidate>
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Paso 1: Busque la institución que desea modificar.</legend>
+                        <legend class="custom-border">Paso 1: Busque la institución que desea eliminar.</legend>
                         <div class="col-md-6 col-md-offset-3">
                             <fieldset class="custom-border">
                                 <legend class="custom-border">filtros:</legend>
@@ -127,20 +133,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-4 text-right">
-                                        <label for="textinput">Mostrar Instituciones : </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select id="select_Institucion_activaOinactiva" name="select_Institucion_activaOinactiva"  class="form-control">                            
-                                            <option value="1">ACTIVAS</option>
-                                            <option value="2">INACTIVAS</option>
-                                            <option value="">TODAS</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br>
+                                <br>                                
                                 <div class="row text-center">
                                     <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!consultaParaModificarInstitucion.$valid"> 
                                 </div>
@@ -151,7 +144,7 @@
                 String nombre;
                 String pais;
                 String tipo;
-                String activaOinactiva;
+                String activaOinactiva="1";
 
                 ConexionBD conexionbd = null;
 
@@ -160,8 +153,7 @@
                 try {
                     nombre = request.getParameter("text_NomInstitucion");
                     pais = request.getParameter("tex_paisInstitucion");
-                    tipo = request.getParameter("select_tipoInstitucion");
-                    activaOinactiva = request.getParameter("select_Institucion_activaOinactiva");
+                    tipo = request.getParameter("select_tipoInstitucion");                    
 
                     //formando la consulta
                     String consultaSql;
@@ -170,10 +162,9 @@
 
                     if(nombre!=null) {} else {nombre="";};
                     if(pais!=null) {} else {pais="";};
-                    if(tipo!=null) {} else {tipo="";};                     
-                    if(activaOinactiva!=null) {} else {activaOinactiva="";};
+                    if(tipo!=null) {} else {tipo="";};                                         
                     
-                    consultaSql = "SELECT NOMBRE_INSTITUCION, TIPO_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, INSTITUCION_ACTIVA,ID_INSTITUCION  FROM  INSTITUCION WHERE NOMBRE_INSTITUCION LIKE '%"+nombre+"%' AND PAIS LIKE '%"+pais+"%' AND TIPO_INSTITUCION LIKE '%"+tipo+"%' AND INSTITUCION_ACTIVA LIKE '%"+activaOinactiva+"%' ORDER BY INSTITUCION_ACTIVA ASC";
+                    consultaSql = "SELECT NOMBRE_INSTITUCION, TIPO_INSTITUCION, PAIS, PAGINA_WEB, EMAIL,ID_INSTITUCION  FROM  INSTITUCION WHERE NOMBRE_INSTITUCION LIKE '%"+nombre+"%' AND PAIS LIKE '%"+pais+"%' AND TIPO_INSTITUCION LIKE '%"+tipo+"%' AND INSTITUCION_ACTIVA = 1";
                     System.out.println(consultaSql);
                     
                     conexionbd = new ConexionBD();
@@ -199,7 +190,6 @@
                     <th>País</th>
                     <th>Página web</th>
                     <th>Correo electronico</th>
-                    <th>Estado</th>
                     <th>Opción</th>
                     </thead>
                     <tbody>
@@ -215,11 +205,10 @@
                                     out.write("<td>" + rs.getString(2) + "</td>");
                                     out.write("<td>" + rs.getString(3) + "</td>");
                                     out.write("<td>" + rs.getString(4) + "</td>");
-                                    out.write("<td>" + rs.getString(5) + "</td>");
-                                    if(rs.getInt(6)==1){ out.write("<td> ACTIVA </td>"); } else { out.write("<td> INACTIVA </td>"); }                                    
+                                    out.write("<td>" + rs.getString(5) + "</td>");                                    
                                     out.write("<td>");
                                     out.write("<center>");
-                                    out.write("<form style='display:inline;' action='205_modificar_institucion.jsp' method='post'><input type='hidden' name='ID_INSTITUCION' value='" + rs.getString(7) + "'><input type='submit' class='btn btn-success' name='submit' value='Mostrar institución'></form> ");
+                                    out.write("<form style='display:inline;' action='207_eliminar_institucion.jsp' method='post'><input type='hidden' name='ID_INSTITUCION' value='" + rs.getString(6) + "'><input type='submit' class='btn btn-success' name='submit' value='Mostrar institución'></form> ");
                                     out.write("</center>");
                                     out.write("</td>");
                                     out.write("</tr>");

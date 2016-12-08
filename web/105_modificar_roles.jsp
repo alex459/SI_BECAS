@@ -142,17 +142,17 @@
 
                         <table class="table table-bordered"></br>                                                        
                             <tbody>
-                                <tr class="info">
+                                <tr>
                                     <td>Nombre de usuario </td>
                                     <td><%=nombres%> </td>
                                 </tr>
                                 
-                                <tr class="info">
+                                <tr>
                                     <td>Facultad </td>
                                     <td><%=facultad%> </td>
                                 </tr>
                                 
-                                <tr class="info">
+                                <tr>
                                     <td>Tipo Usuarios </td>
                                     <td><%=tipo_usuario%> <input type="hidden" name="TIP_USUARIO_ANTERIOR" value="<%=tipo_usuario%>"></td>
                                 </tr>

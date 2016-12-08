@@ -1,8 +1,13 @@
 <%-- 
-    Document   : 207_eliminar_institucion
-    Created on : 11-07-2016, 04:51:31 AM
-    Author     : Manuel Miranda
+    
+    Created on : 12-08-2016, 09:39:54 AM
+    Author     : jose
 --%>
+
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
+<%@page import="POJO.Institucion"%>
+<%@page import="DAO.InstitucionDAO"%>
 
 <%@page import="MODEL.variablesDeSesion"%>
 <%
@@ -10,13 +15,52 @@
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String rol=(String)actual.getAttribute("rol");
-    String user=(String)actual.getAttribute("user");
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }
+    }
 %>
+
+<%
+    String ID_INSTITUCION = "";
+    String NOMBRE_INSTITUCION = "";
+    String PAIS = "";
+    String URL = "";
+    String EMAIL = "";
+    String TIPO_INSTITUCION = "";
+    String INSTITUCION_ACTIVA = "";
+
+    ConexionBD conexionbd = null;
+    ResultSet rs = null;
+
+    try {
+        ID_INSTITUCION = request.getParameter("ID_INSTITUCION");
+        if (ID_INSTITUCION == null) {
+            response.sendRedirect("213_consulta_para_modificar_institucion.jsp");
+        }
+        String consultaSql;
+        consultaSql = "SELECT NOMBRE_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, TIPO_INSTITUCION FROM INSTITUCION WHERE ID_INSTITUCION = " + ID_INSTITUCION;
+        System.out.println(consultaSql);
+        conexionbd = new ConexionBD();
+        rs = conexionbd.consultaSql(consultaSql);
+
+        while (rs.next()) {
+            NOMBRE_INSTITUCION = rs.getString(1);
+            PAIS = rs.getString(2);
+            URL = rs.getString(3);
+            EMAIL = rs.getString(4);
+            TIPO_INSTITUCION = rs.getString(5);
+        }
+
+    } catch (Exception ex) {
+        System.out.println("Error " + ex);
+    }
+
+%>
+
+<%=ID_INSTITUCION%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,31 +78,33 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/customfieldset.css" rel="stylesheet">
-        <div class="row">
-            <div class="col-md-4">
-                <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-                <h3 class="text-center" >
-                    <p class="text-danger">Universidad De El Salvador</p>
-                </h3>
-            </div>
-            <div class="col-md-8">
-                <div class="col-xs-12" style="height:50px;"></div>
-                <h2 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-                </h2>
-                <h3 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-                </h3>
-            </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center" >
+                <p class="text-danger">Universidad De El Salvador</p>
+            </h3>
         </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center">
+                <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
+            </h2>
+            <h3 class="text-center">
+                <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
+            </h3>
+        </div>
+    </div>
 
-        <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-        <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
 
-        <%-- todo el menu esta contenido en la siguiente linea
-             el menu puede ser cambiado en la pagina menu.jsp --%>
-        <jsp:include page="menu_corto.jsp"></jsp:include>
+    <%-- todo el menu esta contenido en la siguiente linea
+     el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>
+
     </head>
     <body>
         <div class="container-fluid">
@@ -70,111 +116,104 @@
             </div><!-- TITULO DE LA PANTALLA -->  
 
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <fieldset class="custom-border">
-                    <legend class="custom-border">Eliminar institucion</legend>
-                    <div class="col-md-6 col-md-offset-3">
-                        <fieldset class="custom-border">
-                            <legend class="custom-border">filtros</legend>
+
+                <form class="form-horizontal" name="modificarInst" action="EliminarInstitucionServlet" method="post" >
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Paso 2: De clic al boton eliminar.</legend>
+
+                        <div class="row col-md-6 col-md-offset-3">
                             <div class="row">
+
                                 <div class="col-md-4 text-right">
-                                    <label for="textinput">Institución : </label>
+                                    <label for="textinput">Nombre de la institucion : </label>
                                 </div>
-                                <div class="col-md-6">
-                                    <input id="textinput" name="NOMB_INST" type="text" class="form-control input-md">
-                                </div>
+                                <div class="col-md-8">
+                                    <input id="NOMBRE_INSTITUCION" name="NOMBRE_INSTITUCION" class="form-control input-md" type="text" value = "<%=NOMBRE_INSTITUCION%>" disabled>                                
+                                <input type="hidden" id="NOMBRE_INSTITUCION" name="NOMBRE_INSTITUCION" value="<%=NOMBRE_INSTITUCION%>">
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-4 text-right">
-                                    <label for="textinput">País : </label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input id="textinput" name="PAIS_INST" type="text" class="form-control input-md">
-                                </div>
+                        </div>
+                        <br>
+
+
+                        <div class="row">   <!-- TABLA RESULTADOS -->
+                            <div class="col-md-2">                                                                                                                
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-4 text-right">
-                                    <label for="textinput">Tipo institución : </label>
-                                </div>
-                                <div class="col-md-6">
-                                    <select id="selectbasic" name="TIPO_INST" class="form-control" >                            
-                                        <option value=0>Seleccione tipo de institución</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-8">
+
+                                <table class="table table-bordered"></br>                                                        
+                                    <tbody>
+                                        <tr>
+                                            <td>Pais : </td>
+                                            <td><%=PAIS%> <input type="hidden" id="PAIS" name="PAIS" value="<%=PAIS%>"></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Pagina web : </td>
+                                            <td><%=URL%> <input type="hidden" id="URL" name="URL" value="<%=URL%>"></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Correo electronico : </td>
+                                            <td><%=EMAIL%> <input type="hidden" id="EMAIL" name="EMAIL" value="<%=EMAIL%>"></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Tipo de institucion : </td>
+                                            <td><%=TIPO_INSTITUCION%> <input type="hidden" id="TIPO_INSTITUCION" name="TIPO_INSTITUCION" value="<%=TIPO_INSTITUCION%>"></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <br>
-                            <div class="row text-center">
-                                <button class="btn btn-primary">Consultar</button><br>
+
+                            <div class="col-md-2">                                                                                                                
                             </div>
-                        </fieldset>
-                    </div>
-                    <br>
-                    <div class="row">
-                       <table class="table">
-                            <thead>
-                                <th>No</th>
-                                <th>Nombre de la institución</th>
-                                <th>Tipo institución</th>
-                                <th>País</th>
-                                <th>Página web</th>
-                                <th>Correo electronico</th>
-                                <th>Telefono</th>
-                                <th>Opción</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td> #</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-center"> <input type="button" name="Eliminar" value="Eliminar" class="btn btn-danger"></td>
-                                </tr>
-                                <tr>
-                                    <td> #</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-center"> <input type="button" name="Eliminar" value="Eliminar" class="btn btn-danger"></td>
-                                </tr>
-                            </tbody>
-                        </table> 
+
+                        </div>
+
+
+
+
+
+                        <br>
+                        <div class="row text-center">
+                            <input type='hidden' name='ID_INSTITUCION' value='<%=ID_INSTITUCION%>'>
+                            <input type="submit" class="btn btn-primary" name="submit"  value="Eliminar">
+                            <a href="principal.jsp"  <button class="btn btn-danger">Cancelar</button> </a>  <br>
+                        </div>
                     </div>
                 </fieldset>
-            </div><!-- CONTENIDO DE LA PANTALLA -->
+            </form>    
+        </div><!-- CONTENIDO DE LA PANTALLA -->
+    </div>
+
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
         </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
+        </div>
+    </div>
 
-            <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-                    <div class="col-md-6">
-                            <h3>
-                                    Dirección
-                            </h3>
-                            <p>
-                                    2016 Universidad De El Salvador  <br/>
-                                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                            </p>
-                    </div>
-                    <div class="col-md-6">
-                            <h3>
-                                    Información de contacto
-                            </h3>
-                            <p>
-                                    Universidad De El Salvador
-                                    Tél: +(503) 2511-2000 <br/>
-                                    Consejo de becas
-                                    Tél: +(503) 2511- 2016
-                            </p>
-                    </div>
-            </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+
+
+</body>
 </html>

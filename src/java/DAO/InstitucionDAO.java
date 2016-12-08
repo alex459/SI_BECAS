@@ -184,7 +184,7 @@ public class InstitucionDAO extends ConexionBD{
         try {
             stmt = conn.createStatement();
             
-            String sql = "UPDATE INSTITUCION SET NOMBRE_INSTITUCION='"+insitucion.getNombreInstitucion()+"', TIPO_INSTITUCION='"+insitucion.getTipoInstitucion()+"',PAIS='"+insitucion.getPais()+"',PAGINA_WEB='"+insitucion.getPaginaWeb()+"',EMAIL='"+insitucion.getPaginaWeb()+"', INSTITUCION_ACTIVA="+insitucion.getInstitucionActiva()+" WHERE ID_INSTITUCION="+insitucion.getIdInstitucion()+";";
+            String sql = "UPDATE INSTITUCION SET NOMBRE_INSTITUCION='"+insitucion.getNombreInstitucion()+"', TIPO_INSTITUCION='"+insitucion.getTipoInstitucion()+"',PAIS='"+insitucion.getPais()+"',PAGINA_WEB='"+insitucion.getPaginaWeb()+"',EMAIL='"+insitucion.getEmail()+"', INSTITUCION_ACTIVA="+insitucion.getInstitucionActiva()+" WHERE ID_INSTITUCION="+insitucion.getIdInstitucion()+";";
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();

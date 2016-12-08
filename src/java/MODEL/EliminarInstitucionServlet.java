@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jose
  */
-@WebServlet(name = "ModificarInstitucionServlet", urlPatterns = {"/ModificarInstitucionServlet"})
-public class ModificarInstitucionServlet extends HttpServlet {
+@WebServlet(name = "EliminarInstitucionServlet", urlPatterns = {"/EliminarInstitucionServlet"})
+public class EliminarInstitucionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,12 +39,12 @@ public class ModificarInstitucionServlet extends HttpServlet {
         try{
             
             Integer ID_INSTITUCION = Integer.parseInt(request.getParameter("ID_INSTITUCION"));
-            String NOMBRE_INSTITUCION = request.getParameter("text_NomInstitucion");
-            String PAIS = request.getParameter("tex_paisInstitucion");
-            String URL = request.getParameter("tex_webInstitucion");
-            String EMAIL = request.getParameter("tex_correoInstitucion");
-            String TIPO_INSTITUCION = request.getParameter("select_tipoInstitucion");
-            Integer INSTITUCION_ACTIVA = Integer.parseInt(request.getParameter("select_InstitucionActiva"));
+            String NOMBRE_INSTITUCION = request.getParameter("NOMBRE_INSTITUCION");
+            String PAIS = request.getParameter("PAIS");
+            String URL = request.getParameter("URL");
+            String EMAIL = request.getParameter("EMAIL");
+            String TIPO_INSTITUCION = request.getParameter("TIPO_INSTITUCION");
+            Integer INSTITUCION_ACTIVA = 2; //2 es para dejar inactiva la institucion
             
             Institucion institucion = new Institucion();
             InstitucionDAO institucionDao = new InstitucionDAO();
@@ -61,20 +61,15 @@ public class ModificarInstitucionServlet extends HttpServlet {
             bandera1 = institucionDao.actualizar(institucion);
             
             if(bandera1){
-                Utilidades.mostrarMensaje(response, 1, "Exito", "Se modifico la institucion correctamente.");
+                Utilidades.mostrarMensaje(response, 1, "Exito", "Se desactivo la institucion correctamente.");
             }else{
-                Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo modificar la institucion.");
+                Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo desactivar la institucion.");
             }
             
         }catch(Exception ex){
             System.out.println("ERROR: "+ex);
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo modificar la institucion.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo desactivar la institucion.");
         }
-        
-        
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
