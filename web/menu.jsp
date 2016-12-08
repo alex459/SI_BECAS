@@ -71,7 +71,7 @@
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='203_suspender_becario.jsp'>Suspender becario</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de instituciones===</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='204_agregar_institucion.jsp'>Agregar institución</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='205_modificar_institucion.jsp'>Modificar institución</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='213_consulta_para_modificar_institucion.jsp'>Modificar institución</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='206_consultar_institucion.jsp'>Consultar institución</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='207_eliminar_institucion.jsp'>Eliminar institución</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de documentos===</a></li>");
