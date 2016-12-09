@@ -325,8 +325,8 @@
                         <div class="col-md-12 col-md-offset-1">
                             <%if(expedienteAbierto == false){%>
                                 <br>
-                                <p>Aun no has iniciado el proceso para adquirir una beca de postgrado, 
-                                    para ver las ofertas disponibles presiona el botón “ver ofertas”.</p><br>
+                                <p>Aun no ha iniciado el proceso para adquirir una beca de postgrado, 
+                                    para ver las ofertas disponibles presione el botón “ver ofertas”.</p><br>
                                 <div class="row text-center">
                                     <a href="315_candidato_ofertas_beca.jsp" class="btn btn-success">Ver Ofertas</a>
                                 </div>
