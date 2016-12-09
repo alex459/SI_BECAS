@@ -1,245 +1,235 @@
-<%-- 
-    Document   : acercaDe
-    Created on : 10-16-2016, 05:09:17 PM
-    Author     : MauricioBC
---%>
+<div class="col-md-2">
+    <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+        <li><a href="#/">Datos personales</a></li>
+        <li><a href="#/laboral">Informaci髇 laboral</a></li>
+        <li><a href="#/educacion">Educaci髇</a></li>
+        <li><a href="#/cargos">Cargos desempe馻dos</a></li>
+        <li><a href="#/oferta">Informaci髇 de beca</a></li>
+        <li><a href="#/referencias">Referencias personales</a></li>
+        <li  class="active"><a href="#/documentos">Adjuntar documentos</a></li>
+    </ul>
+</div>  
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Sistema inform谩tico para la administraci贸n de becas de postgrado</title>
-
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/menuSolicitudBeca.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
-    <link href="css/customfieldset.css" rel="stylesheet">
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
-        </h3>
+<div class="col-md-10">
+    <div class="row">   
+        <div class="row">
+            <div class="col-md-3">
+                <label for="textinput">Acciones</label>
+            </div>
+        </div>  
+        <div class="col-md-3">
+            <div class = "panel panel-default" style="padding: 10px;">
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-file"></span> 
+                    Exportar
+                </button>
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-print"></span> 
+                    Imprimir
+                </button>
+            </div>
+        </div> 
     </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Cient铆ficas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema inform谩tico para la administraci贸n de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
-<nav class="navbar navbar-custom" role="navigation">
-    <div class="navbar-header">
+    <fieldset class="custom-border">
+        <legend class="custom-border">Documentaci髇</legend>
 
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-        </button> <a class="navbar-brand active" href="index.html">Inicio</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informaci贸n p煤blica<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="315_candidato_ofertas_beca.jsp">Ofertas de beca</a>
-                        <a href="316_candidatos_documentos.jsp">Documentos</a>
-                        <a href="317_candidatos_acercade.jsp">Acerca de</a>
-                        <a href="#">Login/Logout</a>
-                    </li>								
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Candidatos<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="315_candidato_ofertas_beca.jsp">Ofertas de becas</a>
-                        <a href="303_candidato_estado_solicitudes.jsp">Estado de solicitudes</a>
-                        <a href="305_candidato_estado_proceso.jsp">Estado de proceso de beca</a>
-                        <a href="304_candidato_sol_permiso_inicial.jsp">Solicitud de permiso inicial</a>
-                        <a href="306_candidato_sol_autorizacion_inicial.jsp">Solicitud de autorizaci贸n inicial</a>
-                        <a href="307_candidato_sol_dictamen_propuesta.jsp">Solicitud de dictamen de propuesta</a>
-                        <a href="308_candidato_sol_beca1.jsp">Solicitud de beca</a>
-                    </li>								
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">						
-            <li>
-                <a href="#">Ayuda</a>
-            </li>
-            <li>
-                <a href="#">Contacto</a>
-            </li>
-            <li>
-                <a href="#">Acerca de</a>
-            </li>
-            <li>
-                <a href="login.jsp">Iniciar Sesi贸n</a>
-            </li>
-        </ul>
-    </div>
-
-</nav>
-</head>
-<body>
-
-    <div class="container-fluid">
-        <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
-        <fieldset class="custom-border">
-                <legend class="custom-border">Solicitud de beca de postgrado</legend>
-        <div class="row">            
-            <div class="col-md-2">
-                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
-                    <li><a href="308_candidato_sol_beca1.jsp">Datos personales</a></li>
-                    <li><a href="309_candidato_sol_beca2.jsp">Informaci贸n laboral</a></li>
-                    <li><a href="310_candidato_sol_beca3.jsp">Educaci贸n</a></li>
-                    <li><a href="311_candidato_sol_beca4.jsp">Cargos desempe帽ados</a></li>
-                    <li><a href="312_candidato_sol_beca5.jsp">Informaci贸n de beca</a></li>
-                    <li><a href="313_candidato_sol_beca6.jsp">Referencias personales</a></li>
-                    <li class="active"><a href="314_candidato_sol_beca7.jsp">Adjuntar documentos</a></li>
-                </ul>
-            </div>  
-            <div class="col-md-10">
-                <div class="row">   
-                                <div class="row">
-                                    <div class="col-md-3">
-                                    <label for="textinput">Acciones</label>
-                                    </div>
-                                </div>  
-                                <div class="col-md-3">
-                                    <div class = "panel panel-default" style="padding: 10px;">
-                                    <button type="submit" class="btn btn-success">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       Exportar
-                                    </button>
-                                    <button type="submit" class="btn btn-success">
-                                       <span class="glyphicon glyphicon-print"></span> 
-                                       Imprimir
-                                    </button>
-                                    </div>
-                                </div> 
-                            </div>
-                <fieldset class="custom-border">
-                <legend class="custom-border">Documentaci贸n</legend>
-                    <form class="form-horizontal">                            
-                            <div class="row">   
-                                <div class="col-md-6">
-                                    <label for="textinput">Adjuntar documentos</label>
-                                </div> 
-                            </div>                            
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="textinput">Tipo de documento</label>
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
-                                        <option value="1">Option one</option>
-                                        <option value="2">Option two</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="row">
-                                    <label for="textinput">Ruta del archivo</label>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                    <input id="textinput" name="textinput" type="text" placeholder="ingrese su segundo nombre" class="form-control input-md">
-                                        </div>
-                                         <div class="col-md-2">
-                                     <button id="button1id" name="Examinar" class="btn btn-primary">Examinar</button>
-                                </div>
-                                    <div class="col-md-2">
-                                     <button id="button1id" name="agregar" class="btn btn-primary">Agregar documento</button>
-                                </div>
-                                    </div>                                     
-                                </div>      
-                            </div></br>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table table-bordered"></br>
-                                        <label for="textinput">Documentos adjuntados</label>
-                                        <thead>
-                                            <tr class="success">
-                                                <th>No</th>
-                                                <th>Documentos</th>
-                                                <th>Ruta del archivo</th>
-                                                <th>Acci贸n</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="info">
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td><button id="Editar" name="Editar" class="btn btn-success">Editar</button><button id="eliminar" name="eliminar" class="btn btn-danger">Eliminar</button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div></br>
-                    </form>        </fieldset>            
-                <div class="row">
-                    <div class="col-md-4 col-lg-offset-4">
-                        <button id="button1id" name="regresar" class="btn btn-primary">Regresar</button>                        
-                        <button id="button2id" name="enviar" class="btn btn-success">Enviar</button>
-                        <button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button>
-                    </div>
-                </div></br>
+        <div class="row">   
+            <div class="col-md-6">
+                <label class="text-danger">Adjuntar los siguientes documentos</label><br><br>
             </div> 
-            </br>
-        </div></fieldset>
-    </div>  
-</div>
+        </div>                            
+        <div class="row">
+            <div class="col-md-6">
+                <label>SOLICITUD DE BECA FIRMADA: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="solicitudFirmada" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>       
+        <div class="row">
+            <div class="col-md-6">
+                <label>DICTAMEN DEL JEFE DEL DEPARTAMENTO O ESCUELA QUE MANIFIESTA ELECCION POR CONCURSO DE OPOSICI覰: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="dictamenJefe" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>T蚑ULO ACAD蒑ICO: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="tituloAcademico" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>PARTIDA DE NACIMIENTO: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="partida" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>DUI: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="dui" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>CURR虲ULUM VITAE: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="curriculo" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>NOTAS GLOBALES: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="notas" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>CERTIFICADO DE SALUD: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="certificado" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>PODER JUDICIAL OTORGADO A SU APODERADO: </label>
+                <input type="hidden" value="id"><br>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <input name="poder" type="file" accept="application/pdf"><br>
+                </div>                               
+            </div>      
+        </div>
+        
+        
 
-<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-    <div class="col-md-6">
-        <h3>
-            Direcci贸n
-        </h3>
-        <p>
-            2016 Universidad De El Salvador  <br/>
-            Ciudad Universitaria, Final de Av.M谩rtires y H茅roes del 30 julio, San Salvador, El Salvador, Am茅rica Central. 
-        </p>
-    </div>
-    <div class="col-md-6">
-        <h3>
-            Informaci贸n de contacto
-        </h3>
-        <p>
-            Universidad De El Salvador
-            T茅l: +(503) 2511-2000 <br/>
-            Consejo de becas
-            T茅l: +(503) 2511- 2016
-        </p>
-    </div>
-</div>    
-</div>
+        <div>
+            <input type="hidden" name="user" ng-value="{{user}}">
+            <input type="hidden" name="nombre1" ng-value = "data.nombre" >
+            <input type="hidden" name="nombre2" ng-value = "data.nombre2">
+            <input type="hidden" name="apellido1" ng-value ="data.apellido1">
+            <input type="hidden" name="apellido2" ng-value ="data.apellido2">
+            <input type="hidden" name="fechaNacimiento" ng-value="data.fecha_nacimiento">
+            <input type="hidden" name="departamentoNacimiento" ng-value="data.departamento_nacimiento">
+            <input type="hidden" name="municipioNacimiento" ng-value="data.municipio_nacimiento">
+            <input type="hidden" name="genero" ng-value="data.genero">
+            <input type="hidden" name="direccion" ng-value="data.direccion">
+            <input type="hidden" name="departamentoDireccion" ng-value="data.departamento_direccion">
+            <input type="hidden" name="municipioDireccion" ng-value="data.municipio_direccion">
+            <input type="hidden" name="telCasa" ng-value="data.tel_casa">
+            <input type="hidden" name="telMovil" ng-value="data.tel_movil">
+            <input type="hidden" name="telOficina" ng-value="data.tel_oficina">
 
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
-<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('.input-group.date').datepicker({
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        });
-    });
-</script>
-</body>
-</html>
+            <input type="hidden" name="profesion" ng-value="data.profesion">
+            <input type="hidden" name="cargo" ng-value="data.cargo">
+            <input type="hidden" name="unidad" ng-value="data.unidad">
+            <input type="hidden" name="facultad" ng-value="data.facultad">
+            <input type="hidden" name="fechaContratacion" ng-value="data.fecha_contratacion">
+
+            <input type="hidden" name="beneficios" ng-value="data.beneficios">
+
+            <input type="hidden" name="nombre1R1" ng-value = "data.nombre1R1" >
+            <input type="hidden" name="nombre2R1" ng-value = "data.nombre2R1" >
+            <input type="hidden" name="apellido1R1" ng-value = "data.apellido1R1" >
+            <input type="hidden" name="apellido2R1" ng-value = "data.apellido2R1" >
+            <input type="hidden" name="direccionR1" ng-value = "data.direccionR1" >
+            <input type="hidden" name="departamentoR1" ng-value = "data.departamentoR1" >
+            <input type="hidden" name="municipioR1" ng-value = "data.municipioR1" >
+            <input type="hidden" name="telefonoR1" ng-value = "data.telefonoR1" >
+
+            <input type="hidden" name="nombre1R2" ng-value = "data.nombre1R2" >
+            <input type="hidden" name="nombre2R2" ng-value = "data.nombre2R2" >
+            <input type="hidden" name="apellido1R2" ng-value = "data.apellido1R2" >
+            <input type="hidden" name="apellido2R2" ng-value = "data.apellido2R2" >
+            <input type="hidden" name="direccionR2" ng-value = "data.direccionR2" >
+            <input type="hidden" name="departamentoR2" ng-value = "data.departamentoR2" >
+            <input type="hidden" name="municipioR2" ng-value = "data.municipioR2" >
+            <input type="hidden" name="telefonoR2" ng-value = "data.telefonoR2" >
+
+            <input type="hidden" name="nombre1R3" ng-value = "data.nombre1R3" >
+            <input type="hidden" name="nombre2R3" ng-value = "data.nombre2R3" >
+            <input type="hidden" name="apellido1R3" ng-value = "data.apellido1R3" >
+            <input type="hidden" name="apellido2R3" ng-value = "data.apellido2R3" >
+            <input type="hidden" name="direccionR3" ng-value = "data.direccionR3" >
+            <input type="hidden" name="departamentoR3" ng-value = "data.departamentoR3" >
+            <input type="hidden" name="municipioR3" ng-value = "data.municipioR3" >
+            <input type="hidden" name="telefonoR3" ng-value = "data.telefonoR3" >
+
+            <div class="row" ng-repeat="x in data.educacion">
+                <input type="hidden" name="{{x.tipo}}" ng-value="aux.auxTipoEdu[$index +1]">
+                <input type="hidden" name="{{x.grado}}" ng-value="aux.auxGradoEdu[$index +1]">
+                <input type="hidden" name="{{x.institucion}}" ng-value="aux.auxInstitucionEdu[$index +1]">
+                <input type="hidden" name="{{x.anyo}}" ng-value="aux.auxAnyoEdu[$index +1]"><br>
+            </div>
+            <div class="row" ng-repeat="x in data.proyectos">
+                <input type="hidden" name="{{x.titulo}}" ng-value="aux.auxTituloProy[$index +1]">
+                <input type="hidden" name="{{x.publicado}}" ng-value="aux.auxPublicado[$index +1]">
+            </div>
+            <div class="row" ng-repeat="x in data.idiomas">
+                <input type="hidden" name="{{x.idioma}}" ng-value="aux.auxIdioma[$index +1]">
+                <input type="hidden" name="{{x.nivelHabla}}" ng-value="aux.auxNivelHabla[$index +1]">
+                <input type="hidden" name="{{x.nivelLectura}}" ng-value="aux.auxNivelLectura[$index +1]">
+                <input type="hidden" name="{{x.nivelEscritura}}" ng-value="aux.auxNivelEscritura[$index +1]"><br>
+            </div>
+            <div class="row" ng-repeat="x in data.asociaciones">
+                <input type="hidden" name="{{x.asociacion}}" ng-value="aux.auxAsociacion[$index +1]">
+            </div>
+            <div class="row" ng-repeat="x in data.cargos">
+                <input type="hidden" name="{{x.lugar}}" ng-value="aux.auxLugar[$index +1]">
+                <input type="hidden" name="{{x.cargo}}" ng-value="aux.auxCargo[$index +1]">
+                <input type="hidden" name="{{x.fechaInicio}}" ng-value="aux.auxFechaInicio[$index +1]">
+                <input type="hidden" name="{{x.fechaFin}}" ng-value="aux.auxFechaFin[$index +1]">
+                <input type="hidden" name="{{x.responsabilidades}}" ng-value="aux.auxResponsabilidades[$index +1]">
+            </div>
+            <div class="row" ng-repeat="x in data.programas">
+                <input type="hidden" name="{{x.semestre}}" ng-value="{{$index + 1}}">
+                <input type="hidden" name="{{x.programa}}" ng-value="aux.auxPrograma[$index +1]">
+            </div>
+        </div>
+    </fieldset>            
+    <div class="row">
+        <div class="col-md-4 col-lg-offset-4">
+            <a href=""><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>                        
+            <input type="submit" name="enviar" class="btn btn-success" value="Enviar">
+            <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+        </div>
+    </div></br>
+</div> 
+</br>

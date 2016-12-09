@@ -197,5 +197,86 @@ public class DetalleUsuarioDAO extends ConexionBD {
         
         return idFacultad;
     }
+    
+    
+    //consultar por USUARIO
+    public DetalleUsuario consultarPorUser(String user) {
+        DetalleUsuario temp = new DetalleUsuario();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM detalle_usuario d join usuario us on d.ID_USUARIO = us.ID_USUARIO where NOMBRE_USUARIO = '" + user+"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+
+                int ID_DETALLE_USUARIO = rs.getInt("ID_DETALLE_USUARIO");
+                int ID_USUARIO = rs.getInt("ID_USUARIO");
+                int ID_MUNICIPIO = rs.getInt("ID_MUNICIPIO");
+                int ID_FACULTAD = rs.getInt("ID_FACULTAD");
+                int ID_MUNICIPIO_NACIMIENTO = rs.getInt("ID_MUNICIPIO_NACIMIENTO");
+                String NOMBRE1_DU = rs.getString("NOMBRE1_DU");
+                String NOMBRE2_DU = rs.getString("NOMBRE2_DU");
+                String APELLIDO1_DU = rs.getString("APELLIDO1_DU");
+                String APELLIDO2_DU = rs.getString("APELLIDO2_DU");
+                String DEPARTAMENTO = rs.getString("DEPARTAMENTO");
+                Date FECHA_NACIMIENTO = rs.getDate("FECHA_NACIMIENTO");
+                String PROFESION = rs.getString("PROFESION");
+                String FECHA_CONTRATACION = rs.getString("FECHA_CONTRATACION");
+                String TELEFONO_MOVIL = rs.getString("TELEFONO_MOVIL");
+                String TELEFONO_CASA = rs.getString("TELEFONO_CASA");
+                String TELEFONO_OFICINA = rs.getString("TELEFONO_OFICINA");
+                String DIRECCION = rs.getString("DIRECCION");
+                String GENERO = rs.getString("GENERO");
+
+                temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
+                temp.setIdUsuario(ID_USUARIO);
+                temp.setIdMunicipio(ID_MUNICIPIO);
+                temp.setIdFacultad(ID_FACULTAD);
+                temp.setIdMunicipio(ID_MUNICIPIO);
+                temp.setNombre1Du(NOMBRE1_DU);
+                temp.setNombre2Du(NOMBRE2_DU);
+                temp.setApellido1Du(APELLIDO1_DU);
+                temp.setApellido2Du(APELLIDO2_DU);
+                temp.setDepartamento(DEPARTAMENTO);
+                temp.setFechaNacimiento(FECHA_NACIMIENTO);
+                temp.setProfesion(PROFESION);
+                temp.setFechaContratacion(FECHA_NACIMIENTO);
+                temp.setTelefonoMovil(TELEFONO_MOVIL);
+                temp.setTelefonoCasa(TELEFONO_CASA);
+                temp.setTelefonoOficina(TELEFONO_OFICINA);
+                temp.setDireccion(DIRECCION);
+                temp.setGenero(GENERO);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return temp;
+    }
+    
+    //Permite actualizar el detalle usuario a traves de una solicitud de beca
+    public boolean actualizarDetalleSolicitud(DetalleUsuario temp) {
+        boolean exito = false;
+
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            //String sql = "UPDATE detalle_usuario SET ID_MUNICIPIO="+temp.getIdMunicipio()+", ID_MUNICIPIO_NACIMIENTO="+temp.getIdMunicipioNacimiento()+",NOMBRE1_DU="+temp.getNombre1Du()+",NOMBRE2_DU="+temp.getNombre2Du()+",APELLIDO1_DU="+temp.getApellido1Du() +",APELLIDO2_DU="+temp.getApellido2Du() +",DEPARTAMENTO="+temp.getDepartamento() +",FECHA_NACIMIENTO="+temp.getFechaNacimiento() +",PROFESION="+temp.getProfesion() +",FECHA_CONTRATACION="+temp.getFechaContratacion() +",TELEFONO_MOVIL="+temp.getTelefonoMovil() +",TELEFONO_CASA="+temp.getTelefonoCasa() +",TELEFONO_OFICINA="+temp.getTelefonoOficina() +",DIRECCION="+temp.getDireccion() +",GENERO="+temp.getGenero() + "WHERE ID_DETALLE_USUARIO = " +temp.getIdDetalleUsuario();                         
+            String sql = "UPDATE detalle_usuario SET ID_MUNICIPIO="+temp.getIdMunicipio()+", ID_MUNICIPIO_NACIMIENTO="+temp.getIdMunicipioNacimiento()+",NOMBRE1_DU='"+temp.getNombre1Du()+"',NOMBRE2_DU='"+temp.getNombre2Du()+"',APELLIDO1_DU='"+temp.getApellido1Du() +"',APELLIDO2_DU='"+temp.getApellido2Du() +"',DEPARTAMENTO='"+temp.getDepartamento() +"',PROFESION='"+temp.getProfesion() +"',TELEFONO_MOVIL='"+temp.getTelefonoMovil() +"',TELEFONO_CASA='"+temp.getTelefonoCasa() +"',TELEFONO_OFICINA='"+temp.getTelefonoOficina() +"',DIRECCION='"+temp.getDireccion() +"',GENERO='"+temp.getGenero() + "' WHERE ID_DETALLE_USUARIO = " +temp.getIdDetalleUsuario();                         
+            
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        } finally {
+            this.cerrarConexion();
+        }
+        return exito;
+    }
 
 }

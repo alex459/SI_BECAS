@@ -80,11 +80,11 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="radio-inline" for="radios-0">
-                                            <input type="radio" name="genero"  value="1"  ng-model ="data.genero" ng-required="true">
+                                            <input type="radio" name="genero"  value="M"  ng-model ="data.genero" ng-required="true">
                                             Masculino
                                         </label> 
                                         <label class="radio-inline" for="radios-1">
-                                            <input type="radio" name="genero" value="2" ng-model ="data.genero" ng-required="true">
+                                            <input type="radio" name="genero" value="F" ng-model ="data.genero" ng-required="true">
                                             Femenino
                                         </label> <br>
                                         <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.genero.$error.required">Debe de Seleccionar su genero.</span>
@@ -155,7 +155,7 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-offset-4">
                     
-                        <a class="btn btn-primary" href="#/laboral" ng-disabled="!solicitud.$valid">Continuar</a>
+                        <a href="#/laboral"> <button class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</button></a>
                         <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
                     </div>
                 </div></br>

@@ -23,7 +23,8 @@
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
     String rol = (String) actual.getAttribute("rol");
-    String user = (String) actual.getAttribute("user");
+    //String user = (String) actual.getAttribute("user");
+    String user = "CM16015";
     /*if(user==null){
      response.sendRedirect("login.jsp");
         return;
@@ -119,13 +120,13 @@
     </head>
 
 
-    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos=<%=departamentosJSON%>; municipios=<%=municipiosJSON%>; facultad='<%=facultad.getFacultad()%>'">
+    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos=<%=departamentosJSON%>; municipios=<%=municipiosJSON%>; facultad='<%=facultad.getFacultad()%>'; user='<%=user%>'">
 
         <div class="container-fluid" ng-init="oferta={nombre:'<%=nombreOferta%>',institucion: '<%=nombreInstitucion%>'}" >
         <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
         <fieldset class="custom-border">
             <legend class="custom-border">Solicitud de beca de postgrado</legend>
-            <form class="form-horizontal" name="solicitud" action="{{action}}" method="POST">
+            <form class="form-horizontal" name="solicitud" action="SolicitarBecaServlet" method="POST">
                 <input type="hidden" ng-model="oferta.nombre">
             
                 <div class="row" ng-view>            

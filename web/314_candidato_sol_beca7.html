@@ -141,6 +141,7 @@
         
 
         <div>
+            <input type="hidden" name="user" ng-value = "user" >
             <input type="hidden" name="nombre1" ng-value = "data.nombre" >
             <input type="hidden" name="nombre2" ng-value = "data.nombre2">
             <input type="hidden" name="apellido1" ng-value ="data.apellido1">
@@ -197,6 +198,7 @@
                 <input type="hidden" name="{{x.institucion}}" ng-value="aux.auxInstitucionEdu[$index +1]">
                 <input type="hidden" name="{{x.anyo}}" ng-value="aux.auxAnyoEdu[$index +1]"><br>
             </div>
+            <input type="hidden" name="nEducacion" ng-value = "{{data.educacion.indexOf($last)}}" >
             <div class="row" ng-repeat="x in data.proyectos">
                 <input type="hidden" name="{{x.titulo}}" ng-value="aux.auxTituloProy[$index +1]">
                 <input type="hidden" name="{{x.publicado}}" ng-value="aux.auxPublicado[$index +1]">

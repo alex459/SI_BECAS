@@ -11,6 +11,8 @@ public class Cargo {
     private Date fechaInicio;    
     private Date fechaFin;    
     private String lugar;
+    private String responsabilidades;
+
 
     /**
      * @return the idCargo
@@ -97,6 +99,13 @@ public class Cargo {
     }
 
     
+    public String getResponsabilidades() {
+        return responsabilidades;
+    }
+
+    public void setResponsabilidades(String responsabilidades) {
+        this.responsabilidades = responsabilidades;
+    }
     
     
 }
