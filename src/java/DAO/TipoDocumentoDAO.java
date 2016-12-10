@@ -170,6 +170,34 @@ public class TipoDocumentoDAO extends ConexionBD{
         return lista;
     }
     
+    //consultar tipo documento por departamento
+    public ArrayList<TipoDocumento> consultarPorDepartamento(String departamento) {
+        ArrayList<TipoDocumento> lista = new ArrayList<TipoDocumento>();
+        TipoDocumento temp = new TipoDocumento();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_TIPO_DOCUMENTO, TIPO_DOCUMENTO, DEPARTAMENTO, DESCRIPCION FROM TIPO_DOCUMENTO WHERE DEPARTAMENTO='"+departamento+"';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                temp = new TipoDocumento();
+                int ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                                
+                String TIPO_DOCUMENTO=rs.getString("TIPO_DOCUMENTO");
+                String DEPARTAMENTO=departamento;
+                String DESCRIPCION=rs.getString("DESCRIPCION");              
+                temp.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setDepartamento(DEPARTAMENTO);
+                temp.setDescripcion(DESCRIPCION);              
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
     public ArrayList<TipoDocumento> consultarTodosPublicosIngresados() {
         ArrayList<TipoDocumento> lista = new ArrayList<TipoDocumento>();
         TipoDocumento temp = new TipoDocumento();
