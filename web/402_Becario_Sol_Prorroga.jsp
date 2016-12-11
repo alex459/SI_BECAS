@@ -69,21 +69,17 @@
                             <div class="row">   
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <label>Carta de Solicitud de Prórroga - Unidad:</label>
+                                        <label>Carta de Solicitud de Prórroga: </label>
                                     </div>  
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <select id="facultad" name="tipoDoc" class="form-control">
-                                                <option value="1">Seleccione Unidad </option>
-                                                <option value="2">Junta Directiva</option>
-                                                <option value="2">Consejo de Becas</option>
-                                            </select>
+                                            <input type="text" id="consejo" name="consejo" value="Consejo de Becas" disabled>                                         
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <div class="col-md-2 text-right">
-                                                <label for="textinput">Archivo de la oferta :</label>                                
+                                                <label for="textinput">Archivo:</label>                                
                                             </div>
                                             <div class="col-md-4">      
                                                     <input type="file" name="doc_digital1" accept="application/pdf">   
@@ -92,7 +88,7 @@
                                     </div> 
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
+                                            <button type="button" id="clear1" name="clear1" class="btn btn-danger">Eliminar</button>
                                         </div>
                                     </div> 
                                 </div>    
@@ -103,19 +99,15 @@
                                     <div class="col-md-3">
                                         <label>Carta de Solicitud de Prórroga - Unidad:</label>
                                     </div> 
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <select id="facultad" name="tipoDoc" class="form-control">
-                                                <option value="1">Seleccione Unidad </option>
-                                                <option value="2">Junta Directiva</option>
-                                                <option value="2">Consejo de Becas</option>
-                                            </select>
+                                            <input type="text" id="junta" name="junta" value="Junta Directiva" disabled> 
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <div class="col-md-2 text-right">
-                                                <label for="textinput">Archivo de la oferta :</label>                                
+                                                <label for="textinput">Archivo:</label>                                
                                             </div>
                                             <div class="col-md-4">      
                                                     <input type="file" name="doc_digital2" accept="application/pdf">   
@@ -124,7 +116,7 @@
                                     </div> 
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
+                                            <button id="button2id" type="button" name="eliminar" class="btn btn-danger">Eliminar</button>
                                         </div>
                                     </div>  
                                 </div>    
@@ -133,21 +125,21 @@
                             <div class="row">   
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <label>Constancia de la Institución - Unidad:</label>
+                                        <label>Constancia de la Institución:</label>
                                     </div>  
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <div class="col-md-2 text-right">
-                                                <label for="textinput">Archivo de la oferta :</label>                                
+                                            <div class="col-md-2">
+                                                <label for="textinput">Archivo:</label>                                
                                             </div>
-                                            <div class="col-md-4">      
-                                                    <input type="file" name="doc_digital3" accept="application/pdf">   
+                                            <div class="col-md-4">    
+                                                    <input type="file" name="doc_digital3" accept="application/pdf">
                                             </div> 
                                         </div>
                                     </div> 
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            <button id="button2id" name="eliminar" class="btn btn-danger">Eliminar</button>
+                                            <button id="button2id" type="button" name="eliminar" class="btn btn-danger">Eliminar</button>
                                         </div>
                                     </div> 
                                 </div>    
@@ -192,5 +184,12 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script>
+       var control = $("#doc_digital1");
+  $("#clear1").on("click", function () {
+    control.replaceWith( control = control.clone( true ) );
+});
+
+    </script>
 </body>
 </html>

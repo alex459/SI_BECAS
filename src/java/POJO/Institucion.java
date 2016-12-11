@@ -10,6 +10,15 @@ public class Institucion{
     private String paginaWeb;    
     private String email;    
     private Integer institucionActiva;
+    private String telefono;
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
     /**
      * @return the idInstitucion

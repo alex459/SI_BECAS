@@ -3,6 +3,8 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
+<%@page import="DAO.DocumentoDAO"%>
+<%@page import="POJO.Documento"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="DAO.UsuarioDAO"%>
@@ -27,62 +29,27 @@
     }
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
-    int idUser, idSol, idExp, idProg;
-    ConexionBD conexionbd = null;
-    ResultSet rs = null;
-    Usuario temp1 = new Usuario();
-    SolicitudDeBeca temp2 = new SolicitudDeBeca();
-    Expediente temp3 = new Expediente();
-    Progreso temp4 = new Progreso();
-    //////////Obtener el id del usuario
-    try {
-        //formando la consulta
-        String consultaSql = "SELECT ID_USUARIO FROM USUARIO WHERE NOMBRE_USUARIO='" + user + "';";
-        //realizando la consulta
-        conexionbd = new ConexionBD();
-        rs = conexionbd.consultaSql(consultaSql);
-        temp1 = new Usuario();
-        if (rs.next()) {
-            temp1.setIdUsuario(rs.getInt("ID_USUARIO"));
+    boolean expedienteAbierto = false; 
+    Expediente expediente = new Expediente();
+    //Obtener Expediente Abierto
+    try{
+        // Comprobando si tiene un proceso de beca abierto
+        ExpedienteDAO expDao = new ExpedienteDAO();
+        expedienteAbierto = expDao.expedienteAbierto(user);
+        if(expedienteAbierto == true){
+            //obtener el expediente
+            expDao = new ExpedienteDAO();
+            expediente = expDao.obtenerExpedienteAbierto(user);
+        }else{
+        expediente.setIdProgreso(0);        
         }
-        //con el rs se llenara la tabla de resultados
-    } catch (Exception ex) {
-        System.out.println(ex);
+    } catch (Exception e){
+        e.printStackTrace();
     }
-    idUser = temp1.getIdUsuario();
-    ////////Obtener el id del expediente
-    try {
-        //formando la consulta
-        String consultaSql = "SELECT ID_EXPEDIENTE FROM SOLICITUD_DE_BECA WHERE ID_USUARIO=" + idUser;
-        //realizando la consulta
-        conexionbd = new ConexionBD();
-        rs = conexionbd.consultaSql(consultaSql);
-        temp2 = new SolicitudDeBeca();
-        if (rs.next()) {
-            temp2.setIdExpediente(rs.getInt("ID_EXPEDIENTE"));
-        }
-        //con el rs se llenara la tabla de resultados
-    } catch (Exception ex) {
-        System.out.println(ex);
-    }
-    idExp = temp2.getIdExpediente();
-    ////////Obtener el id del progreso actual del candidato
-    try {
-        //formando la consulta
-        String consultaSql = "SELECT ID_PROGRESO FROM EXPEDIENTE WHERE ID_EXPEDIENTE=" + idExp;
-        //realizando la consulta
-        conexionbd = new ConexionBD();
-        rs = conexionbd.consultaSql(consultaSql);
-        temp3 = new Expediente();
-        if (rs.next()) {
-            temp3.setIdProgreso(rs.getInt("ID_PROGRESO"));
-        }
-        //con el rs se llenara la tabla de resultados
-    } catch (Exception ex) {
-        System.out.println(ex);
-    }
-    idProg = temp3.getIdProgreso();
-    System.out.println("IDUS: " + idUser + " IDEXP: " + idExp + " ID_PROG: " + idProg);
+    int idExp= expediente.getIdExpediente();
+    int idProg = expediente.getIdProgreso();
+    Documento doc=new Documento();
+    DocumentoDAO docDao= new DocumentoDAO();
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -125,7 +92,6 @@
 
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Estado de solicitudes</H3>
-        <form>
             <fieldset class="custom-border">
                 <legend class="custom-border">Solicitudes realizadas</legend>
                 <div class="row">
@@ -155,9 +121,14 @@
                                         out.write("<td  style='color:black;'>Finalizado</td>");
                                     }
                                     if (idProg > 1) 
-                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
+                                    { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="idexp" value="<%=idExp%>">
+                                                    <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="hidden" name="idtipodoc" value="<%=200%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></td><%    }
                                     else{
-                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Editar</button>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
                                 %> 
                             </tr>
@@ -175,9 +146,13 @@
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
                                 if (idProg > 2) 
-                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
-                                    else{
-                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                     { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="idexp" value="<%=idExp%>">
+                                                    <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></td><%    }
+                                else{
+                                out.write("<td><button id='Editar' name='Editar' href='306_candidato_sol_autorizacion_inicial.jsp' class='btn btn-success'>Editar</button>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
                                 %> 
                             </tr>
@@ -195,9 +170,13 @@
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
                                 if (idProg > 3) 
-                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
-                                    else{
-                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                    { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="idexp" value="<%=idExp%>">
+                                                    <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></td><%    } 
+                                else{
+                                out.write("<td><button id='Editar' name='Editar' href='307_candidato_sol_dictamen_propuesta.jsp' class='btn btn-success'>Editar</button>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
                                 %> 
                             </tr>
@@ -215,9 +194,13 @@
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
                                 if (idProg > 4) 
-                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
-                                    else{
-                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                      { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="idexp" value="<%=idExp%>">
+                                                    <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></td><%    }
+                                else{
+                                out.write("<td><button id='Editar' name='Editar' href='307_candidato_sol_dictamen_propuesta.jsp' class='btn btn-success'>Editar</button>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
                                 %> 
                             </tr>
@@ -235,9 +218,13 @@
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
                                 if (idProg > 5) 
-                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
-                                    else{
-                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
+                                      { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="idexp" value="<%=idExp%>">
+                                                    <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></td><%    } 
+                                else{
+                                out.write("<td><button id='Editar' name='Editar' href='308_candidato_sol_beca1.jsp' class='btn btn-success'>Editar</button>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
                                 %> 
                             </tr>
@@ -255,8 +242,12 @@
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
                                 if (idProg > 6) 
-                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
-                                    else{
+                                       { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="idexp" value="<%=idExp%>">
+                                                    <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></td><%    }
+                                else{
                                 out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
                                 %> 
@@ -275,8 +266,12 @@
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
                                 if (idProg > 7) 
-                                        out.write("<td><button id='ver' name='ver' class='btn btn-success'>ver</button></td>");
-                                    else{
+                                      { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
+                                                    <input type="hidden" name="idexp" value="<%=idExp%>">
+                                                    <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
+                                                    </form></td><%    }
+                                else{
                                 out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
                                 %> 
@@ -286,7 +281,6 @@
                 </div> 
             </div>
         </fieldset>
-    </form>
 
     <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
         <div class="col-md-6">

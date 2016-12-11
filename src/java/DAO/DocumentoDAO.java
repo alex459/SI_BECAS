@@ -382,5 +382,32 @@ public class DocumentoDAO extends ConexionBD{
         
         return exito;
     }
+        
+    //Conultar documentos con un tipo de documento y expediente especificos
+        public Documento ObtenerPorExpedienteProgreso(int exp, int idProg, int idTipoDoc) {        
+        this.abrirConexion();
+        Documento doc= new Documento();
+        TipoDocumento tipo= new TipoDocumento();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT DOCUMENTO.ID_DOCUMENTO AS ID_DOCUMENTO,DOCUMENTO_DIGITAL FROM DOCUMENTO,EXPEDIENTE WHERE "
+                    + " EXPEDIENTE.ID_EXPEDIENTE=DOCUMENTO.ID_EXPEDIENTE AND EXPEDIENTE.ID_EXPEDIENTE="+exp+" "
+                    + " AND EXPEDIENTE.ID_PROGRESO="+idProg+" AND DOCUMENTO.ID_TIPO_DOCUMENTO=100;";
+            System.out.println(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            if(rs.next()){
+                tipo.setIdTipoDocumento(100);
+            Blob blob = rs.getBlob("DOCUMENTO_DIGITAL");
+            InputStream DOCUMENTO_DIGITAL = blob.getBinaryStream();
+            doc.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
+            doc.setIdTipoDocumento(tipo);
+            doc.setDocumentoDigital(DOCUMENTO_DIGITAL);    }  
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        
+        return doc;
+    }
            
 }

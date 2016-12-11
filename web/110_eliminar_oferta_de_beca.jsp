@@ -332,7 +332,6 @@
             %>                            
 
             <div class="row">    
-                <form class="form-horizontal">
                     <fieldset class="custom-border">
                         <legend class="custom-border">Ofertas de beca en el sistema</legend>
                         <div class="row">
@@ -389,7 +388,6 @@
                             </div> 
                         </div>
                     </fieldset>
-                </form>
             </div>                    
         </fieldset>                                        
     </div><!-- CONTENIDO DE LA PANTALLA -->
