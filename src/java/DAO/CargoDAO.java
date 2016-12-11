@@ -135,4 +135,44 @@ public class CargoDAO extends ConexionBD{
         }
         return exito;
     }
+
+    public Integer ExisteAsociacionAnterior(Integer idDetalleUsuario, String lugarCargo, String cargoAnterior, Date fechaInicioCargo, Date fechaFinCargo) {
+        Integer idCargo = 0;
+        this.abrirConexion() ;
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_CARGO FROM CARGO where ID_DETALLE_USUARIO = " + idDetalleUsuario +" AND LUGAR= '" + lugarCargo +"'" +" AND NOMBRE_CARGO= '" + cargoAnterior +"'" +" AND FECHA_INICIO= '" + fechaInicioCargo +"'" +" AND FECHA_FIN= '" + fechaFinCargo +"'" ;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idCargo = rs.getInt("ID_IDIOMA"); 
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return idCargo;
+    }
+    
+    //Permite insertar un cargo Anterior
+    public boolean ingresarCargoAnterior(Cargo temp) {
+        boolean exito = false;
+
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+
+            String sql = "INSERT INTO cargo (ID_CARGO, ID_DETALLE_USUARIO, NOMBRE_CARGO, LUGAR, FECHA_INICIO, FECHA_FIN, RESPONSABILIDADES) VALUES (" + temp.getIdCargo()+ "," + temp.getIdDetalleUsuario()+ ",'" + temp.getNombreCargo()+ ",'" + temp.getLugar()+ ",'" + temp.getFechaInicio()+ ",'" + temp.getFechaFin()+ ",'" + temp.getResponsabilidades()+"')";
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        } finally {
+            this.cerrarConexion();
+        }
+        return exito;
+    }
 }

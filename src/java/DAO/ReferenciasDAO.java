@@ -137,4 +137,45 @@ public class ReferenciasDAO extends ConexionBD{
         }
         return exito;
     }
+
+    public Integer ExisteReferencia(Integer idSolicitud, String nombre1, String nombre2, String apellido1, String apellido2) {
+        Integer idReferencia = 0;
+        this.abrirConexion() ;
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_REFERENCIA FROM REFERENCIAS where ID_SOLICITUD = " + idSolicitud +" AND NOMBRE1= '" + nombre1 +"' AND NOMBRE2 = '"+ nombre2+ "' AND APELLIDO1 = '"+ apellido1+ "' AND APELLIDO2 = '"+ apellido2 +"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idReferencia = rs.getInt("ID_REFERENCIA"); 
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return idReferencia;
+    }
+    
+    //obtener el siguiente id (autoincremental)
+    public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_REFERENCIA), 0) AS X FROM REFERENCIAS";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("X") + 1;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
+    }
 }

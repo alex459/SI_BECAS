@@ -57,7 +57,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     proyectos:[{
          id: 1,
          titulo: "tituloProyecto1",
-            publicado: "publicado1"
+         publicado: "publicado1"
         }],
     idiomas:[{
             id: 1,

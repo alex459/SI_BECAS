@@ -13,6 +13,8 @@ import POJO.Investigaciones;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 public class InvestigacionesDAO extends ConexionBD{
+    
+    //Permite consultar una investigacion por id
     public Investigaciones consultarPorId(int id) {
         Investigaciones temp = new Investigaciones();
         this.abrirConexion();
@@ -27,7 +29,7 @@ public class InvestigacionesDAO extends ConexionBD{
                 int ID_INVESTIGACION=id;      
                 int ID_DETALLE_USUARIO=rs.getInt("ID_DETALLE_USUARIO");                        
                 String TITULO_INVESTIGACION=rs.getString("TITULO_INVESTIGACION");
-                Boolean PUBLICADO=rs.getBoolean("PUBLICADO");
+                int PUBLICADO=rs.getInt("PUBLICADO");
                 
                 temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
                 temp.setIdInvestigacion(ID_INVESTIGACION);
@@ -58,7 +60,7 @@ public class InvestigacionesDAO extends ConexionBD{
                 int ID_INVESTIGACION=rs.getInt("ID_INVESTIGACION");
                 int ID_DETALLE_USUARIO=rs.getInt("ID_DETALLE_USUARIO");                        
                 String TITULO_INVESTIGACION=rs.getString("TITULO_INVESTIGACION");
-                Boolean PUBLICADO=rs.getBoolean("PUBLICADO");
+                int PUBLICADO=rs.getInt("PUBLICADO");
                 
                 temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
                 temp.setIdInvestigacion(ID_INVESTIGACION);
@@ -77,6 +79,7 @@ public class InvestigacionesDAO extends ConexionBD{
         return lista;
     }
     
+    //ingresar investigacion
     public boolean ingresar(Investigaciones investigaciones){
         boolean exito = false;        
         this.abrirConexion();
@@ -94,6 +97,7 @@ public class InvestigacionesDAO extends ConexionBD{
         return exito;
     }
     
+    //actualizar investigacion
     public boolean actualizar(Investigaciones investigaciones){
         boolean exito = false;
         
@@ -111,5 +115,47 @@ public class InvestigacionesDAO extends ConexionBD{
             this.cerrarConexion();
         }
         return exito;
+    }
+    
+    //comprobar si existe investigacion en la base
+    public Integer ExisteInvestigacion(Integer idDetalleUsuario, String tituloProyecto, Integer publicado) {
+         Integer idInvestigacion = 0;
+        this.abrirConexion() ;
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_INVESTIGACION FROM INVESTIGACIONES where ID_DETALLE_USUARIO = " + idDetalleUsuario +" AND TITULO_INVESTIGACION= '" + tituloProyecto +"' AND PUBLICADO = " + publicado ;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idInvestigacion = rs.getInt("ID_INVESTIGACION"); 
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return idInvestigacion;
+    }
+    
+    //Permite obtener el siguiente id de la Investigacion
+     public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_INVESTIGACION), 0) AS X FROM INVESTIGACIONES";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("X") + 1;                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
     }
 }

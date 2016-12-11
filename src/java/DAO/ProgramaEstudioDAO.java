@@ -120,4 +120,45 @@ public class ProgramaEstudioDAO extends ConexionBD{
         }
         return exito;
     }
+    
+    //obtener el siguiente id (autoincremental)
+    public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_PROGRAMA_ESTUDIO), 0) AS X FROM PROGRAMA_ESTUDIO";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("X") + 1;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
+    }
+
+    public Integer ExisteProgramaAnterior(Integer idSolicitud, Integer semestre) {
+        Integer idPrograma = 0;
+        this.abrirConexion() ;
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_PROGRAMA_ESTUDIO FROM PROGRAMA_ESTUDIO where ID_SOLICITUD = " + idSolicitud +" AND SEMESTRE= " + semestre;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idPrograma = rs.getInt("ID_PROGRAMA_ESTUDIO"); 
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return idPrograma;
+    }
 }

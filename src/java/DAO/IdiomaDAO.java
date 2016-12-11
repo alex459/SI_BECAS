@@ -110,4 +110,45 @@ public class IdiomaDAO extends ConexionBD{
         }
         return exito;
     }
+
+    public Integer ExisteIdioma(Integer idDetalleUsuario, String idioma) {
+        Integer idIdioma = 0;
+        this.abrirConexion() ;
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_IDIOMA FROM IDIOMA where ID_DETALLE_USUARIO = " + idDetalleUsuario +" AND IDIOMA= '" + idioma +"'" ;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idIdioma = rs.getInt("ID_IDIOMA"); 
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return idIdioma;
+    }
+    
+    //Permite obtener el siguiente id del IDIOMA
+     public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_IDIOMA), 0) AS X FROM IDIOMA";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("X") + 1;                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
+    }
 }

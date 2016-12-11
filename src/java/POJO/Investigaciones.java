@@ -6,7 +6,7 @@ public class Investigaciones{
     private Integer idInvestigacion;
     private Integer idDetalleUsuario;
     private String tituloInvestigacion;
-    private Boolean publicado;
+    private int publicado;
 
     /**
      * @return the idInvestigacion
@@ -53,14 +53,14 @@ public class Investigaciones{
     /**
      * @return the publicado
      */
-    public Boolean getPublicado() {
+    public int getPublicado() {
         return publicado;
     }
 
     /**
      * @param publicado the publicado to set
      */
-    public void setPublicado(Boolean publicado) {
+    public void setPublicado(int publicado) {
         this.publicado = publicado;
     }
     

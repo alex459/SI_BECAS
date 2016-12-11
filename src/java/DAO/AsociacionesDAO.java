@@ -110,4 +110,45 @@ public class AsociacionesDAO extends ConexionBD{
         }
         return exito;
     }
+    
+    //Permite obtener el siguiente id de la Asociacion
+     public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_ASOCIACION), 0) AS X FROM ASOCIACIONES";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("X") + 1;                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
+    }
+
+    public Integer ExisteAsociacion(Integer idDetalleUsuario, String nombreAsociacion) {
+        Integer idAsociacion = 0;
+        this.abrirConexion() ;
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_ASOCIACION FROM ASOCIACIONES where ID_DETALLE_USUARIO = " + idDetalleUsuario +" AND NOMBRE_ASOCIACION= '" + nombreAsociacion +"'" ;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idAsociacion = rs.getInt("ID_IDIOMA"); 
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return idAsociacion;
+    }
 }
