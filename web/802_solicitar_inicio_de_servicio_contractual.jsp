@@ -99,13 +99,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <div class="col-md-5" style="padding-left: 0px;">Carta Solicitud:</div>
-                                    <div class="col-md-7">para:
-                                        <select>
-                                            <option>Junta Directiva</option>
-                                            <option>Consejo de Becas</option>
-                                        </select>
-                                    </div>
+                                    Carta de solicitud para Junta Directiva:
                                 </div>
                                 <div class="col-md-7">
                                     <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
@@ -114,13 +108,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <div class="col-md-5" style="padding-left: 0px;">Carta Solicitud:</div>
-                                    <div class="col-md-7">para:
-                                        <select>
-                                            <option>Junta Directiva</option>
-                                            <option>Consejo de Becas</option>
-                                        </select>
-                                    </div>
+                                    Carta de solicitud para el Consejo de Becas:
                                 </div>
                                 <div class="col-md-7">
                                     <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">

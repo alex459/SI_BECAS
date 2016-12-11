@@ -144,7 +144,7 @@
                                 <input type="hidden" name="idExpediente" value="<%=expediente.getIdExpediente()%>">
                                 <input type="hidden" name="user" value="<%=user%>">
                                 <input type="hidden" name="nAnexos" value="{{Nanexos-1}}">
-                                <input type="submit" class="btn btn-success" name="submit" value="Emviar">
+                                <input type="submit" class="btn btn-success" name="submit" value="Enviar">
                             </div>
                         </div>
                         </form>
