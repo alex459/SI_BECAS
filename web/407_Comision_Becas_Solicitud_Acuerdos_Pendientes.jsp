@@ -153,12 +153,11 @@
                                         
                                         <div class="col-md-6">   
                                             <label for="textinput">Fecha Solicitud: </label>
-                                           <div class="input-group date">
-                                                <input type="text" name="fechaSolicitud" id="fechaSolicitud" class="form-control" ng-model="datos.fechaS" >
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
-                                                </div>
-                                                <span class="text-danger" ng-show="!solicitudAcuerdosPendientesComisionBecas.$pristine">Ingrese una fecha de solicitud.</span>
-    
+                                            <div class="input-group date">
+                                                 <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
+                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                                
                                         </div>
                                         <br>
                                     
@@ -182,7 +181,7 @@
                 String apellido1;
                 String apellido2;
                 String carnet;
-                
+                String fecha1;
                 ConexionBD conexionbd = null;
                
                 ResultSet rs = null;
@@ -198,7 +197,7 @@
             apellido1 = request.getParameter("APELLIDO1");
             apellido2 = request.getParameter("APELLIDO2");
             carnet = request.getParameter("CARNET");    
-            
+            fecha1 = request.getParameter("FECHA1");
             String consultaSql="";
             String pendiente = "PENDIENTE";
             String comisionB= "COMISION DE BECAS";
@@ -208,7 +207,8 @@
             if(apellido1!=null) {} else {apellido1="";};
             if(apellido2!=null) {} else {apellido2="";};
             if(carnet!=null) {} else {carnet="";};
-            consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO='"+pendiente+"' AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'  ;";
+            if(fecha1!=null) {} else {fecha1="";};
+            consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO='"+pendiente+"' AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'   ;";
             
             
                    
@@ -316,7 +316,7 @@
                                                                 calendarWeeks: true,
                                                                 todayHighlight: true,
                                                                 autoclose: true,
-                                                                startDate: new Date()
+                                                                
                                                             });
                                                         });
         </script>
