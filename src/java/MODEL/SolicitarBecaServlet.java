@@ -8,6 +8,7 @@ package MODEL;
 import DAO.AsociacionesDAO;
 import DAO.CargoDAO;
 import DAO.DetalleUsuarioDAO;
+import DAO.DocumentoDAO;
 import DAO.EducacionDao;
 import DAO.ExpedienteDAO;
 import DAO.IdiomaDAO;
@@ -20,6 +21,7 @@ import POJO.Asociaciones;
 
 import POJO.Cargo;
 import POJO.DetalleUsuario;
+import POJO.Documento;
 import POJO.Educacion;
 import POJO.Expediente;
 import POJO.Idioma;
@@ -28,6 +30,9 @@ import POJO.ProgramaEstudio;
 import POJO.Referencias;
 import POJO.SolicitudDeBeca;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -360,12 +365,12 @@ public class SolicitarBecaServlet extends HttpServlet {
                             Integer idMunicipioR1 = Integer.parseInt(request.getParameter("municipioR1"));
                             String telR1 = request.getParameter("telefonoR1");
                             Referencias referencia = new Referencias();
-                            
+
                             //Comparando con la base
-                            Integer idReferencia1 = refeDao.ExisteReferencia(solicitud.getIdSolicitud(),nombre1R1,nombre2R1,apellido1R1,apellido2R1);
-                            if(idReferencia1 == 0){
+                            Integer idReferencia1 = refeDao.ExisteReferencia(solicitud.getIdSolicitud(), nombre1R1, nombre2R1, apellido1R1, apellido2R1);
+                            if (idReferencia1 == 0) {
                                 //Ingresar
-                                idReferencia1=refeDao.getSiguienteId();
+                                idReferencia1 = refeDao.getSiguienteId();
                                 referencia.setIdReferencia(idReferencia1);
                                 referencia.setIdSolicitud(solicitud.getIdSolicitud());
                                 referencia.setNombre1Du(nombre1R1);
@@ -375,18 +380,18 @@ public class SolicitarBecaServlet extends HttpServlet {
                                 referencia.setDomicilio(domicilioR1);
                                 referencia.setIdMunicipio(idMunicipioR1);
                                 referencia.setTelefonoMovil(telR1);
-                                
+
                                 refeDao.ingresar(referencia);
-                            }else{
+                            } else {
                                 //Actualizar
                                 referencia = refeDao.consultarPorId(idReferencia1);
                                 referencia.setDomicilio(domicilioR1);
                                 referencia.setIdMunicipio(idMunicipioR1);
                                 referencia.setTelefonoMovil(telR1);
-                                
+
                                 refeDao.actualizar(referencia);
                             }
-                            
+
                             //Recuperando informacion de Referencia 2
                             String nombre1R2 = request.getParameter("nombre1R2");
                             String nombre2R2 = request.getParameter("nombre2R2");
@@ -395,12 +400,12 @@ public class SolicitarBecaServlet extends HttpServlet {
                             String domicilioR2 = request.getParameter("direccionR2");
                             Integer idMunicipioR2 = Integer.parseInt(request.getParameter("municipioR2"));
                             String telR2 = request.getParameter("telefonoR2");
-                            
+
                             //Comparando con la base
-                            Integer idReferencia2 = refeDao.ExisteReferencia(solicitud.getIdSolicitud(),nombre1R2,nombre2R2,apellido1R2,apellido2R2);
-                            if(idReferencia2 == 0){
+                            Integer idReferencia2 = refeDao.ExisteReferencia(solicitud.getIdSolicitud(), nombre1R2, nombre2R2, apellido1R2, apellido2R2);
+                            if (idReferencia2 == 0) {
                                 //Ingresar
-                                idReferencia2=refeDao.getSiguienteId();
+                                idReferencia2 = refeDao.getSiguienteId();
                                 referencia.setIdReferencia(idReferencia2);
                                 referencia.setIdSolicitud(solicitud.getIdSolicitud());
                                 referencia.setNombre1Du(nombre1R2);
@@ -410,18 +415,18 @@ public class SolicitarBecaServlet extends HttpServlet {
                                 referencia.setDomicilio(domicilioR2);
                                 referencia.setIdMunicipio(idMunicipioR2);
                                 referencia.setTelefonoMovil(telR2);
-                                
+
                                 refeDao.ingresar(referencia);
-                            }else{
+                            } else {
                                 //Actualizar
                                 referencia = refeDao.consultarPorId(idReferencia2);
                                 referencia.setDomicilio(domicilioR2);
                                 referencia.setIdMunicipio(idMunicipioR2);
                                 referencia.setTelefonoMovil(telR2);
-                                
+
                                 refeDao.actualizar(referencia);
                             }
-                            
+
                             //Recuperando informacion de Referencia 3
                             String nombre1R3 = request.getParameter("nombre1R3");
                             String nombre2R3 = request.getParameter("nombre2R3");
@@ -430,12 +435,12 @@ public class SolicitarBecaServlet extends HttpServlet {
                             String domicilioR3 = request.getParameter("direccionR3");
                             Integer idMunicipioR3 = Integer.parseInt(request.getParameter("municipioR3"));
                             String telR3 = request.getParameter("telefonoR3");
-                            
+
                             //Comparando con la base
-                            Integer idReferencia3 = refeDao.ExisteReferencia(solicitud.getIdSolicitud(),nombre1R3,nombre2R3,apellido1R3,apellido2R3);
-                            if(idReferencia3 == 0){
+                            Integer idReferencia3 = refeDao.ExisteReferencia(solicitud.getIdSolicitud(), nombre1R3, nombre2R3, apellido1R3, apellido2R3);
+                            if (idReferencia3 == 0) {
                                 //Ingresar
-                                idReferencia3=refeDao.getSiguienteId();
+                                idReferencia3 = refeDao.getSiguienteId();
                                 referencia.setIdReferencia(idReferencia3);
                                 referencia.setIdSolicitud(solicitud.getIdSolicitud());
                                 referencia.setNombre1Du(nombre1R3);
@@ -445,23 +450,46 @@ public class SolicitarBecaServlet extends HttpServlet {
                                 referencia.setDomicilio(domicilioR3);
                                 referencia.setIdMunicipio(idMunicipioR3);
                                 referencia.setTelefonoMovil(telR3);
-                                
+
                                 refeDao.ingresar(referencia);
-                            }else{
+                            } else {
                                 //Actualizar
                                 referencia = refeDao.consultarPorId(idReferencia3);
                                 referencia.setDomicilio(domicilioR3);
                                 referencia.setIdMunicipio(idMunicipioR3);
                                 referencia.setTelefonoMovil(telR3);
-                                
+
                                 refeDao.actualizar(referencia);
                             }
 
-                        } catch (Exception e) {}
-                        
-                        //documentos
-                        //hacer solicitud, actualizar beneficios y fecha solicitud
+                        } catch (Exception e) {
+                        }
 
+                        //documentos
+                        ArrayList<String> documentos = new ArrayList<>();
+                        documentos.add("solicitudFirmada");
+                        documentos.add("dictamenJefe");
+                        documentos.add("tituloAcademico");
+                        documentos.add("partida");
+                        documentos.add("dui");
+                        documentos.add("curriculo");
+                        documentos.add("notas");
+                        documentos.add("certificado");
+                        documentos.add("poder");
+                        ArrayList tipos = new ArrayList();
+                        tipos.add(122);
+                        tipos.add(123);
+                        tipos.add(124);
+                        tipos.add(125);
+                        tipos.add(126);
+                        tipos.add(127);
+                        tipos.add(128);
+                        tipos.add(129);
+                        tipos.add(130);
+
+                       
+
+                        //hacer solicitud, actualizar beneficios y fecha solicitud
                     } else {
                         //NO HAY DETALLE USUARIO
                     }
