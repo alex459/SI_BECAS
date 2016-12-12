@@ -170,6 +170,40 @@ public class TipoDocumentoDAO extends ConexionBD{
         return lista;
     }
     
+    //consultar documento por id_expediente
+    
+    public ArrayList<TipoDocumento> consultarPorIdExpediente(Integer id) {
+        ArrayList<TipoDocumento> lista = new ArrayList<TipoDocumento>();
+        TipoDocumento temp = new TipoDocumento();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_TIPO_DOCUMENTO, TIPO_DOCUMENTO, DEPARTAMENTO, DESCRIPCION FROM TIPO_DOCUMENTO WHERE ID_TIPO_DOCUMENTO IN (SELECT ID_TIPO_DOCUMENTO FROM DOCUMENTO WHERE ID_EXPEDIENTE ="+ id +")";
+            ResultSet rs = stmt.executeQuery(sql);
+            
+
+            while (rs.next()) {
+                temp = new TipoDocumento();
+                int ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");
+                String TIPO_DOCUMENTO=rs.getString("TIPO_DOCUMENTO");
+                String DEPARTAMENTO=rs.getString("DEPARTAMENTO");
+                String DESCRIPCION=rs.getString("DESCRIPCION");
+                temp.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setDepartamento(DEPARTAMENTO);
+                temp.setDescripcion(DESCRIPCION);
+                lista.add(temp);
+            }
+            
+            this.cerrarConexion();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return lista;
+    }
+    
     //consultar tipo documento por departamento
     public ArrayList<TipoDocumento> consultarPorDepartamento(String departamento) {
         ArrayList<TipoDocumento> lista = new ArrayList<TipoDocumento>();

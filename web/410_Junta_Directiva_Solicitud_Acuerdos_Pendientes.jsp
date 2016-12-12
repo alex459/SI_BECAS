@@ -287,7 +287,9 @@
                                         out.write("<td>" + rs.getString(8) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='408_Comision_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='RESOLVER_SOLICITUD'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='RESOLVER_SOLICITUD'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                         out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(9) + "' ><input type='submit' class='btn btn-primary' name='submit' value='Resolver'></form> ");
+                                        
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");
