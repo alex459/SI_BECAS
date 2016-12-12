@@ -22,19 +22,29 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="textinput">Primer nombre</label>
-                                <input name="nombre1R1" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" ng-model="data.nombre1R1">
+                                <input name="nombre1R1" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" ng-model="data.nombre1R1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1R1.$error.required">El Primer Nombre es requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1R1.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1R1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Segundo nombre</label>
-                                <input name="nombre2R1" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md" ng-model="data.nombre2R1">
+                                <input name="nombre2R1" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md" ng-model="data.nombre2R1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="solicitud.nombre2R1.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre2R1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Primer apellido</label>
-                                <input name="apellido1R1" type="text" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="data.apellido1R1">
+                                <input name="apellido1R1" type="text" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="data.apellido1R1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1R1.$error.required">El Primer Apellido es requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1R1.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1R1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Segundo apellido</label>
-                                <input name="apellido2R1" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md" ng-model="data.apellido2R1">
+                                <input name="apellido2R1" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md" ng-model="data.apellido2R1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                    <span class="text-danger" ng-show="solicitud.apellido2R1.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido2R1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>  
                         </div>
                         <div class="row">
@@ -45,29 +55,34 @@
                         <div class="row">                                
                             <div class="col-md-12">
                                 <label class="control-label" for="textarea">Dirección</label>                    
-                                <textarea class="form-control" name="direccionR1" ng-model="data.direccionR1"></textarea>
+                                <textarea class="form-control" name="direccionR1" ng-model="data.direccionR1" ng-required="true"></textarea>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.direccionR1.$error.required">Debe ingresar la direccion del domicilio de la referencia.</span>
                             </div>
                         </div></br>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="textinput">Departamento</label>
-                                <select name="departamentoR1" class="form-control" ng-model="data.departamentoR1">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
+                                <select name="departamentoR1" class="form-control" ng-model="data.departamentoR1" ng-required="true" ng-change="activarmunicipiosR1()">
+                                    <option ng-repeat="option in departamentos" value="{{option.idDepartamento}}">{{option.nombreDepartamento}}</option>
                                 </select>
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.departamentoR1.$error.required">Debe de Seleccionar el Departamento del domicilio.</span>
+
                             </div>
                             <div class="col-md-4">
                                 <label for="textinput">Municipio</label>
-                                <select name="municipioR1" class="form-control" ng-model="data.municipioR1">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
+                                <select name="municipioR1" class="form-control" ng-model="data.municipioR1" ng-required="true" ng-disabled="activarMunicipiosR1">
+                                    <option ng-repeat="option in municipios|filter:{idDepartamento:data.departamentoR1}" value="{{option.idMunicipio}}">{{option.nombreMunicipio}}</option>
                                 </select>
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.municipioR1.$error.required">Debe de Seleccionar el Municipio del domicilio.</span>
                             </div>  
                         </div>
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="textinput">Número de teléfono</label>
-                                <input name="telefonoR1" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md" ng-model="data.telefonoR1">
+                                <input name="telefonoR1" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md" ng-model="data.telefonoR1" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telefonoR1.$error.required">Debe ingresar el numero de telefono de la persona de referencia.</span>
+                    <span class="text-danger" ng-show="solicitud.telefonoR1.$error.minlength">Debe ingresar 8 digitos.</span>
+                    <span class="text-danger" ng-show="solicitud.telefonoR1.$error.pattern">Solo se permiten numeros. (0-9).</span>
                             </div>
                         </div>
 
@@ -78,19 +93,29 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="textinput">Primer nombre</label>
-                                <input name="nombre1R2" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" ng-model="data.nombre1R2">
+                                <input name="nombre1R2" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" ng-model="data.nombre1R2" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1R2.$error.required">El Primer Nombre es requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1R2.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1R2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Segundo nombre</label>
-                                <input name="nombre2R2" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md" ng-model="data.nombre2R2">
+                                <input name="nombre2R2" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md" ng-model="data.nombre2R2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="solicitud.nombre2R2.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre2R2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Primer apellido</label>
-                                <input name="apellido1R2" type="text" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="data.apellido1R2">
+                                <input name="apellido1R2" type="text" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="data.apellido1R2" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1R2.$error.required">El Primer Apellido es requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1R2.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1R2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Segundo apellido</label>
-                                <input name="apellido2R2" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md" ng-model="data.apellido2R2">
+                                <input name="apellido2R2" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md" ng-model="data.apellido2R2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                    <span class="text-danger" ng-show="solicitud.apellido2R2.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido2R2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>  
                         </div>
                         <div class="row">
@@ -101,29 +126,34 @@
                         <div class="row">                                
                             <div class="col-md-12">
                                 <label class="control-label" for="textarea">Dirección</label>                    
-                                <textarea class="form-control" name="direccionR2" ng-model="data.direccionR2"></textarea>
+                                <textarea class="form-control" name="direccionR2" ng-model="data.direccionR2" ng-required="true"></textarea>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.direccionR2.$error.required">Debe ingresar la direccion del domicilio de la referencia.</span>
                             </div>
                         </div></br>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="textinput">Departamento</label>
-                                <select name="departamentoR2" class="form-control" ng-model="data.departamentoR2">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
+                                <select name="departamentoR2" class="form-control" ng-model="data.departamentoR2" ng-required="true" ng-change="activarmunicipiosR2()">
+                                    <option ng-repeat="option in departamentos" value="{{option.idDepartamento}}">{{option.nombreDepartamento}}</option>
                                 </select>
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.departamentoR2.$error.required">Debe de Seleccionar el Departamento del domicilio.</span>
+
                             </div>
                             <div class="col-md-4">
                                 <label for="textinput">Municipio</label>
-                                <select name="municipioR2" class="form-control" ng-model="data.municipioR2">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
+                                <select name="municipioR2" class="form-control" ng-model="data.municipioR2" ng-required="true" ng-disabled="activarMunicipiosR2">
+                                    <option ng-repeat="option in municipios|filter:{idDepartamento:data.departamentoR2}" value="{{option.idMunicipio}}">{{option.nombreMunicipio}}</option>
                                 </select>
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.municipioR2.$error.required">Debe de Seleccionar el Municipio del domicilio.</span>
                             </div>  
                         </div>
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="textinput">Número de teléfono</label>
-                                <input name="telefonoR2" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md" ng-model="data.telefonoR2">
+                                <input name="telefonoR2" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md" ng-model="data.telefonoR2" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telefonoR2.$error.required">Debe ingresar el numero de telefono de la persona de referencia.</span>
+                    <span class="text-danger" ng-show="solicitud.telefonoR2.$error.minlength">Debe ingresar 8 digitos.</span>
+                    <span class="text-danger" ng-show="solicitud.telefonoR2.$error.pattern">Solo se permiten numeros. (0-9).</span>
                             </div>
                         </div>
 
@@ -134,19 +164,29 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="textinput">Primer nombre</label>
-                                <input name="nombre1R3" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" ng-model="data.nombre1R3">
+                                <input name="nombre1R3" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" ng-model="data.nombre1R3" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1R3.$error.required">El Primer Nombre es requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1R3.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1R3.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Segundo nombre</label>
-                                <input name="nombre2R3" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md" ng-model="data.nombre2R3">
+                                <input name="nombre2R3" type="text" placeholder="ingrese el segundo nombre" class="form-control input-md" ng-model="data.nombre2R3" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="solicitud.nombre2R3.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre2R3.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Primer apellido</label>
-                                <input name="apellido1R3" type="text" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="data.apellido1R3">
+                                <input name="apellido1R3" type="text" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="data.apellido1R3" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1R3.$error.required">El Primer Apellido es requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1R3.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1R3.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>
                             <div class="col-md-3">
                                 <label for="textinput">Segundo apellido</label>
-                                <input name="apellido2R3" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md" ng-model="data.apellido2R3">
+                                <input name="apellido2R3" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md" ng-model="data.apellido2R3" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                    <span class="text-danger" ng-show="solicitud.apellido2R3.$error.minlength">Minimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido2R3.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                             </div>  
                         </div>
                         <div class="row">
@@ -157,29 +197,34 @@
                         <div class="row">                                
                             <div class="col-md-12">
                                 <label class="control-label" for="textarea">Dirección</label>                    
-                                <textarea class="form-control" name="direccionR3" ng-model="data.direccionR3"></textarea>
+                                <textarea class="form-control" name="direccionR3" ng-model="data.direccionR3" ng-required="true"></textarea>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.direccionR3.$error.required">Debe ingresar la direccion del domicilio de la referencia.</span>
                             </div>
                         </div></br>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="textinput">Departamento</label>
-                                <select name="departamentoR3" class="form-control" ng-model="data.departamentoR3">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
+                                <select name="departamentoR3" class="form-control" ng-model="data.departamentoR3" ng-required="true" ng-change="activarmunicipiosR3()">
+                                    <option ng-repeat="option in departamentos" value="{{option.idDepartamento}}">{{option.nombreDepartamento}}</option>
                                 </select>
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.departamentoR3.$error.required">Debe de Seleccionar el Departamento del domicilio.</span>
+
                             </div>
                             <div class="col-md-4">
                                 <label for="textinput">Municipio</label>
-                                <select name="municipioR3" class="form-control" ng-model="data.municipioR3">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
+                                <select name="municipioR3" class="form-control" ng-model="data.municipioR3" ng-required="true" ng-disabled="activarMunicipiosR3">
+                                    <option ng-repeat="option in municipios|filter:{idDepartamento:data.departamentoR3}" value="{{option.idMunicipio}}">{{option.nombreMunicipio}}</option>
                                 </select>
+                                <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.municipioR3.$error.required">Debe de Seleccionar el Municipio del domicilio.</span>
                             </div>  
                         </div>
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="textinput">Número de teléfono</label>
-                                <input name="telefonoR3" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md" ng-model="data.telefonoR3">
+                                <input name="telefonoR3" type="text" placeholder="ingrese el número de teléfono del contacto" class="form-control input-md" ng-model="data.telefonoR3" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telefonoR3.$error.required">Debe ingresar el numero de telefono de la persona de referencia.</span>
+                    <span class="text-danger" ng-show="solicitud.telefonoR3.$error.minlength">Debe ingresar 8 digitos.</span>
+                    <span class="text-danger" ng-show="solicitud.telefonoR3.$error.pattern">Solo se permiten numeros. (0-9).</span>
                             </div>
                         </div>
 
@@ -189,9 +234,9 @@
         </fieldset> 
         <div class="row">
             <div class="col-md-4 col-lg-offset-4">
-                <a href="#/documentos"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a> 
+                <a href="#/documentos"><button class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</button></a> 
                 <a href="#/oferta"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
-                <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+                <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
             </div>
         </div></br>
     </div> 

@@ -174,7 +174,7 @@ public class SolocitudBecaDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_USUARIO, ID_EXPEDIENTE, ID_OFERTA_BECA, FECHA_SOLICITUD, BENEFICIOS FROM SOLICITUD_DE_BECA where ID_USUARIO = " + idUsuario +"AND ID_EXPEDIENTE =" +idExpediente;
+            String sql = "SELECT ID_SOLICITUD, ID_USUARIO, ID_EXPEDIENTE, ID_OFERTA_BECA, FECHA_SOLICITUD, BENEFICIOS FROM SOLICITUD_DE_BECA where ID_USUARIO = " + idUsuario +" AND ID_EXPEDIENTE =" +idExpediente;
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
 

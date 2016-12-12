@@ -107,7 +107,7 @@ public class ReferenciasDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "INSERT INTO REFERENCIAS(ID_REFERENCIA,ID_SOLICITUD,ID_MUNICIPIO,NOMBRE1,NOMBRE2,APELLIDO1,APELLIDO2,DOMICILIO,TELEFONO_MOVIL) VALUES("+referencias.getIdReferencia()+", "+referencias.getIdSolicitud()+", "+referencias.getIdMunicipio()+", '"+referencias.getNombre1Du()+"','"+referencias.getNombre2Du()+"','"+referencias.getApellido1Du()+"','"+referencias.getApellido2Du()+"','"+referencias.getDomicilio()+"','"+referencias.getTelefonoMovil()+"');";
+            String sql = "INSERT INTO referencias(ID_REFERENCIA, ID_SOLICITUD, ID_MUNICIPIO, NOMBRE1_DU, NOMBRE2_DU, APELLIDO1_DU, APELLIDO2_DU, DOMICILIO, TELEFONO_MOVIL) VALUES ("+referencias.getIdReferencia()+", "+referencias.getIdSolicitud()+", "+referencias.getIdMunicipio()+", '"+referencias.getNombre1Du()+"','"+referencias.getNombre2Du()+"','"+referencias.getApellido1Du()+"','"+referencias.getApellido2Du()+"','"+referencias.getDomicilio()+"','"+referencias.getTelefonoMovil()+"');";
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();

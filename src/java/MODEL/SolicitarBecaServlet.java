@@ -16,6 +16,7 @@ import DAO.InvestigacionesDAO;
 import DAO.ProgramaEstudioDAO;
 import DAO.ReferenciasDAO;
 import DAO.SolocitudBecaDAO;
+import DAO.TipoDocumentoDAO;
 import DAO.UsuarioDAO;
 import POJO.Asociaciones;
 
@@ -29,22 +30,26 @@ import POJO.Investigaciones;
 import POJO.ProgramaEstudio;
 import POJO.Referencias;
 import POJO.SolicitudDeBeca;
+import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author adminPC
  */
 @WebServlet(name = "SolicitarBecaServlet", urlPatterns = {"/SolicitarBecaServlet"})
+@MultipartConfig(maxFileSize = 16177215)
+
 public class SolicitarBecaServlet extends HttpServlet {
 
     /**
@@ -476,7 +481,7 @@ public class SolicitarBecaServlet extends HttpServlet {
                         documentos.add("notas");
                         documentos.add("certificado");
                         documentos.add("poder");
-                        ArrayList tipos = new ArrayList();
+                        ArrayList<Integer> tipos = new ArrayList<>();
                         tipos.add(122);
                         tipos.add(123);
                         tipos.add(124);
@@ -487,9 +492,67 @@ public class SolicitarBecaServlet extends HttpServlet {
                         tipos.add(129);
                         tipos.add(130);
 
-                       
+                        //Recuperando datos del formulario
+                        DocumentoDAO documentoDao = new DocumentoDAO();
+                        InputStream documentoAdjunto = null;
+                        String obs = "DOCUMENTO ADJUNTO PARA SOLICITUD DE BECA DEL USUARIO: " + user;
+                        TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
+                        TipoDocumento tipoDocumento = new TipoDocumento();
+                        for (int i = 0; i < 9; i++) {
+                            Documento anexo = new Documento();
+                            //Comparando si exite documento
+                            Integer idTipo = tipos.get(i);
+                            Integer idDocumento = documentoDao.ExisteDocumento(exp.getIdExpediente(), idTipo);
+                            Part filePart = null;
+                            filePart = request.getPart(documentos.get(i));
+                            if (filePart != null) {
+                                documentoAdjunto = filePart.getInputStream();
+                            }
+
+                            if (idDocumento == 0) {
+                                //Ingresar Documento
+                                idDocumento = documentoDao.getSiguienteId();
+                                tipoDocumento = tipoDao.consultarPorId(idTipo);
+                                anexo.setIdDocumento(idDocumento);
+                                anexo.setIdTipoDocumento(tipoDocumento);
+                                anexo.setIdExpediente(exp);
+                                anexo.setDocumentoDigital(documentoAdjunto);
+                                anexo.setObservacion(obs);
+                                anexo.setEstadoDocumento("INGRESADO");
+                                documentoDao.Ingresar(anexo);
+                            } else {
+                                //Actualizar Documento
+                                anexo = documentoDao.ObtenerPorId(idDocumento);
+                                anexo.setDocumentoDigital(documentoAdjunto);
+                                documentoDao.ActualizarDocumentoObservacion(anexo);
+                            }
+
+                        }
 
                         //hacer solicitud, actualizar beneficios y fecha solicitud
+                        Documento acuerdo = new Documento();
+                        Date fechaHoy = new Date();
+                        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
+                        Integer idDoc = documentoDao.getSiguienteId();
+                        Integer tip = 131;
+                        tipoDocumento = tipoDao.consultarPorId(tip);
+                        String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
+
+                        acuerdo.setIdDocumento(idDoc);
+                        acuerdo.setIdTipoDocumento(tipoDocumento);
+                        acuerdo.setIdExpediente(exp);
+                        acuerdo.setFechaSolicitud(sqlDate);
+                        acuerdo.setObservacion(observacion);
+                        acuerdo.setEstadoDocumento("PENDIENTE");
+                        boolean solicitarAcuerdo = documentoDao.solicitarDocumento(acuerdo);
+                        //Cambiar Estado de Progreso 
+                        exp.setEstadoProgreso("EN PROCESO");
+                        expDao.actualizarExpediente(exp);
+                        //Actualizar Beneficios y fecha Solicitud de solicitud Beca
+                        String beneficios = request.getParameter("beneficios");
+                        solicitud.setBeneficios(beneficios);
+                        solicitud.setFechaSolicitud(sqlDate);
+                        solicitudBecaDao.actualizar(solicitud);
                     } else {
                         //NO HAY DETALLE USUARIO
                     }

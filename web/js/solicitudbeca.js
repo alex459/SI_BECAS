@@ -25,8 +25,6 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
 })
 .controller('solicitudCtrl', function($scope) {
     
-    $scope.action= "";
-    $scope.oferta={};
     $scope.data = {nombre:"",
     nombre2: "",
     apellido1: "",
@@ -174,7 +172,9 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Nproy= 2;
     $scope.verAgregarProyecto= true;
     $scope.checkProyecto = false;
+    $scope.verAgregarProyecto2= true;
     $scope.agregarProyecto = function(){
+    $scope.checkProyecto = false;
     if($scope.Nproy <=4){
         $scope.data.proyectos.push({
             id: $scope.Nproy,
@@ -239,6 +239,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Naso= 2;
     $scope.verAgregarAsociacion= true;
     $scope.agregarAsociacion = function(){
+        $scope.checkAsociacion = $scope.checkAsociacion = false;
     if($scope.Nedu <=3){
         $scope.data.asociaciones.push({
             id: $scope.Naso,
@@ -322,5 +323,25 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
             }
         }
     };
-
+    
+    $scope.activarMunicipios = true;
+    $scope.activarmunicipios = function (){
+        $scope.activarMunicipios = false;
+    };
+    $scope.activarMunicipiosDomicilio = true;
+    $scope.activarmunicipiosDomicilio = function (){
+        $scope.activarMunicipiosDomicilio = false;
+    };
+    $scope.activarMunicipiosR1 = true;
+    $scope.activarmunicipiosR1 = function (){
+    $scope.activarMunicipiosR1 = false;
+    };
+    $scope.activarMunicipiosR2 = true;
+    $scope.activarmunicipiosR2 = function (){
+    $scope.activarMunicipiosR2 = false;
+    };
+    $scope.activarMunicipiosR3 = true;
+    $scope.activarmunicipiosR3 = function (){
+    $scope.activarMunicipiosR3 = false;
+    };
 });

@@ -120,13 +120,13 @@
     </head>
 
 
-    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos=<%=departamentosJSON%>; municipios=<%=municipiosJSON%>; facultad='<%=facultad.getFacultad()%>'; user='<%=user%>'">
+    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos=<%=departamentosJSON%>; municipios=<%=municipiosJSON%>; facultad='<%=facultad.getFacultad()%>'; user='<%=user%>'; nombreOferta='<%=nombreOferta%>'; nombreInstitucion='<%=nombreInstitucion%>'; duracion='<%=duracion%>'; pais='<%=pais%>'; tipoBeca='<%=tipoBeca%>';">
 
         <div class="container-fluid" ng-init="oferta={nombre:'<%=nombreOferta%>',institucion: '<%=nombreInstitucion%>'}" >
         <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
         <fieldset class="custom-border">
             <legend class="custom-border">Solicitud de beca de postgrado</legend>
-            <form class="form-horizontal" name="solicitud" action="SolicitarBecaServlet" method="POST">
+            <form class="form-horizontal" name="solicitud" action="SolicitarBecaServlet" method="POST" enctype="multipart/form-data">
                 <input type="hidden" ng-model="oferta.nombre">
             
                 <div class="row" ng-view>            
@@ -169,25 +169,25 @@
         </div>
     </div>    
 
-
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-route.min.js"></script>
-    <script src="js/solicitudbeca.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/solicitudbeca.js"></script>
     <script type="text/javascript">
-                        $(function () {
-                            $('.input-group.date').datepicker({
-                                format: 'yyyy-mm-dd',
-                                calendarWeeks: true,
-                                todayHighlight: true,
-                                autoclose: true,
-                                startDate: new Date()
-                            });
-                        });
-
-    </script>
+    $(function () {
+        $('.input-group.date').datepicker({            
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: new Date()
+        });
+    });
+    
+</script>
+    
 </body>
 </html>

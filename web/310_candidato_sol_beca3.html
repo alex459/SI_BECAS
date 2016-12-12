@@ -42,18 +42,20 @@
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.tipo}}.$error.required">Seleccione el tipo de Educacion.</span>
                                                 </td>
                                                     <td>
-                                                        <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index +1]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/">
+                                                        <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index +1]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                         <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.grado}}.$error.required">Ingrese el grado alcanzado.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.minlength">Minimo 10 caracteres.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                                     </td>
-                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index +1]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/">
+                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index +1]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                         <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.institucion}}.$error.required">Ingrese el nombre de la Institucion.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.minlength">Minimo 10 caracteres.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                                 </td>
                                                 <td>
-                                                    <input name="{{x.anyo}}" type="number" class="form-control" ng-model="aux.auxAnyoEdu[$index +1]" ng-required="true" ng-pattern="/^[0-9]*$/" min="1940" max="2030">
+                                                    <div class="input-group date">
+                                                        <input type="text" name="{{x.anyo}}" class="form-control" ng-disabled="false" ng-model="aux.auxAnyoEdu[$index +1]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="aux.auxAnyoEdu[$index +1]"></i></span>
+                                                    </div>
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.anyo}}.$error.required">Ingrese el Año de graduacion del Estudio.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.min">Año minimo permitido 1940.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.pattern">Solo se permiten letras digitos. (0-9).</span>
@@ -86,7 +88,7 @@
                                             <tr ng-repeat="x in data.proyectos" >
                                                 <td>{{$index + 1}}</td>
                                                 <td>
-                                                    <input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/">
+                                                    <input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.titulo}}.$error.required">Ingrese el nombre del proyecto.</span>
                                                     <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.minlength">Minimo 10 caracteres.</span>
                                                     <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
@@ -95,7 +97,7 @@
                                                     <div class="row">
                                                         <div class="col-sm-2"></div>
                                                         <div class="col-sm-4">
-                                                            <input type="radio" name="{{x.publicado}}" value="1" ng-model="aux.auxPublicado[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto">
+                                                            <input type="radio" name="{{x.publicado}}" value="1" ng-model="aux.auxPublicado[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto" ng-checked="limpiarProyecto()">
                                                             <label>  Si </label>
                                                         </div>
                                                         <div class="col-sm-4">
@@ -113,7 +115,7 @@
                                         </tbody>
                                     </table>
                                     <div class="row text-center">
-                                        <a href="" class="btn btn-primary" ng-click="agregarProyecto()" ng-show="verAgregarProyecto" >Agregar Nuevo Proyecto</a>
+                                        <a href="" class="btn btn-primary" ng-click="agregarProyecto()" ng-show="!checkProyecto&&verAgregarProyecto" >Agregar Nuevo Proyecto</a>
                                     </div>
                                     </div>
                                 </div>
@@ -186,11 +188,24 @@
                         </fieldset>         
                 <div class="row">
                     <div class="col-md-4 col-lg-offset-4">
-                        <a href="#/cargos" class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</a> 
+                        <a href="#/cargos"><button class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</button></a> 
                         <a href="#/laboral" class="btn btn-primary">Regresar</a>
-                        <a href="" class="btn btn-danger">Cancelar</a>
+                        <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
                     </div>
                 </div></br>
             </br>
         </div>
 </div>
+
+<script type="text/javascript">
+                        $(function () {
+                            $('.input-group.date').datepicker({
+                                format: 'yyyy-mm-dd',
+                                calendarWeeks: true,
+                                todayHighlight: true,
+                                autoclose: true,
+                                startDate: new Date()
+                            });
+                        });
+
+</script>

@@ -21,10 +21,10 @@
                             <div class="row no-gutter">
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="labeltitulo" value="{{oferta.nombre}}" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
+                                        <input type="text" class="form-control" id="labeltitulo" value="Titulo a Obtener:" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="titulo" disabled>    
+                                        <input type="text" class="form-control" id="titulo" ng-value="nombreOferta" ng-disabled="true">    
                                     </div>
                                 </div>
                             </div>   
@@ -34,29 +34,29 @@
                                         <input type="text" class="form-control" id="labelinstestu" value="Institución de estudio:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="instEstudio" disabled>    
+                                        <input type="text" class="form-control" id="instEstudio" ng-value="nombreInstitucion" ng-disabled="true">    
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" class="form-control" id="labelPais" value="País:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="pais" disabled>    
+                                        <input type="text" class="form-control" id="pais" ng-value="pais" ng-disabled="true">    
                                     </div>
                                 </div>
                             </div> 
                             <div class="row no-gutter">
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="labelDuracion" value="Duración:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                        <input type="text" class="form-control" id="labelDuracion" value="Duración (Meses):" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="duracion" disabled>    
+                                        <input type="text" class="form-control" id="duracion" ng-value="duracion" ng-disabled="true">    
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" class="form-control" id="labeltipo" value="Tipo de beca:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="tipoBeca" disabled>    
+                                        <input type="text" class="form-control" id="tipoBeca" ng-value="tipoBeca" ng-disabled="true">    
                                     </div>
                                 </div>
                             </div> 
@@ -76,7 +76,7 @@
                             <div class="row">
                                 <div class="col-md-12">     
                                     <br><br><label>Beneficios que espera obtener:</label>
-                                    <textarea class="form-control" name="beneficios" ng-model="data.beneficios"></textarea><br>
+                                    <textarea class="form-control" name="beneficios" ng-model="data.beneficios" ng-required="true" minlength="10" maxlength="1024"></textarea><br>
                                 </div>
                             </div> 
                             <div class="row">
@@ -93,7 +93,7 @@
                                         <tbody>
                                             <tr ng-repeat="x in data.programas">
                                                 <td> <input type="number" name="{{semestre}}" class="form-control" ng-disabled="true" ng-value="{{$index +1}}" ng-model="aux.auxSemestre[$index +1]"></td>
-                                                <td> <textarea class="form-control" id="textarea" name="{{x.programa}}" ng-model="aux.auxPrograma[$index +1]" ></textarea></td>
+                                                <td> <textarea class="form-control" id="textarea" name="{{x.programa}}" ng-model="aux.auxPrograma[$index +1]" ng-required="true" minlength="10" maxlength="1024"></textarea></td>
                                                 <td><a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarPrograma()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
@@ -106,9 +106,9 @@
                         </fieldset>
                 <div class="row">
                     <div class="col-md-4 col-lg-offset-4">
-                        <a href="#/referencias"><button id="button1id" name="continuar" class="btn btn-primary">Continuar</button></a> 
-                        <a href="#/cargos"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
-                        <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
+                        <a href="#/referencias"><button class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</button></a> 
+                        <a href="#/cargos"><button class="btn btn-primary">Regresar</button></a>
+                        <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
                     </div>
                 </div>
             </div> 

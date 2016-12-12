@@ -409,5 +409,26 @@ public class DocumentoDAO extends ConexionBD{
         
         return doc;
     }
+
+    public Integer ExisteDocumento(Integer idExpediente, Integer idTipo) {
+        Integer idDocumento = 0;
+        this.abrirConexion() ;
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_DOCUMENTO FROM DOCUMENTO where ID_EXPEDIENTE = " + idExpediente +" AND ID_TIPO_DOCUMENTO= " + idTipo;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idDocumento = rs.getInt("ID_IDIOMA"); 
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return idDocumento;
+    }
+    
            
 }

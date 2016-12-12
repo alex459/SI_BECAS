@@ -90,7 +90,7 @@ public class ProgramaEstudioDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "INSERT INTO PROGRAMA_ESTUDIO(ID_PROGRAMA_ESTUDIO,ID_SOLICITUD,SEMESTRE,PROGRAMA_ESTUDIO) VALUES("+programaEstudio.getIdProgramaEstudio()+", "+programaEstudio.getIdSolicitud()+", "+programaEstudio.getSemestre()+", '"+programaEstudio.getProgramaEstudio()+"');";
+            String sql = "INSERT INTO PROGRAMA_ESTUDIO(ID_PROGRAMA_ESTUDIO,ID_SOLICITUD,SEMESTRE,PROGRAMA_ESTUDIO) VALUES("+programaEstudio.getIdProgramaEstudio()+", "+programaEstudio.getIdSolicitud().getIdSolicitud()+", "+programaEstudio.getSemestre()+", '"+programaEstudio.getProgramaEstudio()+"');";
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
