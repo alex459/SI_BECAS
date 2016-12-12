@@ -36,14 +36,14 @@
                                     <span class="text-danger" ng-show="solicitud.{{x.asociacion}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                 </td>
                                 <td>
-                                    <input type="checkBox" ng-show="$first && $last" ng-model="checkAsociacion"> <label ng-show="$first && $last">Ninguno</label>
+                                    <input type="checkBox" ng-show="$first && $last" ng-model="checkAsociacion" ng-click="cambiarcheckAsociacion()"> <label ng-show="$first && $last">Ninguno</label>
                                     <a name="eliminar" class="btn btn-danger" ng-show="!$first && $last" ng-click="eliminarAsociacion()">Eliminar</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="row text-center">
-                        <a href="" class="btn btn-primary" ng-click="agregarAsociacion()" ng-show="verAgregarAsociacion">Agregar Nueva Asociacion</a>
+                        <a href="" class="btn btn-primary" ng-click="agregarAsociacion()" ng-show="!checkAsociacion&&verAgregarAsociacion">Agregar Nueva Asociacion</a>
                     </div>
                 </div>                                    
             </div>

@@ -174,7 +174,6 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.checkProyecto = false;
     $scope.verAgregarProyecto2= true;
     $scope.agregarProyecto = function(){
-    $scope.checkProyecto = false;
     if($scope.Nproy <=4){
         $scope.data.proyectos.push({
             id: $scope.Nproy,
@@ -239,7 +238,6 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Naso= 2;
     $scope.verAgregarAsociacion= true;
     $scope.agregarAsociacion = function(){
-        $scope.checkAsociacion = $scope.checkAsociacion = false;
     if($scope.Nedu <=3){
         $scope.data.asociaciones.push({
             id: $scope.Naso,
@@ -343,5 +341,11 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.activarMunicipiosR3 = true;
     $scope.activarmunicipiosR3 = function (){
     $scope.activarMunicipiosR3 = false;
+    };
+    $scope.cambiarcheckProyecto = function (){
+    $scope.checkProyecto = !$scope.checkProyecto;
+    };
+    $scope.cambiarcheckAsociacion = function (){
+    $scope.checkAsociacion = !$scope.checkAsociacion;
     };
 });

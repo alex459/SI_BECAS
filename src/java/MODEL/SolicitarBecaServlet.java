@@ -33,6 +33,8 @@ import POJO.SolicitudDeBeca;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
@@ -75,8 +77,8 @@ public class SolicitarBecaServlet extends HttpServlet {
             String nombre2 = request.getParameter("nombre2");
             String apellido1 = request.getParameter("apellido1");
             String apellido2 = request.getParameter("apellido2");
-            //
-            String fechaNacimiento = request.getParameter("fechaNacimiento");
+            java.sql.Date fechaNacimiento = new java.sql.Date(StringAFecha(request.getParameter("fechaNacimiento")).getTime());
+            //String fechaNacimiento = request.getParameter("fechaNacimiento");
             //String departamentoNacimiento = request.getParameter("departamentoNacimiento");
             Integer municipioNacimiento = Integer.parseInt(request.getParameter("municipioNacimiento"));
             String genero = request.getParameter("genero");
@@ -90,16 +92,23 @@ public class SolicitarBecaServlet extends HttpServlet {
             String profesion = request.getParameter("profesion");
             String cargo = request.getParameter("cargo");
             String unidad = request.getParameter("unidad");
-            //
-            String fechaContratacion = request.getParameter("fechaContratacion");
+            java.sql.Date fechaContratacion = new java.sql.Date(StringAFecha(request.getParameter("fechaContratacion")).getTime());
+            //String fechaContratacion = request.getParameter("fechaContratacion");
 
-            //Pantalla 310
+            boolean checkProyecto = Boolean.parseBoolean(request.getParameter("checkProyecto"));
+            boolean checkAsociacion = Boolean.parseBoolean(request.getParameter("checkAsociacion"));
             Integer nEducacion = Integer.parseInt(request.getParameter("nEducacion"));
-            Integer nInvestigacion = Integer.parseInt(request.getParameter("nInvestigacion"));
-            Integer nIdioma = Integer.parseInt(request.getParameter("nIdioma"));
-            Integer nAsociacion = Integer.parseInt(request.getParameter("nAsociacion"));
+            Integer nInvestigacion = 0;
+            Integer nIdioma = Integer.parseInt(request.getParameter("nAsociacion"));
+            Integer nAsociacion = 0;
             Integer nCargos = Integer.parseInt(request.getParameter("nCargos"));
             Integer nPrograma = Integer.parseInt(request.getParameter("nPrograma"));
+            if(checkProyecto == false){
+                nInvestigacion = Integer.parseInt(request.getParameter("nInvestigacion"));
+            }else{}
+            if(checkAsociacion == false){
+                nAsociacion = Integer.parseInt(request.getParameter("nAsociacion"));
+            }else{}
 
             //obteniendo solicitud y expediente
             ExpedienteDAO expDao = new ExpedienteDAO();
@@ -126,7 +135,7 @@ public class SolicitarBecaServlet extends HttpServlet {
                         detalleUsuario.setNombre2Du(nombre2);
                         detalleUsuario.setApellido1Du(apellido1);
                         detalleUsuario.setApellido2Du(apellido2);
-                        //detalleUsuario.setFechaNacimiento(fechaNacimiento);
+                        detalleUsuario.setFechaNacimiento(fechaNacimiento);
                         detalleUsuario.setIdMunicipioNacimiento(municipioNacimiento);
                         detalleUsuario.setGenero(genero);
                         detalleUsuario.setDireccion(direccion);
@@ -134,7 +143,7 @@ public class SolicitarBecaServlet extends HttpServlet {
                         detalleUsuario.setTelefonoCasa(telCasa);
                         detalleUsuario.setTelefonoMovil(telMovil);
                         detalleUsuario.setTelefonoOficina(telOficina);
-                        //detalleUsuario.setFechaContratacion(fechaContratacion);
+                        detalleUsuario.setFechaContratacion(fechaContratacion);
                         detalleUsuario.setDepartamento(unidad);
                         detalleUsuario.setProfesion(profesion);
 
@@ -300,8 +309,8 @@ public class SolicitarBecaServlet extends HttpServlet {
                                 String cargoAnterior = request.getParameter(varcargo);
                                 //String fechaInicioCargo= request.getParameter(varfechaInicio);
                                 //String fechaFinCargo= request.getParameter(varfechaFin);
-                                Date fechaInicioCargo = new Date();
-                                Date fechaFinCargo = new Date();
+                                java.sql.Date fechaInicioCargo = new java.sql.Date(StringAFecha(request.getParameter("varfechaInicio")).getTime());
+                                java.sql.Date fechaFinCargo = new java.sql.Date(StringAFecha(request.getParameter("varfechaFin")).getTime());
                                 String responsabilidad = request.getParameter(varresponsabilidades);
                                 //Comparando con la base
                                 Integer idCargoAnt = cargosDao.ExisteAsociacionAnterior(detalleUsuario.getIdDetalleUsuario(), lugarCargo, cargoAnterior, fechaInicioCargo, fechaFinCargo);
@@ -566,6 +575,20 @@ public class SolicitarBecaServlet extends HttpServlet {
             //Mensaje de Error de lectura de Datos
         }
 
+    }
+    
+    public Date StringAFecha(String Sfecha) {
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = null;
+        try {
+            fecha = formatoDelTexto.parse(Sfecha);           
+        } catch (ParseException ex) {
+
+            ex.printStackTrace();
+
+        }
+        System.out.println("fechanice!");
+        return fecha;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

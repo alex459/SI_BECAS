@@ -109,13 +109,13 @@
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.publicado}}.$error.required">Seleccione si fue publicado</span>
                                                 </td>
                                                 <td>
-                                                    <input type="checkBox" ng-show="$first&&$last" ng-model="checkProyecto"> <label ng-show="$first&&$last">Ninguno</label>
+                                                    <input type="checkBox" ng-show="$first&&$last" ng-model="checkProyecto" ng-click="cambiarcheckProyecto()"> <label ng-show="$first&&$last">Ninguno</label>
                                                     <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarProyecto()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div class="row text-center">
-                                        <a href="" class="btn btn-primary" ng-click="agregarProyecto()" ng-show="!checkProyecto&&verAgregarProyecto" >Agregar Nuevo Proyecto</a>
+                                        <a href="" class="btn btn-primary" ng-click="agregarProyecto()" ng-show="!checkProyecto&&verAgregarProyecto">Agregar Nuevo Proyecto</a>
                                     </div>
                                     </div>
                                 </div>

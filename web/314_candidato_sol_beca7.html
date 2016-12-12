@@ -204,6 +204,7 @@
                 <input type="hidden" name="{{x.publicado}}" ng-value="aux.auxPublicado[$index +1]">
             </div>
             <input type="hidden" name="nInvestigacion" ng-value = "{{Nproy - 1}}" >
+            <input type="hidden" name="checkProyecto" ng-value = "{{checkProyecto}}" >
             <div class="row" ng-repeat="x in data.idiomas">
                 <input type="hidden" name="{{x.idioma}}" ng-value="aux.auxIdioma[$index +1]">
                 <input type="hidden" name="{{x.nivelHabla}}" ng-value="aux.auxNivelHabla[$index +1]">
@@ -215,6 +216,7 @@
                 <input type="hidden" name="{{x.asociacion}}" ng-value="aux.auxAsociacion[$index +1]">
             </div>
             <input type="hidden" name="nAsociacion" ng-value = "{{Naso - 1}}" >
+            <input type="hidden" name="checkAsociacion" ng-value = "{{checkAsociacion}}" >
             <div class="row" ng-repeat="x in data.cargos">
                 <input type="hidden" name="{{x.lugar}}" ng-value="aux.auxLugar[$index +1]">
                 <input type="hidden" name="{{x.cargo}}" ng-value="aux.auxCargo[$index +1]">
