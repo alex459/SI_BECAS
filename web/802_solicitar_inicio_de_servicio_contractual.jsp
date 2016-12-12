@@ -4,6 +4,8 @@
     Author     : Manuel Miranda
 --%>
 
+<%@page import="POJO.Expediente"%>
+<%@page import="DAO.ExpedienteDAO"%>
 <%-- 
     Document   : 801_agregar_documeto_finalizaciom_beca
     Created on : 12-04-2016, 07:03:26 AM
@@ -22,6 +24,24 @@
      response.sendRedirect("login.jsp");
         return;
      }
+     
+    boolean expedienteAbierto = false;
+    try{
+        // Comprobando si tiene un proceso de beca abierto
+        ExpedienteDAO expDao = new ExpedienteDAO();
+        expedienteAbierto = expDao.expedienteAbierto(user);
+    } catch (Exception e){
+        e.printStackTrace();
+    }
+    //Si no ha iniciado un proceso de beca lo reenvia a la pagina de las ofertas
+    if(expedienteAbierto == false){
+        response.sendRedirect("301_inf_publica_ofertas_beca.jsp");
+        return;
+    }
+    
+    //obtener el expediente
+    ExpedienteDAO expDao = new ExpedienteDAO();
+    Expediente expediente = expDao.obtenerExpedienteAbierto(user);
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -74,53 +94,69 @@
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
-            <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                    <fieldset class="custom-border">
-                        <legend class="custom-border">Adjuntar documentos necesarios</legend>
-                        <div class="col-md-8 col-md-offset-2 row">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    Acta de toma de posesión:
-                                </div>
-                                <div class="col-md-7">
-                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
-                                </div>
+            <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->            
+                <fieldset class="custom-border">
+                    <legend class="custom-border">Adjuntar documentos necesarios</legend>
+                    <%if(expediente.getIdProgreso() == 12){%>
+                        <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                            <div class="text-center">
+                                <h3 class="text-danger"> Ya ha realizado una Solicitud de Dictamen de Propuesta ante Junta Directiva</h3>
+                                <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    Proyecto en que apoyara:
+                        <%}else{%>
+                            <form class="form-horizontal" action="SolicitarInicioDeServicioContractualServlet" method="post" enctype="multipart/form-data">
+                                <div class="col-md-8 col-md-offset-2 row">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Acta de toma de posesión:
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="file" name="actaPosesion" accept="application/pdf" valid-file ng-required="true">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Proyecto en que apoyara:
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="file" name="proyectoApoyara" accept="application/pdf" valid-file ng-required="true">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Carta de solicitud para Junta Directiva:
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="file" name="solicitudJD" accept="application/pdf" valid-file ng-required="true">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            Carta de solicitud para el Consejo de Becas:
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="file" name="solicitudCB" accept="application/pdf" valid-file ng-required="true">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row text-center">
+                                        <input type="hidden" name="idExpediente" value="<%=expediente.getIdExpediente()%>">
+                                        <input type="hidden" name="user" value="<%=user%>">
+                                        <input type="submit" class="btn btn-success" name="submit" value="Enviar">
+                                    </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    Carta de solicitud para Junta Directiva:
-                                </div>
-                                <div class="col-md-7">
-                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    Carta de solicitud para el Consejo de Becas:
-                                </div>
-                                <div class="col-md-7">
-                                    <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row text-center">
-                                <input type="submit" class="btn btn-success" name="submit" value="Emviar">
-                            </div>
+                            </form>    
+                        <%}%>
+                    <%}else{%>
+                        <div class="text-center">
+                            <h3 class="text-danger">No corresponde solicitar este documento </h3>
+                            <a href="305_candidato_estado_proceso.jsp" class="btn btn-primary">Ver Estado del Proceso de Beca</a>
                         </div>
-                    </fieldset>
-                </form>
+                    <%}%>
+                </fieldset>
             </div><!-- CONTENIDO DE LA PANTALLA -->
         </div>
 
