@@ -152,7 +152,7 @@
             <%if (expediente.getIdProgreso() == 5) {%>
                 <% if (expediente.getEstadoProgreso().equals("EN PROCESO")) {%>
                     <div class="text-center">
-                        <h3 class="text-danger"> Ya ha realizado una Solicitud de Dictamen de Propuesta ante Junta Directiva</h3>
+                        <h3 class="text-danger"> Ya ha realizado una Solicitud de Beca ante el Consejo de Becas</h3>
                         <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                     </div>
                 <%} else {%>
