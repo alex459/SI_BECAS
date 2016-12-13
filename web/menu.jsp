@@ -85,23 +85,6 @@
                     out.write("</ul>");
                 }
                 
-
-                //menu informacion_publica (basicamente todos pueden)
-                if(true){
-                    out.write("<ul class='nav navbar-nav'>");
-                    out.write("<li class='dropdown'>");
-                    out.write("<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Información pública<strong class='caret'></strong></a>");
-                    out.write("<ul class='dropdown-menu'>");
-                    
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='301_inf_publica_ofertas_beca.jsp'>Ofertas de becas</a></li>");                    
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='212_documentos.jsp'>Documentos</a></li>");                    
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Acerca de</a></li>");                                        
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='logout.jsp'>Login/Logout</a></li>");                    
-                    
-                    out.write("</ul>");
-                    out.write("</li>");
-                    out.write("</ul>");
-                }
                 
                 //menu de candidatos. todos menos el becarios
                 if(t==id_candidato || t==id_comision || t==id_csu || t==id_fiscalia || t==id_director_consejo || t==id_admin){                                                            
