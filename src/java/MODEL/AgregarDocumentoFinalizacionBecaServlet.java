@@ -52,7 +52,7 @@ public class AgregarDocumentoFinalizacionBecaServlet extends HttpServlet {
         if (filePart != null) {
             tituloObtenido = filePart.getInputStream();
         }
-        boolean solicitarAcuerdo = false;
+        
         boolean ingresarDocumento = false;
         
         ExpedienteDAO expDao = new ExpedienteDAO();
@@ -66,7 +66,6 @@ public class AgregarDocumentoFinalizacionBecaServlet extends HttpServlet {
             TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
         
             Integer idDoc =  documentoDao.getSiguienteId();
-            Integer idTitulo = idDoc;
             String obs = "TITULO OBTENIDO POR EL USUARIO " + user;
             Integer tip = 130;
             tipo = tipoDao.consultarPorId(tip);
@@ -118,10 +117,10 @@ public class AgregarDocumentoFinalizacionBecaServlet extends HttpServlet {
         }
         
         if(ingresarDocumento == true){
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Acuerdo de Autorizacion Inicial correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se han agregado correctamente los documentos de finalización de beca");
         }
         else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud del Acuerdo de Autorizacion Inicial.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudierón agregar correctamente los documentos de finalización de beca");
         
     }
 

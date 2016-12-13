@@ -100,7 +100,7 @@
                     <%if(expediente.getIdProgreso() == 12){%>
                         <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
                             <div class="text-center">
-                                <h3 class="text-danger"> Ya ha realizado una Solicitud de Dictamen de Propuesta ante Junta Directiva</h3>
+                                <h3 class="text-danger"> Ya ha realizado una Solicitud de inicio de servicio contractual</h3>
                                 <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                             </div>
                         <%}else{%>
@@ -126,19 +126,19 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-md-5">
-                                            Carta de solicitud para Junta Directiva:
+                                            Carta de solicitud para el Consejo de Becas:
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="file" name="solicitudJD" accept="application/pdf" valid-file ng-required="true">
+                                            <input type="file" name="solicitudCB" accept="application/pdf" valid-file ng-required="true">
                                         </div>
                                     </div>
                                     <br>
                                     <div class="row">
                                         <div class="col-md-5">
-                                            Carta de solicitud para el Consejo de Becas:
+                                            Carta de solicitud para Junta Directiva:
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="file" name="solicitudCB" accept="application/pdf" valid-file ng-required="true">
+                                            <input type="file" name="solicitudJD" accept="application/pdf" valid-file ng-required="true">
                                         </div>
                                     </div>
                                     <br>

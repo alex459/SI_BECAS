@@ -26,9 +26,9 @@ import javax.servlet.http.Part;
  *
  * @author Manuel Miranda
  */
-@WebServlet(name = "SolicitarInicioDeServicioContractualServlet", urlPatterns = {"/SolicitarInicioDeServicioContractualServlet"})
+@WebServlet(name = "SolicitarAcuerdoDeGestionDeCompromisoContractualServlet", urlPatterns = {"/SolicitarAcuerdoDeGestionDeCompromisoContractualServlet"})
 @MultipartConfig(maxFileSize = 16177215)
-public class SolicitarInicioDeServicioContractualServlet extends HttpServlet {
+public class SolicitarAcuerdoDeGestionDeCompromisoContractualServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,9 +42,9 @@ public class SolicitarInicioDeServicioContractualServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
-        String nombreDocumentos[] = {"actaPosesion","proyectoApoyara","solicitudCB","solicitudJD"};
-        Integer idDocumentos[] = {134,135,136,137};
+        
+        String nombreDocumentos[] = {"cartaSolicitud","cartaRRHH"};
+        Integer idDocumentos[] = {139,140};
 
         InputStream docDigital = null;
         String user = request.getParameter("user");
@@ -71,7 +71,7 @@ public class SolicitarInicioDeServicioContractualServlet extends HttpServlet {
                 if (filePart != null) {
                     docDigital = filePart.getInputStream();
                 }
-                String obs = "DOCUMENTO ADJUNTO PARA SOLICITUD DE INICIO DE SERVICIO CONTRACTUAL DEL USUARIO: " + user;
+                String obs = "DOCUMENTO ADJUNTO PARA SOLICITUD DE ACUERDO DE GESTION DE COMPROMISO CONTRACTUAL DEL USUARIO: " + user;
 
                 anexo.setIdDocumento(idDoc);
                 anexo.setIdTipoDocumento(tipo);
@@ -87,7 +87,7 @@ public class SolicitarInicioDeServicioContractualServlet extends HttpServlet {
             Date fechaHoy = new Date();
             java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
             idDoc = documentoDao.getSiguienteId();
-            tip = 138;
+            tip = 141;
             tipo = tipoDao.consultarPorId(tip);
             String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
 
@@ -109,9 +109,9 @@ public class SolicitarInicioDeServicioContractualServlet extends HttpServlet {
         }
 
         if(solicitarAcuerdo== true)
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el inicio del servicio contractual correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el acuerdo de gestion de compromiso contractual correctamente.");
         else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud de inicio del servicio contractual.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud de acuerdo de gestion de compromiso contractual.");
 
     }
 
