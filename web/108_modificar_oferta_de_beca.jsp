@@ -72,7 +72,7 @@
 <jsp:include page="menu_corto.jsp"></jsp:include>
 
 </head>
-<body>
+<body ng-app="AgregarModificarOfertaApp" ng-controller="AgregarModificarOfertaCtrl">
 
 
     <div class="container-fluid">
@@ -87,7 +87,7 @@
 
         <div class="col-md-12">
 
-            <form class="form-horizontal" action="ModificarOfertaBecaServlet" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" name="AgregarOfertaBeca" action="ModificarOfertaBecaServlet" method="post" enctype="multipart/form-data" novalidate>
             <% OfertaBeca ofertaActual = new OfertaBeca();
                 OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
                 String id_oferta = request.getParameter("ID_OFERTA_BECA");
@@ -106,7 +106,10 @@
                         <label for="nombreOferta">Nombre de la oferta : </label>                                
                     </div>
                     <div class="col-md-3">
-                        <input id="nombreOferta" name="nombreOferta" value="<%= ofertaActual.getNombreOferta()%>" type="text" maxlength="100" placeholder="ingrese el nombre de la oferta" required class="form-control input-md">                                                                
+                        <input id="nombreOferta" name="nombreOferta" type="text" ng-pattern="/^[0-9A-ZÁÉÍÓÚÑ ]*$/" minlength="10" maxlength="100" placeholder="ingrese el nombre de la oferta" class="form-control input-md" ng-model="datos.nombreOferta" ng-required="true" ng-init="datos.nombreOferta = '<%= ofertaActual.getNombreOferta()%>'">
+                        <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.nombreOferta.$error.required">Debe ingresar un nombre para la oferta de beca.</span>
+                        <span class="text-danger" ng-show="AgregarOfertaBeca.nombreOferta.$error.minlength">Minimo 10 caracteres</span>
+                        <span class="text-danger" ng-show="AgregarOfertaBeca.nombreOferta.$error.pattern">Solo se permiten letras mayuscular y numeros (A-Z y 0-9).</span>
                     </div>
                     <div class="col-md-3 text-right">
                         <label for="duracion">Duracion (Meses) : </label>                                
@@ -301,14 +304,14 @@
                         </select>
                     </div>
                     <div class="row"> 
-                            <div class="col-md-3 text-right">
-                                <label for="textinput">Seleccione un nuevo archivo si desea modificar:</label>                                
-                            </div>
-                            <div class="col-md-3">      
-                                <input type="file" name="doc_digital" accept="application/pdf" >
-                                   <input id="ID_DOCUMENTO" name="ID_DOCUMENTO" value="<%=idDoc%>" type="hidden" class="form-control input-md">                                                                
-                
-                            </div>                          
+                        <div class="col-md-3 text-right">
+                            <label for="textinput">Seleccione un nuevo archivo si desea modificar:</label>                                
+                        </div>
+                        <div class="col-md-3">      
+                            <input type="file" name="doc_digital" accept="application/pdf" >
+                            <input id="ID_DOCUMENTO" name="ID_DOCUMENTO" value="<%=idDoc%>" type="hidden" class="form-control input-md">                                                                
+
+                        </div>                          
                     </div>
 
                 </div>
@@ -326,7 +329,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <input type="submit" class="btn btn-primary" name="submit" value="Modificar oferta">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Modificar oferta" ng-disabled="!AgregarOfertaBeca.$valid">
                         <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
                     </div>
                 </div>
@@ -373,16 +376,18 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript">
-                                $(function () {
-                                    $('.input-group.date').datepicker({
-                                        format: 'yyyy-mm-dd',
-                                        calendarWeeks: true,
-                                        todayHighlight: true,
-                                        autoclose: true,
-                                        startDate: new Date()
-                                    });
-                                });
+<script src="js/angular.min.js"></script>
+<script src="js/agregarModificarOferta.js">
+<script type="text/javascript">    
+$(function () {
+$('.input-group.date').datepicker({
+format: 'yyyy-mm-dd',
+calendarWeeks: true,
+todayHighlight: true,
+autoclose: true,
+startDate: new Date()
+});
+});
 </script>
 </body>
 </html>

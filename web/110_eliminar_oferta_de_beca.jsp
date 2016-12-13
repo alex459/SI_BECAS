@@ -23,18 +23,18 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% 
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String rol=(String)actual.getAttribute("rol");
-    String user=(String)actual.getAttribute("user");
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }  
-    response.setContentType("text/html;charset=UTF-8"); 
+    }
+    response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
     OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
     ArrayList<OfertaBeca> lista = ofertaBecaDAO.consultarTodos();
@@ -75,8 +75,8 @@
 
 
 
-<p class="text-right">Rol: <%= rol %></p>
-<p class="text-right">Usuario: <%= user %></p>
+<p class="text-right">Rol: <%= rol%></p>
+<p class="text-right">Usuario: <%= user%></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -152,8 +152,8 @@
                                                 InstitucionDAO institucionDAO = new InstitucionDAO();
                                                 ArrayList<Institucion> listaInstitucion = new ArrayList();
                                                 listaInstitucion = institucionDAO.consultarPorTipo("OFERTANTE");
-                                                %><option value="" disabled selected>Seleccione una institución</option><% 
-                                                for (int i = 0; i < listaInstitucion.size(); i++) {%>
+                                            %><option value="" disabled selected>Seleccione una institución</option><%
+                                                    for (int i = 0; i < listaInstitucion.size(); i++) {%>
                                             <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
                                             <%   }
                                             %>    
@@ -196,8 +196,8 @@
                                                 InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                                 ArrayList<Institucion> listaInstitucion2 = new ArrayList();
                                                 listaInstitucion2 = institucionDAO2.consultarPorTipo("ESTUDIO");
-                                                %><option value="" disabled selected>Seleccione una institución</option><% 
-                                                for (int i = 0; i < listaInstitucion2.size(); i++) {%>
+                                            %><option value="" disabled selected>Seleccione una institución</option><%
+                                                    for (int i = 0; i < listaInstitucion2.size(); i++) {%>
                                             <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
                                             <% }
                                             %>    
@@ -205,6 +205,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="col-md-6 text-right">
@@ -212,7 +213,7 @@
                                     </div>
                                     <div class="col-md-6"> 
                                         <select id="tipoEstudio" name="tipoEstudio" class="form-control">
-                                             <option value="">Seleccione una opción</option>
+                                            <option value="">Seleccione una opción</option>
                                             <option value="Maestria">Maestria</option>
                                             <option value="Doctorado">Doctorado</option>
                                             <option value="Especialización">Especialización</option>
@@ -237,70 +238,72 @@
                 ConexionBD conexionbd = null;
                 ResultSet rs = null;
                 ArrayList<OfertaBeca> lista2 = new ArrayList();
-                ArrayList<Institucion> listaPais = new ArrayList();                
+                ArrayList<Institucion> listaPais = new ArrayList();
                 ArrayList<Documento> listaDocs = new ArrayList();
                 OfertaBeca temp = new OfertaBeca();
                 Institucion temp2 = new Institucion();
                 Documento temp3 = new Documento();
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 try {
-                    String nombre= "",tipoEstudio="", instOfertante="", instEstudio="";
-                if(!request.getParameter("nombreOferta").isEmpty())
-                   nombre = request.getParameter("nombreOferta");
-                instOfertante = request.getParameter("institucionOferente");                
-                instEstudio = request.getParameter("institucionEstudio");
-                if(!request.getParameter("tipoEstudio").isEmpty())
-                   tipoEstudio = request.getParameter("tipoEstudio");
-                String fIngresoIni = request.getParameter("fIngresoIni");
-                String fIngresoFin = request.getParameter("fIngresoFin");
-                String fCierreIni = request.getParameter("fCierreIni");
-                String fCierreFin = request.getParameter("fCierreFin");
+                    String nombre = "", tipoEstudio = "", instOfertante = "", instEstudio = "";
+                    if (!request.getParameter("nombreOferta").isEmpty()) {
+                        nombre = request.getParameter("nombreOferta");
+                    }
+                    instOfertante = request.getParameter("institucionOferente");
+                    instEstudio = request.getParameter("institucionEstudio");
+                    if (!request.getParameter("tipoEstudio").isEmpty()) {
+                        tipoEstudio = request.getParameter("tipoEstudio");
+                    }
+                    String fIngresoIni = request.getParameter("fIngresoIni");
+                    String fIngresoFin = request.getParameter("fIngresoFin");
+                    String fCierreIni = request.getParameter("fCierreIni");
+                    String fCierreFin = request.getParameter("fCierreFin");
                     //formando la consulta
                     String consultaSql = "";
-                   consultaSql = "SELECT ID_OFERTA_BECA, NOMBRE_OFERTA,IDIOMA,TIPO_OFERTA_BECA,TIPO_ESTUDIO,FECHA_CIERRE, "
+                    consultaSql = "SELECT ID_OFERTA_BECA, NOMBRE_OFERTA,IDIOMA,TIPO_OFERTA_BECA,TIPO_ESTUDIO,FECHA_CIERRE, "
                             + " ID_INSTITUCION_ESTUDIO, ID_INSTITUCION_FINANCIERA, "
                             + " NOMBRE_INSTITUCION, OFERTA_BECA.ID_DOCUMENTO AS ID_DOCUMENTO, PAIS FROM "
                             + " OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_DOCUMENTO "
-                           + " AND OFERTA_BECA_ACTIVA=1 "
+                            + " AND OFERTA_BECA_ACTIVA=1 "
                             + " AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
-                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'"; 
-                 if (instEstudio!=null) {
+                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'";
+                    if (instEstudio != null) {
                         int idEst = institucionDAO.consultarIdPorNombre(instEstudio);
                         consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=" + idEst + " ");
                     }
-                    if (instOfertante!=null) {
+                    if (instOfertante != null) {
                         int idFin = institucionDAO.consultarIdPorNombre(instOfertante);
                         consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
                     }
                     //fecha inicio fin no vacia buscar fechas menores
-                if(!fIngresoIni.isEmpty()&&fIngresoFin.isEmpty()){
-                   java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
-                   consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO >= '"+sqlFIngresoIni+"' ");
-                }
-                //fecha inicio no vacia buscar fechas mayores
-                if(fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
-                   java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
-                   consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO <= '"+sqlFIngresoFin+"' ");
-                }
-                //ambas fechas no vacias buscar en rango
-                if(!fIngresoIni.isEmpty()&&!fIngresoFin.isEmpty()){
-                   java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
-                   java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime()); 
-                   consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '"+sqlFIngresoIni+"' AND '"+sqlFIngresoFin+"' ");
-                }
-                if(fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
-                   java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE <= '"+sqlFCierreFin+"' ");
-                }
-                if(!fCierreIni.isEmpty()&&fCierreFin.isEmpty()){
-                   java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
-                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE >= '"+sqlFCierreIni+"' ");
-                }
-                if(!fCierreIni.isEmpty()&&!fCierreFin.isEmpty()){
-                   java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
-                   java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                   consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '"+sqlFCierreIni+"' AND '"+sqlFCierreFin+"' ");
-                }
+                    if (!fIngresoIni.isEmpty() && fIngresoFin.isEmpty()) {
+                        java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                        consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO >= '" + sqlFIngresoIni + "' ");
+                    }
+                    //fecha inicio no vacia buscar fechas mayores
+                    if (fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                        java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                        consultaSql = consultaSql.concat(" AND OFERTA_BECA.FECHA_INGRESO <= '" + sqlFIngresoFin + "' ");
+                    }
+                    //ambas fechas no vacias buscar en rango
+                    if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                        java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                        java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                        consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                    }
+                    if (fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
+                        java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
+                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE <= '" + sqlFCierreFin + "' ");
+                    }
+                    if (!fCierreIni.isEmpty() && fCierreFin.isEmpty()) {
+                        java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
+                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE >= '" + sqlFCierreIni + "' ");
+                    }
+                    if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
+                        java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
+                        java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
+                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                    }
                     System.out.println(consultaSql);
                     //realizando la consulta
                     conexionbd = new ConexionBD();
@@ -332,62 +335,52 @@
             %>                            
 
             <div class="row">    
-                    <fieldset class="custom-border">
-                        <legend class="custom-border">Ofertas de beca en el sistema</legend>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
+                <fieldset class="custom-border">
+                    <legend class="custom-border">Ofertas de beca en el sistema</legend>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
 
-                                    <thead>
-                                        <tr class="success">
-                                            <th>Nombre de la oferta</th>
-                                            <th>Tipo de beca</th>
-                                            <th>Fecha limite</th>
-                                            <th>País</th>
-                                            <th>Tipo estudio</th>
-                                            <th>Institución de estudio</th>
-                                            <th>Institución financiera</th>
-                                            <th>Documento</th>
-                                            <th>Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <%
-                                                System.out.println(lista2.size());
-                                                if (lista2.size() >= 0) {
-                                                    int i = 0;
-                                                    while (i < lista2.size()) {
-                                            %><tr class="bg-primary"><%
-                                            %><td><%=lista2.get(i).getNombreOferta()%></td><%
-                                            %><td><%=lista2.get(i).getTipoOfertaBeca()%></td><%
-                                            %><td><%=df.format(lista2.get(i).getFechaCierre())%></td><%
-                                            %><td><%=listaPais.get(i).getPais()%></td><%
-                                            %><td><%=lista2.get(i).getTipoEstudio()%></td><%
-                                            %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion()%></td><%
-                                            %><td><%=institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion()%></td><%
-                                            %><td><form action="DocumentoOferta" method="post"  target="_blank"> 
-                                                    <input type="hidden" name="id" value="<%=listaDocs.get(i).getIdDocumento()%>">
-                                                    <input type="submit" class="btn btn-primary" value="Ver Documento">
-                                                    </form></td><%    
-                                                        out.write("<td>");
-                                                        out.write("<center>");
-                                                        out.write("<form style='display:inline;' action='EliminarOfertaBecaServlet' method='post'><input type='hidden' name='ID_OFERTA_BECA' value='"+lista2.get(i).getIdOfertaBeca()+"'><input type='submit' class='btn btn-danger' name='submit' value='Deshabilitar oferta'></form> ");
-                                                        out.write("</center>");
-                                                        out.write("</td>");
-                                                        System.out.println("ID MANDADO: " + lista2.get(i).getIdOfertaBeca());
-                                                        i++;
-                                                    }
-                                                }
-                                                %>   
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> 
-                        </div>
-                    </fieldset>
+                                <thead>
+                                    <tr class="success">
+                                        <th>Nombre de la oferta</th>
+                                        <th>Tipo de beca</th>
+                                        <th>Fecha limite</th>
+                                        <th>País</th>
+                                        <th>Tipo estudio</th>
+                                        <th>Institución de estudio</th>
+                                        <th>Institución financiera</th>
+                                        <th>Documento</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                      <%
+                                        if (lista2.size() >= 0) {
+                                            int i = 0;
+                                            while (i < lista2.size()) {
+                                                System.out.println(lista2.get(i).getIdOfertaBeca() + "ELLLLLLL ID");
+                                                out.write("<tr>");
+                                                out.write("<td>" + lista2.get(i).getNombreOferta() + "</td>");
+                                                out.write("<td>" + lista2.get(i).getTipoOfertaBeca() + "</td>");
+                                                out.write("<td>" + df.format(lista2.get(i).getFechaCierre()) + "</td>");
+                                                out.write("<td>" + listaPais.get(i).getPais() + "</td>");
+                                                out.write("<td>" + lista2.get(i).getTipoEstudio() + "</td>");
+                                                out.write("<td>" + institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion() + "</td>");
+                                                out.write("<td>" + institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion() + "</td>");
+                                                out.write("<td><center><form action='DocumentoOferta' method='post'  target='_blank'><input type='hidden' name='id' value='" + listaDocs.get(i).getIdDocumento() + "'><input type='submit' class='btn btn-primary' value='Ver Documento'></form></center></td>");
+                                                out.write("<td><center><form style='display:inline;' action='EliminarOfertaBecaServlet' method='post'><input type='hidden' name='ID_OFERTA_BECA' value='" + lista2.get(i).getIdOfertaBeca() + "'><input type='submit' class='btn btn-danger' name='submit' value='Deshabilitar oferta'></form></center></form></td>");
+                                                out.write("</tr>");
+                                                i++;
+                                            }
+                                        }
+                                    %>     
+                                </tbody>
+                            </table>
+                        </div> 
+                    </div>
+                </fieldset>
             </div>                    
         </fieldset>                                        
     </div><!-- CONTENIDO DE LA PANTALLA -->

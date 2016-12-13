@@ -205,6 +205,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="col-md-6 text-right">
@@ -213,9 +214,9 @@
                                     <div class="col-md-6"> 
                                         <select id="tipoEstudio" name="tipoEstudio" class="form-control">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="Maestria">MAESTRIA</option>
-                                            <option value="Doctorado">DOCTORADO</option>
-                                            <option value="Especialización">ESPECIALIZACIÓN</option>
+                                            <option value="MAESTRIA">MAESTRIA</option>
+                                            <option value="DOCTORADO">DOCTORADO</option>
+                                            <option value="ESPECIALIZACIÓN">ESPECIALIZACIÓN</option>
                                         </select>
                                     </div>
                                 </div>
