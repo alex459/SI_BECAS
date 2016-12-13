@@ -3,39 +3,32 @@
     Created on : 11-08-2016, 10:04:12 PM
     Author     : aquel
 --%>
-<%@page import="DAO.TipoDocumentoDAO"%>
-<%@page import="DAO.DocumentoDAO"%>
-<%@page import="com.google.gson.Gson"%>
-<%@page import="POJO.TipoDocumento"%>
-<%@page import="java.util.ArrayList"%>
+
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
-<%@page import="DAO.DetalleUsuarioDAO"%>
+<%@page import="POJO.TipoDocumento"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="POJO.Documento"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.TipoDocumentoDAO"%>
+<%@page import="DAO.DocumentoDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
     String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
-    Integer idFacultad = 0;
-     try{
-        DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
-        // Obtener la facultad a la que pertenece el usuario
-        idFacultad = DetUsDao.obtenerFacultad(user);
-    } catch (Exception e){
-        e.printStackTrace();
-    }
-     if(user==null){
+    if(user==null){
      response.sendRedirect("login.jsp");
         return;
      }
-     
-
-      String id_documento = request.getParameter("ID_DOCUMENTO");
+    
+    String id_documento = request.getParameter("ID_DOCUMENTO");
        
-      Integer id_expedie = Integer.parseInt(request.getParameter("ID_EXPEDIENTE"));
+    Integer id_expedie = Integer.parseInt(request.getParameter("ID_EXPEDIENTE"));
     ConexionBD conexionBD = new ConexionBD();
     //out.write(id_expediente);
     String consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, E.ID_EXPEDIENTE,CONCAT(DU.DEPARTAMENTO, ' ',F.FACULTAD ) AS UNIDAD, TD.TIPO_DOCUMENTO, D.FECHA_SOLICITUD, P.ID_PROGRESO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE D.ID_DOCUMENTO = " + id_documento;
@@ -70,64 +63,59 @@
     out.write(tipo_documento);
     out.write(fecha_solicitud);*/
     
-   
+    DocumentoDAO docComision = new DocumentoDAO();
+    ArrayList<Documento> publicos = new ArrayList<Documento>();
+    publicos =  docComision.consultarComisionExpe(id_expedie);
+    
+    
+    
+    
+
+    
 %>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html ng-app="resolverSolComisionBecasApp">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistema informático para la administración de becas de postgrado</title>
+        <title>Sistema informático para la administración de becas de postgrado</title>
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
+        <meta name="description" content="Source code generated using layoutit.com">
+        <meta name="author" content="LayoutIt!">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
-    <link href="css/customfieldset.css" rel="stylesheet">
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
-        </h3>
-    </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
-    <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-    <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
-    <p class="text-right" style="font-weight:bold;">Facultad: <%= idFacultad %></p>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/customfieldset.css" rel="stylesheet">
+        <div class="row">
+            <div class="col-md-4">
+                <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+                <h3 class="text-center" >
+                    <p class="text-danger">Universidad De El Salvador</p>
+                </h3>
+            </div>
+            <div class="col-md-8">
+                <div class="col-xs-12" style="height:50px;"></div>
+                <h2 class="text-center">
+                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
+                </h2>
+                <h3 class="text-center">
+                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
+                </h3>
+            </div>
+        </div>
+
+        <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
+        <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+
+
+        <%-- todo el menu esta contenido en la siguiente linea
+             el menu puede ser cambiado en la pagina menu.jsp --%>
+        <jsp:include page="menu_corto.jsp"></jsp:include>
+    </head>
     
-    
-     <%-- todo el menu esta contenido en la siguiente linea
-         el menu puede ser cambiado en la pagina menu.jsp --%>
-    <jsp:include page="menu_corto.jsp"></jsp:include>   
-</head>
-
-
-
-<body ng-controller="BuscarCtrl">
-
-<%
-   
-    %>
-    
-    
-    
+    <body ng-controller="resolverSolComisionBecasCtrl">
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
         <h2>
@@ -136,12 +124,13 @@
 
         <br></br>
 
-        </div><!-- TITULO DE LA PANTALLA -->  
+        </div><!-- TITULO DE LA PANTALLA --> 
         <div class="col-md-12">
-            <form class="form-horizontal" action="ModificarRolesServlet" method="post">
-                <fieldset class="custom-border">
-                    <legend class="custom-border">Solicitud</legend>
-                    <div class="row">    <!-- TABLA RESULTADOS --> 
+            
+                  <fieldset class="custom-border">
+                <legend class="custom-border">Solicitud</legend>
+                
+                 <div class="row">    <!-- TABLA RESULTADOS --> 
                         <div class="col-md-1">
                             
                         </div> 
@@ -173,98 +162,109 @@
                             </table>
                         </div>
                     </div>
-                    
-                    <div class="row">
+
+                 <div class="row">
                         <div class="col-md-2"></div>
                         <div class="col-md-9">
                             <fieldset class="custom-border">
                                 <legend class="custom-border"> Documentos Adjuntados</legend>
-                                
-                               
-
-                                
-                                
-                                <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8">
-                                    <table class="table">
-                                        <thead>
-                                            <th>No.</th>
-                                            <th>Documento</th>
-                                            <th>Accion</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td> #</td>
-                                                <td> Nombre Documento</td>
-                                                <td> <input type="button" name="ver" value="Ver Documento" class="btn btn-success"></td>
-                                            </tr>
-                                            <tr>
-                                                <td> #</td>
-                                                <td> Nombre Documento</td>
-                                                <td> <input type="button" name="ver" value="Ver Documento" class="btn btn-success"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                 </div>
-                                <div class="col-md-2"></div>
-                            </fieldset>
-                        </div>
-                        <div class="col-md-2"></div>
-                    </div>
                 
-
-                    <div class="row">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
+                                        </tr>   
+                                    </thead>
+                                    <tbody >
+                                    <%
+                                        for (int i = 0; i < publicos.size(); i++) {%>
+                                        <tr>
+                                            <td><%=i+1%></td>
+                                            <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
+                                            <td>
+                                                <form action="verDocumentoComision" method="post" >
+                                                    <input type = "hidden" name="id" value="<%= publicos.get(i).getIdDocumento()%>">
+                                                    <input type="submit" class="btn btn-success" value="Ver Documento ">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }%>
+                                    
+                                    
+                                        
+                                    </tbody>
+                                </table>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                                    
+              
+                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <fieldset class="custom-border">
                                 <legend class="custom-border"> Resolucion</legend>
-                                
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <label >Acuerdo:</label><br>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="ruta" class="form-control"><br>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <button class="btn btn-primary">Examinar</button><br>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <label>Observaciones:</label><br>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <textarea class="form-control"></textarea><br>
-                                        </div>
-                                    </div>
-                                    <div class="row text-center">
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3 ">
-                                            <input type="button" name="aprobar" value="Aprobar" class="btn btn-success">
-                                        </div>
-                                        <div class="col-md-3 ">
-                                            <input type="button" name="denegar" value="Denegar" class="btn btn-danger">
-                                        </div>
-                                        <div class="col-md-3"></div>
-                                    </div>
+                <form  name="resolverSolComisionBecas" action="AgregarDocumentoServlet" method="POST" enctype="multipart/form-data">           
+                        <div class="row" >
+                        <div class="col-md-4">
+                            <label>Documento Digital:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true"><br>
+                            <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.doc_digital.$error.required">Debe Agregar un Documento PDF.</span>
+                            
+                        </div>
+                    </div>
+                                   <div class="row">
+                        <div class="col-md-4">
+                            <label>Observacion:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024"></textarea><br>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">
+                                <input type="submit" name="aprobar" value="aprobar" class="btn btn-primary" ng-disabled="!resolverSolComisionBecas.$valid">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="submit" name="denegar" value="denegar" class="btn btn-primary" ng-disabled="!resolverSolComisionBecas.$valid">
+                             </div>
+                        </div>
+                        <div class="col-md-3"></div>   
+                    </div>
                                 
                             </fieldset>
                         </div>
                         <div class="col-md-3"></div>
                     </div>
-                </fieldset>
-            </form>  
-        </div>  
-    </div> 
+               
+                                    
+                                    
+
+            </fieldset>
+            </form>
+            </div>/
+        </div>
+        <div class="col-md-3"></div>
+       
+    </div>  
 
 
 
 
 
 
+
+
+
+</div>
 
 <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
     <div class="col-md-6">
@@ -290,11 +290,12 @@
 </div>    
 </div>
 
+
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/resolverSolComisionBecas.js"></script>
 
-<script src="js/buscarDocumento.js"></script>
 
 </body>
 </html>

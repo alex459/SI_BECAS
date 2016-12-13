@@ -175,6 +175,36 @@ public class DocumentoDAO extends ConexionBD{
         return lista;
     }
     
+    //Consulta Todos los Documentos Publicos
+    public ArrayList<Documento> consultarComisionExpe(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO = 106 OR TD.ID_TIPO_DOCUMENTO = 107 OR TD.ID_TIPO_DOCUMENTO = 108 OR TD.ID_TIPO_DOCUMENTO = 109 OR TD.ID_TIPO_DOCUMENTO = 110 OR TD.ID_TIPO_DOCUMENTO = 111 ";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
     //Elimina un documento por su id
     public Boolean eliminarDocumento(Integer id) {
         this.abrirConexion();
@@ -430,5 +460,41 @@ public class DocumentoDAO extends ConexionBD{
         return idDocumento;
     }
     
-           
+    public Documento obtenerDocumentoExpediente(Integer id) {
+        this.abrirConexion();
+        Documento temp = new Documento();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.DOCUMENTO_DIGITAL,D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_DOCUMENTO=" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            
+
+            while (rs.next()) {
+                
+                TipoDocumento temp2 = new TipoDocumento();
+                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
+                Blob blob= rs.getBlob("DOCUMENTO_DIGITAL");
+                InputStream DOCUMENTO_DIGITAL = blob.getBinaryStream();
+                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);
+                temp.setDocumentoDigital(DOCUMENTO_DIGITAL);
+                
+            }
+            
+            this.cerrarConexion();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return temp;
+    }   
+       
 }

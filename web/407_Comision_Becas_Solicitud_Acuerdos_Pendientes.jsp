@@ -90,11 +90,11 @@
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 
                 
-                <form name="solicitudAcuerdosPendientesComisionBecas" class="form-horizontal" action="407_Comision_Becas_Solicitud_Acuerdos_Pendientes.jsp" method="post" novalidate>
-   
+                
                 <fieldset class="custom-border">
                     <legend class="custom-border">Solicitudes de Acuerdos Pendientes</legend>
-                   
+                    <form name="solicitudAcuerdosPendientesComisionBecas" class="form-horizontal" action="407_Comision_Becas_Solicitud_Acuerdos_Pendientes.jsp" method="post" novalidate>
+    
                     <div class="row">      <!-- FILTROS -->
                             <div class="col-md-2"></div>
                             <div class="col-md-8"> 
@@ -173,6 +173,7 @@
                     </div>
                     
                 </div>
+                 </form>     
            <%
                 response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
                 request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
@@ -262,7 +263,6 @@
                                         out.write("<td>" + rs.getString(8) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='408_Comision_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO'  ><input type='submit' class='btn btn-success' name='submit' value='resolver'></form> ");
                                         out.write("<form style='display:inline;' action='408_Comision_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(9) + "' ><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(10) + "' ><input type='submit' class='btn btn-primary' name='submit' value='Resolver'></form> ");
                                         out.write("</center>");
                                         out.write("</td>");
@@ -278,7 +278,7 @@
                    </div>
                 </fieldset>
                     
-             </form> 
+            
             </div><!-- CONTENIDO DE LA PANTALLA -->
         </div>
 
