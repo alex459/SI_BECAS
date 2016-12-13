@@ -69,7 +69,7 @@
 
 <%-- todo el menu esta contenido en la siguiente linea
      el menu puede ser cambiado en la pagina menu.jsp --%>
-<jsp:include page="menu.jsp"></jsp:include>
+<jsp:include page="menu_corto.jsp"></jsp:include>
 
 </head>
 <body>
@@ -126,7 +126,7 @@
                                 InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                 String instEstAct = institucionDAO2.consultarPorId(ofertaActual.getIdInstitucionFinanciera()).getNombreInstitucion();
                                 ArrayList<Institucion> listaInstitucion2 = new ArrayList();
-                                listaInstitucion2 = institucionDAO2.consultarPorTipo("ofertante");
+                                listaInstitucion2 = institucionDAO2.consultarPorTipo("OFERTANTE");
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {
                                     String valActual = listaInstitucion2.get(i).getNombreInstitucion();
                                     if (instEstAct.trim().equals(valActual.trim())) {
@@ -146,18 +146,18 @@
                         <select id="modalidad" name="modalidad" class="form-control">
                             <%
                                 String tipoModAct = ofertaActual.getModalidad();
-                                if (tipoModAct.trim().equals("Presencial")) {
-                            %><option selected value="Presencial">Presencial</option>
-                            <option value="Semipresencial">Semipresencial</option>
-                            <option value="Virtual">Virtual</option> <%
-                            } else if (tipoModAct.trim().equals("Semipresencial")) {
-                            %><option value="Presencial">Presencial</option>
-                            <option selected value="Semipresencial">Semipresencial</option>
-                            <option value="Virtual">Virtual</option><%
+                                if (tipoModAct.trim().equals("PRESENCIAL")) {
+                            %><option selected value="PRESENCIAL">PRESENCIAL</option>
+                            <option value="SEMIPRESENCIAL">SEMIPRESENCIAL</option>
+                            <option value="VIRTUAL">VIRTUAL</option> <%
+                            } else if (tipoModAct.trim().equals("SEMIPRESENCIAL")) {
+                            %><option value="PRESENCIAL">PRESENCIAL</option>
+                            <option selected value="SEMIPRESENCIAL">Semipresencial</option>
+                            <option value="VIRTUAL">VIRTUAL</option><%
                             } else {
-                            %><option value="Presencial">Presencial</option>
-                            <option value="Semipresencial">Semipresencial</option>
-                            <option selected value="Virtual">Virtual</option><%
+                            %><option value="PRESENCIAL">PRESENCIAL</option>
+                            <option value="SEMIPRESENCIAL">SEMIPRESENCIAL</option>
+                            <option selected value="VIRTUAL">VIRTUAL</option><%
                                 }
                             %> 
                         </select>  
@@ -176,7 +176,7 @@
                             <%  //InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                 instEstAct = institucionDAO2.consultarPorId(ofertaActual.getIdInstitucionEstudio()).getNombreInstitucion();
                                 //ArrayList<Institucion> listaInstitucion2 = new ArrayList();
-                                listaInstitucion2 = institucionDAO2.consultarPorTipo("estudio");
+                                listaInstitucion2 = institucionDAO2.consultarPorTipo("ESTUDIO");
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {
                                     String valActual = listaInstitucion2.get(i).getNombreInstitucion();
                                     if (instEstAct.trim().equals(valActual.trim())) {
@@ -209,18 +209,18 @@
                         <select id="tipoEstudio" name="tipoEstudio" class="form-control">
                             <%
                                 String tipoEstAct = ofertaActual.getTipoEstudio();
-                                if (tipoEstAct.trim().equals("Maestria")) {
-                            %><option selected value="Maestria">Maestria</option>
-                            <option value="Doctorado">Doctorado</option>
-                            <option value="Especialización">Especialización</option> <%
-                            } else if (tipoEstAct.trim().equals("Doctorado")) {
-                            %>   <option value="Maestria">Maestria</option>
-                            <option selected value="Doctorado">Doctorado</option>
-                            <option value="Especialización">Especialización</option> <%
+                                if (tipoEstAct.trim().equals("MAESTRIA")) {
+                            %><option selected value="MAESTRIA">MAESTRIA</option>
+                            <option value="DOCTORADO">DOCTORADO</option>
+                            <option value="ESPECIALIZACIÓN">ESPECIALIZACIÓN</option> <%
+                            } else if (tipoEstAct.trim().equals("DOCTORADO")) {
+                            %>   <option value="MAESTRIA">MAESTRIA</option>
+                            <option selected value="DOCTORADO">DOCTORADO</option>
+                            <option value="ESPECIALIZACIÓN">ESPECIALIZACIÓN</option> <%
                             } else {
-                            %>   <option value="Maestria">Maestria</option>
-                            <option value="Doctorado">Doctorado</option>
-                            <option selected value="Especialización">Especialización</option> <%
+                            %>   <option value="MAESTRIA">MAESTRIA</option>
+                            <option value="DOCTORADO">DOCTORADO</option>
+                            <option selected value="ESPECIALIZACIÓN">ESPECIALIZACIÓN</option> <%
                                 }
                             %>  
                         </select>
@@ -243,12 +243,12 @@
                         <select id="tipoBeca" name="tipoBeca" class="form-control">
                             <%
                                 String tipoBecaAct = ofertaActual.getTipoOfertaBeca();
-                                if (tipoBecaAct.trim().equals("Interna")) {
-                            %> <option selected value="Interna">Interna</option>
-                            <option value="Externa">Externa</option> <%
+                                if (tipoBecaAct.trim().equals("INTERNA")) {
+                            %> <option selected value="INTERNA">INTERNA</option>
+                            <option value="EXTERNA">EXTERNA</option> <%
                             } else {
-                            %>  <option value="Interna">Interna</option>
-                            <option selected value="Externa">Externa</option>
+                            %>  <option value="INTERNA">INTERNA</option>
+                            <option selected value="EXTERNA">EXTERNA</option>
                             <% }
                             %>                    
                         </select>
@@ -284,18 +284,18 @@
                         <select id="financiamiento" name="financiamiento" class="form-control">
                             <%
                                 String tipoFin = ofertaActual.getFinanciamiento();
-                                if (tipoFin.trim().equals("Beca completa")) {
-                            %> <option selected value="Beca completa">Beca completa</option>
-                            <option value="Media beca">Media beca</option>
-                            <option value="Cuarto de beca">Cuarto de beca</option> <%
-                            } else if (tipoFin.trim().equals("Media beca")) {
-                            %> <option value="Beca completa">Beca completa</option>
-                            <option selected value="Media beca">Media beca</option>
-                            <option value="Cuarto de beca">Cuarto de beca</option><%
+                                if (tipoFin.trim().equals("BECA COMPLETA")) {
+                            %> <option selected value="BECA COMPLETA">BECA COMPLETA</option>
+                            <option value="MEDIA BECA">MEDIA BECA</option>
+                            <option value="CUARTO DE BECA">CUARTO DE BECA</option> <%
+                            } else if (tipoFin.trim().equals("MEDIA BECA")) {
+                            %> <option value="BECA COMPLETA">BECA COMPLETA</option>
+                            <option selected value="MEDIA BECA">MEDIA BECA</option>
+                            <option value="CUARTO DE BECA">CUARTO DE BECA</option><%
                             } else {
-                            %>  <option value="Beca completa">Beca completa</option>
-                            <option value="Media beca">Media beca</option>
-                            <option selected value="Cuarto de beca">Cuarto de beca</option> <%
+                            %>  <option value="BECA COMPLETA">BECA COMPLETA</option>
+                            <option value="MEDIA BECA">MEDIA BECA</option>
+                            <option selected value="CUARTO DE BECA">CUARTO DE BECA</option> <%
                                 }
                             %>  
                         </select>

@@ -213,9 +213,9 @@
                                     <div class="col-md-6"> 
                                         <select id="tipoEstudio" name="tipoEstudio" class="form-control">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="Maestria">Maestria</option>
-                                            <option value="Doctorado">Doctorado</option>
-                                            <option value="Especialización">Especialización</option>
+                                            <option value="Maestria">MAESTRIA</option>
+                                            <option value="Doctorado">DOCTORADO</option>
+                                            <option value="Especialización">ESPECIALIZACIÓN</option>
                                         </select>
                                     </div>
                                 </div>
