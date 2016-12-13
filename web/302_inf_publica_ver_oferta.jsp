@@ -310,17 +310,11 @@
                                 </div> 
 
                                 <div class="row no-gutter">
-                                    <div class="col-md-12">
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labeltel" value="Télefono:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" id="tel" disabled>    
-                                        </div>
+                                    <div class="col-md-12">                                       
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" id="labelCierre" value="Cierre convocatoria:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-9">
                                             <input type="text" class="form-control" id="cierre" value="<%=df.format(temp.getFechaCierre()) %>" disabled>    
                                         </div>
                                     </div>
@@ -333,7 +327,7 @@
                                             <span class="glyphicon glyphicon-check"></span> 
                                             Aplicar beca
                                         </button>
-                                    </form>
+                                    </form></br>
                                         <form action="DocumentoOferta" method="post"  target="_blank"> 
                                                     <input type="hidden" name="id" value="<%=idDoc%>">
                                                     <button type="submit" class="btn btn-primary">
