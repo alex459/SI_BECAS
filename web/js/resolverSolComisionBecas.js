@@ -8,6 +8,11 @@ angular.module('resolverSolComisionBecasApp', []).controller('resolverSolComisio
     
 $scope.idTipo;
 $scope.observacion;
-
-    
+$scope.resolucion="";
+$scope.CambiarEstadoAprobado = function (){
+    $scope.resolucion = $scope.resolucion="APROBADO";
+};
+$scope.CambiarEstadoDenegado = function (){
+    $scope.resolucion = $scope.resolucion="DENEGADO";
+};
   });

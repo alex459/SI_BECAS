@@ -231,13 +231,18 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <div class="col-md-6">
-                                <input type="submit" name="aprobar" value="aprobar" class="btn btn-primary" ng-disabled="!resolverSolComisionBecas.$valid">
+                                <a class="btn btn-success" ng-click="CambiarEstadoAprobado()">Aprobar</a>
+                                
                             </div>
                             <div class="col-md-6">
-                                <input type="submit" name="denegar" value="denegar" class="btn btn-primary" ng-disabled="!resolverSolComisionBecas.$valid">
+                                <a class="btn btn-danger" ng-click="CambiarEstadoDenegado()">Denegar</a>
                              </div>
                         </div>
                         <div class="col-md-3"></div>   
+                    </div>
+                    <div class="row text-center">
+                        <input type="text" name="resolucion" ng-value="resolucion">
+                        <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">
                     </div>
                                 
                             </fieldset>
