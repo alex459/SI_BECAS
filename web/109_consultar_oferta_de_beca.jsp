@@ -81,7 +81,7 @@
 
 <%-- todo el menu esta contenido en la siguiente linea
      el menu puede ser cambiado en la pagina menu.jsp --%>
-<jsp:include page="menu.jsp"></jsp:include>
+<jsp:include page="menu_corto.jsp"></jsp:include>
 
 </head>
 <body>
@@ -151,7 +151,7 @@
                                         <%
                                             InstitucionDAO institucionDAO = new InstitucionDAO();
                                             ArrayList<Institucion> listaInstitucion = new ArrayList();
-                                            listaInstitucion = institucionDAO.consultarPorTipo("ofertante");
+                                            listaInstitucion = institucionDAO.consultarPorTipo("OFERTANTE");
                                               %><option value="" disabled selected>Seleccione una institución</option><%                                      
                                             for (int i = 0; i < listaInstitucion.size(); i++) {%>
                                         <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
@@ -195,7 +195,7 @@
                                         <%
                                             InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                             ArrayList<Institucion> listaInstitucion2 = new ArrayList();
-                                            listaInstitucion2 = institucionDAO2.consultarPorTipo("estudio");
+                                            listaInstitucion2 = institucionDAO2.consultarPorTipo("ESTUDIO");
                                             %><option value="" disabled selected>Seleccione una institución</option><% 
                                             for (int i = 0; i < listaInstitucion2.size(); i++) {%>
                                         <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
@@ -333,7 +333,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="info">
+                                    <tr>
                                         <%
                                             System.out.println(lista2.size());
                                             if (lista2.size() >= 0) {

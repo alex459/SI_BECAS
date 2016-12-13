@@ -65,7 +65,7 @@
 
 <%-- todo el menu esta contenido en la siguiente linea
      el menu puede ser cambiado en la pagina menu.jsp --%>
-<jsp:include page="menu.jsp"></jsp:include>
+<jsp:include page="menu_corto.jsp"></jsp:include>
 
 </head>
 <body>
@@ -129,9 +129,9 @@
                         <div class="col-md-3">
                          <select id="modalidad" name="modalidad" class="form-control" ng-model="datos.mod" ng-required="true">
                                 <option value="">Seleccione una opción</option>
-                                <option value="Presencial">Presencial</option>  
-                                <option value="Semipresencial">Semipresencial</option>
-                                <option value="Virtual">Virtual</option>
+                                <option value="PRESENCIAL">PRESENCIAL</option>  
+                                <option value="SEMIPRESENCIAL">SEMIPRESENCIAL</option>
+                                <option value="VIRTUAL">VIRTUAL</option>
                          </select>  
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.modalidad.$error.required">Seleccione una modalidad.</span>
 
@@ -237,9 +237,9 @@
                         <div class="col-md-3">         
                             <select id="financiamiento" name="financiamiento" class="form-control" ng-model="datos.finan" ng-required="true">
                                 <option value="">Seleccione una opción</option>
-                                <option value="Beca completa">Beca completa</option>
-                                <option value="Media beca">Media beca</option>
-                                <option value="Cuarto de beca">Cuarto de beca</option>
+                                <option value="BECA COMPLETA">BECA COMPLETA</option>
+                                <option value="MEDIA BECA">MEDIA BECA</option>
+                                <option value="CUARTO DE BECA">CUARTO DE BECA</option>
                             </select>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.financiamiento.$error.required">Seleccione un tipo de financiamiento.</span>
 
