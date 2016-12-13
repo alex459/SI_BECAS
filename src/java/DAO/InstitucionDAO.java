@@ -118,6 +118,40 @@ public class InstitucionDAO extends ConexionBD{
     }
     
     //consultar nombre de insitucion por tipo de insitucion
+    public ArrayList<Institucion> consultarActivosPorTipo(String tipo) {
+        ArrayList<Institucion> lista = new ArrayList<Institucion>();
+        Institucion temp = new Institucion();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_INSTITUCION, NOMBRE_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, INSTITUCION_ACTIVA FROM INSTITUCION WHERE TIPO_INSTITUCION LIKE '%"+tipo+"%' AND INSTITUCION_ACTIVA = 1;";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                temp = new Institucion();
+                int ID_INSTITUCION=rs.getInt("ID_INSTITUCION");                                
+                String NOMBRE_INSTITUCION=rs.getString("NOMBRE_INSTITUCION");
+                String TIPO_INSITUCION=tipo;
+                String PAIS=rs.getString("PAIS");
+                String PAGINA_WEB=rs.getString("PAGINA_WEB");
+                String EMAIL=rs.getString("EMAIL");
+                int INSTITUCION_ACTIVA=rs.getInt("INSTITUCION_ACTIVA");                
+                temp.setIdInstitucion(ID_INSTITUCION);
+                temp.setNombreInstitucion(NOMBRE_INSTITUCION);
+                temp.setTipoInstitucion(TIPO_INSITUCION);
+                temp.setPais(PAIS);
+                temp.setPaginaWeb(PAGINA_WEB);
+                temp.setEmail(EMAIL);
+                temp.setInstitucionActiva(INSTITUCION_ACTIVA);                
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    //consultar nombre de insitucion por tipo de insitucion
     public int consultarIdPorNombre(String nombre) {
         Institucion temp = new Institucion();        
         this.abrirConexion();        

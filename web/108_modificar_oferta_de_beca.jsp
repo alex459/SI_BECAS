@@ -129,7 +129,7 @@
                                 InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                 String instEstAct = institucionDAO2.consultarPorId(ofertaActual.getIdInstitucionFinanciera()).getNombreInstitucion();
                                 ArrayList<Institucion> listaInstitucion2 = new ArrayList();
-                                listaInstitucion2 = institucionDAO2.consultarPorTipo("OFERTANTE");
+                                listaInstitucion2 = institucionDAO2.consultarActivosPorTipo("OFERTANTE");
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {
                                     String valActual = listaInstitucion2.get(i).getNombreInstitucion();
                                     if (instEstAct.trim().equals(valActual.trim())) {
@@ -179,7 +179,7 @@
                             <%  //InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                 instEstAct = institucionDAO2.consultarPorId(ofertaActual.getIdInstitucionEstudio()).getNombreInstitucion();
                                 //ArrayList<Institucion> listaInstitucion2 = new ArrayList();
-                                listaInstitucion2 = institucionDAO2.consultarPorTipo("ESTUDIO");
+                                listaInstitucion2 = institucionDAO2.consultarActivosPorTipo("ESTUDIO");
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {
                                     String valActual = listaInstitucion2.get(i).getNombreInstitucion();
                                     if (instEstAct.trim().equals(valActual.trim())) {

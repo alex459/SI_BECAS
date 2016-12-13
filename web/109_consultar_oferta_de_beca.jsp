@@ -151,7 +151,7 @@
                                             <%
                                                 InstitucionDAO institucionDAO = new InstitucionDAO();
                                                 ArrayList<Institucion> listaInstitucion = new ArrayList();
-                                                listaInstitucion = institucionDAO.consultarPorTipo("OFERTANTE");
+                                                listaInstitucion = institucionDAO.consultarActivosPorTipo("OFERTANTE");
                                             %><option value="" disabled selected>Seleccione una institución</option><%
                                                 for (int i = 0; i < listaInstitucion.size(); i++) {%>
                                             <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
@@ -195,7 +195,7 @@
                                             <%
                                                 InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                                 ArrayList<Institucion> listaInstitucion2 = new ArrayList();
-                                                listaInstitucion2 = institucionDAO2.consultarPorTipo("ESTUDIO");
+                                                listaInstitucion2 = institucionDAO2.consultarActivosPorTipo("ESTUDIO");
                                             %><option value="" disabled selected>Seleccione una institución</option><%
                                                 for (int i = 0; i < listaInstitucion2.size(); i++) {%>
                                             <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
