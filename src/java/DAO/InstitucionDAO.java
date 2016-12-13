@@ -90,7 +90,7 @@ public class InstitucionDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_INSTITUCION, NOMBRE_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, INSTITUCION_ACTIVA FROM INSTITUCION WHERE TIPO_INSTITUCION='"+tipo+"';";
+            String sql = "SELECT ID_INSTITUCION, NOMBRE_INSTITUCION, PAIS, PAGINA_WEB, EMAIL, INSTITUCION_ACTIVA FROM INSTITUCION WHERE TIPO_INSTITUCION LIKE '%"+tipo+"%';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 temp = new Institucion();

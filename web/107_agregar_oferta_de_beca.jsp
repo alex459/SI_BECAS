@@ -91,8 +91,10 @@
                             <label for="nombreOferta">Nombre de la oferta : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="nombreOferta" name="nombreOferta" type="text" maxlength="100" placeholder="ingrese el nombre de la oferta" class="form-control input-md" ng-model="datos.nombreOferta" ng-required="true">                                                                
+                            <input id="nombreOferta" name="nombreOferta" type="text" ng-pattern="/^[0-9A-ZÁÉÍÓÚÑ ]*$/" minlength="10" maxlength="100" placeholder="ingrese el nombre de la oferta" class="form-control input-md" ng-model="datos.nombreOferta" ng-required="true">                                                                
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.nombreOferta.$error.required">Debe ingresar un nombre para la oferta de beca.</span>
+                            <span class="text-danger" ng-show="AgregarOfertaBeca.nombreOferta.$error.minlength">Minimo 10 caracteres</span>
+                            <span class="text-danger" ng-show="AgregarOfertaBeca.nombreOferta.$error.pattern">Solo se permiten letras mayuscular y numeros (A-Z y 0-9).</span>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="duracion">Duracion (Meses) : </label>                                
@@ -112,7 +114,7 @@
                             <%
                                 InstitucionDAO institucionDAO = new InstitucionDAO();
                                 ArrayList<Institucion> listaInstitucion = new ArrayList();
-                                listaInstitucion = institucionDAO.consultarPorTipo("ofertante");
+                                listaInstitucion = institucionDAO.consultarPorTipo("OFERTANTE");
                                  %><option value="" disabled selected required>Seleccione una institución</option><%  
                                 for (int i = 0; i < listaInstitucion.size(); i++) { %>
                                     <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
@@ -147,7 +149,7 @@
                             <%
                                 InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                 ArrayList<Institucion> listaInstitucion2 = new ArrayList();
-                                listaInstitucion2 = institucionDAO2.consultarPorTipo("estudio");
+                                listaInstitucion2 = institucionDAO2.consultarPorTipo("ESTUDIO");
                                  %><option value="" disabled selected required>Seleccione una opción</option><% 
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {  %>
                                     <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
@@ -175,9 +177,9 @@
                         <div class="col-md-3"> 
                             <select id="tipoEstudio" name="tipoEstudio" class="form-control" ng-model="datos.tipoEst" ng-required="true">
                                 <option value="">Seleccione una opción</option>
-                               <option value="Maestria">Maestria</option>
-                               <option value="Doctorado">Doctorado</option>
-                               <option value="Especialización">Especialización</option>
+                               <option value="MAESTRIA">MAESTRIA</option>
+                               <option value="DOCTORADO">DOCTORADO</option>
+                               <option value="ESPECIALIZACIÓN">ESPECIALIZACIÓN</option>
                             </select>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.tipoEstudio.$error.required">Seleccione un tipo de estudio.</span>
 
@@ -201,8 +203,8 @@
                         <div class="col-md-3">    
                             <select id="tipoBeca" name="tipoBeca" class="form-control" ng-model="datos.tipoB" ng-required="true">
                                 <option value="">Seleccione una opción</option>
-                                <option value="Interna">Interna</option>
-                                <option value="Externa">Externa</option>                                
+                                <option value="INTERNA">INTERNA</option>
+                                <option value="EXTERNA">EXTERNA</option>                                
                             </select>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.tipoBeca.$error.required">Seleccione un tipo de beca.</span>
 
