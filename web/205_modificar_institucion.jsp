@@ -184,9 +184,9 @@
                             <div class="col-md-6">
                                 <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control"> 
                                     <option value="<%=TIPO_INSTITUCION%>"><%=TIPO_INSTITUCION%></option>
-                                    <option value="OFERENTE">OFERENTE</option>
+                                    <option value="OFERTANTE">OFERTANTE</option>
                                     <option value="ESTUDIO">ESTUDIO</option>
-                                    <option value="AMBOS">AMBOS</option>
+                                    <option value="OFERTANTE Y ESTUDIO">OFERTANTE Y ESTUDIO</option>
                                 </select>
                             </div>
                         </div>
