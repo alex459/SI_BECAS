@@ -111,6 +111,7 @@
                         <tr>                            
                             <td style="background-color:#728FCE; color:white">Sin iniciar</td>
                             <%
+                                System.out.println(expediente.getIdExpediente()+" SSSS "+expediente.getEstadoExpediente());
                             if(expedienteAbierto == false)    
                             out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                             else
@@ -121,9 +122,9 @@
                                 <form style='display:inline;' >
                                     <%
                                     if(expedienteAbierto == false)    
-                                    out.write("<input type='submit' class='btn btn-success' name='submit' value='Ver -opción-'>");
+                                    out.write("<a href='301_inf_publica_ofertas_beca.jsp'>Ver ofertas de beca</a>");
                                     else
-                                    out.write("<input type='submit' class='btn btn-success' name='submit' value='Ver -opción-' disabled>");
+                                    out.write("<input type='submit' class='btn btn-success' name='submit' value='Finalizado' disabled>");
                                                                 %>
                                 </form>
                                 </center>
@@ -322,13 +323,13 @@
                 <h3>Detalle</h3>
                 <div class = "panel panel-default">
                     <div class="row">
-                        <div class="col-md-12 col-md-offset-1">
+                        <div class="col-md-12">
                             <%if(expedienteAbierto == false){%>
                                 <br>
                                 <p>Aun no ha iniciado el proceso para adquirir una beca de postgrado, 
                                     para ver las ofertas disponibles presione el botón “ver ofertas”.</p><br>
                                 <div class="row text-center">
-                                    <a href="315_candidato_ofertas_beca.jsp" class="btn btn-success">Ver Ofertas</a>
+                                    <a href="301_inf_publica_ofertas_beca.jsp" class="btn btn-success">Ver Ofertas</a>
                                 </div>
                                 
                             <%}else if(expediente.getIdProgreso() == 1){%>
@@ -445,8 +446,16 @@
                     
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
-                         <button id="cancelar" name="cancelar" class="btn btn-danger">Cancelar proceso</button>
-                        </div>
+                            <form style='display:inline;' action='CancelarProcesoCandidato' method='post'>
+                                <input type='hidden' name='id_exp' value='<%=expediente.getIdExpediente() %>'>
+                          <%   
+                              if(expedienteAbierto)
+                                  out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
+                              else    
+                                  out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar proceso</button>");
+                                 %>
+                         </form>
+                        </div></br>
                     </div>
                 </div>
             </div>  

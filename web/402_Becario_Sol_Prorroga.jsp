@@ -86,18 +86,13 @@
                                             </div> 
                                         </div>
                                     </div> 
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <button type="button" id="clear1" name="clear1" class="btn btn-danger">Eliminar</button>
-                                        </div>
-                                    </div> 
                                 </div>    
                             </div>  
 
                             <div class="row">   
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <label>Carta de Solicitud de Prórroga - Unidad:</label>
+                                        <label>Carta de Solicitud de Prórroga:</label>
                                     </div> 
                                     <div class="col-md-2">
                                         <div class="form-group">
@@ -113,11 +108,6 @@
                                                     <input type="file" name="doc_digital2" accept="application/pdf">   
                                             </div> 
                                         </div>
-                                    </div> 
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <button id="button2id" type="button" name="eliminar" class="btn btn-danger">Eliminar</button>
-                                        </div>
                                     </div>  
                                 </div>    
                             </div>  
@@ -127,19 +117,14 @@
                                     <div class="col-md-3">
                                         <label>Constancia de la Institución:</label>
                                     </div>  
-                                    <div class="col-md-5">
+                                    <div class="col-md-6 col-md-offset-2">
                                         <div class="form-group">
-                                            <div class="col-md-2">
+                                            <div class="col-md-2  text-right">
                                                 <label for="textinput">Archivo:</label>                                
                                             </div>
                                             <div class="col-md-4">    
                                                     <input type="file" name="doc_digital3" accept="application/pdf">
                                             </div> 
-                                        </div>
-                                    </div> 
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <button id="button2id" type="button" name="eliminar" class="btn btn-danger">Eliminar</button>
                                         </div>
                                     </div> 
                                 </div>    
