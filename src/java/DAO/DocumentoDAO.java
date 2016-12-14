@@ -496,5 +496,118 @@ public class DocumentoDAO extends ConexionBD{
         }
         return temp;
     }   
+    
+    public Documento obtenerInformacionDocumentoPorId(Integer id) {
+        this.abrirConexion();
+        Documento temp = new Documento();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_DOCUMENTO=" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            
+
+            while (rs.next()) {
+                
+                TipoDocumento temp2 = new TipoDocumento();
+                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
+                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);
+                
+            }
+            
+            this.cerrarConexion();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return temp;
+    }  
+    
+    //Actualiza un Documento de ingresado a aprobado o denegado
+    public boolean ActualizarResolver(Documento documento) {
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
+            String sql = "UPDATE DOCUMENTO SET DOCUMENTO_DIGITAL=?,OBSERVACION_O=?, FECHA_INGRESO=?,ESTADO_DOCUMENTO=? WHERE ID_DOCUMENTO=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            if (documento.getDocumentoDigital() != null) {
+                statement.setBlob(1, documento.getDocumentoDigital());
+            }
+            statement.setString(2, documento.getObservacion());
+            statement.setDate(3, sqlDate);
+            statement.setString(4, documento.getEstadoDocumento());
+            statement.setInt(5, documento.getIdDocumento());     
+      
+            int row = statement.executeUpdate();
+            
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+    
+    //Actualiza un Documento de ingresado a aprobado o denegado
+    public boolean ActualizarResolverCorreccion(Documento documento) {
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
+            String sql = "UPDATE DOCUMENTO SET OBSERVACION_O=?, FECHA_INGRESO=?,ESTADO_DOCUMENTO=? WHERE ID_DOCUMENTO=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, documento.getObservacion());
+            statement.setDate(2, sqlDate);
+            statement.setString(3, documento.getEstadoDocumento());
+            statement.setInt(4, documento.getIdDocumento());     
+      
+            int row = statement.executeUpdate();
+            
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+    
+    //Obtiene el id del expediente de un Documento
+    public Integer ObtenerIdExpedientePorIdDocumento(Integer id) {
+        
+        Integer idExp = 0;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_EXPEDIENTE AS X FROM DOCUMENTO WHERE ID_DOCUMENTO=" + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            
+            while (rs.next()) {
+                idExp = rs.getInt("X");
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        
+        return idExp;
+    }
        
 }

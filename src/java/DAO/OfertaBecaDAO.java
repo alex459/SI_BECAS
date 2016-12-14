@@ -182,6 +182,26 @@ public class OfertaBecaDAO extends ConexionBD{
         return exito;
     } 
     
+     public String ObtenerTipoBeca(Integer id) {
+        
+        String tipo = "";
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT TIPO_OFERTA_BECA FROM oferta_beca ob JOIN solicitud_de_beca sb ON ob.ID_OFERTA_BECA= sb.ID_OFERTA_BECA where sb.ID_EXPEDIENTE = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            
+            while (rs.next()) {
+                tipo = rs.getString("TIPO_OFERTA_BECA");
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        
+        return tipo;
+    }
 }
 
 
