@@ -74,7 +74,7 @@
     
 %>
 <!DOCTYPE html>
-<html ng-app="resolverSolComisionBecasApp">
+<html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -115,7 +115,7 @@
         <jsp:include page="menu_corto.jsp"></jsp:include>
     </head>
     
-    <body ng-controller="resolverSolComisionBecasCtrl">
+    <body ng-app="resolverSolComisionBecasApp" ng-controller="resolverSolComisionBecasCtrl">
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
         <h2>
@@ -203,8 +203,8 @@
                                     
               
                      <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
                             <fieldset class="custom-border">
                                 <legend class="custom-border"> Resolucion</legend>
                 <form  name="resolverSolComisionBecas" action="AgregarDocumentoServlet" method="POST" enctype="multipart/form-data">           
@@ -228,26 +228,32 @@
                         <div class="col-md-1"></div>
                     </div>
                     <div class="row text-center">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <div class="col-md-6">
-                                <a class="btn btn-success" ng-click="CambiarEstadoAprobado()">Aprobar</a>
-                                
-                            </div>
-                            <div class="col-md-6">
-                                <a class="btn btn-danger" ng-click="CambiarEstadoDenegado()">Denegar</a>
-                             </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10 btn-group text-center" data-toggle="buttons">
+                            <div class="col-md-4">
+                                <label class="btn btn-primary " ng-click="CambiarEstadoAprobado()">
+                                <input type="radio" name="resolucion" value="APROBADO" autocomplete="off" ng-model="resolucion" > Aprobado
+                            </label></div>
+                            <div class="col-md-4">
+                                <label class="btn btn-danger" ng-click="CambiarEstadoDenegado()">
+                                <input type="radio" name="resolucion" value="DENEGADO" autocomplete="off" ng-model="resolucion" > Denegado
+                            </label></div>
+                            <div class="col-md-4">
+                            <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
+                                <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion"> Solicitar Correccion
+                            </label></div>
                         </div>
-                        <div class="col-md-3"></div>   
+                        <div class="col-md-1"></div>   
                     </div>
                     <div class="row text-center">
-                        <input type="text" name="resolucion" ng-value="resolucion">
-                        <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">
+                        <br>
                     </div>
-                                
+                    <div class="row text-center">
+                        <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">
+                    </div>            
                             </fieldset>
                         </div>
-                        <div class="col-md-3"></div>
+                        <div class="col-md-1"></div>
                     </div>
                
                                     
