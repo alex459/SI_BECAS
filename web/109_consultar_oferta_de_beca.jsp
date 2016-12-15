@@ -350,8 +350,15 @@
                                                 out.write("<td>" + lista2.get(i).getTipoEstudio() + "</td>");
                                                 out.write("<td>" + institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion() + "</td>");
                                                 out.write("<td>" + institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion() + "</td>");
-                                                out.write("<td><center><form action='DocumentoOferta' method='post'  target='_blank'><input type='hidden' name='id' value='" + listaDocs.get(i).getIdDocumento() + "'><input type='submit' class='btn btn-primary' value='Ver Documento'></form></center></td>");
-                                                out.write("<td><center><form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'><input type='hidden' name='ID_DOC' value='" + listaDocs.get(i).getIdDocumento() + "'><input type='hidden' name='ID_OFERTA_BECA' value='" + lista2.get(i).getIdOfertaBeca() + "'><input type='submit' class='btn btn-success' name='submit' value='Modificar oferta'></center></form></td>");
+                                                System.out.println(listaDocs.get(i).getIdDocumento());
+                                                out.write("<td><center><form action='DocumentoOferta' method='post'  target='_blank'><input type='hidden' name='id' value='" 
+                                                        + listaDocs.get(i).getIdDocumento() + "'><input type='submit' class='btn btn-primary' value='Ver Documento'></form>"
+                                                                + "</center></td>");
+                                                out.write("<td><center><form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'>"
+                                                        + "<input type='hidden' name='ID_DOC' value='" + listaDocs.get(i).getIdDocumento() + "'>"
+                                                                + "<input type='hidden' name='ID_OFERTA_BECA' value='" + lista2.get(i).getIdOfertaBeca() + "'>"
+                                                                        + "<input type='submit' class='btn btn-success' name='submit' value='Modificar oferta'>"
+                                                                        + "</center></form></td>");
                                                 out.write("</tr>");
                                                 i++;
                                             }

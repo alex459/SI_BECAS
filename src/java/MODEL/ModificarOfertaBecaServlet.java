@@ -63,6 +63,7 @@ public class ModificarOfertaBecaServlet extends HttpServlet {
         DocumentoDAO documentoDao = new DocumentoDAO();    
         int idDoc=Integer.parseInt(request.getParameter("ID_DOCUMENTO"));        
         documento.setIdDocumento(idDoc);
+        System.out.println("id servlet "+idDoc);
         documento.setDocumentoDigital(archivo);
         boolean act = false;
         if (filePart.getSize() >0){
@@ -97,7 +98,7 @@ public class ModificarOfertaBecaServlet extends HttpServlet {
         ofertaBeca.setIdOfertaBeca(Integer.parseInt(request.getParameter("idOferta")));
         ofertaBeca.setIdInstitucionEstudio(institucionDAO.consultarIdPorNombre(request.getParameter("institucionEstudio")));
         ofertaBeca.setIdInstitucionFinanciera(institucionDAO.consultarIdPorNombre(request.getParameter("institucionOferente")));
-        ofertaBeca.setIdDocumento(1);
+        //ofertaBeca.setIdDocumento(1);
         ofertaBeca.setNombreOferta(request.getParameter("nombreOferta"));
         ofertaBeca.setTipoOfertaBeca(request.getParameter("tipoBeca"));
         ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
