@@ -11,6 +11,9 @@
 <%@page import="DAO.DetalleUsuarioDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <% 
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
@@ -32,18 +35,13 @@
 %>
 
 
-
-
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <%response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+        <%
         %>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -79,32 +77,31 @@
 
         <%-- todo el menu esta contenido en la siguiente linea
          el menu puede ser cambiado en la pagina menu.jsp --%>
-    <jsp:include page="menu_corto.jsp"></jsp:include>    
+        <jsp:include page="menu_corto.jsp"></jsp:include>    
 </head>
-    <body ng-app="solicitudAcuerdosPendientesJuntaDirectivaApp" ng-controller="solicitudAcuerdosPendientesJuntaDirectivaCtrl">
-        <div class="container-fluid" >
-            <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27">Solicitudes de Acuerdos Pendientes</p>
-                </h2>
-                <br></br> 
-            </div><!-- TITULO DE LA PANTALLA -->  
+<body ng-app="solicitudAcuerdosPendientesJuntaDirectivaApp" ng-controller="solicitudAcuerdosPendientesJuntaDirectivaCtrl">
+    <div class="container-fluid" >
+        <div class="row"><!-- TITULO DE LA PANTALLA -->
+            <h2>
+                <p class="text-center" style="color:#cf2a27">Solicitudes de Acuerdos Pendientes</p>
+            </h2>
+            <br></br> 
+        </div><!-- TITULO DE LA PANTALLA -->  
 
-            <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
+        <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 
                 
-                <form name="solicitudAcuerdosPendientesJuntaDirectiva" class="form-horizontal" action="410_Junta_Directiva_Solicitud_Acuerdos_Pendientes.jsp" method="post" novalidate>
-   
+           
                 <fieldset class="custom-border">
                     <legend class="custom-border">Solicitudes de Acuerdos Pendientes</legend>
-                   
-                    <div class="row">      <!-- FILTROS -->
+                    <form name="solicitudAcuerdosPendientesJuntaDirectiva" class="form-horizontal" action="410_Junta_Directiva_Solicitud_Acuerdos_Pendientes.jsp" method="post" novalidate>
+   
+                        <div class="row">      <!-- FILTROS -->
                             <div class="col-md-2"></div>
                             <div class="col-md-8"> 
-                        
-                       
-                            <fieldset class="custom-border">
-                                <legend class="custom-border">Filtros</legend>
+                  
+                                <fieldset class="custom-border">
+                                    <legend class="custom-border">Filtros</legend>
                                 
                                     <div class="row"> 
                                         <div class="col-md-12">   
@@ -139,14 +136,12 @@
                                             </div>
 
                                             </div> 
-                                            <div class="col-md-3 text-right">
-                            
-                                            </div> 
+                                            <div class="col-md-3 text-right"></div> 
                                         </div>
-                                        </div>
-                                        <br>
-                                       <div class="row">
-                                       <div class="col-md-6">   
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6">   
                                             <label for="textinput">Codigo de Usuario: </label>  
                                             <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
                                             <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.CARNET.$error.minlength">Minimo 7 caracteres.</span>
@@ -183,13 +178,14 @@
                                     </div>
                                     <br>
                                     <div class="row text-center"> 
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!solicitudAcuerdosPendientesJuntaDirectiva.$valid">
+                                        <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!solicitudAcuerdosPendientesJuntaDirectiva.$valid">
                                     </div>
-                        </fieldset>
+                                </fieldset>
                                 
-                    </div>
+                            </div>
                     
-                </div>
+                        </div>
+                    </form>
            <%
                 response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
                 request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
@@ -236,25 +232,17 @@
                     } else {
                         consultaSql = consultaSql.concat(" AND TD.ID_TIPO_DOCUMENTO = " + id_tipo_documento);
                     }
-                   
-            
-           
             
             conexionbd = new ConexionBD();
             rs = conexionbd.consultaSql(consultaSql);
-                    //con el rs se llenara la tabla de resultados
+            //con el rs se llenara la tabla de resultados
            
             }
             catch (Exception ex){
             }
             
             %>    
-                    
-                    
-                    
-                    
-                    
-                    
+                   
                     <br>
                     <div class="col-md-2"></div> 
                    
@@ -287,8 +275,7 @@
                                         out.write("<td>" + rs.getString(8) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='RESOLVER_SOLICITUD'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
-                                         out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(9) + "' ><input type='submit' class='btn btn-primary' name='submit' value='Resolver'></form> ");
+                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(9) + "' ><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
                                         
                                         out.write("</center>");
                                         out.write("</td>");
@@ -302,9 +289,10 @@
                             </tbody>
                         </table> 
                    </div>
+                   </div>         
                 </fieldset>
                     
-             </form> 
+             
             </div><!-- CONTENIDO DE LA PANTALLA -->
         </div>
 

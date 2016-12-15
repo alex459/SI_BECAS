@@ -610,4 +610,181 @@ public class DocumentoDAO extends ConexionBD{
         return idExp;
     }
        
+     //obtener documentos de junta directiva por progreso   1
+    public ArrayList<Documento> consultarJuntaDirectivaExpeProceso1(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO = 100 OR TD.ID_TIPO_DOCUMENTO = 101 OR TD.ID_TIPO_DOCUMENTO = 102 ";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    //obtener documentos de junta directiva por progreso   4
+     public ArrayList<Documento> consultarJuntaDirectivaExpeProceso4(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO = 103 OR TD.ID_TIPO_DOCUMENTO = 105 OR TD.ID_TIPO_DOCUMENTO = 107 ";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    //obtener documentos de junta directiva por progreso   8
+    public ArrayList<Documento> consultarJuntaDirectivaExpeProceso8(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO = 135 ";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    } 
+    //obtener documentos de junta directiva por progreso   9 
+    public ArrayList<Documento> consultarJuntaDirectivaExpeProceso9(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO = 137 OR TD.ID_TIPO_DOCUMENTO = 139";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+     //obtener documentos de junta directiva por progreso   11
+    public ArrayList<Documento> consultarJuntaDirectivaExpeProceso11(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO = 147 OR TD.ID_TIPO_DOCUMENTO = 148 AND TD.ID_TIPO_DOCUMENTO = 149 OR TD.ID_TIPO_DOCUMENTO = 150";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+     //obtener documentos de junta directiva por progreso   12
+    public ArrayList<Documento> consultarJuntaDirectivaExpeProceso12(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO = 153 OR TD.ID_TIPO_DOCUMENTO = 154";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    
 }

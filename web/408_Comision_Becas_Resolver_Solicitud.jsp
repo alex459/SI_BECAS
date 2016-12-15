@@ -117,24 +117,22 @@
     </head>
     
     <body ng-app="resolverSolComisionBecasApp" ng-controller="resolverSolComisionBecasCtrl">
-    <div class="container-fluid">
-        <div class="row"><!-- TITULO DE LA PANTALLA -->
-        <h2>
-            <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Acuerdo</p>
-        </h2>
+     <div class="container-fluid">
+            <div class="row"><!-- TITULO DE LA PANTALLA -->
+            <h2>
+                <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Acuerdo</p>
+            </h2>
 
-        <br></br>
+            <br></br>
 
         </div><!-- TITULO DE LA PANTALLA --> 
         <div class="col-md-12">
             
-                  <fieldset class="custom-border">
+            <fieldset class="custom-border">
                 <legend class="custom-border">Solicitud</legend>
                 
-                 <div class="row">    <!-- TABLA RESULTADOS --> 
-                        <div class="col-md-1">
-                            
-                        </div> 
+                    <div class="row">    <!-- TABLA RESULTADOS --> 
+                        <div class="col-md-1"></div> 
                         <div class="col-md-10">
                             <table class="table table-bordered"></br>
                                 <tbody>
@@ -163,120 +161,117 @@
                             </table>
                         </div>
                     </div>
+                    
+                    
+                   
 
-                 <div class="row">
+                    <div class="row">
                         <div class="col-md-2"></div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <fieldset class="custom-border">
                                 <legend class="custom-border"> Documentos Adjuntados</legend>
                 
-                <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
-                        <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
-                                        </tr>   
-                                    </thead>
-                                    <tbody >
-                                    <%
-                                        for (int i = 0; i < publicos.size(); i++) {%>
-                                        <tr>
-                                            <td><%=i+1%></td>
-                                            <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
-                                            <td>
-                                                <form action="verDocumentoComision" method="post" >
-                                                    <input type = "hidden" name="id" value="<%= publicos.get(i).getIdDocumento()%>">
-                                                    <input type="submit" class="btn btn-success" value="Ver Documento ">
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        <% }%>
-                                    
-                                    
-                                        
-                                    </tbody>
-                                </table>
-                    </div>
-                    <div class="col-md-1"></div>
-                </div>
-                                    
-              
-                     <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <fieldset class="custom-border">
-                                <legend class="custom-border"> Resolucion</legend>
-                                <form  name="resolverSolComisionBecas" action="ResolverDictamen" method="POST" enctype="multipart/form-data" novalidate>           
-                        <div class="row" >
-                        <div class="col-md-4">
-                            <label>Documento Digital:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true"><br>
-                            <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.doc_digital.$error.required">Debe Agregar un Documento PDF.</span>
-                            
-                        </div>
-                    </div>
-                                   <div class="row">
-                        <div class="col-md-4">
-                            <label>Observacion:</label>
-                        </div>
-                        <div class="col-md-7">
-                            <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024"></textarea><br>
-                        </div>
-                        <div class="col-md-1"></div>
-                    </div>
-                    <div class="row text-center">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10 btn-group text-center" data-toggle="buttons">
-                            <div class="col-md-4">
-                                <label class="btn btn-primary " ng-click="CambiarEstadoAprobado()">
-                                <input type="radio" name="resolucion" value="APROBADO" autocomplete="off" ng-model="resolucion" > Aprobado
-                            </label></div>
-                            <div class="col-md-4">
-                                <label class="btn btn-danger" ng-click="CambiarEstadoDenegado()">
-                                <input type="radio" name="resolucion" value="DENEGADO" autocomplete="off" ng-model="resolucion" > Denegado
-                            </label></div>
-                            <div class="col-md-4">
-                            <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
-                                <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion"> Solicitar Correccion
-                            </label></div>
-                        </div>
-                        <div class="col-md-1"></div>   
-                    </div>
-                    <div class="row text-center">
-                        <br>
-                    </div>
-                    <div class="row text-center">
-                        <input type="hidden" name="accion" value="<%=accion%>">
-                        <input type="hidden" name="id_documento" value="<%=id_documento%>">
-                        <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">
-                    </div>            
-                            </fieldset>
-                        </div>
-                        <div class="col-md-1"></div>
-                    </div>
-               
-                                    
-                                    
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10">
+                                            <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
+                                                            </tr>   
+                                                        </thead>
+                                                        <tbody >
+                                                        <%
+                                                            for (int i = 0; i < publicos.size(); i++) {%>
+                                                            <tr>
+                                                                <td><%=i+1%></td>
+                                                                <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
+                                                                <td>
+                                                                    <form action="verDocumentoComision" method="post" >
+                                                                        <input type = "hidden" name="id" value="<%= publicos.get(i).getIdDocumento()%>">
+                                                                        <input type="submit" class="btn btn-success" value="Ver Documento ">
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                            <% }%>
 
+
+
+                                                        </tbody>
+                                                    </table>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                    </div>
+
+
+                                    <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10">
+                                                <fieldset class="custom-border">
+                                                    <legend class="custom-border"> Resolucion</legend>
+                                                    <form  name="resolverSolComisionBecas" action="ResolverDictamen" method="POST" enctype="multipart/form-data" novalidate>           
+                                                        
+                                                        <div class="row" >
+                                                            <div class="col-md-4">
+                                                                <label>Documento Digital:</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true"><br>
+                                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.doc_digital.$error.required">Debe Agregar un Documento PDF.</span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label>Observacion:</label>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024"></textarea><br>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                        <div class="row text-center">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10 btn-group text-center" data-toggle="buttons">
+                                                                <div class="col-md-4">
+                                                                    <label class="btn btn-primary " ng-click="CambiarEstadoAprobado()">
+                                                                        <input type="radio" name="resolucion" value="APROBADO" autocomplete="off" ng-model="resolucion" > Aprobado
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="btn btn-danger" ng-click="CambiarEstadoDenegado()">
+                                                                        <input type="radio" name="resolucion" value="DENEGADO" autocomplete="off" ng-model="resolucion" > Denegado
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
+                                                                        <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion"> Solicitar Correccion
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>   
+                                                        </div>
+                                                        <div class="row text-center">
+                                                            <br>
+                                                        </div>
+                                                        <div class="row text-center">
+                                                            <input type="hidden" name="accion" value="<%=accion%>">
+                                                            <input type="hidden" name="id_documento" value="<%=id_documento%>">
+                                                            <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">
+                                                        </div>  
+                                                    </form>    
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-1"></div>
+                                    </div>
+         
+           
+                            </fieldset>      
+                        </div>
+                    </div>
+                <div class="col-md-3"></div>
             </fieldset>
-            </form>
-            </div>/
-        </div>
-        <div class="col-md-3"></div>
-       
-    </div>  
-
-
-
-
-
-
-
-
+        </div>  
 
 </div>
 
@@ -302,7 +297,7 @@
         </p>
     </div>
 </div>    
-</div>
+
 
 
 <script src="js/jquery.min.js"></script>
