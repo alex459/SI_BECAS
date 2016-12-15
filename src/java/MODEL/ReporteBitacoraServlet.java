@@ -67,7 +67,9 @@ public class ReporteBitacoraServlet extends HttpServlet {
 
             //preparando parametros para el reporte
             Map parametersMap = new HashMap();
-            parametersMap.put("NOMBRE1", "%");
+            parametersMap.put("PARAMETRO1", "HOLA");
+            parametersMap.put("PARAMETRO2", "MUNDO");
+            /*parametersMap.put("NOMBRE1", "%");
             parametersMap.put("NOMBRE2", "%");
             parametersMap.put("APELLIDO1", "%");
             parametersMap.put("APELLIDO2", "%");
@@ -78,12 +80,12 @@ public class ReporteBitacoraServlet extends HttpServlet {
             parametersMap.put("ID_ACCION_MENOR", 0);
             parametersMap.put("ID_ACCION_MAYOR", 10);
             parametersMap.put("NOMBRE_USUARIO", "JOSE ALEXIS BELTRAN SERRANO");
-            parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");
+            parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");*/
 
             if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF                
                 ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
-                byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\101_reporte_bitacora.jasper", parametersMap, conexionBD.conn);
+                byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\test_reporte_2.jasper", parametersMap, conexionBD.conn);
                 conexionBD.cerrarConexion();
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
