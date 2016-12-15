@@ -14,7 +14,6 @@ import POJO.Expediente;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -69,12 +68,12 @@ public class ResolverDictamen extends HttpServlet {
             Expediente expediente = expDao.consultarPorId(idExpediente);
             Date fechaHoy = new Date();
             java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
-            String obs = "DOCUMENTO SOLICITADO POR LA COMISION DE BECA";
+            
             //Obteniendo Documento a resolver
             documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
-            
             documento.setEstadoDocumento(resolucion);
             documento.setObservacion(observacion);
+            String obs = documento.getObservacion();
             switch (resolucion) {
                 case "APROBADO":
                     //Actualizar Documento y solicitar el nuevo
@@ -100,10 +99,12 @@ public class ResolverDictamen extends HttpServlet {
                         } 
                         
                     }else{
-                        //actualizar
+                        //YA SE HIZO LA SOLICITUD LA PRIMERA VEZ
                     }
                     //Cambiar progreso y estado
                     expediente.setIdProgreso(4);
+                    expediente.setEstadoProgreso("PENDIENTE");
+                    expDao.actualizarExpediente(expediente);
                     break;
                 case "DENEGADO":
                     //Actualizar Documento y poner el progreso como denegado
@@ -111,14 +112,33 @@ public class ResolverDictamen extends HttpServlet {
                     documentoDao.ActualizarResolver(documento);
                     //Insercion o Actualizacion
                     if(accion.equals("insertar")){
-                        //Insercion cambiar progreso
+                        //fin
                     }else{
-                        //Borrar Solicitud y cambiar el progreso
+                        //Borrar la solicitud de acuerdos que se habia hecho
+                        //obteniendo el id del acuerdo solicitado
+                        Integer idAcuerdoSolicitado = 0;
+                        Documento acuerdoSolicitado = new Documento();
+                        //eliminando el documento
+                        if(TipoBeca.equals("INTERNA")){
+                           idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
+                           documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                        }else{
+                           idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
+                           documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                        }
+                        
                     }
+                    //Cambiar progreso y estado
+                    expediente.setIdProgreso(3);
+                    expediente.setEstadoProgreso("DENEGADO");
+                    expDao.actualizarExpediente(expediente);
                     break;
                 case "CORRECCION":
                     //Actualizar documento anterior a correccion y cambiar progreso al anterior
                     documentoDao.ActualizarResolverCorreccion(documento);
+                    expediente.setIdProgreso(2);
+                    expediente.setEstadoProgreso("PENDIENTE");
+                    expDao.actualizarExpediente(expediente);
                     break;
                 default:
                     break;
