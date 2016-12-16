@@ -44,6 +44,7 @@ public class login extends HttpServlet {
         if(usuarioDao.login(usuario.getNombreUsuario(), usuario.getClave())){
             HttpSession sesion = request.getSession();
             sesion.setMaxInactiveInterval(600); //600 segundos, 10 min max para sesion activa
+            sesion.setAttribute("id_user_login", usuario.getIdUsuario().toString());
             sesion.setAttribute("user", usuario.getNombreUsuario());
             sesion.setAttribute("rol", getRol(usuario.getNombreUsuario(),usuarioDao));
             sesion.setAttribute("id_tipo_usuario", usuario.getIdTipoUsuario());

@@ -1,5 +1,6 @@
 package DAO;
 
+import MODEL.Utilidades;
 import MODEL.variablesDeSesion;
 import POJO.TipoUsuario;
 import POJO.Usuario;
@@ -55,7 +56,7 @@ public class UsuarioDAO extends ConexionBD {
         return siguienteId;
     }
     
-    public boolean ingresar(Usuario usuario){
+    public boolean ingresar(Usuario usuario, Integer id_user_login){
         boolean exito = false;
         
         this.abrirConexion();
@@ -65,6 +66,7 @@ public class UsuarioDAO extends ConexionBD {
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
+            Utilidades.nuevaBitacora(1, id_user_login, "Se ingreso un nuevo usuario.", sql);
         }catch (Exception e) {
             System.out.println("Error " + e);
         }finally{
@@ -96,7 +98,8 @@ public class UsuarioDAO extends ConexionBD {
                 usuario.setNombreUsuario(NOMBRE_USUARIO);
                 usuario.setClave(CLAVE);
                 logeo = true;
-                System.out.println("first logeo true");
+                Utilidades.nuevaBitacora(6, ID_USUARIO, "usuario logeado con id "+ID_USUARIO+" y nombre "+NOMBRE_USUARIO, "");
+                
             }
 
             if (logeo) {
@@ -135,7 +138,7 @@ public class UsuarioDAO extends ConexionBD {
         return logeo;
     }
 
-    public boolean actualizar(Usuario usuario){
+    public boolean actualizar(Usuario usuario,Integer id_user_login){
         boolean exito = false;
         
         this.abrirConexion();
@@ -154,7 +157,7 @@ public class UsuarioDAO extends ConexionBD {
     }
 
     //cambia el rol del usuario a inactivo
-    public boolean darDeBajaUsuario(Usuario usuario) {
+    public boolean darDeBajaUsuario(Usuario usuario, Integer id_user_login) {
         usuario.setIdTipoUsuario(10); //pasa a ser inactivo
         boolean exito = false;
         

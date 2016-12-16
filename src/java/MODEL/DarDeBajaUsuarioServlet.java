@@ -39,16 +39,16 @@ public class DarDeBajaUsuarioServlet extends HttpServlet {
         
         Usuario usuario = new Usuario();
         UsuarioDAO usuarioDao = new UsuarioDAO();
-        usuarioDao.darDeBajaUsuario(usuario);
 
         boolean bandera;
         
         String nombre_usuario = request.getParameter("CARNET");
         usuario = usuarioDao.consultarPorNombreUsuario(nombre_usuario);
-        bandera = usuarioDao.darDeBajaUsuario(usuario);
+        int id_user_login = Integer.parseInt(request.getSession().getAttribute("id_user_login").toString());
+        bandera = usuarioDao.darDeBajaUsuario(usuario, id_user_login);
 
         if (bandera) {
-            Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se dio de baja al usuario "+nombre_usuario+".");
+            //Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se dio de baja al usuario "+nombre_usuario+".");
             Utilidades.mostrarMensaje(response, 1, "Exito", "El usuario "+nombre_usuario+" se ha desactivado.");
         } else {
             Utilidades.mostrarMensaje(response, 2, "Error", "El usuario "+nombre_usuario+" no pudo ser desactivado.");

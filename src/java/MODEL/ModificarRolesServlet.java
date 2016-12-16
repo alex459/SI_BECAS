@@ -44,7 +44,8 @@ public class ModificarRolesServlet extends HttpServlet {
         String nombre_usuario = request.getParameter("CARNET");
         usuario = usuarioDao.consultarPorNombreUsuario(nombre_usuario);
         usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
-        bandera = usuarioDao.actualizar(usuario);
+        int id_user_login = Integer.parseInt(request.getSession().getAttribute("id_user_login").toString());
+        bandera = usuarioDao.actualizar(usuario, id_user_login);
 
         
         
@@ -56,7 +57,7 @@ public class ModificarRolesServlet extends HttpServlet {
             temp1 = temp2.consultarPorId(usuario.getIdTipoUsuario());
             String rol_anterior = request.getParameter("TIP_USUARIO_ANTERIOR");
             String rol_nuevo = temp1.getTipoUsuario();                    
-            Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se actualizo el rol del usuario "+nombre_usuario+" de "+rol_anterior+" a "+rol_nuevo+".");
+            //Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se actualizo el rol del usuario "+nombre_usuario+" de "+rol_anterior+" a "+rol_nuevo+".");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se cambio el rol del usuario "+nombre_usuario+" correctamente.");
         } else {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo cambiar el rol del usuario " + nombre_usuario + ".");

@@ -4,6 +4,7 @@ import DAO.BitacoraDAO;
 import DAO.UsuarioDAO;
 import POJO.Bitacora;
 import POJO.Usuario;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,52 +28,45 @@ public class Utilidades {
         }
 
     }
-    
+
     /**
-     * Metodo para registrar una bitacora nueva.
-     * Id_Accion puede ser 1-INGRESAR, 2-ACTUALIZAR, 3-CONSULTAR, 4-ELIMINAR, 5-LOGIN, 6-LOGOUT, 7-REPORTE.
-     * usuario_sesion es el usuario logeado, en jsp o en servlet se pude obtener con sesion.getParameter("user").
-     * Ejemplo de Descripcion: "Se ingreso un nuevo usuario al sistema con carnet xxxx".
-     * 
+     * Metodo para registrar una bitacora nueva. Id_Accion puede ser 1-INGRESAR,
+     * 2-ACTUALIZAR, 3-CONSULTAR, 4-ELIMINAR, 5-LOGIN, 6-LOGOUT, 7-REPORTE.
+     * usuario_sesion es el usuario logeado, en jsp o en servlet se pude obtener
+     * con sesion.getParameter("user"). Ejemplo de Descripcion: "Se ingreso un
+     * nuevo usuario al sistema con carnet xxxx".
+     *
      * @param Id_accion
      * @param usuario_sesion
-     * @param Descripcion 
+     * @param Descripcion
      */
-    public static void nuevaBitacora(Integer Id_accion, String usuario_sesion, String Descripcion) {
+    public static void nuevaBitacora(Integer Id_accion, Integer Id_usuario, String Descripcion, String Sql_Script) {
         Bitacora temp1 = new Bitacora();
-        Usuario temp2 = new Usuario();
-        UsuarioDAO temp3 = new UsuarioDAO();
-        BitacoraDAO temp4 = new BitacoraDAO();        
-        temp1.setIdBitacora(temp4.getSiguienteId());
+        BitacoraDAO temp2 = new BitacoraDAO();
+        temp1.setIdBitacora(temp2.getSiguienteId());
         temp1.setIdAccion(Id_accion);
-        temp2 = temp3.consultarPorNombreUsuario(usuario_sesion);
-        temp1.setIdUsuario(temp2.getIdUsuario());
+        temp1.setIdUsuario(Id_usuario);
         Calendar calendar = Calendar.getInstance();
         java.util.Date now = calendar.getTime();
         java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
         temp1.setFechaBitacora(currentTimestamp);
         temp1.setDescripcion(Descripcion);
-        temp1.setSqlScript("");
-        temp4.ingresar(temp1);
+        temp1.setSqlScript(Sql_Script.replaceAll("'", "''"));
+        temp2.ingresar(temp1);
     }
-    
-    
-    /*public static void nuevaBitacora(Integer Id_accion, String usuario_sesion, String Descripcion, String Sql) {
-        Bitacora temp1 = new Bitacora();
-        Usuario temp2 = new Usuario();
-        UsuarioDAO temp3 = new UsuarioDAO();
-        BitacoraDAO temp4 = new BitacoraDAO();        
-        temp1.setIdBitacora(temp4.getSiguienteId());
-        temp1.setIdAccion(Id_accion);
-        temp2 = temp3.consultarPorNombreUsuario(usuario_sesion);
-        temp1.setIdUsuario(temp2.getIdUsuario());
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date now = calendar.getTime();
-        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
-        temp1.setFechaBitacora(currentTimestamp);
-        temp1.setDescripcion(Descripcion);
-        temp1.setSqlScript(Sql);
-        temp4.ingresar(temp1);
-    }*/
+
+    public static boolean verificarPermisos(Integer tipo_usuario_logeado, ArrayList<String> tipo_usuarios_permitidos) {
+        boolean respuesta = false;
+
+        if (tipo_usuarios_permitidos.size() != 0 || tipo_usuarios_permitidos!=null) {
+            for (int i = 0; i < tipo_usuarios_permitidos.size(); i++) {
+                if (Integer.parseInt(tipo_usuarios_permitidos.get(i).toString()) == tipo_usuario_logeado) {
+                    respuesta = true;
+                }
+            }
+            
+        }
+        return respuesta;
+    }
 
 }

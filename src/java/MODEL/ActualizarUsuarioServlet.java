@@ -95,13 +95,13 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         
         
         if (validacion2 && validacion3) {
-            
-            bandera1 = usuarioDao.actualizar(usuario); //guardando usuario
-            bandera2 = detalleUsuarioDao.actualizarOpcion2(detalleUsuario); //guardando detalle usuario
+            int id_user_login = Integer.parseInt(request.getSession().getAttribute("id_user_login").toString());
+            bandera1 = usuarioDao.actualizar(usuario, id_user_login); //guardando usuario
+            bandera2 = detalleUsuarioDao.actualizarOpcion2(detalleUsuario, id_user_login); //guardando detalle usuario
 
             //Redireccionando a la pagina de mensaje general    
             if (bandera1 && bandera2) {
-                Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se actualizo el usuario "+usuario.getNombreUsuario()+".");
+                //Utilidades.nuevaBitacora(2, request.getSession().getAttribute("user").toString(), "Se actualizo el usuario "+usuario.getNombreUsuario()+".");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizo el usuario correctamente.");
             } else {
                 Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario.");

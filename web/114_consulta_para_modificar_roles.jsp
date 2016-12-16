@@ -4,19 +4,30 @@
     Author     : next
 --%>
 
+<!-- inicio proceso de seguridad de login -->
+<%@page import="MODEL.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String id_usuario_login = (String) actual.getAttribute("id_user_login");
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
-    if (user == null) {
-        response.sendRedirect("login.jsp");
-        return;
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("7");
+    tipo_usuarios_permitidos.add("8");
+    tipo_usuarios_permitidos.add("9");
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user==null) {
+        response.sendRedirect("logout.jsp");        
     }
 %>
+<!-- fin de proceso de seguridad de login -->
 
 <%@page import="DAO.ConexionBD"%>
 <%@page import="POJO.Facultad"%>

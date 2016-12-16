@@ -1,5 +1,6 @@
 package DAO;
 
+import MODEL.Utilidades;
 import POJO.DetalleUsuario;
 import java.sql.ResultSet;
 import java.sql.Date;
@@ -121,7 +122,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
         return siguienteId;
     }
 
-    public boolean ingresar(DetalleUsuario temp) {
+    public boolean ingresar(DetalleUsuario temp, int id_user_login) {
         boolean exito = false;
 
         this.abrirConexion();
@@ -132,6 +133,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
+            Utilidades.nuevaBitacora(1, id_user_login, "Se ingreso un detalle usuario.", sql);
         } catch (Exception e) {
             System.out.println("Error " + e);
         } finally {
@@ -141,7 +143,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
     }
     
     //solo se usa en la pantalla de agregar_usuario.jsp
-    public boolean ingresarOpcion2(DetalleUsuario temp) {
+    public boolean ingresarOpcion2(DetalleUsuario temp, Integer id_user_login) {
         boolean exito = false;
 
         this.abrirConexion();
@@ -151,6 +153,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
+            Utilidades.nuevaBitacora(1, id_user_login, "Se ingreso un detalle usuario.", sql);
         } catch (Exception e) {
             System.out.println("Error " + e);
         } finally {
@@ -159,7 +162,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
         return exito;
     }
 
-    public boolean actualizarOpcion2(DetalleUsuario temp) {
+    public boolean actualizarOpcion2(DetalleUsuario temp, Integer id_user_login) {
         boolean exito = false;
 
         this.abrirConexion();
@@ -169,6 +172,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
+            Utilidades.nuevaBitacora(2, id_user_login, "Se actualizo un detalle usuario.", sql);
         } catch (Exception e) {
             System.out.println("Error " + e);
         } finally {

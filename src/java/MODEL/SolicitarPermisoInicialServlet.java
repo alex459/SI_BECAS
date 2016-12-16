@@ -176,7 +176,7 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
         
         }else{
             //Agregar a bitacora accion
-            Utilidades.nuevaBitacora(1, request.getSession().getAttribute("user").toString(), "Error al ingresar solicitud de Permiso Inicial");
+            //Utilidades.nuevaBitacora(1, request.getSession().getAttribute("user").toString(), "Error al ingresar solicitud de Permiso Inicial");
         }
         
         
