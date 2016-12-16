@@ -15,6 +15,9 @@
 <%@page import="MODEL.variablesDeSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
+    response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
+    request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
+                
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");

@@ -12,6 +12,9 @@
 <%@page import="DAO.DetalleUsuarioDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <% 
+    response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
+    request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
+                
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
@@ -32,7 +35,7 @@
      }
      
 
-      String id_documento = request.getParameter("ID_DOCUMENTO");
+    String id_documento = request.getParameter("ID_DOCUMENTO");
     
     ConexionBD conexionBD = new ConexionBD();
     
@@ -87,20 +90,20 @@
             publicos =  docComision.consultarJuntaDirectivaExpeProceso4(id_expedie);
         break;
         
-        case 8:
-            publicos =  docComision.consultarJuntaDirectivaExpeProceso8(id_expedie);
-        break;
-        
-        case 9:
-            publicos =  docComision.consultarJuntaDirectivaExpeProceso9(id_expedie);
-        break;
-        
-        case 11:
-            publicos =  docComision.consultarJuntaDirectivaExpeProceso11(id_expedie);
+        case 10:
+            publicos =  docComision.consultarJuntaDirectivaExpeProceso10(id_expedie);
         break;
         
         case 12:
             publicos =  docComision.consultarJuntaDirectivaExpeProceso12(id_expedie);
+        break;
+        
+        case 13:
+            publicos =  docComision.consultarJuntaDirectivaExpeProceso13(id_expedie);
+        break;
+        
+        case 20:
+            publicos =  docComision.consultarJuntaDirectivaExpeProceso20(id_expedie);
         break;
         
         default:
@@ -155,21 +158,20 @@ String accion="insertar";
     <jsp:include page="menu_corto.jsp"></jsp:include>   
 </head>
     <body ng-app="resolverSolComisionBecasApp" ng-controller="resolverSolComisionBecasCtrl">
-
-        <div class="container-fluid">
+     <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Acuerdo</p>
-                </h2>
+            <h2>
+                <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Acuerdo</p>
+            </h2>
 
             <br></br>
 
-            </div><!-- TITULO DE LA PANTALLA -->  
-            <div class="col-md-12">
+        </div><!-- TITULO DE LA PANTALLA --> 
+        <div class="col-md-12">
+            
+            <fieldset class="custom-border">
+                <legend class="custom-border">Solicitud</legend>
                 
-        
-                <fieldset class="custom-border">
-                    <legend class="custom-border">Solicitud</legend>
                     <div class="row">    <!-- TABLA RESULTADOS --> 
                         <div class="col-md-1"></div> 
                         <div class="col-md-10">
@@ -209,67 +211,67 @@ String accion="insertar";
                         <div class="col-md-8">
                             <fieldset class="custom-border">
                                 <legend class="custom-border"> Documentos Adjuntados</legend>
-                                
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
-                                                </tr>   
-                                            </thead>
-                                            <tbody >
-                                                <%for (int i = 0; i < publicos.size(); i++) {%>
-                                                <tr>
-                                                    <td><%=i+1%></td>
-                                                    <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
-                                                    <td>
-                                                        <form action="verDocumentoComision" method="post" >
-                                                            <input type = "hidden" name="id" value="<%= publicos.get(i).getIdDocumento()%>">
-                                                            <input type="submit" class="btn btn-success" value="Ver Documento ">
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                <% }%>
-
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                </div>
                 
-                                
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10">
+                                            <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
+                                                            </tr>   
+                                                        </thead>
+                                                        <tbody >
+                                                        <%
+                                                            for (int i = 0; i < publicos.size(); i++) {%>
+                                                            <tr>
+                                                                <td><%=i+1%></td>
+                                                                <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
+                                                                <td>
+                                                                    <form action="verDocumentoComision" method="post" >
+                                                                        <input type = "hidden" name="id" value="<%= publicos.get(i).getIdDocumento()%>">
+                                                                        <input type="submit" class="btn btn-success" value="Ver Documento ">
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                            <% }%>
 
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <fieldset class="custom-border">
-                                            <legend class="custom-border"> Resolucion</legend>
-                                            <form  name="resolverSolComisionBecas" action="ResolverDictamen" method="POST" enctype="multipart/form-data" novalidate>           
+
+
+                                                        </tbody>
+                                                    </table>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                    </div>
+
+
+                                    <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10">
+                                                <fieldset class="custom-border">
+                                                    <legend class="custom-border"> Resolucion</legend>
+                                                    <form  name="resolverSolComisionBecas" action="ResolverDictamen" method="POST" enctype="multipart/form-data" novalidate>           
                                                         
-                                                <div class="row" >
-                                                    <div class="col-md-4">
-                                                        <label>Documento Digital:</label>
-                                                    </div>
-                                                        <div class="col-md-8">
+                                                        <div class="row" >
+                                                            <div class="col-md-4">
+                                                                <label>Documento Digital:</label>
+                                                            </div>
+                                                            <div class="col-md-8">
                                                                 <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true"><br>
                                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.doc_digital.$error.required">Debe Agregar un Documento PDF.</span>
 
+                                                            </div>
                                                         </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <label>Observacion:</label>
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024"></textarea><br>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                                <div class="row text-center">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label>Observacion:</label>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024"></textarea><br>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                        <div class="row text-center">
                                                             <div class="col-md-1"></div>
                                                             <div class="col-md-10 btn-group text-center" data-toggle="buttons">
                                                                 <div class="col-md-4">
@@ -288,33 +290,31 @@ String accion="insertar";
                                                                     </label>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-1"></div>
-                                                </div>  
-                                                <div class="row text-center">
+                                                            <div class="col-md-1"></div>   
+                                                        </div>
+                                                        <div class="row text-center">
                                                             <br>
-                                                </div>
-                                                <div class="row text-center">
+                                                        </div>
+                                                        <div class="row text-center">
                                                             <input type="hidden" name="accion" value="<%=accion%>">
                                                             <input type="hidden" name="id_documento" value="<%=id_documento%>">
                                                             <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">
-                                                </div>  
-                                            </form>                
-                                        </fieldset>
+                                                        </div>  
+                                                    </form>    
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-1"></div>
                                     </div>
-                                    <div class="col-md-3"></div>
-                                </div>
-                            </fieldset>
-                                   
-                        </div> 
-                    </div> 
-                </fieldset>
-            </div>  
+         
+           
+                            </fieldset>      
+                        </div>
+                    </div>
+                <div class="col-md-3"></div>
+            </fieldset>
+        </div>  
 
-    </div>
-
-
-
-
+</div>
 
 <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
     <div class="col-md-6">
@@ -338,11 +338,14 @@ String accion="insertar";
         </p>
     </div>
 </div>    
+
+
+
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
+<script src="js/angular.min.js"></script>
 <script src="js/resolverSolComisionBecas.js"></script>
-<%--hice este pero no me lo agarraba--%>
-<%-- <script src="js/resolverSolComisionBecas.js"></script> --%>
+
+
 </body>
 </html>

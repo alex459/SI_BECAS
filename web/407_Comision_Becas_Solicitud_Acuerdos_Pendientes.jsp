@@ -29,10 +29,6 @@
 %>
 
 
-
-
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -75,8 +71,8 @@
     <p class="text-right" style="font-weight:bold;">Facultad: <%= idFacultad %></p>
 
         <%-- todo el menu esta contenido en la siguiente linea
-         el menu puede ser cambiado en la pagina menu.jsp --%>
-    <jsp:include page="menu_corto.jsp"></jsp:include>    
+        el menu puede ser cambiado en la pagina menu.jsp --%>
+        <jsp:include page="menu_corto.jsp"></jsp:include>    
 </head>
     <body ng-app="solicitudAcuerdosPendientesComisionBecasApp" ng-controller="solicitudAcuerdosPendientesComisionBecasCtrl">
         <div class="container-fluid" >
