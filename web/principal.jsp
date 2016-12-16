@@ -19,6 +19,12 @@
     Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
     ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
     //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("1");
+    tipo_usuarios_permitidos.add("2");
+    tipo_usuarios_permitidos.add("3");
+    tipo_usuarios_permitidos.add("4");
+    tipo_usuarios_permitidos.add("5");
+    tipo_usuarios_permitidos.add("6");
     tipo_usuarios_permitidos.add("7");
     tipo_usuarios_permitidos.add("8");
     tipo_usuarios_permitidos.add("9");
