@@ -158,6 +158,8 @@
                             </select><span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.institucionEstudio.$error.required">Seleccione una institución de estudio.</span>
 
                         </div>
+                              <input type="text" value="" id="sensorText" /> <input type="text" value="" id="voltageText" />
+
                         <div class="col-md-3 text-right">
                             <label for="fechaInicio">Fecha inicio de estudio :</label>                                
                         </div>
@@ -325,7 +327,7 @@
             startDate: new Date()
         });
     });
-    
+}
 </script>
 </body>
 </html>
