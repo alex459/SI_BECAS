@@ -135,9 +135,6 @@ String accion="insertar";
 </head>
 
 
-
-<body>
-
     
     
     <body ng-app="resolverSolConsejoSuperiorUniversitarioApp" ng-controller="resolverSolConsejoSuperiorUniversitarioCtrl">
