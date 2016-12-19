@@ -67,7 +67,7 @@ public class AgregarDocumentoFinalizacionBecaServlet extends HttpServlet {
         
             Integer idDoc =  documentoDao.getSiguienteId();
             String obs = "TITULO OBTENIDO POR EL USUARIO " + user;
-            Integer tip = 130;
+            Integer tip = 143;
             tipo = tipoDao.consultarPorId(tip);
         
             documento.setIdDocumento(idDoc);

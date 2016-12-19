@@ -44,7 +44,7 @@ public class SolicitarAcuerdoDeGestionDeCompromisoContractualServlet extends Htt
         response.setContentType("text/html;charset=UTF-8");
         
         String nombreDocumentos[] = {"cartaSolicitud","cartaRRHH"};
-        Integer idDocumentos[] = {139,140};
+        Integer idDocumentos[] = {153,154};
 
         InputStream docDigital = null;
         String user = request.getParameter("user");
@@ -87,7 +87,7 @@ public class SolicitarAcuerdoDeGestionDeCompromisoContractualServlet extends Htt
             Date fechaHoy = new Date();
             java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
             idDoc = documentoDao.getSiguienteId();
-            tip = 141;
+            tip = 155;
             tipo = tipoDao.consultarPorId(tip);
             String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
 
