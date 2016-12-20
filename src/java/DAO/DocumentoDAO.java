@@ -409,8 +409,7 @@ public class DocumentoDAO extends ConexionBD{
             this.cerrarConexion();
         } catch (Exception e) {
             System.out.println("Error " + e);
-        }
-        
+        }        
         return exito;
     }
         
@@ -423,7 +422,7 @@ public class DocumentoDAO extends ConexionBD{
             stmt = conn.createStatement();
             String sql = "SELECT DOCUMENTO.ID_DOCUMENTO AS ID_DOCUMENTO,DOCUMENTO_DIGITAL FROM DOCUMENTO,EXPEDIENTE WHERE "
                     + " EXPEDIENTE.ID_EXPEDIENTE=DOCUMENTO.ID_EXPEDIENTE AND EXPEDIENTE.ID_EXPEDIENTE="+exp+" "
-                    + " AND EXPEDIENTE.ID_PROGRESO="+idProg+" AND DOCUMENTO.ID_TIPO_DOCUMENTO=100;";
+                    + " AND EXPEDIENTE.ID_PROGRESO="+idProg+" AND DOCUMENTO.ID_TIPO_DOCUMENTO="+idTipoDoc+";";
             System.out.println(sql);
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();

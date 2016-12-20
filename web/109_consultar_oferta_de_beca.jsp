@@ -124,7 +124,7 @@
                                                 </div>
                                                 <div class="col-md-6">                                
                                                     <div class="input-group date">
-                                                        <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                        <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
                                                 </div> 
                                             </div>
@@ -134,7 +134,7 @@
                                                 </div>
                                                 <div class="col-md-6">                                
                                                     <div class="input-group date">
-                                                        <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                        <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
                                                 </div> 
                                             </div>
@@ -168,7 +168,7 @@
                                             </div>
                                             <div class="col-md-6">                                
                                                 <div class="input-group date">
-                                                    <input type="text" name="fCierreIni" id="fCierreIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                    <input type="text" name="fCierreIni" id="fCierreIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                                 </div>
                                             </div> 
                                         </div>
@@ -178,7 +178,7 @@
                                             </div>
                                             <div class="col-md-6">                                
                                                 <div class="input-group date">
-                                                    <input type="text" name="fCierreFin" id="fCierreFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                    <input type="text" name="fCierreFin" id="fCierreFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                                 </div>
                                             </div> 
                                         </div>
@@ -351,14 +351,14 @@
                                                 out.write("<td>" + institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionEstudio()).getNombreInstitucion() + "</td>");
                                                 out.write("<td>" + institucionDAO3.consultarPorId(lista2.get(i).getIdInstitucionFinanciera()).getNombreInstitucion() + "</td>");
                                                 System.out.println(listaDocs.get(i).getIdDocumento());
-                                                out.write("<td><center><form action='DocumentoOferta' method='post'  target='_blank'><input type='hidden' name='id' value='" 
+                                                out.write("<td><center><form action='DocumentoOferta' method='post'  target='_blank'><input type='hidden' name='id' value='"
                                                         + listaDocs.get(i).getIdDocumento() + "'><input type='submit' class='btn btn-primary' value='Ver Documento'></form>"
-                                                                + "</center></td>");
+                                                        + "</center></td>");
                                                 out.write("<td><center><form style='display:inline;' action='108_modificar_oferta_de_beca.jsp' method='post'>"
                                                         + "<input type='hidden' name='ID_DOC' value='" + listaDocs.get(i).getIdDocumento() + "'>"
-                                                                + "<input type='hidden' name='ID_OFERTA_BECA' value='" + lista2.get(i).getIdOfertaBeca() + "'>"
-                                                                        + "<input type='submit' class='btn btn-success' name='submit' value='Modificar oferta'>"
-                                                                        + "</center></form></td>");
+                                                        + "<input type='hidden' name='ID_OFERTA_BECA' value='" + lista2.get(i).getIdOfertaBeca() + "'>"
+                                                        + "<input type='submit' class='btn btn-success' name='submit' value='Modificar oferta'>"
+                                                        + "</center></form></td>");
                                                 out.write("</tr>");
                                                 i++;
                                             }
@@ -411,15 +411,41 @@
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
-                                                        $(function () {
-                                                            $('.input-group.date').datepicker({
-                                                                format: 'yyyy-mm-dd',
-                                                                calendarWeeks: true,
-                                                                todayHighlight: true,
-                                                                autoclose: true,
-                                                                startDate: new Date()
-                                                            });
-                                                        });
+    $(function () {
+        $('#fIngresoIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fIngresoFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+        $('#fCierreIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fCierreFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: new Date()
+        }).on('change.dp', function (e) {
+            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+    });
 </script>
 </body>
 </html>
