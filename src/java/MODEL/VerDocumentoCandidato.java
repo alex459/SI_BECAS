@@ -42,17 +42,15 @@ public class VerDocumentoCandidato extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");        
         DocumentoDAO docdao = new DocumentoDAO();
         Integer idExp = Integer.parseInt(request.getParameter("idexp"));
-        Integer idTipo = Integer.parseInt(request.getParameter("idprog"));
-        
-        
-        //Integer idTipo = Integer.parseInt(request.getParameter("idtipodoc"));
+        Integer idProg = Integer.parseInt(request.getParameter("idprog"));
+        Integer idTipoDoc = Integer.parseInt(request.getParameter("idtipodoc"));
         
         Documento doc = new Documento();
         //////////////////////////////////////////////////////
         //////////////////////////////////////////////////////
         //////////////////////////////////////////////////////
         //agregar parametro con idtipodoc
-        doc = docdao.ObtenerPorExpedienteProgreso(idExp, idTipo,100);
+        doc = docdao.ObtenerPorExpedienteProgreso(idExp, idProg,idTipoDoc);
         
         String PdfName = doc.getIdTipoDocumento().getTipoDocumento() +".pdf";
         System.out.println("DOCUMENTO CANDIDATO, PRUEBA");

@@ -46,10 +46,12 @@
     } catch (Exception e){
         e.printStackTrace();
     }
+     System.out.println("BIEN");
     int idExp= expediente.getIdExpediente();
     int idProg = expediente.getIdProgreso();
     Documento doc=new Documento();
     DocumentoDAO docDao= new DocumentoDAO();
+   
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -124,7 +126,7 @@
                                     { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
                                                     <input type="hidden" name="idexp" value="<%=idExp%>">
                                                     <input type="hidden" name="idprog" value="<%=idProg%>">
-                                                    <input type="hidden" name="idtipodoc" value="<%=200%>">
+                                                    <input type="hidden" name="idtipodoc" value="<%=103%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
                                     else{
@@ -149,6 +151,7 @@
                                      { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
                                                     <input type="hidden" name="idexp" value="<%=idExp%>">
                                                     <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="hidden" name="idtipodoc" value="<%=105%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
                                 else{
@@ -173,6 +176,7 @@
                                     { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
                                                     <input type="hidden" name="idexp" value="<%=idExp%>">
                                                     <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="hidden" name="idtipodoc" value="<%=112%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    } 
                                 else{
@@ -197,6 +201,7 @@
                                       { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
                                                     <input type="hidden" name="idexp" value="<%=idExp%>">
                                                     <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="hidden" name="idtipodoc" value="<%=121%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
                                 else{
@@ -221,6 +226,7 @@
                                       { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
                                                     <input type="hidden" name="idexp" value="<%=idExp%>">
                                                     <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="hidden" name="idtipodoc" value="<%=131%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    } 
                                 else{
@@ -245,6 +251,7 @@
                                        { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
                                                     <input type="hidden" name="idexp" value="<%=idExp%>">
                                                     <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="hidden" name="idtipodoc" value="<%=132%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
                                 else{
@@ -269,6 +276,7 @@
                                       { %><td><form action="VerDocumentoCandidato" method="post"  target="_blank"> 
                                                     <input type="hidden" name="idexp" value="<%=idExp%>">
                                                     <input type="hidden" name="idprog" value="<%=idProg%>">
+                                                    <input type="hidden" name="idtipodoc" value="<%=133%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
                                 else{

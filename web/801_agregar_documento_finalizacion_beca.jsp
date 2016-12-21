@@ -125,9 +125,9 @@
                                     <div class="col-md-4">
                                         <select  name="{{x.tipo}}" class="form-control">
                                             <option value="">Seleccione el tipo de documento</option>
-                                            <option value="131">Certificación de notas</option>
-                                            <option value="132">Acta de evaluación de tesis</option>
-                                            <option value="133">Constancia de egresado</option>
+                                            <option value="144">Certificación de notas</option>
+                                            <option value="145">Acta de evaluación de tesis</option>
+                                            <option value="146">Constancia de egresado</option>
                                         </select><br>
                                     </div>
                                     <div class="col-md-3">

@@ -54,21 +54,21 @@ public class ResolverDictamen extends HttpServlet {
             if (filePart != null) {
                 archivo = filePart.getInputStream();
             }
-            
+
             Documento documento = new Documento();
             DocumentoDAO documentoDao = new DocumentoDAO();
             TipoDocumento tipoDoc = new TipoDocumento();
             TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
             ExpedienteDAO expDao = new ExpedienteDAO();
             OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
-            
+
             //Obteniendo el id del expediente y el tipo de beca
             Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(id_documento);
             String TipoBeca = ofertaDao.ObtenerTipoBeca(idExpediente);
             Expediente expediente = expDao.consultarPorId(idExpediente);
             Date fechaHoy = new Date();
             java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
-            
+
             //Obteniendo Documento a resolver
             documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
             documento.setEstadoDocumento(resolucion);
@@ -81,24 +81,24 @@ public class ResolverDictamen extends HttpServlet {
                     documentoDao.ActualizarResolver(documento);
                     //Insercion o Actualizacion
                     Documento acuerdoSolicitar = new Documento();
-                    if(accion.equals("insertar")){
+                    if (accion.equals("insertar")) {
                         //solicitar Acuerdos a Junta Directiva
                         acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
                         acuerdoSolicitar.setIdExpediente(expediente);
                         acuerdoSolicitar.setFechaSolicitud(sqlDate);
                         acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
                         acuerdoSolicitar.setObservacion(obs);
-                        if(TipoBeca.equals("INTERNA")){
+                        if (TipoBeca.equals("INTERNA")) {
                             tipoDoc = tipoDao.consultarPorId(120);
                             acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
                             documentoDao.solicitarDocumento(acuerdoSolicitar);
-                        }else{
+                        } else {
                             tipoDoc = tipoDao.consultarPorId(121);
                             acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
                             documentoDao.solicitarDocumento(acuerdoSolicitar);
-                        } 
-                        
-                    }else{
+                        }
+
+                    } else {
                         //YA SE HIZO LA SOLICITUD LA PRIMERA VEZ
                     }
                     //Cambiar progreso y estado
@@ -111,22 +111,22 @@ public class ResolverDictamen extends HttpServlet {
                     documento.setDocumentoDigital(archivo);
                     documentoDao.ActualizarResolver(documento);
                     //Insercion o Actualizacion
-                    if(accion.equals("insertar")){
+                    if (accion.equals("insertar")) {
                         //fin
-                    }else{
+                    } else {
                         //Borrar la solicitud de acuerdos que se habia hecho
                         //obteniendo el id del acuerdo solicitado
                         Integer idAcuerdoSolicitado = 0;
                         Documento acuerdoSolicitado = new Documento();
                         //eliminando el documento
-                        if(TipoBeca.equals("INTERNA")){
-                           idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
-                           documentoDao.eliminarDocumento(idAcuerdoSolicitado);
-                        }else{
-                           idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
-                           documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                        if (TipoBeca.equals("INTERNA")) {
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
+                            documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                        } else {
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
+                            documentoDao.eliminarDocumento(idAcuerdoSolicitado);
                         }
-                        
+
                     }
                     //Cambiar progreso y estado
                     expediente.setIdProgreso(3);
@@ -135,9 +135,30 @@ public class ResolverDictamen extends HttpServlet {
                     break;
                 case "CORRECCION":
                     //Actualizar documento anterior a correccion y cambiar progreso al anterior
+                    if (accion.equals("insertar")) {
+                        //fin
+                    } else {
+                        //Borrar la solicitud de acuerdos que se habia hecho
+                        //obteniendo el id del acuerdo solicitado
+                        Integer idAcuerdoSolicitado = 0;
+                        Documento acuerdoSolicitado = new Documento();
+                        //eliminando el documento
+                        try {
+                            if (TipoBeca.equals("INTERNA")) {
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
+                                documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                            } else {
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
+                                documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
                     documentoDao.ActualizarResolverCorreccion(documento);
                     expediente.setIdProgreso(2);
-                    expediente.setEstadoProgreso("PENDIENTE");
+                    expediente.setEstadoProgreso("REVISION");
                     expDao.actualizarExpediente(expediente);
                     break;
                 default:

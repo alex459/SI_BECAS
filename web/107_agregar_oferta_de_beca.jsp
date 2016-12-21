@@ -153,13 +153,15 @@
                                  %><option value="" disabled selected required>Seleccione una opción</option><% 
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {  %>
                                     <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
-                               <% }
-                            %>    
-                            </select><span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.institucionEstudio.$error.required">Seleccione una institución de estudio.</span>
-
+                             <input type="hidden" name="pais" id="pais" value="<%=listaInstitucion2.get(i).getPais() %>" />
+                                    <% }
+                            %>   
+                            </select>
+                                
+                                    <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.institucionEstudio.$error.required">Seleccione una institución de estudio.</span>
+  
                         </div>
-                              <input type="text" value="" id="sensorText" /> <input type="text" value="" id="voltageText" />
-
+                              
                         <div class="col-md-3 text-right">
                             <label for="fechaInicio">Fecha inicio de estudio :</label>                                
                         </div>
@@ -327,7 +329,7 @@
             startDate: new Date()
         });
     });
-}
+
 </script>
 </body>
 </html>

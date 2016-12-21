@@ -7,7 +7,7 @@ package MODEL;
 
 import DAO.ConexionBD;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -16,9 +16,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+
+
 
 /**
  *
@@ -44,37 +44,73 @@ public class SolicitudBecaPDF extends HttpServlet {
         //servlet encargado de generar reportes de bitacora
         try {
             //leyendo parametros del jsp
-            String nombre1 = request.getParameter("nombre1");
-            String nombre2 = request.getParameter("nombre2");
-            String apellido1 = request.getParameter("apellido1");
-            String apellido2 = request.getParameter("apellido2");
-
+            /*
+            String reporte_nombre1 = request.getParameter("REPORTE_NOMBRE1");
+            String reporte_nombre2 = request.getParameter("REPORTE_NOMBRE2");
+            String reporte_apellido1 = request.getParameter("REPORTE_APELLIDO1");
+            String reporte_apellido2 = request.getParameter("REPORTE_APELLIDO2");
+            String reporte_fecha1 = request.getParameter("REPORTE_FECHA1");
+            String reporte_fecha2 = request.getParameter("REPORTE_FECHA2");
+            String reporte_id_accion_menor = request.getParameter("REPORTE_ID_ACCION_MENOR");
+            String reporte_id_accion_mayor = request.getParameter("REPORTE_ID_ACCION_MAYOR");
+            String reporte_reporte_nombre_usuario = request.getParameter("REPORTE_NOMBRE_USUARIO");
+            String reporte_reporte_rol_usuario = request.getParameter("REPORTE_ROL_USUARIO");
+            String opcion_de_salida = request.getParameter("OPCION_DE_SALIDA");*/
+            String opcion_de_salida ="1";
             //preparando parametros para el reporte
             Map parametersMap = new HashMap();
-            parametersMap.put("nombre1", "");
-            parametersMap.put("nombre2", "");
-            parametersMap.put("apellido1", "");
-            parametersMap.put("apellido2", "");
-            JasperReport report = JasperCompileManager.compileReport("REPORTES/308_Solicitud_Beca_PDF.jrxml");
+            parametersMap.put("NOMBRE1", "%");
+            parametersMap.put("NOMBRE2", "%");
+            parametersMap.put("APELLIDO1", "%");
+            parametersMap.put("APELLIDO2", "%");
+            System.out.println(new Date((2016 - 1900), 1, 1));
+            System.out.println(new Date((2016 - 1900), 12, 31));
+            parametersMap.put("FECHA1", new Date((2016 - 1900), 1, 1));
+            parametersMap.put("FECHA2", new Date((2016 - 1900), 12, 31));
+            parametersMap.put("ID_ACCION_MENOR", 0);
+            parametersMap.put("ID_ACCION_MAYOR", 10);
+            parametersMap.put("NOMBRE_USUARIO", "JOSE ALEXIS BELTRAN SERRANO");
+            parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");
 
-            //SALIDA EN PDF                
+            if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF                
                 ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
-                response.setContentType("application/pdf");
-                byte[] bytes = JasperRunManager.runReportToPdf(report, parametersMap, conexionBD.conn);
-                //byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\adminPC\\Documents\\NetBeansProjects\\JavaApplication1\\src\\javaapplication1\\solicitud100.jasper", parametersMap, conexionBD.conn);
-                //byte[] bytes = JasperRunManager.runReportToPdf
+                byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\report1.jasper", parametersMap, conexionBD.conn);
                 conexionBD.cerrarConexion();
-                
+                response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
                 ServletOutputStream outputstream = response.getOutputStream();
                 outputstream.write(bytes, 0, bytes.length);
                 outputstream.flush();
                 outputstream.close();
+            }
+
+            if ("2".equals(opcion_de_salida)) { //SALIDA EN XLS
+                /*JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\101_reporte_bitacora.jrxml");
+                ConexionBD conexionBD = new ConexionBD();
+                conexionBD.abrirConexion();
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametersMap, conexionBD.conn);
+                conexionBD.cerrarConexion();
+                JRXlsExporter exporter = new JRXlsExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "C:\\a.xls");
+                exporter.exportReport();*/
+
+            }
+
+            if ("3".equals(opcion_de_salida)) { //SALIDA EN XLS
+
+            }
+
+            if ("4".equals(opcion_de_salida)) { //SALIDA EN XLS
+
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Error: " + ex);
         }
+
 
     }
 

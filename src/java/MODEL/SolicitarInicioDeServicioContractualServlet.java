@@ -43,8 +43,8 @@ public class SolicitarInicioDeServicioContractualServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         /* TODO output your page here. You may use following sample code. */
-        String nombreDocumentos[] = {"actaPosesion","proyectoApoyara","solicitudCB","solicitudJD"};
-        Integer idDocumentos[] = {134,135,136,137};
+        String nombreDocumentos[] = {"actaPosesion","proyectoApoyara","solicitudJD","solicitudCB"};
+        Integer idDocumentos[] = {147,148,149,150};
 
         InputStream docDigital = null;
         String user = request.getParameter("user");
@@ -87,7 +87,7 @@ public class SolicitarInicioDeServicioContractualServlet extends HttpServlet {
             Date fechaHoy = new Date();
             java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
             idDoc = documentoDao.getSiguienteId();
-            tip = 138;
+            tip = 151;
             tipo = tipoDao.consultarPorId(tip);
             String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
 

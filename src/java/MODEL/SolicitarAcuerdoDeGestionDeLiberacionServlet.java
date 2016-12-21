@@ -61,7 +61,7 @@ public class SolicitarAcuerdoDeGestionDeLiberacionServlet extends HttpServlet {
             Part filePart = null;
             Documento anexo = new Documento();
             idDoc = documentoDao.getSiguienteId();
-            tip = 142;
+            tip = 156;
             tipo = tipoDao.consultarPorId(tip);
             filePart = request.getPart("cartaSolicitud");
             if (filePart != null) {
@@ -82,7 +82,7 @@ public class SolicitarAcuerdoDeGestionDeLiberacionServlet extends HttpServlet {
             Date fechaHoy = new Date();
             java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
             idDoc = documentoDao.getSiguienteId();
-            tip = 143;
+            tip = 157;
             tipo = tipoDao.consultarPorId(tip);
             String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
 

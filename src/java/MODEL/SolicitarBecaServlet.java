@@ -70,6 +70,7 @@ public class SolicitarBecaServlet extends HttpServlet {
         boolean exitoValores = false;
         boolean exitoDetalle = false;
         boolean exitoActDetalle = false;
+        boolean solicitudHecha = false;
         try {
             String user = request.getParameter("user");
             //Pantalla 308

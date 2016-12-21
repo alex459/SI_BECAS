@@ -422,15 +422,41 @@
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
-                                                        $(function () {
-                                                            $('.input-group.date').datepicker({
-                                                                format: 'yyyy-mm-dd',
-                                                                calendarWeeks: true,
-                                                                todayHighlight: true,
-                                                                autoclose: true,
-                                                                startDate: new Date()
-                                                            });
-                                                        });
+                                     $(function () {
+        $('#fIngresoIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fIngresoFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+        $('#fCierreIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fCierreFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: new Date()
+        }).on('change.dp', function (e) {
+            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+    });
 </script>
 </body>
 </html>
