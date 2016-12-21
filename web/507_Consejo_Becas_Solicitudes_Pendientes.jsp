@@ -88,7 +88,7 @@
                     <fieldset class="custom-border">
                         <legend class="custom-border">Solicitudes de Acuerdos Pendientes</legend>
                         
-                         <form name="solicitudAcuerdosPendientesConsejoBecas" class="form-horizontal" action="507_Consejo_Becas_Solicitudes_Pendientes.jsp" method="post" novalidate>
+                         <form name="solicitudAcuerdosPendientesConsejoBecas" class="form-horizontal" action="501_Solicitudes_Asesoria_Contrato.jsp" method="post" novalidate>
    
                             <div class="row">      <!-- FILTROS -->
                                 <div class="col-md-2"></div>
