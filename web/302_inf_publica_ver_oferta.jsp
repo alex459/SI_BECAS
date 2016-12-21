@@ -320,7 +320,7 @@
                                     </div>
                                 </div></br> 
                                 </form>
-                                        <div clas="row"><center>
+                                        <div class="row"><center>
                                     <form style='display:inline;' action='304_candidato_sol_permiso_inicial.jsp' method='post'>
                                     <input type='hidden' name='ID_OFERTA' value='<%=idOferta%>'>
                                     <button type="submit" name='submit' class="btn btn-success">

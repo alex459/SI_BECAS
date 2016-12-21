@@ -84,7 +84,7 @@
             publicos =  docComision.consultarConsejoBecas12(id_expedie);
         break;
         
-        case 15:
+        case 14:
             publicos =  docComision.consultarConsejoBecas15(id_expedie);
         break;
         
@@ -284,6 +284,7 @@ String accion="insertar";
                                                             <br>
                                                         </div>
                                                         <div class="row text-center">
+                                                            <input type="hidden" name="accion" value="<%=id_p%>">
                                                             <input type="hidden" name="accion" value="<%=accion%>">
                                                             <input type="hidden" name="id_documento" value="<%=id_documento%>">
                                                             <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">

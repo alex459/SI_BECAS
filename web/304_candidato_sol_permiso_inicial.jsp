@@ -24,7 +24,7 @@
         ExpedienteDAO expDao = new ExpedienteDAO();
         expedienteAbierto = expDao.expedienteAbierto(user);
         // Obteniendo el id de la oferta
-        idOferta = Integer.parseInt(request.getParameter("ID_OFERTA_BECA"));
+        idOferta = Integer.parseInt(request.getParameter("ID_OFERTA"));
     } catch (Exception e){
         e.printStackTrace();
     }
