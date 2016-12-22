@@ -115,4 +115,44 @@ public class BecaDAO extends ConexionBD{
         }
         return exito;
     }
+    
+    public Integer getSiguienteId() {
+        Integer siguienteId = -1;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(ID_BECA), 0) AS X FROM BECA";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                siguienteId = rs.getInt("X") + 1;                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return siguienteId;
+    } 
+    
+    public Integer consultarIdUsuarioPorIdExpediente(int id) {
+        Integer idOferta = 0;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT SB.ID_USUARIO FROM BECA B JOIN solicitud_de_beca SB ON B.ID_EXPEDIENTE = SB.ID_EXPEDIENTE WHERE SB.ID_EXPEDIENTE = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idOferta = rs.getInt("ID_OFERTA_BECA");             
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return idOferta;
+    }
 }

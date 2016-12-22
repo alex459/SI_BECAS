@@ -450,7 +450,7 @@ public class DocumentoDAO extends ConexionBD{
             this.cerrarConexion();
 
             while (rs.next()) {
-                idDocumento = rs.getInt("ID_IDIOMA"); 
+                idDocumento = rs.getInt("ID_DOCUMENTO"); 
             }
 
         } catch (Exception e) {

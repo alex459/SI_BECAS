@@ -244,4 +244,21 @@ public class UsuarioDAO extends ConexionBD {
     }
     
 
+    public boolean actualizarRolPorIdUsuario(int id, int idRol){
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+ idRol+" WHERE ID_USUARIO = "+id;
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
 }

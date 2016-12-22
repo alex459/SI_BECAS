@@ -98,7 +98,7 @@
                                 <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                             </div>
                         <%}else{%>
-                            <form class="form-horizontal" action="SolicitarAcuerdoDeGestionDeLiberacionServlet" method="post">
+                            <form class="form-horizontal" action="SolicitarAcuerdoDeGestionDeLiberacionServlet" method="post" enctype="multipart/form-data">
                                 <div class="col-md-8 col-md-offset-2 row">
                                     <div class="row">
                                         <div class="col-md-5">

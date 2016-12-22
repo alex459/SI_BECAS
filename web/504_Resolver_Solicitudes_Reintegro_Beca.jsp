@@ -200,7 +200,7 @@ String accion="insertar";
                                             <div class="col-md-10">
                                                 <fieldset class="custom-border">
                                                     <legend class="custom-border"> Resolucion</legend>
-                                                    <form  name="resolverSolFiscaliaActaReintegro" action="ResolverDictamen" method="POST" enctype="multipart/form-data" novalidate>           
+                                                    <form  name="resolverSolFiscaliaActaReintegro" action="ResolverReintegroFiscalia" method="POST" enctype="multipart/form-data" novalidate>           
                                                         
                                                         <div class="row" >
                                                             <div class="col-md-4">
@@ -247,7 +247,7 @@ String accion="insertar";
                                                         </div>
                                                         <div class="row text-center">
                                                             <input type="hidden" name="accion" value="<%=accion%>">
-                                                            <%--   <input type="hidden" name="id_documento" value="<<%=id_documento%>">--%>
+                                                            <input type="hidden" name="id_ex" value="<%=id_ex%>">
                                                             <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolFiscaliaActaReintegro.$valid">
                                                         </div>  
                                                     </form>    

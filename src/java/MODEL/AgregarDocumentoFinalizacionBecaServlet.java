@@ -104,6 +104,11 @@ public class AgregarDocumentoFinalizacionBecaServlet extends HttpServlet {
                         anexo.setEstadoDocumento("INGRESADO");
                         documentoDao.Ingresar(anexo);
                     }
+                    
+                    //ACTUALIZAR EL PROGRESO DEL EXPEDIENTE
+                    expediente.setIdProgreso(12);
+                    expediente.setEstadoProgreso("PENDIENTE");
+                    expDao.actualizarExpediente(expediente);
                 }else{
                     //Nada NO hay Documentacion Anexada
                 }

@@ -91,7 +91,7 @@
             <div class="col-md-12"  ng-controller="AgregarDocFinalizacionBecaCtrl"><!-- CONTENIDO DE LA PANTALLA -->
                 <fieldset class="custom-border">
                     <legend class="custom-border">Adjuntar documentos necesarios</legend>
-                    <%if(expediente.getIdProgreso() == 11){%>
+                    <%if(expediente.getIdProgreso() == 9 || expediente.getIdProgreso()==12){%>
                     <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
                         <div class="text-center">
                             <h3 class="text-danger"> Ya ha agregado documentos de finalizacion de beca</h3>
