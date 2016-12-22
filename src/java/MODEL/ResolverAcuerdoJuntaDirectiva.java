@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import javax.servlet.http.Part;
  * @author adminPC
  */
 @WebServlet(name = "ResolverAcuerdoJuntaDirectiva", urlPatterns = {"/ResolverAcuerdoJuntaDirectiva"})
+@MultipartConfig(maxFileSize = 16177215)
 public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
 
     /**
@@ -46,6 +48,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
             //Recuperando informacion
             String resolucion = request.getParameter("resolucion");
             String observacion = request.getParameter("observacion");
+            String prueba = request.getParameter("id_p");
             Integer idProgreso = Integer.parseInt(request.getParameter("id_p"));
             String accion = request.getParameter("accion");
             String estado = "";

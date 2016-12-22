@@ -276,7 +276,7 @@ String accion="insertar";
                                                             <br>
                                                         </div>
                                                         <div class="row text-center">
-                                                            <input type="hidden" name="accion" value="<%=id_p%>">
+                                                            <input type="hidden" name="id_p" value="<%=id_p%>">
                                                             <input type="hidden" name="accion" value="<%=accion%>">
                                                             <input type="hidden" name="id_documento" value="<%=id_documento%>">
                                                             <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolConsejoSuperiorUniversitario.$valid">

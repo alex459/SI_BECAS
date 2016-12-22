@@ -164,7 +164,7 @@ public class CargoDAO extends ConexionBD{
         try {
             stmt = conn.createStatement();
 
-            String sql = "INSERT INTO cargo (ID_CARGO, ID_DETALLE_USUARIO, NOMBRE_CARGO, LUGAR, FECHA_INICIO, FECHA_FIN, RESPONSABILIDADES) VALUES (" + temp.getIdCargo()+ "," + temp.getIdDetalleUsuario()+ ",'" + temp.getNombreCargo()+ ",'" + temp.getLugar()+ ",'" + temp.getFechaInicio()+ ",'" + temp.getFechaFin()+ ",'" + temp.getResponsabilidades()+"')";
+            String sql = "INSERT INTO cargo (ID_CARGO, ID_DETALLE_USUARIO, NOMBRE_CARGO, LUGAR, FECHA_INICIO, FECHA_FIN, RESPONSABILIDADES) VALUES (" + temp.getIdCargo()+ "," + temp.getIdDetalleUsuario()+ ",'" + temp.getNombreCargo()+ "','" + temp.getLugar()+ "','" + temp.getFechaInicio()+ "','" + temp.getFechaFin()+ "','" + temp.getResponsabilidades()+"')";
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();

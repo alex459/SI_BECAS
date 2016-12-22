@@ -308,13 +308,11 @@ public class SolicitarBecaServlet extends HttpServlet {
                                 Cargo cargoAnt = new Cargo();
                                 String lugarCargo = request.getParameter(varlugar);
                                 String cargoAnterior = request.getParameter(varcargo);
-                                //String fechaInicioCargo= request.getParameter(varfechaInicio);
-                                //String fechaFinCargo= request.getParameter(varfechaFin);
-                                java.sql.Date fechaInicioCargo = new java.sql.Date(StringAFecha(request.getParameter("varfechaInicio")).getTime());
-                                java.sql.Date fechaFinCargo = new java.sql.Date(StringAFecha(request.getParameter("varfechaFin")).getTime());
+                                java.sql.Date fechaInicioCargo = new java.sql.Date(StringAFecha(request.getParameter(varfechaInicio)).getTime());
+                                java.sql.Date fechaFinCargo = new java.sql.Date(StringAFecha(request.getParameter(varfechaFin)).getTime());
                                 String responsabilidad = request.getParameter(varresponsabilidades);
                                 //Comparando con la base
-                                Integer idCargoAnt = cargosDao.ExisteAsociacionAnterior(detalleUsuario.getIdDetalleUsuario(), lugarCargo, cargoAnterior, fechaInicioCargo, fechaFinCargo);
+                                Integer idCargoAnt = 0;//cargosDao.ExisteAsociacionAnterior(detalleUsuario.getIdDetalleUsuario(), lugarCargo, cargoAnterior, fechaInicioCargo, fechaFinCargo);
                                 if (idCargoAnt != 0) {
                                     //Cargo ya ingresado
                                 } else {
@@ -574,6 +572,7 @@ public class SolicitarBecaServlet extends HttpServlet {
 
         } catch (Exception e) {
             //Mensaje de Error de lectura de Datos
+            e.printStackTrace();
         }
 
     }

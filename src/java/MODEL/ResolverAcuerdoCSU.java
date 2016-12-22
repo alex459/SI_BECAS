@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import javax.servlet.http.Part;
  * @author adminPC
  */
 @WebServlet(name = "ResolverAcuerdoCSU", urlPatterns = {"/ResolverAcuerdoCSU"})
+@MultipartConfig(maxFileSize = 16177215)
 public class ResolverAcuerdoCSU extends HttpServlet {
 
     /**
