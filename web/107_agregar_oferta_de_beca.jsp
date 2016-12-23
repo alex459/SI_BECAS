@@ -153,8 +153,10 @@
                                  %><option value="" disabled selected required>Seleccione una opción</option><% 
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {  %>
                                     <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
-                             <input type="hidden" name="pais" id="pais" value="<%=listaInstitucion2.get(i).getPais() %>" />
-                                    <% }
+                             <option type="hidden" name="pais" style="display:none;" id="pais" value="<%=listaInstitucion2.get(i).getPais() %>" /></option>
+                                    
+                             <%
+                              }
                             %>   
                             </select>
                                 
@@ -328,6 +330,12 @@
             autoclose: true,
             startDate: new Date()
         });
+         $('#institucionEstudio').on('change', function(){
+            $('#tipoBeca option[value="EXTERNA"]').prop('selected', true);
+            var selected2 = $("#pais").val();
+    var selected = $(this).find("option:selected").val();
+    alert(selected2);
+  });
     });
 
 </script>
