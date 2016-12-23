@@ -103,7 +103,8 @@
                                         <label> Carta de Solicitud de Autorizacion inicial:</label>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="file" class="" name="cartaSolicitud" accept="application/pdf">
+                                        <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
+                        <span class="text-danger" ng-show="solicitudDictamen.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
                                     </div>
                                     <div class="col-md-2"></div>                    
                                 </div>
@@ -122,17 +123,14 @@
                                             <label>Tipo de Documento: </label><br>
                                         </div>
                                         <div class="col-md-4">
-                                            <select  name="{{x.tipo}}" class="form-control">
-                                                <option value="">Seleccione el tipo de documento</option>
-                                                <option value="107">Carta de recomendación de la Escuela o Departamento</option>
-                                                <option value="108">Carta  de aceptación de la institución que ofrece la beca</option>
-                                                <option value="109">Plan de Estudios</option>
-                                                <option value="110">Constancia de la Unidad de Recursos Humanos del Tiempo de Servicio</option>
-                                                <option value="111">Carta de legalización de maestría ante el MINED</option>
-                                            </select><br>
+                                            <select  name="{{x.tipo}}" class="form-control" ng-required="true">
+                                                <option ng-repeat="option in tipos" value="{{option.id}}">{{option.tipoDocumento}}</option>
+                                            </select>
+                                            <span class="text-danger" ng-show="!solicitudDictamen.$pristine && solicitudDictamen.{{x.tipo}}.$error.required">Debe de Seleccionar un Tipo de Documento.</span><br>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="file" name="{{x.nombre}}" accept="application/pdf"><br>
+                                            <input type="file" name="{{x.nombre}}" accept="application/pdf" ng-model="docAnexo" valid-file required><br>
+                                            <span class="text-danger" ng-show="solicitudDictamen.{{x.nombre}}.$invalid">Debe ingresar un documento en formato PDF.</span><br>
                                         </div>
                                         <div class="col-md-1">
                                             <a class="btn btn-danger" ng-click="eliminar(item)">Eliminar</a><br>
@@ -146,7 +144,7 @@
                                     <input type="hidden" name="idExpediente" value="<%=expediente.getIdExpediente()%>">
                                     <input type="hidden" name="user" value="<%=user%>">
                                     <input type="hidden" name="nAnexos" value="{{Nanexos-1}}">
-                                    <input type="submit" name="guardar" value="Enviar" class="btn btn-success">
+                                    <input type="submit" name="guardar" value="Enviar" class="btn btn-success" ng-disabled="!solicitudDictamen.$valid">
                                 </div> 
                             </form>
                         <%}%>

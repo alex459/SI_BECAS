@@ -561,12 +561,15 @@ public class SolicitarBecaServlet extends HttpServlet {
                         solicitud.setBeneficios(beneficios);
                         solicitud.setFechaSolicitud(sqlDate);
                         solicitudBecaDao.actualizar(solicitud);
+                        Utilidades.mostrarMensaje(response, 1, "Exito", "Se realizo la solicitud satisfactoriamente.");
+
                     } else {
                         //NO HAY DETALLE USUARIO
+                        Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud.");
                     }
                 } catch (Exception e) {
                     //Mensaje de error de detalle usuario
-                }
+                }   Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud.");
             } else {
             }
 
