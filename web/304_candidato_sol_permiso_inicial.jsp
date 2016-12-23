@@ -3,6 +3,7 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
+<%@page import="POJO.Expediente"%>
 <%@page import="DAO.ExpedienteDAO"%>
 <%@page import="DAO.DetalleUsuarioDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
@@ -89,23 +90,36 @@
         <div class="row">
             <div class="col-md-12">
                 
-            <%if (expedienteAbierto == true){%>
-                <div class="text-center">
-                    <h3 class="text-danger">Ya ha iniciado un Proceso de Solicitud de Beca </h3>
-                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
-                </div>
-                
+            <%if (expedienteAbierto == true){
+                //obtener el expediente
+                ExpedienteDAO expDao = new ExpedienteDAO();
+                Expediente expediente = expDao.obtenerExpedienteAbierto(user);
+            %>
+                <%if(expediente.getIdProgreso() == 1){%>
+                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                            <div class="text-center">
+                                <h3 class="text-danger"> Ya ha realizado una solicitud de Acuerdo de Permiso Inicial</h3>
+                                <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
+                            </div>
+                        <%}%>
+                <%}else{%>
+                    <div class="text-center">
+                        <h3 class="text-danger">No corresponde solicitar este documento </h3>
+                        <a href="305_candidato_estado_proceso.jsp" class="btn btn-primary">Ver Estado del Proceso de Beca</a>
+                    </div>
+                <%}%>    
             <%}else{%>
             <fieldset class="custom-border">
                 <legend class="custom-border">Adjuntar documentación necesaria</legend>
-                <form name="solicitudPermisoInicial" action="PermisoInicial" method="post" enctype="multipart/form-data">
+                <form name="solicitudPermisoInicial" action="PermisoInicial" method="post" enctype="multipart/form-data" novalidate>
                 <div class="row"> 
                     <div class="col-md-2"></div>
                     <div class="col-md-3">
                         <label> Carta de Solicitud de permiso inicial:</label>
                     </div>
                     <div class="col-md-5">
-                        <input type="file" class="" name="cartaSolicitud" accept="application/pdf">
+                        <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
+                        <span class="text-danger" ng-show="solicitudPermisoInicial.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
                     </div>
                     <div class="col-md-2"></div>
                                     
@@ -125,14 +139,14 @@
                                     <label>Tipo de Documento: </label><br>
                                 </div>
                                 <div class="col-md-4">
-                                        <select  name="{{x.tipo}}" class="form-control">
-                                            <option value="">Seleccione el tipo de documento</option>
-                                            <option value="101">Carta de Solicitud de la Escuela o Departamento</option>
-                                            <option value="102">Carta de solicitud de la institución que Oferta la Beca</option>
-                                        </select><br>
+                                        <select  name="{{x.tipo}}" class="form-control" ng-required="true">
+                                            <option ng-repeat="option in tipoAnexo" value="{{option.id}}">{{option.tipoDocumento}}</option>
+                                        </select>
+                                        <span class="text-danger" ng-show="!solicitudPermisoInicial.$pristine && solicitudPermisoInicial.{{x.tipo}}.$error.required">Debe de Seleccionar un Tipo de Documento.</span><br>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="file" name="{{x.nombre}}" accept="application/pdf"><br>
+                                        <input type="file" name="{{x.nombre}}" accept="application/pdf" ng-model="docAnexo" valid-file required>
+                                        <span class="text-danger" ng-show="solicitudPermisoInicial.{{x.nombre}}.$invalid">Debe ingresar un documento en formato PDF.</span><br>
                                     </div>
                                     <div class="col-md-1">
                                         <a class="btn btn-danger" ng-click="eliminar(item)">Eliminar</a><br>
@@ -147,7 +161,7 @@
                         <input type="hidden" name="user" value="<%=user%>">
                         <input type="hidden" name="idOferta" value="<%=idOferta%>">
                         <input type="hidden" name="nAnexos" value="{{Nanexos-1}}">
-                        <input type="submit" name="guardar" value="Enviar" class="btn btn-success">
+                        <input type="submit" name="guardar" value="Enviar" class="btn btn-success" ng-disabled="!solicitudPermisoInicial.$valid">
                     </div> 
                 </form>
             </fieldset>          

@@ -228,7 +228,7 @@ String accion="insertar";
                                                                 <td><%=i+1%></td>
                                                                 <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
                                                                 <td>
-                                                                    <form action="verDocumentoComision" method="post" >
+                                                                    <form action="verDocumentoComision" method="post" target="_blank" >
                                                                         <input type = "hidden" name="id" value="<%= publicos.get(i).getIdDocumento()%>">
                                                                         <input type="submit" class="btn btn-success" value="Ver Documento ">
                                                                     </form>
