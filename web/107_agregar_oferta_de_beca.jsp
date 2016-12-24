@@ -3,6 +3,7 @@
     Created on : 10-17-2016, 06:14:37 AM
     Author     : next
 --%>
+<%@page import="MODEL.Utilidades"%>
 <%@page import="POJO.OfertaBeca"%>
 <%@page import="DAO.BecaDAO"%>
 <%@page import="DAO.InstitucionDAO"%>
@@ -16,12 +17,23 @@
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String id_usuario_login = (String) actual.getAttribute("id_user_login");
     String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("7");
+    tipo_usuarios_permitidos.add("8");
+    tipo_usuarios_permitidos.add("9");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }
+    }
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user==null) {
+        response.sendRedirect("logout.jsp");        
+    }
 %>
 <!DOCTYPE html>
 <head>
@@ -76,14 +88,13 @@
             <h2>
                 <p class="text-center" style="color:#cf2a27">Agregar Oferta de Beca</p>
             </h2>
-
             <br></br>
-
         </div><!-- TITULO DE LA PANTALLA -->  
 
         <div class="col-md-12" ng-app="AgregarModificarOfertaApp" ng-controller="AgregarModificarOfertaCtrl">
 
             <form  class="form-horizontal" name="AgregarOfertaBeca" action="AgregarOfertaBecaServlet" method="post" enctype="multipart/form-data" novalidate>
+                <input id="userlog" value=<%=id_usuario_login %> type="hidden" />
                 <fieldset class="custom-border">  
                     <legend class="custom-border">Agregar oferta de beca</legend>
                     <div class="row"> 

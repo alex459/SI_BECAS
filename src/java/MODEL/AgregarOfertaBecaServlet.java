@@ -104,7 +104,7 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         ofertaBeca.setFechaIngreso(sqlDate);
         ofertaBeca.setTipoEstudio(request.getParameter("tipoEstudio"));
         ofertaBeca.setOfertaBecaActiva(1);
-        
+       // int iduser=Integer.parseInt(request.getSession().getAttribute("id_usuario_login").toString());  
         Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);
         
         if(exito){

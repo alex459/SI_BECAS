@@ -30,6 +30,7 @@ public class OfertaBecaDAO extends ConexionBD{
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
+            
         }catch (Exception e) {
             System.out.println("Error " + e);
         }finally{

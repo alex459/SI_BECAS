@@ -3,6 +3,8 @@
     Created on : 11-16-2016, 04:05:00 PM
     Author     : aquel
 --%>
+<%@page import="MODEL.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -11,12 +13,23 @@
     HttpSession actual = request.getSession();
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("2");
+    tipo_usuarios_permitidos.add("7");
+    tipo_usuarios_permitidos.add("8");
+    tipo_usuarios_permitidos.add("9");
     if (user == null) {
         response.sendRedirect("login.jsp");
         return;
     }
-    response.setContentType("text/html;charset=UTF-8");
-    request.setCharacterEncoding("UTF-8");
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user==null) {
+        response.sendRedirect("logout.jsp");        
+    }
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

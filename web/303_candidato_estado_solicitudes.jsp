@@ -3,6 +3,8 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
+<%@page import="MODEL.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="DAO.DocumentoDAO"%>
 <%@page import="POJO.Documento"%>
 <%@page import="java.sql.ResultSet"%>
@@ -23,9 +25,20 @@
     HttpSession actual = request.getSession();
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("1");
+    tipo_usuarios_permitidos.add("7");
+    tipo_usuarios_permitidos.add("8");
+    tipo_usuarios_permitidos.add("9");
     if (user == null) {
         response.sendRedirect("login.jsp");
         return;
+    }
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user==null) {
+        response.sendRedirect("logout.jsp");        
     }
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");

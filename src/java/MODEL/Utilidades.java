@@ -56,8 +56,10 @@ public class Utilidades {
     }
 
     public static boolean verificarPermisos(Integer tipo_usuario_logeado, ArrayList<String> tipo_usuarios_permitidos) {
+        System.out.println(tipo_usuario_logeado);
+        System.out.println(tipo_usuarios_permitidos.size());
         boolean respuesta = false;
-
+        
         if (tipo_usuarios_permitidos.size() != 0 || tipo_usuarios_permitidos!=null) {
             for (int i = 0; i < tipo_usuarios_permitidos.size(); i++) {
                 if (Integer.parseInt(tipo_usuarios_permitidos.get(i).toString()) == tipo_usuario_logeado) {

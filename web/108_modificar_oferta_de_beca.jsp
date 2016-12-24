@@ -4,6 +4,7 @@
     Author     : next
 --%>
 
+<%@page import="MODEL.Utilidades"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="POJO.OfertaBeca"%>
@@ -22,9 +23,19 @@
     HttpSession actual = request.getSession();
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("7");
+    tipo_usuarios_permitidos.add("8");
+    tipo_usuarios_permitidos.add("9");
     if (user == null) {
         response.sendRedirect("login.jsp");
         return;
+    }
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user==null) {
+        response.sendRedirect("logout.jsp");        
     }
 %>
 <!DOCTYPE html>
