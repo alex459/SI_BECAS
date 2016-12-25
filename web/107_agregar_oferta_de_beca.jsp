@@ -266,7 +266,8 @@
                             <label for="textinput">Archivo de la oferta :</label>                                
                         </div>
                         <div class="col-md-3">      
-                            <input type="file" name="doc_digital" accept="application/pdf">
+                            <input type="file" name="doc_digital" accept="application/pdf" ng-model="doc_digital" valid-file ng-required="true">
+                            <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.doc_digital.$error.required">Debe Agregar un Documento PDF.</span>
                       
                         </div>              
                     </div>

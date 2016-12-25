@@ -32,7 +32,7 @@
     
 %>
 <!DOCTYPE html>
-<html ng-app="DocumentoApp">
+<html >
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,7 +73,7 @@
     <jsp:include page="menu_corto.jsp"></jsp:include>
 </head>
 
-<body ng-controller="AgregarCtrl">
+<body ng-app="DocumentoApp"ng-controller="AgregarCtrl">
 
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Agregar Documento</H3>
@@ -102,8 +102,8 @@
                             <label>Documento Digital:</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true"><br>
-                            <span class="text-danger" ng-show="!agregarDocumento.$pristine && agregarDocumento.doc_digital.$error.required">Debe Agregar un Documento PDF.</span>
+                            <input type="file" name="doc_digital" accept="application/pdf" ng-model="doc_digital" valid-file ng-required="true">
+                            <span class="text-danger" ng-show="!agregarDocumento.$pristine && agregarDocumento.doc_digital.$error.required">Debe Agregar un Documento PDF.</span><br>
                             
                         </div>
                     </div>
@@ -147,7 +147,7 @@
 
 
 
-</div>
+
 
 <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
     <div class="col-md-6">
@@ -171,7 +171,7 @@
         </p>
     </div>
 </div>    
-</div>
+
 
 
 <script src="js/jquery.min.js"></script>

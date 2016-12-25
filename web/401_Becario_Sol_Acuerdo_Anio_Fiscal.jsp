@@ -35,40 +35,47 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistema informático para la administración de becas de postgrado</title>
+        <title>Sistema informático para la administración de becas de postgrado</title>
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
+        <meta name="description" content="Source code generated using layoutit.com">
+        <meta name="author" content="LayoutIt!">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/customfieldset.css" rel="stylesheet">
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
-        </h3>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+        <link href="css/customfieldset.css" rel="stylesheet">
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center text-danger" >
+                Universidad De El Salvador
+            </h3>
+        </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador
+            </h2>
+            <h3 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Sistema informático para la administración de becas de postgrado
+            </h3>
+        </div>
     </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
-<p class="text-right">Rol: <%= rol%></p>
-<p class="text-right">Usuario: <%= user%></p>
-<jsp:include page="menu.jsp"></jsp:include>
-</head>
-<body>
+
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
+
+
+    <%-- todo el menu esta contenido en la siguiente linea
+         el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>
+    </head>
+<body ng-app = "solicitudApp" ng-controller="SolicitarAutorizacionCtrl">
 
     <div class="container-fluid">        
         <H3 class="text-center" style="color:#E42217;">Solicitar Acuerdo de Año Fiscal</H3>
@@ -78,43 +85,26 @@
                 <div class="col-md-12">                
                     <fieldset class="custom-border">
                         <legend class="custom-border">Adjuntar documentación necesaria</legend>
-                        <form class="form-horizontal"  name="SolAnioFiscal" action="SolAcuerdoAnioFiscalServlet" method="post" enctype="multipart/form-data">
-                            <div class="row">                       
-                                <div class="row">
-                                    <div class="col-md-12 col-md-offset-2">
-                                        <label>Seleccione la carta de solicitud del acuerdo de año fiscal</label>
+                        <form name="SolAnioFiscal" action="SolAcuerdoAnioFiscalServlet" method="post" enctype="multipart/form-data" novalidate>
+                                <div class="row"> 
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3">
+                                        <label> Carta de Solicitud de Año Fiscal:</label>
                                     </div>
-                                </div></br>
-                                <div class="col-md-12 col-md-offset-2">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                           <label>Carta de Solicitud del Becario-</label>  <p class="help-block"></p>
-                                        </div>
+                                    <div class="col-md-5">
+                                        <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
+                        <span class="text-danger" ng-show="SolAnioFiscal.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
                                     </div>
-                                    <div class="col-md-6">    
-                                        <div class="form-group">
-                                                <div class="col-md-3 text-right">
-                                                    <label for="textinput">Archivo de la oferta :</label>                                
-                                                </div>
-                                                <div class="col-md-3">      
-                                                    <input type="file" name="doc_digital" accept="application/pdf">
-                                                </div> 
-                                        </div>
-                                    </div> 
+                                    <div class="col-md-2"></div>                    
                                 </div>
-                            </div>
-
-
-
-                            </br></br>
-                            <div class="row">   
-                                <div class="col-md-2 col-md-offset-5">
-                                    <form style='display:inline;' action='SolAcuerdoAnioFiscalServlet.jsp' method='post'>
-                                                        <input type='hidden' name='user' value='<%=user%>'>
-                                    <input type='submit' class='btn btn-success' name='submit' value='Enviar Solicitud'></form>
-                                </div>    
-                            </div> </br>
-                        </form></fieldset>
+                                
+                                <div class="row text-center">
+                                    <br>
+                                    <input type="hidden" name="user" value="<%=user%>">
+                                    <input type="submit" name="guardar" value="Enviar" class="btn btn-success" ng-disabled="!SolAnioFiscal.$valid">
+                                </div> 
+                            </form>
+                       </fieldset>
                 </div> 
             </div></fieldset>
 
@@ -144,6 +134,7 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/solicitarAutorizacionInicial.js"></script>
 </body>
 </html>

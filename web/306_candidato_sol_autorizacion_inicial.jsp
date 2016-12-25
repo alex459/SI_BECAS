@@ -49,6 +49,8 @@
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
     <div class="row">
         <div class="col-md-4">
@@ -68,14 +70,14 @@
         </div>
     </div>
 
-    <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-    <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
 
     <%-- todo el menu esta contenido en la siguiente linea
          el menu puede ser cambiado en la pagina menu.jsp --%>
     <jsp:include page="menu_corto.jsp"></jsp:include>
-</head>
+    </head>
 <body ng-app = "solicitudApp" ng-controller="SolicitarAutorizacionCtrl">
 
     <div class="container-fluid">        

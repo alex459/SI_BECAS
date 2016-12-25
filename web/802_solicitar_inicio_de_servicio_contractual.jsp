@@ -59,37 +59,40 @@
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
-        <div class="row">
-            <div class="col-md-4">
-                <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-                <h3 class="text-center" >
-                    <p class="text-danger">Universidad De El Salvador</p>
-                </h3>
-            </div>
-            <div class="col-md-8">
-                <div class="col-xs-12" style="height:50px;"></div>
-                <h2 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-                </h2>
-                <h3 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-                </h3>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center text-danger" >
+                Universidad De El Salvador
+            </h3>
         </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador
+            </h2>
+            <h3 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Sistema informático para la administración de becas de postgrado
+            </h3>
+        </div>
+    </div>
 
-        <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-        <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
-        <%-- todo el menu esta contenido en la siguiente linea
-             el menu puede ser cambiado en la pagina menu.jsp --%>
-        <jsp:include page="menu_corto.jsp"></jsp:include>
+
+    <%-- todo el menu esta contenido en la siguiente linea
+         el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>
     </head>
-    <body>
+    <body ng-app = "solicitudApp" ng-controller="SolicitarAutorizacionCtrl">
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27">Solicitar inicio de servicio contractual</p>
+                <h2 class="text-center" style="color:#cf2a27">
+                    Solicitar inicio de servicio contractual
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -104,14 +107,15 @@
                                 <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                             </div>
                         <%}else{%>
-                            <form class="form-horizontal" action="SolicitarInicioDeServicioContractualServlet" method="post" enctype="multipart/form-data">
+                        <form name="solicitarServicio" class="form-horizontal" action="SolicitarInicioDeServicioContractualServlet" method="post" enctype="multipart/form-data">
                                 <div class="col-md-8 col-md-offset-2 row">
                                     <div class="row">
                                         <div class="col-md-5">
                                             Acta de toma de posesión:
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="file" name="actaPosesion" accept="application/pdf" valid-file ng-required="true">
+                                            <input type="file" name="actaPosesion" accept="application/pdf" ng-model="actaPosesion" valid-file required>
+                                            <span class="text-danger" ng-show="solicitarServicio.actaPosesion.$invalid">Debe ingresar un documento en formato PDF.</span>
                                         </div>
                                     </div>
                                     <br>
@@ -120,7 +124,8 @@
                                             Proyecto en que apoyara:
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="file" name="proyectoApoyara" accept="application/pdf" valid-file ng-required="true">
+                                            <input type="file" name="proyectoApoyara" accept="application/pdf" ng-model="proyectoApoyara" valid-file required>
+                                            <span class="text-danger" ng-show="solicitarServicio.proyectoApoyara.$invalid">Debe ingresar un documento en formato PDF.</span>
                                         </div>
                                     </div>
                                     <br>
@@ -129,7 +134,8 @@
                                             Carta de solicitud para Junta Directiva:
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="file" name="solicitudJD" accept="application/pdf" valid-file ng-required="true">
+                                            <input type="file" name="solicitudJD" accept="application/pdf" ng-model="solicitudJD" valid-file required>
+                                            <span class="text-danger" ng-show="solicitarServicio.solicitudJD.$invalid">Debe ingresar un documento en formato PDF.</span>
                                         </div>
                                     </div>
                                     <br>
@@ -138,14 +144,15 @@
                                             Carta de solicitud para el Consejo de Becas:
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="file" name="solicitudCB" accept="application/pdf" valid-file ng-required="true">
+                                            <input type="file" name="solicitudCB" accept="application/pdf" ng-model="solicitudCB" valid-file required>
+                                            <span class="text-danger" ng-show="solicitarServicio.solicitudCB.$invalid">Debe ingresar un documento en formato PDF.</span>
                                         </div>
                                     </div>
                                     <br>
                                     <div class="row text-center">
                                         <input type="hidden" name="idExpediente" value="<%=expediente.getIdExpediente()%>">
                                         <input type="hidden" name="user" value="<%=user%>">
-                                        <input type="submit" class="btn btn-success" name="submit" value="Enviar">
+                                        <input type="submit" class="btn btn-success" name="submit" value="Enviar" ng-disabled="!solicitarServicio.$valid">
                                     </div>
                                 </div>
                             </form>    
@@ -185,7 +192,8 @@
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/scripts.js"></script>
         <script src="js/angular.min.js"></script>
+        <script src="js/solicitarAutorizacionInicial.js"></script>
+
     </body>
 </html>

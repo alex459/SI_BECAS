@@ -53,37 +53,40 @@
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
-        <div class="row">
-            <div class="col-md-4">
-                <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-                <h3 class="text-center" >
-                    <p class="text-danger">Universidad De El Salvador</p>
-                </h3>
-            </div>
-            <div class="col-md-8">
-                <div class="col-xs-12" style="height:50px;"></div>
-                <h2 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-                </h2>
-                <h3 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-                </h3>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center text-danger" >
+                Universidad De El Salvador
+            </h3>
         </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador
+            </h2>
+            <h3 class="text-center text-danger" style="text-shadow:3px 3px 3px #666;">
+                Sistema informático para la administración de becas de postgrado
+            </h3>
+        </div>
+    </div>
 
-        <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-        <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
-        <%-- todo el menu esta contenido en la siguiente linea
-             el menu puede ser cambiado en la pagina menu.jsp --%>
-        <jsp:include page="menu_corto.jsp"></jsp:include>
+
+    <%-- todo el menu esta contenido en la siguiente linea
+         el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>
     </head>
     <body ng-app="AgregarDocFinalizacionbeca">
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27">Agregar documentos finalización de beca</p>
+                <h2 class="text-center" style="color:#cf2a27">
+                    Agregar documentos finalización de beca
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -98,14 +101,15 @@
                             <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                         </div>
                     <%}else{%>
-                        <form class="form-horizontal" action="AgregarDocumentoFinalizacionBecaServlet" method="post" enctype="multipart/form-data">
+                    <form name="AgregarDocumentoFinalizacion" class="form-horizontal" action="AgregarDocumentoFinalizacionBecaServlet" method="post" enctype="multipart/form-data">
                         <div class="col-md-8 col-md-offset-2 row">
                             <div class="row">
                                 <div class="col-md-5">
                                     Titulo obtenido:
                                 </div>
                                 <div class="col-md-7">
-                                    <input type="file" name="tituloObtenido" accept="application/pdf">
+                                    <input type="file" name="tituloObtenido" accept="application/pdf" ng-model="tituloObtenido" valid-file required>
+                                    <span class="text-danger" ng-show="AgregarDocumentoFinalizacion.tituloObtenido.$invalid">Debe ingresar un documento en formato PDF.</span>
                                 </div>
                             </div>
 
@@ -115,28 +119,28 @@
                                         <br>
                                         <a ng-click="agregar()" ng-show="verAgregar">Agregar Otro Documento</a><br><br>
                                     </div>
-                                    <div class="col-md-2"></div>                    
                                 </div>
 
                                 <div class="row text-left" ng-repeat="x in anexos">
-                                    <div class="col-md-3" style="padding-left: 30px;">
+                                    <div class="col-md-2" style="padding-left: 30px;">
                                         <label>Tipo de Documento: </label><br>
                                     </div>
-                                    <div class="col-md-4">
-                                        <select  name="{{x.tipo}}" class="form-control">
-                                            <option value="">Seleccione el tipo de documento</option>
-                                            <option value="144">Certificación de notas</option>
-                                            <option value="145">Acta de evaluación de tesis</option>
-                                            <option value="146">Constancia de egresado</option>
-                                        </select><br>
-                                    </div>
                                     <div class="col-md-3">
-                                        <input type="file" name="{{x.nombre}}" accept="application/pdf"><br>
+                                        <select  name="{{x.tipo}}" class="form-control" ng-required="true">
+                                            <option value="144">CERTIFICACION DE NOTAS</option>
+                                            <option value="145">ACTA DE EVALUACION DE TESIS</option>
+                                            <option value="146">CONSTANCIA DE EGRESADO</option>
+                                        </select>
+                                        <span class="text-danger" ng-show="!AgregarDocumentoFinalizacion.$pristine && AgregarDocumentoFinalizacion.{{x.tipo}}.$error.required">Debe de Seleccionar un Tipo de Documento.</span><br>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="file" name="{{x.nombre}}" accept="application/pdf" ng-model="docAnexo" valid-file required><br>
+                                            <span class="text-danger" ng-show="AgregarDocumentoFinalizacion.{{x.nombre}}.$invalid">Debe ingresar un documento en formato PDF.</span><br>
                                     </div>
                                     <div class="col-md-1">
                                         <a class="btn btn-danger" ng-click="eliminar(x)">Eliminar</a><br>
                                     </div>
-                                    <div class="col-md-1"></div>  
+                                    
                                 </div>   
                             </div>
                             <div class="row text-center">
@@ -144,7 +148,7 @@
                                 <input type="hidden" name="idExpediente" value="<%=expediente.getIdExpediente()%>">
                                 <input type="hidden" name="user" value="<%=user%>">
                                 <input type="hidden" name="nAnexos" value="{{Nanexos-1}}">
-                                <input type="submit" class="btn btn-success" name="submit" value="Enviar">
+                                <input type="submit" class="btn btn-success" name="submit" value="Enviar" ng-disabled="!AgregarDocumentoFinalizacion.$valid">
                             </div>
                         </div>
                         </form>
