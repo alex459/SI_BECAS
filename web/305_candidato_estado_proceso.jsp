@@ -591,7 +591,7 @@
                                 <input type='hidden' name='id_exp' value='<%=expediente.getIdExpediente() %>'>
                           <%   
                               if(expedienteAbierto)
-                                  out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
+                                  out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
                               else    
                                   out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar proceso</button>");
                                  %>

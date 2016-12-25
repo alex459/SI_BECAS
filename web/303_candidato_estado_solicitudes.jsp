@@ -60,11 +60,11 @@
         e.printStackTrace();
     }
      System.out.println("BIEN");
-    int idExp= expediente.getIdExpediente();
-    int idProg = expediente.getIdProgreso();
-    Documento doc=new Documento();
-    DocumentoDAO docDao= new DocumentoDAO();
-   
+     int idExp= 0;
+    int idProg = 0;
+    if(expedienteAbierto){ 
+    idExp= expediente.getIdExpediente();
+    idProg = expediente.getIdProgreso(); }  
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -102,6 +102,20 @@
 <p class="text-right">Usuario: <%= user%></p>
 <jsp:include page="menuCandidato.jsp"></jsp:include>
 </head>
+<% 
+ if(!expedienteAbierto){
+%>
+  <body>
+
+<div class="text-center">
+                                <h3 class="text-danger"> No tiene un expediente abierto</h3>
+                                <h3 class="text-danger"> Realice la solicitud de persmiso inicial para iniciar el proceso</h3>
+                                <a href="304_candidato_sol_permiso_inicial.jsp" class="btn btn-primary">Solicitar permiso inicial</a>
+                            </div>
+  </body>    
+<% 
+ }else{
+%>
 <body>
 
 
@@ -130,8 +144,16 @@
                                     <td style="color:black;">Junta directiva de la facultad</td>
                                     <td style="color:black;"> </td>
                                 <%
-                                    if (idProg == 1) {
+                                    if (idProg == 0) {
                                         out.write("<td style='color:black;'>Pendiente</td>");
+                                    }
+                                    else if (idProg == 1) {
+                                        if(expediente.getEstadoProgreso().equals("REVISION"))
+                                           out.write("<td style='color:black;'>Revision</td>");
+                                        else if(expediente.getEstadoProgreso().equals("EN PROCESO"))
+                                           out.write("<td style='color:black;'>En proceso</td>"); 
+                                        else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                           out.write("<td style='color:black;'>Denegado</td>");     
                                     } else {
                                         out.write("<td  style='color:black;'>Finalizado</td>");
                                     }
@@ -142,9 +164,21 @@
                                                     <input type="hidden" name="idtipodoc" value="<%=103%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
+                                    else if(idProg == 1){
+                                    if(expediente.getEstadoProgreso().equals("REVISION")){
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    }else{
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    }
+                                     //////////////Para cancelar el proceso  
+                                     out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
+                                     out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("</form>");
+                                    }
                                     else{
-                                out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Editar</button>");                                    
-                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled >Actualizar documentación</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}
                                 %> 
                             </tr>
                             <tr class="info">
@@ -156,7 +190,12 @@
                                     if (idProg < 2) {
                                         out.write("<td style=' color:black;'>Pendiente</td>");
                                     } else if (idProg == 2) {
-                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                        if(expediente.getEstadoProgreso().equals("REVISION"))
+                                           out.write("<td style='color:black;'>Revision</td>");
+                                        else if(expediente.getEstadoProgreso().equals("EN PROCESO"))
+                                           out.write("<td style='color:black;'>En proceso</td>"); 
+                                        else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                           out.write("<td style='color:black;'>Denegado</td>");     
                                     } else {
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
@@ -167,9 +206,22 @@
                                                     <input type="hidden" name="idtipodoc" value="<%=105%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
-                                else{
-                                out.write("<td><button id='Editar' name='Editar' href='306_candidato_sol_autorizacion_inicial.jsp' class='btn btn-success'>Editar</button>");                                    
-                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                else if(idProg == 2) {
+                                if(expediente.getEstadoProgreso().equals("REVISION")){
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    }else{
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    }
+                                   //////////////Para cancelar el proceso  
+                                     out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
+                                     out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("</form>");
+                                    }
+                                else
+                                {
+                                out.write("<td><button id='Editar' name='Editar' href='306_candidato_sol_autorizacion_inicial.jsp' disabled class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}
                                 %> 
                             </tr>
                             <tr class="info">
@@ -181,7 +233,12 @@
                                     if (idProg < 3) {
                                         out.write("<td style=' color:black;'>Pendiente</td>");
                                     } else if (idProg == 3) {
-                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                        if(expediente.getEstadoProgreso().equals("REVISION"))
+                                           out.write("<td style='color:black;'>Revision</td>");
+                                        else if(expediente.getEstadoProgreso().equals("EN PROCESO"))
+                                           out.write("<td style='color:black;'>En proceso</td>"); 
+                                        else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                           out.write("<td style='color:black;'>Denegado</td>");  
                                     } else {
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
@@ -192,9 +249,21 @@
                                                     <input type="hidden" name="idtipodoc" value="<%=112%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    } 
+                                else if(idProg == 3) {
+                                if(expediente.getEstadoProgreso().equals("REVISION")){
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    }else{
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    }
+                                    //////////////Para cancelar el proceso  
+                                     out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
+                                     out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("</form>");
+                                    }
                                 else{
-                                out.write("<td><button id='Editar' name='Editar' href='307_candidato_sol_dictamen_propuesta.jsp' class='btn btn-success'>Editar</button>");                                    
-                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                out.write("<td><button id='Editar' name='Editar' href='307_candidato_sol_dictamen_propuesta.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}
                                 %> 
                             </tr>
                             <tr class="info">
@@ -206,7 +275,12 @@
                                     if (idProg < 4) {
                                         out.write("<td style=' color:black;'>Pendiente</td>");
                                     } else if (idProg == 4) {
-                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                         if(expediente.getEstadoProgreso().equals("REVISION"))
+                                           out.write("<td style='color:black;'>Revision</td>");
+                                        else if(expediente.getEstadoProgreso().equals("EN PROCESO"))
+                                           out.write("<td style='color:black;'>En proceso</td>"); 
+                                        else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                           out.write("<td style='color:black;'>Denegado</td>");  
                                     } else {
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
@@ -217,9 +291,21 @@
                                                     <input type="hidden" name="idtipodoc" value="<%=121%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
+                                else if (idProg == 4) {
+                                if(expediente.getEstadoProgreso().equals("REVISION")){
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    }else{
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    }
+                                    //////////////Para cancelar el proceso  
+                                     out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
+                                     out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("</form>");
+                                    }
                                 else{
-                                out.write("<td><button id='Editar' name='Editar' href='307_candidato_sol_dictamen_propuesta.jsp' class='btn btn-success'>Editar</button>");                                    
-                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                out.write("<td><button id='Editar' name='Editar' href='307_candidato_sol_dictamen_propuesta.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}    
                                 %> 
                             </tr>
                             <tr class="info">
@@ -231,7 +317,12 @@
                                     if (idProg < 5) {
                                         out.write("<td style=' color:black;'>Pendiente</td>");
                                     } else if (idProg == 5) {
-                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                         if(expediente.getEstadoProgreso().equals("REVISION"))
+                                           out.write("<td style='color:black;'>Revision</td>");
+                                        else if(expediente.getEstadoProgreso().equals("EN PROCESO"))
+                                           out.write("<td style='color:black;'>En proceso</td>"); 
+                                        else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                           out.write("<td style='color:black;'>Denegado</td>");  
                                     } else {
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
@@ -242,9 +333,21 @@
                                                     <input type="hidden" name="idtipodoc" value="<%=131%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    } 
-                                else{
-                                out.write("<td><button id='Editar' name='Editar' href='308_candidato_sol_beca1.jsp' class='btn btn-success'>Editar</button>");                                    
-                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                else  if (idProg == 5){
+                                if(expediente.getEstadoProgreso().equals("REVISION")){
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    }else{
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    }
+                                    //////////////Para cancelar el proceso  
+                                     out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
+                                     out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("</form>");
+                                    }
+                                else {
+                                out.write("<td><button id='Editar' name='Editar' href='308_candidato_sol_beca1.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}    
                                 %> 
                             </tr>
                             <tr class="info">
@@ -256,7 +359,12 @@
                                     if (idProg < 6) {
                                         out.write("<td style=' color:black;'>Pendiente</td>");
                                     } else if (idProg == 6) {
-                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                         if(expediente.getEstadoProgreso().equals("REVISION"))
+                                           out.write("<td style='color:black;'>Revision</td>");
+                                        else if(expediente.getEstadoProgreso().equals("EN PROCESO"))
+                                           out.write("<td style='color:black;'>En proceso</td>"); 
+                                        else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                           out.write("<td style='color:black;'>Denegado</td>");  
                                     } else {
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
@@ -267,9 +375,21 @@
                                                     <input type="hidden" name="idtipodoc" value="<%=132%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
+                                else if (idProg == 6){
+                                if(expediente.getEstadoProgreso().equals("REVISION")){
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    }else{
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    }
+                                    //////////////Para cancelar el proceso  
+                                     out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
+                                     out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("</form>");
+                                    }
                                 else{
-                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
-                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}    
                                 %> 
                             </tr>
                             <tr class="info">
@@ -281,7 +401,12 @@
                                     if (idProg < 7) {
                                         out.write("<td style=' color:black;'>Pendiente</td>");
                                     } else if (idProg == 7) {
-                                        out.write("<td style=' color:black;'>En Proceso</td>");
+                                         if(expediente.getEstadoProgreso().equals("REVISION"))
+                                           out.write("<td style='color:black;'>Revision</td>");
+                                        else if(expediente.getEstadoProgreso().equals("EN PROCESO"))
+                                           out.write("<td style='color:black;'>En proceso</td>"); 
+                                        else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                           out.write("<td style='color:black;'>Denegado</td>");  
                                     } else {
                                         out.write("<td style=' color:black;'>Finalizado</td>");
                                     }
@@ -292,13 +417,29 @@
                                                     <input type="hidden" name="idtipodoc" value="<%=133%>">
                                                     <input type="submit" class="btn btn-primary" value="Ver Documento">
                                                     </form></td><%    }
+                                else if (idProg == 7){
+                                if(expediente.getEstadoProgreso().equals("REVISION")){
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    }else{
+                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    }
+                                    //////////////Para cancelar el proceso  
+                                     out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
+                                     out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("</form>");
+                                    }
                                 else{
-                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success'>Editar</button>");                                    
-                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar</button></td>");}
+                                out.write("<td><button id='Editar' name='Editar' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}    
                                 %> 
                             </tr>
+                            </table>
                         </tbody>
-                    </table>
+                        <% 
+ }
+%>
+                    
                 </div> 
             </div>
         </fieldset>
