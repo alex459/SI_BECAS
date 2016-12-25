@@ -164,9 +164,10 @@
                                  %><option value="" disabled selected required>Seleccione una opción</option><% 
                                 for (int i = 0; i < listaInstitucion2.size(); i++) {  %>
                                     <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
-                             <option type="hidden" name="pais" style="display:none;" id="pais" value="<%=listaInstitucion2.get(i).getPais() %>" /></option>
+                                    <option  name="pais" style="display:none;" id="pais" value="<%=listaInstitucion2.get(i).getPais() %>"><%=listaInstitucion2.get(i).getPais() %></option>
                                     
                              <%
+                                 
                               }
                             %>   
                             </select>
@@ -342,8 +343,9 @@
             startDate: new Date()
         });
          $('#institucionEstudio').on('change', function(){
-            $('#tipoBeca option[value="EXTERNA"]').prop('selected', true);
-            var selected2 = $("#pais").val();
+          //  $('#tipoBeca option[value="EXTERNA"]').prop('selected', true);
+            var selectPais= document.getElementById("#pais");
+            var selected2 = $("#pais").find("option:selected").text();
     var selected = $(this).find("option:selected").val();
     alert(selected2);
   });

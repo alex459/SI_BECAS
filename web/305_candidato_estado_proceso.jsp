@@ -127,7 +127,7 @@
                                 System.out.println(expediente.getIdExpediente()+" SSSS "+expediente.getEstadoExpediente());
                             if(expedienteAbierto == false)    
                             out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                            else
+                            else                                
                             out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
                             %>        
                             <td class="text-center" style="background-color:white; color:black;">
@@ -149,7 +149,14 @@
                              if(expediente.getIdProgreso()<1)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                              else if(expediente.getIdProgreso()==1)
-                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
+                             { 
+                               if(expediente.getEstadoProgreso().equals("REVISION"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Revisión </td>");
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Denegado</td>");
+                               else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>En proceso</td>"); 
+                             }
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
                                     %>
@@ -159,9 +166,20 @@
                              if(expediente.getIdProgreso()<1){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(expediente.getIdProgreso()==1){
-                                 out.write("<button type='submit' class='btn btn-default' disabled>");
+                             }else if(expediente.getIdProgreso()==1)
+                             { 
+                               if(expediente.getEstadoProgreso().equals("REVISION")){
+                                out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
+                               }
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO")){
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-alert'></span>");
+                               }
+                               else {
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
+                               }
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
@@ -176,7 +194,14 @@
                              if(expediente.getIdProgreso()<2)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                              else if(expediente.getIdProgreso() ==2)
-                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
+                                 { 
+                               if(expediente.getEstadoProgreso().equals("REVISION"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Revisión </td>");
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Denegado</td>");
+                               else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>En proceso</td>"); 
+                             }
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
                                     %>
@@ -186,9 +211,19 @@
                              if(expediente.getIdProgreso()<2){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(expediente.getIdProgreso()==2){
-                                 out.write("<button type='submit' class='btn btn-default' disabled>");
+                             }else if(expediente.getIdProgreso()==2){ 
+                               if(expediente.getEstadoProgreso().equals("REVISION")){
+                                out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
+                               }
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO")){
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-alert'></span>");
+                               }
+                               else {
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
+                               }
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
@@ -203,7 +238,14 @@
                              if(expediente.getIdProgreso()<3)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                              else if(expediente.getIdProgreso()==3)
-                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
+                                 { 
+                               if(expediente.getEstadoProgreso().equals("REVISION"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Revisión </td>");
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Denegado</td>");
+                               else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>En proceso</td>"); 
+                             }
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
                                     %>
@@ -213,9 +255,19 @@
                              if(expediente.getIdProgreso()<3){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(expediente.getIdProgreso()==3){
-                                 out.write("<button type='submit' class='btn btn-default' disabled>");
+                             }else if(expediente.getIdProgreso()==3){ 
+                               if(expediente.getEstadoProgreso().equals("REVISION")){
+                                out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
+                               }
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO")){
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-alert'></span>");
+                               }
+                               else {
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
+                               }
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
@@ -229,7 +281,14 @@
                              if(expediente.getIdProgreso()<4)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                              else if(expediente.getIdProgreso()==4)
-                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
+                                { 
+                               if(expediente.getEstadoProgreso().equals("REVISION"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Revisión </td>");
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Denegado</td>");
+                               else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>En proceso</td>"); 
+                             }
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
                                     %>
@@ -239,9 +298,19 @@
                              if(expediente.getIdProgreso()<4){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(expediente.getIdProgreso()==4){
-                                 out.write("<button type='submit' class='btn btn-default' disabled>");
+                             }else if(expediente.getIdProgreso()==4){ 
+                               if(expediente.getEstadoProgreso().equals("REVISION")){
+                                out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
+                               }
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO")){
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-alert'></span>");
+                               }
+                               else {
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
+                               }
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
@@ -255,7 +324,14 @@
                              if(expediente.getIdProgreso()<5)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                              else if(expediente.getIdProgreso()==5)
-                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
+                                 { 
+                               if(expediente.getEstadoProgreso().equals("REVISION"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Revisión </td>");
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Denegado</td>");
+                               else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>En proceso</td>"); 
+                             }
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
                                     %>
@@ -265,9 +341,19 @@
                              if(expediente.getIdProgreso()<5){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(expediente.getIdProgreso()==5){
-                                 out.write("<button type='submit' class='btn btn-default' disabled>");
+                             }else if(expediente.getIdProgreso()==5){ 
+                               if(expediente.getEstadoProgreso().equals("REVISION")){
+                                out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
+                               }
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO")){
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-alert'></span>");
+                               }
+                               else {
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
+                               }
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
@@ -282,7 +368,14 @@
                              if(expediente.getIdProgreso()<6)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                              else if(expediente.getIdProgreso()==6)
-                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
+                                 { 
+                               if(expediente.getEstadoProgreso().equals("REVISION"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Revisión </td>");
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Denegado</td>");
+                               else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>En proceso</td>"); 
+                             }
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
                                     %>
@@ -292,9 +385,19 @@
                              if(expediente.getIdProgreso()<6){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(expediente.getIdProgreso()==6){
-                                 out.write("<button type='submit' class='btn btn-default' disabled>");
+                             }else if(expediente.getIdProgreso()==6){ 
+                               if(expediente.getEstadoProgreso().equals("REVISION")){
+                                out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
+                               }
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO")){
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-alert'></span>");
+                               }
+                               else {
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
+                               }
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
@@ -308,7 +411,14 @@
                              if(expediente.getIdProgreso()<7)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
                              else if(expediente.getIdProgreso()==7)
-                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Proceso</td>");
+                                 { 
+                               if(expediente.getEstadoProgreso().equals("REVISION"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Revisión </td>");
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Denegado</td>");
+                               else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>En proceso</td>"); 
+                             }
                              else 
                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
                                     %>
@@ -318,9 +428,19 @@
                              if(expediente.getIdProgreso()<7){
                                  out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-lock'></span>");
-                             }else if(expediente.getIdProgreso()==7){
-                                 out.write("<button type='submit' class='btn btn-default' disabled>");
+                             }else if(expediente.getIdProgreso()==7){ 
+                               if(expediente.getEstadoProgreso().equals("REVISION")){
+                                out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
+                               }
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO")){
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-alert'></span>");
+                               }
+                               else {
+                                   out.write("<button type='submit' class='btn btn-default' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
+                               }
                              }else{ 
                                 out.write("<button type='submit' class='btn btn-success' disabled>");
                                 out.write("<span class='glyphicon glyphicon-check'></span> ");
@@ -361,6 +481,8 @@
                                 <div class="row text-center">
                                     <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
+                                    <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
+                                    <a href="304_candidato_sol_permiso_inicial.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="304_candidato_sol_permiso_inicial.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
@@ -382,6 +504,8 @@
                                 <div class="row text-center">
                                     <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
+                                    <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
+                                    <a href="306_candidato_sol_autorizacion_inicial.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="306_candidato_sol_autorizacion_inicial.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
@@ -402,6 +526,8 @@
                                 <div class="row text-center">
                                     <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
+                                    <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
+                                    <a href="307_candidato_sol_dictamen_propuesta.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="307_candidato_sol_dictamen_propuesta.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
@@ -429,6 +555,8 @@
                                 <div class="row text-center">
                                     <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
+                                    <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
+                                    <a href="308_candidato_sol_beca1.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="308_candidato_sol_beca1.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
