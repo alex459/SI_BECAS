@@ -110,8 +110,8 @@ String accion="insertar";
     <body ng-app="resolverSolFiscaliaAsesoriaContratoApp" ng-controller="resolverSolFiscaliaAsesoriaContratoCtrl">
      <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-            <h2>
-                <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Asesoría de Contrato de Beca</p>
+            <h2 class="text-center" style="color:#cf2a27">
+                Resolver Solicitud de Asesoría de Contrato de Beca
             </h2>
 
             <br></br>
@@ -125,7 +125,7 @@ String accion="insertar";
                     <div class="row">    <!-- TABLA RESULTADOS --> 
                         <div class="col-md-1"></div> 
                         <div class="col-md-10">
-                            <table class="table table-bordered"></br>
+                            <table class="table table-bordered">
                                 <tbody>
                                     <tr>
                                     <td>Solicitante: </td>
@@ -178,7 +178,7 @@ String accion="insertar";
                                                                 <td><%=i+1%></td>
                                                                 <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
                                                                 <td>
-                                                                    <form action="verDocumentoConsejo" method="post" >
+                                                                    <form action="verDocumentoConsejo" method="post" target="_blank">
                                                                         <input type = "hidden" name="id" value="<%= publicos.get(i).getIdDocumento()%>">
                                                                         <input type="submit" class="btn btn-success" value="Ver Documento ">
                                                                     </form>
@@ -202,13 +202,13 @@ String accion="insertar";
                                                     <legend class="custom-border"> Resolucion</legend>
                                                     <form  name="resolverSolFiscaliaAsesoriaContrato" action="ResolverContratoFiscalia" method="POST" enctype="multipart/form-data" novalidate>           
                                                         
-                                                        <div class="row" >
+                                                       <div class="row" >
                                                             <div class="col-md-4">
                                                                 <label>Documento Digital:</label>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="file" name="doc_digital" accept="application/pdf" valid-file ng-required="true"><br>
-                                                                <span class="text-danger" ng-show="!resolverSolFiscaliaAsesoriaContrato.$pristine && resolverSolComisionBecas.doc_digital.$error.required">Debe Agregar un Documento PDF.</span>
+                                                                <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" valid-file required>
+                                                                <span class="text-danger" ng-show="resolverSolFiscaliaAsesoriaContrato.doc_digital.$invalid">Debe ingresar un documento en formato PDF.</span>
 
                                                             </div>
                                                         </div>
@@ -226,22 +226,25 @@ String accion="insertar";
                                                             <div class="col-md-10 btn-group text-center" data-toggle="buttons">
                                                                 <div class="col-md-4">
                                                                     <label class="btn btn-primary " ng-click="CambiarEstadoAprobado()">
-                                                                        <input type="radio" name="resolucion" value="APROBADO" autocomplete="off" ng-model="resolucion" > Aprobado
+                                                                        <input type="radio" name="resolucion" value="APROBADO" autocomplete="off" ng-model="resolucion" ng-required="true"> Aprobado
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <label class="btn btn-danger" ng-click="CambiarEstadoDenegado()">
-                                                                        <input type="radio" name="resolucion" value="DENEGADO" autocomplete="off" ng-model="resolucion" > Denegado
+                                                                        <input type="radio" name="resolucion" value="DENEGADO" autocomplete="off" ng-model="resolucion" ng-required="true"> Denegado
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
-                                                                        <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion"> Solicitar Correccion
+                                                                        <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true"> Solicitar Correccion
                                                                     </label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-1"></div>   
                                                         </div>
+                                                        <div class="row text-center">
+                                                            <span class="text-danger" ng-show="!resolverSolFiscaliaAsesoriaContrato.$pristine && resolverSolFiscaliaAsesoriaContrato.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
+                                                        </div> 
                                                         <div class="row text-center">
                                                             <br>
                                                         </div>
@@ -249,7 +252,7 @@ String accion="insertar";
                                                             <input type="hidden" name="accion" value="<%=accion%>">
                                                             <input type="hidden" name="id_ex" value="<%=id_ex%>">
                                                             <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolFiscaliaAsesoriaContrato.$valid">
-                                                        </div>  
+                                                        </div> 
                                                     </form>    
                                                 </fieldset>
                                             </div>
