@@ -117,16 +117,14 @@
  }else{
 %>
 <body>
-
-
-    <div class="container-fluid">
+   <div class="container-fluid">
+        
         <H3 class="text-center" style="color:#E42217;">Estado de solicitudes</H3>
             <fieldset class="custom-border">
                 <legend class="custom-border">Solicitudes realizadas</legend>
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-bordered">
-
                             <thead>
                                 <tr class="success">
                                     <th>No</th>
@@ -143,7 +141,9 @@
                                     <td style="color:black;">Permiso Inicial</td>
                                     <td style="color:black;">Junta directiva de la facultad</td>
                                     <td style="color:black;"> </td>
+                            
                                 <%
+                                    
                                     if (idProg == 0) {
                                         out.write("<td style='color:black;'>Pendiente</td>");
                                     }
@@ -166,18 +166,21 @@
                                                     </form></td><%    }
                                     else if(idProg == 1){
                                     if(expediente.getEstadoProgreso().equals("REVISION")){
-                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    out.write("<td><center><form style='display:inline;' action='318_modificar_sol_permiso_inicial.jsp' method='post'>"
+                                                        + "<input type='hidden' name='idexp' value='" + expediente.getIdExpediente() + "'>"
+                                                        + "<input type='submit' class='btn btn-success' name='submit' value='Actualizar documentación'>"
+                                                        + "</form>");  
                                     }else{
-                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    out.write("<td><a id='Editar' name='Editar' href='318_modificar_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</a>");                                    
                                     }
                                      //////////////Para cancelar el proceso  
                                      out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
                                      out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
-                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
-                                     out.write("</form>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
+                                     out.write("</form></center></td>");
                                     }
                                     else{
-                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled >Actualizar documentación</button>");                                    
+                                    out.write("<td><a id='Editar' name='Editar' href='318_modificar_sol_permiso_inicial.jsp' class='btn btn-success' disabled >Actualizar documentación</a>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}
                                 %> 
                             </tr>
@@ -208,19 +211,22 @@
                                                     </form></td><%    }
                                 else if(idProg == 2) {
                                 if(expediente.getEstadoProgreso().equals("REVISION")){
-                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
-                                    }else{
-                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                   out.write("<td><center><form style='display:inline;' action='319_actualizar_sol_autorizacion_inicial.jsp' method='post'>"
+                                                        + "<input type='hidden' name='idexp' value='" + expediente.getIdExpediente() + "'>"
+                                                        + "<input type='submit' class='btn btn-success' name='submit' value='Actualizar documentación'>"
+                                                        + "</form>"); 
+                                }else{
+                                    out.write("<td><a id='Editar' name='Editar' href='319_actualizar_sol_autorizacion_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</a>");                                    
                                     }
                                    //////////////Para cancelar el proceso  
                                      out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
                                      out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
-                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
                                      out.write("</form>");
                                     }
                                 else
                                 {
-                                out.write("<td><button id='Editar' name='Editar' href='306_candidato_sol_autorizacion_inicial.jsp' disabled class='btn btn-success'>Actualizar documentación</button>");                                    
+                                out.write("<td><a id='Editar' name='Editar' href='319_actualizar_sol_autorizacion_inicial.jsp' disabled class='btn btn-success'>Actualizar documentación</a>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}
                                 %> 
                             </tr>
@@ -251,18 +257,21 @@
                                                     </form></td><%    } 
                                 else if(idProg == 3) {
                                 if(expediente.getEstadoProgreso().equals("REVISION")){
-                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success'>Actualizar documentación</button>");                                    
+                                    out.write("<td><center><form style='display:inline;' action='320_actualizar_sol_dictamen_propuesta.jsp' method='post'>"
+                                                        + "<input type='hidden' name='idexp' value='" + expediente.getIdExpediente() + "'>"
+                                                        + "<input type='submit' class='btn btn-success' name='submit' value='Actualizar documentación'>"
+                                                        + "</form>");
                                     }else{
-                                    out.write("<td><button id='Editar' name='Editar' href='304_candidato_sol_permiso_inicial.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                    out.write("<td><button id='Editar' name='Editar' href='320_actualizar_sol_dictamen_propuesta.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
                                     }
                                     //////////////Para cancelar el proceso  
                                      out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
                                      out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
-                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
                                      out.write("</form>");
                                     }
                                 else{
-                                out.write("<td><button id='Editar' name='Editar' href='307_candidato_sol_dictamen_propuesta.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
+                                out.write("<td><button id='Editar' name='Editar' href='320_actualizar_sol_dictamen_propuesta.jsp' class='btn btn-success' disabled>Actualizar documentación</button>");                                    
                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar</button></td>");}
                                 %> 
                             </tr>
@@ -300,7 +309,7 @@
                                     //////////////Para cancelar el proceso  
                                      out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
                                      out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
-                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
                                      out.write("</form>");
                                     }
                                 else{
@@ -342,7 +351,7 @@
                                     //////////////Para cancelar el proceso  
                                      out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
                                      out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
-                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
                                      out.write("</form>");
                                     }
                                 else {
@@ -384,7 +393,7 @@
                                     //////////////Para cancelar el proceso  
                                      out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
                                      out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
-                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
                                      out.write("</form>");
                                     }
                                 else{
@@ -426,7 +435,7 @@
                                     //////////////Para cancelar el proceso  
                                      out.write("<form style='display:inline;' action='CancelarProcesoCandidato' method='post'>");
                                      out.write("<input type='hidden' name='id_exp' value='"+expediente.getIdExpediente()+"'>");
-                                     out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                     out.write("<button id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
                                      out.write("</form>");
                                     }
                                 else{
