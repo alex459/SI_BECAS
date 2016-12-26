@@ -104,7 +104,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             case 15:
                                 //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
                                 idProgreso = 16;
-                                estado = "FINALIZADA";
+                                estado = "FINALIZADO";
                                 break;
                             case 22:
                                 //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
@@ -131,7 +131,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                     Integer idAcuerdoSolicitado = 0;
                     Documento acuerdoSolicitado = new Documento();
                     if(accion.equals("insertar")){
-                        //fin
+                        estado = "DENEGADO";
                     }else{
                         //Borrar la solicitud de acuerdos que se habia hecho y cambiar el progreso
                         switch (idProgreso) {

@@ -143,7 +143,7 @@ String accion="insertar";
                                     
                                     <tr>
                                     <td>Documento Solicitado: </td>
-                                    <td>Acuerdo de Beca </td>
+                                    <td>CONTRATO DE BECA </td>
                                     <td>Fecha Solicitud: </td>
                                     <td><%=fecha_solicitud%> </td>
                                     </tr>

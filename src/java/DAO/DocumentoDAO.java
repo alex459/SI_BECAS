@@ -1083,4 +1083,27 @@ public class DocumentoDAO extends ConexionBD{
         return lista;
     }    
     
+    //Actualiza un Documento de ingresado a aprobado o denegado
+    public boolean ActualizarEstadoDocumento(Documento documento) {
+        boolean exito = false;
+        
+        this.abrirConexion();
+        try {
+            String sql = "UPDATE DOCUMENTO SET ESTADO_DOCUMENTO=? WHERE ID_DOCUMENTO=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, documento.getEstadoDocumento());
+            statement.setInt(2, documento.getIdDocumento());     
+      
+            int row = statement.executeUpdate();
+            
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+    
 }

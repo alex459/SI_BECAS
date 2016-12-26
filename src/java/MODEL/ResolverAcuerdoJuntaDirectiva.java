@@ -14,7 +14,6 @@ import POJO.Expediente;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -154,7 +153,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                     Integer idAcuerdoSolicitado = 0;
                     Documento acuerdoSolicitado = new Documento();
                     if(accion.equals("insertar")){
-                        //fin
+                        estado = "DENEGADO";
                     }else{
                         //Borrar la solicitud de acuerdos que se habia hecho y cambiar el progreso
                         switch (idProgreso) {

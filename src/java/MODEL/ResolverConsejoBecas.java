@@ -162,7 +162,7 @@ public class ResolverConsejoBecas extends HttpServlet {
                     Integer idAcuerdoSolicitado = 0;
                     Documento acuerdoSolicitado = new Documento();
                     if(accion.equals("insertar")){
-                        //fin
+                        estado = "DENEGADO";
                     }else{
                         //Borrar la solicitud de acuerdos que se habia hecho y cambiar el progreso
                         switch (idProgreso) {

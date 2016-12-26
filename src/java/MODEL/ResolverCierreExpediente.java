@@ -5,6 +5,10 @@
  */
 package MODEL;
 
+import DAO.DocumentoDAO;
+import DAO.ExpedienteDAO;
+import POJO.Documento;
+import POJO.Expediente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,17 +36,38 @@ public class ResolverCierreExpediente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ResolverCierreExpediente</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ResolverCierreExpediente at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        try{
+            //RECUPERANDO INFORMACION DEL JSP
+            String resolucion = request.getParameter("resolucion");
+            Integer idDocumento = Integer.parseInt(request.getParameter("id_documento"));
+            
+            //Obteniendo el expediente
+            DocumentoDAO documentoDao = new DocumentoDAO();
+            Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(idDocumento);
+            ExpedienteDAO expDao = new ExpedienteDAO();
+            Expediente expediente = expDao.consultarPorId(idExpediente);
+            boolean exitoActExpediente = false;
+            
+            if (resolucion.equals("CERRAR")){
+                //Cerrar Expediente
+                expediente.setEstadoExpediente("CERRADO");
+                exitoActExpediente = expDao.actualizarExpediente(expediente);
+            }else{
+                //Solicitar Correccion
+                Documento acuerdo = documentoDao.obtenerInformacionDocumentoPorId(idDocumento);
+                acuerdo.setEstadoDocumento("REVISION");
+                boolean exitoActEstado =documentoDao.ActualizarEstadoDocumento(acuerdo);
+                expediente.setEstadoProgreso("REVISION");
+                exitoActExpediente = expDao.actualizarExpediente(expediente);
+            }
+            if (exitoActExpediente == true){
+                    Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
+                } else{
+                    Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
+                }
+        }catch(Exception e){
+            e.printStackTrace();
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
         }
     }
 
