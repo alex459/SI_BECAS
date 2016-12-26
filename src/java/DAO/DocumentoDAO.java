@@ -502,7 +502,7 @@ public class DocumentoDAO extends ConexionBD{
         Documento temp = new Documento();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_DOCUMENTO=" +id;
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO, D.ESTADO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_DOCUMENTO=" +id;
             ResultSet rs = stmt.executeQuery(sql);
             
 
@@ -514,12 +514,14 @@ public class DocumentoDAO extends ConexionBD{
                 Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
                 String OBSERVACION=rs.getString("OBSERVACION_O");
                 String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
+                String ESTADO_DOCUMENTO = rs.getString("ESTADO_DOCUMENTO");
                 
                 temp.setIdDocumento(ID_DOCUMENTO);
                 temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
                 temp2.setTipoDocumento(TIPO_DOCUMENTO);
                 temp.setIdTipoDocumento(temp2);
                 temp.setObservacion(OBSERVACION);
+                temp.setEstadoDocumento(ESTADO_DOCUMENTO);
                 
             }
             
@@ -530,6 +532,7 @@ public class DocumentoDAO extends ConexionBD{
         }
         return temp;
     }  
+    
     
     //Actualiza un Documento de ingresado a aprobado o denegado
     public boolean ActualizarResolver(Documento documento) {

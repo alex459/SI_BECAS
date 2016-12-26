@@ -264,4 +264,27 @@ public class TipoDocumentoDAO extends ConexionBD{
         return lista;
     }
    
+    //consultar tipo documento por departamento
+    public ArrayList<TipoDocumento> consultarTiposDocumentosDeSolicitudes() {
+        ArrayList<TipoDocumento> lista = new ArrayList<TipoDocumento>();
+        TipoDocumento temp = new TipoDocumento();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_TIPO_DOCUMENTO, TIPO_DOCUMENTO FROM TIPO_DOCUMENTO WHERE ID_TIPO_DOCUMENTO IN (103,105,112,120,121,131,132,133,134,140,141,142)";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                temp = new TipoDocumento();
+                int ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                                
+                String TIPO_DOCUMENTO=rs.getString("TIPO_DOCUMENTO");             
+                temp.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp.setTipoDocumento(TIPO_DOCUMENTO);             
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
 }
