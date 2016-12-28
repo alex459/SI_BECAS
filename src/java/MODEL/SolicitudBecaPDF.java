@@ -75,7 +75,7 @@ public class SolicitudBecaPDF extends HttpServlet {
             if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF                
                 ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
-                byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\report1.jasper", parametersMap, conexionBD.conn);
+                byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\SolicitudBeca.jasper", parametersMap, conexionBD.conn);
                 conexionBD.cerrarConexion();
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);

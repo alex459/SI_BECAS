@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54ad7314-eff1-49cb-9d31-28411484dcd2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="504"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="nombre1" class="java.lang.String"/>
+	<parameter name="nombre2" class="java.lang.String"/>
+	<parameter name="apellido1" class="java.lang.String"/>
+	<parameter name="apellido2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="112" splitType="Stretch">
+			<image>
+				<reportElement x="13" y="1" width="98" height="89" uuid="7d2cded7-47aa-44f3-baa9-5927dce57df4"/>
+				<imageExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="77" y="11" width="353" height="20" uuid="fd529e67-3439-48b0-8884-31e55d676e80"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSEJO DE BECAS Y DE INVESTIGACIONES CIENTIFICAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="31" width="353" height="20" uuid="b4ea2b2d-f3c3-4721-9d5b-b38478090ccb"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="453" y="-10" width="102" height="115" uuid="271b8c91-713b-4210-af4e-7169ce3dec3d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="70" width="555" height="20" uuid="2c0d5bab-a9d0-470a-8b25-6e84de698a8e"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLICITUD DE BECA PARA POSTGRADO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="653" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="6" width="555" height="631" uuid="fda6fa7b-3c6c-4042-9761-e5e40a7cb7e9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="14" y="17" width="15" height="20" uuid="818fd9a1-f037-4184-8c0c-783b9adeae5c"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="17" width="104" height="20" uuid="5ca24faa-9851-4a2a-8e50-3e9ab928ec58"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[PRIMER NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="17" width="121" height="20" uuid="9ecfb6c9-7263-49ba-90b1-3284089e41ce"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[SEGUNDO NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="358" y="17" width="121" height="20" uuid="14cffd73-14bd-4a4b-9627-092a30d116d6"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="60" width="524" height="1" uuid="cc72236d-a2de-4ef4-895b-4d6c18561a14"/>
+			</line>
+			<staticText>
+				<reportElement x="40" y="71" width="53" height="20" uuid="76360dbb-ea31-41f5-99eb-ce2556878b2d"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[EDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="71" width="146" height="20" uuid="bf4c13fb-80a9-43e5-8238-f0016c3b4886"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[LUGAR DE NACIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="71" width="15" height="20" uuid="37b1f11f-e22e-4107-a4d0-35f81676cddf"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="71" width="143" height="20" uuid="c4a0a6ab-5d62-493d-8bd1-b02ee03850b5"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[FECHA DE NACIMIENTO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="113" width="524" height="1" uuid="1a20bef2-45c9-46cb-bb6e-adb05a702149"/>
+			</line>
+			<staticText>
+				<reportElement x="40" y="124" width="223" height="20" uuid="4e48f771-6f03-455f-9409-6742f1c415d5"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[DOMICILIO (DIRECCION COMPLETA)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="124" width="84" height="20" uuid="58727317-3123-4fef-9f1a-a94cc8f2545b"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[TELEFONOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="124" width="15" height="20" uuid="d09171ea-039b-4d4a-8b5d-4296942e3082"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="194" width="524" height="1" uuid="c11516e3-be87-42ac-92ad-f761d7965fa8"/>
+			</line>
+			<staticText>
+				<reportElement x="326" y="144" width="54" height="20" uuid="c2ad4e95-d927-4629-9a67-b33a82db9c2c"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[CASA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="144" width="54" height="20" uuid="b6312d3b-ff46-4ded-a04c-7825221a706e"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[MOVIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="144" width="54" height="20" uuid="c8cc09dd-d03f-4982-87c3-b10cdaf85601"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[OFICINA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="203" width="72" height="20" uuid="22886f1e-4783-45b5-8c82-51adad71f44e"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[PROFESION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="203" width="67" height="20" uuid="5039b12f-4156-49e1-948d-5399ef961786"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[FACULTAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="203" width="15" height="20" uuid="e0fe4bd2-1fb4-4813-a0d5-4949caa53b62"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="244" width="524" height="1" uuid="614a8e64-8fca-4e98-957d-20e4e5c8ef03"/>
+			</line>
+			<staticText>
+				<reportElement x="130" y="203" width="97" height="20" uuid="82d3d718-9975-441f-923c-e927e88ab452"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[CARGO ACTUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="203" width="107" height="20" uuid="c6bc4621-7880-4156-a86a-19c9acdc64d4"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="296" width="524" height="1" uuid="0b5fdfef-ab6f-4740-8462-7bc567bd86d7"/>
+			</line>
+			<staticText>
+				<reportElement x="14" y="255" width="15" height="20" uuid="b486e68f-2f8f-4a16-9e6e-8c6c173f5982"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[5.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="255" width="359" height="20" uuid="ccb4846d-84ab-42fc-a56c-578f3eae9a34"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[TIEMPO DE SERVICIO EN LA UNIVERSIDAD DE EL SALVADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="308" width="119" height="20" uuid="3784914d-de6c-49f0-baf2-71ab3e84b4a6"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUCION]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="404" width="524" height="1" uuid="6ddcbdff-dc66-49d7-8875-c8df71c789b2"/>
+			</line>
+			<staticText>
+				<reportElement x="468" y="308" width="54" height="20" uuid="e56e7dd0-fb60-4706-8edd-2f764dff7ab9"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[AÑO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="308" width="15" height="20" uuid="d2dcd8bb-51be-49e2-840a-fe6383b54ccb"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[6.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="308" width="67" height="20" uuid="809a02d3-82c7-409b-96d7-9642a751a1cb"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[GRADO ALCANZADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="308" width="90" height="20" uuid="f06d6704-a406-4853-ad77-0f685b0d514d"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[EDUCACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="416" width="15" height="20" uuid="090f62e4-e180-4ca2-b836-f2607221665d"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[7.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="523" width="524" height="1" uuid="bbd9bffd-c38e-498a-9390-f3b8f7a40cb7"/>
+			</line>
+			<staticText>
+				<reportElement x="41" y="416" width="412" height="20" uuid="62ae8cd2-aaa9-477c-a8de-65d4de20eb51"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[TRABAJOS DE INVESTIGACION (INCLUYENDO TITULO DE TESIS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="433" width="412" height="20" uuid="004e3fe8-967a-4cd1-af3f-f655aa318495"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[(INDIQUE SI HA SIDO PUBLICADO)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="536" width="15" height="20" uuid="96b064ba-8f77-47f7-b934-99f5fc188947"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[8.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="536" width="412" height="20" uuid="584f10a3-ea1c-4332-b079-15d09434475b"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[ASOCIACIONES PROFESIONALES A LAS QUE PERTENECE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="55" y="41" width="100" height="20" uuid="acc42410-802a-4602-b509-ba083de10bc9"/>
+				<textFieldExpression><![CDATA[$P{nombre1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="41" width="100" height="20" uuid="baef9a21-e3ac-44b5-baa0-3aa984be6188"/>
+				<textFieldExpression><![CDATA[$P{nombre2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="40" width="100" height="20" uuid="a30e3615-0fcc-48a7-960a-e757a92ac02b"/>
+				<textFieldExpression><![CDATA[$P{apellido1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="439" y="40" width="100" height="20" uuid="8ac2760d-a6b9-4092-a71f-fc50b894b1dc"/>
+				<textFieldExpression><![CDATA[$P{apellido2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

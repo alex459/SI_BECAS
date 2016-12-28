@@ -233,12 +233,12 @@ String accion="insertar";
                                                     <form  name="resolverSolConsejoSuperiorUniversitario" action="ResolverAcuerdoCSU" method="POST" enctype="multipart/form-data" novalidate>           
                                                         
                                                        <div class="row" >
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-4" ng-show="requerido">
                                                                 <label>Documento Digital:</label>
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" valid-file required>
-                                                                <span class="text-danger" ng-show="resolverSolConsejoSuperiorUniversitario.doc_digital.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                            <div class="col-md-8" ng-show="requerido">
+                                                                <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" valid-file ng-required="requerido">
+                                                                <span class="text-danger" ng-show="resolverSolConsejoSuperiorUniversitario.doc_digital.$invalid&&requerido">Debe ingresar un documento en formato PDF.</span>
 
                                                             </div>
                                                         </div>
@@ -247,7 +247,8 @@ String accion="insertar";
                                                                 <label>Observacion:</label>
                                                             </div>
                                                             <div class="col-md-7">
-                                                                <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024"></textarea><br>
+                                                                <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
+                                                                <span class="text-danger" ng-show="!resolverSolConsejoSuperiorUniversitario.$pristine && resolverSolConsejoSuperiorUniversitario.observacion.$error.required">Ingrese la observacion del documento</span><br>
                                                             </div>
                                                             <div class="col-md-1"></div>
                                                         </div>

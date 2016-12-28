@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54ad7314-eff1-49cb-9d31-28411484dcd2">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="nombre1" class="java.lang.String"/>
+	<parameter name="nombre2" class="java.lang.String"/>
+	<parameter name="apellido1" class="java.lang.String"/>
+	<parameter name="apellido2" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\"]]></defaultValueExpression>
+	</parameter>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="1" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="333" splitType="Stretch">
+			<subreport>
+				<reportElement x="-17" y="0" width="599" height="68" uuid="97d703b4-95a6-468e-b139-814b03995624"/>
+				<subreportParameter name="nombre1"/>
+				<subreportParameter name="nombre2"/>
+				<subreportParameter name="apellido1"/>
+				<subreportParameter name="apellido2"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "solicitudBeca1.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="68" width="100" height="1" uuid="d85ead0b-b229-45ca-8320-8efb01b2a7b3"/>
+			</break>
+			<subreport>
+				<reportElement x="-17" y="69" width="599" height="100" uuid="c9e7a76e-1c42-4305-8d60-1200e698f6df"/>
+				<subreportParameter name="nombre1"/>
+				<subreportParameter name="nombre2"/>
+				<subreportParameter name="apellido1"/>
+				<subreportParameter name="apellido2"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "solicitudBeca2.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="169" width="599" height="1" uuid="302d1c0c-25a0-4de0-bc77-2f3ded1bdb24"/>
+			</break>
+			<subreport>
+				<reportElement x="-17" y="170" width="599" height="100" uuid="024893ef-9cbd-4b76-a3cf-60fd60459f89"/>
+				<subreportParameter name="nombre1"/>
+				<subreportParameter name="nombre2"/>
+				<subreportParameter name="apellido1"/>
+				<subreportParameter name="apellido2"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "solicitudBeca3.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="270" width="599" height="1" uuid="a500dc6f-3da1-4501-9158-e5177ec14a2c"/>
+			</break>
+			<subreport>
+				<reportElement x="-17" y="271" width="599" height="62" uuid="71cb82c4-9a03-4be7-a302-73d306a5730b"/>
+				<subreportParameter name="nombre1"/>
+				<subreportParameter name="nombre2"/>
+				<subreportParameter name="apellido1"/>
+				<subreportParameter name="apellido2"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "solicitudBeca4.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="2" splitType="Stretch"/>
+	</summary>
+</jasperReport>

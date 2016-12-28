@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54ad7314-eff1-49cb-9d31-28411484dcd2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="439"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="nombre1" class="java.lang.String"/>
+	<parameter name="nombre2" class="java.lang.String"/>
+	<parameter name="apellido1" class="java.lang.String"/>
+	<parameter name="apellido2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="94" splitType="Stretch">
+			<image>
+				<reportElement x="13" y="1" width="98" height="89" uuid="7d2cded7-47aa-44f3-baa9-5927dce57df4"/>
+				<imageExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="77" y="11" width="353" height="20" uuid="fd529e67-3439-48b0-8884-31e55d676e80"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSEJO DE BECAS Y DE INVESTIGACIONES CIENTIFICAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="31" width="353" height="20" uuid="b4ea2b2d-f3c3-4721-9d5b-b38478090ccb"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="648" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="6" width="555" height="639" uuid="fda6fa7b-3c6c-4042-9761-e5e40a7cb7e9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="14" y="17" width="15" height="20" uuid="818fd9a1-f037-4184-8c0c-783b9adeae5c"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[13.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="17" width="199" height="20" uuid="5ca24faa-9851-4a2a-8e50-3e9ab928ec58"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[PROGRAMA DE ESTUDIOS A REALIZAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="37" width="277" height="20" uuid="76360dbb-ea31-41f5-99eb-ce2556878b2d"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[PROGRAMA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="416" width="524" height="1" uuid="6ddcbdff-dc66-49d7-8875-c8df71c789b2"/>
+			</line>
+			<staticText>
+				<reportElement x="14" y="429" width="15" height="20" uuid="090f62e4-e180-4ca2-b836-f2607221665d"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[14.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="429" width="412" height="20" uuid="62ae8cd2-aaa9-477c-a8de-65d4de20eb51"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[BENEFICIOS QUE ESPERA OBTENER CON LOS ESTUDIOS PROPUESTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="37" width="60" height="20" uuid="0e9981af-a92a-4d7e-902a-43b7970edb3b"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[SEMESTRE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="57" width="462" height="1" uuid="692153c7-b421-4f37-95d1-4fb935d9b3a8"/>
+			</line>
+			<line>
+				<reportElement x="146" y="37" width="1" height="309" uuid="0a0147f0-800e-4492-835f-2463ef372199"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
