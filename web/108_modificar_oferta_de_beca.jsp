@@ -398,6 +398,19 @@ todayHighlight: true,
 autoclose: true,
 startDate: new Date()
 });
+ $('#institucionEstudio').on('change', function(){
+          //  $('#tipoBeca option[value="EXTERNA"]').prop('selected', true);
+            var selectPais= document.getElementById("#pais");
+            var selected2 = $("#pais").find("option:selected").text();
+            var univ="universidad de el salvador";
+    var selected = $(this).find("option:selected").val();
+    if (selected.toUpperCase() === univ.toUpperCase()) {
+          document.getElementById('tipoBeca').value="INTERNA";
+            //alert("equal");
+        }else{
+            document.getElementById('tipoBeca').value="EXTERNA";
+        }
+  });
 });
 </script>
 </body>

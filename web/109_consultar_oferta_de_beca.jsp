@@ -28,10 +28,15 @@
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
+    
     HttpSession actual = request.getSession();
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
     Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
     ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
     //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
     tipo_usuarios_permitidos.add("7");
