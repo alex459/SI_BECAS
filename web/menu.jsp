@@ -113,6 +113,7 @@
                     out.write("<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Becarios<strong class='caret'></strong></a>");
                     out.write("<ul class='dropdown-menu'>");
                     
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='400_Becario_Solicitudes.jsp'>Estado de Solicitudes</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='401_Becario_Sol_Acuerdo_Anio_Fiscal.jsp'>Solicitud acuerdo de año fiscal</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='402_Becario_Sol_Prorroga.jsp'>Solicitud prorroga</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='801_agregar_documento_finalizacion_beca.jsp'>Agregar documentos de finalizacion de beca</a></li>");

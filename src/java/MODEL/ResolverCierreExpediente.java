@@ -39,6 +39,7 @@ public class ResolverCierreExpediente extends HttpServlet {
         try{
             //RECUPERANDO INFORMACION DEL JSP
             String resolucion = request.getParameter("resolucion");
+            String observacion ="";
             Integer idDocumento = Integer.parseInt(request.getParameter("id_documento"));
             
             //Obteniendo el expediente
@@ -56,7 +57,9 @@ public class ResolverCierreExpediente extends HttpServlet {
                 //Solicitar Correccion
                 Documento acuerdo = documentoDao.obtenerInformacionDocumentoPorId(idDocumento);
                 acuerdo.setEstadoDocumento("REVISION");
+                acuerdo.setObservacion(observacion);
                 boolean exitoActEstado =documentoDao.ActualizarEstadoDocumento(acuerdo);
+                expediente.setIdProgreso(15);
                 expediente.setEstadoProgreso("REVISION");
                 exitoActExpediente = expDao.actualizarExpediente(expediente);
             }

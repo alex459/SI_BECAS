@@ -95,7 +95,7 @@
         break;
     }
    
-String accion="insertar";
+String accion=request.getParameter("ACCION");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -238,15 +238,16 @@ String accion="insertar";
                                             <div class="col-md-10">
                                                 <fieldset class="custom-border">
                                                     <legend class="custom-border"> Resolucion</legend>
+                                                    <%if(accion.equals("insertar")){%>
                                                     <form  name="resolverSolComisionBecas" action="ResolverConsejoBecas" method="POST" enctype="multipart/form-data" novalidate>           
                                                         
-                                                        <div class="row" >
+                                                        <div class="row" ng-show="requerido">
                                                             <div class="col-md-4">
                                                                 <label>Documento Digital:</label>
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" valid-file required>
-                                                                <span class="text-danger" ng-show="resolverSolComisionBecas.doc_digital.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                            <div class="col-md-8" ng-show="requerido">
+                                                                <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" valid-file ng-required="requerido">
+                                                                <span class="text-danger" ng-show="resolverSolComisionBecas.doc_digital.$invalid&&requerido">Debe ingresar un documento en formato PDF.</span>
 
                                                             </div>
                                                         </div>
@@ -255,7 +256,8 @@ String accion="insertar";
                                                                 <label>Observacion:</label>
                                                             </div>
                                                             <div class="col-md-7">
-                                                                <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024"></textarea><br>
+                                                                <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
+                                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.observacion.$error.required">Ingrese la observacion del documento</span><br>
                                                             </div>
                                                             <div class="col-md-1"></div>
                                                         </div>
@@ -264,17 +266,17 @@ String accion="insertar";
                                                             <div class="col-md-10 btn-group text-center" data-toggle="buttons">
                                                                 <div class="col-md-4">
                                                                     <label class="btn btn-primary " ng-click="CambiarEstadoAprobado()">
-                                                                        <input type="radio" name="resolucion" value="APROBADO" autocomplete="off" ng-model="resolucion" ng-required="true"> Aprobado
+                                                                        <input type="radio" name="resolucion" value="APROBADO" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoAprobado()"> Aprobado
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <label class="btn btn-danger" ng-click="CambiarEstadoDenegado()">
-                                                                        <input type="radio" name="resolucion" value="DENEGADO" autocomplete="off" ng-model="resolucion" ng-required="true"> Denegado
+                                                                        <input type="radio" name="resolucion" value="DENEGADO" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoDenegado()"> Denegado
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
-                                                                        <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true"> Solicitar Correccion
+                                                                        <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoCorreccion()"> Solicitar Correccion
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -292,7 +294,89 @@ String accion="insertar";
                                                             <input type="hidden" name="id_documento" value="<%=id_documento%>">
                                                             <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">
                                                         </div>  
-                                                    </form>    
+                                                    </form>  
+                                                    <%}else{
+                                                        Documento acuerdo = docComision.obtenerInformacionDocumentoPorId(Integer.parseInt(id_documento));                                                        
+                                                    %>
+                                                    <div class="row">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Acuerdo Ingresado</th><th>Observacion</th><th>Documento</th>
+                                                                </tr>                                                        
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><%=acuerdo.getIdTipoDocumento().getTipoDocumento()%></td>
+                                                                    <td><%=acuerdo.getObservacion()%></td>
+                                                                    <td>
+                                                                        <form action="verDocumentoConsejo" method="post" target="_blank" >
+                                                                            <input type = "hidden" name="id" value="<%=id_documento %>">
+                                                                            <input type="submit" class="btn btn-success" value="Ver Documento ">
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> 
+                                                                            
+                                                    <form  name="resolverSolComisionBecas" action="ResolverConsejoBecas" method="POST" enctype="multipart/form-data" novalidate>           
+                                                        
+                                                        <div class="row" ng-show="requerido">
+                                                            <div class="col-md-4">
+                                                                <label>Documento Digital:</label>
+                                                            </div>
+                                                            <div class="col-md-8" ng-show="requerido">
+                                                                <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" >
+                                                                <span class="text-danger" ng-show="resolverSolComisionBecas.doc_digital.$invalid&&requerido">Debe ingresar un documento en formato PDF.</span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label>Observacion:</label>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
+                                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.observacion.$error.required">Ingrese la observacion del documento</span><br>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                        <div class="row text-center">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10 btn-group text-center" data-toggle="buttons">
+                                                                <div class="col-md-4">
+                                                                    <label class="btn btn-primary " ng-click="CambiarEstadoAprobado()">
+                                                                        <input type="radio" name="resolucion" value="APROBADO" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoAprobado()"> Aprobado
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="btn btn-danger" ng-click="CambiarEstadoDenegado()">
+                                                                        <input type="radio" name="resolucion" value="DENEGADO" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoDenegado()"> Denegado
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
+                                                                        <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoCorreccion()"> Solicitar Correccion
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>   
+                                                        </div>
+                                                        <div class="row text-center">
+                                                            <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
+                                                        </div> 
+                                                        <div class="row text-center">
+                                                            <br>
+                                                        </div>
+                                                        <div class="row text-center">
+                                                            <input type="hidden" name="id_p" value="<%=id_p%>">
+                                                            <input type="hidden" name="accion" value="<%=accion%>">
+                                                            <input type="hidden" name="id_documento" value="<%=id_documento%>">
+                                                            <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolComisionBecas.$valid">
+                                                        </div>  
+                                                    </form> 
+                                                    <%}%>
                                                 </fieldset>
                                             </div>
                                             <div class="col-md-1"></div>

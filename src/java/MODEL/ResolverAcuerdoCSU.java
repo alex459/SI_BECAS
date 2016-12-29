@@ -14,7 +14,6 @@ import POJO.Expediente;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -77,11 +76,16 @@ public class ResolverAcuerdoCSU extends HttpServlet {
             documento.setEstadoDocumento(resolucion);
             documento.setObservacion(observacion);
             String obs = documento.getObservacion();
-            switch (resolucion) {
-                case "APROBADO":
-                    //Actualizar Documento a resolver
+            if (filePart.getSize() >0){
+                //Actualizar Documento a resolver
                     documento.setDocumentoDigital(archivo);
                     documentoDao.ActualizarResolver(documento);
+            }else{
+                    boolean exitoActDoc= documentoDao.ActualizarEstadoDocumento(documento);
+            }
+            switch (resolucion) {
+                case "APROBADO":
+                    
                     //Insercion o Actualizacion
                     Documento acuerdoSolicitar = new Documento();
                     if (accion.equals("insertar")) {
@@ -117,6 +121,28 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                         }
                     } else {
                         //YA SE HIZO LA SOLICITUD LA PRIMERA VEZ
+                        switch (idProgreso) {
+                            case 7:
+                                //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
+                                idProgreso = 8;
+                                estado = "PENDIENTE";
+                                //SOLICITAR CONTRATO DE BECA de nuevo
+                                
+                                break;
+                            case 15:
+                                //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
+                                idProgreso = 16;
+                                estado = "FINALIZADO";
+                                break;
+                            case 22:
+                                //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
+                                idProgreso = 9;
+                                estado = "EN PROCESO";
+                                //Cambiar fecha fin de beca
+                                break;
+                            default:
+                                break;
+                        }
                     }
                     //Cambiar progreso y estado
                     expediente.setIdProgreso(idProgreso);
@@ -125,13 +151,37 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                     break;
                 case "DENEGADO":
                     //Actualizar Documento y poner el progreso como denegado
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
                     //Insercion o Actualizacion
                     Integer idAcuerdoSolicitado = 0;
                     Documento acuerdoSolicitado = new Documento();
                     if(accion.equals("insertar")){
-                        estado = "DENEGADO";
+                        
+                        switch (idProgreso) {
+                            case 7:
+                                //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
+                                idProgreso = 7;
+                                estado = "DENEGADO";
+                                
+                                break;
+                            case 15:
+                                ////ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
+                                idProgreso = 14;
+                                estado = "REVISION";
+                                //Solicitar correccion del Acuerdo del consejo de becas
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
+                                acuerdoSolicitado = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                acuerdoSolicitado.setEstadoDocumento("REVISION");
+                                acuerdoSolicitado.setObservacion(observacion);
+                                documentoDao.ActualizarEstadoDocumento(acuerdoSolicitado);
+                                break;
+                            case 22:
+                                //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
+                                idProgreso = 22;
+                                estado = "DENEGADO";
+                                break;
+                            default:
+                                break;
+                        }
                     }else{
                         //Borrar la solicitud de acuerdos que se habia hecho y cambiar el progreso
                         switch (idProgreso) {
@@ -142,11 +192,18 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                 //BORRAR DOCUMENTO SOLICITADO
                                 idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 134);
                                 documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                //idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 134);
                                 break;
                             case 15:
                                 ////ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
                                 idProgreso = 14;
                                 estado = "REVISION";
+                                //Solicitar correccion del Acuerdo del consejo de becas
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
+                                acuerdoSolicitado = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                acuerdoSolicitado.setEstadoDocumento("REVISION");
+                                acuerdoSolicitado.setObservacion(observacion);
+                                documentoDao.ActualizarEstadoDocumento(acuerdoSolicitado);
                                 break;
                             case 22:
                                 //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
@@ -206,9 +263,15 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             case 15:
                                 //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
                                 documentoDao.ActualizarResolverCorreccion(documento);
+                                //Solicitar correccion del Acuerdo del consejo de becas
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
+                                acuerdoSolicitado = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                acuerdoSolicitado.setEstadoDocumento("REVISION");
+                                acuerdoSolicitado.setObservacion(observacion);
+                                documentoDao.ActualizarEstadoDocumento(acuerdoSolicitado);
                                expediente.setIdProgreso(14);
                                expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
+                               expDao.actualizarExpediente(expediente);                               
                                 break;
                             case 22:
                                 //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO

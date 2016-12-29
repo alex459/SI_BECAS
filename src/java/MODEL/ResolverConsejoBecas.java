@@ -14,7 +14,6 @@ import POJO.Expediente;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -77,12 +76,18 @@ public class ResolverConsejoBecas extends HttpServlet {
             documento.setEstadoDocumento(resolucion);
             documento.setObservacion(observacion);
             String obs = documento.getObservacion();
-            switch (resolucion) {
-                case "APROBADO":
-                    //Actualizar Documento a resolver
+            if (filePart.getSize() >0){
+                //Actualizar Documento a resolver
                     documento.setDocumentoDigital(archivo);
                     documentoDao.ActualizarResolver(documento);
-                    //Insercion o Actualizacion
+            }else{
+                    boolean exitoActDoc= documentoDao.ActualizarEstadoDocumento(documento);
+            }
+            Integer idAcuerdoSolicitado = 0;
+            
+            switch (resolucion) {
+                case "APROBADO":
+                    //Insercion o Actualizacion                    
                     Documento acuerdoSolicitar = new Documento();
                     if (accion.equals("insertar")) {
                         //Al insertar se debe solicitar el nuevo documento y cambiar el progreso
@@ -147,7 +152,78 @@ public class ResolverConsejoBecas extends HttpServlet {
                                 break;
                         }
                     } else {
-                        //YA SE HIZO LA SOLICITUD LA PRIMERA VEZ
+                        //COMPROBAR SI YA SE HIZO LA SOLICITUD LA PRIMERA VEZ
+                        switch (idProgreso) {
+                            case 2:
+                                //ACUERDO DE AUTORIZACION INICIAL
+                                idProgreso = 3;
+                                estado = "PENDIENTE";
+                                break;
+                            case 5:
+                                //SOLICITUD DE BECA
+                                idProgreso = 7;
+                                estado = "EN PROCESO";
+                                //SOLICITAR ACUERDO AL CSU
+                                acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                acuerdoSolicitar.setIdExpediente(expediente);
+                                acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                acuerdoSolicitar.setObservacion(obs);
+                                if (TipoBeca.equals("INTERNA")) {
+                                    tipoDoc = tipoDao.consultarPorId(132);
+                                }else{
+                                    tipoDoc = tipoDao.consultarPorId(133);
+                                }
+                                acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                break;
+                            case 12:
+                                //ACUERDO DE INICIO DE CUMPLIMIENTO DE SERVICIO CONTRACTUAL
+                                idProgreso = 13;
+                                estado = "PENDIENTE";
+                                break;
+                            case 14:
+                                //ACUERDO DE GESTION DE LIBERACION
+                                //SOLICITAR ACUERDO AL CSU
+                                idProgreso = 15;
+                                estado = "EN PROCESO";
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 158);
+                                if(idAcuerdoSolicitado == 0){
+                                    //Solicitar
+                                    acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                acuerdoSolicitar.setIdExpediente(expediente);
+                                acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                acuerdoSolicitar.setObservacion(obs);
+                                tipoDoc = tipoDao.consultarPorId(158);
+                                acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                }else{
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                }
+                                
+                                break;
+                            case 21:
+                                //SOLICITUD DE PRORROGA
+                                idProgreso = 22;
+                                estado = "EN PROCESO";
+                                //solicitar Acuerdos al Consejo de Becas
+                                acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                acuerdoSolicitar.setIdExpediente(expediente);
+                                acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                acuerdoSolicitar.setObservacion(obs);
+                                tipoDoc = tipoDao.consultarPorId(142);
+                                acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                break;
+                            default:
+                                break;
+                        }
+                        
                     }
                     //Cambiar progreso y estado
                     expediente.setIdProgreso(idProgreso);
@@ -156,10 +232,7 @@ public class ResolverConsejoBecas extends HttpServlet {
                     break;
                 case "DENEGADO":
                     //Actualizar Documento y poner el progreso como denegado
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
                     //Insercion o Actualizacion
-                    Integer idAcuerdoSolicitado = 0;
                     Documento acuerdoSolicitado = new Documento();
                     if(accion.equals("insertar")){
                         estado = "DENEGADO";

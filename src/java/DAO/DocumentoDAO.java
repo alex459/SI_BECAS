@@ -502,7 +502,7 @@ public class DocumentoDAO extends ConexionBD{
         Documento temp = new Documento();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO, D.ESTADO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_DOCUMENTO=" +id;
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO, D.ESTADO_DOCUMENTO ,TD.DEPARTAMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_DOCUMENTO=" +id;
             ResultSet rs = stmt.executeQuery(sql);
             
 
@@ -515,10 +515,13 @@ public class DocumentoDAO extends ConexionBD{
                 String OBSERVACION=rs.getString("OBSERVACION_O");
                 String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
                 String ESTADO_DOCUMENTO = rs.getString("ESTADO_DOCUMENTO");
+                String DEPARTAMENTO = rs.getString("DEPARTAMENTO");
+                
                 
                 temp.setIdDocumento(ID_DOCUMENTO);
                 temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
                 temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp2.setDepartamento(DEPARTAMENTO);
                 temp.setIdTipoDocumento(temp2);
                 temp.setObservacion(OBSERVACION);
                 temp.setEstadoDocumento(ESTADO_DOCUMENTO);
@@ -1089,10 +1092,11 @@ public class DocumentoDAO extends ConexionBD{
         
         this.abrirConexion();
         try {
-            String sql = "UPDATE DOCUMENTO SET ESTADO_DOCUMENTO=? WHERE ID_DOCUMENTO=?";
+            String sql = "UPDATE DOCUMENTO SET ESTADO_DOCUMENTO=?, OBSERVACION_O = ? WHERE ID_DOCUMENTO=?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, documento.getEstadoDocumento());
-            statement.setInt(2, documento.getIdDocumento());     
+            statement.setString(2, documento.getObservacion());
+            statement.setInt(3, documento.getIdDocumento());     
       
             int row = statement.executeUpdate();
             
@@ -1104,6 +1108,36 @@ public class DocumentoDAO extends ConexionBD{
             this.cerrarConexion();
         }
         return exito;
+    }
+    
+    //Consulta Todos los Documentos Publicos
+    public ArrayList<Documento> consultarSolicitudesBecario(int idExpediente) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_TIPO_DOCUMENTO IN (135,137,149,153,156) AND D.ID_EXPEDIENTE = " +idExpediente ;
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
     }
     
 }
