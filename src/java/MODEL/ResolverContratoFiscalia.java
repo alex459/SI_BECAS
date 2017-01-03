@@ -5,20 +5,15 @@
  */
 package MODEL;
 
-import DAO.UsuarioDAO;
-import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.OfertaBecaDAO;
 import DAO.TipoDocumentoDAO;
-import POJO.Beca;
 import POJO.Documento;
 import POJO.Expediente;
-import POJO.OfertaBeca;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;

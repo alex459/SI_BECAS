@@ -8,9 +8,12 @@ package MODEL;
 import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
+import DAO.OfertaBecaDAO;
 import DAO.UsuarioDAO;
+import POJO.Beca;
 import POJO.Documento;
 import POJO.Expediente;
+import POJO.OfertaBeca;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author adminPC
  */
-@WebServlet(name = "ResolverCierreExpediente", urlPatterns = {"/ResolverCierreExpediente"})
-public class ResolverCierreExpediente extends HttpServlet {
+@WebServlet(name = "ResolverInicioBeca", urlPatterns = {"/ResolverInicioBeca"})
+public class ResolverInicioBeca extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,44 +40,53 @@ public class ResolverCierreExpediente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try{
+        try {
             //RECUPERANDO INFORMACION DEL JSP
             String resolucion = request.getParameter("resolucion");
-            String observacion ="";
+            String observacion = "";
             Integer idDocumento = Integer.parseInt(request.getParameter("id_documento"));
-            
+
             //Obteniendo el expediente
             DocumentoDAO documentoDao = new DocumentoDAO();
             Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(idDocumento);
             ExpedienteDAO expDao = new ExpedienteDAO();
             Expediente expediente = expDao.consultarPorId(idExpediente);
-            boolean exitoActExpediente = false;
-            
-            if (resolucion.equals("CERRAR")){
-                //Cerrar Expediente
-                expediente.setEstadoExpediente("CERRADO");
-                exitoActExpediente = expDao.actualizarExpediente(expediente);
-                //Cambiar estado a Candidato
-                 BecaDAO becaDao = new BecaDAO();
-                Integer IdUsuario = becaDao.consultarIdUsuarioPorIdExpediente(idExpediente);
+
+            if (resolucion.equals("APROBADO")) {
+                //CREAR LA BECA
+                OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
+                Integer idOferta = ofertaDao.consultarPorExpediente(idExpediente);
+                OfertaBeca oferta = ofertaDao.consultarPorId(idOferta);
+                BecaDAO becaDao = new BecaDAO();
+                Beca beca = new Beca();
                 UsuarioDAO usuarioDao = new UsuarioDAO();
+                beca.setIdBeca(becaDao.getSiguienteId());
+                beca.setFechaInicio(oferta.getFechaInicio());
+                ///////////SUMARLE DURACION A FECHA INICIO
+                beca.setFechaFin(oferta.getFechaInicio());
+                beca.setIdExpediente(idExpediente);
+                boolean exitoBeca = becaDao.ingresar(beca);
+                //CAMBIAR EL ESTADO A BECARIO
+                Integer IdUsuario = becaDao.consultarIdUsuarioPorIdExpediente(idExpediente);
                 usuarioDao.actualizarRolPorIdUsuario(IdUsuario, 2);
-            }else{
+                //CAMBIAR PROGRESO Y ESTADO DE EXPEDIENTE
+                    expediente.setIdProgreso(9);
+                    expediente.setEstadoProgreso("PENDIENTE");
+                    expDao.actualizarExpediente(expediente);
+            } else {
                 //Solicitar Correccion
-                Documento acuerdo = documentoDao.obtenerInformacionDocumentoPorId(idDocumento);
-                acuerdo.setEstadoDocumento("REVISION");
-                acuerdo.setObservacion(observacion);
-                boolean exitoActEstado =documentoDao.ActualizarEstadoDocumento(acuerdo);
-                expediente.setIdProgreso(15);
+                //CAMBIAR ESTADO DE DOCUMENTO
+                Documento contrato = new Documento();
+                contrato = documentoDao.obtenerInformacionDocumentoPorId(idDocumento);
+                contrato.setEstadoDocumento("REVISION");
+                documentoDao.ActualizarEstadoDocumento(contrato);
+                //CAMBIAR PROGRESO Y ESTADO EXPEDIENTE
+                expediente.setIdProgreso(8);
                 expediente.setEstadoProgreso("REVISION");
-                exitoActExpediente = expDao.actualizarExpediente(expediente);
+                expDao.actualizarExpediente(expediente);
             }
-            if (exitoActExpediente == true){
-                    Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
-                } else{
-                    Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
-                }
-        }catch(Exception e){
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
+        } catch (Exception e) {
             e.printStackTrace();
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
         }

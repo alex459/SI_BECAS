@@ -168,6 +168,8 @@
                     
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='507_Consejo_Becas_Solicitudes_Pendientes.jsp'>Solicitudes de acuerdos pendientes</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='508_Consejo_Becas_Resolver_Solicitud.jsp'>Resolver solicitud de acuerdo pendiente</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='520_Solicitudes_de_Inicio_Beca.jsp'>Solicitudes de Inicio de Beca</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='521_Resolver_Solicitud_de_Inicio_de_Beca.jsp'>Resolver solicitud de Inicio de Beca</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='509_Consejo_Becas_Buscar_Acuerdo.jsp'>Buscar acuerdo</a></li>");                    
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='518_Solicitudes_de_Cierre_de_Expediente.jsp'>Solicitudes de Cierre de Expediente</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='519_Resolver_Cierre_de_Expediente.jsp'>Resolver Solicitud de Cierre de Expediente</a></li>");

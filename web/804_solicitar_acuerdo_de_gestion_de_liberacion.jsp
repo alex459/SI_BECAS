@@ -39,8 +39,11 @@
     String accion = "insertar";
     try{
         accion = request.getParameter("ACCION");
+        if (accion == null){
+            accion = "insertar";
+        }
     }catch(Exception e){
-        
+        e.printStackTrace();        
     }
 %>
 

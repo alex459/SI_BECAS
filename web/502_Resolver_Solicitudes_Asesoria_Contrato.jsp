@@ -51,9 +51,9 @@
     }
      
     Integer id_expedie = Integer.parseInt(id_ex);
-    
-    
+        
     DocumentoDAO docComision = new DocumentoDAO();
+    int id_documento = docComision.ExisteDocumento(id_expedie, 134);
     ArrayList<Documento> publicos = new ArrayList<Documento>();
     publicos =  docComision.consultarFiscaliaContratoBeca(id_expedie);
     
@@ -250,8 +250,9 @@ String accion="insertar";
                                                             <br>
                                                         </div>
                                                         <div class="row text-center">
+                                                            <input type="hidden" name="id_p" value="8">
                                                             <input type="hidden" name="accion" value="<%=accion%>">
-                                                            <input type="hidden" name="id_ex" value="<%=id_ex%>">
+                                                            <input type="hidden" name="id_documento" value="<%=id_documento%>">
                                                             <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolFiscaliaAsesoriaContrato.$valid">
                                                         </div> 
                                                     </form>    
