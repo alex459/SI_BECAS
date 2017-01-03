@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//FALTA 22
 package MODEL;
 
 import DAO.DocumentoDAO;
@@ -44,7 +45,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            //Recuperando informacion
+            //RECUPERAR DATOS
             String resolucion = request.getParameter("resolucion");
             String observacion = request.getParameter("observacion");
             Integer idProgreso = Integer.parseInt(request.getParameter("id_p"));
@@ -56,7 +57,10 @@ public class ResolverAcuerdoCSU extends HttpServlet {
             if (filePart != null) {
                 archivo = filePart.getInputStream();
             }
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
 
+            //DAOS Y POJOS
             Documento documento = new Documento();
             DocumentoDAO documentoDao = new DocumentoDAO();
             TipoDocumento tipoDoc = new TipoDocumento();
@@ -64,37 +68,33 @@ public class ResolverAcuerdoCSU extends HttpServlet {
             ExpedienteDAO expDao = new ExpedienteDAO();
             OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
 
-            //Obteniendo el id del expediente y el tipo de beca
+            //RECUPERAR EXPEDIENTE, DOCUMENTO A RESOLVER  Y TIPO DE BECA
             Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(id_documento);
             String TipoBeca = ofertaDao.ObtenerTipoBeca(idExpediente);
             Expediente expediente = expDao.consultarPorId(idExpediente);
-            Date fechaHoy = new Date();
-            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
-
-            //Obteniendo Documento a resolver
             documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+            //RESOLUCION DEL DOCUMENTO
             documento.setEstadoDocumento(resolucion);
             documento.setObservacion(observacion);
             String obs = documento.getObservacion();
-            if (filePart.getSize() >0){
+            if (filePart.getSize() > 0) {
                 //Actualizar Documento a resolver
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
-            }else{
-                    boolean exitoActDoc= documentoDao.ActualizarEstadoDocumento(documento);
+                documento.setDocumentoDigital(archivo);
+                documentoDao.ActualizarResolver(documento);
+            } else {
+                boolean exitoActDoc = documentoDao.ActualizarEstadoDocumento(documento);
             }
+            //PROCESO SEGUN RESOLUCION 
+            Integer idAcuerdoSolicitado = 0;
+            Documento acuerdoAnterior = new Documento();
             switch (resolucion) {
                 case "APROBADO":
-                    
-                    //Insercion o Actualizacion
                     Documento acuerdoSolicitar = new Documento();
-                    if (accion.equals("insertar")) {
-                        //Al insertar se debe solicitar el nuevo documento y cambiar el progreso
-                        switch (idProgreso) {
-                            case 7:
-                                //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
-                                idProgreso = 8;
-                                estado = "PENDIENTE";
+                    switch (idProgreso) {
+                        case 7:
+                            //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
                                 //SOLICITAR CONTRATO DE BECA
                                 acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
                                 acuerdoSolicitar.setIdExpediente(expediente);
@@ -104,191 +104,193 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                 tipoDoc = tipoDao.consultarPorId(134);
                                 acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
                                 documentoDao.solicitarDocumento(acuerdoSolicitar);
-                                break;
-                            case 15:
-                                //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
-                                idProgreso = 16;
-                                estado = "FINALIZADO";
-                                break;
-                            case 22:
-                                //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
-                                idProgreso = 9;
-                                estado = "EN PROCESO";
-                                //Cambiar fecha fin de beca
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        //YA SE HIZO LA SOLICITUD LA PRIMERA VEZ
-                        switch (idProgreso) {
-                            case 7:
-                                //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
-                                idProgreso = 8;
-                                estado = "PENDIENTE";
-                                //SOLICITAR CONTRATO DE BECA de nuevo
-                                
-                                break;
-                            case 15:
-                                //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
-                                idProgreso = 16;
-                                estado = "FINALIZADO";
-                                break;
-                            case 22:
-                                //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
-                                idProgreso = 9;
-                                estado = "EN PROCESO";
-                                //Cambiar fecha fin de beca
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    //Cambiar progreso y estado
-                    expediente.setIdProgreso(idProgreso);
-                    expediente.setEstadoProgreso(estado);
-                    expDao.actualizarExpediente(expediente);
+                            } else {
+                                //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 134);
+                                if (idAcuerdoSolicitado != 0) {
+                                    //ACTUALIZAR DOCUMENTO SOLICITADO
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                } else {
+                                    //REALIZAR SOLICITUD
+                                    acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                    acuerdoSolicitar.setIdExpediente(expediente);
+                                    acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    tipoDoc = tipoDao.consultarPorId(134);
+                                    acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                    documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                }
+                            }// FIN ACTUALIZAR
+                            idProgreso = 8;
+                            estado = "PENDIENTE";
+                            break;
+                        case 15:
+                            //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                            } else {
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idProgreso = 16;
+                            estado = "FINALIZADO";
+                            break;
+                        case 22:
+                            //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                            } else {
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 case "DENEGADO":
-                    //Actualizar Documento y poner el progreso como denegado
-                    //Insercion o Actualizacion
-                    Integer idAcuerdoSolicitado = 0;
-                    Documento acuerdoSolicitado = new Documento();
-                    if(accion.equals("insertar")){
-                        
-                        switch (idProgreso) {
-                            case 7:
-                                //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
-                                idProgreso = 7;
-                                estado = "DENEGADO";
-                                
-                                break;
-                            case 15:
-                                ////ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
-                                idProgreso = 14;
-                                estado = "REVISION";
-                                //Solicitar correccion del Acuerdo del consejo de becas
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
-                                acuerdoSolicitado = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
-                                acuerdoSolicitado.setEstadoDocumento("REVISION");
-                                acuerdoSolicitado.setObservacion(observacion);
-                                documentoDao.ActualizarEstadoDocumento(acuerdoSolicitado);
-                                break;
-                            case 22:
-                                //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
-                                idProgreso = 22;
-                                estado = "DENEGADO";
-                                break;
-                            default:
-                                break;
-                        }
-                    }else{
-                        //Borrar la solicitud de acuerdos que se habia hecho y cambiar el progreso
-                        switch (idProgreso) {
-                            case 7:
-                                //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
-                                idProgreso = 7;
-                                estado = "DENEGADO";
-                                //BORRAR DOCUMENTO SOLICITADO
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 134);
-                                documentoDao.eliminarDocumento(idAcuerdoSolicitado);
-                                //idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 134);
-                                break;
-                            case 15:
-                                ////ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
-                                idProgreso = 14;
-                                estado = "REVISION";
-                                //Solicitar correccion del Acuerdo del consejo de becas
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
-                                acuerdoSolicitado = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
-                                acuerdoSolicitado.setEstadoDocumento("REVISION");
-                                acuerdoSolicitado.setObservacion(observacion);
-                                documentoDao.ActualizarEstadoDocumento(acuerdoSolicitado);
-                                break;
-                            case 22:
-                                //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
-                                idProgreso = 22;
-                                estado = "DENEGADO";
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    expediente.setIdProgreso(idProgreso);
-                    expediente.setEstadoProgreso(estado);
-                    expDao.actualizarExpediente(expediente);
+                    switch (idProgreso) {
+                        case 7:
+                            //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                            } else {
+                                //ACTUALIZAR
+                                //BORRAR DOCUMENTO SOLICITADO                                
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 134);                                
+                                if (idAcuerdoSolicitado != 0){
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                } else{
+                                    //No se habia solicitado
+                                }
+                            }// FIN ACTUALIZAR
+                            idProgreso = 7;
+                            estado = "DENEGADO";
+                            break;
+                        case 15:
+                            //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                                //obteniendo ACUERDO DE GESTION DE LIBERACION y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            } else {
+                                //ACTUALIZAR
+                                //obteniendo ACUERDO DE GESTION DE LIBERACION y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            }// FIN ACTUALIZAR
+                            idProgreso = 14;
+                            estado = "REVISION";
+                            break;
+                        case 22:
+                            //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                            } else {
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
-                case "CORRECCION":
-                    //Actualizar documento anterior a correccion y cambiar progreso al anterior
-                    Integer idAcuerdoSolicitad = 0;
-                    Documento acuerdoSolicitad = new Documento();
-                    if (accion.equals("insertar")) {
-                        switch (idProgreso) {
-                            case 7:
-                               documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(6);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 15:
-                                //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(14);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 22:
-                                //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(21);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        //Actualizar
-                        //Eliminar solicitudes si se habian hecho y cambiar progreso
-                        switch (idProgreso) {
-                            case 7:
-                               documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(6);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                               //BORRAR DOCUMENTO SOLICITADO
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 134);
-                                documentoDao.eliminarDocumento(idAcuerdoSolicitado);
-                                break;
-                            case 15:
-                                //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                                //Solicitar correccion del Acuerdo del consejo de becas
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
-                                acuerdoSolicitado = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
-                                acuerdoSolicitado.setEstadoDocumento("REVISION");
-                                acuerdoSolicitado.setObservacion(observacion);
-                                documentoDao.ActualizarEstadoDocumento(acuerdoSolicitado);
-                               expediente.setIdProgreso(14);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);                               
-                                break;
-                            case 22:
-                                //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(21);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                               //Reestablecer fecha original de beca
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                case "CORRECCION":                    
+                    String tipoCorreccion = request.getParameter("tipoCorreccion");
+                    switch (idProgreso) {
+                        case 7:
+                            //ACUERDO DE BECA DEL CONSEJO SUPERIOR UNIVERSITARIO
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo ACUERDO DE OTORGAMIENTO DE BECA y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 131);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   
+                                    //No EXISTE
+                                }
+                            } else {
+                                //ACTUALIZAR
+                                //BORRAR DOCUMENTO SOLICITADO                                
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 134);                                
+                                if (idAcuerdoSolicitado != 0){
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                } else{
+                                    //No se habia solicitado
+                                }
+                                //obteniendo ACUERDO DE OTORGAMIENTO DE BECA y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 131);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            }// FIN ACTUALIZAR
+                            idProgreso =5;
+                            estado = "REVISION";
+                            break;
+                        case 15:
+                            //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo ACUERDO DE GESTION DE LIBERACION y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   
+                                    //No EXISTE
+                                }
+                            } else {
+                                //ACTUALIZAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo ACUERDO DE GESTION DE LIBERACION y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   
+                                    //No EXISTE
+                                }
+                            }// FIN ACTUALIZAR
+                            idProgreso = 14;
+                            estado = "REVISION";
+                            break;
+                        case 22:
+                            //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                            } else {
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 default:
+                    Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
                     break;
-            }
+            } //FIN SWITCH RESOLUCION
+
+            //CAMBIAR PROGRESO Y ESTADO
+            expediente.setIdProgreso(idProgreso);
+            expediente.setEstadoProgreso(estado);
+            expDao.actualizarExpediente(expediente);
+            //MOSTRAR MENSAJE DE EXITO
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
         } catch (Exception e) {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");

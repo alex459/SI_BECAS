@@ -44,17 +44,22 @@ public class ResolverDictamen extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            //Recuperando informacion
+            //RECUPERAR DATOS
             String resolucion = request.getParameter("resolucion");
             String observacion = request.getParameter("observacion");
+            Integer idProgreso = Integer.parseInt(request.getParameter("id_p"));
             String accion = request.getParameter("accion");
+            String estado = "";
             Integer id_documento = Integer.parseInt(request.getParameter("id_documento"));
             InputStream archivo = null;
             Part filePart = request.getPart("doc_digital");
             if (filePart != null) {
                 archivo = filePart.getInputStream();
             }
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
 
+            //DAOS Y POJOS
             Documento documento = new Documento();
             DocumentoDAO documentoDao = new DocumentoDAO();
             TipoDocumento tipoDoc = new TipoDocumento();
@@ -62,109 +67,175 @@ public class ResolverDictamen extends HttpServlet {
             ExpedienteDAO expDao = new ExpedienteDAO();
             OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
 
-            //Obteniendo el id del expediente y el tipo de beca
+            //RECUPERAR EXPEDIENTE, DOCUMENTO A RESOLVER  Y TIPO DE BECA
             Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(id_documento);
             String TipoBeca = ofertaDao.ObtenerTipoBeca(idExpediente);
             Expediente expediente = expDao.consultarPorId(idExpediente);
-            Date fechaHoy = new Date();
-            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
-
-            //Obteniendo Documento a resolver
             documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+            //RESOLUCION DEL DOCUMENTO
             documento.setEstadoDocumento(resolucion);
             documento.setObservacion(observacion);
             String obs = documento.getObservacion();
+            if (filePart.getSize() > 0) {
+                //Actualizar Documento a resolver
+                documento.setDocumentoDigital(archivo);
+                documentoDao.ActualizarResolver(documento);
+            } else {
+                boolean exitoActDoc = documentoDao.ActualizarEstadoDocumento(documento);
+            }
+            //PROCESO SEGUN RESOLUCION 
+            Integer idAcuerdoSolicitado = 0;
             switch (resolucion) {
                 case "APROBADO":
-                    //Actualizar Documento y solicitar el nuevo
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
-                    //Insercion o Actualizacion
                     Documento acuerdoSolicitar = new Documento();
-                    if (accion.equals("insertar")) {
-                        //solicitar Acuerdos a Junta Directiva
-                        acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
-                        acuerdoSolicitar.setIdExpediente(expediente);
-                        acuerdoSolicitar.setFechaSolicitud(sqlDate);
-                        acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
-                        acuerdoSolicitar.setObservacion(obs);
-                        if (TipoBeca.equals("INTERNA")) {
-                            tipoDoc = tipoDao.consultarPorId(120);
-                            acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
-                            documentoDao.solicitarDocumento(acuerdoSolicitar);
-                        } else {
-                            tipoDoc = tipoDao.consultarPorId(121);
-                            acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
-                            documentoDao.solicitarDocumento(acuerdoSolicitar);
-                        }
-
-                    } else {
-                        //YA SE HIZO LA SOLICITUD LA PRIMERA VEZ
-                    }
-                    //Cambiar progreso y estado
-                    expediente.setIdProgreso(4);
-                    expediente.setEstadoProgreso("PENDIENTE");
-                    expDao.actualizarExpediente(expediente);
+                    switch (idProgreso) {
+                        case 3:
+                            //DICTAMEN
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                                //solicitar Acuerdos de beca a Junta Directiva
+                                acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                acuerdoSolicitar.setIdExpediente(expediente);
+                                acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                acuerdoSolicitar.setObservacion(obs);
+                                if (TipoBeca.equals("INTERNA")) {
+                                    tipoDoc = tipoDao.consultarPorId(120);
+                                } else {
+                                    tipoDoc = tipoDao.consultarPorId(121);
+                                }
+                                acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                documentoDao.solicitarDocumento(acuerdoSolicitar);
+                            } else {
+                                //ACTUALIZAR
+                                if (TipoBeca.equals("INTERNA")) {
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
+                                } else {
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
+                                }
+                                if (idAcuerdoSolicitado != 0) {
+                                    //ACTUALIZAR DOCUMENTO SOLICITADO
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                } else {
+                                    //REALIZAR SOLICITUD
+                                    //solicitar Acuerdos de beca a Junta Directiva
+                                    acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                    acuerdoSolicitar.setIdExpediente(expediente);
+                                    acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    if (TipoBeca.equals("INTERNA")) {
+                                        tipoDoc = tipoDao.consultarPorId(120);
+                                    } else {
+                                        tipoDoc = tipoDao.consultarPorId(121);
+                                    }
+                                    acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                    documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                }
+                            }// FIN ACTUALIZAR
+                            idProgreso = 4;
+                            estado = "PENDIENTE";
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 case "DENEGADO":
-                    //Actualizar Documento y poner el progreso como denegado
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
-                    //Insercion o Actualizacion
-                    if (accion.equals("insertar")) {
-                        //fin
-                    } else {
-                        //Borrar la solicitud de acuerdos que se habia hecho
-                        //obteniendo el id del acuerdo solicitado
-                        Integer idAcuerdoSolicitado = 0;
-                        Documento acuerdoSolicitado = new Documento();
-                        //eliminando el documento
-                        if (TipoBeca.equals("INTERNA")) {
-                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
-                            documentoDao.eliminarDocumento(idAcuerdoSolicitado);
-                        } else {
-                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
-                            documentoDao.eliminarDocumento(idAcuerdoSolicitado);
-                        }
+                    switch (idProgreso) {
+                        case 3:
+                            //DICTAMEN
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
 
-                    }
-                    //Cambiar progreso y estado
-                    expediente.setIdProgreso(3);
-                    expediente.setEstadoProgreso("DENEGADO");
-                    expDao.actualizarExpediente(expediente);
+                            } else {
+                                //ACTUALIZAR
+                                //BORRAR DOCUMENTO SOLICITADO
+                                if (TipoBeca.equals("INTERNA")) {
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
+                                } else {
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
+                                }
+                                if (idAcuerdoSolicitado != 0) {
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                } else {
+                                    //No se habia solicitado
+                                }
+                            }// FIN ACTUALIZAR
+                            idProgreso = 3;
+                            estado = "DENEGADO";
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 case "CORRECCION":
-                    //Actualizar documento anterior a correccion y cambiar progreso al anterior
-                    if (accion.equals("insertar")) {
-                        //fin
-                    } else {
-                        //Borrar la solicitud de acuerdos que se habia hecho
-                        //obteniendo el id del acuerdo solicitado
-                        Integer idAcuerdoSolicitado = 0;
-                        Documento acuerdoSolicitado = new Documento();
-                        //eliminando el documento
-                        try {
-                            if (TipoBeca.equals("INTERNA")) {
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
-                                documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                    Documento acuerdoAnterior = new Documento();
+                    String tipoCorreccion = request.getParameter("tipoCorreccion");
+                    switch (idProgreso) {
+                        case 3:
+                            //DICTAMEN
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                                if (tipoCorreccion.equals("documento")) {
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo AUTORIZACION INICIAL y cambiando estado a REVISION
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 105);                                   
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                    idProgreso = 2;
+                                    estado = "REVISION";
+                                } else {
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD 
+                                    idProgreso = 3;
+                                    estado = "CORRECCION";
+                                }
                             } else {
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
-                                documentoDao.eliminarDocumento(idAcuerdoSolicitado);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                    documentoDao.ActualizarResolverCorreccion(documento);
-                    expediente.setIdProgreso(2);
-                    expediente.setEstadoProgreso("REVISION");
-                    expDao.actualizarExpediente(expediente);
+                                //ACTUALIZAR
+                                //BORRAR DOCUMENTO SOLICITADO
+                                if (TipoBeca.equals("INTERNA")) {
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 120);
+                                }else{
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 121);
+                                }
+                                if (idAcuerdoSolicitado != 0){
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                } else{
+                                    //No se habia solicitado
+                                }
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo AUTORIZACION INICIAL y cambiando estado a REVISION
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 105);                                   
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                    idProgreso = 2;
+                                    estado = "REVISION";
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD 
+                                    idProgreso =3;
+                                    estado = "CORRECCION";
+                                }
+                            }// FIN ACTUALIZAR
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 default:
+                    Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
                     break;
-            }
+            } //FIN SWITCH RESOLUCION
 
+            //CAMBIAR PROGRESO Y ESTADO
+            expediente.setIdProgreso(idProgreso);
+            expediente.setEstadoProgreso(estado);
+            expDao.actualizarExpediente(expediente);
+            //MOSTRAR MENSAJE DE EXITO
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
         } catch (Exception e) {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");

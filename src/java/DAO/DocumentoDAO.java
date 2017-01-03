@@ -888,7 +888,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (101, 102, 103 )";
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (101, 102, 103,104 )";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();

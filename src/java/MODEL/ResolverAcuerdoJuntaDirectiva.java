@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//FALTA 10 Y 20 (ANO FISCAL Y PRORROGA)
 package MODEL;
 
 import DAO.DocumentoDAO;
@@ -44,10 +45,9 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            //Recuperando informacion
+            //RECUPERAR DATOS
             String resolucion = request.getParameter("resolucion");
             String observacion = request.getParameter("observacion");
-            String prueba = request.getParameter("id_p");
             Integer idProgreso = Integer.parseInt(request.getParameter("id_p"));
             String accion = request.getParameter("accion");
             String estado = "";
@@ -57,7 +57,10 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
             if (filePart != null) {
                 archivo = filePart.getInputStream();
             }
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
 
+            //DAOS Y POJOS
             Documento documento = new Documento();
             DocumentoDAO documentoDao = new DocumentoDAO();
             TipoDocumento tipoDoc = new TipoDocumento();
@@ -65,47 +68,61 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
             ExpedienteDAO expDao = new ExpedienteDAO();
             OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
 
-            //Obteniendo el id del expediente y el tipo de beca
+            //RECUPERAR EXPEDIENTE, DOCUMENTO A RESOLVER  Y TIPO DE BECA
             Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(id_documento);
             String TipoBeca = ofertaDao.ObtenerTipoBeca(idExpediente);
             Expediente expediente = expDao.consultarPorId(idExpediente);
-            Date fechaHoy = new Date();
-            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
-
-            //Obteniendo Documento a resolver
             documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+            //RESOLUCION DEL DOCUMENTO
             documento.setEstadoDocumento(resolucion);
             documento.setObservacion(observacion);
             String obs = documento.getObservacion();
+            if (filePart.getSize() > 0) {
+                //Actualizar Documento a resolver
+                documento.setDocumentoDigital(archivo);
+                documentoDao.ActualizarResolver(documento);
+            } else {
+                boolean exitoActDoc = documentoDao.ActualizarEstadoDocumento(documento);
+            }
+            //PROCESO SEGUN RESOLUCION 
+            Integer idAcuerdoSolicitado = 0;
             switch (resolucion) {
                 case "APROBADO":
-                    //Actualizar Documento a resolver
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
-                    //Insercion o Actualizacion
                     Documento acuerdoSolicitar = new Documento();
-                    if (accion.equals("insertar")) {
-                        //Al insertar se debe solicitar el nuevo documento y cambiar el progreso
-                        switch (idProgreso) {
-                            case 1:
-                                //Solicitud de Permiso inicial, solo cambiar progreso
-                                idProgreso = 2;
-                                estado = "PENDIENTE";
-                                break;
-                            case 4:
-                                //Acuerdos de Permisos de Beca
-                                idProgreso = 5;
-                                estado = "PENDIENTE";
-                                break;
-                            case 10:
-                                //Acuerdo de Año Fiscal
-                                idProgreso = 9;
-                                estado = "EN PROCESO";
-                                break;
-                            case 12:
-                                //Solicitud Inicio de Servicio Contractual, pasar solicitud al consejo de Becas
-                                estado = "EN PROCESO";
-                                //solicitar Acuerdos al Consejo de Becas
+                    switch(idProgreso){
+                        case 1:
+                            //SOLICITUD DE PERMISO INICIAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idProgreso = 2;
+                            estado = "PENDIENTE";
+                            break;
+                        case 4:
+                            //ACUERDOS DE PERMISOS DE BECA
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idProgreso = 5;
+                            estado = "PENDIENTE";
+                            break;
+                        case 10:
+                            //ACUERDO DE AÑO FISCAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            break;
+                        case 12:
+                            //SOLICITUD INICIO DE SERVICIO CONTRACTUAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                                //SOLICITAR ACUERDO AL CONSEJO DE BECAS
                                 acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
                                 acuerdoSolicitar.setIdExpediente(expediente);
                                 acuerdoSolicitar.setFechaSolicitud(sqlDate);
@@ -114,204 +131,265 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                 tipoDoc = tipoDao.consultarPorId(152);
                                 acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
                                 documentoDao.solicitarDocumento(acuerdoSolicitar);
-                                break;
-                            case 13:
-                                //Solicitud de Acuerdo de Gestión de Compromiso Contractual
-                                idProgreso = 14;
-                                estado = "PENDIENTE";
-                                break;
-                            case 20:
-                                //SOLICITUD DE PRORROGA
-                                idProgreso = 21;
-                                estado = "EN PROCESO";
-                                //solicitar Acuerdos al Consejo de Becas
-                                acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
-                                acuerdoSolicitar.setIdExpediente(expediente);
-                                acuerdoSolicitar.setFechaSolicitud(sqlDate);
-                                acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
-                                acuerdoSolicitar.setObservacion(obs);
-                                tipoDoc = tipoDao.consultarPorId(141);
-                                acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
-                                documentoDao.solicitarDocumento(acuerdoSolicitar);
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        //YA SE HIZO LA SOLICITUD LA PRIMERA VEZ
-                    }
-                    //Cambiar progreso y estado
-                    expediente.setIdProgreso(idProgreso);
-                    expediente.setEstadoProgreso(estado);
-                    expDao.actualizarExpediente(expediente);
+                            }else{
+                                //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 152);
+                                if (idAcuerdoSolicitado != 0){
+                                    //ACTUALIZAR DOCUMENTO SOLICITADO
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                }else{
+                                    //REALIZAR SOLICITUD
+                                    acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                    acuerdoSolicitar.setIdExpediente(expediente);
+                                    acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    tipoDoc = tipoDao.consultarPorId(152);
+                                    acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                    documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                }//FIN idAcuerdoSolicitado                                                               
+                            }// FIN ACTUALIZAR
+                            idProgreso = 12;
+                            estado = "EN PROCESO";
+                            break;
+                        case 13:
+                            //SOLICITUD DE ACUERDO DE GESTION DE COMPROMISO CONTRACTUAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idProgreso = 14;
+                            estado = "PENDIENTE";
+                            break;
+                        case 20:
+                            //SOLICITUD DE PRORROGA
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            //idProgreso = 21;
+                            //estado = "EN PROCESO";
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 case "DENEGADO":
-                    //Actualizar Documento y poner el progreso como denegado
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
-                    //Insercion o Actualizacion
-                    Integer idAcuerdoSolicitado = 0;
-                    Documento acuerdoSolicitado = new Documento();
-                    if(accion.equals("insertar")){
-                        estado = "DENEGADO";
-                    }else{
-                        //Borrar la solicitud de acuerdos que se habia hecho y cambiar el progreso
-                        switch (idProgreso) {
-                            case 1:
-                                //Solicitud de Permiso inicial, solo cambiar progreso
-                                idProgreso = 1;
-                                estado = "DENEGADO";
-                                break;
-                            case 4:
-                                //Acuerdos de Permisos de Beca
-                                idProgreso = 4;
-                                estado = "DENEGADO";
-                                break;
-                            case 10:
-                                //Acuerdo de Año Fiscal
-                                idProgreso = 10;
-                                estado = "DENEGADO";
-                                break;
-                            case 12:
-                                //Solicitud Inicio de Servicio Contractual, pasar solicitud al consejo de Becas
-                                idProgreso = 12;
-                                estado = "DENEGADO";
-                                //BORRAR DOCUMENTO SOLICITADO
+                    switch(idProgreso){
+                        case 1:
+                            //SOLICITUD DE PERMISO INICIAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            estado = "DENEGADO";
+                            break;
+                        case 4:
+                            //ACUERDOS DE PERMISOS DE BECA
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            estado = "DENEGADO";
+                            break;
+                        case 10:
+                            //ACUERDO DE AÑO FISCAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            break;
+                        case 12:
+                            //SOLICITUD INICIO DE SERVICIO CONTRACTUAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
                                 idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 152);
-                                documentoDao.eliminarDocumento(idAcuerdoSolicitado);
-                                break;
-                            case 13:
-                                //Solicitud de Acuerdo de Gestión de Compromiso Contractual
-                                idProgreso = 13;
-                                estado = "DENEGADO";
-                                break;
-                            case 20:
-                                //SOLICITUD DE PRORROGA
-                                idProgreso = 20;
-                                estado = "DENEGADO";
-                                //BORRAR DOCUMENTO SOLICITADO
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
-                                documentoDao.eliminarDocumento(idAcuerdoSolicitado);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    expediente.setIdProgreso(idProgreso);
-                    expediente.setEstadoProgreso(estado);
-                    expDao.actualizarExpediente(expediente);
+                                if (idAcuerdoSolicitado != 0){
+                                    //ELIMINAR DOCUMENTO SOLICITADO    
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                }else{
+                                    //NADA
+                                }//FIN idAcuerdoSolicitado
+                            }// FIN ACTUALIZAR
+                            estado = "DENEGADO";
+                            break;
+                        case 13:
+                            //SOLICITUD DE ACUERDO DE GESTION DE COMPROMISO CONTRACTUAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            estado = "PENDIENTE";
+                            break;
+                        case 20:
+                            //SOLICITUD DE PRORROGA
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 case "CORRECCION":
-                    //Actualizar documento anterior a correccion y cambiar progreso al anterior
-                    Integer idAcuerdoSolicitad = 0;
-                    Documento acuerdoSolicitad = new Documento();
-                    if (accion.equals("insertar")) {
-                        switch (idProgreso) {
-                            case 1:
-                               documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(1);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 4:
-                                //Acuerdos de Permisos de Beca
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(3);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 10:
-                                //Acuerdo de Año Fiscal
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(10);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 12:
-                                //Solicitud Inicio de Servicio Contractual, pasar solicitud al consejo de Becas
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(12);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 13:
-                                //Solicitud de Acuerdo de Gestión de Compromiso Contractual
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(13);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 20:
-                                //SOLICITUD DE PRORROGA
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(20);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        //Actualizar
-                        //Eliminar solicitudes si se habian hecho y cambiar progreso
-                        switch (idProgreso) {
-                            case 1:
-                               documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(1);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 4:
-                                //Acuerdos de Permisos de Beca
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(3);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 10:
-                                //Acuerdo de Año Fiscal
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(10);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 12:
-                                //Solicitud Inicio de Servicio Contractual, pasar solicitud al consejo de Becas
-                               //BORRAR DOCUMENTO SOLICITADO
-                                idAcuerdoSolicitad = documentoDao.ExisteDocumento(idExpediente, 152);
-                                documentoDao.eliminarDocumento(idAcuerdoSolicitad);
-                                //Cambiar Progreso
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(12);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 13:
-                                //Solicitud de Acuerdo de Gestión de Compromiso Contractual
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(13);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            case 20:
-                                //SOLICITUD DE PRORROGA
-                                //BORRAR DOCUMENTO SOLICITADO
-                                idAcuerdoSolicitad = documentoDao.ExisteDocumento(idExpediente, 141);
-                                documentoDao.eliminarDocumento(idAcuerdoSolicitad);
-                                //Cambiar Progreso
-                                documentoDao.ActualizarResolverCorreccion(documento);
-                               expediente.setIdProgreso(20);
-                               expediente.setEstadoProgreso("REVISION");
-                               expDao.actualizarExpediente(expediente);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                    Documento acuerdoAnterior = new Documento();
+                    String tipoCorreccion = request.getParameter("tipoCorreccion");
+                    switch(idProgreso){
+                        case 1:
+                            //SOLICITUD DE PERMISO INICIAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //no existe documento anteriror
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD
+                                    idProgreso =1;
+                                    estado = "CORRECCION";
+                                }
+                            }else{
+                                //ACTUALIZAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //no existe documento anterior
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD
+                                    idProgreso =1;
+                                    estado = "CORRECCION";
+                                }
+                            }// FIN ACTUALIZAR
+                            break;
+                        case 4:
+                            //ACUERDOS DE PERMISOS DE BECA
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo dictamen de becas y cambiando estado a REVISION
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 112);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD
+                                    //no existe solicitud
+                                }
+                            }else{
+                                //ACTUALIZAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo dictamen de becas y cambiando estado a REVISION
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 112);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD
+                                    //no existe solicitud
+                                }
+                            }// FIN ACTUALIZAR
+                            idProgreso =3;
+                            estado = "REVISION";
+                            break;
+                        case 10:
+                            //ACUERDO DE AÑO FISCAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            break;
+                        case 12:
+                            //SOLICITUD INICIO DE SERVICIO CONTRACTUAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //no existe
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD                                    
+                                }
+                                idProgreso =9;
+                                estado = "CORRECCION";
+                            }else{
+                                //ACTUALIZAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //no existe
+                                }else{
+                                    //ELIMINAR SOLICITUD DE SIGUIENTE DOCUMENTO REALIZADA
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 152);
+                                    if (idAcuerdoSolicitado != 0){
+                                        //ELIMINAR DOCUMENTO SOLICITADO    
+                                        documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                    }else{
+                                        //NADA
+                                    }//FIN idAcuerdoSolicitado
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD                                    
+                                }
+                                idProgreso =9;
+                                estado = "CORRECCION";
+                            }// FIN ACTUALIZAR
+                            break;
+                        case 13:
+                            //SOLICITUD DE ACUERDO DE GESTION DE COMPROMISO CONTRACTUAL
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //no existe
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD                                    
+                                }
+                                idProgreso =13;
+                                estado = "CORRECCION";
+                            }else{
+                                //ACTUALIZAR
+                                 if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //no existe
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD                                    
+                                }
+                                idProgreso =13;
+                                estado = "CORRECCION";
+                            }// FIN ACTUALIZAR
+                            break;
+                        case 20:
+                            //SOLICITUD DE PRORROGA
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            break;
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 default:
+                    Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
                     break;
-            }
+            } //FIN SWITCH RESOLUCION
+            
+            //CAMBIAR PROGRESO Y ESTADO
+            expediente.setIdProgreso(idProgreso);
+            expediente.setEstadoProgreso(estado);
+            expDao.actualizarExpediente(expediente);
+            //MOSTRAR MENSAJE DE EXITO
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
         } catch (Exception e) {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
