@@ -42,6 +42,7 @@ public class SolicitarAcuerdoDeGestionDeLiberacionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         InputStream docDigital = null;
         String user = request.getParameter("user");
@@ -104,9 +105,9 @@ public class SolicitarAcuerdoDeGestionDeLiberacionServlet extends HttpServlet {
         }
 
         if(solicitarAcuerdo== true)
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el acuerdo de gestion de liberación correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el acuerdo de gestion de liberacion correctamente.");
         else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud de acuerdo de gestion de liberación.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud de acuerdo de gestion de liberacion.");
         
     }
 

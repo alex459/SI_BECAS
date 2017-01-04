@@ -36,7 +36,7 @@
     //obtener el expediente
     ExpedienteDAO expDao = new ExpedienteDAO();
     Expediente expediente = expDao.obtenerExpedienteAbierto(user);
-    String accion = "insertar";
+    /*String accion = "insertar";
     try{
         accion = request.getParameter("ACCION");
         if (accion == null){
@@ -44,7 +44,7 @@
         }
     }catch(Exception e){
         e.printStackTrace();        
-    }
+    }*/
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -109,8 +109,9 @@
                                 <h3 class="text-danger"> Ya ha realizado una Solicitud de acuerdo de gestion de liberación.</h3>
                                 <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                             </div>
-                        <%}else if(accion.equals("insertar")){%>
-                        <form name="solicitarLiberacion" class="form-horizontal" action="SolicitarAcuerdoDeGestionDeLiberacionServlet" method="post" enctype="multipart/form-data">
+                            <!--<%/*}else if(accion.equals("insertar")){*/%>-->
+                        <%}else{%>
+                            <form name="solicitarLiberacion" class="form-horizontal" action="SolicitarAcuerdoDeGestionDeLiberacionServlet" method="post" enctype="multipart/form-data">
                                 <div class="col-md-8 col-md-offset-2 row">
                                     <div class="row">
                                         <div class="col-md-5">
@@ -129,8 +130,8 @@
                                     </div>
                                 </div>
                             </form>
-                        <%}else{%>
-                        <%--FORMULARIO ACTUALIZAR--%>
+                            <!--<%/*}else{*/%>-->
+                            <%--FORMULARIO ACTUALIZAR--%>
                         <%}%>
                     <%}else{%>
                         <div class="text-center">
