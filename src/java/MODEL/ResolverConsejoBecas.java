@@ -127,7 +127,7 @@ public class ResolverConsejoBecas extends HttpServlet {
                                     tipoDoc = tipoDao.consultarPorId(133);
                                 }
                                 acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
-                                documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                documentoDao.solicitarDocumento(acuerdoSolicitar);                               
                             } else {
                                 //ACTUALIZAR
                                 if (TipoBeca.equals("INTERNA")) {
