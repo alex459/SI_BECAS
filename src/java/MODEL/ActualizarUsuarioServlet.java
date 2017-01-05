@@ -85,11 +85,9 @@ public class ActualizarUsuarioServlet extends HttpServlet {
             }else{
                 validacion3 = true;
             }
-        }else{
-            if(fac != 13){
+        }else{            
                 validacion3 = true;
-                detalleUsuario.setIdFacultad(13);
-            }
+                detalleUsuario.setIdFacultad(13);            
         }
         
         

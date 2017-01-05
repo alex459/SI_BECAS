@@ -245,7 +245,7 @@
                     //realizando la consulta
                     conexionbd = new ConexionBD();
                     rs = conexionbd.consultaSql(consultaSql);
-
+                    Utilidades.nuevaBitacora(3, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , request.getSession().getAttribute("user").toString(), consultaSql);
                     //con el rs se llenara la tabla de resultados
                 } catch (Exception ex) {
 
@@ -290,8 +290,8 @@
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");
-                                    }
-                                    Utilidades.nuevaBitacora(3, request.getSession().getAttribute("user").toString(), "Se consulto los usuarios: " + usuarios_consultados);
+                                    }                                    
+                                    
                                 } catch (Exception ex) {
                                     System.out.println("error: " + ex);
                                 }
