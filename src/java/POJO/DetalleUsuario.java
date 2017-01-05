@@ -23,6 +23,7 @@ public class DetalleUsuario{
     private String telefonoOficina; 
     private String direccion;    
     private String genero; 
+    private String Email;
 
     /**
      * @return the idDetalleUsuario
@@ -261,22 +262,49 @@ public class DetalleUsuario{
     public void setTelefonoOficina(String telefonoOficina) {
         this.telefonoOficina = telefonoOficina;
     }
-    
+
+    /**
+     * @return the direccion
+     */
     public String getDireccion() {
         return direccion;
     }
 
+    /**
+     * @param direccion the direccion to set
+     */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
+    /**
+     * @return the genero
+     */
     public String getGenero() {
         return genero;
     }
 
+    /**
+     * @param genero the genero to set
+     */
     public void setGenero(String genero) {
         this.genero = genero;
     }
-       
+
+    /**
+     * @return the Email
+     */
+    public String getEmail() {
+        return Email;
+    }
+
+    /**
+     * @param Email the Email to set
+     */
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
+    
 
 }

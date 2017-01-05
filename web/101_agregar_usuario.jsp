@@ -28,8 +28,8 @@
     tipo_usuarios_permitidos.add("8");
     tipo_usuarios_permitidos.add("9");
     boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
-    if (!autorizacion || user==null) {
-        response.sendRedirect("logout.jsp");        
+    if (!autorizacion || user == null) {
+        response.sendRedirect("logout.jsp");
     }
 %>
 <!-- fin de proceso de seguridad de login -->
@@ -99,14 +99,20 @@
                             <label for="textinput">Codigo de usuario : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="CARNET" name="CARNET" type="text" placeholder="ingrese un codigo para el usuario" class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
-                            <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CARNET.$error.required">El codigo es requerido.</span>
+                            <input id="CARNET" name="CARNET" type="text" placeholder="ingrese un codigo para el usuario." class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
+                            <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CARNET.$error.required">El usuario es requerido.</span>
                             <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.minlength">Minimo 7 caracteres.</span>
                             <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
                             <small id="help1"></small>
                         </div>
-                        <div class="col-md-3 text-right">
-
+                        <div class="col-md-3 text-right">                                   
+                            <label for="textinput">Email universitario : </label>                                
+                        </div>
+                        <div class="col-md-3">
+                            <input id="EMAIL" name="EMAIL" type="email"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
+                            <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.EMAIL.$error.required">El correo electronico requerido.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.EMAIL.$error.minlength">Minimo 3 caracteres</span>
+                            <span class="text-danger" ng-show="agregarUsuario.EMAIL.$error.email">Solo permite formato: ejemplo usuario@ues.com).</span>
                         </div>                        
                     </div> 
 
