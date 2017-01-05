@@ -15,6 +15,8 @@ import POJO.Documento;
 import POJO.Expediente;
 import POJO.OfertaBeca;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -63,16 +65,22 @@ public class ResolverInicioBeca extends HttpServlet {
                 beca.setIdBeca(becaDao.getSiguienteId());
                 beca.setFechaInicio(oferta.getFechaInicio());
                 ///////////SUMARLE DURACION A FECHA INICIO
-                beca.setFechaFin(oferta.getFechaInicio());
+                Date fecha = oferta.getFechaInicio();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(fecha);
+                cal.add(Calendar.MONTH, oferta.getDuracion());
+                Date nuevaFecha = cal.getTime();
+                java.sql.Date fechaFin = new java.sql.Date(nuevaFecha.getTime());
+                beca.setFechaFin(fechaFin);
                 beca.setIdExpediente(idExpediente);
                 boolean exitoBeca = becaDao.ingresar(beca);
                 //CAMBIAR EL ESTADO A BECARIO
                 Integer IdUsuario = becaDao.consultarIdUsuarioPorIdExpediente(idExpediente);
                 usuarioDao.actualizarRolPorIdUsuario(IdUsuario, 2);
                 //CAMBIAR PROGRESO Y ESTADO DE EXPEDIENTE
-                    expediente.setIdProgreso(9);
-                    expediente.setEstadoProgreso("PENDIENTE");
-                    expDao.actualizarExpediente(expediente);
+                expediente.setIdProgreso(9);
+                expediente.setEstadoProgreso("PENDIENTE");
+                expDao.actualizarExpediente(expediente);
             } else {
                 //Solicitar Correccion
                 //CAMBIAR ESTADO DE DOCUMENTO
