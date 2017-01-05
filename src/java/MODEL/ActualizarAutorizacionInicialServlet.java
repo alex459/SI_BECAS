@@ -5,22 +5,14 @@
  */
 package MODEL;
 
-import DAO.OfertaBecaDAO;
-import DAO.InstitucionDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.TipoDocumentoDAO;
-import POJO.Institucion;
-import POJO.OfertaBeca;
 import POJO.Documento;
 import POJO.Expediente;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -41,64 +33,201 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        response.setContentType("text/html;charset=UTF-8");
-        
-        //Recuperando datos del formulario
-        InputStream cartaSolicitud = null;
-        int idexp = Integer.parseInt(request.getParameter("idexp"));
-        Integer idDoc = Integer.parseInt(request.getParameter("idDoc"));
-        Integer nAnexos = Integer.parseInt(request.getParameter("nAnexos"));
-        Part filePart = request.getPart("cartaSolicitud");
-        if (filePart != null) {
-            cartaSolicitud = filePart.getInputStream();
-        }
-        
-        ExpedienteDAO expDao = new ExpedienteDAO();
-        Expediente expediente = new Expediente();
-        
-        expediente.setIdExpediente(idexp);
-        expediente.setEstadoExpediente("ABIERTO");
-        expediente.setIdProgreso(2);
-        expediente.setEstadoProgreso("EN PROCESO");
-        expDao.actualizarExpediente(expediente);
-        
-        //boolean expedienteCreado = expDao.ingresar(expediente);
-        boolean ingresarDocumento = false;
-        
-            //Ingresar Carta de Solicitud
-            Documento documento = new Documento();
-            DocumentoDAO documentoDao = new DocumentoDAO();
-            TipoDocumento tipo = new TipoDocumento();
-        
-            documento.setIdDocumento(idDoc);
-            documento.setDocumentoDigital(cartaSolicitud);
-            ingresarDocumento = documentoDao.ActualizarDocDig(documento);
-            
-            //Agregar a bitacora accion
-            //Utilidades.nuevaBitacora(1, request.getSession().getAttribute("user").toString(), "Error al ingresar solicitud de Permiso Inicial");
-        
-        
-        
-        if(ingresarDocumento== true){
-            
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se modifico el documento de autorizacion Inicial correctamente.");
-        }
-        else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo modifico el documento de la solicitud del Acuerdo de autorizacion Inicial.");
-    
-    }
-
-    public Date StringAFecha(String Sfecha) {
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
-        Date fecha = null;
         try {
-            fecha = formatoDelTexto.parse(Sfecha);           
-        } catch (ParseException ex) {
+            //Recuperando datos del formulario
+            int idExpediente = Integer.parseInt(request.getParameter("idExpediente"));
+            String accCarta = request.getParameter("accCarta");
+            String accCartaEscuela = request.getParameter("accCartaEscuela");
+            String accCartaInstitucion = request.getParameter("accCartaInstitucion");
 
-            ex.printStackTrace();
+            int id_documento = 0;
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
+            int idDoc = 0;
+            String obs = "";
+            int tip=0;
 
+            InputStream archivo = null;
+            Part filePart = null;
+
+            DocumentoDAO documentoDao = new DocumentoDAO();
+            Documento documento = new Documento();
+            TipoDocumento tipo = new TipoDocumento();
+            TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
+            ExpedienteDAO expDao = new ExpedienteDAO();
+            Expediente expediente = new Expediente();
+            
+            expediente = expDao.consultarPorId(idExpediente);
+
+            //Carta de Solicitud del candidato
+            switch (accCarta) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 104);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("cartaSolicitud");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 104);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "CARTA DE SOLICITUD DEL expediente " + idExpediente;
+                        tip= 104;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            
+            //Carta de Solicitud de la Escuela
+            switch (accCartaEscuela) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 101);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("cartaEscuela");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 101);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
+                        tip= 101;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            
+            //Carta de Solicitud de la Institucion que oferta la beca
+            switch (accCartaInstitucion) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 102);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("CartaInstitucion");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 102);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
+                        tip= 102;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            if(accCarta.equals("ninguna") && accCartaEscuela.equals("ninguna") && accCartaInstitucion.equals("ninguna")){
+                //no se realizo ninguna accion, Conservar estado y progreso 
+            } else{
+                //CAMBIAR DOCUMENTO,PROGRESO Y ESTADO A PENDIENTE
+                id_documento = documentoDao.ExisteDocumento(idExpediente, 105);
+                documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                documento.setEstadoDocumento("PENDIENTE");
+                documentoDao.ActualizarEstadoDocumento(documento);
+                
+                expediente.setIdProgreso(2);
+                expediente.setEstadoProgreso("EN PROCESO");
+                expDao.actualizarExpediente(expediente);
+            }
+            
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se Actualizo correctamente la Solicitud.");
+
+        } catch (Exception e) {
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo Actualizar la Solicitud.");
         }
-        System.out.println("fechanice!");
-        return fecha;
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

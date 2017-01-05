@@ -82,7 +82,7 @@
 <body ng-app = "solicitudApp" ng-controller="SolicitarDictamenCtrl">
 
     <div class="container-fluid">        
-            <H3 class="text-center" style="color:#E42217;">Solicitud de dictamen de propuesta</H3>
+            <H3 class="text-center" style="color:#E42217;">Solicitud de Dictamen de Propuesta</H3>
         <fieldset class="custom-border">
                 <legend class="custom-border">Solicitud de dictamen de propuesta</legend>
         <div class="row">

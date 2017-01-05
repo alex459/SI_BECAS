@@ -3,61 +3,27 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="POJO.Documento"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="DAO.ConexionBD"%>
+<%@page import="DAO.DocumentoDAO"%>
 <%@page import="POJO.Expediente"%>
 <%@page import="DAO.ExpedienteDAO"%>
 <%@page import="DAO.DetalleUsuarioDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String rol=(String)actual.getAttribute("rol");
-    String user=(String)actual.getAttribute("user");
-    Integer idFacultad = 0;
-    boolean expedienteAbierto = false;
-    Integer idOferta =0;
-    //Obteniendo su facultad
-    try{
-        DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
-        idFacultad = DetUsDao.obtenerFacultad(user);
-        // Comprobando si tiene un proceso de beca abierto
-        ExpedienteDAO expDao = new ExpedienteDAO();
-        expedienteAbierto = expDao.expedienteAbierto(user);
-    } catch (Exception e){
-        e.printStackTrace();
-    }
-     if(user==null){
-     response.sendRedirect("login.jsp");
-        return;
-     }    
-    int idexp = Integer.parseInt(request.getParameter("idexp").toString()); 
-                Integer id_ofertaa_beca;
-                ConexionBD conexionbd = null;
-                ResultSet rs = null;
-                Documento temp3 = new Documento();
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    //formando la consulta
-                    String consultaSql = "";
-                    consultaSql = "SELECT ID_DOCUMENTO FROM DOCUMENTO WHERE ID_EXPEDIENTE="+idexp+" AND ID_TIPO_DOCUMENTO=100;";
-                    System.out.println(consultaSql);
-                    //realizando la consulta
-                    conexionbd = new ConexionBD();
-                    rs = conexionbd.consultaSql(consultaSql);
-                    if (rs.next()) {
-                        temp3 = new Documento();
-                        temp3.setIdDocumento(rs.getInt("ID_DOCUMENTO"));
-                    }
-                    //con el rs se llenara la tabla de resultados
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                }
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+
+    DocumentoDAO documentoDao = new DocumentoDAO();
+    int idDocumento = Integer.parseInt(request.getParameter("idDocumento"));
+    int idexp = documentoDao.ObtenerIdExpedientePorIdDocumento(idDocumento);
+    ArrayList<Documento> lista = documentoDao.documentosPermisoInicial(idexp);
+    int numero = 1;
+
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -68,6 +34,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Sistema informático para la administración de becas de postgrado</title>
+
+        <meta name="description" content="Source code generated using layoutit.com">
+        <meta name="author" content="LayoutIt!">
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
@@ -97,70 +66,173 @@
     <%-- todo el menu esta contenido en la siguiente linea
          el menu puede ser cambiado en la pagina menu.jsp --%>
     <jsp:include page="menu_corto.jsp"></jsp:include>
-</head>
-<body ng-app = "solicitudApp" ng-controller="SolicitarPermisoCtrl">
+    </head>
+    <body ng-app = "solicitudApp" ng-controller="SolicitarPermisoCtrl">
 
-    <div class="container-fluid">        
-                <H3 class="text-center" style="color:#E42217;">Solicitud de permiso inicial</H3>
-        <fieldset class="custom-border">
-                <legend class="custom-border">Actualizar documento de solicitud de permiso inicial </legend>
-        <div class="row">
-            <div class="col-md-12">
-            <fieldset class="custom-border">
-                <legend class="custom-border">Adjuntar documentación necesaria</legend>
-                <form name="solicitudPermisoInicial" action="ActualizarPermisoInicialServlet" method="post" enctype="multipart/form-data" novalidate>
-                <div class="row"> 
-                    <div class="col-md-2"></div>
-                    <div class="col-md-3">
-                        <label> Carta de Solicitud de permiso inicial:</label>
-                    </div>
-                    <div class="col-md-5">
-                        <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
-                        <span class="text-danger" ng-show="solicitudPermisoInicial.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
-                    </div>
-                    <div class="col-md-2"></div>                                    
-                </div>                    
-                    <div class="row">
-                        <div class="row text-right">
+        <div class="container-fluid">        
+            <H3 class="text-center" style="color:#E42217;">Editar Solicitud de permiso inicial</H3>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Solicitud de permiso inicial</legend>
+                        <div class="row">
+                            <div class="col-md-1"></div>
                             <div class="col-md-10">
-                                <a ng-click="agregar()" ng-show="verAgregar">Agregar Otro Documento</a><br>
-                            </div>
-                            <div class="col-md-2"></div>                                                       
+                                <fieldset class="custom-border">
+                                    <legend class="custom-border">Documentos Adjuntados</legend>
+                                    <table class="table text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Documento</th>
+                                                <th>Documento Digital</th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% for (int i = 0; i < lista.size(); i++) {%>
+                                        <tr>
+                                            <td><%=numero%></td>
+                                            <td><%=lista.get(i).getIdTipoDocumento().getTipoDocumento()%></td>
+                                            <td>
+                                                <form action="verDocumentoConsejo" method="post" target="_blank">
+                                                    <input type = "hidden" name="id" value="<%= lista.get(i).getIdDocumento()%>">
+                                                    <input type="submit" class="btn btn-success" value="Ver Documento ">
+                                                </form>
+                                            </td>                                            
+                                        </tr>
+                                        <%numero=numero+1;}%>
+                                    </tbody>
+                                </table>
+                            </fieldset>
                         </div>
-                            <div class="row text-left" ng-repeat="x in anexos">
-                                <div class="col-md-1"></div>  
-                                <div class="col-md-2">
-                                    <label>Tipo de Documento: </label><br>
-                                </div>
-                                <div class="col-md-4">
-                                        <select  name="{{x.tipo}}" class="form-control" ng-required="true">
-                                            <option ng-repeat="option in tipoAnexo" value="{{option.id}}">{{option.tipoDocumento}}</option>
-                                        </select>
-                                        <span class="text-danger" ng-show="!solicitudPermisoInicial.$pristine && solicitudPermisoInicial.{{x.tipo}}.$error.required">Debe de Seleccionar un Tipo de Documento.</span><br>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="file" name="{{x.nombre}}" accept="application/pdf" ng-model="docAnexo" valid-file required>
-                                        <span class="text-danger" ng-show="solicitudPermisoInicial.{{x.nombre}}.$invalid">Debe ingresar un documento en formato PDF.</span><br>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <a class="btn btn-danger" ng-click="eliminar(item)">Eliminar</a><br>
-                                    </div>
-                                <div class="col-md-1"></div>  
-                                </div>
-                        <div class="col-md-2"></div>
-                         
+                        <div class="col-md-1"></div>
                     </div>
-                    <div class="row text-center">
-                        <br>
-                        <input type="hidden" name="idexp" value="<%=idexp%>">
-                        <input type="hidden" name="idDoc" value="<%=temp3.getIdDocumento() %>">
-                        <input type="hidden" name="nAnexos" value="{{Nanexos-1}}">
-                        <input type="submit" name="guardar" value="Enviar" class="btn btn-success" ng-disabled="!solicitudPermisoInicial.$valid">
-                    </div> 
-                </form>
-            </fieldset>      
-            </div> 
-        </div></fieldset>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10 text-center">
+                            <label>Seleccione la accion que desea realizar</label>
+                        </div>
+                        <div class="col-md-1"></div>                        
+                    </div>
+                    <form name="solicitudPermisoInicial" action="ActualizarPermisoInicialServlet" method="post" enctype="multipart/form-data" novalidate>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-static"> Carta de Solicitud de permiso inicial:</label>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCarta"  value="ninguna"  ng-model ="accCarta" ng-required="true" ng-click="NadaCarta()">
+                                                Ninguna
+                                            </label>
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCarta"  value="actualizar"  ng-model ="accCarta" ng-required="true" ng-click="ActualizarCarta()">
+                                                Actualizar
+                                            </label> 
+                                            
+                                        </div> 
+                                    </div>
+                                    <div class="row" ng-show="mostrarCarta">
+                                        <div class="col-md-12">
+                                            <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file ng-required="mostrarCarta">
+                                            <span class="text-danger" ng-show="solicitudPermisoInicial.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-static"> Carta de solicitud de la Escuela o Departamento:</label>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCartaEscuela"  value="ninguna"  ng-model ="accCartaEscuela" ng-required="true" ng-click="NadaCartaEscuela()">
+                                                Ninguna
+                                            </label>
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCartaEscuela"  value="actualizar"  ng-model ="accCartaEscuela" ng-required="true" ng-click="ActualizarCartaEscuela()">
+                                                Actualizar
+                                            </label> 
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCartaEscuela"  value="eliminar"  ng-model ="accCartaEscuela" ng-required="true" ng-click="EliminarCartaEscuela()">
+                                                Eliminar
+                                            </label> 
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" ng-show="mostrarCartaEscuela">
+                                            <input type="file" class="" name="cartaEscuela" accept="application/pdf" ng-model="cartaEscuela" valid-file ng-required="mostrarCartaEscuela">
+                                            <span class="text-danger" ng-show="solicitudPermisoInicial.cartaEscuela.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-static"> Carta de solicitud de la Institucion que oferta la beca:</label>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCartaInstitucion"  value="ninguna"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="NadaCartaInstitucion()">
+                                                Ninguna
+                                            </label>
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCartaInstitucion"  value="actualizar"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="ActualizarCartaInstitucion()">
+                                                Actualizar
+                                            </label> 
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCartaInstitucion"  value="eliminar"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="EliminarCartaInstitucion()">
+                                                Eliminar
+                                            </label> 
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" ng-show="mostrarCartaInstitucion">
+                                            <input type="file" class="" name="CartaInstitucion" accept="application/pdf" ng-model="CartaInstitucion" valid-file ng-required="mostrarCartaInstitucion">
+                                            <span class="text-danger" ng-show="solicitudPermisoInicial.CartaInstitucion.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                                                                        
+                        <div class="row text-center">
+                            <input type="hidden" name="idExpediente" value="<%=idexp%>">
+                            <input type="submit" name="guardar" value="Guardar" class="btn btn-success" ng-disabled="!solicitudPermisoInicial.$valid">                            
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
@@ -192,3 +264,4 @@
     <script src="js/solicitudPermisoInicial.js"></script>
 </body>
 </html>
+

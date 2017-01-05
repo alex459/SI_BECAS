@@ -205,7 +205,7 @@
             if(apellido2!=null) {} else {apellido2="";};
             if(carnet!=null) {} else {carnet="";};
             if(fecha1!=null) {} else {fecha1="";};
-            consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO, E.ID_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO='"+pendiente+"' AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'   ;";
+            consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO, E.ID_EXPEDIENTE, D.ESTADO_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('"+pendiente+"','REVISION') AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'   ;";
             
             
                    
@@ -259,7 +259,11 @@
                                         out.write("<td>" + rs.getString(8) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='408_Comision_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(9) + "' ><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(10) + "' ><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                        if(rs.getString(11).equals("PENDIENTE")){
+                                            out.write("<form style='display:inline;' action='408_Comision_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(9) + "'><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(10) + "' ><input type='hidden' name='ACCION' value='insertar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                        }else{
+                                            out.write("<form style='display:inline;' action='408_Comision_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(9) + "'><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(10) + "' ><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                        }                                         
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");

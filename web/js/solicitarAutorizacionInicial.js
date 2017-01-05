@@ -41,7 +41,51 @@ solicitudApp.controller('SolicitarAutorizacionCtrl',['$scope', function ($scope)
         }
     };
     
-    
+    $scope.accCarta = "ninguna";
+    $scope.accCartaEscuela = "ninguna";
+    $scope.accCartaInstitucion = "ninguna";
+    $scope.mostrarCarta = false;
+    $scope.mostrarCartaEscuela = false;
+    $scope.mostrarCartaInstitucion = false;
+    $scope.EliminarCarta = function (){
+        $scope.accCarta = $scope.accCarta="eliminar";        
+        $scope.mostrarCarta = $scope.mostrarCarta = false;
+    };
+    $scope.EliminarCartaEscuela = function (){
+        $scope.accCartaEscuela = $scope.accCartaEscuela="eliminar";
+        $scope.mostrarCartaEscuela = $scope.mostrarCartaEscuela = false;
+    };
+    $scope.EliminarCartaInstitucion = function (){
+        $scope.accCartaInstitucion = $scope.accCartaInstitucion="eliminar";
+        $scope.mostrarCartaInstitucion = $scope.mostrarCartaInstitucion = false;
+    };
+    $scope.NadaCarta = function (){
+        $scope.accCarta = $scope.accCarta="ninguna";        
+        $scope.mostrarCarta = $scope.mostrarCarta = false;
+    };
+    $scope.NadaCartaEscuela = function (){
+        $scope.accCartaEscuela = $scope.accCartaEscuela="ninguna";
+        $scope.mostrarCartaEscuela = $scope.mostrarCartaEscuela = false;
+    };
+    $scope.NadaCartaInstitucion = function (){
+        $scope.accCartaInstitucion = $scope.accCartaInstitucion="ninguna";
+        $scope.mostrarCartaInstitucion = $scope.mostrarCartaInstitucion = false;
+    };
+    $scope.ActualizarCarta = function (){
+        $scope.accCarta = $scope.accCarta="actualizar";
+        $scope.mostrarCarta = $scope.mostrarCarta = false;
+        $scope.mostrarCarta = $scope.mostrarCarta = !$scope.mostrarCarta;
+    };
+    $scope.ActualizarCartaEscuela = function (){
+        $scope.accCartaEscuela = $scope.accCartaEscuela="actualizar";
+        $scope.mostrarCartaEscuela = $scope.mostrarCartaEscuela = false;
+        $scope.mostrarCartaEscuela = $scope.mostrarCartaEscuela = !$scope.mostrarCartaEscuela;
+    };
+    $scope.ActualizarCartaInstitucion = function (){
+        $scope.accCartaInstitucion = $scope.accCartaInstitucion="actualizar";
+        $scope.mostrarCartaInstitucion = $scope.mostrarCartaInstitucion = false;
+        $scope.mostrarCartaInstitucion = $scope.mostrarCartaInstitucion = !$scope.mostrarCartaInstitucion;
+    };
   }]);
   
   solicitudApp.directive('validFile',function(){

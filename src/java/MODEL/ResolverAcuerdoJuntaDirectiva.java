@@ -94,18 +94,38 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                             //SOLICITUD DE PERMISO INICIAL
                             if (accion.equals("insertar")){
                                 //INSERTAR
+                                estado = "PENDIENTE";
                             }else{
                                 //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 105);
+                                if(idAcuerdoSolicitado !=0){
+                                    estado = "EN PROCESO";
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                } else{                                
+                                estado = "PENDIENTE";
+                                }
                             }// FIN ACTUALIZAR
                             idProgreso = 2;
-                            estado = "PENDIENTE";
+                            
                             break;
                         case 4:
                             //ACUERDOS DE PERMISOS DE BECA
                             if (accion.equals("insertar")){
                                 //INSERTAR
+                                estado = "PENDIENTE";
                             }else{
-                                //ACTUALIZAR
+                                //ACTUALIZAR                                
+                                   idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 131);                                                              
+                                if(idAcuerdoSolicitado !=0){
+                                    estado = "EN PROCESO";
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                } else{                                
+                                estado = "PENDIENTE";
+                                }
                             }// FIN ACTUALIZAR
                             idProgreso = 5;
                             estado = "PENDIENTE";
@@ -187,6 +207,11 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                 //INSERTAR
                             }else{
                                 //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 105);
+                                if(idAcuerdoSolicitado !=0){                                    
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                }                                
+                                
                             }// FIN ACTUALIZAR
                             estado = "DENEGADO";
                             break;
@@ -196,6 +221,10 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                 //INSERTAR
                             }else{
                                 //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 131);                                 
+                                if(idAcuerdoSolicitado !=0){                                    
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                } 
                             }// FIN ACTUALIZAR
                             estado = "DENEGADO";
                             break;
