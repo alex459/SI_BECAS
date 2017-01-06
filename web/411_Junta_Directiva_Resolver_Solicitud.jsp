@@ -297,7 +297,7 @@
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                             </div> 
-                                            <%if (id_p == 1) {%>
+                                            <%if (id_p == 1 || id_p ==12 || id_p ==13) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
                                             <%} else  if (id_p == 4) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
@@ -402,7 +402,7 @@
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                             </div> 
-                                            <%if (id_p == 1) {%>
+                                            <%if (id_p == 1 || id_p ==12 || id_p ==13) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
                                             <%} else  if (id_p == 4) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">

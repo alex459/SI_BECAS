@@ -6,12 +6,6 @@
 
 <%@page import="POJO.Expediente"%>
 <%@page import="DAO.ExpedienteDAO"%>
-<%-- 
-    Document   : 801_agregar_documeto_finalizaciom_beca
-    Created on : 12-04-2016, 07:03:26 AM
-    Author     : Manuel Miranda
---%>
-
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -92,7 +86,7 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2 class="text-center" style="color:#cf2a27">
-                    Solicitar inicio de servicio contractual
+                    Solicitar Inicio de Servicio Contractual
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  

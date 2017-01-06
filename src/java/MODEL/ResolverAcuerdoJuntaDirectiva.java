@@ -179,11 +179,21 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                             //SOLICITUD DE ACUERDO DE GESTION DE COMPROMISO CONTRACTUAL
                             if (accion.equals("insertar")){
                                 //INSERTAR
+                                estado = "PENDIENTE";
                             }else{
                                 //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);                                                              
+                                if(idAcuerdoSolicitado !=0){
+                                    estado = "EN PROCESO";
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                } else{                                
+                                estado = "PENDIENTE";
+                                }
                             }// FIN ACTUALIZAR
                             idProgreso = 14;
-                            estado = "PENDIENTE";
+                            
                             break;
                         case 20:
                             //SOLICITUD DE PRORROGA

@@ -101,7 +101,7 @@
                             </thead>
                             <tbody class="text-center">                                
                                 <%if (lista.isEmpty()){
-                                    out.write("<tr><h2>No ha realizado ninguna solicitud</h2></tr>");
+                                    out.write("<tr><h3 class='text-primary'>No ha realizado ninguna solicitud</h3></tr>");
                                 }else{
                                     Documento acuerdo = new Documento();
                                     int numero = 1;
@@ -112,74 +112,70 @@
                                     String url="";
                                     for(int i= 0; i<lista.size(); i++){
                                         try{
-                                        idDoc=lista.get(i).getIdTipoDocumento().getIdTipoDocumento();
+                                        idDoc=lista.get(i).getIdTipoDocumento().getIdTipoDocumento();                                        
                                         switch(idDoc){
-                                            case 135:
+                                            case 136:
                                                 tipo="ACUERDO DE AÑO FISCAL";
                                                 unidad="JUNTA DIRECTIVA";
-                                                url="401_Becario_Sol_Acuerdo_Anio_Fiscal.jsp";
-                                                idAcuerdo=documentoDAO.ExisteDocumento(idExpediente, 136);
-                                                acuerdo = documentoDAO.obtenerInformacionDocumentoPorId(idAcuerdo);
+                                                url="401_Becario_Sol_Acuerdo_Anio_Fiscal.jsp";                                             
                                                 break;
-                                            case 137:
+                                            case 140:
                                                 tipo="ACUERDO DE PRORROGA DE BECA";
                                                 unidad="JUNTA DIRECTIVA";
-                                                url="402_Becario_Sol_Prorroga.jsp";
-                                                idAcuerdo=documentoDAO.ExisteDocumento(idExpediente, 140);
-                                                acuerdo = documentoDAO.obtenerInformacionDocumentoPorId(idAcuerdo);
+                                                url="402_Becario_Sol_Prorroga.jsp";                                                
                                                 break;
-                                            case 149:
+                                            case 151:
                                                 tipo="INICIO DE SERVICIO CONTRACTUAL";
                                                 unidad="JUNTA DIRECTIVA";
-                                                url="802_solicitar_inicio_de_servicio_contractual.jsp";
-                                                idAcuerdo=documentoDAO.ExisteDocumento(idExpediente, 151);
-                                                acuerdo = documentoDAO.obtenerInformacionDocumentoPorId(idAcuerdo);
+                                                url="416_Modificar_Solicitud_de_Servicio_Contractual.jsp";                                                
                                                 break;
-                                            case 153:
+                                            case 155:
                                                 tipo="ACUERDO DE GESTION DE COMPROMISO CONTRACTUAL";
                                                 unidad="JUNTA DIRECTIVA";
-                                                url="803_solicitar_acuerdo_de_gestion_de_compromiso_contractual.jsp";
-                                                idAcuerdo=documentoDAO.ExisteDocumento(idExpediente, 155);
-                                                acuerdo = documentoDAO.obtenerInformacionDocumentoPorId(idAcuerdo);
+                                                url="417_Modificar_Acuerdo_Gestion_Compromiso_Contractual.jsp";                                                
                                                 break;
-                                            case 156:
+                                            case 157:
                                                 tipo="ACUERDO DE GESTION DE LIBERACION";
                                                 unidad="CONSEJO DE BECAS";
-                                                url="804_solicitar_acuerdo_de_gestion_de_liberacion.jsp";
-                                                idAcuerdo=documentoDAO.ExisteDocumento(idExpediente, 157);
-                                                acuerdo = documentoDAO.obtenerInformacionDocumentoPorId(idAcuerdo);
+                                                url="418_Modificar_Gestion_Liberacion.jsp";                                                
                                                 break;                                          
                                         }%>
                                         <tr>
                                             <td><%=numero%></td>
                                             <td><%=tipo%></td>
                                             <td><%=unidad%></td>
-                                            <td><%=acuerdo.getEstadoDocumento()%></td>
+                                            <td><%=lista.get(i).getEstadoDocumento()%></td>
                                             <td>
-                                                <%if(acuerdo.getEstadoDocumento().equals("APROBADO") || acuerdo.getEstadoDocumento().equals("DENEGADO")){%>
+                                                <%if (lista.get(i).getEstadoDocumento().equals("APROBADO") || lista.get(i).getEstadoDocumento().equals("DENEGADO") || lista.get(i).getEstadoDocumento().equals("REVISION")){%>                                                
                                                     <form action="verDocumentoConsejo" method="post" target="_blank">
-                                                        <input type = "hidden" name="id" value="<%= acuerdo.getIdDocumento()%>">
+                                                        <input type = "hidden" name="id" value="<%= lista.get(i).getIdDocumento()%>">
                                                         <input type="submit" class="btn btn-success" value="Ver Documento ">
                                                     </form>
+                                                <%}else if(lista.get(i).getEstadoDocumento().equals("EN ESPERA")){%>                                                 
+                                                <div class="row">                                                    
+                                                        <form action="<%=url%>" method="post">
+                                                            <input type='hidden' name='ACCION' value='cancelar'>
+                                                            <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
+                                                            <input type="submit" class="btn btn-danger" value="Cancelar">
+                                                        </form>                                                          
+                                                </div>
                                                 <%}else{%>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <form action="<%=url%>" method="post">
                                                             <input type='hidden' name='ACCION' value='actualizar'>
-                                                            <input type = "hidden" name="id" value="<%= acuerdo.getIdDocumento()%>">
+                                                            <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
                                                             <input type="submit" class="btn btn-success form-control" value="Editar ">
                                                         </form>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <form action="<%=url%>" method="post">
-                                                            <input type='hidden' name='ACCION' value='actualizar'>
-                                                            <input type = "hidden" name="id" value="<%= acuerdo.getIdDocumento()%>">
+                                                            <input type='hidden' name='ACCION' value='cancelar'>
+                                                            <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
                                                             <input type="submit" class="btn btn-danger form-control" value="Cancelar">
                                                         </form>      
                                                     </div>
                                                 </div>
-                                                    
-                                                    
                                                 <%}%>
                                             </td>
                                         </tr>

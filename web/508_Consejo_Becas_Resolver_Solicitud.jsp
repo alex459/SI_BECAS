@@ -289,6 +289,8 @@
                                             
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
+                                            <%} else  if (id_p == 12) {%> 
+                                            <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
                                                 <div class="text-center"><br><br><label>Seleccione el Tipo de Correccion a solicitar:</label></div>
@@ -396,6 +398,8 @@
                                             
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
+                                            <%} else  if (id_p == 12) {%> 
+                                            <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
                                                 <div class="text-center"><br><br><label>Seleccione el Tipo de Correccion a solicitar:</label></div>

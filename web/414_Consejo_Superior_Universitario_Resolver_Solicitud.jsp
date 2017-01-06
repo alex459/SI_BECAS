@@ -276,7 +276,7 @@
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 7) {%> 
+                                            <%} else  if (id_p == 7 || id_p == 15) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -380,7 +380,7 @@
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 7) {%> 
+                                            <%} else  if (id_p == 7 || id_p == 15) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">

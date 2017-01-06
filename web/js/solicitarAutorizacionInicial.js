@@ -86,6 +86,21 @@ solicitudApp.controller('SolicitarAutorizacionCtrl',['$scope', function ($scope)
         $scope.mostrarCartaInstitucion = $scope.mostrarCartaInstitucion = false;
         $scope.mostrarCartaInstitucion = $scope.mostrarCartaInstitucion = !$scope.mostrarCartaInstitucion;
     };
+    $scope.accProyecto = "ninguna";
+    $scope.mostrarProyecto = false;
+    $scope.EliminarProyecto = function (){
+        $scope.accProyecto = $scope.accProyecto="eliminar";        
+        $scope.mostrarProyecto = $scope.mostrarProyecto = false;
+    };
+    $scope.NadaProyecto = function (){
+        $scope.accProyecto = $scope.accProyecto="ninguna";        
+        $scope.mostrarProyecto = $scope.mostrarProyecto = false;
+    };
+    $scope.ActualizarProyecto = function (){
+        $scope.accProyecto = $scope.accProyecto="actualizar";
+        $scope.mostrarProyecto = $scope.mostrarProyecto = false;
+        $scope.mostrarProyecto = $scope.mostrarProyecto = !$scope.mostrarProyecto;
+    };
   }]);
   
   solicitudApp.directive('validFile',function(){
