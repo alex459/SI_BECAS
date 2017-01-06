@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.HashMap;
@@ -25,8 +26,10 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -49,7 +52,7 @@ public class ReporteBitacoraServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
         request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
-        
+
         //servlet encargado de generar reportes de bitacora
         try {
             //leyendo parametros del jsp
@@ -67,8 +70,8 @@ public class ReporteBitacoraServlet extends HttpServlet {
 
             //preparando parametros para el reporte
             Map parametersMap = new HashMap();
-            parametersMap.put("PARAMETRO1", "HOLA");
-            parametersMap.put("PARAMETRO2", "MUNDO");
+            //parametersMap.put("PARAMETRO1", "HOLA");
+            //parametersMap.put("PARAMETRO2", "MUNDO");
             /*parametersMap.put("NOMBRE1", "%");
             parametersMap.put("NOMBRE2", "%");
             parametersMap.put("APELLIDO1", "%");
@@ -85,7 +88,8 @@ public class ReporteBitacoraServlet extends HttpServlet {
             if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF                
                 ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
-                byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\test_reporte_2.jasper", parametersMap, conexionBD.conn);
+                String path = getServletContext().getRealPath("/REPORTES/");
+                byte[] bytes = JasperRunManager.runReportToPdf(path + "/test_reporte_2.jasper", parametersMap, conexionBD.conn);
                 conexionBD.cerrarConexion();
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
@@ -93,6 +97,7 @@ public class ReporteBitacoraServlet extends HttpServlet {
                 outputstream.write(bytes, 0, bytes.length);
                 outputstream.flush();
                 outputstream.close();
+                
             }
 
             if ("2".equals(opcion_de_salida)) { //SALIDA EN XLS
