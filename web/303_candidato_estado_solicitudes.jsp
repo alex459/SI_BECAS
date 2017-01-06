@@ -28,15 +28,18 @@
         response.sendRedirect("login.jsp");
         return;
     }
-   
+
     ExpedienteDAO expDao = new ExpedienteDAO();
     Expediente expediente = expDao.obtenerExpedienteAbierto(user);
     DocumentoDAO documentoDAO = new DocumentoDAO();
-    int idExpediente = expediente.getIdExpediente();
-    ArrayList<Documento> lista = documentoDAO.consultarSolicitudesCandidato(idExpediente);
+    ArrayList<Documento> lista = new ArrayList<Documento>();
+    if (expediente.getIdExpediente() != null) {
+        int idExpediente = expediente.getIdExpediente();
+        lista = documentoDAO.consultarSolicitudesCandidato(idExpediente);
+    }
     ConexionBD conexionBD = new ConexionBD();
 
-    
+
 %>
 <!DOCTYPE html>
 <html>
@@ -78,113 +81,113 @@
     <%-- todo el menu esta contenido en la siguiente linea
          el menu puede ser cambiado en la pagina menu.jsp --%>
     <jsp:include page="menu_corto.jsp"></jsp:include>
-</head>
-<body>
-    <div class="container-fluid">
-        <h3 class="text-center" style="color:#E42217;">Estado de Solicitudes</h3>
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <fieldset class="custom-border">
-                    <legend class="custom-border">Solicitudes realizadas</legend>
-                    
-                    <div class="col-md-12">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr class="success">
-                                    <th>No</th>
-                                    <th>Solicitud</th>
-                                    <th>Unidad</th>
-                                    <th>Estado</th>
-                                    <th>Acción</th>
-                                </tr>                                   
-                            </thead>
-                            <tbody class="text-center">                                
-                                <%if (lista.isEmpty()){
-                                    out.write("<tr><h3 class='text-primary'>No ha realizado ninguna solicitud</h3></tr>");
-                                }else{
-                                    Documento acuerdo = new Documento();
-                                    int numero = 1;
-                                    int idAcuerdo=0;
-                                    int idDoc =0;
-                                    String tipo="";
-                                    String unidad="";
-                                    String url="";
-                                    for(int i= 0; i<lista.size(); i++){
-                                        try{
-                                        idDoc=lista.get(i).getIdTipoDocumento().getIdTipoDocumento();                                        
-                                        switch(idDoc){
-                                            case 103:
-                                                tipo="ACUERDO DE PERMISO INICIAL";
-                                                unidad="JUNTA DIRECTIVA";
-                                                url="318_modificar_sol_permiso_inicial.jsp";
-                                                break;
-                                            case 105:
-                                                tipo="ACUERDO DE AUTORIZACION INICIAL";
-                                                unidad="CONSEJO DE BECAS";
-                                                url="319_actualizar_sol_autorizacion_inicial.jsp";                                                
-                                                break;
-                                            case 112:
-                                                tipo="DICTAMEN DE PROPUESTA ANTE JUNTA DIRECTIVA";
-                                                unidad="COMISION DE BECAS";
-                                                url="320_actualizar_sol_dictamen_propuesta.jsp";                                                
-                                                break;
-                                            case 131:
-                                                tipo="SOLICITUD DE BECA";
-                                                unidad="CONSEJO DE BECAS";
-                                                url="308_candidato_sol_beca1.jsp";                                                
-                                                break;                                                                                     
-                                        }%>
-                                        <tr>
-                                            <td><%=numero%></td>
-                                            <td><%=tipo%></td>
-                                            <td><%=unidad%></td>
-                                            <td><%=lista.get(i).getEstadoDocumento()%></td>
-                                            <td>
-                                                <%if (lista.get(i).getEstadoDocumento().equals("APROBADO") || lista.get(i).getEstadoDocumento().equals("DENEGADO") || lista.get(i).getEstadoDocumento().equals("REVISION")){%>                                                
-                                                    <form action="verDocumentoConsejo" method="post" target="_blank">
-                                                        <input type = "hidden" name="id" value="<%= lista.get(i).getIdDocumento()%>">
-                                                        <input type="submit" class="btn btn-success" value="Ver Documento ">
-                                                    </form>
-                                                <%}else if(lista.get(i).getEstadoDocumento().equals("EN ESPERA")){%>                                                 
-                                                <div class="row">                                                    
-                                                        <form action="<%=url%>" method="post">
-                                                            <input type='hidden' name='ACCION' value='cancelar'>
-                                                            <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
-                                                            <input type="submit" class="btn btn-danger" value="Cancelar">
-                                                        </form>                                                          
-                                                </div>
-                                                <%}else{%>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <form action="<%=url%>" method="post">
-                                                            <input type='hidden' name='ACCION' value='actualizar'>
-                                                            <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
-                                                            <input type="submit" class="btn btn-success form-control" value="Editar ">
-                                                        </form>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <form action="<%=url%>" method="post">
-                                                            <input type='hidden' name='ACCION' value='cancelar'>
-                                                            <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
-                                                            <input type="submit" class="btn btn-danger form-control" value="Cancelar">
-                                                        </form>      
-                                                    </div>
-                                                </div>
-                                                <%}%>
-                                            </td>
-                                        </tr>
-                                        <%
-                                        numero++;
-                                        }catch(Exception e){
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h3 class="text-center" style="color:#E42217;">Estado de Solicitudes</h3>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Solicitudes realizadas</legend>
+
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="success">
+                                        <th>No</th>
+                                        <th>Solicitud</th>
+                                        <th>Unidad</th>
+                                        <th>Estado</th>
+                                        <th>Acción</th>
+                                    </tr>                                   
+                                </thead>
+                                <tbody class="text-center">                                
+                                <%if (lista.isEmpty()) {
+                                        out.write("<tr><h3 class='text-primary'>No ha realizado ninguna solicitud</h3></tr>");
+                                    } else {
+                                        Documento acuerdo = new Documento();
+                                        int numero = 1;
+                                        int idAcuerdo = 0;
+                                        int idDoc = 0;
+                                        String tipo = "";
+                                        String unidad = "";
+                                        String url = "";
+                                        for (int i = 0; i < lista.size(); i++) {
+                                            try {
+                                                idDoc = lista.get(i).getIdTipoDocumento().getIdTipoDocumento();
+                                                switch (idDoc) {
+                                                    case 103:
+                                                        tipo = "ACUERDO DE PERMISO INICIAL";
+                                                        unidad = "JUNTA DIRECTIVA";
+                                                        url = "318_modificar_sol_permiso_inicial.jsp";
+                                                        break;
+                                                    case 105:
+                                                        tipo = "ACUERDO DE AUTORIZACION INICIAL";
+                                                        unidad = "CONSEJO DE BECAS";
+                                                        url = "319_actualizar_sol_autorizacion_inicial.jsp";
+                                                        break;
+                                                    case 112:
+                                                        tipo = "DICTAMEN DE PROPUESTA ANTE JUNTA DIRECTIVA";
+                                                        unidad = "COMISION DE BECAS";
+                                                        url = "320_actualizar_sol_dictamen_propuesta.jsp";
+                                                        break;
+                                                    case 131:
+                                                        tipo = "SOLICITUD DE BECA";
+                                                        unidad = "CONSEJO DE BECAS";
+                                                        url = "308_candidato_sol_beca1.jsp";
+                                                        break;
+                                                }%>
+                                <tr>
+                                    <td><%=numero%></td>
+                                    <td><%=tipo%></td>
+                                    <td><%=unidad%></td>
+                                    <td><%=lista.get(i).getEstadoDocumento()%></td>
+                                    <td>
+                                        <%if (lista.get(i).getEstadoDocumento().equals("APROBADO") || lista.get(i).getEstadoDocumento().equals("DENEGADO") || lista.get(i).getEstadoDocumento().equals("REVISION")) {%>                                                
+                                        <form action="verDocumentoConsejo" method="post" target="_blank">
+                                            <input type = "hidden" name="id" value="<%= lista.get(i).getIdDocumento()%>">
+                                            <input type="submit" class="btn btn-success" value="Ver Documento ">
+                                        </form>
+                                        <%} else if (lista.get(i).getEstadoDocumento().equals("EN ESPERA")) {%>                                                 
+                                        <div class="row">                                                    
+                                            <form action="<%=url%>" method="post">
+                                                <input type='hidden' name='ACCION' value='cancelar'>
+                                                <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
+                                                <input type="submit" class="btn btn-danger" value="Cancelar">
+                                            </form>                                                          
+                                        </div>
+                                        <%} else {%>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <form action="<%=url%>" method="post">
+                                                    <input type='hidden' name='ACCION' value='actualizar'>
+                                                    <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
+                                                    <input type="submit" class="btn btn-success form-control" value="Editar ">
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <form action="<%=url%>" method="post">
+                                                    <input type='hidden' name='ACCION' value='cancelar'>
+                                                    <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
+                                                    <input type="submit" class="btn btn-danger form-control" value="Cancelar">
+                                                </form>      
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                    </td>
+                                </tr>
+                                <%
+                                                numero++;
+                                            } catch (Exception e) {
+                                            }
                                         }
-                                    }
-                                    
-                                }%>                                
+
+                                    }%>                                
                             </tbody>
                         </table>
                     </div>
-                    
+
                 </fieldset>
             </div>
             <div class="col-md-1"></div>
