@@ -70,8 +70,8 @@ public class ReporteBitacoraServlet extends HttpServlet {
 
             //preparando parametros para el reporte
             Map parametersMap = new HashMap();
-            //parametersMap.put("PARAMETRO1", "HOLA");
-            //parametersMap.put("PARAMETRO2", "MUNDO");
+            parametersMap.put("PARAMETRO1", "HOLA");
+            parametersMap.put("PARAMETRO2", "MUNDO");
             /*parametersMap.put("NOMBRE1", "%");
             parametersMap.put("NOMBRE2", "%");
             parametersMap.put("APELLIDO1", "%");
