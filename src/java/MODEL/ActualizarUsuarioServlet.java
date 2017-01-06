@@ -83,7 +83,7 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         Integer fac = detalleUsuario.getIdFacultad();
         if(t_u==1 || t_u==2 || t_u==3 || t_u==4){
             if(fac == 13){
-                mensaje = mensaje.concat("  Los candidatos, becarios, comisiones o juntas directivas deben tener una facultad.");
+                mensaje = mensaje.concat("  Los candidatos, becarios, comisiones o juntas directivas deben tener una facultad que no sea Administrativa.");
             }else{
                 validacion3 = true;
             }

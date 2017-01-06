@@ -62,7 +62,7 @@ public class UsuarioDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "INSERT INTO USUARIO(ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE) VALUES("+usuario.getIdUsuario()+", "+usuario.getIdTipoUsuario()+", '"+usuario.getNombreUsuario()+"', '"+usuario.getClave()+"')";
+            String sql = "INSERT INTO USUARIO(ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE) VALUES("+usuario.getIdUsuario()+", "+usuario.getIdTipoUsuario()+", '"+usuario.getNombreUsuario()+"', MD5('"+usuario.getClave()+"'))";
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
@@ -83,7 +83,7 @@ public class UsuarioDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre + "' AND CLAVE='" + clave + "'";
+            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre + "' AND CLAVE= '" + clave + "'";
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
             if (rs.next()) {
@@ -98,7 +98,7 @@ public class UsuarioDAO extends ConexionBD {
                 usuario.setNombreUsuario(NOMBRE_USUARIO);
                 usuario.setClave(CLAVE);
                 logeo = true;
-                Utilidades.nuevaBitacora(6, ID_USUARIO, "usuario logeado con id "+ID_USUARIO+" y nombre "+NOMBRE_USUARIO, "");
+                Utilidades.nuevaBitacora(5, ID_USUARIO, "usuario logeado con id "+ID_USUARIO+" y nombre "+NOMBRE_USUARIO, sql);
                 
             }
 
@@ -144,7 +144,11 @@ public class UsuarioDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+usuario.getIdTipoUsuario()+", NOMBRE_USUARIO = '"+usuario.getNombreUsuario()+"', CLAVE ='"+usuario.getClave()+"' WHERE ID_USUARIO = "+usuario.getIdUsuario();
+            String sql = new String();
+            if(usuario.getClave().length()>0)
+                sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+usuario.getIdTipoUsuario()+", NOMBRE_USUARIO = '"+usuario.getNombreUsuario()+"', CLAVE =MD5('"+usuario.getClave()+"') WHERE ID_USUARIO = "+usuario.getIdUsuario();
+            else
+                sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+usuario.getIdTipoUsuario()+", NOMBRE_USUARIO = '"+usuario.getNombreUsuario()+"' WHERE ID_USUARIO = "+usuario.getIdUsuario();
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();

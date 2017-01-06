@@ -220,21 +220,17 @@
                             <label for="textinput">Contraseña :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="CLAVE" name="CLAVE" type="password" ng-init="datos.contrasena1 = '<%=clave%>'" placeholder="ingrese una contraseña" class="form-control input-md" ng-model="datos.contrasena1" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">
-                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.CLAVE.$error.required">La Contraseña es requerida.</span>
+                            <input id="CLAVE" name="CLAVE" type="password" placeholder="ingrese una contraseña (Opcional)" class="form-control input-md" ng-model="datos.contrasena1"  ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">                            
                             <span class="text-danger" ng-show="ActualizarUsuario.CLAVE.$error.minlength">Minimo 6 caracteres.</span>
                             <span class="text-danger" ng-show="ActualizarUsuario.CLAVE.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
-                            <small id="help6"></small>
                         </div>
                         <div class="col-md-3 text-right">
                             <label for="textinput">Confirmar contraseña :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="CLAVE2" name="CLAVE2" type="password" ng-init="datos.contrasena2 = '<%=clave%>'" placeholder="ingrese nuevamente la contraseña" class="form-control input-md" ng-model="datos.contrasena2" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">
-                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.CLAVE2.$error.required">Debe Confirmar la Contraseña.</span>
+                            <input id="CLAVE2" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md" ng-model="datos.contrasena2" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">                            
                             <span class="text-danger" ng-show="ActualizarUsuario.CLAVE2.$error.minlength">Minimo 6 caracteres.</span>
-                            <span class="text-danger" ng-show="ActualizarUsuario.CLAVE2.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
-                            <small id="help7"></small>
+                            <span class="text-danger" ng-show="ActualizarUsuario.CLAVE2.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>                            
                         </div>              
                     </div>
 
@@ -302,7 +298,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <input type="hidden" name="ID_USUARIO" value="<%=id_usuario%>">
-                        <input type="hidden" name="ID_DETALLE_USUARIO" value="<%=id_detalle_usuario%>">
+                        <input type="hidden" name="ID_DETALLE_USUARIO" value="<%=id_detalle_usuario%>">                        
                         <input type="submit" class="btn btn-primary" name="submit" value="Actualizar usuario" ng-disabled="!ActualizarUsuario.$valid">
 
                     </div>
