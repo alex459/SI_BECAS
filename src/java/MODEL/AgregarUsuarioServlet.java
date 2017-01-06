@@ -53,6 +53,7 @@ public class AgregarUsuarioServlet extends HttpServlet {
         detalleUsuario.setIdUsuario(idUsuario);
         detalleUsuario.setCarnet(request.getParameter("CARNET"));
         detalleUsuario.setEmail(request.getParameter("EMAIL"));
+        detalleUsuario.setGenero(request.getParameter("GENERO"));
         detalleUsuario.setNombre1Du(request.getParameter("NOMBRE1_DU"));
         detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
         detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));

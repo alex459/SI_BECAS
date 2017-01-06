@@ -149,7 +149,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "INSERT INTO DETALLE_USUARIO(ID_DETALLE_USUARIO, ID_USUARIO, ID_FACULTAD, CARNET, NOMBRE1_DU, NOMBRE2_DU, APELLIDO1_DU, APELLIDO2_DU) VALUES("+temp.getIdDetalleUsuario()+","+temp.getIdUsuario()+","+temp.getIdFacultad()+", '"+temp.getCarnet()+"', '"+temp.getNombre1Du()+"', '"+temp.getNombre2Du()+"', '"+temp.getApellido1Du()+"', '"+temp.getApellido2Du()+"')";
+            String sql = "INSERT INTO DETALLE_USUARIO(ID_DETALLE_USUARIO, ID_USUARIO, ID_FACULTAD, CARNET, NOMBRE1_DU, NOMBRE2_DU, APELLIDO1_DU, APELLIDO2_DU, GENERO, EMAIL) VALUES("+temp.getIdDetalleUsuario()+","+temp.getIdUsuario()+","+temp.getIdFacultad()+", '"+temp.getCarnet()+"', '"+temp.getNombre1Du()+"', '"+temp.getNombre2Du()+"', '"+temp.getApellido1Du()+"', '"+temp.getApellido2Du()+"', '"+temp.getGenero()+"', '"+temp.getEmail()+"')";
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
@@ -168,7 +168,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "UPDATE DETALLE_USUARIO SET ID_FACULTAD = "+temp.getIdFacultad()+", CARNET = '"+temp.getCarnet()+"', NOMBRE1_DU = '"+temp.getNombre1Du()+"', NOMBRE2_DU ='"+temp.getNombre2Du()+"', APELLIDO1_DU ='"+temp.getApellido1Du()+"', APELLIDO2_DU ='"+temp.getApellido2Du()+"' WHERE ID_DETALLE_USUARIO ="+temp.getIdDetalleUsuario();                         
+            String sql = "UPDATE DETALLE_USUARIO SET ID_FACULTAD = "+temp.getIdFacultad()+", CARNET = '"+temp.getCarnet()+"', NOMBRE1_DU = '"+temp.getNombre1Du()+"', NOMBRE2_DU ='"+temp.getNombre2Du()+"', APELLIDO1_DU ='"+temp.getApellido1Du()+"', APELLIDO2_DU ='"+temp.getApellido2Du()+"', GENERO = '"+temp.getGenero()+"', EMAIL = '"+temp.getEmail()+"' WHERE ID_DETALLE_USUARIO ="+temp.getIdDetalleUsuario();                         
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();

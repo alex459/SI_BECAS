@@ -23,7 +23,7 @@ public class DetalleUsuario{
     private String telefonoOficina; 
     private String direccion;    
     private String genero; 
-    private String Email;
+    private String email;
 
     /**
      * @return the idDetalleUsuario
@@ -292,19 +292,20 @@ public class DetalleUsuario{
     }
 
     /**
-     * @return the Email
+     * @return the email
      */
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     /**
-     * @param Email the Email to set
+     * @param email the email to set
      */
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
+    
     
 
 }

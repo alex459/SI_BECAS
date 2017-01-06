@@ -106,7 +106,7 @@
                             <small id="help1"></small>
                         </div>
                         <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Email universitario : </label>                                
+                            <label for="textinput">Email : </label>                                
                         </div>
                         <div class="col-md-3">
                             <input id="EMAIL" name="EMAIL" type="email"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
@@ -229,7 +229,27 @@
                     </div>              
                 </div>
 
-                <br>        
+                <br>
+
+                <div class="row">
+                    <div class="col-md-3 text-right">
+                        <label for="textinput">Sexo :</label>                                
+                    </div>
+                    <div class="col-md-3">                                
+                        <div class="radio">
+                            <label><input type="radio" name="GENERO" value="M" checked>M</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="GENERO" value="F">F</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-right">
+                    </div>
+                    <div class="col-md-3">                                
+                    </div>              
+                </div>
+
+                <br>
 
                 <div class="row">
                     <div class="col-md-12 text-center">

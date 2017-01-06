@@ -86,7 +86,7 @@
         String id_usuario = request.getParameter("ID_USUARIO");
         String id_detalle_usuario = request.getParameter("ID_DETALLE_USUARIO");
         ConexionBD conexionBD = new ConexionBD();
-        String consultaSql = "SELECT DU.CARNET, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, U.CLAVE, U.ID_TIPO_USUARIO, TU.TIPO_USUARIO, DU.ID_FACULTAD, F.FACULTAD FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN FACULTAD F NATURAL JOIN TIPO_USUARIO TU WHERE U.ID_USUARIO = "+id_usuario;
+        String consultaSql = "SELECT DU.CARNET, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, U.CLAVE, U.ID_TIPO_USUARIO, TU.TIPO_USUARIO, DU.ID_FACULTAD, F.FACULTAD, DU.GENERO, DU.EMAIL FROM DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN FACULTAD F NATURAL JOIN TIPO_USUARIO TU WHERE U.ID_USUARIO = "+id_usuario;
         ResultSet rs = null;
         //out.write(consultaSql);
         String carnet=new String();
@@ -99,6 +99,8 @@
         String tipo_usuario=new String();
         String id_facultad=new String();
         String facultad=new String();
+        String genero = new String();
+        String email = new String();        
         try{
             rs = conexionBD.consultaSql(consultaSql);  
             while(rs.next()){
@@ -112,6 +114,8 @@
                 tipo_usuario = rs.getString(8);
                 id_facultad = rs.getString(9);
                 facultad = rs.getString(10);
+                genero = rs.getString(11);
+                email = rs.getString(12);                
             }
         }catch(Exception ex){
             System.err.println("error: "+ex);
@@ -150,9 +154,15 @@
                             <span class="text-danger" ng-show="ActualizarUsuario.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
                             <small id="help1"></small>
                         </div>
-                        <div class="col-md-3 text-right">
-                            
-                        </div>                        
+                        <div class="col-md-3 text-right">                                   
+                            <label for="textinput">Email : </label>                                
+                        </div>
+                        <div class="col-md-3">
+                            <input id="EMAIL" name="EMAIL" type="email" ng-init="datos.correo = '<%=email%>'"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
+                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.EMAIL.$error.required">El correo electronico requerido.</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.EMAIL.$error.minlength">Minimo 3 caracteres</span>
+                            <span class="text-danger" ng-show="ActualizarUsuario.EMAIL.$error.email">Solo permite formato: ejemplo usuario@ues.com).</span>
+                        </div>                       
                     </div> 
 
                     <br>
@@ -267,7 +277,27 @@
                     </div>              
                 </div>
 
-                <br>        
+                <br> 
+                
+                <div class="row">
+                    <div class="col-md-3 text-right">
+                        <label for="textinput">Sexo :</label>                                
+                    </div>
+                    <div class="col-md-3">                                
+                        <div class="radio">
+                            <label><input type="radio" name="GENERO" value="M" <%if("M".equals(genero)) out.write("checked");%>>M</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="GENERO" value="F" <%if("F".equals(genero)) out.write("checked");%>>F</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-right">
+                    </div>
+                    <div class="col-md-3">                                
+                    </div>              
+                </div>
+                
+                <br> 
 
                 <div class="row">
                     <div class="col-md-12 text-center">
