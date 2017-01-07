@@ -60,12 +60,14 @@ public class ResolverCierreExpediente extends HttpServlet {
                 UsuarioDAO usuarioDao = new UsuarioDAO();
                 usuarioDao.actualizarRolPorIdUsuario(IdUsuario, 2);
             }else{
-                //Solicitar Correccion
+                //Solicitar Correccion 
                 Documento acuerdo = documentoDao.obtenerInformacionDocumentoPorId(idDocumento);
                 acuerdo.setEstadoDocumento("REVISION");
                 acuerdo.setObservacion(observacion);
                 boolean exitoActEstado =documentoDao.ActualizarEstadoDocumento(acuerdo);
+                if(expediente.getIdProgreso() == 16){
                 expediente.setIdProgreso(15);
+                }
                 expediente.setEstadoProgreso("REVISION");
                 exitoActExpediente = expDao.actualizarExpediente(expediente);
             }

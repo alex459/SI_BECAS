@@ -67,6 +67,8 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
         detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));
         detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
+        detalleUsuario.setEmail(request.getParameter("EMAIL"));
+        detalleUsuario.setGenero(request.getParameter("GENERO"));
         
         
         //validacion 2
@@ -81,15 +83,13 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         Integer fac = detalleUsuario.getIdFacultad();
         if(t_u==1 || t_u==2 || t_u==3 || t_u==4){
             if(fac == 13){
-                mensaje = mensaje.concat("  Los candidatos, becarios, comisiones o juntas directivas deben tener una facultad.");
+                mensaje = mensaje.concat("  Los candidatos, becarios, comisiones o juntas directivas deben tener una facultad que no sea Administrativa.");
             }else{
                 validacion3 = true;
             }
-        }else{
-            if(fac != 13){
+        }else{            
                 validacion3 = true;
-                detalleUsuario.setIdFacultad(13);
-            }
+                detalleUsuario.setIdFacultad(13);            
         }
         
         

@@ -1,8 +1,9 @@
 <%-- 
-    Document   : acercaDe
-    Created on : 10-16-2016, 05:09:17 PM
-    Author     : MauricioBC
+    Document   : 417_Modificar_Acuerdo_Gestion_Compromiso_Contractual
+    Created on : 5/01/2017, 05:10:41 PM
+    Author     : adminPC
 --%>
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="POJO.Documento"%>
 <%@page import="DAO.DocumentoDAO"%>
@@ -21,7 +22,7 @@
     DocumentoDAO documentoDao = new DocumentoDAO();
     int idDocumento = Integer.parseInt(request.getParameter("idDocumento"));
     int idexp = documentoDao.ObtenerIdExpedientePorIdDocumento(idDocumento);
-    ArrayList<Documento> lista = documentoDao.documentosAutorizacionInicial(idexp);
+    ArrayList<Documento> lista = documentoDao.DocumentosGestionContractual(idexp);
     int numero = 1;
 
 %>
@@ -70,12 +71,12 @@
     <body ng-app = "solicitudApp" ng-controller="SolicitarAutorizacionCtrl">
 
         <div class="container-fluid">        
-            <H3 class="text-center" style="color:#E42217;">Editar Solicitud de Autorizacion Inicial</H3>
+            <H3 class="text-center" style="color:#E42217;">Editar Solicitud de Acuerdo de Gestion de Compromiso Contractual</H3>
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Solicitud de Autorizacion Inicial</legend>
+                        <legend class="custom-border">Solicitud de Inicio de Acuerdo de Gestion de Compromiso Contractual</legend>
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
@@ -115,7 +116,7 @@
                         </div>
                         <div class="col-md-1"></div>                        
                     </div>
-                    <form name="solicitudPermisoInicial" action="ActualizarAutorizacionInicialServlet" method="post" enctype="multipart/form-data" novalidate>
+                    <form name="solicitudPermisoInicial" action="AcualizarGestionContractualServlet" method="post" enctype="multipart/form-data" novalidate>
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
@@ -123,7 +124,7 @@
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label class="form-control-static"> Carta de Solicitud de Autorizacion Inicial</label>
+                                            <label class="form-control-static"> Carta de solicitud:</label>
                                         </div>   
                                         <div class="col-md-6">
                                             <label class="radio-inline" for="radios-0">
@@ -157,7 +158,7 @@
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label class="form-control-static"> Carta de solicitud de la Escuela o Departamento:</label>
+                                            <label class="form-control-static"> Carta de RRHH:</label>
                                         </div>   
                                         <div class="col-md-6">
                                             <label class="radio-inline" for="radios-0">
@@ -167,11 +168,7 @@
                                             <label class="radio-inline" for="radios-0">
                                                 <input type="radio" name="accCartaEscuela"  value="actualizar"  ng-model ="accCartaEscuela" ng-required="true" ng-click="ActualizarCartaEscuela()">
                                                 Actualizar
-                                            </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaEscuela"  value="eliminar"  ng-model ="accCartaEscuela" ng-required="true" ng-click="EliminarCartaEscuela()">
-                                                Eliminar
-                                            </label> 
+                                            </label>                                             
                                         </div> 
                                     </div>
                                     <div class="row">
@@ -187,42 +184,8 @@
                             <div class="col-md-1"></div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="form-control-static"> Carta de solicitud de la Institucion que oferta la beca:</label>
-                                        </div>   
-                                        <div class="col-md-6">
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaInstitucion"  value="ninguna"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="NadaCartaInstitucion()">
-                                                Ninguna
-                                            </label>
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaInstitucion"  value="actualizar"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="ActualizarCartaInstitucion()">
-                                                Actualizar
-                                            </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaInstitucion"  value="eliminar"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="EliminarCartaInstitucion()">
-                                                Eliminar
-                                            </label> 
-                                        </div> 
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12" ng-show="mostrarCartaInstitucion">
-                                            <input type="file" class="" name="CartaInstitucion" accept="application/pdf" ng-model="CartaInstitucion" valid-file ng-required="mostrarCartaInstitucion">
-                                            <span class="text-danger" ng-show="solicitudPermisoInicial.CartaInstitucion.$invalid">Debe ingresar un documento en formato PDF.</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="col-md-1"></div>
-                        </div>
+                        
+                        
                                                                         
                         <div class="row text-center">
                             <input type="hidden" name="idExpediente" value="<%=idexp%>">
@@ -258,9 +221,9 @@
         </div>    
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/angular.min.js"></script>
-    <script src="js/solicitarAutorizacionInicial.js"></script>
-</body>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/solicitarAutorizacionInicial.js"></script>
+    </body>
 </html>

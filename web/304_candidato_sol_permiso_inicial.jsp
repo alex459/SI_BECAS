@@ -96,7 +96,7 @@
                 Expediente expediente = expDao.obtenerExpedienteAbierto(user);
             %>
                 <%if(expediente.getIdProgreso() == 1){%>
-                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO") || expediente.getEstadoProgreso().equals("REVISION")){%>
                             <div class="text-center">
                                 <h3 class="text-danger"> Ya ha realizado una solicitud de Acuerdo de Permiso Inicial</h3>
                                 <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>

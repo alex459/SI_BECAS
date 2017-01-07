@@ -52,6 +52,8 @@ public class AgregarUsuarioServlet extends HttpServlet {
         detalleUsuario.setIdDetalleUsuario(idDetalleUsuario);
         detalleUsuario.setIdUsuario(idUsuario);
         detalleUsuario.setCarnet(request.getParameter("CARNET"));
+        detalleUsuario.setEmail(request.getParameter("EMAIL"));
+        detalleUsuario.setGenero(request.getParameter("GENERO"));
         detalleUsuario.setNombre1Du(request.getParameter("NOMBRE1_DU"));
         detalleUsuario.setNombre2Du(request.getParameter("NOMBRE2_DU"));
         detalleUsuario.setApellido1Du(request.getParameter("APELLIDO1_DU"));
@@ -83,15 +85,13 @@ public class AgregarUsuarioServlet extends HttpServlet {
         Integer fac = detalleUsuario.getIdFacultad();
         if(t_u==1 || t_u==2 || t_u==3 || t_u==4){
             if(fac == 13){
-                mensaje = mensaje.concat("  Los candidatos, becarios, comisiones o juntas directivas deben tener una facultad.");
+                mensaje = mensaje.concat("  Elija una facultad para los tipos de usuarios candidatos, becarios, comisiones o juntas directivas que no se Administrativa. ");
             }else{
                 validacion3 = true;
             }
-        }else{
-            if(fac != 13){
+        }else{            
                 validacion3 = true;
-                detalleUsuario.setIdFacultad(13);
-            }
+                detalleUsuario.setIdFacultad(13);            
         }
         
 

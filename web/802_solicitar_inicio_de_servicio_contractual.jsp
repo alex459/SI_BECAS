@@ -6,12 +6,6 @@
 
 <%@page import="POJO.Expediente"%>
 <%@page import="DAO.ExpedienteDAO"%>
-<%-- 
-    Document   : 801_agregar_documeto_finalizaciom_beca
-    Created on : 12-04-2016, 07:03:26 AM
-    Author     : Manuel Miranda
---%>
-
 <%@page import="MODEL.variablesDeSesion"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -42,6 +36,9 @@
     //obtener el expediente
     ExpedienteDAO expDao = new ExpedienteDAO();
     Expediente expediente = expDao.obtenerExpedienteAbierto(user);
+    if(expediente.getEstadoProgreso().equals("CORRECCION")){
+         response.sendRedirect("400_Becario_Solicitudes.jsp");
+     }
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -92,7 +89,7 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2 class="text-center" style="color:#cf2a27">
-                    Solicitar inicio de servicio contractual
+                    Solicitar Inicio de Servicio Contractual
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -101,7 +98,7 @@
                 <fieldset class="custom-border">
                     <legend class="custom-border">Adjuntar documentos necesarios</legend>
                     <%if(expediente.getIdProgreso() == 12){%>
-                        <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                        <% if(expediente.getEstadoProgreso().equals("EN PROCESO") || expediente.getEstadoProgreso().equals("REVISION")){%>
                             <div class="text-center">
                                 <h3 class="text-danger"> Ya ha realizado una Solicitud de inicio de servicio contractual</h3>
                                 <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>

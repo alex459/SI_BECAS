@@ -218,7 +218,7 @@ String accion="insertar";
                                                             </div>
                                                             <div class="col-md-7">
                                                                 <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                                                <span class="text-danger" ng-show="!resolverSolFiscaliaAsesoriaContrato.$pristine && resolverSolFiscaliaAsesoriaContrato.observacion.$error.required">Ingrese la observacion del documento</span><br>
+                                                                <span class="text-danger" ng-show="resolverSolFiscaliaAsesoriaContrato.observacion.$error.required">Ingrese la observacion del documento</span><br>
                                                             </div>
                                                             <div class="col-md-1"></div>
                                                         </div>
@@ -246,6 +246,7 @@ String accion="insertar";
                                                         <div class="row text-center">
                                                             <span class="text-danger" ng-show="!resolverSolFiscaliaAsesoriaContrato.$pristine && resolverSolFiscaliaAsesoriaContrato.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                                         </div> 
+                                                        <input type="hidden" name="tipoCorreccion" value="documento">
                                                         <div class="row text-center">
                                                             <br>
                                                         </div>

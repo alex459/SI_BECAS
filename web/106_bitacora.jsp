@@ -368,7 +368,7 @@
 
                     <table class="table table-bordered"></br>                        
                         <thead>
-                            <tr class="success">
+                            <tr>
                                 <th>No</th>
                                 <th>Nombre de usuario</th>
                                 <th>Codigo de usuario</th>
@@ -385,7 +385,7 @@
                                     if (rs != null) {
                                         while (rs.next()) {
                                             i = i + 1;
-                                            out.write("<tr class='info'>");
+                                            out.write("<tr>");
                                             out.write("<td>" + i + "</td>");
                                             out.write("<td>" + rs.getString(1) + "</td>");
                                             out.write("<td>" + rs.getString(2) + "</td>");

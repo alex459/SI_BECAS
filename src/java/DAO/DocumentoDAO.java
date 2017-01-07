@@ -445,7 +445,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion() ;
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_DOCUMENTO FROM DOCUMENTO where ID_EXPEDIENTE = " + idExpediente +" AND ID_TIPO_DOCUMENTO= " + idTipo;
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO FROM DOCUMENTO D where ID_EXPEDIENTE = " + idExpediente +" AND ID_TIPO_DOCUMENTO= " + idTipo +" GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
 
@@ -711,7 +711,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (147, 148, 149)";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (147, 148, 149) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -740,7 +740,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (153, 154)";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (153, 154) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -769,7 +769,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (137, 138, 139, 140)";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (137, 138, 139, 140) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -798,7 +798,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (122,123,124,125,126,127,128,129,130,131)";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (131) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -828,7 +828,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (156,157) ";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (156,157) GROUP BY  D.ID_TIPO_DOCUMENTO ";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -858,7 +858,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (141) ";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (141) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -946,7 +946,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (147,148,150,151 )";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (147,148,150,151 ) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -975,7 +975,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (155, 156 )";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (155, 156 ) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -1004,7 +1004,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (138,139,140 )";
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE='" + exp + "' AND TD.ID_TIPO_DOCUMENTO IN (138,139,140 ) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -1110,14 +1110,77 @@ public class DocumentoDAO extends ConexionBD{
         return exito;
     }
     
-    //Consulta Todos los Documentos Publicos
+    //Consulta Todos las solicitudes de un becario
     public ArrayList<Documento> consultarSolicitudesBecario(int idExpediente) {
         ArrayList<Documento> lista = new ArrayList<Documento>();
         
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_TIPO_DOCUMENTO IN (135,137,149,153,156) AND D.ID_EXPEDIENTE = " +idExpediente ;
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO, D.ESTADO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_TIPO_DOCUMENTO IN (136,140,151,155,157) AND D.ID_EXPEDIENTE = " +idExpediente ;
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO"); 
+                String ESTADO_DOCUMENTO = rs.getString("ESTADO_DOCUMENTO");
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION); 
+                temp.setEstadoDocumento(ESTADO_DOCUMENTO);
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    //Consulta Todos las solicitudes de un candidato
+    public ArrayList<Documento> consultarSolicitudesCandidato(int idExpediente) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO, D.ESTADO_DOCUMENTO FROM DOCUMENTO D INNER JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ID_TIPO_DOCUMENTO IN (103,105,112,131) AND D.ID_EXPEDIENTE = " +idExpediente ;
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");  
+                String ESTADO_DOCUMENTO = rs.getString("ESTADO_DOCUMENTO");
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);
+                temp.setEstadoDocumento(ESTADO_DOCUMENTO);
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    public ArrayList<Documento> documentosPermisoInicial(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE D.ID_EXPEDIENTE='" + exp + "' AND D.ID_TIPO_DOCUMENTO IN (100,101,102) GROUP BY  D.ID_TIPO_DOCUMENTO";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -1140,4 +1203,148 @@ public class DocumentoDAO extends ConexionBD{
         return lista;
     }
     
+    public ArrayList<Documento> documentosAutorizacionInicial(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE D.ID_EXPEDIENTE='" + exp + "' AND D.ID_TIPO_DOCUMENTO IN (101,102,104) GROUP BY  D.ID_TIPO_DOCUMENTO";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    public ArrayList<Documento> documentosDictamenPropuesta(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE D.ID_EXPEDIENTE='" + exp + "' AND D.ID_TIPO_DOCUMENTO IN (106,107,108,109,110,111) GROUP BY  D.ID_TIPO_DOCUMENTO";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    public ArrayList<Documento> DocumentosInicioServicio(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE D.ID_EXPEDIENTE='" + exp + "' AND D.ID_TIPO_DOCUMENTO IN (147,148,149,150) GROUP BY  D.ID_TIPO_DOCUMENTO";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    public ArrayList<Documento> DocumentosGestionContractual(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE D.ID_EXPEDIENTE='" + exp + "' AND D.ID_TIPO_DOCUMENTO IN (153,154) GROUP BY  D.ID_TIPO_DOCUMENTO";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
+    
+    public ArrayList<Documento> DocumentosGestionLiberacion(int exp) {
+        ArrayList<Documento> lista = new ArrayList<Documento>();
+        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT IFNULL(MAX(D.ID_DOCUMENTO), 0) AS ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE D.ID_EXPEDIENTE='" + exp + "' AND D.ID_TIPO_DOCUMENTO IN (156) GROUP BY  D.ID_TIPO_DOCUMENTO";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Documento temp = new Documento();
+                TipoDocumento temp2 = new TipoDocumento();                
+                int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
+                Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
+                String OBSERVACION=rs.getString("OBSERVACION_O");
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                temp.setIdDocumento(ID_DOCUMENTO);
+                temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
+                temp2.setTipoDocumento(TIPO_DOCUMENTO);
+                temp.setIdTipoDocumento(temp2);
+                temp.setObservacion(OBSERVACION);               
+                lista.add(temp);
+            }            
+            this.cerrarConexion();            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return lista;
+    }
 }

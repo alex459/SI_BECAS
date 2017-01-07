@@ -174,6 +174,11 @@ public class ResolverDictamen extends HttpServlet {
                 case "CORRECCION":
                     Documento acuerdoAnterior = new Documento();
                     String tipoCorreccion = request.getParameter("tipoCorreccion");
+                    if (tipoCorreccion.equals("documento")) {
+                        //Poner estado de documento en Esperando correccion
+                        documento.setEstadoDocumento("EN ESPERA");
+                        documentoDao.ActualizarEstadoDocumento(documento);
+                    }
                     switch (idProgreso) {
                         case 3:
                             //DICTAMEN

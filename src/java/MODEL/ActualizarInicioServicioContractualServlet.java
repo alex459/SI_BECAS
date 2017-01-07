@@ -24,12 +24,21 @@ import javax.servlet.http.Part;
 
 /**
  *
- * @author MauricioBC
+ * @author adminPC
  */
-@WebServlet("/ActualizarPermisoInicialServlet")
+@WebServlet(name = "ActualizarInicioServicioContractualServlet", urlPatterns = {"/ActualizarInicioServicioContractualServlet"})
 @MultipartConfig(maxFileSize = 16177215)
-public class ActualizarPermisoInicialServlet extends HttpServlet {
+public class ActualizarInicioServicioContractualServlet extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -39,6 +48,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
             String accCarta = request.getParameter("accCarta");
             String accCartaEscuela = request.getParameter("accCartaEscuela");
             String accCartaInstitucion = request.getParameter("accCartaInstitucion");
+            String accProyecto = request.getParameter("accProyecto");            
 
             int id_documento = 0;
             Date fechaHoy = new Date();
@@ -66,7 +76,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                     break;
                 case "eliminar":
                     //Obteniendo el id del documento
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 100);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 149);
                     if (id_documento != 0) {
                         //eliminar
                         documentoDao.eliminarDocumento(id_documento);
@@ -81,7 +91,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                     if (filePart != null) {
                         archivo = filePart.getInputStream();
                     }
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 100);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 149);
                     if (id_documento != 0) {
                         //Actualizar
                         documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
@@ -92,7 +102,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                         //Agregar
                         idDoc = documentoDao.getSiguienteId();
                         obs = "CARTA DE SOLICITUD DEL expediente " + idExpediente;
-                        tip= 100;
+                        tip= 149;
                         tipo = tipoDao.consultarPorId(tip);
 
                         documento.setIdDocumento(idDoc);
@@ -116,7 +126,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                     break;
                 case "eliminar":
                     //Obteniendo el id del documento
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 101);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 150);
                     if (id_documento != 0) {
                         //eliminar
                         documentoDao.eliminarDocumento(id_documento);
@@ -131,7 +141,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                     if (filePart != null) {
                         archivo = filePart.getInputStream();
                     }
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 101);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 150);
                     if (id_documento != 0) {
                         //Actualizar
                         documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
@@ -142,7 +152,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                         //Agregar
                         idDoc = documentoDao.getSiguienteId();
                         obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
-                        tip= 101;
+                        tip= 150;
                         tipo = tipoDao.consultarPorId(tip);
 
                         documento.setIdDocumento(idDoc);
@@ -166,7 +176,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                     break;
                 case "eliminar":
                     //Obteniendo el id del documento
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 102);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 147);
                     if (id_documento != 0) {
                         //eliminar
                         documentoDao.eliminarDocumento(id_documento);
@@ -181,7 +191,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                     if (filePart != null) {
                         archivo = filePart.getInputStream();
                     }
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 102);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 147);
                     if (id_documento != 0) {
                         //Actualizar
                         documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
@@ -192,7 +202,7 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                         //Agregar
                         idDoc = documentoDao.getSiguienteId();
                         obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
-                        tip= 102;
+                        tip= 147;
                         tipo = tipoDao.consultarPorId(tip);
 
                         documento.setIdDocumento(idDoc);
@@ -208,16 +218,65 @@ public class ActualizarPermisoInicialServlet extends HttpServlet {
                     break;
             }
             
-            if(accCarta.equals("ninguna") && accCartaEscuela.equals("ninguna") && accCartaInstitucion.equals("ninguna")){
+            //Proyecto en que apoyara
+            switch (accProyecto) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 148);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("Proyecto");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 148);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
+                        tip= 148;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            if(accCarta.equals("ninguna") && accCartaEscuela.equals("ninguna") && accCartaInstitucion.equals("ninguna") && accProyecto.equals("ninguna")){
                 //no se realizo ninguna accion, Conservar estado y progreso 
             } else{
                 //CAMBIAR DOCUMENTO,PROGRESO Y ESTADO A PENDIENTE
-                id_documento = documentoDao.ExisteDocumento(idExpediente, 103);
+                id_documento = documentoDao.ExisteDocumento(idExpediente, 151);
                 documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
                 documento.setEstadoDocumento("PENDIENTE");
                 documentoDao.ActualizarEstadoDocumento(documento);
                 
-                expediente.setIdProgreso(1);
+                expediente.setIdProgreso(12);
                 expediente.setEstadoProgreso("EN PROCESO");
                 expDao.actualizarExpediente(expediente);
             }

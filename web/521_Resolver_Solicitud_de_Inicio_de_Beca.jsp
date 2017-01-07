@@ -141,9 +141,9 @@ String accion="insertar";*/
     <body ng-app="resolverCierreApp" ng-controller="CierreCtrl">
      <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-            <h2 class="text-center" style="color:#cf2a27">
+            <h3 class="text-center" style="color:#cf2a27">
                 Resolver Solicitud de Inicio de Beca
-            </h2>
+            </h3>
 
             <br></br>
 

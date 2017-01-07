@@ -87,6 +87,7 @@ public class ResolverConsejoBecas extends HttpServlet {
             //PROCESO SEGUN RESOLUCION 
             Integer idAcuerdoSolicitado = 0;
             Documento acuerdoAnterior = new Documento();
+            int idDocumentoResuelto = 0;
             switch (resolucion) {
                 case "APROBADO":
                     Documento acuerdoSolicitar = new Documento();
@@ -95,12 +96,20 @@ public class ResolverConsejoBecas extends HttpServlet {
                             //ACUERDO DE AUTORIZACION INICIAL
                             if (accion.equals("insertar")) {
                                 //INSERTAR
+                                estado = "PENDIENTE";
                             } else {
                                 //ACTUALIZAR
-
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 112);
+                                if(idAcuerdoSolicitado !=0){
+                                    estado = "EN PROCESO";
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                } else{                             
+                                estado = "PENDIENTE";
+                                }
                             }// FIN ACTUALIZAR
-                            idProgreso = 3;
-                            estado = "PENDIENTE";
+                            idProgreso = 3;                            
                             break;
                         case 5:
                             //SOLICITUD DE BECA
@@ -118,7 +127,7 @@ public class ResolverConsejoBecas extends HttpServlet {
                                     tipoDoc = tipoDao.consultarPorId(133);
                                 }
                                 acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
-                                documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                documentoDao.solicitarDocumento(acuerdoSolicitar);                               
                             } else {
                                 //ACTUALIZAR
                                 if (TipoBeca.equals("INTERNA")) {
@@ -218,6 +227,10 @@ public class ResolverConsejoBecas extends HttpServlet {
                                 //INSERTAR
                             } else {
                                 //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 112);
+                                if(idAcuerdoSolicitado !=0){                                    
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                } 
                             }// FIN ACTUALIZAR
                             idProgreso = 2;
                             estado = "DENEGADO";
@@ -289,7 +302,12 @@ public class ResolverConsejoBecas extends HttpServlet {
                     } //FIN SWITCH PROGRESO
                     break;
                 case "CORRECCION":                    
-                    String tipoCorreccion = request.getParameter("tipoCorreccion");
+                    String tipoCorreccion = request.getParameter("tipoCorreccion");  
+                    if (tipoCorreccion.equals("documento")) {
+                        //Poner estado de documento en Esperando correccion
+                        documento.setEstadoDocumento("EN ESPERA");
+                        documentoDao.ActualizarEstadoDocumento(documento);
+                    }
                     switch (idProgreso) {
                         case 2:
                             //ACUERDO DE AUTORIZACION INICIAL
@@ -302,11 +320,14 @@ public class ResolverConsejoBecas extends HttpServlet {
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                    idProgreso = 1;
+                                    estado = "REVISION";
                                 } else {
-                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD                                      
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD 
+                                    idProgreso = 2;
+                                    estado = "CORRECCION";
                                 }
-                                idProgreso = 2;
-                                estado = "CORRECCION";
+                                
                             } else {
                                 //ACTUALIZAR
                                 if (tipoCorreccion.equals("documento")) {
