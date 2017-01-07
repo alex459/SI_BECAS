@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteCandidatos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c74c8e7b-556b-4ab7-98b1-013564788cc1">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteCandidatos" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c74c8e7b-556b-4ab7-98b1-013564788cc1">
 	<property name="ireport.zoom" value="0.9090909090909091"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="paramtest" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE, FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,
 SDB.FECHA_SOLICITUD AS FECHA_SOLICITUD, OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,
@@ -13,7 +14,7 @@ DU.ID_FACULTAD=FA.ID_FACULTAD AND DU.ID_USUARIO=SDB.ID_USUARIO AND
 SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND
 SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND
 EX.ID_PROGRESO=PR.ID_PROGRESO
-AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='ABIERTO']]>
+AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='ABIERTO' OB.TIPO_OFERTA_BECA= $P{paramtest} ;]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="FACULTAD" class="java.lang.String">

@@ -4,9 +4,52 @@
     Author     : adminPC
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="POJO.Documento"%>
+<%@page import="POJO.DetalleUsuario"%>
+<%@page import="POJO.OfertaBeca"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
+<%@page import="POJO.Institucion"%>
+<%@page import="DAO.InstitucionDAO"%>
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="MODEL.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
+<%@page import="POJO.Facultad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+
+    HttpSession actual = request.getSession();
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("7");
+    tipo_usuarios_permitidos.add("8");
+    tipo_usuarios_permitidos.add("9");
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user == null) {
+        response.sendRedirect("logout.jsp");
+    }
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    Facultad facultad1 = new Facultad();
+    AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
+%>
 <!DOCTYPE html>
 <html>
+    
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,54 +82,12 @@
         </h3>
     </div>
 </div>
-<nav class="navbar navbar-custom" role="navigation">
-    <div class="navbar-header">
+<p class="text-right">Rol: <%= rol%></p>
+    <p class="text-right">Usuario: <%= user%></p>
 
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-        </button> <a class="navbar-brand active" href="index.html">Inicio</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-       <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Información pública<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="315_candidato_ofertas_beca.jsp">Ofertas de beca</a>
-                        <a href="316_candidatos_documentos.jsp">Documentos</a>
-                        <a href="317_candidatos_acercade.jsp">Acerca de</a>
-                        <a href="#">Login/Logout</a>
-                    </li>                               
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Consejo de Becas<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="507_Consejo_Becas_Solicitudes_Pendientes.jsp">Solicitudes de Acuerdos Pendientes</a>
-                        <a href="508_Consejo_Becas_Resolver_Solicitud.jsp">Resolver Solicitud de Acuerdo Pendiente</a>
-                        <a href="509_Consejo_Becas_Buscar_Acuerdo.jsp">Buscar Acuerdo</a>
-                        <a href="510_Reportes.jsp">Reportes</a>
-                    </li>                               
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">                        
-            <li>
-                <a href="#">Ayuda</a>
-            </li>
-            <li>
-                <a href="login.jsp">Cerrar Sesión</a>
-            </li>
-        </ul>
-    </div>
-
-</nav>
+    <%-- todo el menu esta contenido en la siguiente linea
+         el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>   
 </head>
 
 
@@ -103,7 +104,7 @@
                             <fieldset class="custom-border">
                                 <legend class="custom-border">Filtros</legend>
                                 <h5 style="color:#E42217">Ingrese los Fitros de Busqueda del Reporte</h5>
-                                <form>
+                                <form class="form-horizontal" action="511_Reporte_Institucion_Financiera.jsp" method="post">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="col-md-4">
@@ -112,30 +113,27 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Tipo de Beca</option>
-                                                    <option>Externa</option>
-                                                    <option>Interna</option>
+                                                <select name="tipoBeca" id="tipoBeca"  class="form-control">
+                                                    <option value="">Seleccione Tipo de Beca</option>
+                                                    <option value="EXTERNA">Externa</option>
+                                                    <option value="INTERNA">Interna</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label >
-                                                <label class="text-center">Rango para fecha de Inicio de Beca</label><br>
-                                            <div class="col-md-2">
-                                                <label>Inicio:</label>
+                                        <div class="col-md-6 ">
+                                        <div class="col-md-6">          
+                                            <label for="fIngresoIni">Fecha de ingreso (inicio) :</label> 
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
-                                            <div class="col-md-4">
-                                                <input type="date" name="fecha_inicio" class="form-control">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>Fin:</label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input type="date" name="fecha_fin" class="form-control">
-                                            </div>
-                                            </label>
                                         </div>
+                                        <div class="col-md-6">      
+                                            <label for="fIngresoFin">Fecha de ingreso (fin) :</label>
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
 
                                     <div class="row">
@@ -146,29 +144,32 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Facultad</option>
-                                                    <option>Facultad 1</option>
-                                                    <option>Facultad 2</option>
-                                                </select>
+                                               <select id="facultad" name="facultad" class="form-control">
+                                            <%
+                                                FacultadDAO facDao = new FacultadDAO();
+                                                ArrayList<Facultad> lista = facDao.consultarTodos();
+                                            %><option value="" selected>Seleccione una facultad</option><%
+                                                for (int i = 0; i < lista.size(); i++) {%>
+                                            <option value="<%=lista.get(i).getFacultad() %>"> <%=lista.get(i).getFacultad() %></option>
+                                            <%   }
+                                            %>    
+                                        </select>   
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label class="text-center">Rango para fecha de Finalizacion de Beca</label><br>
-                                            <div class="col-md-2">
-                                                <label>Inicio:</label><br>
+                                        <div class="col-md-6 ">
+                                        <div class="col-md-6">          
+                                            <label for="fCierreIni">Fecha de cierre (inicio) :</label> 
+                                            <div class="input-group date">
+                                                <input type="text" name="fCierreIni" id="fCierreIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
-                                            <div class="col-md-4">
-                                                <input type="date" name="fecha_inicio" class="form-control">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>Fin:</label><br>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input type="date" name="fecha_fin" class="form-control">
-                                            </div>
-
                                         </div>
+                                        <div class="col-md-6">      
+                                            <label for="fCierreFin">Fecha de cierre (fin) :</label>
+                                            <div class="input-group date">
+                                                <input type="text" name="fCierreFin" id="fCierreFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
 
                                     <div class="row">
@@ -179,13 +180,13 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Tipo de Becario</option>
-                                                    <option>Activo</option>
-                                                    <option>Contractual</option>
-                                                    <option>Inactivo</option>
-                                                    <option>Liberado</option>
-                                                    <option>Incumplimiento de Contrato</option>
+                                                <select name="tipoBecario" id="tipoBecario" class="form-control">
+                                                    <option value="">Seleccione Tipo de Becario</option>
+                                                    <option value="ACTIVO">Activo</option>
+                                                    <option value="CONTRACTUAL">Contractual</option>
+                                                    <option value="INACTIVO">Inactivo</option>
+                                                    <option value="LIBERADO">Liberado</option>
+                                                    <option value="INCUMPLIMIENTO DE CONTRATO">Incumplimiento de Contrato</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -196,11 +197,17 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Institucion</option>
-                                                    <option>Institucion 1</option>
-                                                    <option>Institucion 2</option>
-                                                </select>
+                                                 <select id="institucionOferente" name="institucionOferente" class="form-control">
+                                            <%
+                                                InstitucionDAO institucionDAO = new InstitucionDAO();
+                                                ArrayList<Institucion> listaInstitucion = new ArrayList();
+                                                listaInstitucion = institucionDAO.consultarActivosPorTipo("OFERTANTE");
+                                            %><option value="" selected>Seleccione una institución</option><%
+                                                for (int i = 0; i < listaInstitucion.size(); i++) {%>
+                                            <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
+                                            <%   }
+                                            %>    
+                                        </select>     
                                             </div>
                                         </div>
                                     </div>
@@ -213,17 +220,17 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Tipo de Estudio</option>
-                                                    <option>Maestria</option>
-                                                    <option>Doctorado</option>
-                                                    <option>Especializacion</option>
+                                                <select  name="tipoEstudio" id="tipoEstudio" class="form-control">
+                                                    <option value="">Seleccione Tipo de Estudio</option>
+                                                    <option value="MAESTRIA">Maestria</option>
+                                                    <option value="DOCTORADO">Doctorado</option>
+                                                    <option value="ESPECIALIZACION">Especializacion</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 text-center">
                                             <br>
-                                            <input type="button" name="filtrar" value="Realizar Busqueda" class="btn btn-primary">
+                                             <input type="submit" class="btn btn-primary" name="submit" value="Buscar"> 
                                         </div>
                                     </div>
 
@@ -231,6 +238,137 @@
                             </fieldset>
                         </div>
 
+                                        
+  <%
+                    InstitucionDAO institucionDAO3 = new InstitucionDAO();
+                    Integer id_ofertaa_beca;
+                    ConexionBD conexionbd = null;
+                    ResultSet rs = null;
+                    ArrayList<OfertaBeca> lista2 = new ArrayList();
+                    ArrayList<Institucion> listaIns = new ArrayList();
+                    ArrayList<DetalleUsuario> listaUser = new ArrayList();
+                    ArrayList<Documento> listaDocs = new ArrayList();
+                    ArrayList<Facultad> listaFacultades = new ArrayList();
+                    OfertaBeca temp = new OfertaBeca();
+                    Institucion temp2 = new Institucion();
+                    DetalleUsuario temp3 = new DetalleUsuario();
+                    Documento temp4 = new Documento();
+                    Facultad temp5 = new Facultad();
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                     String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="", tipoBecario="";
+                    String queryParam=""; 
+                    
+                       
+                    try {
+                       
+                         if (!request.getParameter("tipoBecario").isEmpty()) {
+                            tipoEstudio = request.getParameter("tipoBecario");
+                        }
+                        
+                        
+                        
+                       
+                       
+                        String fIngresoIni = request.getParameter("fIngresoIni");
+                        String fIngresoFin = request.getParameter("fIngresoFin");
+                        String fCierreIni = request.getParameter("fCierreIni");
+                        String fCierreFin = request.getParameter("fCierreFin");
+                        
+                        //formando la consulta
+                        String consultaSql = "";
+                        consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE,"
+                                + " FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,"
+                                + " OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,OB.FECHA_INICIO AS FECHA_INICIO,"
+                                + " OB.FECHA_CIERRE AS FECHA_CIERRE,D.OBSERVACION_O AS OBSERVACION_O,INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,"
+                                + " INS.PAIS AS PAIS FROM DETALLE_USUARIO DU, FACULTAD FA, OFERTA_BECA OB, DOCUMENTO D,"
+                                + " INSTITUCION INS, SOLICITUD_DE_BECA SDB, EXPEDIENTE EX, USUARIO US, TIPO_USUARIO TU  "
+                                + " WHERE DU.ID_FACULTAD=FA.ID_FACULTAD "
+                                + " AND DU.ID_USUARIO=SDB.ID_USUARIO AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND "
+                                + " OB.ID_DOCUMENTO=D.ID_DOCUMENTO AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND "
+                                + " OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND US.ID_USUARIO=DU.ID_USUARIO "
+                                + " AND US.ID_TIPO_USUARIO=TU.ID_TIPO_USUARIO "
+                          //      + " AND US.ID_TIPO_USUARIO= 1 "
+                                + " AND "
+                                + " EX.ESTADO_EXPEDIENTE='ABIERTO' "
+                                + " AND INS.TIPO_INSTITUCION='OFERTANTE' ";
+                        if (request.getParameter("tipoBeca").toString().length()>0) {
+                            tipoBeca = request.getParameter("tipoBeca");
+                            consultaSql = consultaSql.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
+                        }
+                         
+                        if (request.getParameter("facultad").toString().length()>0) {
+                              facultad = request.getParameter("facultad");
+                            consultaSql = consultaSql.concat(" AND FA.FACULTAD='" + facultad + "' ");
+                        }
+                  
+                        if (request.getParameter("institucionOferente").toString().length()>0) {
+                             System.out.println("LLLLEEEEEEEEGAAAAÑÑÑÑÑÑ");
+                                institucionOferente = request.getParameter("institucionOferente");
+                            consultaSql = consultaSql.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
+                        }
+                        
+                              
+                        if (request.getParameter("tipoEstudio").toString().length()>0) {
+                           
+                                tipoEstudio = request.getParameter("tipoEstudio");
+                            consultaSql = consultaSql.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
+                        }
+                  /*      
+                        if (!request.getParameter("tipoBecario").isEmpty()) {
+                            tipoEstudio = request.getParameter("tipoBecario");
+                        }*/
+                  
+                        if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                        java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                        java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                        consultaSql = consultaSql.concat(" AND FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                    }
+                    if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
+                        java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
+                        java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
+                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                    }
+                    consultaSql = consultaSql.concat(";");
+                    System.out.println(consultaSql);
+                        consultaSql = consultaSql.concat(";");
+                        queryParam=consultaSql;
+                        System.out.println(consultaSql);
+                        //realizando la consulta
+                        conexionbd = new ConexionBD();
+                        rs = conexionbd.consultaSql(consultaSql);
+                        while (rs.next()) {
+                             temp = new OfertaBeca();
+                            temp2 = new Institucion();
+                            temp3 = new DetalleUsuario();
+                            temp4 = new Documento();
+                            temp5 = new Facultad();
+                            
+                            
+                            temp.setTipoOfertaBeca(rs.getString("TIPO_OFERTA_BECA"));
+                            temp.setFechaCierre(rs.getDate("FECHA_CIERRE"));
+                            temp.setFechaInicio(rs.getDate("FECHA_INICIO"));
+                            temp.setTipoEstudio(rs.getString("TIPO_ESTUDIO"));
+                            temp2.setNombreInstitucion(rs.getString("NOMBRE_INSTITUCION"));
+                            temp2.setPais(rs.getString("PAIS"));
+                            temp3.setNombre1Du(rs.getString("NOMBRE"));
+                            temp4.setObservacion(rs.getString("OBSERVACION_O"));
+                            temp5.setFacultad(rs.getString("FACULTAD"));
+                            
+
+                            lista2.add(temp);
+                            listaIns.add(temp2);
+                            listaUser.add(temp3);
+                            listaDocs.add(temp4);
+                            listaFacultades.add(temp5);
+
+                        }
+                        //con el rs se llenara la tabla de resultados
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                    }
+                %>                                                
+                                        
+                                        
                         <div class="col-md-3 text-center">
                             <fieldset class="custom-border">
                                 <legend class="custom-border">Acciones</legend>
@@ -285,30 +423,34 @@
                                     </tr>  
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>###</td>
-                                        <td>Nombre Becario</td>
-                                        <td>Tipo Beca</td>
-                                        <td>##/##/####</td>
-                                        <td>##/##/####</td>
-                                        <td>Pais</td>
-                                        <td>Titulo de Estudio Postgrado</td>
-                                        <td>Nombre de la Institucion Financiera</td>
-                                        <td>Nombre de la Facultad</td>
-                                        <td>Observaciones</td>
-                                    </tr>
-                                    <tr>
-                                        <td>###</td>
-                                        <td>Nombre Becario</td>
-                                        <td>Tipo Beca</td>
-                                        <td>##/##/####</td>
-                                        <td>##/##/####</td>
-                                        <td>Pais</td>
-                                        <td>Titulo de Estudio Postgrado</td>
-                                        <td>Nombre de la Institucion Financiera</td>
-                                        <td>Nombre de la Facultad</td>
-                                        <td>Observaciones</td>
-                                    </tr>
+                                    <%
+                                if (lista2.size() >= 0) {
+                                    int i = 0;
+                                    while (i < lista2.size()) {
+                                        out.write("<tr>");
+                                        out.write("<td>" + i + 1 + "</td>");
+                                        out.write("<td>" + listaUser.get(i).getNombre1Du() + "</td>");
+                                        out.write("<td>" + lista2.get(i).getTipoOfertaBeca() + "</td>");                                        
+                                        out.write("<td>" + df.format(lista2.get(i).getFechaInicio()) + "</td>");
+                                        out.write("<td>" + df.format(lista2.get(i).getFechaCierre()) + "</td>");
+                                        out.write("<td>" + listaIns.get(i).getPais() + "</td>");
+                                        out.write("<td>" + lista2.get(i).getTipoEstudio() + "</td>");
+                                        out.write("<td>" + listaIns.get(i).getNombreInstitucion() + "</td>");
+                                        out.write("<td>" + listaFacultades.get(i).getFacultad() + "</td>");
+                                        out.write("<td>" + listaDocs.get(i).getObservacion() + "</td>");
+                                        out.write("</tr>");
+                                        i++;
+                                    }
+                                }
+                            %>  
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+        </fieldset>
+    </div>  
+
+                                   
                                 </tbody>
                             </table>
                         </div>
@@ -351,6 +493,42 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-
+<script type="text/javascript">
+    $(function () {
+        $('#fIngresoIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fIngresoFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+        $('#fCierreIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fCierreFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: new Date()
+        }).on('change.dp', function (e) {
+            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+    });
+</script>
 </body>
 </html>

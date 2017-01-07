@@ -48,14 +48,7 @@
     AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
 %>
 <!DOCTYPE html>
-<html>
-    <p class="text-right">Rol: <%= rol%></p>
-    <p class="text-right">Usuario: <%= user%></p>
-
-
-    <%-- todo el menu esta contenido en la siguiente linea
-         el menu puede ser cambiado en la pagina menu.jsp --%>
-    <jsp:include page="menu_corto.jsp"></jsp:include>    
+<html> 
         <head>
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,54 +81,13 @@
                 </h3>
             </div>
         </div>
-        <nav class="navbar navbar-custom" role="navigation">
-            <div class="navbar-header">
+       <p class="text-right">Rol: <%= rol%></p>
+<p class="text-right">Usuario: <%= user%></p>
 
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </button> <a class="navbar-brand active" href="index.html">Inicio</a>
-            </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Información pública<strong class="caret"></strong></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="315_candidato_ofertas_beca.jsp">Ofertas de beca</a>
-                                <a href="316_candidatos_documentos.jsp">Documentos</a>
-                                <a href="317_candidatos_acercade.jsp">Acerca de</a>
-                                <a href="#">Login/Logout</a>
-                            </li>                               
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Consejo de Becas<strong class="caret"></strong></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="507_Consejo_Becas_Solicitudes_Pendientes.jsp">Solicitudes de Acuerdos Pendientes</a>
-                                <a href="508_Consejo_Becas_Resolver_Solicitud.jsp">Resolver Solicitud de Acuerdo Pendiente</a>
-                                <a href="509_Consejo_Becas_Buscar_Acuerdo.jsp">Buscar Acuerdo</a>
-                                <a href="510_Reportes.jsp">Reportes</a>
-                            </li>                               
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">                        
-                    <li>
-                        <a href="#">Ayuda</a>
-                    </li>
-                    <li>
-                        <a href="login.jsp">Cerrar Sesión</a>
-                    </li>
-                </ul>
-            </div>
-
-        </nav>
+<%-- todo el menu esta contenido en la siguiente linea
+     el menu puede ser cambiado en la pagina menu.jsp --%>
+<jsp:include page="menu_corto.jsp"></jsp:include>
     </head>
 
 
@@ -272,6 +224,7 @@
                     Facultad temp6 = new Facultad();
                     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                      String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="";
+                    String queryParam=""; 
 
                        
                     try {
@@ -322,6 +275,7 @@
                             consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                         }
                         consultaSql = consultaSql.concat(";");
+                        queryParam=consultaSql;
                         System.out.println(consultaSql);
                         //realizando la consulta
                         conexionbd = new ConexionBD();
@@ -366,6 +320,7 @@
                                     <input type="hidden" name="REPORTE_FACULTAD" value="<%=facultad%>">
                                     <input type="hidden" name="REPORTE_TIPOESTUDIO" value="<%=tipoEstudio%>">
                                     <input type="hidden" name="REPORTE_INSTITUCION" value="<%=institucionOferente%>">
+                                    <input type="hidden" name="QUERY" value="<%=queryParam %>">
                                     <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="RENÉ MAURICIO BOLAÑOS CANJURA">
                                     <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
                                     <input type="hidden" name="OPCION_DE_SALIDA" value="1">
