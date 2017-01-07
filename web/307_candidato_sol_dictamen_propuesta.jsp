@@ -33,9 +33,9 @@
      //obtener el expediente
      ExpedienteDAO expDao = new ExpedienteDAO();
      Expediente expediente = expDao.obtenerExpedienteAbierto(user);
-     //obtener el id_Progreso del expediente
-     
-     //obtener el estado_Progreso
+     if(expediente.getEstadoProgreso().equals("CORRECCION")){
+         response.sendRedirect("303_candidato_estado_solicitudes.jsp");
+     }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -90,7 +90,7 @@
                 <fieldset class="custom-border">
                     <legend class="custom-border">Adjuntar documentación necesaria</legend>
                     <%if(expediente.getIdProgreso() == 3){%>
-                        <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                        <% if(expediente.getEstadoProgreso().equals("EN PROCESO") || expediente.getEstadoProgreso().equals("REVISION")){%>
                             <div class="text-center">
                                 <h3 class="text-danger"> Ya ha realizado una Solicitud de Dictamen de Propuesta ante Junta Directiva</h3>
                                 <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
