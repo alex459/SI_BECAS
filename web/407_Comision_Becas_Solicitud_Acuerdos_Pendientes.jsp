@@ -92,8 +92,8 @@
                     <form name="solicitudAcuerdosPendientesComisionBecas" class="form-horizontal" action="407_Comision_Becas_Solicitud_Acuerdos_Pendientes.jsp" method="post" novalidate>
     
                     <div class="row">      <!-- FILTROS -->
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8"> 
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8"> 
                         
                        
                             <fieldset class="custom-border">
@@ -169,7 +169,7 @@
                     </div>
                     
                 </div>
-                 </form>     
+                </form>     
            <%
                 response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
                 request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
