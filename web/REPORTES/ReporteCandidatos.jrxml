@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="0.9090909090909091"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="paramtest" class="java.lang.String"/>
+	<parameter name="condicion" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE, FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,
 SDB.FECHA_SOLICITUD AS FECHA_SOLICITUD, OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,
@@ -14,7 +14,7 @@ DU.ID_FACULTAD=FA.ID_FACULTAD AND DU.ID_USUARIO=SDB.ID_USUARIO AND
 SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND
 SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND
 EX.ID_PROGRESO=PR.ID_PROGRESO
-AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='ABIERTO' OB.TIPO_OFERTA_BECA= $P{paramtest} ;]]>
+AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='ABIERTO' $P!{condicion} ;]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="FACULTAD" class="java.lang.String">

@@ -226,7 +226,7 @@
                      String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="";
                     String queryParam=""; 
 
-                       
+                     String consultaSql2 = "";   
                     try {
                        
                          if (!request.getParameter("tipoEstudio").isEmpty()) {
@@ -248,6 +248,7 @@
                         String fCierreFin = request.getParameter("fCierreFin");
                         //formando la consulta
                         String consultaSql = "";
+                       
                         consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE"
                                 + ", FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,SDB.FECHA_SOLICITUD AS FECHA_SOLICITUD"
                                 + ", OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION, "
@@ -258,22 +259,23 @@
                                 + " EX.ID_PROGRESO=PR.ID_PROGRESO AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION "
                                 + " AND EX.ESTADO_EXPEDIENTE='ABIERTO' ";
                         if (!request.getParameter("tipoBeca").isEmpty()) {
-                            consultaSql = consultaSql.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
                         }
                         if (!request.getParameter("facultad").isEmpty()) {
-                            consultaSql = consultaSql.concat(" AND FA.FACULTAD='" + facultad + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND FA.FACULTAD='" + facultad + "' ");
                         }
                         if (!request.getParameter("institucionOferente").isEmpty()) {
-                            consultaSql = consultaSql.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
                         }
                         if (!request.getParameter("tipoEstudio").isEmpty()) {
-                            consultaSql = consultaSql.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
                         }
                         if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                             java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                             java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                            consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                         }
+                        consultaSql = consultaSql.concat(consultaSql2);
                         consultaSql = consultaSql.concat(";");
                         queryParam=consultaSql;
                         System.out.println(consultaSql);
@@ -324,6 +326,7 @@
                                     <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="RENÉ MAURICIO BOLAÑOS CANJURA">
                                     <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
                                     <input type="hidden" name="OPCION_DE_SALIDA" value="1">
+                                    <input type="hidden" name="CONDICION" value="<%=consultaSql2 %>">                                    
                                      <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
                                
                                 </form>

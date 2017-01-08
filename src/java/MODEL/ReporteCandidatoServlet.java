@@ -52,6 +52,7 @@ public class ReporteCandidatoServlet extends HttpServlet {
             String reporte_reporte_nombre_usuario = request.getParameter("REPORTE_NOMBRE_USUARIO");
             String reporte_reporte_rol_usuario = request.getParameter("REPORTE_ROL_USUARIO");
             String opcion_de_salida = request.getParameter("OPCION_DE_SALIDA");
+            String condicion = request.getParameter("CONDICION");
             String query="";
             query= request.getParameter("QUERY");
 
@@ -73,28 +74,25 @@ public class ReporteCandidatoServlet extends HttpServlet {
           //  PrintStream salida = null
           Map parametersMap=new HashMap();
           parametersMap.put("paramtest", "EXTERNA");
+          parametersMap.put("condicion", condicion);
                // parametersMap=null;
             if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF     
                 
-            
-                ConexionBD conexionBD = new ConexionBD();
-                conexionBD.abrirConexion();
-                String dir="C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\ReporteCandidatos.jrxml";
-                 String dir2="C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\ReporteCandidatos.Jasper";
-               // InputStream entrada = new ByteArrayInputStream(dir.getBytes(StandardCharsets.UTF_8));
-              //  salida.print(dir2);
-                /*JasperDesign jd=JRXmlLoader.load(dir);
-                String sql=query;
-                JRDesignQuery newQuery= new JRDesignQuery();
-                newQuery.setText(sql);
-                JasperReport jr=JasperCompileManager.compileReport(jd);*/
-                //JasperPrint jp=JasperFillManager.fillReport(jr, null, conexionBD.conn);
-                //JasperViewer.viewReport(jp);
-                //byte[] bytes = JasperRunManager.runReportToPdf("C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\ReporteCandidatos.jasper", parametersMap, conexionBD.conn);
-                //JasperReport jr=JasperCompileManager.compileReport(dir);
-                //JasperCompileManager.compileReportToStream(entrada, salida);
+            /*
                 byte[] bytes = JasperRunManager.runReportToPdf(dir2, null, conexionBD.conn);
               
+                conexionBD.cerrarConexion();
+                response.setContentType("application/pdf");
+                response.setContentLength(bytes.length);
+                ServletOutputStream outputstream = response.getOutputStream();
+                outputstream.write(bytes, 0, bytes.length);
+                outputstream.flush();
+                outputstream.close();
+                */
+                 ConexionBD conexionBD = new ConexionBD();
+                conexionBD.abrirConexion();
+                String path = getServletContext().getRealPath("/REPORTES/");
+                byte[] bytes = JasperRunManager.runReportToPdf(path + "/ReporteCandidatos.jasper", parametersMap, conexionBD.conn);
                 conexionBD.cerrarConexion();
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
