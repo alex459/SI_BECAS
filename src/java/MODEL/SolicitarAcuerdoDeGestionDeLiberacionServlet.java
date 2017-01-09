@@ -104,11 +104,11 @@ public class SolicitarAcuerdoDeGestionDeLiberacionServlet extends HttpServlet {
             }
         }
 
-        if(solicitarAcuerdo== true)
+        if(solicitarAcuerdo== true){
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el acuerdo de gestion de liberacion correctamente.");
-        else
+        }else{
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud de acuerdo de gestion de liberacion.");
-        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

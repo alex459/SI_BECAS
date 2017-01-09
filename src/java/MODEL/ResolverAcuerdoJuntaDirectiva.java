@@ -137,6 +137,8 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                             }else{
                                 //ACTUALIZAR
                             }// FIN ACTUALIZAR
+                            idProgreso = 9;
+                            estado = "PENDIENTE";
                             break;
                         case 12:
                             //SOLICITUD INICIO DE SERVICIO CONTRACTUAL
@@ -245,6 +247,8 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                             }else{
                                 //ACTUALIZAR
                             }// FIN ACTUALIZAR
+                            idProgreso = 9;
+                            estado = "PENDIENTE";
                             break;
                         case 12:
                             //SOLICITUD INICIO DE SERVICIO CONTRACTUAL
@@ -350,6 +354,8 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                             }else{
                                 //ACTUALIZAR
                             }// FIN ACTUALIZAR
+                            idProgreso =10;
+                            estado = "CORRECCION";
                             break;
                         case 12:
                             //SOLICITUD INICIO DE SERVICIO CONTRACTUAL

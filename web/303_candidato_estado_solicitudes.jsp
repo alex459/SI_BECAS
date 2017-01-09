@@ -151,12 +151,13 @@
                                         </form>
                                         <%} else if (lista.get(i).getEstadoDocumento().equals("EN ESPERA")) {%>                                                 
                                         <div class="row">                                                    
-                                            <form action="<%=url%>" method="post">
+                                            <form action="CancelarSolicitudServlet" method="post">
                                                 <input type='hidden' name='ACCION' value='cancelar'>
                                                 <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
                                                 <input type="submit" class="btn btn-danger" value="Cancelar">
                                             </form>                                                          
                                         </div>
+                                         <%} else if (lista.get(i).getEstadoDocumento().equals("CANCELADO")) {%>
                                         <%} else {%>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -167,7 +168,7 @@
                                                 </form>
                                             </div>
                                             <div class="col-md-6">
-                                                <form action="<%=url%>" method="post">
+                                                <form action="CancelarSolicitudServlet" method="post">
                                                     <input type='hidden' name='ACCION' value='cancelar'>
                                                     <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
                                                     <input type="submit" class="btn btn-danger form-control" value="Cancelar">

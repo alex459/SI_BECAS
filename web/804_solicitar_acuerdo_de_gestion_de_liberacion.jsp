@@ -110,7 +110,7 @@
                         <% if(expediente.getEstadoProgreso().equals("EN PROCESO") || expediente.getEstadoProgreso().equals("REVISION")){%>
                             <div class="text-center">
                                 <h3 class="text-danger"> Ya ha realizado una Solicitud de acuerdo de gestion de liberación.</h3>
-                                <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
+                                <a href="400_Becario_Solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                             </div>
                             <!--<%/*}else if(accion.equals("insertar")){*/%>-->
                         <%}else{%>

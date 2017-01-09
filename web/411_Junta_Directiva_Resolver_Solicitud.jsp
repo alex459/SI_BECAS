@@ -160,9 +160,9 @@
     <body ng-app="resolverSolJuntaDirectivaApp" ng-controller="resolverSolJuntaDirectivaCtrl">
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2 class="text-center" style="color:#cf2a27">
+                <h3 class="text-center" style="color:#cf2a27">
                     Resolver Solicitud de Acuerdo
-                </h2>
+                </h3>
 
                 <br></br>
 
@@ -297,7 +297,7 @@
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                             </div> 
-                                            <%if (id_p == 1 || id_p ==12 || id_p ==13) {%>
+                                            <%if (id_p == 1 || id_p ==10 || id_p ==12 || id_p ==13) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
                                             <%} else  if (id_p == 4) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
@@ -402,7 +402,7 @@
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                             </div> 
-                                            <%if (id_p == 1 || id_p ==12 || id_p ==13) {%>
+                                            <%if (id_p == 1 || id_p ==10 ||  id_p ==12 || id_p ==13) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
                                             <%} else  if (id_p == 4) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">

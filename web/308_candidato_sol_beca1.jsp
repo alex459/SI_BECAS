@@ -156,7 +156,7 @@
                         <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                     </div>
                 <%} else {%>
-                    <form class="form-horizontal" name="solicitud" action="SolicitarBecaServlet" method="POST" enctype="multipart/form-data">            
+                <form class="form-horizontal" name="solicitud" action="{{url}}" method="POST" enctype="multipart/form-data" target="{{pestana}}" novalidate>            
                         <div class="row" ng-view>            
 
                         </div>

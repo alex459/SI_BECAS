@@ -120,7 +120,7 @@
                                                     case 136:
                                                         tipo = "ACUERDO DE AÑO FISCAL";
                                                         unidad = "JUNTA DIRECTIVA";
-                                                        url = "401_Becario_Sol_Acuerdo_Anio_Fiscal.jsp";
+                                                        url = "419_Modificar_Acuerdo_Anyo_Fiscal.jsp";
                                                         break;
                                                     case 140:
                                                         tipo = "ACUERDO DE PRORROGA DE BECA";
@@ -156,12 +156,13 @@
                                         </form>
                                         <%} else if (lista.get(i).getEstadoDocumento().equals("EN ESPERA")) {%>                                                 
                                         <div class="row">                                                    
-                                            <form action="<%=url%>" method="post">
+                                            <form action="CancelarSolicitudServlet" method="post">
                                                 <input type='hidden' name='ACCION' value='cancelar'>
                                                 <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
                                                 <input type="submit" class="btn btn-danger" value="Cancelar">
                                             </form>                                                          
                                         </div>
+                                        <%} else if (lista.get(i).getEstadoDocumento().equals("CANCELADO")) {%>
                                         <%} else {%>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -172,7 +173,7 @@
                                                 </form>
                                             </div>
                                             <div class="col-md-6">
-                                                <form action="<%=url%>" method="post">
+                                                <form action="CancelarSolicitudServlet" method="post">
                                                     <input type='hidden' name='ACCION' value='cancelar'>
                                                     <input type = "hidden" name="idDocumento" value="<%= lista.get(i).getIdDocumento()%>">
                                                     <input type="submit" class="btn btn-danger form-control" value="Cancelar">

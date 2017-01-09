@@ -10,34 +10,34 @@
 <%@page import="DAO.TipoDocumentoDAO"%>
 <%@page import="DAO.DetalleUsuarioDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
-<% 
+<%
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
-    
+
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String rol=(String)actual.getAttribute("rol");
-    String user=(String)actual.getAttribute("user");
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
     Integer idFacultad = 0;
-     try{
+    try {
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
         idFacultad = DetUsDao.obtenerFacultad(user);
-    } catch (Exception e){
+    } catch (Exception e) {
         e.printStackTrace();
     }
-     if(user==null){
-     response.sendRedirect("login.jsp");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
         return;
-     }
+    }
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <%
@@ -52,79 +52,79 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/customfieldset.css" rel="stylesheet">
-        <div class="row">
-            <div class="col-md-4">
-                <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-                <h3 class="text-center" >
-                    <p class="text-danger">Universidad De El Salvador</p>
-                </h3>
-            </div>
-            <div class="col-md-8">
-                <div class="col-xs-12" style="height:50px;"></div>
-                <h2 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-                </h2>
-                <h3 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-                </h3>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center" >
+                <p class="text-danger">Universidad De El Salvador</p>
+            </h3>
         </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center">
+                <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
+            </h2>
+            <h3 class="text-center">
+                <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
+            </h3>
+        </div>
+    </div>
 
-         <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-    <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
-    <p class="text-right" style="font-weight:bold;">Facultad: <%= idFacultad %></p>
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
+    <p class="text-right" style="font-weight:bold;">Facultad: <%= idFacultad%></p>
 
-        <%-- todo el menu esta contenido en la siguiente linea
-         el menu puede ser cambiado en la pagina menu.jsp --%>
-        <jsp:include page="menu_corto.jsp"></jsp:include>    
-<body ng-app="solicitudAcuerdosPendientesJuntaDirectivaApp" ng-controller="solicitudAcuerdosPendientesJuntaDirectivaCtrl">
- 
-    <div class="container-fluid">
-        <H3 class="text-center" style="color:#E42217;">Buscar Acuerdo</H3>
-        <fieldset class="custom-border">
-                <legend class="custom-border">Acuerdos</legend>
-                    
- 
-                                <form name="solicitudAcuerdosPendientesJuntaDirectiva" class="form-horizontal" action="412_Junta_Directiva_Buscar_Acuerdos.jsp" method="post" novalidate>
-   
-                                    <div class="row">      <!-- FILTROS -->
-                                        <div class="col-md-2"></div>
-                                    <div class="col-md-8"> 
-                  
-                                        <fieldset class="custom-border">
-                                         <legend class="custom-border">Filtros</legend>
-                                
+    <%-- todo el menu esta contenido en la siguiente linea
+     el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>    
+        <body ng-app="solicitudAcuerdosPendientesJuntaDirectivaApp" ng-controller="solicitudAcuerdosPendientesJuntaDirectivaCtrl">
+
+            <div class="container-fluid">
+                <H3 class="text-center" style="color:#E42217;">Buscar Acuerdo</H3>
+                <fieldset class="custom-border">
+                    <legend class="custom-border">Acuerdos</legend>
+
+
+                    <form name="solicitudAcuerdosPendientesJuntaDirectiva" class="form-horizontal" action="412_Junta_Directiva_Buscar_Acuerdos.jsp" method="post" novalidate>
+
+                        <div class="row">      <!-- FILTROS -->
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8"> 
+
+                                <fieldset class="custom-border">
+                                    <legend class="custom-border">Filtros</legend>
+
                                     <div class="row"> 
                                         <div class="col-md-12">   
                                             <label for="textinput">Solicitante: </label>                                                                                      
                                         </div>
-                                        
+
                                         <div class="col-md-12">    
-                                            
+
                                             <div class="row">
-                                            
-                                            <div class="col-md-3">                                                                                    
-                                                <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
-                                    
-                                            </div>
-                                            
-                                            <div class="col-md-3">    
-                                                <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
-                                            </div> 
-                                            <div class="col-md-3">
-                                                <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
-                                            </div> 
-                                            <div class="col-md-3">
-                                                <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
-                                            </div>
+
+                                                <div class="col-md-3">                                                                                    
+                                                    <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                    <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
+                                                    <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+
+                                                </div>
+
+                                                <div class="col-md-3">    
+                                                    <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                    <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
+                                                    <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                </div> 
+                                                <div class="col-md-3">
+                                                    <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                    <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
+                                                    <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                </div> 
+                                                <div class="col-md-3">
+                                                    <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                                    <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
+                                                    <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                </div>
 
                                             </div> 
                                             <div class="col-md-3 text-right"></div> 
@@ -139,212 +139,340 @@
                                             <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
                                             <small id="help5"></small>
                                         </div>
-                                        
+
                                         <div class="col-md-6">   
                                             <label for="textinput">Fecha Solicitud: </label>
-                                           <div class="input-group date">
-                                                 <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
-                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                             </div>
-                                                
+
                                         </div>
-                                                                         
+
                                     </div>
                                     <br>
                                     <div class="row">
                                         <div class="col-md-6">  
-                                        <label for="textinput">Tipo de Documento :</label>  
-                                                 <select id="selectbasic" name="ID_TIPO_DOCUMENTO" class="form-control">
-                                                        <option value="0">CONSULTAR TIPO DOCUMENTO</option>    
-                                                        <%
-                                                            TipoDocumentoDAO tipoDocumentoDao = new TipoDocumentoDAO();
-                                                            ArrayList<TipoDocumento> listaTipoDocumento = new ArrayList<TipoDocumento>();
-                                                            listaTipoDocumento = tipoDocumentoDao.consultarPorDepartamento("JUNTA DIRECTIVA");
-                                                            for (int i = 0; i < listaTipoDocumento.size(); i++) {
-                                                            out.write("<option value=" + listaTipoDocumento.get(i).getIdTipoDocumento() + ">" + listaTipoDocumento.get(i).getTipoDocumento() + "</option>");
-                                                             }
-                                                        %>                    
-                                                    </select>
-                                        </div>
+                                            <label for="textinput">Tipo de Documento :</label>  
+                                            <select id="selectbasic" name="ID_TIPO_DOCUMENTO" class="form-control">
+                                                <option value="0">CONSULTAR TIPO DOCUMENTO</option>    
+                                            <%
+                                                TipoDocumentoDAO tipoDocumentoDao = new TipoDocumentoDAO();
+                                                ArrayList<TipoDocumento> listaTipoDocumento = new ArrayList<TipoDocumento>();
+                                                listaTipoDocumento = tipoDocumentoDao.consultarPorDepartamento("JUNTA DIRECTIVA");
+                                                for (int i = 0; i < listaTipoDocumento.size(); i++) {
+                                                    out.write("<option value=" + listaTipoDocumento.get(i).getIdTipoDocumento() + ">" + listaTipoDocumento.get(i).getTipoDocumento() + "</option>");
+                                                }
+                                            %>                    
+                                        </select>
                                     </div>
-                                    <br>
-                                    <div class="row text-center"> 
-                                        <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!solicitudAcuerdosPendientesJuntaDirectiva.$valid">
-                                    </div>
-                                </fieldset>
-                                
-                            </div>
-                    
+                                </div>
+                                <br>
+                                <div class="row text-center"> 
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!solicitudAcuerdosPendientesJuntaDirectiva.$valid">
+                                </div>
+                            </fieldset>
+
                         </div>
-                    </form>
-                                                    
-                                                    
-                     <%
-                response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
-                request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
-                String nombre1;
-                String nombre2;
-                String apellido1;
-                String apellido2;
-                String carnet;
-                Integer id_tipo_documento;
-                String documento;
-                String fecha1;
-                ConexionBD conexionbd = null;
-               
-                ResultSet rs = null;
+
+                    </div>
+                </form>
+
+
+                <%
+                    response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
+                    request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
+                    String nombre1;
+                    String nombre2;
+                    String apellido1;
+                    String apellido2;
+                    String carnet;
+                    Integer id_tipo_documento;
+                    String documento;
+                    String fecha1;
+                    ConexionBD conexionbd = null;
+
+                    ResultSet rs = null;
 
                     //formando la consulta
-                    
                     //out.write(consultaSql);
                     //realizando la consulta
-            try {     
-                
-            nombre1 = request.getParameter("NOMBRE1");
-            nombre2 = request.getParameter("NOMBRE2");
-            apellido1 = request.getParameter("APELLIDO1");
-            apellido2 = request.getParameter("APELLIDO2");
-            carnet = request.getParameter("CARNET");  
-            id_tipo_documento = Integer.parseInt(request.getParameter("ID_TIPO_DOCUMENTO"));
-            documento = request.getParameter("ID_TIPO_DOCUMENTO"); 
-            fecha1 = request.getParameter("FECHA1");
-            String consultaSql="";
-            //String pendiente = "PENDIENTE";
-            String aprobado = "APROBADO";
-            String denegado = "DENEGADO";
-            String juntaD= "JUNTA DIRECTIVA";
-            
-            if(nombre1!=null) {} else {nombre1="";};
-            if(nombre2!=null) {} else {nombre2="";};
-            if(apellido1!=null) {} else {apellido1="";};
-            if(apellido2!=null) {} else {apellido2="";};
-            if(carnet!=null) {} else {carnet="";};
-            if(fecha1!=null) {} else {fecha1="";};
-            consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO  FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE (D.ESTADO_DOCUMENTO='"+aprobado+"' OR D.ESTADO_DOCUMENTO='"+denegado+"') AND TD.DEPARTAMENTO='"+juntaD+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'";
-             
-          if (id_tipo_documento == 0) {
+                    try {
 
-                    } else {
-                        consultaSql = consultaSql.concat(" AND TD.ID_TIPO_DOCUMENTO = " + id_tipo_documento);
+                        nombre1 = request.getParameter("NOMBRE1");
+                        nombre2 = request.getParameter("NOMBRE2");
+                        apellido1 = request.getParameter("APELLIDO1");
+                        apellido2 = request.getParameter("APELLIDO2");
+                        carnet = request.getParameter("CARNET");
+                        id_tipo_documento = Integer.parseInt(request.getParameter("ID_TIPO_DOCUMENTO"));
+                        documento = request.getParameter("ID_TIPO_DOCUMENTO");
+                        fecha1 = request.getParameter("FECHA1");
+                        String consultaSql = "";
+                        //String pendiente = "PENDIENTE";
+                        String aprobado = "APROBADO";
+                        String denegado = "DENEGADO";
+                        String juntaD = "JUNTA DIRECTIVA";
+
+                        if (nombre1 != null) {
+                        } else {
+                            nombre1 = "";
+                        };
+                        if (nombre2 != null) {
+                        } else {
+                            nombre2 = "";
+                        };
+                        if (apellido1 != null) {
+                        } else {
+                            apellido1 = "";
+                        };
+                        if (apellido2 != null) {
+                        } else {
+                            apellido2 = "";
+                        };
+                        if (carnet != null) {
+                        } else {
+                            carnet = "";
+                        };
+                        if (fecha1 != null) {
+                        } else {
+                            fecha1 = "";
+                        };
+                        consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN ('APROBADO','DENEGADO','REVISION') AND TD.DEPARTAMENTO='" + juntaD + "' AND F.ID_FACULTAD='" + idFacultad + "' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'";
+
+                        if (id_tipo_documento == 0) {
+
+                        } else {
+                            consultaSql = consultaSql.concat(" AND TD.ID_TIPO_DOCUMENTO = " + id_tipo_documento);
+                        }
+
+                        conexionbd = new ConexionBD();
+                        rs = conexionbd.consultaSql(consultaSql);
+                        //con el rs se llenara la tabla de resultados
+
+                    } catch (Exception ex) {
                     }
-            
-            conexionbd = new ConexionBD();
-            rs = conexionbd.consultaSql(consultaSql);
-            //con el rs se llenara la tabla de resultados
-           
-            }
-            catch (Exception ex){
-            }
-            
-            %>    
-                          
-                          
-                        
-                                                    
-                                                    
-                    <div class="col-md-2"></div> 
-                    
-                    <div class="row">
-                        <h5>Resultados</h5>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <table class="table text-center">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Codigo de Empleado</th>
-                                        <th>Solicitante</th>
-                                        <th>Unidad</th>
-                                        <th>Fecha de Resolucion</th>
-                                        <th>Tipo de Acuerdo</th>
-                                        <th>Estado</th>
-                                        <th>Acción</th>
-                                    </tr>  
-                                </thead>
-                                <tbody>
-                                    <%
-                                try {
-                                    Integer i = 0;
-                                    while (rs.next()) {
-                                        i = i + 1;
-                                        out.write("<tr>");
-                                        out.write("<td>" + i + "</td>");
-                                        out.write("<td>" + rs.getString(1) + "</td>");
-                                        out.write("<td>" + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + "</td>");
-                                        out.write("<td>" + rs.getString(6) + " " + rs.getString(7) + "</td>");
-                                        out.write("<td>" + rs.getString(8) + "</td>");
-                                        out.write("<td>" + rs.getString(9) + "</td>");
-                                        out.write("<td>" + rs.getString(10) + "</td>");
-                                        out.write("<td>");
-                                        out.write("<center>");
-                                        out.write("<form style='display:inline;' ><input type='submit' class='btn btn-success' name='submit' value='Ver'></form> ");
-                                       
-                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "' ><input type='submit' class='btn btn-danger' name='submit' value='Resolver'></form> ");
-                                        
-                                        out.write("</center>");
-                                        out.write("</td>");
-                                        out.write("</tr>");
+
+                %>    
+
+
+
+
+
+                <div class="col-md-2"></div> 
+
+                <div class="row">
+                    <h5>Resultados</h5>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Codigo de Empleado</th>
+                                    <th>Solicitante</th>
+                                    <th>Unidad</th>
+                                    <th>Fecha de Resolucion</th>
+                                    <th>Tipo de Acuerdo</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>  
+                            </thead>
+                            <tbody>
+                                <%                                        try {
+                                        Integer i = 0;
+                                        int idTipoDoc = 0;
+                                        int idProgreso =0;
+                                        String estadoProgreso = "";
+                                        while (rs.next()) {
+                                            i = i + 1;
+                                            out.write("<tr>");
+                                            out.write("<td>" + i + "</td>");
+                                            out.write("<td>" + rs.getString(1) + "</td>");
+                                            out.write("<td>" + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + "</td>");
+                                            out.write("<td>" + rs.getString(6) + " " + rs.getString(7) + "</td>");
+                                            out.write("<td>" + rs.getString(8) + "</td>");
+                                            out.write("<td>" + rs.getString(9) + "</td>");
+                                            out.write("<td>" + rs.getString(10) + "</td>");
+                                            out.write("<td>");
+                                            out.write("<center>");
+                                            //SWIFT DE ID TIPO DOCUMENTO
+                                            idTipoDoc = rs.getInt(12);
+                                            idProgreso = rs.getInt(13);
+                                            estadoProgreso = rs.getString(14);
+                                            switch (idTipoDoc) {
+                                                case 103:
+                                                        if(idProgreso == 2){
+                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }else{
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 120:
+                                                        if(idProgreso == 5){
+                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }else{
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 121:
+                                                        if(idProgreso == 5){
+                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }else{
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 136:
+                                                    if(idProgreso == 9 || idProgreso ==12){                                                            
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 140:
+                                                    if(idProgreso == 9){
+                                                            
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 151:
+                                                    if(idProgreso == 13){
+                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }else{
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }
+                                                        }else if(idProgreso == 12){                                                            
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 155:
+                                                    if(idProgreso == 5){
+                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }else{
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                            }
+                                            out.write("</center>");
+                                            out.write("</td>");
+                                            out.write("</tr>");
+                                        }
+                                    } catch (Exception ex) {
+                                        System.out.println("error: " + ex);
                                     }
-                                }catch (Exception ex) {
-                                    System.out.println("error: " + ex);
-                                }
 
-                            %>  
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-1"></div>
+                                %>  
+                            </tbody>
+                        </table>
                     </div>
-                                                    
-        </fieldset>
-    </div>  
+                    <div class="col-md-1"></div>
+                </div>
 
-</div>
-
-
+            </fieldset>
+        </div>  
 
 
 
 
-<div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-    <div class="col-md-6">
-        <h3>
-            Dirección
-        </h3>
-        <p>
-            2016 Universidad De El Salvador  <br/>
-            Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-        </p>
-    </div>
-    <div class="col-md-6">
-        <h3>
-            Información de contacto
-        </h3>
-        <p>
-            Universidad De El Salvador
-            Tél: +(503) 2511-2000 <br/>
-            Consejo de becas
-            Tél: +(503) 2511- 2016
-        </p>
-    </div>
-</div>    
-</div>
 
-<script src="js/jquery.min.js"></script>
+
+
+        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+            <div class="col-md-6">
+                <h3>
+                    Dirección
+                </h3>
+                <p>
+                    2016 Universidad De El Salvador  <br/>
+                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h3>
+                    Información de contacto
+                </h3>
+                <p>
+                    Universidad De El Salvador
+                    Tél: +(503) 2511-2000 <br/>
+                    Consejo de becas
+                    Tél: +(503) 2511- 2016
+                </p>
+            </div>
+        </div>    
+
+
+        <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
         <script src="js/solicitudAcuerdosPendientesJuntaDirectiva.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
         <script type="text/javascript">
-                                                        $(function () {
-                                                            $('.input-group.date').datepicker({
-                                                                format: 'yyyy-mm-dd',
-                                                                calendarWeeks: true,
-                                                                todayHighlight: true,
-                                                                autoclose: true,
-                                                                
-                                                            });
-                                                        });
+                                                $(function () {
+                                                    $('.input-group.date').datepicker({
+                                                        format: 'yyyy-mm-dd',
+                                                        calendarWeeks: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true,
+                                                    });
+                                                });
         </script>
-</body>
+    </body>
 </html>

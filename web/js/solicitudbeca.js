@@ -348,6 +348,17 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.cambiarcheckAsociacion = function (){
     $scope.checkAsociacion = !$scope.checkAsociacion;
     };
+    
+    $scope.url="SolicitarBecaServlet";
+    $scope.pestana="_blank";
+    $scope.cambiarUrlPDF = function (){
+    $scope.url = $scope.url = "SolicitudBecaPDF";
+    $scope.pestana= $scope.pestana= "_blank";
+    };
+    $scope.cambiarUrlSolicitud = function (){
+    $scope.url = $scope.url = "SolicitarBecaServlet";
+    $scope.pestana= $scope.pestana= "";
+    };
 })
 .directive('validFile',function(){
     return {

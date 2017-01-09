@@ -19,14 +19,7 @@
         </div>  
         <div class="col-md-3">
             <div class = "panel panel-default" style="padding: 10px;">
-                <button type="submit" class="btn btn-success">
-                    <span class="glyphicon glyphicon-file"></span> 
-                    Exportar
-                </button>
-                <button type="submit" class="btn btn-success">
-                    <span class="glyphicon glyphicon-print"></span> 
-                    Imprimir
-                </button>
+                <input type="submit" name="enviar" class="btn btn-success" value="Descargar en PDF" ng-click="cambiarUrlPDF()">                               
             </div>
         </div> 
     </div>
@@ -235,7 +228,7 @@
     <div class="row">
         <div class="col-md-4 col-lg-offset-4">
             <a href=""><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>                        
-            <input type="submit" name="enviar" class="btn btn-success" value="Enviar" ng-disabled="!solicitud.$valid">
+            <input type="submit" name="enviar" class="btn btn-success" value="Enviar" ng-disabled="!solicitud.$valid" ng-click="cambiarUrlSolicitud()">
             <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
         </div>
     </div></br>

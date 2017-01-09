@@ -101,6 +101,7 @@
                                 <h3 class="text-danger"> Ya ha realizado una solicitud de Acuerdo de Permiso Inicial</h3>
                                 <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                             </div>
+                        <%} else{%>
                         <%}%>
                 <%}else{%>
                     <div class="text-center">
