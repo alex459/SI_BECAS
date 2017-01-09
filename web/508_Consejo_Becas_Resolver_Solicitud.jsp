@@ -149,9 +149,9 @@
     <body ng-app="resolverSolConsejoBecasApp" ng-controller="resolverSolConsejoBecasCtrl">
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Acuerdo</p>
-                </h2>
+                <h3 class="text-center" style="color:#cf2a27">
+                    Resolver Solicitud de Acuerdo
+                </h3>
 
                 <br></br>
 
@@ -289,7 +289,7 @@
                                             
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 12) {%> 
+                                            <%} else  if (id_p == 12 || id_p == 21) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -398,7 +398,7 @@
                                             
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 12) {%> 
+                                            <%} else  if (id_p == 12 || id_p == 21) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">

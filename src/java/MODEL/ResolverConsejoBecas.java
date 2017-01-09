@@ -211,9 +211,38 @@ public class ResolverConsejoBecas extends HttpServlet {
                             //SOLICITUD DE PRORROGA
                             if (accion.equals("insertar")) {
                                 //INSERTAR
+                                //SOLICITAR ACUERDO AL CONSEJO DE BECAS
+                                acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                acuerdoSolicitar.setIdExpediente(expediente);
+                                acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                acuerdoSolicitar.setObservacion(obs);
+                                tipoDoc = tipoDao.consultarPorId(142);
+                                acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                documentoDao.solicitarDocumento(acuerdoSolicitar);
                             } else {
                                 //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 142);
+                                if (idAcuerdoSolicitado != 0) {
+                                    //ACTUALIZAR DOCUMENTO SOLICITADO
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                } else {
+                                    //REALIZAR SOLICITUD
+                                    acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                    acuerdoSolicitar.setIdExpediente(expediente);
+                                    acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    tipoDoc = tipoDao.consultarPorId(142);
+                                    acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                    documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                }
                             }// FIN ACTUALIZAR
+                            idProgreso = 22;
+                            estado = "EN PROCESO";
                             break;
                         default:
                             break;
@@ -296,6 +325,12 @@ public class ResolverConsejoBecas extends HttpServlet {
                             } else {
                                 //ACTUALIZAR
                             }// FIN ACTUALIZAR
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 140);
+                            acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                            acuerdoAnterior.setEstadoDocumento("REVISION");
+                            documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            idProgreso = 20;
+                            estado = "REVISION";
                             break;
                         default:
                             break;
@@ -481,6 +516,12 @@ public class ResolverConsejoBecas extends HttpServlet {
                             } else {
                                 //ACTUALIZAR
                             }// FIN ACTUALIZAR
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 140);
+                            acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                            acuerdoAnterior.setEstadoDocumento("REVISION");
+                            documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            idProgreso = 20;
+                            estado = "REVISION";
                             break;
                         default:
                             break;

@@ -125,7 +125,7 @@
                                                     case 140:
                                                         tipo = "ACUERDO DE PRORROGA DE BECA";
                                                         unidad = "JUNTA DIRECTIVA";
-                                                        url = "402_Becario_Sol_Prorroga.jsp";
+                                                        url = "420_Modificar_Solicitud_Prorroga.jsp";
                                                         break;
                                                     case 151:
                                                         tipo = "INICIO DE SERVICIO CONTRACTUAL";

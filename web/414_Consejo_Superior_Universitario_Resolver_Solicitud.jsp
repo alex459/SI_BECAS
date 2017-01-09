@@ -137,9 +137,9 @@
     <body ng-app="resolverSolConsejoSuperiorUniversitarioApp" ng-controller="resolverSolConsejoSuperiorUniversitarioCtrl">
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Acuerdo</p>
-                </h2>
+                <h3 class="text-center" style="color:#cf2a27">
+                    Resolver Solicitud de Acuerdo
+                </h3>
 
                 <br></br>
 
@@ -152,7 +152,7 @@
                     <div class="row">    <!-- TABLA RESULTADOS --> 
                         <div class="col-md-1"></div> 
                         <div class="col-md-10">
-                            <table class="table table-bordered"></br>
+                            <table class="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <td>Solicitante: </td>
@@ -276,7 +276,7 @@
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 7 || id_p == 15) {%> 
+                                            <%} else  if (id_p == 7 || id_p == 15 || id_p == 22) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -380,7 +380,7 @@
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 7 || id_p == 15) {%> 
+                                            <%} else  if (id_p == 7 || id_p == 15 || id_p == 22) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">

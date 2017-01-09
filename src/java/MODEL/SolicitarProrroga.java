@@ -45,54 +45,55 @@ public class SolicitarProrroga extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{
         //Obtener el id del expediente del usuario actual
         int idUser, idSol, idExp, idProg;
-        String user=request.getParameter("user");
-            ConexionBD conexionbd = null;
-            ResultSet rs = null;
-            Usuario temp1=new Usuario();
-            SolicitudDeBeca temp2=new SolicitudDeBeca();
-            Expediente temp3=new Expediente();
-            Progreso temp4=new Progreso();
-            //////////Obtener el id del usuario
-             try {
-                //formando la consulta
-                String consultaSql="SELECT ID_USUARIO FROM USUARIO WHERE NOMBRE_USUARIO='"+user+"';";
-                //realizando la consulta
-                conexionbd = new ConexionBD();
-                rs = conexionbd.consultaSql(consultaSql); 
-                temp1 = new Usuario();
-                if(rs.next()) {
-                    temp1.setIdUsuario(rs.getInt("ID_USUARIO"));
-                }
-                //con el rs se llenara la tabla de resultados
-            } catch (Exception ex) {
-                System.out.println(ex);
+        String user = request.getParameter("user");
+        ConexionBD conexionbd = null;
+        ResultSet rs = null;
+        Usuario temp1 = new Usuario();
+        SolicitudDeBeca temp2 = new SolicitudDeBeca();
+        Expediente temp3 = new Expediente();
+        Progreso temp4 = new Progreso();
+        //////////Obtener el id del usuario
+        try {
+            //formando la consulta
+            String consultaSql = "SELECT ID_USUARIO FROM USUARIO WHERE NOMBRE_USUARIO='" + user + "';";
+            //realizando la consulta
+            conexionbd = new ConexionBD();
+            rs = conexionbd.consultaSql(consultaSql);
+            temp1 = new Usuario();
+            if (rs.next()) {
+                temp1.setIdUsuario(rs.getInt("ID_USUARIO"));
             }
-            idUser=temp1.getIdUsuario();
-            ////////Obtener el id del expediente
-             try {
-                //formando la consulta
-                String consultaSql= "SELECT ID_EXPEDIENTE FROM SOLICITUD_DE_BECA WHERE ID_USUARIO="+idUser;
-                //realizando la consulta
-                conexionbd = new ConexionBD();
-                rs = conexionbd.consultaSql(consultaSql); 
-                temp2 = new SolicitudDeBeca();
-                if(rs.next()) {
-                    temp2.setIdExpediente(rs.getInt("ID_EXPEDIENTE"));
-                }
-                //con el rs se llenara la tabla de resultados
-            } catch (Exception ex) {
-                System.out.println(ex);
+            //con el rs se llenara la tabla de resultados
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        idUser = temp1.getIdUsuario();
+        ////////Obtener el id del expediente
+        try {
+            //formando la consulta
+            String consultaSql = "SELECT ID_EXPEDIENTE FROM SOLICITUD_DE_BECA WHERE ID_USUARIO=" + idUser;
+            //realizando la consulta
+            conexionbd = new ConexionBD();
+            rs = conexionbd.consultaSql(consultaSql);
+            temp2 = new SolicitudDeBeca();
+            if (rs.next()) {
+                temp2.setIdExpediente(rs.getInt("ID_EXPEDIENTE"));
             }
-            idExp=temp2.getIdExpediente();
+            //con el rs se llenara la tabla de resultados
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        idExp = temp2.getIdExpediente();
         ///////////////////////////////////////////////////////////////////
-        
+
         //Agarrando el pdf
         int tip1 = 113;
         int tip2 = 114;
         int tip3 = 115;
-        String obs = "Solicitud de prorroga ingresada";        
+        String obs = "Solicitud de prorroga ingresada";
         //1er archivo, 1ra carta de sol de prorroga
         InputStream archivo1 = null;
         Part filePart1 = request.getPart("doc_digital1");
@@ -111,12 +112,12 @@ public class SolicitarProrroga extends HttpServlet {
         if (filePart3 != null) {
             archivo3 = filePart3.getInputStream();
         }
-        
+
         Date fechaHoy = new Date();
         OfertaBeca ofertaBeca = new OfertaBeca();
         OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
         InstitucionDAO institucionDAO = new InstitucionDAO();
-        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());  
+        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
         Documento documento1 = new Documento();
         Documento documento2 = new Documento();
         Documento documento3 = new Documento();
@@ -127,12 +128,11 @@ public class SolicitarProrroga extends HttpServlet {
         TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
         ExpedienteDAO expDao = new ExpedienteDAO();
 
-
         //Insertando el pdf 1
-        int idDoc1=docdao.getSiguienteId();
+        int idDoc1 = docdao.getSiguienteId();
         tipo1 = tipoDao.consultarPorId(tip1);
-        Expediente idexpediente = expDao.consultarPorId(idExp);  
-        String Estado = "Pendiente";        
+        Expediente idexpediente = expDao.consultarPorId(idExp);
+        String Estado = "INGRESADO";
         documento1.setIdDocumento(idDoc1);
         documento1.setFechaIngreso(sqlDate);
         documento1.setFechaSolicitud(sqlDate);
@@ -140,13 +140,13 @@ public class SolicitarProrroga extends HttpServlet {
         documento1.setDocumentoDigital(archivo1);
         documento1.setIdExpediente(idexpediente);
         documento1.setObservacion(obs);
-        documento1.setEstadoDocumento(Estado);     
+        documento1.setEstadoDocumento(Estado);
         boolean ing1 = docdao.Ingresar(documento1);
-        System.out.println("resultado de doc "+ing1);
+        System.out.println("resultado de doc " + ing1);
         //Insertando el pdf 2
-        int idDoc2=docdao.getSiguienteId();
+        int idDoc2 = docdao.getSiguienteId();
         tipo2 = tipoDao.consultarPorId(tip2);
-        Estado = "Pendiente";        
+        Estado = "INGRESADO";
         documento2.setIdDocumento(idDoc2);
         documento2.setFechaIngreso(sqlDate);
         documento2.setFechaSolicitud(sqlDate);
@@ -154,13 +154,13 @@ public class SolicitarProrroga extends HttpServlet {
         documento2.setDocumentoDigital(archivo2);
         documento2.setIdExpediente(idexpediente);
         documento2.setObservacion(obs);
-        documento2.setEstadoDocumento(Estado);     
+        documento2.setEstadoDocumento(Estado);
         boolean ing2 = docdao.Ingresar(documento2);
-        System.out.println("resultado de doc "+ing2);
+        System.out.println("resultado de doc " + ing2);
         //Insertando el pdf 3
-        int idDoc3=docdao.getSiguienteId();
+        int idDoc3 = docdao.getSiguienteId();
         tipo3 = tipoDao.consultarPorId(tip3);
-        Estado = "Pendiente";        
+        Estado = "INGRESADO";
         documento3.setIdDocumento(idDoc3);
         documento3.setFechaIngreso(sqlDate);
         documento3.setFechaSolicitud(sqlDate);
@@ -168,22 +168,45 @@ public class SolicitarProrroga extends HttpServlet {
         documento3.setDocumentoDigital(archivo3);
         documento3.setIdExpediente(idexpediente);
         documento3.setObservacion("Carta de institucion para prorroga");
-        documento3.setEstadoDocumento(Estado);     
+        documento3.setEstadoDocumento(Estado);
         boolean ing3 = docdao.Ingresar(documento3);
-        System.out.println("resultado de doc "+ing3);
-        
-            if((ing1==true) && (ing2==true) && (ing3==true)){
+        System.out.println("resultado de doc " + ing3);
+
+        //solictar Acuerdo
+        Documento acuerdo = new Documento();
+        TipoDocumento tipo = new TipoDocumento();
+        int idDoc = docdao.getSiguienteId();
+        int tip = 140;
+        tipo = tipoDao.consultarPorId(tip);
+        String observacion = "DOCUMENTO SOLICITADO POR EL USUARIO:" + user;
+
+        acuerdo.setIdDocumento(idDoc);
+        acuerdo.setIdTipoDocumento(tipo);
+        acuerdo.setIdExpediente(idexpediente);
+        acuerdo.setFechaSolicitud(sqlDate);
+        acuerdo.setObservacion(observacion);
+        acuerdo.setEstadoDocumento("PENDIENTE");
+        docdao.solicitarDocumento(acuerdo);
+
+        //Cambiar progreso a Prorroga y en proceso
+        idexpediente.setIdProgreso(20);
+        idexpediente.setEstadoProgreso("EN PROCESO");
+                    expDao.actualizarExpediente(idexpediente);
+        if ((ing1 == true) && (ing2 == true) && (ing3 == true)) {
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la solicitud correctamente.");
-        }else{
+        } else {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la solicitud");
-        } 
+        }
+        }catch(Exception e){
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la solicitud");
+        }
     }
 
     public Date StringAFecha(String Sfecha) {
         SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
         try {
-            fecha = formatoDelTexto.parse(Sfecha);           
+            fecha = formatoDelTexto.parse(Sfecha);
         } catch (ParseException ex) {
 
             ex.printStackTrace();
