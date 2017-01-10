@@ -4,6 +4,10 @@
     Author     : alex
 --%>
 
+<%@page import="DAO.OfertaBecaDAO"%>
+<%@page import="POJO.Institucion"%>
+<%@page import="DAO.InstitucionDAO"%>
+<%@page import="DAO.BecaDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="POJO.Documento"%>
 <%@page import="DAO.DocumentoDAO"%>
@@ -107,10 +111,14 @@
     }
 
     String accion = request.getParameter("ACCION");
-    
-    if (accion == null){
+
+    if (accion == null) {
         accion = "insertar";
     }
+    BecaDAO becaDao = new BecaDAO();
+    InstitucionDAO institucionDao = new InstitucionDAO();
+    Institucion institucion = new Institucion();
+    OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -175,7 +183,7 @@
                     <div class="row">    <!-- TABLA RESULTADOS --> 
                         <div class="col-md-1"></div> 
                         <div class="col-md-10">
-                            <table class="table table-bordered"></br>
+                            <table class="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <td>Solicitante: </td>
@@ -215,7 +223,7 @@
                             <div class="row">
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
-                                    <table class="table">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
@@ -223,7 +231,7 @@
                                         </thead>
                                         <tbody >
                                             <%
-                                                            for (int i = 0; i < publicos.size(); i++) {%>
+                                                for (int i = 0; i < publicos.size(); i++) {%>
                                             <tr>
                                                 <td><%=i + 1%></td>
                                                 <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
@@ -240,6 +248,31 @@
 
                                         </tbody>
                                     </table>
+                                    <%if (id_p == 20 || id_p == 21 || id_p == 22) {
+                                    
+                                    String fechaFin= becaDao.fechaFinBeca(id_expedie);
+                                    institucion = institucionDao.institucionEstudioBecario(id_expedie);
+                                    String titulo = ofertaDao.obtenerTituloBeca(id_expedie);
+                                    %>
+                                    <div class="row">
+                                        <table class="table table-bordered text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th>Fecha Fin de Beca</th>
+                                                    <th>Institucion</th>
+                                                    <th>Titulo a Obtener</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><%=fechaFin%></td>
+                                                    <td><%=institucion.getNombreInstitucion()%>, <%= institucion.getPais()%></td>
+                                                    <td><%=titulo%></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <%}%>
                                 </div>
                                 <div class="col-md-1"></div>
                             </div>
@@ -297,9 +330,9 @@
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                             </div> 
-                                            <%if (id_p == 1 || id_p ==10 || id_p ==12 || id_p ==13 || id_p ==20) {%>
+                                            <%if (id_p == 1 || id_p == 10 || id_p == 12 || id_p == 13 || id_p == 20) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 4) {%> 
+                                            <%} else if (id_p == 4) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%> 
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -321,6 +354,20 @@
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de correccion.</span>
                                             </div> 
                                             <%}%>
+                                            <%if (id_p == 20) {%>
+                                            <div class="row" ng-show="mostrarfechaprorroga">
+                                                <br><br>
+                                                <div class="col-md-6">
+                                                    <label>Ingrese la fecha de fin de la prorroga:</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                        <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                    </div>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.fechaCierre.$error.required">Ingrese una fecha de fin de prorroga.</span>
+                                                </div>                                                
+                                            </div>
+                                            <%}%>
                                             <div class="row text-center">
                                                 <br>
                                             </div>
@@ -335,7 +382,7 @@
                                             Documento acuerdo = docComision.obtenerInformacionDocumentoPorId(Integer.parseInt(id_documento));
                                         %>
                                         <div class="row">
-                                            <table class="table">
+                                            <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Acuerdo Ingresado</th><th>Observacion</th><th>Documento</th>
@@ -355,7 +402,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                                                
+
                                         <form  name="resolverSolComisionBecas" action="ResolverAcuerdoJuntaDirectiva" method="POST" enctype="multipart/form-data" novalidate>           
 
                                             <div class="row" >
@@ -402,9 +449,9 @@
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                             </div> 
-                                            <%if (id_p == 1 || id_p ==10 ||  id_p ==12 || id_p ==13 || id_p ==20) {%>
+                                            <%if (id_p == 1 || id_p == 10 || id_p == 12 || id_p == 13 || id_p == 20) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 4) {%> 
+                                            <%} else if (id_p == 4) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -425,6 +472,20 @@
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de correccion.</span>
                                             </div> 
+                                            <%}%>
+                                            <%if (id_p == 20) {%>
+                                            <div class="row" ng-show="mostrarfechaprorroga">
+                                                <br><br>
+                                                <div class="col-md-6">
+                                                    <label>Ingrese la fecha de fin de la prorroga:</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                        <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                    </div>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.fechaCierre.$error.required">Ingrese una fecha de fin de prorroga.</span>
+                                                </div>                                                
+                                            </div>
                                             <%}%>
                                             <div class="row text-center">
                                                 <br>
@@ -481,6 +542,20 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/resolverSolJuntaDirectiva.js"></script>
+    <script src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+                                                    $(function () {
+                                                        $('.input-group.date').datepicker({
+                                                            format: 'yyyy-mm-dd',
+                                                            calendarWeeks: true,
+                                                            todayHighlight: true,
+                                                            autoclose: true,
+                                                            startDate: new Date()
+                                                        });
+                                                    });
+
+    </script>
 
 
 </body>

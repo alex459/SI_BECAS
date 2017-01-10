@@ -229,4 +229,29 @@ public class InstitucionDAO extends ConexionBD{
         }
         return exito;
     }
+    
+    public Institucion institucionEstudioBecario(int idExpediente) {
+        Institucion temp = new Institucion(); 
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_INSTITUCION, NOMBRE_INSTITUCION, PAIS FROM `oferta_beca` OB JOIN institucion I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION JOIN solicitud_de_beca SB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA WHERE SB.ID_EXPEDIENTE =" +idExpediente ;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                int id= rs.getInt("ID_INSTITUCION");
+                String nombre = rs.getString("NOMBRE_INSTITUCION");
+                String pais = rs.getString("PAIS");
+                temp.setIdInstitucion(id);
+                temp.setNombreInstitucion(nombre);
+                temp.setPais(pais);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return temp;
+    }
 }

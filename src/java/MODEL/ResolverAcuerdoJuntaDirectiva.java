@@ -86,6 +86,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
             }
             //PROCESO SEGUN RESOLUCION 
             Integer idAcuerdoSolicitado = 0;
+            String fechafinProrroga="";
             switch (resolucion) {
                 case "APROBADO":
                     Documento acuerdoSolicitar = new Documento();
@@ -199,6 +200,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                             break;
                         case 20:
                             //SOLICITUD DE PRORROGA
+                            fechafinProrroga = request.getParameter("fechaCierre");
                             if (accion.equals("insertar")) {
                                 //INSERTAR
                                 //SOLICITAR ACUERDO AL CONSEJO DE BECAS
@@ -229,6 +231,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                     tipoDoc = tipoDao.consultarPorId(141);
                                     acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
                                     documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                    //INGRESAR O ACTUALIZAR PRORROGA EN EL SISTEMA
                                 }
                             }// FIN ACTUALIZAR
                             idProgreso = 21;

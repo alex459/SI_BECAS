@@ -223,6 +223,26 @@ public class OfertaBecaDAO extends ConexionBD{
 
         return idOferta;
     }
+     
+     public String obtenerTituloBeca(int idExpediente) {
+        String titulo = null;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT NOMBRE_OFERTA FROM `oferta_beca` OB JOIN solicitud_de_beca SB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA WHERE SB.ID_EXPEDIENTE =" +idExpediente;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                titulo = rs.getString("NOMBRE_OFERTA");                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return titulo;
+    } 
 }
 
 

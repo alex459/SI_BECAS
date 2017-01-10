@@ -8,18 +8,22 @@ $scope.obsReq = true;
 $scope.resolucion;
 $scope.tipoCorreccion = "documento";
 $scope.mostrartipocorrecion = false;
+$scope.mostrarfechaprorroga = false;
 $scope.CambiarEstadoAprobado = function (){
     $scope.resolucion = $scope.resolucion="APROBADO";
     $scope.requerido = $scope.requerido = true;
     $scope.obsReq = $scope.obsReq = true;
     $scope.obsReq = $scope.obsReq = !$scope.obsReq;
     $scope.mostrartipocorrecion = $scope.mostrartipocorrecion = false;
+    $scope.mostrarfechaprorroga = $scope.mostrarfechaprorroga = false;
+    $scope.mostrarfechaprorroga = $scope.mostrarfechaprorroga = !$scope.mostrarfechaprorroga;
 };
 $scope.CambiarEstadoDenegado = function (){
     $scope.resolucion = $scope.resolucion="DENEGADO";
     $scope.requerido = $scope.requerido = true;
     $scope.obsReq = $scope.obsReq = true;
     $scope.mostrartipocorrecion = $scope.mostrartipocorrecion = false;
+    $scope.mostrarfechaprorroga = $scope.mostrarfechaprorroga = false;
 };
 $scope.CambiarEstadoCorreccion = function (){
     $scope.resolucion = $scope.resolucion="CORRECCION";
@@ -28,6 +32,7 @@ $scope.CambiarEstadoCorreccion = function (){
     $scope.obsReq = $scope.obsReq = true;
     $scope.mostrartipocorrecion = $scope.mostrartipocorrecion = false;
     $scope.mostrartipocorrecion = $scope.mostrartipocorrecion = !$scope.mostrartipocorrecion;
+    $scope.mostrarfechaprorroga = $scope.mostrarfechaprorroga = false;
 };
   }]);
   

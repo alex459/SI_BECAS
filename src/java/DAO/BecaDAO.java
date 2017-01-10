@@ -155,4 +155,24 @@ public class BecaDAO extends ConexionBD{
 
         return idOferta;
     }
+    
+    public String fechaFinBeca(int idExpediente) {
+        String fecha = null;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT FECHA_FIN FROM BECA WHERE ID_EXPEDIENTE =" +idExpediente;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                fecha = rs.getString("FECHA_FIN");                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return fecha;
+    } 
 }

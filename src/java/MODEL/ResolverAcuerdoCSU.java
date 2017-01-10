@@ -144,8 +144,14 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                 //INSERTAR
                             } else {
                                 //ACTUALIZAR
+                                //REGRESAR FECHA FIN A LA ANTERIOR //PARA ELLO AGREGAR UNA COLUMNA ESTADO
                             }// FIN ACTUALIZAR
-                            break;
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
+                            acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                            acuerdoAnterior.setEstadoDocumento("REVISION");
+                            documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            idProgreso = 21;
+                            estado = "REVISION";
                         default:
                             break;
                     } //FIN SWITCH PROGRESO
@@ -275,7 +281,14 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                 //INSERTAR
                             } else {
                                 //ACTUALIZAR
+                                //REGRESAR FECHA FIN A LA ANTERIOR //PARA ELLO AGREGAR UNA COLUMNA ESTADO
                             }// FIN ACTUALIZAR
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
+                            acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                            acuerdoAnterior.setEstadoDocumento("REVISION");
+                            documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            idProgreso = 21;
+                            estado = "REVISION";
                             break;
                         default:
                             break;
