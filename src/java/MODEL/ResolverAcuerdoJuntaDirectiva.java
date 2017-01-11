@@ -6,15 +6,21 @@
 //FALTA 10 Y 20 (ANO FISCAL Y PRORROGA)
 package MODEL;
 
+import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.OfertaBecaDAO;
+import DAO.ProrrogaDAO;
 import DAO.TipoDocumentoDAO;
+import POJO.Beca;
 import POJO.Documento;
 import POJO.Expediente;
+import POJO.Prorroga;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -67,6 +73,10 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
             TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
             ExpedienteDAO expDao = new ExpedienteDAO();
             OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
+            ProrrogaDAO prorrogaDao = new ProrrogaDAO();
+            BecaDAO becaDao = new BecaDAO();
+            Beca beca = new Beca();
+            Prorroga prorroga = new Prorroga();
 
             //RECUPERAR EXPEDIENTE, DOCUMENTO A RESOLVER  Y TIPO DE BECA
             Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(id_documento);
@@ -86,7 +96,8 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
             }
             //PROCESO SEGUN RESOLUCION 
             Integer idAcuerdoSolicitado = 0;
-            String fechafinProrroga="";
+            String fechafinProrroga = "";
+            int idProrroga = 0;
             switch (resolucion) {
                 case "APROBADO":
                     Documento acuerdoSolicitar = new Documento();
@@ -201,6 +212,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                         case 20:
                             //SOLICITUD DE PRORROGA
                             fechafinProrroga = request.getParameter("fechaCierre");
+                            java.sql.Date sqlDate2 = new java.sql.Date(StringAFecha(fechafinProrroga).getTime());
                             if (accion.equals("insertar")) {
                                 //INSERTAR
                                 //SOLICITAR ACUERDO AL CONSEJO DE BECAS
@@ -231,9 +243,34 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                     tipoDoc = tipoDao.consultarPorId(141);
                                     acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
                                     documentoDao.solicitarDocumento(acuerdoSolicitar);
-                                    //INGRESAR O ACTUALIZAR PRORROGA EN EL SISTEMA
                                 }
                             }// FIN ACTUALIZAR
+                            //INGRESAR O ACTUALIZAR PRORROGA EN EL SISTEMA
+                            beca = becaDao.consultarPorExpediente(idExpediente);
+                            int idProrrogaAnterior = prorrogaDao.ExisteProrrogaAnterior(beca.getIdBeca());
+                            idProrroga = prorrogaDao.ExisteProrroga(beca.getIdBeca(), id_documento);
+                             if (idProrrogaAnterior != 0) {
+                                    Prorroga prorrogaAnterior = prorrogaDao.consultarPorId(idProrrogaAnterior);
+                                    prorroga.setFechaInicio(prorrogaAnterior.getFechaFin());
+                                } else {
+                                    prorroga.setFechaInicio(beca.getFechaFin());
+                                }
+                            if (idProrroga != 0) {
+                                //Actualizar
+                                prorroga = prorrogaDao.consultarPorId(idProrroga);                               
+                                prorroga.setFechaFin(sqlDate2);
+                                prorroga.setEstado("APROBADO");
+                                prorrogaDao.actualizarProrroga(prorroga);
+                            } else {
+                                //ingresar
+                                idProrroga = prorrogaDao.getSiguienteId();
+                                prorroga.setIdProrroga(idProrroga);
+                                prorroga.setIdBeca(beca.getIdBeca());
+                                prorroga.setIdDocumento(id_documento);                                
+                                prorroga.setFechaFin(sqlDate2);
+                                prorroga.setEstado("APROBADO");
+                                prorrogaDao.ingresar(prorroga);
+                            }
                             idProgreso = 21;
                             estado = "EN PROCESO";
                             break;
@@ -311,7 +348,19 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                 //INSERTAR
                             } else {
                                 //ACTUALIZAR
+                                //ACTUALIZAR ESTADO PRORROGA EN EL SISTEMA
+                                beca = becaDao.consultarPorExpediente(idExpediente);
+                                idProrroga = prorrogaDao.ExisteProrroga(beca.getIdBeca(), id_documento);
+                                if (idProrroga != 0) {
+                                    //Actualizar
+                                    prorroga = prorrogaDao.consultarPorId(idProrroga);
+                                    prorroga.setEstado("DENEGADO");
+                                    prorrogaDao.actualizarProrroga(prorroga);
+                                } else {
+                                    //NO SOLICITAR
+                                }
                             }// FIN ACTUALIZAR
+
                             idProgreso = 9;
                             estado = "PENDIENTE";
                             break;
@@ -336,14 +385,16 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                     estado = "CORRECCION";
                                 }
                             } else //ACTUALIZAR
-                            if (tipoCorreccion.equals("documento")) {
-                                //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
-                                //no existe documento anterior
-                            } else {
-                                //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD
-                                idProgreso = 1;
-                                estado = "CORRECCION";
-                            }// FIN ACTUALIZAR
+                            {
+                                if (tipoCorreccion.equals("documento")) {
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //no existe documento anterior
+                                } else {
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD
+                                    idProgreso = 1;
+                                    estado = "CORRECCION";
+                                }// FIN ACTUALIZAR
+                            }
                             break;
                         case 4:
                             //ACUERDOS DE PERMISOS DE BECA
@@ -361,17 +412,19 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                     //no existe solicitud
                                 }
                             } else //ACTUALIZAR
-                            if (tipoCorreccion.equals("documento")) {
-                                //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
-                                //obteniendo dictamen de becas y cambiando estado a REVISION
-                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 112);
-                                acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
-                                acuerdoAnterior.setEstadoDocumento("REVISION");
-                                documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
-                            } else {
-                                //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD
-                                //no existe solicitud
-                            }// FIN ACTUALIZAR
+                            {
+                                if (tipoCorreccion.equals("documento")) {
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo dictamen de becas y cambiando estado a REVISION
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 112);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                } else {
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD
+                                    //no existe solicitud
+                                }// FIN ACTUALIZAR
+                            }
                             idProgreso = 3;
                             estado = "REVISION";
                             break;
@@ -446,7 +499,17 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                             if (accion.equals("insertar")) {
                                 //INSERTAR
                             } else {
-                                //ACTUALIZAR
+                                //ACTUALIZAR ESTADO PRORROGA EN EL SISTEMA
+                                beca = becaDao.consultarPorExpediente(idExpediente);
+                                idProrroga = prorrogaDao.ExisteProrroga(beca.getIdBeca(), id_documento);
+                                if (idProrroga != 0) {
+                                    //Actualizar
+                                    prorroga = prorrogaDao.consultarPorId(idProrroga);
+                                    prorroga.setEstado("DENEGADO");
+                                    prorrogaDao.actualizarProrroga(prorroga);
+                                } else {
+                                    //NO SOLICITAR
+                                }
                             }// FIN ACTUALIZAR
                             idProgreso = 20;
                             estado = "CORRECCION";
@@ -469,6 +532,20 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
         } catch (Exception e) {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
         }
+    }
+
+    public Date StringAFecha(String Sfecha) {
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = null;
+        try {
+            fecha = formatoDelTexto.parse(Sfecha);
+        } catch (ParseException ex) {
+
+            ex.printStackTrace();
+
+        }
+        System.out.println("fechanice!");
+        return fecha;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

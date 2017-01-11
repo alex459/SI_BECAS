@@ -4,6 +4,13 @@
     Author     : alex
 --%>
 
+<%@page import="POJO.Prorroga"%>
+<%@page import="POJO.Beca"%>
+<%@page import="DAO.ProrrogaDAO"%>
+<%@page import="DAO.OfertaBecaDAO"%>
+<%@page import="POJO.Institucion"%>
+<%@page import="DAO.InstitucionDAO"%>
+<%@page import="DAO.BecaDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="POJO.Documento"%>
 <%@page import="DAO.DocumentoDAO"%>
@@ -85,6 +92,11 @@
     }
 
     String accion = request.getParameter("ACCION");
+
+    if (accion == null) {
+        accion = "insertar";
+    }
+
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -200,7 +212,7 @@
                                         </thead>
                                         <tbody >
                                             <%
-                                                            for (int i = 0; i < publicos.size(); i++) {%>
+                                                for (int i = 0; i < publicos.size(); i++) {%>
                                             <tr>
                                                 <td><%=i + 1%></td>
                                                 <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
@@ -217,10 +229,45 @@
 
                                         </tbody>
                                     </table>
+
                                 </div>
                                 <div class="col-md-1"></div>
                             </div>
 
+                            <%if (id_p == 20 || id_p == 21 || id_p == 22) {
+                                    BecaDAO becaDao = new BecaDAO();
+                                    InstitucionDAO institucionDao = new InstitucionDAO();
+                                    Institucion institucion = new Institucion();
+                                    OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
+                                    ProrrogaDAO prorrogaDao = new ProrrogaDAO();
+                                    String fechaFin = becaDao.fechaFinBeca(id_expedie);
+                                    institucion = institucionDao.institucionEstudioBecario(id_expedie);
+                                    String titulo = ofertaDao.obtenerTituloBeca(id_expedie);
+                                    Beca beca = becaDao.consultarPorExpediente(id_expedie);
+                                    int idProrroga = prorrogaDao.ExisteProrrogaAnterior(beca.getIdBeca());
+                                    Prorroga prorroga = prorrogaDao.consultarPorId(idProrroga);
+                            %>
+                            <div class="row">
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha Fin de Beca</th>
+                                            <th>Fecha Fin Prorroga</th>
+                                            <th>Institucion</th>
+                                            <th>Titulo a Obtener</th>                                                    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><%=fechaFin%></td>
+                                            <td><%=prorroga.getFechaFin()%></td>
+                                            <td><%=institucion.getNombreInstitucion()%>, <%= institucion.getPais()%></td>
+                                            <td><%=titulo%></td>                                                    
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <%}%>
 
                             <div class="row">
                                 <div class="col-md-1"></div>
@@ -276,7 +323,7 @@
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 7 || id_p == 15 || id_p == 22) {%> 
+                                            <%} else if (id_p == 7 || id_p == 15 || id_p == 22) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -380,7 +427,7 @@
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 7 || id_p == 15 || id_p == 22) {%> 
+                                            <%} else if (id_p == 7 || id_p == 15 || id_p == 22) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">

@@ -6,12 +6,16 @@
 //FALTA 22
 package MODEL;
 
+import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.OfertaBecaDAO;
+import DAO.ProrrogaDAO;
 import DAO.TipoDocumentoDAO;
+import POJO.Beca;
 import POJO.Documento;
 import POJO.Expediente;
+import POJO.Prorroga;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,6 +71,10 @@ public class ResolverAcuerdoCSU extends HttpServlet {
             TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
             ExpedienteDAO expDao = new ExpedienteDAO();
             OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
+            BecaDAO becaDao = new BecaDAO();
+            ProrrogaDAO prorrogaDao = new ProrrogaDAO();
+            Beca beca = new Beca();
+            Prorroga prorroga = new Prorroga();
 
             //RECUPERAR EXPEDIENTE, DOCUMENTO A RESOLVER  Y TIPO DE BECA
             Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(id_documento);
@@ -87,6 +95,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
             //PROCESO SEGUN RESOLUCION 
             Integer idAcuerdoSolicitado = 0;
             Documento acuerdoAnterior = new Documento();
+            int idProrroga = 0;
             switch (resolucion) {
                 case "APROBADO":
                     Documento acuerdoSolicitar = new Documento();
@@ -144,14 +153,16 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                 //INSERTAR
                             } else {
                                 //ACTUALIZAR
-                                //REGRESAR FECHA FIN A LA ANTERIOR //PARA ELLO AGREGAR UNA COLUMNA ESTADO
                             }// FIN ACTUALIZAR
-                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
-                            acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
-                            acuerdoAnterior.setEstadoDocumento("REVISION");
-                            documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
-                            idProgreso = 21;
-                            estado = "REVISION";
+                            beca = becaDao.consultarPorExpediente(idExpediente);
+                            //obteniendo acuerdo de prorroga de JD
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 140);
+                            if (idAcuerdoSolicitado !=0){
+                                idProrroga = prorrogaDao.ExisteProrroga(beca.getIdBeca(), idAcuerdoSolicitado);
+                                prorroga = prorrogaDao.consultarPorId(idProrroga);
+                                beca.setFechaFin(prorroga.getFechaFin());
+                                becaDao.actualizar(beca);
+                            }
                         default:
                             break;
                     } //FIN SWITCH PROGRESO
@@ -201,7 +212,28 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                 //INSERTAR
                             } else {
                                 //ACTUALIZAR
+                                //REGRESAR FECHA FIN A LA ANTERIOR               
+                                beca = becaDao.consultarPorExpediente(idExpediente);
+                                idProrroga = prorrogaDao.obtenerProrrogaAprobada(beca.getIdBeca());
+                                if(idProrroga !=0){
+                                    prorroga = prorrogaDao.consultarPorId(idProrroga);
+                                    if(beca.getFechaFin() == prorroga.getFechaFin()){
+                                        prorroga.setEstado("DENEGADO");
+                                        prorrogaDao.actualizarProrroga(prorroga);
+                                        beca.setFechaFin(prorroga.getFechaInicio());
+                                    }else{
+                                        // FECHA FIN BECA BIEN
+                                    }
+                                } else{
+                                    //No hacer nada
+                                }
                             }// FIN ACTUALIZAR
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
+                            acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                            acuerdoAnterior.setEstadoDocumento("REVISION");
+                            documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            idProgreso = 21;
+                            estado = "REVISION";                            
                             break;
                         default:
                             break;
@@ -281,7 +313,21 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                 //INSERTAR
                             } else {
                                 //ACTUALIZAR
-                                //REGRESAR FECHA FIN A LA ANTERIOR //PARA ELLO AGREGAR UNA COLUMNA ESTADO
+                                //REGRESAR FECHA FIN A LA ANTERIOR                                      
+                                beca = becaDao.consultarPorExpediente(idExpediente);
+                                idProrroga = prorrogaDao.obtenerProrrogaAprobada(beca.getIdBeca());
+                                if(idProrroga !=0){
+                                    prorroga = prorrogaDao.consultarPorId(idProrroga);
+                                    if(beca.getFechaFin() == prorroga.getFechaFin()){
+                                        prorroga.setEstado("DENEGADO");
+                                        prorrogaDao.actualizarProrroga(prorroga);
+                                        beca.setFechaFin(prorroga.getFechaInicio());
+                                    }else{
+                                        // FECHA FIN BECA BIEN
+                                    }
+                                } else{
+                                    //No hacer nada
+                                }
                             }// FIN ACTUALIZAR
                             idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
                             acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);

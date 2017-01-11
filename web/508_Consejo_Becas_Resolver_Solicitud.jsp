@@ -4,6 +4,13 @@
     Author     : adminPC
 --%>
 
+<%@page import="POJO.Beca"%>
+<%@page import="POJO.Prorroga"%>
+<%@page import="DAO.ProrrogaDAO"%>
+<%@page import="DAO.OfertaBecaDAO"%>
+<%@page import="POJO.Institucion"%>
+<%@page import="DAO.InstitucionDAO"%>
+<%@page import="DAO.BecaDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="POJO.Documento"%>
 <%@page import="DAO.DocumentoDAO"%>
@@ -93,10 +100,12 @@
     }
 
     String accion = request.getParameter("ACCION");
-    
-    if (accion == null){
+
+    if (accion == null) {
         accion = "insertar";
     }
+
+
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -164,7 +173,7 @@
                     <div class="row">    <!-- TABLA RESULTADOS --> 
                         <div class="col-md-1"></div> 
                         <div class="col-md-10">
-                            <table class="table table-bordered"></br>
+                            <table class="table table-bordered">
                                 <tbody>
                                     <tr>
                                         <td>Solicitante: </td>
@@ -212,7 +221,7 @@
                                         </thead>
                                         <tbody >
                                             <%
-                                                            for (int i = 0; i < publicos.size(); i++) {%>
+                                                for (int i = 0; i < publicos.size(); i++) {%>
                                             <tr>
                                                 <td><%=i + 1%></td>
                                                 <td><% out.write(publicos.get(i).getIdTipoDocumento().getTipoDocumento());%></td>
@@ -233,6 +242,41 @@
                                 <div class="col-md-1"></div>
                             </div>
 
+
+                            <%if (id_p == 20 || id_p == 21 || id_p == 22) {
+                                    BecaDAO becaDao = new BecaDAO();
+                                    InstitucionDAO institucionDao = new InstitucionDAO();
+                                    Institucion institucion = new Institucion();
+                                    OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
+                                    ProrrogaDAO prorrogaDao = new ProrrogaDAO();
+                                    String fechaFin = becaDao.fechaFinBeca(id_expedie);
+                                    institucion = institucionDao.institucionEstudioBecario(id_expedie);
+                                    String titulo = ofertaDao.obtenerTituloBeca(id_expedie);
+                                    Beca beca = becaDao.consultarPorExpediente(id_expedie);
+                                    int idProrroga = prorrogaDao.ExisteProrrogaAnterior(beca.getIdBeca());
+                                    Prorroga prorroga = prorrogaDao.consultarPorId(idProrroga);
+                            %>
+                            <div class="row">
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha Fin de Beca</th>
+                                            <th>Fecha Fin Prorroga</th>
+                                            <th>Institucion</th>
+                                            <th>Titulo a Obtener</th>                                                    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><%=fechaFin%></td>
+                                            <td><%=prorroga.getFechaFin()%></td>
+                                            <td><%=institucion.getNombreInstitucion()%>, <%= institucion.getPais()%></td>
+                                            <td><%=titulo%></td>                                                    
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <%}%>
 
                             <div class="row">
                                 <div class="col-md-1"></div>
@@ -286,10 +330,10 @@
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                             </div> 
-                                            
+
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 12 || id_p == 21) {%> 
+                                            <%} else if (id_p == 12 || id_p == 21) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -311,7 +355,7 @@
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de correccion.</span>
                                             </div> 
                                             <%}%>
-                                            
+
                                             <div class="row text-center">
                                                 <br>
                                             </div>
@@ -387,18 +431,18 @@
                                                             <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoCorreccion()"> Solicitar Correccion
                                                         </label>
                                                     </div>
-                                                    
+
                                                 </div>
                                                 <div class="col-md-1"></div>   
                                             </div>                                                                                 
-                                            
+
                                             <div class="row text-center">
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                             </div> 
-                                            
+
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else  if (id_p == 12 || id_p == 21) {%> 
+                                            <%} else if (id_p == 12 || id_p == 21) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -420,7 +464,7 @@
                                                 <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de correccion.</span>
                                             </div> 
                                             <%}%>
-                                            
+
                                             <div class="row text-center">
                                                 <br>
                                             </div>

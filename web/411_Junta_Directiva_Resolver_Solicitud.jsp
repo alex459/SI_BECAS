@@ -362,7 +362,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="input-group date">
-                                                        <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                        <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="fecharequerida"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                                                     </div>
                                                     <span class="text-danger" ng-show="resolverSolComisionBecas.fechaCierre.$error.required">Ingrese una fecha de fin de prorroga.</span>
                                                 </div>                                                
@@ -481,7 +481,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="input-group date">
-                                                        <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                                        <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="fecharequerida"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                                                     </div>
                                                     <span class="text-danger" ng-show="resolverSolComisionBecas.fechaCierre.$error.required">Ingrese una fecha de fin de prorroga.</span>
                                                 </div>                                                

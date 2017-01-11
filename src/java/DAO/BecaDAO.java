@@ -175,4 +175,34 @@ public class BecaDAO extends ConexionBD{
 
         return fecha;
     } 
+    
+    public Beca consultarPorExpediente(int id) {
+        Beca temp = new Beca();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_BECA, ID_EXPEDIENTE, FECHA_INICIO, FECHA_FIN FROM BECA where ID_EXPEDIENTE = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+
+                int ID_BECA = rs.getInt("ID_BECA");        
+                int ID_EXPEDIENTE = rs.getInt("ID_EXPEDIENTE");  
+                Date FECHA_INICIO = rs.getDate("FECHA_INICIO");
+                Date FECHA_FIN = rs.getDate("FECHA_FIN");
+
+                temp.setIdBeca(ID_BECA);
+                temp.setIdExpediente(ID_EXPEDIENTE);
+                temp.setFechaInicio(FECHA_INICIO);
+                temp.setFechaFin(FECHA_FIN);
+                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return temp;
+    }
 }
