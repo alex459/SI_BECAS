@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -67,29 +68,35 @@ public class ReporteBitacoraServlet extends HttpServlet {
             String reporte_reporte_nombre_usuario = request.getParameter("REPORTE_NOMBRE_USUARIO");
             String reporte_reporte_rol_usuario = request.getParameter("REPORTE_ROL_USUARIO");
             String opcion_de_salida = request.getParameter("OPCION_DE_SALIDA");
+            
+            if("".equals(reporte_nombre1)) reporte_nombre1 = "%";
+            if("".equals(reporte_nombre2)) reporte_nombre2 = "%";
+            if("".equals(reporte_apellido1)) reporte_apellido1 = "%";
+            if("".equals(reporte_apellido2)) reporte_apellido2 = "%";
 
             //preparando parametros para el reporte
             Map parametersMap = new HashMap();
-            parametersMap.put("PARAMETRO1", "HOLA");
-            parametersMap.put("PARAMETRO2", "MUNDO");
-            /*parametersMap.put("NOMBRE1", "%");
-            parametersMap.put("NOMBRE2", "%");
-            parametersMap.put("APELLIDO1", "%");
-            parametersMap.put("APELLIDO2", "%");
-            System.out.println(new Date((2016 - 1900), 1, 1));
-            System.out.println(new Date((2016 - 1900), 12, 31));
-            parametersMap.put("FECHA1", new Date((2016 - 1900), 1, 1));
-            parametersMap.put("FECHA2", new Date((2016 - 1900), 12, 31));
+            //parametersMap.put("PARAMETRO1", "HOLA");
+            //parametersMap.put("PARAMETRO2", "MUNDO");
+            parametersMap.put("NOMBRE1", reporte_nombre1);
+            parametersMap.put("NOMBRE2", reporte_nombre2);
+            parametersMap.put("APELLIDO1", reporte_apellido1);
+            parametersMap.put("APELLIDO2", reporte_apellido2);            
+            System.out.println(new Timestamp(116,11,24,0,0,0,0));
+            System.out.println(new Timestamp(117,1,20,0,0,0,0));
+            parametersMap.put("FECHA1", new Timestamp(116,11,24,0,0,0,0));
+            parametersMap.put("FECHA2", new Timestamp(117,1,20,0,0,0,0));
             parametersMap.put("ID_ACCION_MENOR", 0);
             parametersMap.put("ID_ACCION_MAYOR", 10);
             parametersMap.put("NOMBRE_USUARIO", "JOSE ALEXIS BELTRAN SERRANO");
-            parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");*/
+            parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");
 
             if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF                
                 ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
                 String path = getServletContext().getRealPath("/REPORTES/");
-                byte[] bytes = JasperRunManager.runReportToPdf(path + "/test_reporte_2.jasper", parametersMap, conexionBD.conn);
+                //byte[] bytes = JasperRunManager.runReportToPdf(path + "/test_reporte_2.jasper", parametersMap, conexionBD.conn);
+                byte[] bytes = JasperRunManager.runReportToPdf(path + "/101_reporte_bitacora.jasper", parametersMap, conexionBD.conn);                
                 conexionBD.cerrarConexion();
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
