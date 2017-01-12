@@ -75,5 +75,25 @@ public class MunicipioDAO extends ConexionBD{
         }
         return lista;
     }
+    
+    public String consultarNombrePorId(int id) {
+        String municipio = null;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT NOMBRE_MUNICIPIO FROM MUNICIPIO WHERE ID_MUNICIPIO = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {                       
+                 municipio=rs.getString("NOMBRE_MUNICIPIO");              
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return municipio;
+    }
 }
 

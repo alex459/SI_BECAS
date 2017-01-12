@@ -69,4 +69,24 @@ public class DepartamentoDAO extends ConexionBD{
         }
         return lista;
     }
+    
+    public String consultarNombrePorId(int id) {
+        String departamento = null;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT NOMBRE_DEPARTAMENTO FROM DEPARTAMENTO WHERE ID_DEPARTAMENTO = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {                    
+                departamento=rs.getString("NOMBRE_DEPARTAMENTO");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return departamento;
+    }
 }

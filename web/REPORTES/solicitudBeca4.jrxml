@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54ad7314-eff1-49cb-9d31-28411484dcd2">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54ad7314-eff1-49cb-9d31-28411484dcd2">
+	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="435"/>
+	<property name="ireport.y" value="157"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -13,15 +13,39 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="nombre1" class="java.lang.String"/>
-	<parameter name="nombre2" class="java.lang.String"/>
-	<parameter name="apellido1" class="java.lang.String"/>
-	<parameter name="apellido2" class="java.lang.String"/>
+	<parameter name="ListaBecasAnteriores" class="java.util.List"/>
+	<parameter name="nombre1R1" class="java.lang.String"/>
+	<parameter name="nombre2R1" class="java.lang.String"/>
+	<parameter name="apellido1R1" class="java.lang.String"/>
+	<parameter name="apellido2R1" class="java.lang.String"/>
+	<parameter name="domicilioR1" class="java.lang.String"/>
+	<parameter name="departamentoR1" class="java.lang.String"/>
+	<parameter name="municipioR1" class="java.lang.String"/>
+	<parameter name="telR1" class="java.lang.String"/>
+	<parameter name="nombre1R2" class="java.lang.String"/>
+	<parameter name="nombre2R2" class="java.lang.String"/>
+	<parameter name="apellido1R2" class="java.lang.String"/>
+	<parameter name="apellido2R2" class="java.lang.String"/>
+	<parameter name="domicilioR2" class="java.lang.String"/>
+	<parameter name="departamentoR2" class="java.lang.String"/>
+	<parameter name="municipioR2" class="java.lang.String"/>
+	<parameter name="telR2" class="java.lang.String"/>
+	<parameter name="nombre1R3" class="java.lang.String"/>
+	<parameter name="nombre2R3" class="java.lang.String"/>
+	<parameter name="apellido1R3" class="java.lang.String"/>
+	<parameter name="apellido2R3" class="java.lang.String"/>
+	<parameter name="domicilioR3" class="java.lang.String"/>
+	<parameter name="departamentoR3" class="java.lang.String"/>
+	<parameter name="municipioR3" class="java.lang.String"/>
+	<parameter name="telR3" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="94" splitType="Stretch">
+		<band height="746" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="93" width="555" height="491" uuid="fda6fa7b-3c6c-4042-9761-e5e40a7cb7e9"/>
+			</rectangle>
 			<image>
 				<reportElement x="13" y="1" width="98" height="89" uuid="7d2cded7-47aa-44f3-baa9-5927dce57df4"/>
 				<imageExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
@@ -40,158 +64,267 @@
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
-		</band>
-	</title>
-	<detail>
-		<band height="662" splitType="Stretch">
-			<rectangle>
-				<reportElement x="0" y="6" width="555" height="491" uuid="fda6fa7b-3c6c-4042-9761-e5e40a7cb7e9"/>
-			</rectangle>
 			<staticText>
-				<reportElement x="14" y="17" width="15" height="20" uuid="818fd9a1-f037-4184-8c0c-783b9adeae5c"/>
+				<reportElement x="2" y="99" width="15" height="20" uuid="818fd9a1-f037-4184-8c0c-783b9adeae5c"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[15.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="40" y="17" width="199" height="20" uuid="5ca24faa-9851-4a2a-8e50-3e9ab928ec58"/>
+				<reportElement x="28" y="99" width="199" height="20" uuid="5ca24faa-9851-4a2a-8e50-3e9ab928ec58"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[BECAS OBTENIDAS ANTERIORMENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="206" y="131" width="190" height="20" uuid="76360dbb-ea31-41f5-99eb-ce2556878b2d"/>
+				<reportElement x="194" y="213" width="190" height="20" uuid="76360dbb-ea31-41f5-99eb-ce2556878b2d"/>
 				<textElement textAlignment="Center">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[DIRECCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="51" y="131" width="60" height="20" uuid="0e9981af-a92a-4d7e-902a-43b7970edb3b"/>
+				<reportElement x="39" y="213" width="60" height="20" uuid="0e9981af-a92a-4d7e-902a-43b7970edb3b"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<line>
-				<reportElement x="40" y="150" width="485" height="1" uuid="692153c7-b421-4f37-95d1-4fb935d9b3a8"/>
+				<reportElement x="28" y="232" width="485" height="1" uuid="692153c7-b421-4f37-95d1-4fb935d9b3a8"/>
 			</line>
 			<line>
-				<reportElement x="205" y="131" width="1" height="202" uuid="0a0147f0-800e-4492-835f-2463ef372199"/>
+				<reportElement x="193" y="213" width="1" height="202" uuid="0a0147f0-800e-4492-835f-2463ef372199"/>
 			</line>
 			<staticText>
-				<reportElement x="14" y="111" width="395" height="20" uuid="8e154eb8-d469-46df-91a3-12bfa09b4e6d"/>
+				<reportElement x="2" y="193" width="395" height="20" uuid="8e154eb8-d469-46df-91a3-12bfa09b4e6d"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[16. UNIVERSITARIOS QUE PUEDAN DAR REFERNCIA SOBRE SU PERSONA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="452" y="131" width="60" height="20" uuid="5a35c334-0f29-438d-9084-6692b0b18956"/>
+				<reportElement x="440" y="213" width="60" height="20" uuid="5a35c334-0f29-438d-9084-6692b0b18956"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[TELEFONO]]></text>
 			</staticText>
 			<line>
-				<reportElement x="429" y="131" width="1" height="202" uuid="cc969ffa-6ec6-4731-bba5-bc6fafcbbda8"/>
+				<reportElement x="417" y="213" width="1" height="202" uuid="cc969ffa-6ec6-4731-bba5-bc6fafcbbda8"/>
 			</line>
 			<line>
-				<reportElement x="40" y="332" width="485" height="1" uuid="a6510b42-33eb-49a5-8cb2-aa11975fa1d6"/>
+				<reportElement x="28" y="414" width="485" height="1" uuid="a6510b42-33eb-49a5-8cb2-aa11975fa1d6"/>
 			</line>
 			<staticText>
-				<reportElement x="29" y="343" width="515" height="16" uuid="65e1b970-45eb-4f64-925f-6086be0d7332"/>
+				<reportElement x="17" y="425" width="515" height="16" uuid="65e1b970-45eb-4f64-925f-6086be0d7332"/>
 				<text><![CDATA[HAGO CONSTAR QUE LOS DATOS PROPORCIONADOS EN LA PRESENTE SOLICITUD SON VERACES ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="14" y="102" width="524" height="1" uuid="52ccb09b-24d1-4bc1-8dcd-a624e940227b"/>
+				<reportElement x="2" y="184" width="524" height="1" uuid="52ccb09b-24d1-4bc1-8dcd-a624e940227b"/>
 			</line>
 			<staticText>
-				<reportElement x="29" y="359" width="515" height="16" uuid="6359c106-03ab-41bf-9461-f4665f836f8f"/>
+				<reportElement x="17" y="441" width="515" height="16" uuid="6359c106-03ab-41bf-9461-f4665f836f8f"/>
 				<text><![CDATA[Y PUEDEN SER COMPROBADOS POR LOS MEDIOS DEL CONSEJO DE BECAS Y DE INVESTIGACIONES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="29" y="375" width="515" height="16" uuid="765643fd-f1ca-4dc8-9437-123c0ca679e8"/>
+				<reportElement x="17" y="457" width="515" height="16" uuid="765643fd-f1ca-4dc8-9437-123c0ca679e8"/>
 				<text><![CDATA[CIENTIFICAS CONSIDERE CONVENIETES]]></text>
 			</staticText>
 			<line>
-				<reportElement x="334" y="422" width="203" height="1" uuid="52c6f6cd-afe5-4b45-9600-24a480be3ab5"/>
+				<reportElement x="322" y="504" width="203" height="1" uuid="52c6f6cd-afe5-4b45-9600-24a480be3ab5"/>
 			</line>
 			<staticText>
-				<reportElement x="396" y="428" width="100" height="20" uuid="c6758f00-5aef-4992-8aa5-b5ab67bebf5c"/>
+				<reportElement x="384" y="510" width="100" height="20" uuid="c6758f00-5aef-4992-8aa5-b5ab67bebf5c"/>
 				<text><![CDATA[LUGAR Y FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="334" y="408" width="143" height="20" uuid="975ad282-08c2-4a56-9dac-c24a77ac4d01"/>
+				<reportElement x="322" y="490" width="143" height="20" uuid="975ad282-08c2-4a56-9dac-c24a77ac4d01"/>
 				<text><![CDATA[CIUDAD UNIVERSITARIA,]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="465" y="408" width="100" height="20" uuid="9480a4fa-0638-47d1-a769-19e3c6be9e75"/>
+				<reportElement x="453" y="490" width="100" height="20" uuid="9480a4fa-0638-47d1-a769-19e3c6be9e75"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="150" y="481" width="159" height="1" uuid="018fb576-fefc-4941-a1ef-18540a92f261"/>
+				<reportElement x="138" y="563" width="159" height="1" uuid="018fb576-fefc-4941-a1ef-18540a92f261"/>
 			</line>
 			<staticText>
-				<reportElement x="13" y="467" width="147" height="20" uuid="177ee6b1-7126-40e4-9bc7-dd7998ceafce"/>
+				<reportElement x="1" y="549" width="147" height="20" uuid="177ee6b1-7126-40e4-9bc7-dd7998ceafce"/>
 				<text><![CDATA[FIRMA DEL SOLICITANTE:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="502" width="34" height="20" uuid="c88af006-d0f5-4ec5-8289-46b65c7cf789"/>
+				<reportElement x="34" y="584" width="549" height="20" uuid="baba1e50-9e07-4305-839b-4b48b8d67133"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[LA PRESENTE SOLICITUD DEBERA SER ACOMPAÑADA CON LA DOCUMENTACION QUE A CONTINUACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="616" width="549" height="17" uuid="c72c3871-c580-4497-9686-df63d04408d2"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[1- PUNTO DE ACTA DE JUNTA DIRECTIVA SOBRE APROBACION DE LA BECA , QUE INCLUYA EL PROFESOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="629" width="549" height="17" uuid="eaa0884d-71ea-4def-8742-60b71ee00db3"/>
+				<text><![CDATA[SUSTITUTO O QUIEN ASUMIRA LA CARGA ACADEMICA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="646" width="549" height="17" uuid="d3dcf7dc-fea5-4a8c-98ab-a7f033e99c6a"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[2- COMUNICACION OFICIAL SOBRE ACEPTACION DEL CANDIDATO DE LA INSTITUCION EN DONDE REALIZARA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="659" width="549" height="17" uuid="8815c1f8-f4c8-4918-8c35-70da41d60823"/>
+				<text><![CDATA[LOS ESTUDIOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="676" width="549" height="17" uuid="817be840-8465-4c58-b834-01e3b39cfc04"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[3- PROGRAMA DE ESTUDIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="693" width="549" height="17" uuid="645a2f92-8ca5-4d04-98f5-1347341c9b8c"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[4- FOTOCOPIA DE TITULO Y PARTIDA DE NACIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="710" width="549" height="17" uuid="c268c8f4-545a-466d-99a3-94021ae998e6"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[5- COMUNICACION OFICIAL DEL ORGANISMO QUE FINANCIARA TOTAL O PARCIALMENTE LA BECA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="727" width="549" height="17" uuid="d38fd7f0-36d1-4ea7-957d-89ad7d00265e"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[6- CERTIFICADO DE SALUD RECIENTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="4" y="131" width="521" height="41" uuid="9ec4f0a5-9281-4c4d-803c-960ffa2811a2"/>
+				<textFieldExpression><![CDATA[""+$P{ListaBecasAnteriores}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="243" width="88" height="20" uuid="9c2e8489-e840-4caf-8ff6-606001ca1937"/>
+				<textFieldExpression><![CDATA[$P{nombre2R1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="263" width="84" height="20" uuid="5bcd73c1-c7c7-4678-8f64-e55920a080ec"/>
+				<textFieldExpression><![CDATA[$P{apellido1R1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="263" width="88" height="20" uuid="c1a02b92-f2ba-4ea1-b50c-7195908f0a5a"/>
+				<textFieldExpression><![CDATA[$P{apellido2R1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="243" width="210" height="40" uuid="8c809e06-7f1f-4f8f-8f14-c16194d83584"/>
+				<textFieldExpression><![CDATA[$P{domicilioR1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="307" y="283" width="100" height="20" uuid="19788ab3-c331-42b4-ab75-3bf0fff77dd3"/>
+				<textFieldExpression><![CDATA[$P{departamentoR1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="283" width="100" height="20" uuid="5ccac571-d2b3-4674-96ff-c352e01a7575"/>
+				<textFieldExpression><![CDATA[$P{municipioR1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="273" width="100" height="20" uuid="57b56dbb-dd58-456e-a99d-7667b50e5dc1"/>
+				<textFieldExpression><![CDATA[$P{telR1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="99" y="312" width="83" height="20" uuid="1bc10a1e-f9c3-4192-8415-e4c33214f8bb"/>
+				<textFieldExpression><![CDATA[$P{nombre2R2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="99" y="332" width="83" height="20" uuid="be169e73-406f-461c-aa20-1c657d13c1d3"/>
+				<textFieldExpression><![CDATA[$P{apellido2R2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="312" width="210" height="34" uuid="c0af1f59-3b1b-4493-8e0b-1b8485855621"/>
+				<textFieldExpression><![CDATA[$P{domicilioR2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="346" width="100" height="20" uuid="fca2253c-77d2-49a7-903a-a7e62bcc5675"/>
+				<textFieldExpression><![CDATA[$P{municipioR2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="307" y="346" width="100" height="20" uuid="8455358d-d1b8-4d9c-87ab-5b0f15b35abf"/>
+				<textFieldExpression><![CDATA[$P{departamentoR2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="326" width="100" height="20" uuid="153b748b-4e35-4f9c-87c4-7b13f14a9f6a"/>
+				<textFieldExpression><![CDATA[$P{telR2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="99" y="366" width="83" height="20" uuid="42e5919b-b7f3-4ab8-aec5-be49f8e308c1"/>
+				<textFieldExpression><![CDATA[$P{nombre2R3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="386" width="87" height="20" uuid="518507d2-e13f-4f4a-a6e2-b252298d2e2a"/>
+				<textFieldExpression><![CDATA[$P{apellido1R3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="99" y="386" width="83" height="20" uuid="e7cc2e33-6196-48e8-abc3-2157066c9dfe"/>
+				<textFieldExpression><![CDATA[$P{apellido2R3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="366" width="210" height="31" uuid="17d96c8d-44e7-499e-b76c-8295ee97aeb8"/>
+				<textFieldExpression><![CDATA[$P{domicilioR3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="397" width="100" height="20" uuid="596b044f-8abb-4632-8987-eca00ac7f92f"/>
+				<textFieldExpression><![CDATA[$P{municipioR3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="307" y="397" width="100" height="20" uuid="6060c239-37d1-46ec-93f0-543227fde8b4"/>
+				<textFieldExpression><![CDATA[$P{departamentoR3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="377" width="100" height="20" uuid="d9a3d716-37b4-411f-a24f-d9dd62750288"/>
+				<textFieldExpression><![CDATA[$P{telR3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="243" width="89" height="20" uuid="8bc798a5-2829-482a-aef7-56ad78b7c0e8"/>
+				<textFieldExpression><![CDATA[$P{nombre1R1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="366" width="100" height="20" uuid="9d7d3ed4-4960-4fd2-bce4-0b0d531fbd56"/>
+				<textFieldExpression><![CDATA[$P{nombre1R3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="312" width="100" height="20" uuid="2358cb92-1021-4653-9ffa-555a6769f6ab"/>
+				<textFieldExpression><![CDATA[$P{nombre1R2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="332" width="100" height="20" uuid="51bbe658-bfcb-4ccc-8308-ed81eea50ba9"/>
+				<textFieldExpression><![CDATA[$P{apellido1R2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-174" width="34" height="20" uuid="c88af006-d0f5-4ec5-8289-46b65c7cf789"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOTA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="34" y="502" width="549" height="20" uuid="baba1e50-9e07-4305-839b-4b48b8d67133"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[LA PRESENTE SOLICITUD DEBERA SER ACOMPAÑADA CON LA DOCUMENTACION QUE A CONTINUACION]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="517" width="549" height="17" uuid="01bc5131-7c3b-4d25-9fa3-6c97f30a163a"/>
+				<reportElement x="0" y="-159" width="549" height="17" uuid="01bc5131-7c3b-4d25-9fa3-6c97f30a163a"/>
 				<text><![CDATA[SE INDICA:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="14" y="534" width="549" height="17" uuid="c72c3871-c580-4497-9686-df63d04408d2"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[1- PUNTO DE ACTA DE JUNTA DIRECTIVA SOBRE APROBACION DE LA BECA , QUE INCLUYA EL PROFESOR]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="14" y="547" width="549" height="17" uuid="eaa0884d-71ea-4def-8742-60b71ee00db3"/>
-				<text><![CDATA[SUSTITUTO O QUIEN ASUMIRA LA CARGA ACADEMICA.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="14" y="564" width="549" height="17" uuid="d3dcf7dc-fea5-4a8c-98ab-a7f033e99c6a"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[2- COMUNICACION OFICIAL SOBRE ACEPTACION DEL CANDIDATO DE LA INSTITUCION EN DONDE REALIZARA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="14" y="577" width="549" height="17" uuid="8815c1f8-f4c8-4918-8c35-70da41d60823"/>
-				<text><![CDATA[LOS ESTUDIOS:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="16" y="594" width="549" height="17" uuid="817be840-8465-4c58-b834-01e3b39cfc04"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[3- PROGRAMA DE ESTUDIOS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="16" y="611" width="549" height="17" uuid="645a2f92-8ca5-4d04-98f5-1347341c9b8c"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[4- FOTOCOPIA DE TITULO Y PARTIDA DE NACIMIENTO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="16" y="628" width="549" height="17" uuid="c268c8f4-545a-466d-99a3-94021ae998e6"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[5- COMUNICACION OFICIAL DEL ORGANISMO QUE FINANCIARA TOTAL O PARCIALMENTE LA BECA.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="16" y="645" width="549" height="17" uuid="d38fd7f0-36d1-4ea7-957d-89ad7d00265e"/>
-				<textElement textAlignment="Justified"/>
-				<text><![CDATA[6- CERTIFICADO DE SALUD RECIENTE]]></text>
-			</staticText>
+			<textField>
+				<reportElement x="-1" y="-446" width="89" height="20" uuid="1498d8c8-6e6a-4684-8d8e-d0da2c1077ae"/>
+				<textFieldExpression><![CDATA[$P{nombre1R2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="-426" width="89" height="20" uuid="147ef89d-d386-42e5-891b-1f9b1b80ae8e"/>
+				<textFieldExpression><![CDATA[$P{apellido1R2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="-392" width="89" height="20" uuid="0ae6ab77-c71a-4bce-b2cd-35abfeb4dc0a"/>
+				<textFieldExpression><![CDATA[$P{nombre1R3}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
