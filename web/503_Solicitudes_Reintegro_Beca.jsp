@@ -75,8 +75,8 @@
 <body ng-app="solicitudReintegroBecaApp" ng-controller="solicitudReintegroBecaCtrl">
         <div class="container-fluid" >
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27">Solicitudes de Reintegración de Beca</p>
+                <h2 class="text-center" style="color:#cf2a27">
+                    Solicitudes de Reintegro de Beca
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -86,9 +86,9 @@
                 
                
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Solicitudes de Acuerdos Pendientes</legend>
+                        <legend class="custom-border">Solicitudes de Reintegro Pendientes</legend>
                         
-                         <form name="solicitudReintegroBeca" class="form-horizontal" action="503_Solicitudes_Reintegro_Beca.jsp" method="post" novalidate>
+                         <form name="solicitudAsesoriaContrato" class="form-horizontal" action="503_Solicitudes_Reintegro_Beca.jsp" method="post" novalidate>
    
                             <div class="row">      <!-- FILTROS -->
                                 <div class="col-md-2"></div>
@@ -108,25 +108,25 @@
                                             
                                                         <div class="col-md-3">                                                                                    
                                                             <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
 
                                                         </div>
                                             
                                                         <div class="col-md-3">    
                                                             <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                                         </div> 
                                                         <div class="col-md-3">
                                                             <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                                         </div> 
                                                         <div class="col-md-3">
                                                             <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                                         </div>
 
                                                     </div> 
@@ -138,16 +138,16 @@
                                                 <div class="col-md-6">   
                                                     <label for="textinput">Codigo de Usuario: </label>  
                                                     <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
-                                                    <span class="text-danger" ng-show="solicitudReintegroBeca.CARNET.$error.minlength">Minimo 7 caracteres.</span>
-                                                    <span class="text-danger" ng-show="solicitudReintegroBeca.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
+                                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.CARNET.$error.minlength">Minimo 7 caracteres.</span>
+                                                    <span class="text-danger" ng-show="solicitudAsesoriaContrato.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
                                                     <small id="help5"></small>
                                                 </div>
                                         
                                                 <div class="col-md-6">   
                                                     <label for="textinput">Expediente :</label>  
                                                          <input id="ID_EXPEDIENTE" name="ID_EXPEDIENTE" type="text" placeholder="ingrese numero de expediente a buscar" class="form-control input-md" ng-model="datos.idexpediente" ng-pattern="/^[0-9]*$/" minlength="1" maxlength="4">
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.ID_EXPEDIENTE.$error.minlength">Minimo 1 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudReintegroBeca.ID_EXPEDIENTE.$error.pattern">Solo se permiten numeros. (0-9).</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.ID_EXPEDIENTE.$error.minlength">Minimo 1 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudAsesoriaContrato.ID_EXPEDIENTE.$error.pattern">Solo se permiten numeros. (0-9).</span>
                                 
                                                 </div>
                                                                          
@@ -179,7 +179,7 @@
                                             </div>
                                             <br>
                                             <div class="row text-center"> 
-                                                <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!solicitudReintegroBeca.$valid">
+                                                <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!solicitudAsesoriaContrato.$valid">
                                             </div>
                                         </fieldset>
                                 
@@ -218,7 +218,7 @@
             id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
             fecha1 = request.getParameter("FECHA1");
             
-            String progreso= "23";
+            String progreso= "8";
             String consultaSql="";
             
             if(nombre1!=null) {} else {nombre1="";};
@@ -229,7 +229,7 @@
             if(fecha1!=null) {} else {fecha1="";};
             if(expediente!=null) {} else {expediente="";};
             
-          consultaSql = "SELECT DU.CARNET, DU.NOMBRE1_DU, DU.NOMBRE2_DU,  DU.APELLIDO1_DU,  DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD ,SB.FECHA_SOLICITUD, E.ID_EXPEDIENTE FROM EXPEDIENTE E JOIN SOLICITUD_DE_BECA SB ON E.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO JOIN DETALLE_USUARIO DU ON U.ID_USUARIO = DU.ID_USUARIO JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD  WHERE E.ID_PROGRESO = '"+progreso+"' AND DU.NOMBRE1_DU LIKE '%"+nombre1+"%' AND DU.NOMBRE2_DU LIKE '%"+nombre2+"%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND E.ID_EXPEDIENTE LIKE '%" + expediente + "%' AND SB.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'  ";
+          consultaSql = "SELECT DU.CARNET, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD ,SB.FECHA_SOLICITUD, E.ID_EXPEDIENTE FROM EXPEDIENTE E JOIN SOLICITUD_DE_BECA SB ON E.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO JOIN DETALLE_USUARIO DU ON U.ID_USUARIO = DU.ID_USUARIO JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD JOIN DOCUMENTO D ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_PROGRESO = 23 AND D.ID_TIPO_DOCUMENTO=159  AND DU.NOMBRE1_DU LIKE '%"+nombre1+"%' AND DU.NOMBRE2_DU LIKE '%"+nombre2+"%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND E.ID_EXPEDIENTE LIKE '%" + expediente + "%' AND SB.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'  ";
            //PRUEBA   out.write(consultaSql);
           
           if (id_facultad == 0) 
@@ -260,7 +260,7 @@
                         <h5>Resultados</h5>
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <table class="table text-center">
+                            <table class="table table-bordered text-center">
                                 <thead>
                                     <tr>
                                         <th>No.</th>

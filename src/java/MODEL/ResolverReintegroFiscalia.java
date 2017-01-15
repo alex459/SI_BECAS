@@ -5,20 +5,15 @@
  */
 package MODEL;
 
-import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.OfertaBecaDAO;
 import DAO.TipoDocumentoDAO;
-import DAO.UsuarioDAO;
-import POJO.Beca;
 import POJO.Documento;
 import POJO.Expediente;
-import POJO.OfertaBeca;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -49,82 +44,108 @@ public class ResolverReintegroFiscalia extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            //Recuperando informacion
+            //RECUPERAR DATOS
             String resolucion = request.getParameter("resolucion");
             String observacion = request.getParameter("observacion");
+            Integer idProgreso = Integer.parseInt(request.getParameter("id_p"));
             String accion = request.getParameter("accion");
-            Integer idExpediente = Integer.parseInt(request.getParameter("id_ex"));
+            String estado = "";
+            Integer id_documento = Integer.parseInt(request.getParameter("id_documento"));
             InputStream archivo = null;
             Part filePart = request.getPart("doc_digital");
             if (filePart != null) {
                 archivo = filePart.getInputStream();
             }
+            Date fechaHoy = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
 
+            //DAOS Y POJOS
             Documento documento = new Documento();
             DocumentoDAO documentoDao = new DocumentoDAO();
             TipoDocumento tipoDoc = new TipoDocumento();
             TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
             ExpedienteDAO expDao = new ExpedienteDAO();
             OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
-            BecaDAO becaDao = new BecaDAO();
-            Beca beca = new Beca();
-            UsuarioDAO usuarioDao = new UsuarioDAO();
-            boolean exitoBeca = false;
-            //Obteniendo el tipo de beca
 
+            //RECUPERAR EXPEDIENTE, DOCUMENTO A RESOLVER  Y TIPO DE BECA
+            Integer idExpediente = documentoDao.ObtenerIdExpedientePorIdDocumento(id_documento);
             String TipoBeca = ofertaDao.ObtenerTipoBeca(idExpediente);
             Expediente expediente = expDao.consultarPorId(idExpediente);
-            Date fechaHoy = new Date();
-            java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
-
-            //Obteniendo Documento a resolver
-            Integer id_documento = documentoDao.ExisteDocumento(idExpediente, 159);
             documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+            //RESOLUCION DEL DOCUMENTO
             documento.setEstadoDocumento(resolucion);
             documento.setObservacion(observacion);
             String obs = documento.getObservacion();
-            Integer IdUsuario = becaDao.consultarIdUsuarioPorIdExpediente(idExpediente);
+            if (filePart.getSize() > 0) {
+                //Actualizar Documento a resolver
+                documento.setDocumentoDigital(archivo);
+                documentoDao.ActualizarResolver(documento);
+            } else {
+                boolean exitoActDoc = documentoDao.ActualizarEstadoDocumento(documento);
+            }
+            //PROCESO SEGUN RESOLUCION 
+            Integer idAcuerdoSolicitado = 0;
             switch (resolucion) {
                 case "APROBADO":
-                    //Actualizar Documento y solicitar el nuevo
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
-                    //CAMBIAR EL ESTADO A BECARIO                        
-                        usuarioDao.actualizarRolPorIdUsuario(IdUsuario, 2);
-                    //CAMBIAR PROGRESO Y ESTADO DE EXPEDIENTE
-                    expediente.setIdProgreso(14);
-                    expediente.setEstadoProgreso("PENDIENTE");
-                    expDao.actualizarExpediente(expediente);
+                    switch(idProgreso){
+                        case 23:
+                            //ACTA DE REINTEGRO
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idProgreso = 23;
+                            estado = "FINALIZADO";
+                            break;                        
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
                 case "DENEGADO":
-                    //Actualizar Documento y poner el progreso como denegado
-                    documento.setDocumentoDigital(archivo);
-                    documentoDao.ActualizarResolver(documento);
-                    //CAMBIAR EL ESTADO A BECARIO
-                        usuarioDao.actualizarRolPorIdUsuario(IdUsuario, 2);
-                    //CAMBIAR PROGRESO Y ESTADO DE EXPEDIENTE
-                    expediente.setIdProgreso(9);
-                    expediente.setEstadoProgreso("EN PROCESO");
-                    expDao.actualizarExpediente(expediente);
+                    switch(idProgreso){
+                        case 23:
+                            //ACTA DE REINTEGRO
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idProgreso = 9;
+                            estado = "PENDIENTE";
+                            break;                        
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
                     break;
-                    //SE DEBE PREGUNTAR SI AL SUSPENDER BECARIO SE ENVIA ALGUN DOCUMENTO A FISCALIA
-                /*case "CORRECCION":
-                    //Actualizar documento anterior a correccion y cambiar progreso al anterior
-                    if (accion.equals("insertar")) {
-                        //NO SE HABIA CREADO BECA
-                    } else {
-                        //ELIMINAR LA BECA CREADA (CASO DE QUE SE HAYA APROBADO ANTES)
-                        //CAMBIAR EL ESTADO A CANDIDATO
-                    }
-                    //CAMBIAR PROGRESO Y ESTADO DE EXPEDIENTE
-                    expediente.setIdProgreso(9);
-                    expediente.setEstadoProgreso("REVISION");
-                    expDao.actualizarExpediente(expediente);
-                    break;*/
+                case "CORRECCION":
+                    String tipoCorreccion = request.getParameter("tipoCorreccion");
+                    Documento acuerdoAnterior = new Documento();
+                    switch(idProgreso){
+                        case 23:
+                            //ACTA DE REINTEGRO
+                            if (accion.equals("insertar")){
+                                //INSERTAR
+                            }else{
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idProgreso = 9;
+                            estado = "PENDIENTE";
+                            break;                        
+                        default:
+                            break;
+                    } //FIN SWITCH PROGRESO
+                    break;
                 default:
+                    Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");
                     break;
-            }
-
+            } //FIN SWITCH RESOLUCION
+            
+             //CAMBIAR PROGRESO Y ESTADO
+            expediente.setIdProgreso(idProgreso);
+            expediente.setEstadoProgreso(estado);
+            expDao.actualizarExpediente(expediente);
+            //MOSTRAR MENSAJE DE EXITO
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
         } catch (Exception e) {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");

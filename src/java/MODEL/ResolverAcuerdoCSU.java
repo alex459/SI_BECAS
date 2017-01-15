@@ -163,6 +163,8 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                 beca.setFechaFin(prorroga.getFechaFin());
                                 becaDao.actualizar(beca);
                             }
+                            idProgreso = 9;
+                            estado = "PENDIENTE";
                         default:
                             break;
                     } //FIN SWITCH PROGRESO

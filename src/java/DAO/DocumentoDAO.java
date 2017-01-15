@@ -1063,7 +1063,7 @@ public class DocumentoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE = " + exp + " AND D.ESTADO_DOCUMENTO NOT IN ('PENDIENTE')" ;
+            String sql = "SELECT D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, D.OBSERVACION_O,D.ESTADO_DOCUMENTO, TD.TIPO_DOCUMENTO FROM TIPO_DOCUMENTO TD JOIN DOCUMENTO D ON TD.ID_TIPO_DOCUMENTO = D.ID_TIPO_DOCUMENTO JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE WHERE E.ID_EXPEDIENTE = " + exp + " AND D.ESTADO_DOCUMENTO NOT IN ('PENDIENTE', 'CORRECCION', 'EN ESPERA', 'CANCELADO')" ;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Documento temp = new Documento();
@@ -1071,12 +1071,14 @@ public class DocumentoDAO extends ConexionBD{
                 int ID_DOCUMENTO=rs.getInt("ID_DOCUMENTO");        
                 Integer ID_TIPO_DOCUMENTO=rs.getInt("ID_TIPO_DOCUMENTO");                        
                 String OBSERVACION=rs.getString("OBSERVACION_O");
-                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");                
+                String TIPO_DOCUMENTO = rs.getString("TIPO_DOCUMENTO");
+                String ESTADO_DOCUMENTO = rs.getString("ESTADO_DOCUMENTO");
                 temp.setIdDocumento(ID_DOCUMENTO);
                 temp2.setIdTipoDocumento(ID_TIPO_DOCUMENTO);
                 temp2.setTipoDocumento(TIPO_DOCUMENTO);
                 temp.setIdTipoDocumento(temp2);
-                temp.setObservacion(OBSERVACION);               
+                temp.setObservacion(OBSERVACION);   
+                temp.setEstadoDocumento(ESTADO_DOCUMENTO);
                 lista.add(temp);
             }            
             this.cerrarConexion();            

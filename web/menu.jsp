@@ -174,7 +174,7 @@
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='518_Solicitudes_de_Cierre_de_Expediente.jsp'>Solicitudes de Cierre de Expediente</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='519_Resolver_Cierre_de_Expediente.jsp'>Resolver Solicitud de Cierre de Expediente</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='510_Reportes.jsp'>Reportes</a></li>");
-                    
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='522_Becas_Expiradas.jsp'>Becas Expiradas</a></li>");
                     out.write("</ul>");
                     out.write("</li>");
                     out.write("</ul>");

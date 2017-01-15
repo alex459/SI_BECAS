@@ -68,6 +68,7 @@ public class ResolverCierreExpediente extends HttpServlet {
                 if(expediente.getIdProgreso() == 16){
                 expediente.setIdProgreso(15);
                 }
+
                 expediente.setEstadoProgreso("REVISION");
                 exitoActExpediente = expDao.actualizarExpediente(expediente);
             }

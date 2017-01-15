@@ -51,9 +51,9 @@
     }
      
     Integer id_expedie = Integer.parseInt(id_ex);
-    
-    
+        
     DocumentoDAO docComision = new DocumentoDAO();
+    int id_documento = docComision.ExisteDocumento(id_expedie, 159);
     ArrayList<Documento> publicos = new ArrayList<Documento>();
     publicos =  docComision.consultarFiscaliaReintegroBeca(id_expedie);
     
@@ -107,12 +107,12 @@ String accion="insertar";
 
     
     
-    <body ng-app="resolverSolFiscaliaActaReintegroApp" ng-controller="resolverSolFiscaliaActaReintegroCtrl">
+    <body ng-app="resolverSolFiscaliaAsesoriaContratoApp" ng-controller="resolverSolFiscaliaAsesoriaContratoCtrl">
      <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-            <h2>
-                <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Asesoría de Contrato de Beca</p>
-            </h2>
+            <h3 class="text-center" style="color:#cf2a27">
+                Resolver Solicitud de Reintegro de Beca
+            </h3>
 
             <br></br>
 
@@ -125,7 +125,7 @@ String accion="insertar";
                     <div class="row">    <!-- TABLA RESULTADOS --> 
                         <div class="col-md-1"></div> 
                         <div class="col-md-10">
-                            <table class="table table-bordered"></br>
+                            <table class="table table-bordered">
                                 <tbody>
                                     <tr>
                                     <td>Solicitante: </td>
@@ -143,7 +143,7 @@ String accion="insertar";
                                     
                                     <tr>
                                     <td>Documento Solicitado: </td>
-                                    <td>Acta de Reintegro de Beca </td>
+                                    <td>ACTA DE REINTEGRO DE BECA </td>
                                     <td>Fecha Solicitud: </td>
                                     <td><%=fecha_solicitud%> </td>
                                     </tr>
@@ -165,7 +165,7 @@ String accion="insertar";
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
-                                            <table class="table">
+                                            <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
                                                                 <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
@@ -200,14 +200,15 @@ String accion="insertar";
                                             <div class="col-md-10">
                                                 <fieldset class="custom-border">
                                                     <legend class="custom-border"> Resolucion</legend>
-                                                    <form  name="resolverSolFiscaliaActaReintegro" action="ResolverReintegroFiscalia" method="POST" enctype="multipart/form-data" novalidate>           
-                                                        <div class="row" >
+                                                    <form  name="resolverSolFiscaliaAsesoriaContrato" action="ResolverReintegroFiscalia" method="POST" enctype="multipart/form-data" novalidate>           
+                                                        
+                                                       <div class="row" >
                                                             <div class="col-md-4" ng-show="requerido">
                                                                 <label>Documento Digital:</label>
                                                             </div>
                                                             <div class="col-md-8" ng-show="requerido">
                                                                 <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" valid-file ng-required="requerido">
-                                                                <span class="text-danger" ng-show="resolverSolFiscaliaActaReintegro.doc_digital.$invalid&&requerido">Debe ingresar un documento en formato PDF.</span>
+                                                                <span class="text-danger" ng-show="resolverSolFiscaliaAsesoriaContrato.doc_digital.$invalid&&requerido">Debe ingresar un documento en formato PDF.</span>
 
                                                             </div>
                                                         </div>
@@ -217,7 +218,7 @@ String accion="insertar";
                                                             </div>
                                                             <div class="col-md-7">
                                                                 <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                                                <span class="text-danger" ng-show="!resolverSolFiscaliaActaReintegro.$pristine && resolverSolFiscaliaActaReintegro.observacion.$error.required">Ingrese la observacion del documento</span><br>
+                                                                <span class="text-danger" ng-show="resolverSolFiscaliaAsesoriaContrato.observacion.$error.required">Ingrese la observacion del documento</span><br>
                                                             </div>
                                                             <div class="col-md-1"></div>
                                                         </div>
@@ -243,15 +244,17 @@ String accion="insertar";
                                                             <div class="col-md-1"></div>   
                                                         </div>
                                                         <div class="row text-center">
-                                                            <span class="text-danger" ng-show="!resolverSolFiscaliaActaReintegro.$pristine && resolverSolFiscaliaActaReintegro.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
+                                                            <span class="text-danger" ng-show="!resolverSolFiscaliaAsesoriaContrato.$pristine && resolverSolFiscaliaAsesoriaContrato.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
                                                         </div> 
+                                                        <input type="hidden" name="tipoCorreccion" value="documento">
                                                         <div class="row text-center">
                                                             <br>
                                                         </div>
                                                         <div class="row text-center">
+                                                            <input type="hidden" name="id_p" value="23">
                                                             <input type="hidden" name="accion" value="<%=accion%>">
-                                                            <input type="hidden" name="id_ex" value="<%=id_ex%>">
-                                                            <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolFiscaliaActaReintegro.$valid">
+                                                            <input type="hidden" name="id_documento" value="<%=id_documento%>">
+                                                            <input type="submit" value="Guardar" class="btn btn-success" ng-disabled="!resolverSolFiscaliaAsesoriaContrato.$valid">
                                                         </div> 
                                                     </form>    
                                                 </fieldset>
@@ -291,14 +294,14 @@ String accion="insertar";
             Tél: +(503) 2511- 2016
         </p>
     </div>
-</div>    
+</div>  
 
 
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
-<script src="js/resolverSolFiscaliaActaReintegro.js"></script>
+<script src="js/resolverSolFiscaliaAsesoriaContrato.js"></script>
 
 
 </body>
