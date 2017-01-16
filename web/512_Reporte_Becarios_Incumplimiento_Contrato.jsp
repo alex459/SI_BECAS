@@ -258,7 +258,7 @@
                      String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="", tipoBecario="";
                     String queryParam=""; 
                     
-                       
+                       String consultaSql2 = "";
                     try {
                        
                          if (!request.getParameter("tipoBecario").isEmpty()) {
@@ -276,41 +276,42 @@
                         
                         //formando la consulta
                         String consultaSql = "";
-                        consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) "
-                                + " AS NOMBRE,OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,"
-                                + " INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,D.OBSERVACION_O AS OBSERVACION_O,"
-                                + " OB.FECHA_INICIO AS FECHA_INICIO, OB.FECHA_CIERRE AS FECHA_CIERRE"
-                                + " , FA.FACULTAD AS FACULTAD FROM DETALLE_USUARIO DU, "
-                                + " FACULTAD FA, OFERTA_BECA OB, DOCUMENTO D,iNSTITUCION INS, SOLICITUD_DE_BECA SDB, "
-                                + " EXPEDIENTE EX, USUARIO US, TIPO_USUARIO TU "
-                                + " WHERE DU.ID_FACULTAD=FA.ID_FACULTAD AND DU.ID_USUARIO=SDB.ID_USUARIO "
-                                + " AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND OB.ID_DOCUMENTO=D.ID_DOCUMENTO "
-                                + " AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND "
-                                + " OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND US.ID_USUARIO=DU.ID_USUARIO "
-                                + " AND US.ID_TIPO_USUARIO=TU.ID_TIPO_USUARIO "
-                             //   + " AND US.ID_TIPO_USUARIO= 1 "
-                                + " AND EX.ESTADO_EXPEDIENTE='ABIERTO' AND INS.TIPO_INSTITUCION='OFERTANTE' ";
+                        consultaSql = " SELECT distinct "
+                        + "CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU)"
+                        + "  AS NOMBRE, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,"
+                        + "  INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,"
+                        + " D.OBSERVACION_O AS OBSERVACION_O, OB.FECHA_INICIO AS FECHA_INICIO, "
+                        + " OB.FECHA_CIERRE AS FECHA_CIERRE , FA.FACULTAD AS FACULTAD FROM "
+                        + " DETALLE_USUARIO DU,  FACULTAD FA, OFERTA_BECA OB, DOCUMENTO D,iNSTITUCION INS, "
+                        + " SOLICITUD_DE_BECA SDB,EXPEDIENTE EX, USUARIO US, TIPO_USUARIO TU, PROGRESO PR"
+                        + "  WHERE DU.ID_FACULTAD=FA.ID_FACULTAD AND US.ID_USUARIO=DU.ID_USUARIO AND"
+                        + " DU.ID_USUARIO=SDB.ID_USUARIO AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA"
+                        + " AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND "
+                        + " SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND EX.ID_EXPEDIENTE=D.ID_EXPEDIENTE"
+                        + " AND EX.ID_PROGRESO=PR.ID_PROGRESO AND US.ID_TIPO_USUARIO= 2 "
+                        + " AND EX.ESTADO_EXPEDIENTE='ABIERTO' AND INS.TIPO_INSTITUCION='OFERTANTE' "
+                        + "AND PR.ESTADO_BECARIO='INCUMPLIMIENTO' AND D.ID_TIPO_DOCUMENTO=159  ";
                         if (request.getParameter("tipoBeca").toString().length()>0) {
                             tipoBeca = request.getParameter("tipoBeca");
-                            consultaSql = consultaSql.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
                         }
                          
                         if (request.getParameter("facultad").toString().length()>0) {
                               facultad = request.getParameter("facultad");
-                            consultaSql = consultaSql.concat(" AND FA.FACULTAD='" + facultad + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND FA.FACULTAD='" + facultad + "' ");
                         }
                   
                         if (request.getParameter("institucionOferente").toString().length()>0) {
                              System.out.println("LLLLEEEEEEEEGAAAAÑÑÑÑÑÑ");
                                 institucionOferente = request.getParameter("institucionOferente");
-                            consultaSql = consultaSql.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
                         }
                         
                               
                         if (request.getParameter("tipoEstudio").toString().length()>0) {
                            
                                 tipoEstudio = request.getParameter("tipoEstudio");
-                            consultaSql = consultaSql.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
                         }
                   /*      
                         if (!request.getParameter("tipoBecario").isEmpty()) {
@@ -320,13 +321,14 @@
                         if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                         java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                         java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
                     }
                     if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                         java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                     }
+                     consultaSql = consultaSql.concat(consultaSql2);                                                                                             
                     consultaSql = consultaSql.concat(";");
                     System.out.println(consultaSql);
                         consultaSql = consultaSql.concat(";");
@@ -373,10 +375,12 @@
                                 <div class="col-md-6">
                                     <br>
                                     <label class="">PDF</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       PDF
-                                    </button><br><br>
+                                    <form class="form-horizontal" action="ReporteBecariosIncumplimientoContrato" method="post">
+                                        <input type="hidden" name="OPCION_DE_SALIDA" value="1">
+                                    <input type="hidden" name="CONDICION" value="<%=consultaSql2 %>">                                    
+                                     <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                               
+                                </form><br><br>
                                     <label>Enviar Por Correo</label>
                                     <button type="submit" class="btn btn-success form-control">
                                        <span class="glyphicon glyphicon-file"></span> 

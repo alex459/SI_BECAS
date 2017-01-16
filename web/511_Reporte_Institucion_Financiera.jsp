@@ -258,7 +258,7 @@
                      String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="", tipoBecario="";
                     String queryParam=""; 
                     
-                       
+                    String consultaSql2 = "";  
                     try {
                        
                          if (!request.getParameter("tipoBecario").isEmpty()) {
@@ -276,6 +276,7 @@
                         
                         //formando la consulta
                         String consultaSql = "";
+                        
                         consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE,"
                                 + " FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,"
                                 + " OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,OB.FECHA_INICIO AS FECHA_INICIO,"
@@ -293,25 +294,25 @@
                                 + " AND INS.TIPO_INSTITUCION='OFERTANTE' ";
                         if (request.getParameter("tipoBeca").toString().length()>0) {
                             tipoBeca = request.getParameter("tipoBeca");
-                            consultaSql = consultaSql.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
                         }
                          
                         if (request.getParameter("facultad").toString().length()>0) {
                               facultad = request.getParameter("facultad");
-                            consultaSql = consultaSql.concat(" AND FA.FACULTAD='" + facultad + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND FA.FACULTAD='" + facultad + "' ");
                         }
                   
                         if (request.getParameter("institucionOferente").toString().length()>0) {
                              System.out.println("LLLLEEEEEEEEGAAAAÑÑÑÑÑÑ");
                                 institucionOferente = request.getParameter("institucionOferente");
-                            consultaSql = consultaSql.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
                         }
                         
                               
                         if (request.getParameter("tipoEstudio").toString().length()>0) {
                            
                                 tipoEstudio = request.getParameter("tipoEstudio");
-                            consultaSql = consultaSql.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
                         }
                   /*      
                         if (!request.getParameter("tipoBecario").isEmpty()) {
@@ -321,13 +322,14 @@
                         if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                         java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                         java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
                     }
                     if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                         java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                     }
+                    consultaSql = consultaSql.concat(consultaSql2);
                     consultaSql = consultaSql.concat(";");
                     System.out.println(consultaSql);
                         consultaSql = consultaSql.concat(";");
@@ -375,10 +377,14 @@
                                 <div class="col-md-6">
                                     <br>
                                     <label class="">PDF</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       PDF
-                                    </button><br><br>
+                                    <form class="form-horizontal" action="ReporteInstitucionFinancieraServlet" method="post">
+                                        <input type="hidden" name="OPCION_DE_SALIDA" value="1">
+                                    <input type="hidden" name="CONDICION" value="<%=consultaSql2 %>">                                    
+                                     <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                               
+                                </form>
+                                    
+                                    <br><br>
                                     <label>Enviar Por Correo</label>
                                     <button type="submit" class="btn btn-success form-control">
                                        <span class="glyphicon glyphicon-file"></span> 
@@ -419,7 +425,6 @@
                                         <th>Estudio Realizado</th>
                                         <th>Institucion que Financia</th>
                                         <th>Facultad</th>
-                                        <th>Observaciones</th>
                                     </tr>  
                                 </thead>
                                 <tbody>
@@ -437,7 +442,7 @@
                                         out.write("<td>" + lista2.get(i).getTipoEstudio() + "</td>");
                                         out.write("<td>" + listaIns.get(i).getNombreInstitucion() + "</td>");
                                         out.write("<td>" + listaFacultades.get(i).getFacultad() + "</td>");
-                                        out.write("<td>" + listaDocs.get(i).getObservacion() + "</td>");
+                                       // out.write("<td>" + listaDocs.get(i).getObservacion() + "</td>");
                                         out.write("</tr>");
                                         i++;
                                     }
