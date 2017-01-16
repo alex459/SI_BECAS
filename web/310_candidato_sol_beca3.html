@@ -30,9 +30,9 @@
                                         <tbody>
                                             
                                             <tr ng-repeat="x in data.educacion">
-                                                <td>{{$index + 1}}</td>
+                                                <td>{{$index + 1}}</td>                                                
                                                 <td> 
-                                                    <select name="{{x.tipo}}" class="form-control" ng-model="aux.auxTipoEdu[$index +1]" ng-required="true">
+                                                    <select name="{{x.tipo}}" class="form-control" ng-model="aux.auxTipoEdu[$index]" ng-required="true">
                                                         <option value="PRIMARIA">PRIMARIA</option>
                                                         <option value="SECUNDARIA">SECUNDARIA</option>
                                                         <option value="UNIVERSITARIA">UNIVERSITARIA</option>
@@ -42,21 +42,21 @@
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.tipo}}.$error.required">Seleccione el tipo de Educacion.</span>
                                                 </td>
                                                     <td>
-                                                        <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index +1]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                        <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                         <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.grado}}.$error.required">Ingrese el grado alcanzado.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.minlength">Minimo 10 caracteres.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                                     </td>
-                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index +1]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                         <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.institucion}}.$error.required">Ingrese el nombre de la Institucion.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.minlength">Minimo 10 caracteres.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                                 </td>
                                                 <td>
                                                     <div class="input-group date">
-                                                        <input type="text" name="{{x.anyo}}" class="form-control" ng-disabled="false" ng-model="aux.auxAnyoEdu[$index +1]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="aux.auxAnyoEdu[$index +1]"></i></span>
+                                                        <input type="text" name="{{x.anyo}}" class="form-control" ng-disabled="false" ng-model="aux.auxAnyoEdu[$index]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="aux.auxAnyoEdu[$index]"></i></span>
                                                     </div>
-                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.anyo}}.$error.required">Ingrese el Año de graduacion del Estudio.</span>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.required">Ingrese el Año de graduacion del Estudio.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.min">Año minimo permitido 1940.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.pattern">Solo se permiten letras digitos. (0-9).</span>
                                                 </td>
@@ -88,7 +88,7 @@
                                             <tr ng-repeat="x in data.proyectos" >
                                                 <td>{{$index + 1}}</td>
                                                 <td>
-                                                    <input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                    <input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.titulo}}.$error.required">Ingrese el nombre del proyecto.</span>
                                                     <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.minlength">Minimo 10 caracteres.</span>
                                                     <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
@@ -97,11 +97,11 @@
                                                     <div class="row">
                                                         <div class="col-sm-2"></div>
                                                         <div class="col-sm-4">
-                                                            <input type="radio" name="{{x.publicado}}" value="1" ng-model="aux.auxPublicado[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto" ng-checked="limpiarProyecto()">
+                                                            <input type="radio" name="{{x.publicado}}" value="1" ng-model="aux.auxPublicado[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto" ng-checked="limpiarProyecto()">
                                                             <label>  Si </label>
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <input type="radio" name="{{x.publicado}}" value="0" ng-model="aux.auxPublicado[$index +1]" ng-required="!checkProyecto" ng-disabled="checkProyecto">
+                                                            <input type="radio" name="{{x.publicado}}" value="0" ng-model="aux.auxPublicado[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto">
                                                             <label>  No </label>
                                                         </div>
                                                         <div class="col-sm-2"></div>

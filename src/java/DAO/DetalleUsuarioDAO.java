@@ -227,7 +227,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
                 String DEPARTAMENTO = rs.getString("DEPARTAMENTO");
                 Date FECHA_NACIMIENTO = rs.getDate("FECHA_NACIMIENTO");
                 String PROFESION = rs.getString("PROFESION");
-                String FECHA_CONTRATACION = rs.getString("FECHA_CONTRATACION");
+                Date FECHA_CONTRATACION = rs.getDate("FECHA_CONTRATACION");
                 String TELEFONO_MOVIL = rs.getString("TELEFONO_MOVIL");
                 String TELEFONO_CASA = rs.getString("TELEFONO_CASA");
                 String TELEFONO_OFICINA = rs.getString("TELEFONO_OFICINA");
@@ -238,7 +238,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
                 temp.setIdUsuario(ID_USUARIO);
                 temp.setIdMunicipio(ID_MUNICIPIO);
                 temp.setIdFacultad(ID_FACULTAD);
-                temp.setIdMunicipio(ID_MUNICIPIO);
+                temp.setIdMunicipioNacimiento(ID_MUNICIPIO_NACIMIENTO);
                 temp.setNombre1Du(NOMBRE1_DU);
                 temp.setNombre2Du(NOMBRE2_DU);
                 temp.setApellido1Du(APELLIDO1_DU);
@@ -246,7 +246,7 @@ public class DetalleUsuarioDAO extends ConexionBD {
                 temp.setDepartamento(DEPARTAMENTO);
                 temp.setFechaNacimiento(FECHA_NACIMIENTO);
                 temp.setProfesion(PROFESION);
-                temp.setFechaContratacion(FECHA_NACIMIENTO);
+                temp.setFechaContratacion(FECHA_CONTRATACION);
                 temp.setTelefonoMovil(TELEFONO_MOVIL);
                 temp.setTelefonoCasa(TELEFONO_CASA);
                 temp.setTelefonoOficina(TELEFONO_OFICINA);

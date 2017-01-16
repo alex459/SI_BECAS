@@ -89,4 +89,24 @@ public class DepartamentoDAO extends ConexionBD{
 
         return departamento;
     }
+    
+    public int consultarPorIdMunicipio(int id) {
+        int departamento = 0;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT D.ID_DEPARTAMENTO FROM DEPARTAMENTO D JOIN MUNICIPIO M ON D.ID_DEPARTAMENTO = M.ID_DEPARTAMENTO WHERE M.ID_MUNICIPIO = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {                    
+                departamento=rs.getInt("ID_DEPARTAMENTO");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return departamento;
+    }
 }

@@ -135,7 +135,7 @@
                                                     case 131:
                                                         tipo = "SOLICITUD DE BECA";
                                                         unidad = "CONSEJO DE BECAS";
-                                                        url = "308_candidato_sol_beca1.jsp";
+                                                        url = "321_Modificar_Solicitud_Beca.jsp";
                                                         break;
                                                 }%>
                                 <tr>

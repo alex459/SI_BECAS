@@ -7,6 +7,7 @@ package DAO;
 
 import POJO.Educacion;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -76,5 +77,39 @@ public class EducacionDao extends ConexionBD {
     }
     
     //Permite actualizar una Educacion en la base de datos
+     
+     //consultar por id
+    public ArrayList<Educacion> consultarPorIdDetalle(int id) {
+        ArrayList<Educacion> educacion = new ArrayList<Educacion>();        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT `ID_EDUCACION`, `ID_DETALLE_USUARIO`, `TIPO_EDUCACION`, `GRADO_ALCANZADO`, `NOMBRE_INSTITUCION`, `ANIO` FROM `educacion` WHERE `ID_DETALLE_USUARIO` = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                Educacion temp = new Educacion();
+                int ID_EDUCACION = rs.getInt("ID_EDUCACION"); 
+                int ID_DETALLE_USUARIO = rs.getInt("ID_DETALLE_USUARIO"); 
+                String TIPO_EDUCACION = rs.getString("TIPO_EDUCACION");
+                String GRADO_ALCANZADO = rs.getString("GRADO_ALCANZADO");
+                String NOMBRE_INSTITUCION = rs.getString("NOMBRE_INSTITUCION");
+                int ANIO = rs.getInt("ANIO"); 
+
+                temp.setIdEducacion(ID_EDUCACION);
+                temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
+                temp.setTipoEducacion(TIPO_EDUCACION);
+                temp.setGradoAlcanzado(GRADO_ALCANZADO);
+                temp.setNombreInstitucion(NOMBRE_INSTITUCION);
+                temp.setAnio(ANIO);
+                
+                educacion.add(temp);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return educacion;
+    }
     
 }
