@@ -191,12 +191,12 @@
                 <input type="hidden" name="{{x.institucion}}" ng-value="aux.auxInstitucionEdu[$index]">
                 <input type="hidden" name="{{x.anyo}}" ng-value="aux.auxAnyoEdu[$index]"><br>
             </div>
-            <input type="hidden" name="nEducacion" ng-value = "{{Nedu - 1}}" >
+            <input type="hidden" name="nEducacion" ng-value = "{{Nedu-1}}" >
             <div class="row" ng-repeat="x in data.proyectos">
                 <input type="hidden" name="{{x.titulo}}" ng-value="aux.auxTituloProy[$index]">
                 <input type="hidden" name="{{x.publicado}}" ng-value="aux.auxPublicado[$index]">
             </div>
-            <input type="hidden" name="nInvestigacion" ng-value = "{{Nproy - 1}}" >
+            <input type="hidden" name="nInvestigacion" ng-value = "{{Nproy-1 }}" >
             <input type="hidden" name="checkProyecto" ng-value = "{{checkProyecto}}" >
             <div class="row" ng-repeat="x in data.idiomas">
                 <input type="hidden" name="{{x.idioma}}" ng-value="aux.auxIdioma[$index]">
@@ -204,11 +204,11 @@
                 <input type="hidden" name="{{x.nivelLectura}}" ng-value="aux.auxNivelLectura[$index]">
                 <input type="hidden" name="{{x.nivelEscritura}}" ng-value="aux.auxNivelEscritura[$index]"><br>
             </div>
-            <input type="hidden" name="nIdioma" ng-value = "{{Nidi - 1}}" >
+            <input type="hidden" name="nIdioma" ng-value = "{{Nidi-1 }}" >
             <div class="row" ng-repeat="x in data.asociaciones">
                 <input type="hidden" name="{{x.asociacion}}" ng-value="aux.auxAsociacion[$index]">
             </div>
-            <input type="hidden" name="nAsociacion" ng-value = "{{Naso - 1}}" >
+            <input type="hidden" name="nAsociacion" ng-value = "{{Naso-1 }}" >
             <input type="hidden" name="checkAsociacion" ng-value = "{{checkAsociacion}}" >
             <div class="row" ng-repeat="x in data.cargos">
                 <input type="hidden" name="{{x.lugar}}" ng-value="aux.auxLugar[$index]">
@@ -217,12 +217,12 @@
                 <input type="hidden" name="{{x.fechaFin}}" ng-value="aux.auxFechaFin[$index]">
                 <input type="hidden" name="{{x.responsabilidades}}" ng-value="aux.auxResponsabilidades[$index]">
             </div>
-            <input type="hidden" name="nCargos" ng-value = "{{Ncar - 1}}" >
+            <input type="hidden" name="nCargos" ng-value = "{{Ncar-1 }}" >
             <div class="row" ng-repeat="x in data.programas">
-                <input type="hidden" name="{{x.semestre}}" ng-value="{{$index + 1}}">
+                <input type="hidden" name="{{x.semestre}}" ng-value="{{$index}}">
                 <input type="hidden" name="{{x.programa}}" ng-value="aux.auxPrograma[$index]">
             </div>
-            <input type="hidden" name="nPrograma" ng-value = "{{Npro - 1}}" >
+            <input type="hidden" name="nPrograma" ng-value = "{{Npro-1 }}" >
         </div>
     </fieldset>            
     <div class="row">

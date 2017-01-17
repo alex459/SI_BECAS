@@ -161,4 +161,41 @@ public class ProgramaEstudioDAO extends ConexionBD{
         
         return idPrograma;
     }
+    
+    public ArrayList<ProgramaEstudio> consultarPorIdSolicitud(int id) {
+        ArrayList<ProgramaEstudio> lista = new ArrayList<ProgramaEstudio>();
+        ProgramaEstudio temp = new ProgramaEstudio();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_PROGRAMA_ESTUDIO, ID_SOLICITUD, SEMESTRE, PROGRAMA_ESTUDIO FROM programa_estudio WHERE ID_SOLICITUD =" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            
+
+            while (rs.next()) {
+                temp = new ProgramaEstudio();
+                
+               int ID_PROGRAMA_ESTUDIO=rs.getInt("ID_PROGRAMA_ESTUDIO");      
+                int ID_SOLICITUD=rs.getInt("ID_SOLICITUD");
+                int SEMESTRE=rs.getInt("SEMESTRE");     
+                String PROGRAMA_ESTUDIO=rs.getString("PROGRAMA_ESTUDIO");
+                
+               temp.setIdProgramaEstudio(ID_PROGRAMA_ESTUDIO);
+               SolicitudDeBeca sol=new SolicitudDeBeca();
+               sol.setIdSolicitud(ID_SOLICITUD);
+               temp.setIdSolicitud(sol);
+               temp.setSemestre(SEMESTRE);
+               temp.setProgramaEstudio(PROGRAMA_ESTUDIO);
+                
+                lista.add(temp);
+            }
+            
+            this.cerrarConexion();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return lista;
+    }
 }

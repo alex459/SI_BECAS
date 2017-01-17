@@ -178,4 +178,51 @@ public class ReferenciasDAO extends ConexionBD{
 
         return siguienteId;
     }
+    
+    
+    public ArrayList<Referencias> consultarPorIdSolicitud(int id) {
+        ArrayList<Referencias> lista = new ArrayList<Referencias>();
+        Referencias temp = new Referencias();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_REFERENCIA, ID_SOLICITUD, ID_MUNICIPIO, NOMBRE1_DU, NOMBRE2_DU, APELLIDO1_DU, APELLIDO2_DU, DOMICILIO, TELEFONO_MOVIL FROM referencias WHERE ID_SOLICITUD = " +id ;
+            ResultSet rs = stmt.executeQuery(sql);
+            
+
+            while (rs.next()) {
+                temp = new Referencias();
+                
+                
+                int ID_REFERENCIA=rs.getInt("ID_REFERENCIA");      
+                int ID_SOLICITUD=rs.getInt("ID_SOLICITUD");
+                int ID_MUNICIPIO=rs.getInt("ID_MUNICIPIO");                          
+                String NOMBRE1=rs.getString("NOMBRE1_DU");
+                String NOMBRE2=rs.getString("NOMBRE2_DU");
+                String APELLIDO1=rs.getString("APELLIDO1_DU");
+                String APELLIDO2=rs.getString("APELLIDO2_DU");
+                String DOMICILIO=rs.getString("DOMICILIO");
+                String TELEFONO_MOVIl=rs.getString("TELEFONO_MOVIl");
+                
+                temp.setIdReferencia(ID_REFERENCIA);
+                temp.setIdSolicitud(ID_SOLICITUD);
+                temp.setIdMunicipio(ID_MUNICIPIO);
+                temp.setNombre1Du(NOMBRE1);
+                temp.setNombre2Du(NOMBRE2);
+                temp.setApellido1Du(APELLIDO1);
+                temp.setApellido2Du(APELLIDO2);
+                temp.setDomicilio(DOMICILIO);
+                temp.setTelefonoMovil(TELEFONO_MOVIl);
+                
+                lista.add(temp);
+            }
+            
+            this.cerrarConexion();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+ 
+        return lista;
+    }
 }

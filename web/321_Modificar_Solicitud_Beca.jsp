@@ -3,6 +3,12 @@
     Created on : 15/01/2017, 11:26:18 AM
     Author     : adminPC
 --%>
+<%@page import="POJO.Referencias"%>
+<%@page import="DAO.ReferenciasDAO"%>
+<%@page import="POJO.ProgramaEstudio"%>
+<%@page import="DAO.ProgramaEstudioDAO"%>
+<%@page import="POJO.SolicitudDeBeca"%>
+<%@page import="DAO.SolocitudBecaDAO"%>
 <%@page import="POJO.Idioma"%>
 <%@page import="DAO.IdiomaDAO"%>
 <%@page import="POJO.Investigaciones"%>
@@ -80,6 +86,9 @@
     InvestigacionesDAO invDao = new InvestigacionesDAO();
     IdiomaDAO idiomaDao = new IdiomaDAO();
     CargoDAO cargoDao = new CargoDAO();
+    SolocitudBecaDAO solicitudDao = new SolocitudBecaDAO();
+    ProgramaEstudioDAO programaDao = new ProgramaEstudioDAO();
+    ReferenciasDAO referenciaDao = new ReferenciasDAO();
     try {
         Usuario usuario = usDao.consultarPorNombreUsuario(user);
         //Obteniendo su facultad        
@@ -129,6 +138,13 @@
     asociacion = asoDao.consultarPorIdDetalle(detalle.getIdDetalleUsuario());
     ArrayList<Cargo> cargo = new ArrayList<Cargo>();
     cargo = cargoDao.consultarPorIdDetalle(detalle.getIdDetalleUsuario());
+    SolicitudDeBeca solicitud = new SolicitudDeBeca();
+    solicitud = solicitudDao.consultarPorIdExpediente(expediente.getIdExpediente());
+    ArrayList<ProgramaEstudio> programa = new ArrayList<ProgramaEstudio>();
+    programa = programaDao.consultarPorIdSolicitud(solicitud.getIdSolicitud());
+    ArrayList<Referencias> referencia = new ArrayList<Referencias>();
+    referencia = referenciaDao.consultarPorIdSolicitud(solicitud.getIdSolicitud());
+    
     boolean listaMunicipiosActivar = true;
     boolean listaMunicipiosDomActivar = true;
     CargoDAO carDao = new CargoDAO();
@@ -189,6 +205,13 @@
     proyectos = proyectos + "]";
     auxTituloProy = auxTituloProy + "]";
     auxPublicado = auxPublicado + "]";
+    boolean checkProyecto =false;
+    if(investigacion.size() == 0){
+        checkProyecto = !false;
+        proyectos = "[{id: 1, titulo: 'tituloProyecto1', publicado:'publicado1:'}]";
+    }else{        
+        checkProyecto =false;
+    }    
      
     
     
@@ -232,6 +255,13 @@
     }
     asociaciones = asociaciones + "]";
     auxAsociacion = auxAsociacion + "]";
+    boolean checkAsociacion = false;
+    if(asociacion.size() == 0){
+        checkAsociacion = !false;
+        proyectos = "[{id: 1, asociacion: 'asociacion1'}]";
+    }else{        
+        checkAsociacion =false;
+    } 
     
     
     String cargos = "[";
@@ -263,6 +293,53 @@
     auxFechaInicio = auxFechaInicio + "]";
     auxFechaFin = auxFechaFin + "]";
     auxResponsabilidades = auxResponsabilidades + "]";
+    
+    
+    String programas = "[";
+    String auxSemestre = "[";
+    String auxPrograma = "[";
+    
+    for (int i = 0; i < programa.size(); i++) {
+        int n = i + 1;
+        programas = programas + "{semestre: 'semestre" + n + "', programa:'v" + n + "'}";
+        auxSemestre = auxSemestre + "" + programa.get(i).getSemestre()+ "";
+        auxPrograma = auxPrograma + "'" + programa.get(i).getProgramaEstudio()+ "'";
+        
+        if (i != programa.size() - 1) {
+            programas = programas + ",";
+            auxSemestre = auxSemestre + ",";
+            auxPrograma = auxPrograma + ",";            
+        }
+    }
+    programas = programas + "]";
+    auxSemestre = auxSemestre + "]";
+    auxPrograma = auxPrograma + "]";
+    
+    Referencias ref1 = referencia.get(0);
+    Referencias ref2 = referencia.get(1);
+    Referencias ref3 = referencia.get(2);
+    int idDepartamentoR1 = 0;
+    int idDepartamentoR2 = 0;
+    int idDepartamentoR3 = 0;
+    idDepartamentoR1 = depDao.consultarPorIdMunicipio(ref1.getIdMunicipio());
+    idDepartamentoR2 = depDao.consultarPorIdMunicipio(ref2.getIdMunicipio());
+    idDepartamentoR3 = depDao.consultarPorIdMunicipio(ref3.getIdMunicipio());
+    
+    boolean listaMunicipiosR1activar = true;   
+    if (idDepartamentoR1 != 0) {
+        //Activar
+        listaMunicipiosR1activar = false;
+    }
+    boolean listaMunicipiosR2activar = true;   
+    if (idDepartamentoR2 != 0) {
+        //Activar
+        listaMunicipiosR2activar = false;
+    }
+    boolean listaMunicipiosR3activar = true;   
+    if (idDepartamentoR3 != 0) {
+        //Activar
+        listaMunicipiosR3activar = false;
+    }
 
 %>
 <!DOCTYPE html>
@@ -310,7 +387,7 @@
     </head>
 
 
-    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos =<%=departamentosJSON%>; municipios =<%=municipiosJSON%>; facultad = '<%=facultad.getFacultad()%>'; user = '<%=user%>'; nombreOferta = '<%=nombreOferta%>'; nombreInstitucion = '<%=nombreInstitucion%>'; duracion = '<%=duracion%>'; pais = '<%=pais%>'; tipoBeca = '<%=tipoBeca%>'; data.nombre = '<%=detalle.getNombre1Du()%>'; data.nombre2 = '<%=detalle.getNombre2Du()%>'; data.apellido1 = '<%=detalle.getApellido1Du()%>'; data.apellido2 = '<%=detalle.getApellido2Du()%>'; data.municipio_nacimiento = '<%=detalle.getIdMunicipioNacimiento()%>'; data.departamento_nacimiento = '<%=idDepartamento%>'; data.fecha_nacimiento = '<%=detalle.getFechaNacimiento()%>'; data.genero = '<%=detalle.getGenero()%>'; activarMunicipios =<%=listaMunicipiosActivar%>; data.direccion = '<%=detalle.getDireccion()%>'; data.municipio_direccion = '<%=detalle.getIdMunicipio()%>'; data.departamento_direccion = '<%=idDepartamentoD%>'; activarMunicipiosDomicilio =<%=listaMunicipiosDomActivar%>; data.tel_casa = '<%=detalle.getTelefonoCasa()%>'; data.tel_movil = '<%=detalle.getTelefonoMovil()%>'; data.tel_oficina = '<%=detalle.getTelefonoOficina()%>'; data.profesion = '<%=detalle.getProfesion()%>'; data.unidad = '<%=detalle.getDepartamento()%>'; data.cargo = '<%=cargoActual.getNombreCargo()%>'; data.fecha_contratacion = '<%=detalle.getFechaContratacion()%>'; data.educacion = <%=educaciones%>; aux.auxTipoEdu= <%=auxTipoEdu%>; aux.auxGradoEdu =<%=auxGradoEdu%>; aux.auxInstitucionEdu=<%=auxInstitucionEdu%>; aux.auxAnyoEdu=<%=auxAnyoEdu%>; data.proyectos = <%=proyectos%>; aux.auxTituloProy=<%=auxTituloProy%>; aux.auxPublicado=<%=auxPublicado%>; data.idiomas = <%=idiomas%>; aux.auxIdioma=<%=auxIdioma%>; aux.auxNivelEscritura=<%=auxNivelEscritura%>; aux.auxNivelHabla=<%=auxNivelHabla%>; aux.auxNivelLectura=<%=auxNivelLectura%>; data.asociaciones = <%=asociaciones%>; aux.auxAsociacion=<%=auxAsociacion%>; data.cargos = <%=cargos%>; aux.auxLugar=<%=auxLugar%>; aux.auxCargo=<%=auxCargo%>; aux.auxFechaInicio=<%=auxFechaInicio%>; aux.auxFechaFin=<%=auxFechaFin%>; aux.auxResponsabilidades=<%=auxResponsabilidades%>;">
+    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos =<%=departamentosJSON%>; municipios =<%=municipiosJSON%>; facultad = '<%=facultad.getFacultad()%>'; user = '<%=user%>'; nombreOferta = '<%=nombreOferta%>'; nombreInstitucion = '<%=nombreInstitucion%>'; duracion = '<%=duracion%>'; pais = '<%=pais%>'; tipoBeca = '<%=tipoBeca%>'; data.nombre = '<%=detalle.getNombre1Du()%>'; data.nombre2 = '<%=detalle.getNombre2Du()%>'; data.apellido1 = '<%=detalle.getApellido1Du()%>'; data.apellido2 = '<%=detalle.getApellido2Du()%>'; data.municipio_nacimiento = '<%=detalle.getIdMunicipioNacimiento()%>'; data.departamento_nacimiento = '<%=idDepartamento%>'; data.fecha_nacimiento = '<%=detalle.getFechaNacimiento()%>'; data.genero = '<%=detalle.getGenero()%>'; activarMunicipios =<%=listaMunicipiosActivar%>; data.direccion = '<%=detalle.getDireccion()%>'; data.municipio_direccion = '<%=detalle.getIdMunicipio()%>'; data.departamento_direccion = '<%=idDepartamentoD%>'; activarMunicipiosDomicilio =<%=listaMunicipiosDomActivar%>; data.tel_casa = '<%=detalle.getTelefonoCasa()%>'; data.tel_movil = '<%=detalle.getTelefonoMovil()%>'; data.tel_oficina = '<%=detalle.getTelefonoOficina()%>'; data.profesion = '<%=detalle.getProfesion()%>'; data.unidad = '<%=detalle.getDepartamento()%>'; data.cargo = '<%=cargoActual.getNombreCargo()%>'; data.fecha_contratacion = '<%=detalle.getFechaContratacion()%>'; data.educacion = <%=educaciones%>; aux.auxTipoEdu = <%=auxTipoEdu%>; aux.auxGradoEdu =<%=auxGradoEdu%>; aux.auxInstitucionEdu =<%=auxInstitucionEdu%>; aux.auxAnyoEdu =<%=auxAnyoEdu%>; data.proyectos = <%=proyectos%>; aux.auxTituloProy =<%=auxTituloProy%>; aux.auxPublicado =<%=auxPublicado%>; data.idiomas = <%=idiomas%>; aux.auxIdioma =<%=auxIdioma%>; aux.auxNivelEscritura =<%=auxNivelEscritura%>; aux.auxNivelHabla =<%=auxNivelHabla%>; aux.auxNivelLectura =<%=auxNivelLectura%>; data.asociaciones = <%=asociaciones%>; aux.auxAsociacion =<%=auxAsociacion%>; data.cargos = <%=cargos%>; aux.auxLugar =<%=auxLugar%>; aux.auxCargo =<%=auxCargo%>; aux.auxFechaInicio =<%=auxFechaInicio%>; aux.auxFechaFin =<%=auxFechaFin%>; aux.auxResponsabilidades =<%=auxResponsabilidades%>; checkProyecto = <%=checkProyecto%>; Nedu = <%=educacion.size()%>; Nproy = <%=investigacion.size()%>; Nidi = <%=idioma.size()%>; Naso = <%=asociacion.size()%>; Ncar = <%=cargo.size()%>; data.beneficios = '<%=solicitud.getBeneficios()%>'; checkAsociacion = <%=checkAsociacion%>; data.programas = <%=programas%>; aux.auxSemestre =<%=auxSemestre%>; aux.auxPrograma =<%=auxPrograma%>; Npro = <%=programa.size()%>; data.nombre1R1 = '<%=ref1.getNombre1Du()%>'; data.nombre2R1 = '<%=ref1.getNombre2Du()%>'; data.apellido1R1 = '<%=ref1.getApellido1Du()%>'; data.apellido2R1 = '<%=ref1.getApellido2Du()%>'; data.direccionR1 = '<%=ref1.getDomicilio()%>'; data.municipioR1 = '<%=ref1.getIdMunicipio()%>'; data.departamentoR1 = '<%=idDepartamentoR1%>'; data.telefonoR1 = '<%=ref1.getTelefonoMovil()%>'; activarMunicipiosR1 =<%=listaMunicipiosR1activar%>; data.nombre1R2 = '<%=ref2.getNombre1Du()%>'; data.nombre2R2 = '<%=ref2.getNombre2Du()%>'; data.apellido1R2 = '<%=ref2.getApellido1Du()%>'; data.apellido2R2 = '<%=ref2.getApellido2Du()%>'; data.direccionR2 = '<%=ref2.getDomicilio()%>'; data.municipioR2 = '<%=ref2.getIdMunicipio()%>'; data.departamentoR2 = '<%=idDepartamentoR2%>'; data.telefonoR2 = '<%=ref2.getTelefonoMovil()%>'; activarMunicipiosR2 =<%=listaMunicipiosR2activar%>; data.nombre1R3 = '<%=ref3.getNombre1Du()%>'; data.nombre2R3 = '<%=ref3.getNombre2Du()%>'; data.apellido1R3 = '<%=ref3.getApellido1Du()%>'; data.apellido2R3 = '<%=ref3.getApellido2Du()%>'; data.direccionR3 = '<%=ref3.getDomicilio()%>'; data.municipioR3 = '<%=ref3.getIdMunicipio()%>'; data.departamentoR3 = '<%=idDepartamentoR3%>'; data.telefonoR3 = '<%=ref3.getTelefonoMovil()%>'; activarMunicipiosR3 =<%=listaMunicipiosR3activar%>;">
 
     <div class="container-fluid" ng-init="oferta={nombre:'<%=nombreOferta%>',institucion: '<%=nombreInstitucion%>'}" >
         <h3 class="text-center" style="color:#E42217;">Solicitud de beca</h3>
