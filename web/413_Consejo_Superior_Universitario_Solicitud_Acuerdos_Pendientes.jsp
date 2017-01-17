@@ -6,28 +6,36 @@
 <%@page import="POJO.Facultad"%>
 <%@page import="DAO.FacultadDAO"%>
 <%@page import="POJO.TipoDocumento"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="DAO.TipoDocumentoDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="DAO.DetalleUsuarioDAO"%>
+
+<!-- inicio proceso de seguridad de login -->
+<%@page import="MODEL.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%
-    //lineas para tildes
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
-        
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String id_usuario_login = (String) actual.getAttribute("id_user_login");
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
-    if (user == null) {
-        response.sendRedirect("login.jsp");
-        return;
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("5"); //consejo superior universitario
+    tipo_usuarios_permitidos.add("9"); //admin
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user == null) {
+        response.sendRedirect("logout.jsp");
     }
 %>
+<!-- fin de proceso de seguridad de login -->
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

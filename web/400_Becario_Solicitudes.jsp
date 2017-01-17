@@ -3,7 +3,7 @@
     Created on : 28/12/2016, 04:48:52 PM
     Author     : adminPC
 --%>
-<%@page import="java.util.ArrayList"%>
+
 <%@page import="POJO.Expediente"%>
 <%@page import="DAO.ExpedienteDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,23 +11,34 @@
 <%@page import="POJO.Documento"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
+
+<!-- inicio proceso de seguridad de login -->
+<%@page import="MODEL.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.variablesDeSesion"%>
-
-
 <%
-    response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
-    request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
-
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String id_usuario_login = (String) actual.getAttribute("id_user_login");
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
-    if (user == null) {
-        response.sendRedirect("login.jsp");
-        return;
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("2"); //becario
+    tipo_usuarios_permitidos.add("9"); //admin
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user == null) {
+        response.sendRedirect("logout.jsp");
     }
+%>
+<!-- fin de proceso de seguridad de login -->
+
+<%
 
     ExpedienteDAO expDao = new ExpedienteDAO();
     Expediente expediente = expDao.obtenerExpedienteAbierto(user);
