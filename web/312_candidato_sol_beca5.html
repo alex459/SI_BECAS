@@ -92,8 +92,8 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="x in data.programas">
-                                                <td> <input type="number" name="{{semestre}}" class="form-control" ng-disabled="true" ng-value="{{$index +1}}" ng-model="aux.auxSemestre[$index +1]"></td>
-                                                <td> <textarea class="form-control" id="textarea" name="{{x.programa}}" ng-model="aux.auxPrograma[$index +1]" ng-required="true" minlength="10" maxlength="1024"></textarea></td>
+                                                <td> <input type="number" name="{{semestre}}" class="form-control" ng-disabled="true" ng-value="{{$index +1}}" ng-model="aux.auxSemestre[$index]"></td>
+                                                <td> <textarea class="form-control" id="textarea" name="{{x.programa}}" ng-model="aux.auxPrograma[$index]" ng-required="true" minlength="10" maxlength="1024"></textarea></td>
                                                 <td><a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarPrograma()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
