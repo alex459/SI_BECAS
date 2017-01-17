@@ -30,7 +30,7 @@
                             <tr ng-repeat="x in data.asociaciones">
                                 <td>{{$index + 1}}</td>
                                 <td>
-                                    <input name="{{x.asociacion}}" type="text" placeholder="Ingrese el nombre de la Asociación Profecional a la que pertenece" class="form-control input-md" ng-model="aux.auxAsociacion[$index + 1]" ng-required="!checkAsociacion" ng-disabled="checkAsociacion" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <input name="{{x.asociacion}}" type="text" placeholder="Ingrese el nombre de la Asociación Profecional a la que pertenece" class="form-control input-md" ng-model="aux.auxAsociacion[$index]" ng-required="!checkAsociacion" ng-disabled="checkAsociacion" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.asociacion}}.$error.required">Ingrese el nombre de la Asociacion.</span>
                                     <span class="text-danger" ng-show="solicitud.{{x.asociacion}}.$error.minlength">Minimo 10 caracteres.</span>
                                     <span class="text-danger" ng-show="solicitud.{{x.asociacion}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
@@ -62,15 +62,15 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="x in data.cargos">
-                                <td> </td>
+                                <td> {{$index + 1}}</td>
                                 <td>
                                     <label>Lugar del Cargo:</label>
-                                    <input  name="{{x.lugar}}" type="text" placeholder="Ingrese el nombre del lugar en el cual tuvo el cargo" class="form-control input-md" ng-model="aux.auxLugar[$index + 1]" ng-required="true" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <input  name="{{x.lugar}}" type="text" placeholder="Ingrese el nombre del lugar en el cual tuvo el cargo" class="form-control input-md" ng-model="aux.auxLugar[$index]" ng-required="true" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.lugar}}.$error.required">Ingrese el Lugar.</span>
                                     <span class="text-danger" ng-show="solicitud.{{x.lugar}}.$error.minlength">Minimo 10 caracteres.</span>
                                     <span class="text-danger" ng-show="solicitud.{{x.lugar}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                     <br><label>Titulo del Cargo:</label>
-                                    <input  name="{{x.cargo}}" type="text" placeholder="Ingrese el nombre del cargo" class="form-control input-md" ng-model="aux.auxCargo[$index + 1]" ng-required="true" minlength="10" maxlength="50" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <input  name="{{x.cargo}}" type="text" placeholder="Ingrese el nombre del cargo" class="form-control input-md" ng-model="aux.auxCargo[$index]" ng-required="true" minlength="10" maxlength="50" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.cargo}}.$error.required">Ingrese el nombre del cargo.</span>
                                     <span class="text-danger" ng-show="solicitud.{{x.cargo}}.$error.minlength">Minimo 10 caracteres.</span>
                                     <span class="text-danger" ng-show="solicitud.{{x.cargo}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
@@ -78,12 +78,12 @@
                                 <td>
                                     <label>Fecha de Inicio:</label>
                                     <div class="input-group date">
-                                        <input name="{{x.fechaInicio}}" type="text" class="form-control" ng-model="aux.auxFechaInicio[$index + 1]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input name="{{x.fechaInicio}}" type="text" class="form-control" ng-model="aux.auxFechaInicio[$index]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     </div> 
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.fechaInicio}}.$error.required">Ingrese la fecha de inicio del cargo.</span>
                                     <br><label>Fecha de Fin</label>
                                     <div class="input-group date">
-                                        <input name="{{x.fechaFin}}" type="text" class="form-control" ng-model="aux.auxFechaFin[$index + 1]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input name="{{x.fechaFin}}" type="text" class="form-control" ng-model="aux.auxFechaFin[$index]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     </div> 
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.fechaFin}}.$error.required">Ingrese la fecha de Fin del cargo.</span>
                                     <script type="text/javascript">
@@ -97,7 +97,7 @@
                                         });
                                         });</script>
                                 </td>
-                                <td><textarea name="{{x.responsabilidades}}" class="form-control" ng-model="aux.auxResponsabilidades[$index + 1]" ng-required="true" maxlength="250"></textarea>
+                                <td><textarea name="{{x.responsabilidades}}" class="form-control" ng-model="aux.auxResponsabilidades[$index]" ng-required="true" maxlength="250"></textarea>
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.responsabilidades}}.$error.required">Ingrese las responsabilidades del cargo.</span>
                                 </td>
                                 <td><a name="eliminar" class="btn btn-danger" ng-show="!$first && $last" ng-click="eliminarCargo()">Eliminar</a></td>

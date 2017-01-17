@@ -158,4 +158,34 @@ public class InvestigacionesDAO extends ConexionBD{
 
         return siguienteId;
     }
+     
+     public ArrayList<Investigaciones> consultarPorIdDetalle(int id) {
+        ArrayList<Investigaciones> investigacion = new ArrayList<Investigaciones>();        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_INVESTIGACION, ID_DETALLE_USUARIO, TITULO_INVESTIGACION, PUBLICADO FROM investigaciones WHERE ID_DETALLE_USUARIO = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                Investigaciones temp = new Investigaciones();
+                int ID_INVESTIGACION = rs.getInt("ID_INVESTIGACION"); 
+                int ID_DETALLE_USUARIO = rs.getInt("ID_DETALLE_USUARIO"); 
+                String TITULO_INVESTIGACION = rs.getString("TITULO_INVESTIGACION");
+                int PUBLICADO = rs.getInt("PUBLICADO");
+
+
+                temp.setIdInvestigacion(ID_INVESTIGACION);
+                temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
+                temp.setTituloInvestigacion(TITULO_INVESTIGACION);
+                temp.setPublicado(PUBLICADO);
+                
+                investigacion.add(temp);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return investigacion;
+    }
 }

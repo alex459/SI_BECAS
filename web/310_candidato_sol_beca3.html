@@ -138,7 +138,7 @@
                                         <tbody>
                                             <tr ng-repeat="x in data.idiomas">
                                                 <td>{{$index + 1}} </td>
-                                                <td> <select name="{{x.idioma}}" ng-model="aux.auxIdioma[$index +1]" class="form-control" ng-required="true">
+                                                <td> <select name="{{x.idioma}}" ng-model="aux.auxIdioma[$index]" class="form-control" ng-required="true">
                                                         <option value="ESPANOL">ESPAÑOL</option>
                                                         <option value="INGLES">INGLES</option>
                                                         <option value="FRANCES">FRANCES</option>
@@ -151,21 +151,21 @@
                                                     </select> 
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.idioma}}.$error.required">Seleccione un idioma.</span>
                                                 </td>
-                                                <td> <select name="{{x.nivelHabla}}" class="form-control" ng-model="aux.auxNivelHabla[$index +1]" ng-required="true">
+                                                <td> <select name="{{x.nivelHabla}}" class="form-control" ng-model="aux.auxNivelHabla[$index]" ng-required="true">
                                                         <option value="REGULAR">REGULAR</option>
                                                         <option value="BIEN">BIEN</option>
                                                         <option value="EXCELENTE">EXCELENTE</option>
                                                      </select> 
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelHabla}}.$error.required">Seleccione un nivel.</span>
                                                 </td>
-                                                <td> <select name="{{x.nivelLectura}}" class="form-control" ng-model="aux.auxNivelLectura[$index +1]" ng-required="true">
+                                                <td> <select name="{{x.nivelLectura}}" class="form-control" ng-model="aux.auxNivelLectura[$index]" ng-required="true">
                                                         <option value="REGULAR">REGULAR</option>
                                                         <option value="BIEN">BIEN</option>
                                                         <option value="EXCELENTE">EXCELENTE</option>
                                                      </select>  
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelLectura}}.$error.required">Seleccione un nivel.</span>
                                                 </td>
-                                                <td> <select name="{{x.nivelEscritura}}" class="form-control" ng-model="aux.auxNivelEscritura[$index +1]" ng-required="true">
+                                                <td> <select name="{{x.nivelEscritura}}" class="form-control" ng-model="aux.auxNivelEscritura[$index]" ng-required="true">
                                                         <option value="REGULAR">REGULAR</option>
                                                         <option value="BIEN">BIEN</option>
                                                         <option value="EXCELENTE">EXCELENTE</option>

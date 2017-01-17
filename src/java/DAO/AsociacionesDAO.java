@@ -151,4 +151,30 @@ public class AsociacionesDAO extends ConexionBD{
         
         return idAsociacion;
     }
+    
+    public ArrayList<Asociaciones> consultarPorIdDetalle(int id) {
+        ArrayList<Asociaciones> asociacion = new ArrayList<Asociaciones>();        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_ASOCIACION, ID_DETALLE_USUARIO, NOMBRE_ASOCIACION FROM asociaciones WHERE ID_DETALLE_USUARIO = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                Asociaciones temp = new Asociaciones();
+                int ID_ASOCIACION = rs.getInt("ID_ASOCIACION"); 
+                int ID_DETALLE_USUARIO = rs.getInt("ID_DETALLE_USUARIO"); 
+                String NOMBRE_ASOCIACION = rs.getString("NOMBRE_ASOCIACION");              
+
+                temp.setIdAsociacion(ID_ASOCIACION);
+                temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
+                temp.setNombreAsociacion(NOMBRE_ASOCIACION);
+                asociacion.add(temp);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return asociacion;
+    }
 }

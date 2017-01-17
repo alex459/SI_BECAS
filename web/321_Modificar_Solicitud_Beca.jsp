@@ -3,6 +3,8 @@
     Created on : 15/01/2017, 11:26:18 AM
     Author     : adminPC
 --%>
+<%@page import="POJO.Idioma"%>
+<%@page import="DAO.IdiomaDAO"%>
 <%@page import="POJO.Investigaciones"%>
 <%@page import="DAO.InvestigacionesDAO"%>
 <%@page import="POJO.Asociaciones"%>
@@ -76,6 +78,8 @@
     EducacionDao eduDao = new EducacionDao();
     AsociacionesDAO asoDao = new AsociacionesDAO();
     InvestigacionesDAO invDao = new InvestigacionesDAO();
+    IdiomaDAO idiomaDao = new IdiomaDAO();
+    CargoDAO cargoDao = new CargoDAO();
     try {
         Usuario usuario = usDao.consultarPorNombreUsuario(user);
         //Obteniendo su facultad        
@@ -118,7 +122,13 @@
     ArrayList<Educacion> educacion = new ArrayList<Educacion>();
     educacion = eduDao.consultarPorIdDetalle(detalle.getIdDetalleUsuario());
     ArrayList<Investigaciones> investigacion = new ArrayList<Investigaciones>();
+    investigacion = invDao.consultarPorIdDetalle(detalle.getIdDetalleUsuario());
+    ArrayList<Idioma> idioma = new ArrayList<Idioma>();
+    idioma = idiomaDao.consultarPorIdDetalle(detalle.getIdDetalleUsuario());
     ArrayList<Asociaciones> asociacion = new ArrayList<Asociaciones>();
+    asociacion = asoDao.consultarPorIdDetalle(detalle.getIdDetalleUsuario());
+    ArrayList<Cargo> cargo = new ArrayList<Cargo>();
+    cargo = cargoDao.consultarPorIdDetalle(detalle.getIdDetalleUsuario());
     boolean listaMunicipiosActivar = true;
     boolean listaMunicipiosDomActivar = true;
     CargoDAO carDao = new CargoDAO();
@@ -165,35 +175,94 @@
     String auxTituloProy = "[";
     String auxPublicado = "[";
 
-    for (int i = 0; i < educacion.size(); i++) {
+    for (int i = 0; i < investigacion.size(); i++) {
         int n = i + 1;
-        proyectos = proyectos + "{id:" + n + ", titulo: 'tituloProyecto" + n + "', publicado:'grado" + n + "', institucion: 'institucion" + n + "'}";
+        proyectos = proyectos + "{id:" + n + ", titulo: 'tituloProyecto" + n + "', publicado:'publicado:" +  n + "'}";
         auxTituloProy = auxTituloProy + "'" + investigacion.get(i).getTituloInvestigacion()+ "'";
-        auxPublicado = auxPublicado + "'" + investigacion.get(i).getPublicado()+ "'";
-        if (i != educacion.size() - 1) {
+        auxPublicado = auxPublicado + "" + investigacion.get(i).getPublicado()+ "";
+        if (i != investigacion.size() - 1) {
             proyectos = proyectos + ",";
             auxTituloProy = auxTituloProy + ",";
             auxPublicado = auxPublicado + ",";
         }
     }
     proyectos = proyectos + "]";
-    auxTipoEdu = auxTipoEdu + "]";
+    auxTituloProy = auxTituloProy + "]";
     auxPublicado = auxPublicado + "]";
+     
+    
+    
+    String idiomas = "[";
+    String auxIdioma = "[";
+    String auxNivelHabla = "[";
+    String auxNivelEscritura = "[";
+    String auxNivelLectura = "[";
+    for (int i = 0; i < idioma.size(); i++) {
+        int n = i + 1;
+        idiomas = idiomas + "{id:" + n + ", idioma: 'idioma" + n + "', nivelHabla: 'nivelHabla" + n + "', nivelEscritura: 'nivelEscritura" + n + "', nivelLectura: 'nivelLectura" + n + "'}";
+        auxIdioma = auxIdioma + "'" + idioma.get(i).getIdioma()+ "'";
+        auxNivelHabla = auxNivelHabla + "'" + idioma.get(i).getNivelHabla()+ "'";
+        auxNivelEscritura = auxNivelEscritura + "'" + idioma.get(i).getNivelEscrito()+ "'";
+        auxNivelLectura = auxNivelLectura + "'" + idioma.get(i).getNivelLectura()+ "'";
+        if (i != idioma.size() - 1) {
+            idiomas = idiomas + ",";
+            auxIdioma = auxIdioma + ",";
+            auxNivelHabla = auxNivelHabla + ",";
+            auxNivelEscritura = auxNivelEscritura + ",";
+            auxNivelLectura = auxNivelLectura + ",";
+        }
+    }
+    idiomas = idiomas + "]";
+    auxIdioma = auxIdioma + "]";
+    auxNivelHabla = auxNivelHabla + "]";
+    auxNivelEscritura = auxNivelEscritura + "]";
+    auxNivelLectura = auxNivelLectura + "]";
     
     
     String asociaciones = "[";
     String auxAsociacion = "[";    
-    for (int i = 0; i < educacion.size(); i++) {
+    for (int i = 0; i < asociacion.size(); i++) {
         int n = i + 1;
         asociaciones = asociaciones + "{id:" + n + ", asociacion: 'asociacion" + n + "'}";
         auxAsociacion = auxAsociacion + "'" + asociacion.get(i).getNombreAsociacion() + "'";        
-        if (i != educacion.size() - 1) {
+        if (i != asociacion.size() - 1) {
             asociaciones = asociaciones + ",";
             auxAsociacion = auxAsociacion + ",";            
         }
     }
     asociaciones = asociaciones + "]";
     auxAsociacion = auxAsociacion + "]";
+    
+    
+    String cargos = "[";
+    String auxLugar = "[";
+    String auxCargo = "[";
+    String auxFechaInicio = "[";
+    String auxFechaFin = "[";
+    String auxResponsabilidades = "[";
+    for (int i = 0; i < cargo.size(); i++) {
+        int n = i + 1;
+        cargos = cargos + "{id:" + n + ", lugar: 'lugarCargo" + n + "', cargo:'cargoAnterior" + n + "', fechaInicio: 'fechaInicioCargo" + n + "', fechaFin:'fechaFinCargo" + n + "', responsabilidades: 'responsabilidad" + n + "'}";
+        auxLugar = auxLugar + "'" + cargo.get(i).getLugar()+ "'";
+        auxCargo = auxCargo + "'" + cargo.get(i).getNombreCargo()+ "'";
+        auxFechaInicio = auxFechaInicio + "'" + cargo.get(i).getFechaInicio()+ "'";
+        auxFechaFin = auxFechaFin + "'" + cargo.get(i).getFechaFin() + "'";
+        auxResponsabilidades = auxResponsabilidades + "'" + cargo.get(i).getResponsabilidades() + "'";
+        if (i != cargo.size() - 1) {
+            cargos = cargos + ",";
+            auxLugar = auxLugar + ",";
+            auxCargo = auxCargo + ",";
+            auxFechaInicio = auxFechaInicio + ",";
+            auxFechaFin = auxFechaFin + ",";
+            auxResponsabilidades = auxResponsabilidades + ",";
+        }
+    }
+    cargos = cargos + "]";
+    auxLugar = auxLugar + "]";
+    auxCargo = auxCargo + "]";
+    auxFechaInicio = auxFechaInicio + "]";
+    auxFechaFin = auxFechaFin + "]";
+    auxResponsabilidades = auxResponsabilidades + "]";
 
 %>
 <!DOCTYPE html>
@@ -241,7 +310,7 @@
     </head>
 
 
-    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos =<%=departamentosJSON%>; municipios =<%=municipiosJSON%>; facultad = '<%=facultad.getFacultad()%>'; user = '<%=user%>'; nombreOferta = '<%=nombreOferta%>'; nombreInstitucion = '<%=nombreInstitucion%>'; duracion = '<%=duracion%>'; pais = '<%=pais%>'; tipoBeca = '<%=tipoBeca%>'; data.nombre = '<%=detalle.getNombre1Du()%>'; data.nombre2 = '<%=detalle.getNombre2Du()%>'; data.apellido1 = '<%=detalle.getApellido1Du()%>'; data.apellido2 = '<%=detalle.getApellido2Du()%>'; data.municipio_nacimiento = '<%=detalle.getIdMunicipioNacimiento()%>'; data.departamento_nacimiento = '<%=idDepartamento%>'; data.fecha_nacimiento = '<%=detalle.getFechaNacimiento()%>'; data.genero = '<%=detalle.getGenero()%>'; activarMunicipios =<%=listaMunicipiosActivar%>; data.direccion = '<%=detalle.getDireccion()%>'; data.municipio_direccion = '<%=detalle.getIdMunicipio()%>'; data.departamento_direccion = '<%=idDepartamentoD%>'; activarMunicipiosDomicilio =<%=listaMunicipiosDomActivar%>; data.tel_casa = '<%=detalle.getTelefonoCasa()%>'; data.tel_movil = '<%=detalle.getTelefonoMovil()%>'; data.tel_oficina = '<%=detalle.getTelefonoOficina()%>'; data.profesion = '<%=detalle.getProfesion()%>'; data.unidad = '<%=detalle.getDepartamento()%>'; data.cargo = '<%=cargoActual.getNombreCargo()%>'; data.fecha_contratacion = '<%=detalle.getFechaContratacion()%>'; data.educacion = <%=educaciones%>; aux.auxTipoEdu= <%=auxTipoEdu%>; aux.auxGradoEdu =<%=auxGradoEdu%>; aux.auxInstitucionEdu=<%=auxInstitucionEdu%>; aux.auxAnyoEdu=<%=auxAnyoEdu%>;">
+    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos =<%=departamentosJSON%>; municipios =<%=municipiosJSON%>; facultad = '<%=facultad.getFacultad()%>'; user = '<%=user%>'; nombreOferta = '<%=nombreOferta%>'; nombreInstitucion = '<%=nombreInstitucion%>'; duracion = '<%=duracion%>'; pais = '<%=pais%>'; tipoBeca = '<%=tipoBeca%>'; data.nombre = '<%=detalle.getNombre1Du()%>'; data.nombre2 = '<%=detalle.getNombre2Du()%>'; data.apellido1 = '<%=detalle.getApellido1Du()%>'; data.apellido2 = '<%=detalle.getApellido2Du()%>'; data.municipio_nacimiento = '<%=detalle.getIdMunicipioNacimiento()%>'; data.departamento_nacimiento = '<%=idDepartamento%>'; data.fecha_nacimiento = '<%=detalle.getFechaNacimiento()%>'; data.genero = '<%=detalle.getGenero()%>'; activarMunicipios =<%=listaMunicipiosActivar%>; data.direccion = '<%=detalle.getDireccion()%>'; data.municipio_direccion = '<%=detalle.getIdMunicipio()%>'; data.departamento_direccion = '<%=idDepartamentoD%>'; activarMunicipiosDomicilio =<%=listaMunicipiosDomActivar%>; data.tel_casa = '<%=detalle.getTelefonoCasa()%>'; data.tel_movil = '<%=detalle.getTelefonoMovil()%>'; data.tel_oficina = '<%=detalle.getTelefonoOficina()%>'; data.profesion = '<%=detalle.getProfesion()%>'; data.unidad = '<%=detalle.getDepartamento()%>'; data.cargo = '<%=cargoActual.getNombreCargo()%>'; data.fecha_contratacion = '<%=detalle.getFechaContratacion()%>'; data.educacion = <%=educaciones%>; aux.auxTipoEdu= <%=auxTipoEdu%>; aux.auxGradoEdu =<%=auxGradoEdu%>; aux.auxInstitucionEdu=<%=auxInstitucionEdu%>; aux.auxAnyoEdu=<%=auxAnyoEdu%>; data.proyectos = <%=proyectos%>; aux.auxTituloProy=<%=auxTituloProy%>; aux.auxPublicado=<%=auxPublicado%>; data.idiomas = <%=idiomas%>; aux.auxIdioma=<%=auxIdioma%>; aux.auxNivelEscritura=<%=auxNivelEscritura%>; aux.auxNivelHabla=<%=auxNivelHabla%>; aux.auxNivelLectura=<%=auxNivelLectura%>; data.asociaciones = <%=asociaciones%>; aux.auxAsociacion=<%=auxAsociacion%>; data.cargos = <%=cargos%>; aux.auxLugar=<%=auxLugar%>; aux.auxCargo=<%=auxCargo%>; aux.auxFechaInicio=<%=auxFechaInicio%>; aux.auxFechaFin=<%=auxFechaFin%>; aux.auxResponsabilidades=<%=auxResponsabilidades%>;">
 
     <div class="container-fluid" ng-init="oferta={nombre:'<%=nombreOferta%>',institucion: '<%=nombreInstitucion%>'}" >
         <h3 class="text-center" style="color:#E42217;">Solicitud de beca</h3>

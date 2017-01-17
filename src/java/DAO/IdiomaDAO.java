@@ -151,4 +151,37 @@ public class IdiomaDAO extends ConexionBD{
 
         return siguienteId;
     }
+     
+     public ArrayList<Idioma> consultarPorIdDetalle(int id) {
+        ArrayList<Idioma> idioma = new ArrayList<Idioma>();        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_IDIOMA, ID_DETALLE_USUARIO, IDIOMA, NIVEL_HABLA, NIVEL_LECTURA, NIVEL_ESCRITO FROM idioma WHERE ID_DETALLE_USUARIO = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                Idioma temp = new Idioma();
+                int ID_IDIOMA = rs.getInt("ID_IDIOMA"); 
+                int ID_DETALLE_USUARIO = rs.getInt("ID_DETALLE_USUARIO"); 
+                String IDIOMA = rs.getString("IDIOMA");
+                String NIVEL_HABLA = rs.getString("NIVEL_HABLA");
+                String NIVEL_LECTURA = rs.getString("NIVEL_LECTURA");
+                String NIVEL_ESCRITO = rs.getString("NIVEL_ESCRITO");
+
+
+                temp.setIdIdioma(ID_IDIOMA);
+                temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
+                temp.setIdioma(IDIOMA);
+                temp.setNivelEscrito(NIVEL_ESCRITO);
+                temp.setNivelHabla(NIVEL_HABLA);
+                temp.setNivelLectura(NIVEL_LECTURA);
+                idioma.add(temp);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return idioma;
+    }
 }

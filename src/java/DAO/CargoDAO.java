@@ -7,6 +7,7 @@ package DAO;
 
 import POJO.Cargo;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -174,5 +175,40 @@ public class CargoDAO extends ConexionBD{
             this.cerrarConexion();
         }
         return exito;
+    }
+    
+    public ArrayList<Cargo> consultarPorIdDetalle(int id) {
+        ArrayList<Cargo> cargo = new ArrayList<Cargo>();        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_CARGO, ID_DETALLE_USUARIO, NOMBRE_CARGO, FECHA_INICIO, FECHA_FIN, LUGAR, RESPONSABILIDADES FROM cargo WHERE LUGAR IS NOT null and ID_DETALLE_USUARIO = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                Cargo temp = new Cargo();
+                int ID_CARGO = rs.getInt("ID_CARGO"); 
+                int ID_DETALLE_USUARIO = rs.getInt("ID_DETALLE_USUARIO"); 
+                String NOMBRE_CARGO = rs.getString("NOMBRE_CARGO");
+                Date FECHA_INICIO = rs.getDate("FECHA_INICIO");
+                Date FECHA_FIN = rs.getDate("FECHA_FIN");
+                String LUGAR = rs.getString("LUGAR");
+                String RESPONSABILIDADES = rs.getString("RESPONSABILIDADES");
+
+
+                temp.setIdCargo(ID_CARGO);
+                temp.setIdDetalleUsuario(ID_DETALLE_USUARIO);
+                temp.setNombreCargo(NOMBRE_CARGO);
+                temp.setFechaInicio(FECHA_INICIO);
+                temp.setFechaFin(FECHA_FIN);
+                temp.setLugar(LUGAR);
+                temp.setResponsabilidades(RESPONSABILIDADES);
+                cargo.add(temp);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return cargo;
     }
 }
