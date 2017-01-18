@@ -110,7 +110,9 @@
         <fieldset class="custom-border">
                 <legend class="custom-border">Becas</legend>
         <div class="row">            
+            
             <div class="col-md-6">
+                <h3>Procesos y estados</h3>
                 <div class = "panel panel-default">
                    <table class="table table-bordered">
                     <thead>
@@ -121,28 +123,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>                            
-                            <td style="background-color:#728FCE; color:white">Sin iniciar</td>
-                            <%
-                                System.out.println(expediente.getIdExpediente()+" SSSS "+expediente.getEstadoExpediente());
-                            if(expedienteAbierto == false)    
-                            out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
-                            else                                
-                            out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
-                            %>        
-                            <td class="text-center" style="background-color:white; color:black;">
-                                <center>                                    
-                                <form style='display:inline;' >
-                                    <%
-                                    if(expedienteAbierto == false)    
-                                    out.write("<a href='301_inf_publica_ofertas_beca.jsp'>Ver ofertas de beca</a>");
-                                    else
-                                    out.write("<input type='submit' class='btn btn-success' name='submit' value='Finalizado' disabled>");
-                                                                %>
-                                </form>
-                                </center>
-                            </td>
-                        </tr>
+                        
                         <tr>
                             <td style="background-color:#728FCE; color:white">Permiso inicial de junta directiva</td>
                             <%
@@ -527,7 +508,7 @@
                                     <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
                                     <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
-                                    <a href="307_candidato_sol_dictamen_propuesta.jsp" class="btn btn-success">Actualizar documentación</a>
+                                    <a  href="307_candidato_sol_dictamen_propuesta.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="307_candidato_sol_dictamen_propuesta.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
@@ -587,11 +568,11 @@
                     
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
-                            <form style='display:inline;' action='CancelarProcesoCandidato' method='post'>
+                            <form style='display:inline; align-content: center;' action='CancelarProcesoCandidato' method='post'>
                                 <input type='hidden' name='id_exp' value='<%=expediente.getIdExpediente() %>'>
                           <%   
                               if(expedienteAbierto)
-                                  out.write("<button id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                  out.write("<button style='align-content: center;' id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
                               else    
                                   out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar proceso</button>");
                                  %>
