@@ -5,6 +5,7 @@ import MODEL.variablesDeSesion;
 import POJO.TipoUsuario;
 import POJO.Usuario;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class UsuarioDAO extends ConexionBD {
 
@@ -264,5 +265,27 @@ public class UsuarioDAO extends ConexionBD {
             this.cerrarConexion();
         }
         return exito;
+    }
+    
+    //consultar todos los correos de los usuarios
+    public ArrayList<String> consultarTodosLosCorreos() {
+        ArrayList<String> lista = new ArrayList<String>();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT EMAIL FROM USUARIO, DETALLE_USUARIO WHERE USUARIO.ID_USUARIO = DETALLE_USUARIO.ID_USUARIO";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            while (rs.next()) {
+                String email = rs.getString("EMAIL");
+                lista.add(email);
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+
+        return lista;
     }
 }

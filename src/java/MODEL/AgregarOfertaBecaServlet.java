@@ -15,6 +15,7 @@ import POJO.OfertaBeca;
 import POJO.Documento;
 import POJO.Expediente;
 import POJO.TipoDocumento;
+import MODEL.EnviarCorreo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
@@ -61,7 +62,7 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         TipoDocumento tipo = new TipoDocumento();
         TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
         ExpedienteDAO expDao = new ExpedienteDAO();
-
+        EnviarCorreo envcorreos = new EnviarCorreo();
 
         //parte de lectura desde el jsp y guardado en bd     
         int idOfertaBeca = ofertaBecaDAO.getSiguienteId();
@@ -107,8 +108,21 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
        // int iduser=Integer.parseInt(request.getSession().getAttribute("id_usuario_login").toString());  
         Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);
         
+        //Preparando correo a enviar
+        String asuntoEmail = "Nueva Oferta de Beca de Postgrado";
+        String cuerpoEmail = "Oferta: ";
+        cuerpoEmail = cuerpoEmail+ofertaBeca.getNombreOferta()+"\n\nPara más información acerca de la oferta de beca por favor visitar "
+                + "el módulo Ofertas de Beca en la siguiente aplicación\n\n";
+        
+        String requestURL = request.getRequestURL().toString();
+        String servlet = request.getServletPath();
+        String appURLRoot = requestURL.replace(servlet, "");
+        
+        cuerpoEmail = cuerpoEmail+appURLRoot+"/";
+        
         if(exito){
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la oferta correctamente.");
+            envcorreos.enviarCorreos(asuntoEmail, cuerpoEmail);
         }else{
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la oferta");
         } 
