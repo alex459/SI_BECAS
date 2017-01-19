@@ -83,12 +83,12 @@ public class SolicitudBecaPDF extends HttpServlet {
             String fechaContratacion = request.getParameter("fechaContratacion");
             //calcular tiempo de servicio
             String tiempoServicio = "";
-
+ 
             boolean checkProyecto = Boolean.parseBoolean(request.getParameter("checkProyecto"));
             boolean checkAsociacion = Boolean.parseBoolean(request.getParameter("checkAsociacion"));
             Integer nEducacion = Integer.parseInt(request.getParameter("nEducacion"));
             Integer nInvestigacion = 0;
-            Integer nIdioma = Integer.parseInt(request.getParameter("nAsociacion"));
+            Integer nIdioma = Integer.parseInt(request.getParameter("nIdioma"));
             Integer nAsociacion = 0;
             Integer nCargos = Integer.parseInt(request.getParameter("nCargos"));
             Integer nPrograma = Integer.parseInt(request.getParameter("nPrograma"));
