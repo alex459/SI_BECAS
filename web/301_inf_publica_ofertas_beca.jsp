@@ -336,7 +336,7 @@
                     <legend class="custom-border">Ofertas de beca en el sistema</legend>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-bordered">
+                            <table  id="tablaResultados" class="table table-bordered">
 
                                 <thead>
                                     <tr class="success">
@@ -429,7 +429,41 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+     $(document).ready(function() {
+    $('#tablaResultados').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+    
                                            $(function () {
         $('#fIngresoIni').datepicker({
             format: 'yyyy-mm-dd',
@@ -465,6 +499,7 @@
             $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
         });
     });
+    
 </script>
 </body>
 </html>
