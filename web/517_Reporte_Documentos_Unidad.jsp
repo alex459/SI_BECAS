@@ -4,7 +4,40 @@
     Author     : adminPC
 --%>
 
+<%@page import="DAO.FacultadDAO"%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
+<%@page import="POJO.Facultad"%>
+<%@page import="MODEL.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+
+    HttpSession actual = request.getSession();
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("7");
+    tipo_usuarios_permitidos.add("8");
+    tipo_usuarios_permitidos.add("9");
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user == null) {
+        response.sendRedirect("logout.jsp");
+    }
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    Facultad facultad1 = new Facultad();
+    AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,54 +72,12 @@
         </h3>
     </div>
 </div>
-<nav class="navbar navbar-custom" role="navigation">
-    <div class="navbar-header">
+<p class="text-right">Rol: <%= rol%></p>
+    <p class="text-right">Usuario: <%= user%></p>
 
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-        </button> <a class="navbar-brand active" href="index.html">Inicio</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-       <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Información pública<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="315_candidato_ofertas_beca.jsp">Ofertas de beca</a>
-                        <a href="316_candidatos_documentos.jsp">Documentos</a>
-                        <a href="317_candidatos_acercade.jsp">Acerca de</a>
-                        <a href="#">Login/Logout</a>
-                    </li>                               
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav">
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Consejo de Becas<strong class="caret"></strong></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="507_Consejo_Becas_Solicitudes_Pendientes.jsp">Solicitudes de Acuerdos Pendientes</a>
-                        <a href="508_Consejo_Becas_Resolver_Solicitud.jsp">Resolver Solicitud de Acuerdo Pendiente</a>
-                        <a href="509_Consejo_Becas_Buscar_Acuerdo.jsp">Buscar Acuerdo</a>
-                        <a href="510_Reportes.jsp">Reportes</a>
-                    </li>                               
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">                        
-            <li>
-                <a href="#">Ayuda</a>
-            </li>
-            <li>
-                <a href="login.jsp">Cerrar Sesión</a>
-            </li>
-        </ul>
-    </div>
-
-</nav>
+    <%-- todo el menu esta contenido en la siguiente linea
+         el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>   
 </head>
 
 
@@ -103,8 +94,8 @@
                             <fieldset class="custom-border">
                                 <legend class="custom-border">Filtros</legend>
                                 <h5 style="color:#E42217">Ingrese los Fitros de Busqueda del Reporte</h5>
-                                <form>
-                                    <div class="row">
+                                <form class="form-horizontal" action="517_Reporte_Documentos_Unidad.jsp" method="post">
+                                   <div class="row">
                                         <div class="col-md-6">
                                             <div class="col-md-4">
                                                 <br>
@@ -112,30 +103,30 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Unidad</option>
-                                                    <option>Unidad1</option>
-                                                    <option>Unidad2</option>
+                                                <select name="unidad" id="unidad" class="form-control">
+                                                    <option value="">Seleccione la Unidad</option>
+                                                    <option value="COMISIÓN DE BECA DE UNA FACULTAD">Comisión de Becas</option>
+                                                    <option value="JUNTA DIRECTIVA DE UNA FACULTAD">Junta Directiva</option>
+                                                    <option value="CONSEJO SUPERIOR UNIVERSITARIO">Consejo Superior Universitario</option>
+                                                    <option value="FISCALÍA">Fiscalía</option>
+                                                    <option value="COLABORADOR DEL CONSEJO DE BECAS">Colaborador del Consejo de becas</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 text-center">
-                                            <label >
-                                                <label>Rango de Fecha de Emision</label><br>
-                                            <div class="col-md-2">
-                                                <label>Inicio:</label>
+                                        <div class="col-md-6 ">
+                                        <div class="col-md-6">          
+                                            <label for="fIngresoIni">Fecha de Emisión (inicio) :</label> 
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
-                                            <div class="col-md-4">
-                                                <input type="date" name="fecha_inicio" class="form-control">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>Fin:</label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input type="date" name="fecha_fin" class="form-control">
-                                            </div>
-                                            </label>
                                         </div>
+                                        <div class="col-md-6">      
+                                            <label for="fIngresoFin">Fecha de Emisión (fin) :</label>
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
 
                                     <div class="row">
@@ -146,11 +137,16 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Facultad</option>
-                                                    <option>Facultad 1</option>
-                                                    <option>Facultad 2</option>
-                                                </select>
+                                                <select id="facultad" name="facultad" class="form-control">
+                                            <%
+                                                FacultadDAO facDao = new FacultadDAO();
+                                                ArrayList<Facultad> lista = facDao.consultarTodos();
+                                            %><option value="" selected>Seleccione una facultad</option><%
+                                                for (int i = 0; i < lista.size(); i++) {%>
+                                            <option value="<%=lista.get(i).getFacultad() %>"> <%=lista.get(i).getFacultad() %></option>
+                                            <%   }
+                                            %>    
+                                        </select>   
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -160,10 +156,10 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Tipo de Documento</option>
-                                                    <option>Documento1</option>
-                                                    <option>Documento2</option>
+                                                 <select name="tipoBeca" id="tipoBeca"  class="form-control">
+                                                    <option value="">Seleccione Tipo de Beca</option>
+                                                    <option value="EXTERNA">Externa</option>
+                                                    <option value="INTERNA">Interna</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -177,13 +173,13 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Tipo de Becario</option>
-                                                    <option>Candidato</option>
-                                                    <option>Activo</option>
-                                                    <option>Contractual</option>
-                                                    <option>LiberaDO</option>
-                                                    <option>Incumplimiento de Contrato</option>
+                                                <select name="tipoBecario" id="tipoBecario" class="form-control">
+                                                    <option value="">Seleccione Tipo de Becario</option>
+                                                    <option value="ACTIVO">Activo</option>
+                                                    <option value="CONTRACTUAL">Contractual</option>
+                                                    <option value="INACTIVO">Inactivo</option>
+                                                    <option value="LIBERADO">Liberado</option>
+                                                    <option value="INCUMPLIMIENTO DE CONTRATO">Incumplimiento de Contrato</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -311,6 +307,42 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-
+<script type="text/javascript">
+    $(function () {
+        $('#fIngresoIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fIngresoFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+        $('#fCierreIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fCierreFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: new Date()
+        }).on('change.dp', function (e) {
+            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+    });
+</script>
 </body>
 </html>
