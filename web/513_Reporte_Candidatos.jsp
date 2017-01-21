@@ -314,9 +314,9 @@
                 <div class="col-md-3 text-center">
                     <fieldset class="custom-border">
                         <legend class="custom-border">Acciones</legend>
-                        <div class="col-md-6">
                             <br>
                             <div class="col-md-6 text-center">
+                                <label>PDF</label>
                                 <form class="form-horizontal" action="ReporteCandidatoServlet" method="post">
                                     <input type="hidden" name="REPORTE_TIPOBECA" value="<%=tipoBeca%>">
                                     <input type="hidden" name="REPORTE_FACULTAD" value="<%=facultad%>">
@@ -330,7 +330,7 @@
                                      <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
                                
                                 </form>
-                           
+                             <br>       
                             <label>Enviar Por Correo</label>
                             <button type="submit" class="btn btn-success form-control">
                                 <span class="glyphicon glyphicon-file"></span> 
@@ -339,18 +339,9 @@
                         </div>
                         <div class="col-md-6">
                             <label>Hoja de Cálculo</label>
-                            <button type="submit" class="btn btn-success form-control">
-                                <span class="glyphicon glyphicon-file"></span> 
-                                Excel
-                            </button><br><br>
+                            <div style="border:1px solid; background-color: #32B232; padding:6px; color:white; " id="buttons"></div>
                             <br>
-                            <label>Imprimir</label>
-                            <button type="submit" class="btn btn-success form-control">
-                                <span class="glyphicon glyphicon-print"></span> 
-                                Imprimir
-                            </button>
-
-                        </div>                                                                
+                        </div>           
                     </fieldset>
                 </div>
             </div>
@@ -435,13 +426,12 @@
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="js/buttons.print.min.js"></script>
+<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-    $('#tablaResultados').DataTable(
+    var tabla= $('#tablaResultados').DataTable(
             {
                  "language": 
 {
@@ -468,14 +458,17 @@
 		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 	}
 }
-             ,
-                    dom: 'Bfrtip',
-        buttons: [
-             'csv', 'excel'
-        ]}
+             }
                    
                 );
+         var buttons = new $.fn.dataTable.Buttons(tabla, {
+     buttons: [
+        'csv', 'excel'
+    ]
+}).container().appendTo($('#buttons'));
+        
 } );
+
     $(function () {
         $('#fIngresoIni').datepicker({
             format: 'yyyy-mm-dd',
