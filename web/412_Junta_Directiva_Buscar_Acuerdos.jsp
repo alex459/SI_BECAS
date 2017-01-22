@@ -51,6 +51,8 @@
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
     <div class="row">
         <div class="col-md-4">
@@ -141,7 +143,7 @@
                                         </div>
 
                                         <div class="col-md-6">   
-                                            <label for="textinput">Fecha Solicitud: </label>
+                                            <label for="textinput">Fecha Resolucion: </label>
                                             <div class="input-group date">
                                                 <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -264,7 +266,7 @@
                     <h5>Resultados</h5>
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <table class="table text-center">
+                        <table id="tablaAcuerdos" class="table table-bordered text-center">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -464,13 +466,46 @@
         <script src="js/angular.min.js"></script>
         <script src="js/solicitudAcuerdosPendientesJuntaDirectiva.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
         <script type="text/javascript">
+            $(document).ready(function() {
+    $('#tablaAcuerdos').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
                                                 $(function () {
                                                     $('.input-group.date').datepicker({
                                                         format: 'yyyy-mm-dd',
                                                         calendarWeeks: true,
                                                         todayHighlight: true,
-                                                        autoclose: true,
+                                                        autoclose: true
                                                     });
                                                 });
         </script>

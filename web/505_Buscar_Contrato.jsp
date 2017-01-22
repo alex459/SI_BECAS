@@ -42,6 +42,8 @@
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
         <div class="row">
             <div class="col-md-4">
@@ -220,7 +222,7 @@
             if(fecha1!=null) {} else {fecha1="";};
             if(expediente!=null) {} else {expediente="";};
             
-          consultaSql = "SELECT DU.CARNET, DU.NOMBRE1_DU, DU.NOMBRE2_DU,  DU.APELLIDO1_DU,  DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD ,D.FECHA_INGRESO, E.ID_EXPEDIENTE FROM EXPEDIENTE E JOIN SOLICITUD_DE_BECA SB ON E.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO JOIN DETALLE_USUARIO DU ON U.ID_USUARIO = DU.ID_USUARIO JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE TD.ID_TIPO_DOCUMENTO = '"+documento+"' AND DU.NOMBRE1_DU LIKE '%"+nombre1+"%' AND DU.NOMBRE2_DU LIKE '%"+nombre2+"%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND E.ID_EXPEDIENTE LIKE '%" + expediente + "%' AND SB.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'  ";
+          consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU,  DU.APELLIDO1_DU,  DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD ,D.FECHA_INGRESO, E.ID_EXPEDIENTE, D.ID_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO FROM EXPEDIENTE E JOIN SOLICITUD_DE_BECA SB ON E.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO JOIN DETALLE_USUARIO DU ON U.ID_USUARIO = DU.ID_USUARIO JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE TD.ID_TIPO_DOCUMENTO = '"+documento+"' AND DU.NOMBRE1_DU LIKE '%"+nombre1+"%' AND DU.NOMBRE2_DU LIKE '%"+nombre2+"%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND E.ID_EXPEDIENTE LIKE '%" + expediente + "%' AND SB.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'  ";
            //PRUEBA   out.write(consultaSql);
           
           if (id_facultad == 0) 
@@ -247,7 +249,7 @@
                         <h5>Resultados</h5>
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <table class="table text-center">
+                            <table id="tablaAcuerdos" class="table table-bordered text-center">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -263,6 +265,8 @@
                                     <%
                                 try {
                                     Integer i = 0;
+                                    int idProgreso =0;
+                                    String estadoProgreso = "";
                                     while (rs.next()) {
                                         i = i + 1;
                                         out.write("<tr>");
@@ -275,9 +279,22 @@
                                         
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' ><input type='submit' class='btn btn-success' name='submit' value='Ver'></form> ");
-                                       
-                                        out.write("<form style='display:inline;' action='502_Resolver_Solicitudes_Asesoria_Contrato.jsp' method='post'><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-danger' name='submit' value='Resolver'></form> ");
+                                        idProgreso = rs.getInt(11);
+                                            estadoProgreso = rs.getString(12);
+                                            if (idProgreso == 4) {
+                                                if (estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")) {
+                                                    //EDITAR                                                                
+                                                    out.write("<form style='display:inline;' action='502_Resolver_Solicitudes_Asesoria_Contrato.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(10) + "' ><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(9) + "' ><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
+                                                    //VER DOCUMENTO
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(10) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                } else {
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(10) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                }
+                                            } else {
+                                                // no se puede editar
+                                                //VER DOCUMENTO
+                                                out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                            }                                                                                    
                                         
                                         out.write("</center>");
                                         out.write("</td>");
@@ -325,23 +342,55 @@
         </p>
     </div>
 </div>    
-</div>
+
 
 <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
         <script src="js/solicitudAsesoriaContrato.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
         <script type="text/javascript">
-                                                        $(function () {
-                                                            $('.input-group.date').datepicker({
-                                                                format: 'yyyy-mm-dd',
-                                                                calendarWeeks: true,
-                                                                todayHighlight: true,
-                                                                autoclose: true,
-                                                                
-                                                            });
-                                                        });
+            $(document).ready(function() {
+    $('#tablaAcuerdos').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+                                                $(function () {
+                                                    $('.input-group.date').datepicker({
+                                                        format: 'yyyy-mm-dd',
+                                                        calendarWeeks: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true
+                                                    });
+                                                });
         </script>
 </body>
 </html>

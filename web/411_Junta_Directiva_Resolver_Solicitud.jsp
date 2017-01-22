@@ -98,9 +98,23 @@
         case 1:
             publicos = docComision.consultarJuntaDirectivaExpeProceso1(id_expedie);
             break;
+            
+        case 2:
+            publicos = docComision.consultarJuntaDirectivaExpeProceso1(id_expedie);
+            break;
 
         case 4:
             publicos = docComision.consultarJuntaDirectivaExpeProceso4(id_expedie);
+            break;
+        
+        case 5:
+            publicos = docComision.consultarJuntaDirectivaExpeProceso4(id_expedie);
+            break;
+        
+        case 9:
+            //Revisar que tipo de acuerdo es
+            publicos = docComision.consultarJuntaDirectivaExpeProceso12(id_expedie);
+            //publicos = docComision.consultarJuntaDirectivaExpeProceso10(id_expedie);
             break;
 
         case 10:
@@ -114,7 +128,9 @@
         case 13:
             publicos = docComision.consultarJuntaDirectivaExpeProceso13(id_expedie);
             break;
-
+        case 14:
+            publicos = docComision.consultarJuntaDirectivaExpeProceso13(id_expedie);
+            break;
         case 20:
             publicos = docComision.consultarJuntaDirectivaExpeProceso20(id_expedie);
             break;

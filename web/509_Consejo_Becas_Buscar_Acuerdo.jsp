@@ -42,6 +42,8 @@
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
         <div class="row">
             <div class="col-md-4">
@@ -148,7 +150,7 @@
                                             <br>
                                             <div class="row">
                                                 <div class="col-md-6">  
-                                                    <label for="textinput">Fecha Solicitud: </label>
+                                                    <label for="textinput">Fecha Resolucion </label>
                                                     <div class="input-group date">
                                                        <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
                                                          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -221,7 +223,7 @@
             if(carnet!=null) {} else {carnet="";};
             if(fecha1!=null) {} else {fecha1="";};
             
-            consultaSql = "SELECT DU.CARNET, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO, D.ESTADO_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('APROBADO', 'DENEGADO') AND TD.DEPARTAMENTO='"+consejoB+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'  ";
+            consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO, D.ESTADO_DOCUMENTO, D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO = SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('APROBADO', 'DENEGADO', 'REVISION') AND TD.DEPARTAMENTO='"+consejoB+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'  ";
              
           if (id_tipo_documento == 0) {
 
@@ -252,7 +254,7 @@
                         <h5>Resultados</h5>
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <table class="table text-center">
+                            <table id="tablaAcuerdos" class="table table-bordered text-center">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -261,40 +263,117 @@
                                         <th>Unidad</th>
                                         <th>Fecha de Resolucion</th>
                                         <th>Tipo de Acuerdo</th>
+                                        <th>Estado</th>
                                         <th>Acción</th>
                                     </tr>  
                                 </thead>
                                 <tbody>
-                                    <%
-                                try {
-                                    Integer i = 0;
-                                    while (rs.next()) {
-                                        i = i + 1;
-                                        out.write("<tr>");
-                                        out.write("<td>" + i + "</td>");
-                                        out.write("<td>" + rs.getString(1) + "</td>");
-                                        out.write("<td>" + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + "</td>");
-                                        out.write("<td>" + rs.getString(6) + " " + rs.getString(7) + "</td>");
-                                        out.write("<td>" + rs.getString(8) + "</td>");
-                                        out.write("<td>" + rs.getString(9) + "</td>");
-                                        out.write("<td>");
-                                        out.write("<center>");
-                                        
-                                           out.write("<form style='display:inline;' ><input type='submit' class='btn btn-success' name='submit' value='Ver'></form> ");
-                                       
-                                            out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(10) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Resolver'></form> ");
-                                                                               
-                                        
-                                        out.write("</center>");
-                                        out.write("</td>");
-                                        out.write("</tr>");
+                                <%                                        try {
+                                        Integer i = 0;
+                                        int idTipoDoc = 0;
+                                        int idProgreso =0;
+                                        String estadoProgreso = "";
+                                        while (rs.next()) {
+                                            i = i + 1;
+                                            out.write("<tr>");
+                                            out.write("<td>" + i + "</td>");
+                                            out.write("<td>" + rs.getString(1) + "</td>");
+                                            out.write("<td>" + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + "</td>");
+                                            out.write("<td>" + rs.getString(6) + " " + rs.getString(7) + "</td>");
+                                            out.write("<td>" + rs.getString(8) + "</td>");
+                                            out.write("<td>" + rs.getString(9) + "</td>");
+                                            out.write("<td>" + rs.getString(10) + "</td>");
+                                            out.write("<td>");
+                                            out.write("<center>");
+                                            //SWIFT DE ID TIPO DOCUMENTO
+                                            idTipoDoc = rs.getInt(12);
+                                            idProgreso = rs.getInt(13);
+                                            estadoProgreso = rs.getString(14);
+                                            switch (idTipoDoc) {
+                                                case 105:
+                                                        if(idProgreso == 3){
+                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }else{
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 131:
+                                                        if(idProgreso == 7){
+                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }else{
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 141:
+                                                        if(idProgreso == 22){
+                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }else{
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                            }
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 152:
+                                                    if(idProgreso == 9 || idProgreso ==12){                                                            
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;
+                                                case 157:
+                                                    if(idProgreso == 15){
+                                                            
+                                                              //EDITAR                                                                
+                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              //VER DOCUMENTO
+                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
+                                                        }else{
+                                                            // no se puede editar
+                                                            //VER DOCUMENTO
+                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                        }
+                                                    break;                                                
+                                            }
+                                            out.write("</center>");
+                                            out.write("</td>");
+                                            out.write("</tr>");
+                                        }
+                                    } catch (Exception ex) {
+                                        System.out.println("error: " + ex);
                                     }
-                                }catch (Exception ex) {
-                                    System.out.println("error: " + ex);
-                                }
 
-                            %>  
-                                </tbody>
+                                %>  
+                            </tbody>
                             </table>
                         </div>
                         <div class="col-md-1"></div>
@@ -331,23 +410,55 @@
         </p>
     </div>
 </div>    
-</div>
+
 
 <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
         <script src="js/solicitudAcuerdosPendientesConsejoBecas.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
         <script type="text/javascript">
-                                                        $(function () {
-                                                            $('.input-group.date').datepicker({
-                                                                format: 'yyyy-mm-dd',
-                                                                calendarWeeks: true,
-                                                                todayHighlight: true,
-                                                                autoclose: true,
-                                                                
-                                                            });
-                                                        });
+            $(document).ready(function() {
+    $('#tablaAcuerdos').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+                                                $(function () {
+                                                    $('.input-group.date').datepicker({
+                                                        format: 'yyyy-mm-dd',
+                                                        calendarWeeks: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true
+                                                    });
+                                                });
         </script>
 
 </body>

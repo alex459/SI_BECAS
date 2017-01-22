@@ -96,11 +96,19 @@
         case 2:
             publicos = docComision.consultarConsejoBecas2(id_expedie);
             break;
+        case 3:
+            publicos = docComision.consultarConsejoBecas2(id_expedie);
+            break;
 
         case 5:
             publicos = docComision.consultarConsejoBecas5(id_expedie);
             break;
-
+        case 7:
+            publicos = docComision.consultarConsejoBecas5(id_expedie);
+            break;
+        case 9:
+            publicos = docComision.consultarConsejoBecas12(id_expedie);
+            break;
         case 12:
             publicos = docComision.consultarConsejoBecas12(id_expedie);
             break;
@@ -108,8 +116,14 @@
         case 14:
             publicos = docComision.consultarConsejoBecas15(id_expedie);
             break;
+        case 15:
+            publicos = docComision.consultarConsejoBecas15(id_expedie);
+            break;
 
         case 21:
+            publicos = docComision.consultarConsejoBecas21(id_expedie);
+            break;
+        case 22:
             publicos = docComision.consultarConsejoBecas21(id_expedie);
             break;
         default:

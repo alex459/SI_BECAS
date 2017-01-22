@@ -46,6 +46,8 @@
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
         <div class="row">
             <div class="col-md-4">
@@ -82,7 +84,7 @@
         <fieldset class="custom-border">
                 <legend class="custom-border">Acuerdos</legend>
                 
-                    <form name="solicitudAcuerdosPendientesComisionBecas" class="form-horizontal" action="409_Comision_Becas_Buscar_Acuerdos.jsp" method="post" novalidate>
+                    <form name="solicitudAcuerdosPendientesComisionBecas" class="form-horizontal" action="409_Comision_Becas_Buscar_Acuerdo.jsp" method="post" novalidate>
     
                     <div class="row">      <!-- FILTROS -->
                         <div class="col-md-2"></div>
@@ -201,7 +203,7 @@
             if(apellido2!=null) {} else {apellido2="";};
             if(carnet!=null) {} else {carnet="";};
             if(fecha1!=null) {} else {fecha1="";};
-            consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, E.ID_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE (D.ESTADO_DOCUMENTO='"+aprobado+"' OR D.ESTADO_DOCUMENTO='"+denegado+"') AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'   ;";
+            consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, E.ID_EXPEDIENTE, E.ID_PROGRESO, E.ESTADO_PROGRESO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE (D.ESTADO_DOCUMENTO='"+aprobado+"' OR D.ESTADO_DOCUMENTO='"+denegado+"') AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'   ;";
             
             
                    
@@ -227,7 +229,7 @@
                         <h5>Resultados</h5>
                         <%-- <div class="col-md-1"></div>--%>
                         <div class="col-md-12">
-                            <table class="table text-center">
+                            <table id="tablaAcuerdos" class="table table-bordered text-center">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -244,9 +246,11 @@
                                     <%
                                 try {
                                     Integer i = 0;
+                                    int idProgreso =0;
+                                    String estadoProgreso = "";
                                     while (rs.next()) {
                                         i = i + 1;
-                                        out.write("<tr>");
+                                        out.write("<tr>");                                       
                                         out.write("<td>" + i + "</td>");
                                         out.write("<td>" + rs.getString(1) + "</td>");
                                         out.write("<td>" + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + "</td>");
@@ -257,10 +261,23 @@
                                       
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' ><input type='submit' class='btn btn-success' name='submit' value='Ver'></form> ");
-                                       
-                                        out.write("<form style='display:inline;' action='408_Comision_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "' ><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(12) + "' ><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                        
+                                        idProgreso = rs.getInt(13);
+                                            estadoProgreso = rs.getString(14);
+                                            if (idProgreso == 4) {
+                                                if (estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")) {
+                                                    //EDITAR                                                                
+                                                    out.write("<form style='display:inline;' action='408_Comision_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "' ><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(12) + "' ><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
+                                                    //VER DOCUMENTO
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                } else {
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                }
+                                            } else {
+                                                // no se puede editar
+                                                //VER DOCUMENTO
+                                                out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                            }                                                                            
+                                                                                
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");
@@ -307,23 +324,55 @@
         </p>
     </div>
 </div>    
-</div>
+
 
 <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
         <script src="js/solicitudAcuerdosPendientesComisionBecas.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
         <script type="text/javascript">
-                                                        $(function () {
-                                                            $('.input-group.date').datepicker({
-                                                                format: 'yyyy-mm-dd',
-                                                                calendarWeeks: true,
-                                                                todayHighlight: true,
-                                                                autoclose: true,
-                                                                
-                                                            });
-                                                        });
+            $(document).ready(function() {
+    $('#tablaAcuerdos').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+                                                $(function () {
+                                                    $('.input-group.date').datepicker({
+                                                        format: 'yyyy-mm-dd',
+                                                        calendarWeeks: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true
+                                                    });
+                                                });
         </script>
 
 </body>

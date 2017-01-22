@@ -92,12 +92,24 @@
         case 7:
             publicos = docComision.consultarConsejoSuperiorUniversitario7(id_expedie);
             break;
+            
+        case 8:
+            publicos = docComision.consultarConsejoSuperiorUniversitario7(id_expedie);
+            break;
 
         case 15:
             publicos = docComision.consultarConsejoSuperiorUniversitario15(id_expedie);
             break;
+            
+        case 16:
+            publicos = docComision.consultarConsejoSuperiorUniversitario15(id_expedie);
+            break;
 
         case 22:
+            publicos = docComision.consultarConsejoSuperiorUniversitario22(id_expedie);
+            break;
+            
+        case 9:
             publicos = docComision.consultarConsejoSuperiorUniversitario22(id_expedie);
             break;
 
