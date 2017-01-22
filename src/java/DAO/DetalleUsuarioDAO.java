@@ -282,5 +282,26 @@ public class DetalleUsuarioDAO extends ConexionBD {
         }
         return exito;
     }
+    
+    //consultar por id usuario. no por id detalle usuario
+    public String ObtenerNombrePorIdUsuario (int id_usuario) {
+        String r = new String();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT  CONCAT(NOMBRE1_DU, ' ', NOMBRE2_DU, ' ', APELLIDO1_DU, ' ', APELLIDO2_DU) AS NOMBRES FROM detalle_usuario WHERE ID_USUARIO = " + id_usuario;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                r = rs.getString(1);  
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return r;
+    }
 
 }

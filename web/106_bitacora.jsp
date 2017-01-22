@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
@@ -47,6 +48,7 @@
     String nombre_usuario = new String();
     String accion = new String(); //tipo_operacion                
     String tabla_afectada = new String();; //descripcion
+
     String fecha1 = new String();
     String fecha2 = new String();
     String id_accion = new String();
@@ -70,13 +72,13 @@
         //formando la consulta
         String consultaSql = "select CONCAT(DU.NOMBRE1_DU, ' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, A.ACCION, B.DESCRIPCION, B.FECHA_BITACORA, B.ID_BITACORA from DETALLE_USUARIO DU NATURAL JOIN USUARIO U NATURAL JOIN BITACORA B NATURAL JOIN ACCION A WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%'";
         if (!request.getParameter("FECHA1").equals("") && !request.getParameter("FECHA2").equals("")) {
-            fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA1")));
-            fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA2")));            
-            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + " 00:00:00' AND '" + fecha2 + " 11:59:59'");
+            fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA1"))) + " 00:00:00";
+            fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA2"))) + " 23:59:59";
+            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
         } else {
-            fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse("01/01/2016"));
-            fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(modifiedDate));
-            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + " 00:00:00' AND '" + fecha2 + " 11:59:59'");
+            fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse("01/01/2016"))+ " 00:00:00";
+            fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(modifiedDate)) + " 23:59:59";
+            consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
         }
         if (!id_accion.equals("0")) {
             id_accion_menor = id_accion;
@@ -89,7 +91,7 @@
 
         }
 
-        out.write(consultaSql);
+        //out.write(consultaSql);
         //realizando la consulta
         rs = conexionBD.consultaSql(consultaSql);
 
@@ -402,7 +404,9 @@
                                             out.write("<td>" + rs.getString(2) + "</td>");
                                             out.write("<td>" + rs.getString(3) + "</td>");
                                             out.write("<td>" + rs.getString(4) + "</td>");
-                                            out.write("<td>" + rs.getDate(5).getMonth() + "/" + rs.getDate(5).getDay() + "/" + rs.getDate(5).getYear() + "</td>");
+                                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                                            String data = df.format(rs.getDate(5));
+                                            out.write("<td>" + data + "</td>");                                            
                                             out.write("<td>" + rs.getTimestamp(5).getHours() + ":" + rs.getTimestamp(5).getMinutes() + ":" + rs.getTimestamp(5).getSeconds() + "</td>");
                                             out.write("</tr>");
                                         }

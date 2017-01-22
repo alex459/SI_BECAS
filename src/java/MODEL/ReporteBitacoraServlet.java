@@ -1,6 +1,7 @@
 package MODEL;
 
 import DAO.ConexionBD;
+import DAO.DetalleUsuarioDAO;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,8 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -65,14 +67,31 @@ public class ReporteBitacoraServlet extends HttpServlet {
             String reporte_fecha2 = request.getParameter("REPORTE_FECHA2");
             String reporte_id_accion_menor = request.getParameter("REPORTE_ID_ACCION_MENOR");
             String reporte_id_accion_mayor = request.getParameter("REPORTE_ID_ACCION_MAYOR");
-            String reporte_reporte_nombre_usuario = request.getParameter("REPORTE_NOMBRE_USUARIO");
-            String reporte_reporte_rol_usuario = request.getParameter("REPORTE_ROL_USUARIO");
             String opcion_de_salida = request.getParameter("OPCION_DE_SALIDA");
-            
-            if("".equals(reporte_nombre1)) reporte_nombre1 = "%";
-            if("".equals(reporte_nombre2)) reporte_nombre2 = "%";
-            if("".equals(reporte_apellido1)) reporte_apellido1 = "%";
-            if("".equals(reporte_apellido2)) reporte_apellido2 = "%";
+
+            if ("".equals(reporte_nombre1)) {
+                reporte_nombre1 = "%";
+            }
+            if ("".equals(reporte_nombre2)) {
+                reporte_nombre2 = "%";
+            }
+            if ("".equals(reporte_apellido1)) {
+                reporte_apellido1 = "%";
+            }
+            if ("".equals(reporte_apellido2)) {
+                reporte_apellido2 = "%";
+            }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date parsedDate1 = (Date) dateFormat.parse(reporte_fecha1);
+            Timestamp timestamp1 = new java.sql.Timestamp(parsedDate1.getTime());
+            Date parsedDate2 = (Date) dateFormat.parse(reporte_fecha2);
+            Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+            if ("".equals(reporte_id_accion_menor)) {
+                reporte_id_accion_menor = "0";
+            }
+            if ("".equals(reporte_id_accion_mayor)) {
+                reporte_id_accion_mayor = "10";
+            }
 
             //preparando parametros para el reporte
             Map parametersMap = new HashMap();
@@ -81,22 +100,20 @@ public class ReporteBitacoraServlet extends HttpServlet {
             parametersMap.put("NOMBRE1", reporte_nombre1);
             parametersMap.put("NOMBRE2", reporte_nombre2);
             parametersMap.put("APELLIDO1", reporte_apellido1);
-            parametersMap.put("APELLIDO2", reporte_apellido2);            
-            System.out.println(new Timestamp(116,11,24,0,0,0,0));
-            System.out.println(new Timestamp(117,1,20,0,0,0,0));
-            parametersMap.put("FECHA1", new Timestamp(116,11,24,0,0,0,0));
-            parametersMap.put("FECHA2", new Timestamp(117,1,20,0,0,0,0));
-            parametersMap.put("ID_ACCION_MENOR", 0);
-            parametersMap.put("ID_ACCION_MAYOR", 10);
-            parametersMap.put("NOMBRE_USUARIO", "JOSE ALEXIS BELTRAN SERRANO");
-            parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");
+            parametersMap.put("APELLIDO2", reporte_apellido2);
+            parametersMap.put("FECHA1", timestamp1);            
+            parametersMap.put("FECHA2", timestamp2);
+            parametersMap.put("ID_ACCION_MENOR", Integer.parseInt(reporte_id_accion_menor));
+            parametersMap.put("ID_ACCION_MAYOR", Integer.parseInt(reporte_id_accion_mayor));
+            parametersMap.put("NOMBRE_USUARIO", new DetalleUsuarioDAO().ObtenerNombrePorIdUsuario(Integer.parseInt(request.getSession().getAttribute("id_user_login").toString())));
+            parametersMap.put("ROL_USUARIO", request.getSession().getAttribute("rol"));
 
             if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF                
                 ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
                 String path = getServletContext().getRealPath("/REPORTES/");
                 //byte[] bytes = JasperRunManager.runReportToPdf(path + "/test_reporte_2.jasper", parametersMap, conexionBD.conn);
-                byte[] bytes = JasperRunManager.runReportToPdf(path + "/101_reporte_bitacora.jasper", parametersMap, conexionBD.conn);                
+                byte[] bytes = JasperRunManager.runReportToPdf(path + "/101_reporte_bitacora.jasper", parametersMap, conexionBD.conn);
                 conexionBD.cerrarConexion();
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
@@ -104,7 +121,7 @@ public class ReporteBitacoraServlet extends HttpServlet {
                 outputstream.write(bytes, 0, bytes.length);
                 outputstream.flush();
                 outputstream.close();
-                
+
             }
 
             if ("2".equals(opcion_de_salida)) { //SALIDA EN XLS
