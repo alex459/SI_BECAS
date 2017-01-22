@@ -48,14 +48,14 @@
 	<title>
 		<band height="136" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="164" y="15" width="492" height="62" uuid="bbbf1d8f-0451-4849-9afe-4c7ea658cdee"/>
+				<reportElement style="Title" x="167" y="39" width="492" height="62" uuid="bbbf1d8f-0451-4849-9afe-4c7ea658cdee"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS DE LA UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="214" y="94" width="409" height="22" forecolor="#000000" uuid="c06194ad-eaa7-4391-b874-46749371e3cf"/>
+				<reportElement style="SubTitle" x="219" y="102" width="409" height="22" forecolor="#000000" uuid="c06194ad-eaa7-4391-b874-46749371e3cf"/>
 				<textElement>
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
@@ -69,6 +69,13 @@
 				<reportElement x="0" y="0" width="87" height="95" uuid="985062e6-22bd-403c-8817-873dcff432bf"/>
 				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement style="Title" x="164" y="-6" width="509" height="62" uuid="1fc35240-693c-467b-ae75-9e4dca24a9d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>

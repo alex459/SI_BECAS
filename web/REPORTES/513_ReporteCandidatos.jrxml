@@ -13,6 +13,7 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="condicion" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE, FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,
 SDB.FECHA_SOLICITUD AS FECHA_SOLICITUD, OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,
@@ -50,14 +51,14 @@ AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='AB
 	<title>
 		<band height="136" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="163" y="25" width="492" height="62" uuid="85e5b11c-428a-4d7b-955b-a592bbf5c63c"/>
+				<reportElement style="Title" x="165" y="39" width="492" height="62" uuid="85e5b11c-428a-4d7b-955b-a592bbf5c63c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS DE LA UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="227" y="98" width="368" height="22" forecolor="#000000" uuid="52b01de8-b4d2-4219-a955-1b31bf4427b5"/>
+				<reportElement style="SubTitle" x="255" y="98" width="368" height="22" forecolor="#000000" uuid="52b01de8-b4d2-4219-a955-1b31bf4427b5"/>
 				<textElement>
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
@@ -71,6 +72,13 @@ AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='AB
 				<reportElement x="0" y="3" width="87" height="95" uuid="bc47b006-05e8-4001-9f1f-edbe59b961bb"/>
 				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement style="Title" x="150" y="-12" width="509" height="62" uuid="b581d939-6aa5-4fbf-87a3-e55981ebd4a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>

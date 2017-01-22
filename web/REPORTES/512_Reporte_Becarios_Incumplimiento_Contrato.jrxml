@@ -15,7 +15,7 @@
 	</style>
 	<parameter name="condicion" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[ SELECT distinct CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU)  AS NOMBRE,
+		<![CDATA[SELECT distinct CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU)  AS NOMBRE,
  OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,
   INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,D.OBSERVACION_O AS OBSERVACION_O,
    OB.FECHA_INICIO AS FECHA_INICIO, OB.FECHA_CIERRE AS FECHA_CIERRE , FA.FACULTAD AS FACULTAD 
@@ -60,14 +60,14 @@ AND US.ID_TIPO_USUARIO= 2
 	<title>
 		<band height="136" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="136" y="15" width="509" height="62" uuid="316ffc41-8300-4f21-9dc1-6cee4f02dce6"/>
+				<reportElement style="Title" x="151" y="35" width="509" height="62" uuid="316ffc41-8300-4f21-9dc1-6cee4f02dce6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS DE LA UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="136" y="92" width="558" height="33" forecolor="#000000" uuid="7d2d23ac-5efb-4120-b5ac-5cdb2da33ca7"/>
+				<reportElement style="SubTitle" x="136" y="97" width="558" height="33" forecolor="#000000" uuid="7d2d23ac-5efb-4120-b5ac-5cdb2da33ca7"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
@@ -81,6 +81,13 @@ AND US.ID_TIPO_USUARIO= 2
 				<reportElement x="2" y="2" width="87" height="95" uuid="742c23cb-1d28-4f3d-9185-12c6d3a8b7d9"/>
 				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement style="Title" x="154" y="-11" width="509" height="62" uuid="613ae035-5d57-43c2-a610-e3d60c9260b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
