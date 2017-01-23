@@ -290,28 +290,18 @@ public class UsuarioDAO extends ConexionBD {
         return lista;
     }
     
-        public ArrayList<String> consultarCorreosPorID(String[] userID) {
+    public ArrayList<String> consultarCorreosPorID(Integer[] userID) {
         ArrayList<String> lista = new ArrayList<String>();
-        StringBuilder builder = new StringBuilder();
-        for( int i = 0 ; i < userID.length; i++ ) {
-            builder.append("?,");
-        }
-        
         this.abrirConexion();
         try {
-            
-            
-            
             stmt = conn.createStatement();
-            String sql = "SELECT EMAIL FROM USUARIO, DETALLE_USUARIO WHERE USUARIO.ID_USUARIO = DETALLE_USUARIO.ID_USUARIO AND USUARIO.ID_USUARIO IN " + builder.deleteCharAt( builder.length() -1 ).toString();
-            
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            
-            int index = 1;
-            for( Object o : userID ) {
-               pstmt.setObject(  index++, o );
+            String sql = "SELECT EMAIL FROM USUARIO, DETALLE_USUARIO WHERE USUARIO.ID_USUARIO = DETALLE_USUARIO.ID_USUARIO AND USUARIO.ID_USUARIO IN (";
+            for( int i = 0 ; i < userID.length; i++ ) {
+                sql = sql + userID[i]+",";
             }
-            ResultSet rs = pstmt.executeQuery(sql);
+            String newSQL = sql.substring(0, sql.length()-1)+")";
+            
+            ResultSet rs = stmt.executeQuery(newSQL);
             this.cerrarConexion();
             while (rs.next()) {
                 String email = rs.getString("EMAIL");

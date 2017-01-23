@@ -10,12 +10,12 @@ import DAO.InstitucionDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.TipoDocumentoDAO;
+import DAO.EnviarCorreo;
 import POJO.Institucion;
 import POJO.OfertaBeca;
 import POJO.Documento;
 import POJO.Expediente;
 import POJO.TipoDocumento;
-import MODEL.EnviarCorreo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
@@ -109,7 +109,9 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);
         
         //Preparando correo a enviar
-        String[] userID = new String[0];
+        Integer[] userID = null;
+        // userID almacena los ID de los usuarios a los que se les enviara el correo, si se declara null
+        // el correo se enviara a todos los usuarios del sistema
         String asuntoEmail = "Nueva Oferta de Beca de Postgrado";
         String cuerpoEmail = "Oferta: ";
         cuerpoEmail = cuerpoEmail+ofertaBeca.getNombreOferta()+"\n\nPara más información acerca de la oferta de beca por favor visitar "
