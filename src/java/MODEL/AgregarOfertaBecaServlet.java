@@ -109,6 +109,7 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);
         
         //Preparando correo a enviar
+        String[] userID = new String[0];
         String asuntoEmail = "Nueva Oferta de Beca de Postgrado";
         String cuerpoEmail = "Oferta: ";
         cuerpoEmail = cuerpoEmail+ofertaBeca.getNombreOferta()+"\n\nPara más información acerca de la oferta de beca por favor visitar "
@@ -122,7 +123,7 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         
         if(exito){
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la oferta correctamente.");
-            envcorreos.enviarCorreos(asuntoEmail, cuerpoEmail);
+            envcorreos.enviarCorreos(asuntoEmail, cuerpoEmail, userID);
         }else{
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la oferta");
         } 

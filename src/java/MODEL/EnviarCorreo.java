@@ -31,7 +31,7 @@ import javax.mail.internet.MimeMultipart;
  */
 public class EnviarCorreo {
     
-    public void enviarCorreos (String emailSubject, String emailTextBody) throws IOException{
+    public void enviarCorreos (String emailSubject, String emailTextBody,String [] userID) throws IOException{
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable","true");
         props.put("mail.smtp.auth", "true");
@@ -49,8 +49,11 @@ public class EnviarCorreo {
         final String gmailPassword = config.getProperty("gmail.password");
         final String[] attachmentFiles = config.getProperty("attachmentfiles").split(";");
         String[] emailDestinations = new String[0];
-        emailDestinations = getDestinations();
-
+        if(userID.length == 0)
+            emailDestinations = getAllDestinations();
+        else
+            emailDestinations = getDestinations(userID);
+                
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(gmailAccount,gmailPassword);
@@ -86,7 +89,7 @@ public class EnviarCorreo {
             System.out.println("Correo enviado");
 
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
         }
     }
     
@@ -100,7 +103,7 @@ public class EnviarCorreo {
         multipart.addBodyPart(messageBodyPart);
     }
     
-    private String[] getDestinations(){
+    private String[] getAllDestinations(){
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         String destinations[] = new String[0];
         
@@ -109,4 +112,12 @@ public class EnviarCorreo {
         
     }
     
+    private String[] getDestinations(String [] userID){
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        String destinations[] = new String[0];
+        
+        destinations = usuarioDAO.consultarCorreosPorID(userID).toArray(destinations);
+        return destinations;
+        
+    }
 }

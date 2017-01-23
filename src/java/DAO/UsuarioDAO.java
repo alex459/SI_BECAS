@@ -4,6 +4,7 @@ import MODEL.Utilidades;
 import MODEL.variablesDeSesion;
 import POJO.TipoUsuario;
 import POJO.Usuario;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -275,6 +276,42 @@ public class UsuarioDAO extends ConexionBD {
             stmt = conn.createStatement();
             String sql = "SELECT EMAIL FROM USUARIO, DETALLE_USUARIO WHERE USUARIO.ID_USUARIO = DETALLE_USUARIO.ID_USUARIO";
             ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            while (rs.next()) {
+                String email = rs.getString("EMAIL");
+                lista.add(email);
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+
+        return lista;
+    }
+    
+        public ArrayList<String> consultarCorreosPorID(String[] userID) {
+        ArrayList<String> lista = new ArrayList<String>();
+        StringBuilder builder = new StringBuilder();
+        for( int i = 0 ; i < userID.length; i++ ) {
+            builder.append("?,");
+        }
+        
+        this.abrirConexion();
+        try {
+            
+            
+            
+            stmt = conn.createStatement();
+            String sql = "SELECT EMAIL FROM USUARIO, DETALLE_USUARIO WHERE USUARIO.ID_USUARIO = DETALLE_USUARIO.ID_USUARIO AND USUARIO.ID_USUARIO IN " + builder.deleteCharAt( builder.length() -1 ).toString();
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            
+            int index = 1;
+            for( Object o : userID ) {
+               pstmt.setObject(  index++, o );
+            }
+            ResultSet rs = pstmt.executeQuery(sql);
             this.cerrarConexion();
             while (rs.next()) {
                 String email = rs.getString("EMAIL");
