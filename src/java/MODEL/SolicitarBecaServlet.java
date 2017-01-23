@@ -342,8 +342,9 @@ public class SolicitarBecaServlet extends HttpServlet {
                                 String varprograma = "programa" + i;
 
                                 ProgramaEstudio programa = new ProgramaEstudio();
-                                Integer semestre = Integer.parseInt(request.getParameter(varsemestre));
+                                String semestreS = request.getParameter(varsemestre);
                                 String programaEstudio = request.getParameter(varprograma);
+                                int semestre = i;
                                 //Comparando con la base
 
                                 Integer idPrograma = programaDao.ExisteProgramaAnterior(solicitud.getIdSolicitud(), semestre);

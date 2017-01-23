@@ -99,7 +99,11 @@
         case 3:
             publicos = docComision.consultarConsejoBecas2(id_expedie);
             break;
-
+        
+        case 4:
+            publicos = docComision.consultarConsejoBecas5(id_expedie);
+            break;
+            
         case 5:
             publicos = docComision.consultarConsejoBecas5(id_expedie);
             break;

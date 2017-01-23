@@ -117,10 +117,10 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <table class="table">
+                        <table class="table table-bordered text-center">
                                     <thead>
                                         <tr>
-                                            <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th><th>Observaciones</th>
+                                            <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
                                         </tr>   
                                     </thead>
                                     <%int i =0;%>
@@ -133,7 +133,7 @@
                                                     <input type="submit" class="btn btn-success" value="Ver Documento">
                                                 </form>
                                             </td>
-                                            <td>{{x.observacion}}</td>
+                                            
                                             
                                         </tr>
                                         
