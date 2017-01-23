@@ -43,7 +43,7 @@ COUNT(P.ESTADO_BECARIO) AS "CANTIDAD DE BECARIOS"
 		<band height="136" splitType="Stretch">
 			<image>
 				<reportElement x="1" y="2" width="87" height="95" uuid="04062630-4bd2-4229-bcd0-5d9238bb54f1"/>
-				<imageExpression><![CDATA["C:\\Users\\alex\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="172" y="0" width="461" height="62" uuid="cad46086-59d1-47de-8021-cd8af0a4ade1"/>
@@ -68,7 +68,7 @@ COUNT(P.ESTADO_BECARIO) AS "CANTIDAD DE BECARIOS"
 			</staticText>
 			<image>
 				<reportElement x="713" y="2" width="87" height="95" uuid="0c0d0d09-7456-4e1b-bde1-5a86747ff87f"/>
-				<imageExpression><![CDATA["C:\\Users\\alex\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

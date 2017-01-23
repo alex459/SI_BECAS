@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="513_ReporteCandidatos" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8f31927-d4f1-4725-b7b9-440338c699ae">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="21"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -24,7 +24,7 @@ SDB.ID_USUARIO=U.ID_USUARIO AND DU.ID_FACULTAD=FA.ID_FACULTAD AND DU.ID_USUARIO=
 SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND
 SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND
 EX.ID_PROGRESO=PR.ID_PROGRESO AND U.ID_TIPO_USUARIO=1
-AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='ABIERTO' $P!{condicion} ]]>
+AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='ABIERTO' $P!{condicion}]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="FACULTAD" class="java.lang.String">
@@ -66,11 +66,11 @@ AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='AB
 			</staticText>
 			<image>
 				<reportElement x="732" y="3" width="87" height="95" uuid="c1ea3c31-d7df-4f8d-b3c1-142630ce51ca"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="0" y="3" width="87" height="95" uuid="bc47b006-05e8-4001-9f1f-edbe59b961bb"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="150" y="-12" width="509" height="62" uuid="b581d939-6aa5-4fbf-87a3-e55981ebd4a8"/>

@@ -75,11 +75,11 @@ AND US.ID_TIPO_USUARIO= 2
 			</staticText>
 			<image>
 				<reportElement x="731" y="2" width="87" height="95" uuid="b0c5f845-f0d8-40d6-ae95-758d7b10243b"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="2" y="2" width="87" height="95" uuid="742c23cb-1d28-4f3d-9185-12c6d3a8b7d9"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="154" y="-11" width="509" height="62" uuid="613ae035-5d57-43c2-a610-e3d60c9260b1"/>

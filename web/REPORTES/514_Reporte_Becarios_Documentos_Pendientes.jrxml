@@ -52,7 +52,7 @@ WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUM
 		<band height="136" splitType="Stretch">
 			<image>
 				<reportElement x="1" y="2" width="87" height="95" uuid="0c143eec-f04b-4f4c-b52b-d002904de1b1"/>
-				<imageExpression><![CDATA["C:\\Users\\alex\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="172" y="0" width="461" height="58" uuid="7d4253f1-a23f-4ade-8778-2de8167b725c"/>
@@ -77,7 +77,7 @@ WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUM
 			</staticText>
 			<image>
 				<reportElement x="715" y="2" width="87" height="95" uuid="f005bb48-9aa0-4f5e-9b36-37a514ec25bd"/>
-				<imageExpression><![CDATA["C:\\Users\\alex\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
