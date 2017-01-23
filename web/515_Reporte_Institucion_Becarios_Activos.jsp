@@ -13,6 +13,7 @@
 <%@page import="POJO.Facultad"%>
 <%@page import="MODEL.Utilidades"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     response.setHeader("Cache-Control", "no-store");
@@ -274,36 +275,30 @@
                     %>
 
                         <div class="col-md-3 text-center">
-                            <fieldset class="custom-border">
-                                <legend class="custom-border">Acciones</legend>
-                                <div class="col-md-6">
-                                    <br>
-                                    <label class="">PDF</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       PDF
-                                    </button><br><br>
-                                    <label>Enviar Por Correo</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       E-mail
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Hoja de Cálculo</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       Excel
-                                    </button><br><br>
-                                    <br>
-                                    <label>Imprimir</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-print"></span> 
-                                       Imprimir
-                                    </button>
-                                    
-                                </div>                                                                
-                            </fieldset>
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Acciones</legend>
+                            <br>
+                            <div class="col-md-6 text-center">
+                                <label>PDF</label>
+                                     <form class="form-horizontal" action="ReporteInstitucionBecariosActivosServlet" method="post">
+                                    <input type="hidden" name="OPCION_DE_SALIDA" value="1">
+                                    <input type="hidden" name="CONDICION" value="<%=consultaSql2 %>">                                    
+                                     <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                               
+                                </form>
+                                 <br>       
+                            <label>Enviar Por Correo</label>
+                            <button type="submit" class="btn btn-success form-control">
+                                <span class="glyphicon glyphicon-file"></span> 
+                                E-mail
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Hoja de Cálculo</label>
+                            <div style="border:1px solid; background-color: #32B232; padding:6px; color:white; " id="buttons"></div>
+                            <br>
+                        </div>           
+                    </fieldset>
                         </div>
                     </div>
                     
@@ -312,14 +307,14 @@
                     <div class="row">
                         <h5>Resultados de la busqueda</h5>
                         <div class="col-md-12">
-                            <table class="table text-center">
+                            <table id="tablaInstituciones" class="table text-center">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Institucion</th>
-                                        <th>Pais</th>
-                                        <th>Pagina Web</th>
-                                        <th>Cantidad de becarios</th>
+                                        <th>INSTITUCIÓN</th>
+                                        <th>PAÍS</th>
+                                        <th>PÁGINA WEB</th>
+                                        <th>CANTIDAD DE BECARIOS</th>
                                     </tr>  
                                 </thead>
                                 <tbody>
@@ -384,7 +379,48 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
+<script type="text/javascript" src="js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="js/buttons.print.min.js"></script>
+<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
 <script type="text/javascript">
+    $(document).ready(function() {
+    var tabla=$('#tablaInstituciones').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+        var buttons = new $.fn.dataTable.Buttons(tabla, {
+     buttons: [      
+        'csv', 'excel'
+    ]
+}).container().appendTo($('#buttons'));
+} );
     $(function () {
         $('#fIngresoIni').datepicker({
             format: 'yyyy-mm-dd',
@@ -421,7 +457,5 @@
         });
     });
 </script>
-
-
 </body>
 </html>
