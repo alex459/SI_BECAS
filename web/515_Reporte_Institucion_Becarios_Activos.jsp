@@ -132,6 +132,7 @@
                                                 <br>
                                                 <select id="selectbasic" name="PAIS" class="form-control">
                                                     <option value="">Seleccione Tipo de País</option>
+                                                    <option value="ALEMANIA">ALEMANIA</option>
                                                     <option value="ARGENTINA">ARGENTINA</option>
                                                     <option value="BRASIL">BRASIL</option>
                                                     <option value="CANADÁ">CANADÁ</option>
@@ -142,7 +143,7 @@
                                                     <option value="MÉXICO">MÉXICO</option>
                                                     
                                                     
-                                                    <option value="MÉXICO">MÉXICO</option>
+                                                    
                                                 </select>
                                             </div>
                                         </div>
