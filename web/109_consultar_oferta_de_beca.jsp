@@ -255,46 +255,50 @@
                 Documento temp3 = new Documento();
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 try {
-                    String nombre = "", tipoEstudio = "", instOfertante = "", instEstudio = "";
-                    if (!request.getParameter("nombreOferta").isEmpty()) {
-                        nombre = request.getParameter("nombreOferta");
-                    }
-                    instOfertante = request.getParameter("institucionOferente");
-                    instEstudio = request.getParameter("institucionEstudio");
-                    if (!request.getParameter("tipoEstudio").isEmpty()) {
-                        tipoEstudio = request.getParameter("tipoEstudio");
-                    }
-                    String fIngresoIni = request.getParameter("fIngresoIni");
-                    String fIngresoFin = request.getParameter("fIngresoFin");
-                    String fCierreIni = request.getParameter("fCierreIni");
-                    String fCierreFin = request.getParameter("fCierreFin");
-                    //formando la consulta
+                     //formando la consulta
                     String consultaSql = "";
+                    String consultaSql2 = "";
                     consultaSql = "SELECT ID_OFERTA_BECA, NOMBRE_OFERTA,IDIOMA,TIPO_OFERTA_BECA,TIPO_ESTUDIO,FECHA_CIERRE, "
                             + " ID_INSTITUCION_ESTUDIO, ID_INSTITUCION_FINANCIERA, "
                             + " NOMBRE_INSTITUCION, OFERTA_BECA.ID_DOCUMENTO AS ID_DOCUMENTO, PAIS FROM "
                             + " OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_DOCUMENTO "
                             + " AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
-                            + " AND OFERTA_BECA_ACTIVA=1 "
-                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'";
+                            + " AND OFERTA_BECA_ACTIVA=1 ";
+                    String nombre = "", tipoEstudio = "", instOfertante = "", instEstudio = "";
+                    if (!request.getParameter("nombreOferta").isEmpty()) {
+                        nombre = request.getParameter("nombreOferta");
+                        consultaSql2=consultaSql2.concat(" AND nombre_oferta like '%" + nombre + "%'");
+                    }
+                    instOfertante = request.getParameter("institucionOferente");
+                    instEstudio = request.getParameter("institucionEstudio");
+                    if (!request.getParameter("tipoEstudio").isEmpty()) {
+                        tipoEstudio = request.getParameter("tipoEstudio");
+                        consultaSql2=consultaSql2.concat(" AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%'");
+                    }
+                    String fIngresoIni = request.getParameter("fIngresoIni");
+                    String fIngresoFin = request.getParameter("fIngresoFin");
+                    String fCierreIni = request.getParameter("fCierreIni");
+                    String fCierreFin = request.getParameter("fCierreFin");
+                   
                     if (instEstudio != null) {
                         int idEst = institucionDAO.consultarIdPorNombre(instEstudio);
-                        consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=" + idEst + " ");
+                        consultaSql2 = consultaSql2.concat(" AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=" + idEst + " ");
                     }
                     if (instOfertante != null) {
                         int idFin = institucionDAO.consultarIdPorNombre(instOfertante);
-                        consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
+                        consultaSql2 = consultaSql2.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
                     }
                     if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                         java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                         java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
                     }
                     if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                         java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                     }
+                    consultaSql = consultaSql.concat(consultaSql2);
                     consultaSql = consultaSql.concat(";");
                     System.out.println(consultaSql);
                     //realizando la consulta
@@ -333,7 +337,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <table  id="tablaResultados" class="table">
-
                                 <thead>
                                     <tr class="success">
                                         <th>Nombre de la oferta</th>
@@ -423,9 +426,9 @@
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
+   $(document).ready(function() {
     $('#tablaResultados').DataTable(
             {
                  "language": 
@@ -456,7 +459,8 @@
             }
                 );
 } );
-    $(function () {
+    
+                                           $(function () {
         $('#fIngresoIni').datepicker({
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
@@ -491,6 +495,7 @@
             $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
         });
     });
+    
 </script>
 </body>
 </html>

@@ -25,8 +25,8 @@ import net.sf.jasperreports.engine.JasperRunManager;
  *
  * @author next
  */
-@WebServlet("/ReporteCandidatoServlet")
-public class ReporteCandidatoServlet extends HttpServlet {
+@WebServlet("/ReporteInstitucionFinancieraServlet")
+public class ReporteInstitucionFinancieraServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,11 +45,6 @@ public class ReporteCandidatoServlet extends HttpServlet {
         //servlet encargado de generar reportes de bitacora
         try {
             //leyendo parametros del jsp
-            String reporte_tipobeca = request.getParameter("REPORTE_TIPOBECA");
-            String reporte_facultad = request.getParameter("REPORTE_FACULTAD");
-            String reporte_tipoestudio = request.getParameter("REPORTE_TIPOESTUDIO");
-            String reporte_institucion = request.getParameter("REPORTE_INSTITUCION");
-            String reporte_reporte_nombre_usuario = request.getParameter("REPORTE_NOMBRE_USUARIO");
             String reporte_reporte_rol_usuario = request.getParameter("REPORTE_ROL_USUARIO");
             String opcion_de_salida = request.getParameter("OPCION_DE_SALIDA");
             String condicion = request.getParameter("CONDICION");
@@ -92,7 +87,7 @@ public class ReporteCandidatoServlet extends HttpServlet {
                  ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
                 String path = getServletContext().getRealPath("/REPORTES/");
-                byte[] bytes = JasperRunManager.runReportToPdf(path + "/513_ReporteCandidatos.jasper", parametersMap, conexionBD.conn);
+                byte[] bytes = JasperRunManager.runReportToPdf(path + "/511_Reporte_Institucion_Financiera.jasper", parametersMap, conexionBD.conn);
                 conexionBD.cerrarConexion();
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);

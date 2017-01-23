@@ -399,6 +399,7 @@
 
 
                     <div class="row">
+                        <fieldset class="custom-border">
                         <h5>Resultados de la busqueda</h5>
                         <div class="col-md-12">
                             <table id="tablaInstituciones" class="table text-center">
@@ -419,9 +420,10 @@
                                     <%
                                 if (lista2.size() >= 0) {
                                     int i = 0;
+                                    int j=1;
                                     while (i < lista2.size()) {
                                         out.write("<tr>");
-                                        out.write("<td>" + i + 1 + "</td>");
+                                        out.write("<td>" + j+ "</td>");
                                         out.write("<td>" + listaUser.get(i).getNombre1Du() + "</td>");
                                         out.write("<td>" + lista2.get(i).getTipoOfertaBeca() + "</td>");                                        
                                         out.write("<td>" + df.format(lista2.get(i).getFechaInicio()) + "</td>");
@@ -432,6 +434,7 @@
                                         out.write("<td>" + listaFacultades.get(i).getFacultad() + "</td>");
                                        // out.write("<td>" + listaDocs.get(i).getObservacion() + "</td>");
                                         out.write("</tr>");
+                                        j++;
                                         i++;
                                     }
                                 }
@@ -448,6 +451,7 @@
                             </table>
                         </div>
                     </div>
+                    </fieldset>
         </fieldset>
     </div>  
 

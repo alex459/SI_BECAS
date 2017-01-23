@@ -252,12 +252,12 @@
                         consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE"
                                 + ", FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,SDB.FECHA_SOLICITUD AS FECHA_SOLICITUD"
                                 + ", OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION, "
-                                + " PR.NOMBRE_PROGRESO AS NOMBRE_PROGRESO FROM DETALLE_USUARIO DU, FACULTAD FA, "
+                                + " PR.NOMBRE_PROGRESO AS NOMBRE_PROGRESO FROM DETALLE_USUARIO DU, FACULTAD FA, USUARIO U,"
                                 + " OFERTA_BECA OB,INSTITUCION INS, PROGRESO PR, SOLICITUD_DE_BECA SDB, EXPEDIENTE EX "
-                                + " WHERE DU.ID_FACULTAD=FA.ID_FACULTAD AND DU.ID_USUARIO=SDB.ID_USUARIO AND "
+                                + " WHERE SDB.ID_USUARIO=U.ID_USUARIO AND DU.ID_FACULTAD=FA.ID_FACULTAD AND DU.ID_USUARIO=SDB.ID_USUARIO AND "
                                 + " SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND "
                                 + " EX.ID_PROGRESO=PR.ID_PROGRESO AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION "
-                                + " AND EX.ESTADO_EXPEDIENTE='ABIERTO' ";
+                                + " AND U.ID_TIPO_USUARIO=1 AND EX.ESTADO_EXPEDIENTE='ABIERTO' ";
                         if (!request.getParameter("tipoBeca").isEmpty()) {
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
                         }
@@ -311,7 +311,7 @@
                         System.out.println(ex);
                     }
                 %>                                               
-                <div class="col-md-3 text-center">
+                <div class="col-md-3 texct-center">
                     <fieldset class="custom-border">
                         <legend class="custom-border">Acciones</legend>
                             <br>
@@ -348,6 +348,7 @@
 
 
             <div class="row">
+                <fieldset class="custom-border">
                 <h5>Resultados de la busqueda</h5>
                 <div class="col-md-12">
                     <table id="tablaResultados" class="table text-center">
@@ -367,9 +368,10 @@
                             <%
                                 if (lista2.size() >= 0) {
                                     int i = 0;
+                                    int j=1;
                                     while (i < lista2.size()) {
                                         out.write("<tr>");
-                                        out.write("<td>" + i + 1 + "</td>");
+                                        out.write("<td>" + j  + "</td>");
                                         out.write("<td>" + listaUser.get(i).getNombre1Du() + "</td>");
                                         out.write("<td>" + lista2.get(i).getTipoOfertaBeca() + "</td>");                                        
                                         out.write("<td>" + df.format(listaSol.get(i).getFechaSolicitud()) + "</td>");
@@ -378,6 +380,7 @@
                                         out.write("<td>" + listaFacultades.get(i).getFacultad() + "</td>");
                                         out.write("<td>" + listaProg.get(i).getNombreProgreso() + "</td>");
                                         out.write("</tr>");
+                                        j++;
                                         i++;
                                     }
                                 }
@@ -386,15 +389,9 @@
                     </table>
                 </div>
             </div>
+                        </fieldset>
         </fieldset>
     </div>  
-
-
-
-
-
-
-
 
     <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
         <div class="col-md-6">

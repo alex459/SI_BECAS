@@ -85,7 +85,7 @@ public class ReporteTipoBecariosServlet extends HttpServlet {
                  ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
                 String path = getServletContext().getRealPath("/REPORTES/");
-                byte[] bytes = JasperRunManager.runReportToPdf(path + "/ReporteTipoBecarios.jasper", parametersMap, conexionBD.conn);
+                byte[] bytes = JasperRunManager.runReportToPdf(path + "/516_ReporteBecariosTipo.jasper", parametersMap, conexionBD.conn);
                 conexionBD.cerrarConexion();
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);

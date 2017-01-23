@@ -32,19 +32,7 @@
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
-    HttpSession actual = request.getSession();
-    String id_usuario_login = (String) actual.getAttribute("id_user_login");
-    String rol = (String) actual.getAttribute("rol");
-    String user = (String) actual.getAttribute("user");
-    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
-    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
-    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
-    tipo_usuarios_permitidos.add("1"); //candidato
-    tipo_usuarios_permitidos.add("9"); //admin
-    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
-    if (!autorizacion || user == null) {
-        response.sendRedirect("logout.jsp");
-    }
+  
 %>
 <!-- fin de proceso de seguridad de login -->
 
@@ -188,9 +176,9 @@
         </h3>
     </div>
 </div>
-<p class="text-right">Rol: <%= rol %></p>
-<p class="text-right">Usuario: <%= user %></p>
-<jsp:include page="menu.jsp"></jsp:include>
+<p class="text-right"></p>
+<p class="text-right"></p>
+<jsp:include page="menu_corto.jsp"></jsp:include>
 </head>
 <body>
 

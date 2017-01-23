@@ -350,7 +350,7 @@
                     <legend class="custom-border">Ofertas de beca en el sistema</legend>
                     <div class="row">
                         <div class="col-md-12">
-                            <table  id="tablaResultados"  class="table table-bordered">
+                            <table  id="tablaResultados"  class="table">
 
                                 <thead>
                                     <tr class="success">

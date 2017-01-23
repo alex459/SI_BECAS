@@ -17,17 +17,17 @@
 	<queryString>
 		<![CDATA[SELECT distinct CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU)  AS NOMBRE,
  OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,
-  INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,D.OBSERVACION_O AS OBSERVACION_O,
+  INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,OBS.OBSERVACION_O AS OBSERVACION_O,
    OB.FECHA_INICIO AS FECHA_INICIO, OB.FECHA_CIERRE AS FECHA_CIERRE , FA.FACULTAD AS FACULTAD 
-FROM DETALLE_USUARIO DU,  FACULTAD FA, OFERTA_BECA OB, DOCUMENTO D,iNSTITUCION INS, SOLICITUD_DE_BECA SDB,  
+FROM DETALLE_USUARIO DU,  FACULTAD FA, OFERTA_BECA OB, OBSERVACIONES OBS,iNSTITUCION INS, SOLICITUD_DE_BECA SDB,  
 EXPEDIENTE EX, USUARIO US, TIPO_USUARIO TU, PROGRESO PR  WHERE 
 DU.ID_FACULTAD=FA.ID_FACULTAD AND US.ID_USUARIO=DU.ID_USUARIO AND DU.ID_USUARIO=SDB.ID_USUARIO  
 AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION 
-AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND EX.ID_EXPEDIENTE=D.ID_EXPEDIENTE
+AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND EX.ID_EXPEDIENTE=OBS.ID_EXPEDIENTE
 AND EX.ID_PROGRESO=PR.ID_PROGRESO 
 AND US.ID_TIPO_USUARIO= 2
   AND EX.ESTADO_EXPEDIENTE='ABIERTO' AND INS.TIPO_INSTITUCION='OFERTANTE'
-  AND PR.ESTADO_BECARIO='INCUMPLIMIENTO' AND D.ID_TIPO_DOCUMENTO=159   $P!{condicion} ;]]>
+  AND PR.ESTADO_BECARIO='INCUMPLIMIENTO' $P!{condicion} ;]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="TIPO_OFERTA_BECA" class="java.lang.String">
@@ -103,38 +103,65 @@ AND US.ID_TIPO_USUARIO= 2
 			</line>
 			<staticText>
 				<reportElement style="Column header" x="0" y="0" width="89" height="15" forecolor="#736343" uuid="b99d6ba2-ae0c-4808-8902-d0fa68d8b604"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="89" y="0" width="89" height="15" forecolor="#736343" uuid="eed637b2-d26b-47ee-8cb0-062b62f3ce12"/>
-				<text><![CDATA[TIPO_OFERTA_BECA]]></text>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[TIPO OFERTA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="178" y="0" width="89" height="15" forecolor="#736343" uuid="b17195bb-888a-4d85-b4c8-3ec08a6c7a74"/>
-				<text><![CDATA[TIPO_ESTUDIO]]></text>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[TIPO ESTUDIO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="267" y="0" width="89" height="15" forecolor="#736343" uuid="6bfd9319-2fc4-46c5-a902-20c005edd3b1"/>
-				<text><![CDATA[NOMBRE_INSTITUCION]]></text>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[INSTITUCIÓN OFER.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="356" y="0" width="89" height="15" forecolor="#736343" uuid="2c2bbbb2-8419-4f94-a5d9-bb0d961b89a1"/>
+				<reportElement style="Column header" x="356" y="0" width="62" height="15" forecolor="#736343" uuid="2c2bbbb2-8419-4f94-a5d9-bb0d961b89a1"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
 				<text><![CDATA[PAIS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="445" y="0" width="89" height="15" forecolor="#736343" uuid="299962d1-a915-4861-8263-b5fcefe9fa3a"/>
-				<text><![CDATA[OBSERVACION_O]]></text>
+				<reportElement style="Column header" x="415" y="0" width="116" height="15" forecolor="#736343" uuid="299962d1-a915-4861-8263-b5fcefe9fa3a"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="534" y="0" width="89" height="15" forecolor="#736343" uuid="2a4dfd7c-44f8-498d-9623-a9cc5ff97678"/>
-				<text><![CDATA[FECHA_INICIO]]></text>
+				<reportElement style="Column header" x="533" y="0" width="89" height="15" forecolor="#736343" uuid="2a4dfd7c-44f8-498d-9623-a9cc5ff97678"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[FECHA INICIO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="623" y="0" width="89" height="15" forecolor="#736343" uuid="919b2829-7ad5-47b4-bfb1-62f7fede78de"/>
-				<text><![CDATA[FECHA_CIERRE]]></text>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[FECHA CIERRE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="712" y="0" width="89" height="15" forecolor="#736343" uuid="4a9f14b9-b991-42c5-88cf-c70c1c895e81"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
 				<text><![CDATA[FACULTAD]]></text>
 			</staticText>
 		</band>
@@ -144,39 +171,129 @@ AND US.ID_TIPO_USUARIO= 2
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="c99a47ac-0c02-42fb-8c68-f05c455ae75c"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="0" y="0" width="89" height="15" uuid="ce6407ca-9c4b-48a0-ad83-e07846d8a4f1"/>
+					<reportElement style="Row" x="0" y="0" width="89" height="15" uuid="ce6407ca-9c4b-48a0-ad83-e07846d8a4f1"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="89" y="0" width="89" height="15" uuid="3b93b447-d689-4c8d-88bb-cafc0ec640f9"/>
+					<reportElement style="Row" x="89" y="0" width="89" height="15" uuid="3b93b447-d689-4c8d-88bb-cafc0ec640f9"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{TIPO_OFERTA_BECA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="178" y="0" width="89" height="15" uuid="2674758a-ba6f-4070-b6a4-411f519cd935"/>
+					<reportElement style="Row" x="178" y="0" width="89" height="15" uuid="2674758a-ba6f-4070-b6a4-411f519cd935"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{TIPO_ESTUDIO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="267" y="0" width="89" height="15" uuid="fc8f3239-a2b1-4063-896c-cde9da026df1"/>
+					<reportElement style="Row" x="267" y="0" width="89" height="15" uuid="fc8f3239-a2b1-4063-896c-cde9da026df1"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{NOMBRE_INSTITUCION}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="356" y="0" width="89" height="15" uuid="fd673eb0-a1ff-4285-a6ff-ddb58256f185"/>
+					<reportElement style="Row" x="356" y="0" width="62" height="15" uuid="fd673eb0-a1ff-4285-a6ff-ddb58256f185"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{PAIS}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="445" y="0" width="89" height="15" uuid="906f5cb3-5dac-4b4d-befc-6936d2c9d714"/>
+					<reportElement style="Row" x="415" y="0" width="116" height="15" uuid="906f5cb3-5dac-4b4d-befc-6936d2c9d714"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{OBSERVACION_O}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="534" y="0" width="89" height="15" uuid="375a7260-5468-4d51-8ed6-2d63f3085132"/>
+					<reportElement style="Row" x="533" y="0" width="89" height="15" uuid="375a7260-5468-4d51-8ed6-2d63f3085132"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{FECHA_INICIO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="623" y="0" width="89" height="15" uuid="c0659482-a669-41c7-b260-c98899639c50"/>
+					<reportElement style="Row" x="623" y="0" width="89" height="15" uuid="c0659482-a669-41c7-b260-c98899639c50"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{FECHA_CIERRE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="712" y="0" width="89" height="15" uuid="906c7837-15fe-40e5-bbfc-47ffe294cc59"/>
+					<reportElement style="Row" x="712" y="0" width="89" height="15" uuid="906c7837-15fe-40e5-bbfc-47ffe294cc59"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{FACULTAD}]]></textFieldExpression>
 				</textField>
 			</frame>

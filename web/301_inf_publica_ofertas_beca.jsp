@@ -32,20 +32,7 @@
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
-    HttpSession actual = request.getSession();
-    String id_usuario_login = (String) actual.getAttribute("id_user_login");
-    String rol = (String) actual.getAttribute("rol");
-    String user = (String) actual.getAttribute("user");
-    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
-    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
-    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
-    tipo_usuarios_permitidos.add("1"); //candidato
-    tipo_usuarios_permitidos.add("9"); //admin
-    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
-    if (!autorizacion || user == null) {
-        response.sendRedirect("logout.jsp");
-    }
-%>
+   %>
 <!-- fin de proceso de seguridad de login -->
 
 <% 
@@ -94,8 +81,8 @@
 
 
 
-<p class="text-right">Rol: <%= rol %></p>
-<p class="text-right">Usuario: <%= user %></p>
+<p class="text-right"></p>
+<p class="text-right"></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -336,7 +323,7 @@
                     <legend class="custom-border">Ofertas de beca en el sistema</legend>
                     <div class="row">
                         <div class="col-md-12">
-                            <table  id="tablaResultados" class="table table-bordered">
+                            <table  id="tablaResultados" class="table">
 
                                 <thead>
                                     <tr class="success">
@@ -351,14 +338,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="info">
+                                    <tr>
                                         <%
                                             System.out.println("AAAA"+lista2.size());
                                             if (lista2.size() >= 0) {
                                                 int i = 0;
                                                 while (i < lista2.size()) {
                                                     System.out.println(lista2.get(i).getIdOfertaBeca()+"ELLLLLLL ID");
-                                        %><tr class="bg-primary"><%
+                                        %><tr><%
                                         %><td><%=lista2.get(i).getNombreOferta()%></td><%
                                             %><td><%=lista2.get(i).getTipoOfertaBeca()%></td><%
                                         %><td><%=df.format(lista2.get(i).getFechaCierre())%></td><%
@@ -432,7 +419,7 @@
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-     $(document).ready(function() {
+   $(document).ready(function() {
     $('#tablaResultados').DataTable(
             {
                  "language": 

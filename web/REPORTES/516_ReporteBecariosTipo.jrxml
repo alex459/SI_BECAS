@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="516_ReporteBecariosTipo" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="18085d5b-c0ee-4905-b629-be6e15cca193">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="condicion" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT DISTINCT SB.ID_EXPEDIENTE,CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS NOMBRE, OF.FECHA_CIERRE, OF.TIPO_ESTUDIO,OF.TIPO_OFERTA_BECA, OF.FECHA_INICIO, OF.NOMBRE_OFERTA,I.NOMBRE_INSTITUCION, I.PAIS,F.FACULTAD, P.ESTADO_BECARIO 
+ ,P.ID_PROGRESO FROM FACULTAD F,DETALLE_USUARIO DU , USUARIO U, TIPO_USUARIO TU , SOLICITUD_DE_BECA SB, OFERTA_BECA OF, INSTITUCION I ,EXPEDIENTE E, PROGRESO P WHERE DU.ID_FACULTAD=F.ID_FACULTAD AND DU.ID_USUARIO=U.ID_USUARIO AND U.ID_USUARIO=SB.ID_USUARIO AND SB.ID_OFERTA_BECA=OF.ID_OFERTA_BECA AND SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE AND P.ID_PROGRESO=E.ID_PROGRESO AND OF.ID_INSTITUCION_FINANCIERA=I.ID_INSTITUCION AND U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' $P!{condicion}]]>
+	</queryString>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="ESTADO_BECARIO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOMBRE_OFERTA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOMBRE_INSTITUCION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIPO_OFERTA_BECA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIPO_ESTUDIO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PAIS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FACULTAD" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FECHA_INICIO" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FECHA_CIERRE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="148" y="42" width="492" height="62" uuid="34301a9a-4d7d-4e04-99c0-b98bc6cc8e3a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS DE LA UNIVERSIDAD DE EL SALVADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="133" y="-9" width="509" height="62" uuid="5fe6d210-fcaa-4ec3-a2c0-56883591a0df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="238" y="101" width="368" height="22" forecolor="#000000" uuid="4b9d6e78-bc4b-407a-ab71-a31326571086"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE BECARIOS POR TIPO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="735" y="0" width="87" height="95" uuid="fe1f8cee-6073-482d-beeb-a3058348ddc0"/>
+				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="1" y="0" width="87" height="95" uuid="9a16a38b-1b51-46a8-a586-4bed725c4bbe"/>
+				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="8d99b89b-7767-42d5-abce-610fa9fa6e66"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Row" x="0" y="0" width="80" height="15" forecolor="#736343" uuid="57ec9cc2-933c-4614-88b0-28623da244e5"/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="80" y="0" width="80" height="15" forecolor="#736343" uuid="9ae89d88-a661-4503-ad1d-bb73d029161e"/>
+				<text><![CDATA[TIPO BECARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="160" y="0" width="80" height="15" forecolor="#736343" uuid="0ef54d43-b670-4b43-8731-2d980d7f0101"/>
+				<text><![CDATA[OFERTA BECA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="240" y="0" width="80" height="15" forecolor="#736343" uuid="fbb15b90-a3a1-41d2-abe2-30b9e5c64ccd"/>
+				<text><![CDATA[INSITUCIÓN OFER.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="320" y="0" width="80" height="15" forecolor="#736343" uuid="fe3d1a7a-a01c-4665-8690-968460c9ba8c"/>
+				<text><![CDATA[TIPO OFERTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="400" y="0" width="80" height="15" forecolor="#736343" uuid="2179e083-002e-4e37-9766-849c2b07d0f5"/>
+				<text><![CDATA[TIPO ESTUDIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="480" y="0" width="80" height="15" forecolor="#736343" uuid="256cea6f-4daf-4500-bd01-3d340ea4ad99"/>
+				<text><![CDATA[PAÍS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="560" y="0" width="80" height="15" forecolor="#736343" uuid="03257d7b-d3ce-4665-9a5f-26ed77cbd04f"/>
+				<text><![CDATA[FACULTAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="640" y="0" width="80" height="15" forecolor="#736343" uuid="70d9d9c2-7a34-4e8d-b6a0-3714b947bb1f"/>
+				<text><![CDATA[FECHA INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="720" y="0" width="80" height="15" forecolor="#736343" uuid="47de23e0-a396-492a-a5f4-6b18d91f6c72"/>
+				<text><![CDATA[FECHA CIERRE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="0cd9e6dc-7d20-4f0f-982b-db5d2fafc762"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="0" y="0" width="80" height="15" uuid="f24b786c-98b6-4cd2-8de4-68059b06f18f"/>
+					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="80" y="0" width="80" height="15" uuid="dc69151e-a81f-4534-93e2-94a9f84e887c"/>
+					<textFieldExpression><![CDATA[$F{ESTADO_BECARIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="160" y="0" width="80" height="15" uuid="f65b51b2-b327-48e5-b933-e3f8af945538"/>
+					<textFieldExpression><![CDATA[$F{NOMBRE_OFERTA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="240" y="0" width="80" height="15" uuid="d5a8e9ac-2d5a-4583-a363-da9a9976cbd4"/>
+					<textFieldExpression><![CDATA[$F{NOMBRE_INSTITUCION}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="320" y="0" width="80" height="15" uuid="e29b8392-9d37-4605-ad65-cdfe90593148"/>
+					<textFieldExpression><![CDATA[$F{TIPO_OFERTA_BECA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="400" y="0" width="80" height="15" uuid="48a46d9a-a50d-41bf-a9b8-814727956290"/>
+					<textFieldExpression><![CDATA[$F{TIPO_ESTUDIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="480" y="0" width="80" height="15" uuid="24402778-d47c-484a-a338-12b4daade717"/>
+					<textFieldExpression><![CDATA[$F{PAIS}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="560" y="0" width="80" height="15" uuid="a3ce9b95-fc41-4b41-bd7b-551acb55889b"/>
+					<textFieldExpression><![CDATA[$F{FACULTAD}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="640" y="0" width="80" height="15" uuid="26d8a6d8-bdf0-4e5d-87b3-1ff452027997"/>
+					<textFieldExpression><![CDATA[$F{FECHA_INICIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="720" y="0" width="80" height="15" uuid="9f748874-d28c-422f-ae82-ce48d60bccc0"/>
+					<textFieldExpression><![CDATA[$F{FECHA_CIERRE}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="b5db59e6-84a6-4402-8837-601721982cf4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="fec49d9b-fc94-446a-a9d8-40c493cf2570"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="cc4152ad-c5c2-456d-adb6-69152d8abeea"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="bcc42701-6128-47f8-890c-4be897994ffb"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="0055ea5e-50a1-4e54-b3af-adcfa7c4012f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

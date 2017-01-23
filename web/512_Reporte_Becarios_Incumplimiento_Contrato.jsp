@@ -4,6 +4,7 @@
     Author     : adminPC
 --%>
 
+<%@page import="POJO.Observaciones"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
@@ -247,12 +248,12 @@
                     ArrayList<OfertaBeca> lista2 = new ArrayList();
                     ArrayList<Institucion> listaIns = new ArrayList();
                     ArrayList<DetalleUsuario> listaUser = new ArrayList();
-                    ArrayList<Documento> listaDocs = new ArrayList();
+                    ArrayList<Observaciones> listaObs = new ArrayList();
                     ArrayList<Facultad> listaFacultades = new ArrayList();
                     OfertaBeca temp = new OfertaBeca();
                     Institucion temp2 = new Institucion();
                     DetalleUsuario temp3 = new DetalleUsuario();
-                    Documento temp4 = new Documento();
+                    Observaciones temp4 = new Observaciones();
                     Facultad temp5 = new Facultad();
                     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                      String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="", tipoBecario="";
@@ -280,17 +281,17 @@
                         + "CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU)"
                         + "  AS NOMBRE, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,"
                         + "  INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,"
-                        + " D.OBSERVACION_O AS OBSERVACION_O, OB.FECHA_INICIO AS FECHA_INICIO, "
+                        + " OBS.OBSERVACION_O AS OBSERVACION_O, OB.FECHA_INICIO AS FECHA_INICIO, "
                         + " OB.FECHA_CIERRE AS FECHA_CIERRE , FA.FACULTAD AS FACULTAD FROM "
-                        + " DETALLE_USUARIO DU,  FACULTAD FA, OFERTA_BECA OB, DOCUMENTO D,iNSTITUCION INS, "
+                        + " DETALLE_USUARIO DU,  FACULTAD FA, OFERTA_BECA OB, OBSERVACIONES OBS,iNSTITUCION INS, "
                         + " SOLICITUD_DE_BECA SDB,EXPEDIENTE EX, USUARIO US, TIPO_USUARIO TU, PROGRESO PR"
                         + "  WHERE DU.ID_FACULTAD=FA.ID_FACULTAD AND US.ID_USUARIO=DU.ID_USUARIO AND"
                         + " DU.ID_USUARIO=SDB.ID_USUARIO AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA"
                         + " AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND "
-                        + " SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND EX.ID_EXPEDIENTE=D.ID_EXPEDIENTE"
+                        + " SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND EX.ID_EXPEDIENTE=OBS.ID_EXPEDIENTE"
                         + " AND EX.ID_PROGRESO=PR.ID_PROGRESO AND US.ID_TIPO_USUARIO= 2 "
                         + " AND EX.ESTADO_EXPEDIENTE='ABIERTO' AND INS.TIPO_INSTITUCION='OFERTANTE' "
-                        + "AND PR.ESTADO_BECARIO='INCUMPLIMIENTO' AND D.ID_TIPO_DOCUMENTO=159  ";
+                        + "AND PR.ESTADO_BECARIO='INCUMPLIMIENTO' ";
                         if (request.getParameter("tipoBeca").toString().length()>0) {
                             tipoBeca = request.getParameter("tipoBeca");
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
@@ -341,7 +342,7 @@
                              temp = new OfertaBeca();
                             temp2 = new Institucion();
                             temp3 = new DetalleUsuario();
-                            temp4 = new Documento();
+                            temp4 = new Observaciones();
                             temp5 = new Facultad();
                             
                             
@@ -359,7 +360,7 @@
                             lista2.add(temp);
                             listaIns.add(temp2);
                             listaUser.add(temp3);
-                            listaDocs.add(temp4);
+                            listaObs.add(temp4);
                             listaFacultades.add(temp5);
 
                         }
@@ -398,6 +399,7 @@
 
 
                     <div class="row">
+                        <fieldset class="custom-border">
                         <h5>Resultados de la busqueda</h5>
                         <div class="col-md-12">
                             <table id="tablaResultados" class="table text-center">
@@ -421,9 +423,10 @@
                                     <%
                                 if (lista2.size() >= 0) {
                                     int i = 0;
+                                    int j=1;
                                     while (i < lista2.size()) {
                                         out.write("<tr>");
-                                        out.write("<td>" + i + 1 + "</td>");
+                                        out.write("<td>" + j + "</td>");
                                         out.write("<td>" + listaUser.get(i).getNombre1Du() + "</td>");
                                         out.write("<td> </td>");
                                         out.write("<td>" + lista2.get(i).getTipoOfertaBeca() + "</td>");                                        
@@ -434,8 +437,9 @@
                                         out.write("<td>" + listaIns.get(i).getNombreInstitucion() + "</td>");
                                         out.write("<td> </td>");
                                         out.write("<td>" + listaFacultades.get(i).getFacultad() + "</td>");
-                                        out.write("<td>" + listaDocs.get(i).getObservacion() + "</td>");
+                                        out.write("<td>" + listaObs.get(i).getObservacion() + "</td>");
                                         out.write("</tr>");
+                                        j++;
                                         i++;
                                     }
                                 }
@@ -445,6 +449,7 @@
                         </div>
                     </div>
         </fieldset>
+                                </fieldset>
     </div>  
 
 
