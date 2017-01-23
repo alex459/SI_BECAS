@@ -389,14 +389,14 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Nombre</th>
-                                        <th>2a. Beca</th>
+                                      <!--  <th>2a. Beca</th> -->
                                         <th>Tipo de Beca</th>
                                         <th>Fecha de Inicio de Beca</th>
                                         <th>Fecha de Finalizacion de Beca</th>
                                         <th>Pais</th>
                                         <th>Estudio Realizado</th>
                                         <th>Institucion que Financia</th>
-                                        <th>Toma de Posecion</th>
+                                       <!-- <th>Toma de Posesión</th> -->
                                         <th>Facultad</th>
                                         <th>Tipo Becario</th>
                                     </tr>  
@@ -409,14 +409,14 @@
                                                 out.write("<tr>");
                                                 out.write("<td>" + i+1 + "</td>");
                                                 out.write("<td>" + listaUser.get(i).getNombre1Du() + "</td>");
-                                                out.write("<td> </td>");
+                                            //    out.write("<td> </td>");
                                                 out.write("<td>" + lista2.get(i).getTipoOfertaBeca() + "</td>");
                                                 out.write("<td>" + df.format(lista2.get(i).getFechaInicio()) + "</td>");
                                                 out.write("<td>" + df.format(lista2.get(i).getFechaCierre()) + "</td>");
                                                 out.write("<td>" + listaIns.get(i).getPais() + "</td>");
                                                 out.write("<td>" + lista2.get(i).getTipoEstudio() + "</td>");
                                                 out.write("<td>" + listaIns.get(i).getNombreInstitucion() + "</td>");
-                                                out.write("<td> </td>");
+                                               // out.write("<td> </td>");
                                                 out.write("<td>" + listaFacultades.get(i).getFacultad() + "</td>");
                                                 out.write("<td>" + listaProg.get(i).getEstadoBecario() + "</td>");
                                                  i++;
