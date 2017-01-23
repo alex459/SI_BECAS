@@ -63,11 +63,11 @@
 			</staticText>
 			<image>
 				<reportElement x="733" y="-1" width="87" height="95" uuid="f7ad6aab-c849-4e64-a77b-47d02eded8a1"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="0" y="0" width="87" height="95" uuid="985062e6-22bd-403c-8817-873dcff432bf"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="164" y="-6" width="509" height="62" uuid="1fc35240-693c-467b-ae75-9e4dca24a9d5"/>
