@@ -130,10 +130,19 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select class="form-control">
-                                                    <option>Seleccione Pais</option>
-                                                    <option>Pais 1</option>
-                                                    <option>Pais 2</option>
+                                                <select id="selectbasic" name="PAIS" class="form-control">
+                                                    <option value="">Seleccione Tipo de País</option>
+                                                    <option value="ARGENTINA">ARGENTINA</option>
+                                                    <option value="BRASIL">BRASIL</option>
+                                                    <option value="CANADÁ">CANADÁ</option>
+                                                    <option value="EL SALVADOR">EL SALVADOR</option>
+                                                    <option value="ESTADOS UNIDOS">ESTADOS UNIDOS</option>
+                                                    <option value="ESPAÑA">ESPAÑA</option>
+                                                    <option value="JAPÓN">JAPÓN</option>
+                                                    <option value="MÉXICO">MÉXICO</option>
+                                                    
+                                                    
+                                                    <option value="MÉXICO">MÉXICO</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -190,7 +199,7 @@
  <%
                 
                 String tipoEstudio;
-                // String pais;
+                String pais;
                 Integer id_institucion_estudio;
                 Integer id_facultad;
                 // DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -204,7 +213,7 @@
                     tipoEstudio = request.getParameter("TIPO_ESTUDIO");
                     id_institucion_estudio = Integer.parseInt(request.getParameter("INSTITUCION_ESTUDIO"));
                     id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
-                    
+                    pais = request.getParameter("PAIS");
                     String consultaSql="";
                     
                    // if(tipoEstudio!=null) {} else {tipoEstudio="";};
@@ -241,6 +250,12 @@
                            
                             tipoEstudio = request.getParameter("TIPO_ESTUDIO");
                             consultaSql2 = consultaSql2.concat(" AND OF.TIPO_ESTUDIO = '" + tipoEstudio + "' ");
+                   
+                        }
+                     if (request.getParameter("PAIS").toString().length()>0) {
+                           
+                            pais = request.getParameter("PAIS");
+                            consultaSql2 = consultaSql2.concat(" AND I.PAIS = '" + pais + "' ");
                    
                         }
                     
