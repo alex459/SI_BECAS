@@ -136,6 +136,7 @@ public class ResolverContratoFiscalia extends HttpServlet {
                                     }
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                                     idProgreso =7;
                                     estado = "REVISION";
@@ -155,6 +156,7 @@ public class ResolverContratoFiscalia extends HttpServlet {
                                     }
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                                 }else{
                                     //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   

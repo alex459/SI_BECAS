@@ -190,6 +190,7 @@ public class ResolverDictamen extends HttpServlet {
                                     idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 105);                                   
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                                     idProgreso = 2;
                                     estado = "REVISION";
@@ -217,6 +218,7 @@ public class ResolverDictamen extends HttpServlet {
                                     idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 105);                                   
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                                     idProgreso = 2;
                                     estado = "REVISION";

@@ -196,6 +196,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                     idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                             } else {
                                 //ACTUALIZAR
@@ -203,6 +204,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                     idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                             }// FIN ACTUALIZAR
                             idProgreso = 14;
@@ -233,6 +235,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
                             acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                             acuerdoAnterior.setEstadoDocumento("REVISION");
+                            acuerdoAnterior.setObservacion(observacion);
                             documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                             idProgreso = 21;
                             estado = "REVISION";                            
@@ -254,6 +257,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                     idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 131);
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                                 }else{
                                     //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   
@@ -272,6 +276,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                     idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 131);
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                             }// FIN ACTUALIZAR
                             idProgreso =5;
@@ -287,6 +292,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                     idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                                 }else{
                                     //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   
@@ -300,6 +306,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                     idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 157);
                                     acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                                     acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
                                     documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                                 }else{
                                     //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   
@@ -334,6 +341,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
                             acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
                             acuerdoAnterior.setEstadoDocumento("REVISION");
+                            acuerdoAnterior.setObservacion(observacion);
                             documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                             idProgreso = 21;
                             estado = "REVISION";
