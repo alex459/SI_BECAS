@@ -1,10 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package MODEL;
 
+import DAO.ConexionBD;
+import DAO.UsuarioDAO;
+import POJO.TipoUsuario;
+import POJO.Usuario;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -29,13 +28,12 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.X509Certificate;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author jose
- */
 @WebServlet(name = "loginLDAPServlet", urlPatterns = {"/loginLDAPServlet"})
 public class loginLDAPServlet extends HttpServlet {
 
@@ -53,7 +51,7 @@ public class loginLDAPServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            // Create a trust manager that does not validate certificate chains
+            // Evitando error de certificacion en del LDAP.
             TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                     return null;
@@ -66,107 +64,167 @@ public class loginLDAPServlet extends HttpServlet {
                 }
             }
             };
-
-            // Install the all-trusting trust manager
             SSLContext sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, new java.security.SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-            // Create all-trusting host name verifier
             HostnameVerifier allHostsValid = new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) {
                     return true;
                 }
             };
-
-            // Install the all-trusting host verifier
             HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 
-            URL url = new URL("https://ldap.ues.edu.sv/autentificacion/aplicacion.php");
-            URLConnection con = url.openConnection();
-            Reader reader = new InputStreamReader(con.getInputStream());
-            while (true) {
-                int ch = reader.read();
-                if (ch == -1) {
-                    break;
-                }
-                System.out.print((char) ch);
-            }
-
-            /* TODO output your page here. You may use following sample code. */
-            //
-            String USER_AGENT = "Mozilla/5.0";
-
-            String url1 = "https://ldap.ues.edu.sv/autentificacion/control.php";
-            URL obj = new URL(url1);
-            HttpURLConnection con1;
-            con1 = (HttpURLConnection) obj.openConnection();
-
-            con1.setRequestProperty("User-Agent", USER_AGENT);
-            con1.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-            //Data to be posted
+            //Parametros
             String usuario = request.getParameter("usuario");
             String contrasena = request.getParameter("contrasena");
             String urlParameters = "usuario=" + usuario + "&contrasena=" + contrasena;
 
-            // Send post request
-            con1.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con1.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+            try {
 
-            int responseCode = con1.getResponseCode();
-            //out.println("\nSending 'POST' request to URL : " + url);
-            //out.println("Post parameters : " + urlParameters);
-            //out.println("Response Code : " + responseCode);
+                //conectando con LDAP
+                String USER_AGENT = "Mozilla/5.0";
+                String url1 = "https://ldap.ues.edu.sv/autentificacion/control.php";
+                URL obj = new URL(url1);
+                HttpURLConnection con1;
+                con1 = (HttpURLConnection) obj.openConnection();
+                con1.setRequestProperty("User-Agent", USER_AGENT);
+                con1.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+                //Enviando POST
+                con1.setDoOutput(true);
+                DataOutputStream wr = new DataOutputStream(con1.getOutputStream());
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+                int responseCode = con1.getResponseCode();
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con1.getInputStream()));
+                String inputLine;
+                StringBuffer responseD = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    responseD.append(inputLine);
+                }
+                //obteniendo respuesta
+                String htmlContent = new String();
+                for (int i = 0; i < responseD.length(); i++) {
+                    htmlContent = htmlContent + responseD.charAt(i);
+                }
+                System.out.println("contenido" + htmlContent);
+                in.close();
+                //validando login
+                if (htmlContent.contains("Datos incorrectos")) {
+                    //Credenciales invalidas, entonces intenta revisar 
+                    //la base del sistema para logearse.
+                    Usuario usuario_obj = new Usuario();
+                    UsuarioDAO usuarioDao = new UsuarioDAO();
+                    TipoUsuario tipoUsuario = new TipoUsuario();
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con1.getInputStream()));
-            String inputLine;
-            StringBuffer responseD = new StringBuffer();
+                    usuario_obj.setNombreUsuario(usuario);
+                    usuario_obj.setClave(contrasena);
+                    usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
 
-            while ((inputLine = in.readLine()) != null) {
-                responseD.append(inputLine);
-            }
-            String htmlContent = new String();
-            for(int i=0; i<responseD.length() ;i++){
-                htmlContent = htmlContent + responseD.charAt(i);
-            }
-            System.out.println("contenido" + htmlContent);
-            
-            in.close();
-            //print result
-            //out.println("Response From The URL: " + responseD.toString());
-            
-            //validando login
-            if(htmlContent.contains("Datos incorrectos")){
-                
-                response.sendRedirect("login_ldap.jsp");
-                
-            }else{
-                
-                out.println("LOGIN");
-                
+                    if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
+                        HttpSession sesion = request.getSession();
+                        sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
+                        sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
+                        sesion.setAttribute("user", usuario_obj.getNombreUsuario());
+                        sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
+                        sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
+                        response.sendRedirect("principal.jsp");
+                        System.out.println("Credenciales invalidas en LDAP y validas en SIABP");
+                    } else {
+                        //Credenciales invalidas en la base entonces
+                        //enviar al login_ldap.                                               
+                        response.sendRedirect("login_ldap.jsp");
+                        System.out.println("Credenciales invalidas LDAP y SIABP");                                                                        
+                        
+                    }
+
+                } else {
+                    //Credenciales validas en LDAP. entonces consultar
+                    //la base de datos del sistema.
+                    
+                    Usuario usuario_obj = new Usuario();
+                    UsuarioDAO usuarioDao = new UsuarioDAO();
+                    TipoUsuario tipoUsuario = new TipoUsuario();
+
+                    usuario_obj.setNombreUsuario(usuario);
+                    usuario_obj.setClave(contrasena);
+                    usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
+
+                    //usuarioDao.login_ldpa(usuario_obj.getNombreUsuario())
+                    if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
+                        HttpSession sesion = request.getSession();
+                        sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
+                        sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
+                        sesion.setAttribute("user", usuario_obj.getNombreUsuario());
+                        sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
+                        sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
+                        response.sendRedirect("principal.jsp");
+                        System.out.println("Credenciales validas en LDAP y validas en SIABP");
+                    } else {
+                        //Credenciales validas en el LDAP
+                        //enviar al login.                                               }
+                        System.out.println("Credenciales validas LDAP e invalidas en SIABP. Enviando al registro.");
+                        HttpSession sesion = request.getSession();
+                        sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
+                        sesion.setAttribute("id_user_login", "0");
+                        sesion.setAttribute("user", usuario);
+                        sesion.setAttribute("rol", "1");
+                        sesion.setAttribute("id_tipo_usuario", "1");
+                        response.sendRedirect("116_registrar_usuario.jsp");
+                        
+                    }                    
+                }
+
+            } catch (java.net.UnknownHostException e_UnknownHost) {
+
+                //si no se puede conectar al ldap entonces que se 
+                //trate de conectar a la base de datos del sistema.
+                Usuario usuario_obj = new Usuario();
+                UsuarioDAO usuarioDao = new UsuarioDAO();
+                TipoUsuario tipoUsuario = new TipoUsuario();
+
+                usuario_obj.setNombreUsuario(usuario);
+                usuario_obj.setClave(contrasena);
+                usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
+
+                if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
+                    HttpSession sesion = request.getSession();
+                    sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
+                    sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
+                    sesion.setAttribute("user", usuario_obj.getNombreUsuario());
+                    sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
+                    sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
+                    response.sendRedirect("principal.jsp");
+                } else {
+                    response.sendRedirect("login_ldap.jsp");
+                }
+
             }
 
-            
-            
-            /*URL url2 = new URL("https://ldap.ues.edu.sv/autentificacion/aplicacion.php");
-            BufferedReader in = new BufferedReader(new InputStreamReader(url2.openStream()));
-            String inputLine;
-            StringBuilder response2 = new StringBuilder();
-            String htmlContent = new String();
-            while ((inputLine = in.readLine()) != null) {
-                response2.append(inputLine);                 
-            }
-            for(int i=0; i<response2.length() ;i++){
-                htmlContent = htmlContent + response2.charAt(i);
-            }
-            System.out.println("contenido" + htmlContent);            
-            in.close();*/
         }
+    }
+
+    public String getRol(String nombre, UsuarioDAO usuarioDao) {
+        Statement stmt;
+        ResultSet rs;
+        ConexionBD conexion = new ConexionBD();
+        usuarioDao.abrirConexion();
+        conexion.abrirConexion();
+        String rol = "nadas";
+        try {
+            stmt = usuarioDao.conn.createStatement();
+            String sql = "SELECT TIPO_USUARIO FROM TIPO_USUARIO WHERE ID_TIPO_USUARIO = (SELECT ID_TIPO_USUARIO FROM USUARIO where NOMBRE_USUARIO = '" + nombre + "');";
+            rs = stmt.executeQuery(sql);
+            conexion.cerrarConexion();
+            System.out.println(rol);
+            if (rs.next()) {
+                rol = rs.getString("TIPO_USUARIO");
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        return rol;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
