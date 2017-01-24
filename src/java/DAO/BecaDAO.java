@@ -146,7 +146,7 @@ public class BecaDAO extends ConexionBD{
             this.cerrarConexion();
 
             while (rs.next()) {
-                idOferta = rs.getInt("ID_OFERTA_BECA");             
+                idOferta = rs.getInt("ID_USUARIO");             
             }
 
         } catch (Exception e) {

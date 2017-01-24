@@ -153,7 +153,7 @@ public class ExpedienteDAO extends ConexionBD {
         public boolean actualizarExpediente(Expediente expediente){
         boolean exito = false;
         
-        this.abrirConexion();
+        this.abrirConexion(); 
         try {
             stmt = conn.createStatement();
             
