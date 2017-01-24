@@ -65,5 +65,35 @@ public class FacultadDAO extends ConexionBD{
         return lista;
     }
     
+    //consultar todos
+    public ArrayList<Facultad> consultarTodosMenosAdmin() {
+        ArrayList<Facultad> lista = new ArrayList<Facultad>();
+        Facultad temp = new Facultad();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_FACULTAD, FACULTAD FROM FACULTAD WHERE ID_FACULTAD <> 13 " ;
+            ResultSet rs = stmt.executeQuery(sql);
+            
+
+            while (rs.next()) {
+                temp = new Facultad();
+                int ID_FACULTAD = rs.getInt("ID_FACULTAD");                
+                String FACULTAD = rs.getString("FACULTAD");
+
+                temp.setIdFacultad(ID_FACULTAD);
+                temp.setFacultad(FACULTAD);
+                lista.add(temp);
+            }
+            
+            this.cerrarConexion();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return lista;
+    }
+    
     
 }

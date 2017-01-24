@@ -28,6 +28,16 @@ public class Utilidades {
         }
 
     }
+    
+    public static void mostrarMensajeOpcion2(HttpServletResponse response, int tipo_mensaje, String titulo, String mensaje) {
+        //TIPO_MENSAJE 1-exito, 2-info, 3-warning, 4-error        
+        try {
+            response.sendRedirect("117_mensaje_registro.jsp?TIPO_MENSAJE=" + tipo_mensaje + "&TITULO=" + titulo + "&MENSAJE=" + mensaje);
+        } catch (Exception ex) {
+
+        }
+
+    }
 
     /**
      * Metodo para registrar una bitacora nueva. Id_Accion puede ser 1-INGRESAR,

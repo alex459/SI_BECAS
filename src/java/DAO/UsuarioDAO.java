@@ -139,6 +139,68 @@ public class UsuarioDAO extends ConexionBD {
         }
         return logeo;
     }
+    
+    public boolean login_ldap(String nombre) {
+        boolean logeo = false;
+        Usuario usuario = new Usuario();
+        TipoUsuario tipoUsuario = new TipoUsuario();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            if (rs.next()) {
+                
+                int ID_USUARIO = rs.getInt("ID_USUARIO");
+                int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
+                String NOMBRE_USUARIO = rs.getString("NOMBRE_USUARIO");
+                String CLAVE = rs.getString("CLAVE");
+
+                usuario.setIdUsuario(ID_USUARIO);
+                usuario.setIdTipoUsuario(ID_TIPO_USUARIO);
+                usuario.setNombreUsuario(NOMBRE_USUARIO);
+                usuario.setClave(CLAVE);
+                logeo = true;
+                Utilidades.nuevaBitacora(5, ID_USUARIO, "usuario logeado con id "+ID_USUARIO+" y nombre "+NOMBRE_USUARIO, sql);
+                
+            }
+
+            if (logeo) {
+
+                this.abrirConexion();
+                stmt = conn.createStatement();
+                sql = "SELECT ID_TIPO_USUARIO, TIPO_USUARIO, DESCRIPCION_TIPO_USUARIO FROM TIPO_USUARIO where ID_TIPO_USUARIO = " + usuario.getIdTipoUsuario();
+                rs = stmt.executeQuery(sql);
+                this.cerrarConexion();
+
+                while (rs.next()) {
+
+                    int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
+                    String TIPO_USUARIO = rs.getString("TIPO_USUARIO");
+                    String DESCRIPCION_TIPO_USUARIO = rs.getString("DESCRIPCION_TIPO_USUARIO");
+
+                    tipoUsuario.setIdTipoUsuario(ID_TIPO_USUARIO);
+                    tipoUsuario.setTipoUsuario(TIPO_USUARIO);
+                    tipoUsuario.setDescripcionTipoUsuario(DESCRIPCION_TIPO_USUARIO);
+                }
+
+                variablesDeSesion.usuarioActual.setIdUsuario(usuario.getIdUsuario());
+                variablesDeSesion.usuarioActual.setNombreUsuario(usuario.getNombreUsuario());
+                variablesDeSesion.usuarioActual.setClave(usuario.getClave());
+                variablesDeSesion.usuarioActual.setIdTipoUsuario(usuario.getIdTipoUsuario());
+                
+                variablesDeSesion.tipoUsuarioActual.setIdTipoUsuario(tipoUsuario.getIdTipoUsuario());
+                variablesDeSesion.tipoUsuarioActual.setTipoUsuario(tipoUsuario.getTipoUsuario());
+                variablesDeSesion.tipoUsuarioActual.setDescripcionTipoUsuario(tipoUsuario.getDescripcionTipoUsuario());
+                
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error : " + e);
+        }
+        return logeo;
+    }
 
     public boolean actualizar(Usuario usuario,Integer id_user_login){
         boolean exito = false;

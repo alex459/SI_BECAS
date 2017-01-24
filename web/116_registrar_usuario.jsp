@@ -67,12 +67,6 @@
 </div>
 
 
-<p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
-<p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
-
-<%-- todo el menu esta contenido en la siguiente linea
-     el menu puede ser cambiado en la pagina menu.jsp --%>
-<jsp:include page="menu_corto.jsp"></jsp:include>
 
 </head>
 <body ng-app="RegistrarUsuarioApp" ng-controller="RegistrarUsuarioCtrl">
@@ -97,14 +91,14 @@
                             <label for="textinput">Codigo de usuario : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input type="text" value="<%=user%>" placeholder="ingrese un codigo para el usuario." class="form-control input-md"  disable="">                            
+                            <input type="text" value="<%=user%>" placeholder="ingrese un codigo para el usuario." class="form-control input-md"  disabled="true">                            
                             <input hidden="" name="CARNET" value="<%=user%>">
                     </div>
                     <div class="col-md-3 text-right">                                   
                         <label for="textinput">Email : </label>                                
                     </div>
                     <div class="col-md-3">
-                        <input id="EMAIL" name="EMAIL" type="email"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
+                        <input id="EMAIL" name="EMAIL" type="email" ng-init="datos.correo = '<% out.write(user+"@UES.EDU.SV");  %>'" placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
                         <span class="text-danger" ng-show="!registrarUsuario.$pristine && registrarUsuario.EMAIL.$error.required">El correo electronico requerido.</span>
                         <span class="text-danger" ng-show="registrarUsuario.EMAIL.$error.minlength">Minimo 3 caracteres</span>
                         <span class="text-danger" ng-show="registrarUsuario.EMAIL.$error.email">Solo permite formato: ejemplo usuario@ues.com).</span>
@@ -171,7 +165,7 @@
                             <%
                                 FacultadDAO facultadDao = new FacultadDAO();
                                 ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
-                                listaFacultades = facultadDao.consultarTodos();
+                                listaFacultades = facultadDao.consultarTodosMenosAdmin();
                                 for (int i = 0; i < listaFacultades.size(); i++) {
                                     out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
                                 }
@@ -206,7 +200,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
 
-                        <input type="submit" class="btn btn-primary" name="submit" value="Crear usuario" ng-disabled="!registrarUsuario.$valid">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Registrarme" ng-disabled="!registrarUsuario.$valid">
 
                     </div>
                 </div>
@@ -256,6 +250,6 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
-<script src="js/RegistrarUsuario.js"></script>
+<script src="js/registrarUsuario.js"></script>
 </body>
 </html>

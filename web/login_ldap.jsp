@@ -1,8 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : 10-16-2016, 04:15:39 PM
-    Author     : MauricioBC
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% session.invalidate();%>
@@ -38,7 +33,7 @@
         </div>
     </div>  
 </head>
-<body>
+<body ng-app="loginApp" ng-controller="loginCtrl">
 
     <div class="container-fluid">      
         <div class="container">
@@ -48,13 +43,18 @@
                         <h2 class="form-signin-heading">Ingrese sus datos:</h2>
                         <fieldset>
                             <div class="form-group">
-                                <input id="user" class="form-control" placeholder="Usuario" name="usuario" autofocus="">                                                                                                
+                                <input id="usuario" class="form-control" placeholder="Usuario" name="usuario" autofocus="" ng-model="datos.user" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="5" maxlength="20">                                                                
+                                <span class="text-danger" ng-show="!login.$pristine && login.usuario.$error.required">El usuario es requerido.</span>
+                                <span class="text-danger" ng-show="login.usuario.$error.minlength">Minimo 20 caracteres.</span>
+                                <span class="text-danger" ng-show="login.usuario.$error.pattern">Solo se permiten letras y numeros. (a-z, A-Z, 0-9 y punto).</span>
                             </div>
                             <div class="form-group">
-                                <input id="pass" class="form-control" placeholder="Contraseña" name="contrasena" type="password" value="">                                
+                                <input id="contrasena" class="form-control" placeholder="Contraseña" name="contrasena" type="password" value="" ng-model="datos.pass" ng-required="true" maxlength="15" minlength="3">
+                                <span class="text-danger" ng-show="!login.$pristine && login.pass.$error.required">La Contraseña es requerida.</span>
+                                <span class="text-danger" ng-show="login.contrasena.$error.minlength">Minimo 3 caracteres.</span>                                
                             </div>
                         </fieldset> 
-                        <button class="btn btn-lg btn-success btn-block" type="submit">Ingresar</button>
+                        <button class="btn btn-lg btn-success btn-block" type="submit" ng-disabled="!login.$valid">Ingresar</button>
                         <a class="btn btn-lg btn-danger btn-block" href="index.jsp" >Salir</a>
                     </form>
                 </div>   

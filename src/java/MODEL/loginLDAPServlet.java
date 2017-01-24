@@ -151,8 +151,8 @@ public class loginLDAPServlet extends HttpServlet {
                     usuario_obj.setClave(contrasena);
                     usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
 
-                    //usuarioDao.login_ldpa(usuario_obj.getNombreUsuario())
-                    if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
+                    //
+                    if (usuarioDao.login_ldap(usuario_obj.getNombreUsuario())) {
                         HttpSession sesion = request.getSession();
                         sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
                         sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
@@ -170,14 +170,14 @@ public class loginLDAPServlet extends HttpServlet {
                         sesion.setAttribute("id_user_login", "0");
                         sesion.setAttribute("user", usuario);
                         sesion.setAttribute("rol", "1");
-                        sesion.setAttribute("id_tipo_usuario", "1");
-                        response.sendRedirect("116_registrar_usuario.jsp");
-                        
+                        sesion.setAttribute("id_tipo_usuario", 1);
+                        response.sendRedirect("116_registrar_usuario.jsp");                        
                     }                    
                 }
 
             } catch (java.net.UnknownHostException e_UnknownHost) {
 
+                System.out.println("Sin conexion al LDAP: "+e_UnknownHost);
                 //si no se puede conectar al ldap entonces que se 
                 //trate de conectar a la base de datos del sistema.
                 Usuario usuario_obj = new Usuario();
@@ -200,6 +200,8 @@ public class loginLDAPServlet extends HttpServlet {
                     response.sendRedirect("login_ldap.jsp");
                 }
 
+            }catch (Exception ex) {
+                System.out.println("Error en el login_ldap: "+ex);
             }
 
         }
