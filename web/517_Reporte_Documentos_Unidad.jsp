@@ -4,6 +4,10 @@
     Author     : adminPC
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAO.ConexionBD"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <%@page import="DAO.FacultadDAO"%>
 <%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page import="POJO.Facultad"%>
@@ -105,11 +109,11 @@
                                                 <br>
                                                 <select name="unidad" id="unidad" class="form-control">
                                                     <option value="">Seleccione la Unidad</option>
-                                                    <option value="COMISIÓN DE BECA DE UNA FACULTAD">Comisión de Becas</option>
-                                                    <option value="JUNTA DIRECTIVA DE UNA FACULTAD">Junta Directiva</option>
+                                                    <option value="COMISION DE BECAS">Comisión de Becas</option>
+                                                    <option value="JUNTA DIRECTIVA">Junta Directiva</option>
                                                     <option value="CONSEJO SUPERIOR UNIVERSITARIO">Consejo Superior Universitario</option>
-                                                    <option value="FISCALÍA">Fiscalía</option>
-                                                    <option value="COLABORADOR DEL CONSEJO DE BECAS">Colaborador del Consejo de becas</option>
+                                                    <option value="FISCALIA">Fiscalía</option>
+                                                    <option value="CONSEJO DE BECAS">Consejo de Becas</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -175,6 +179,7 @@
                                                 <br>
                                                 <select name="tipoBecario" id="tipoBecario" class="form-control">
                                                     <option value="">Seleccione Tipo de Becario</option>
+                                                    <option value="CANDIDATO">Candidato</option>
                                                     <option value="ACTIVO">Activo</option>
                                                     <option value="CONTRACTUAL">Contractual</option>
                                                     <option value="INACTIVO">Inactivo</option>
@@ -183,88 +188,168 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 text-center">
-                                            <br>
-                                            <input type="button" name="filtrar" value="Realizar Busqueda" class="btn btn-primary">
+                                        <div class="row">
+                                       
+                                            <div class="col-md-12 text-center">
+                                                <br>
+                                                <input type="submit" class="btn btn-primary" name="submit" value="Buscar"> 
+                                            </div>
                                         </div>
                                     </div>
 
                                 </form>
                             </fieldset>
                         </div>
-
+            <%
+                String unidad;
+                String facultad;
+                String tipoBeca;
+                String tipoBecario;
+                            
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                ConexionBD conexionbd = null;
+               
+                ResultSet rs = null;   
+                String consultaSql2 = ""; 
+                try{
+                    
+                    String queryParam=""; 
+                     
+                    String consultaSql="";
+                    
+                
+                    consultaSql = "SELECT 	TD.DEPARTAMENTO AS Unidad, TD.TIPO_DOCUMENTO AS 'Tipo de documento', D.FECHA_INGRESO AS 'fecha de emisión', "
+                                + "CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS Solicitante, "
+                                + "F.FACULTAD AS Facultad,  P.ESTADO_BECARIO AS 'Tipo de Becario', D.OBSERVACION_O AS Obserbaciones, D.ID_DOCUMENTO "
+                                + "FROM DOCUMENTO D "
+                                + "JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO "
+                                + "JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
+                                + "JOIN SOLICITUD_DE_BECA SB ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
+                                + "JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO "
+                                + "JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO "
+                                + "JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD "
+                                + "JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO "
+                                + "JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA "
+                                + "WHERE D.ESTADO_DOCUMENTO = 'APROBADO' AND TD.DEPARTAMENTO IN('COMISION DE BECAS','JUNTA DIRECTIVA', "
+                                + "'CONSEJO DE BECAS','CONSEJO SUPERIOR UNIVERSITARIO','FISCALIA') ";
+                             
+                              
+                    if (request.getParameter("unidad").toString().length()>0) {
+                            unidad = request.getParameter("unidad");
+                            consultaSql2 = consultaSql2.concat(" AND TD.DEPARTAMENTO='" + unidad + "' ");
+                        }           
+                               
+                    if (request.getParameter("facultad").toString().length()>0) {
+                           
+                            facultad = request.getParameter("facultad");
+                            consultaSql2 = consultaSql2.concat(" AND F.FACULTAD='" + facultad + "' ");
+                        }           
+                               
+                               
+                     if (!request.getParameter("tipoBeca").isEmpty()) {
+                            tipoBeca = request.getParameter("tipoBeca");
+                            consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
+                        }           
+                               
+                    if (!request.getParameter("tipoBecario").isEmpty()) {
+                            tipoBecario = request.getParameter("tipoBecario");
+                            consultaSql2 = consultaSql2.concat(" AND P.ESTADO_BECARIO='" + tipoBecario + "' ");
+                        }          
+                               
+                               
+                    
+                    
+                consultaSql = consultaSql.concat(consultaSql2);
+                consultaSql = consultaSql.concat(";");
+                   
+                conexionbd = new ConexionBD();
+                rs = conexionbd.consultaSql(consultaSql);
+                
+                }
+                catch(Exception ex){
+                    System.out.println(ex);
+                }       
+                            
+                            %>
                         <div class="col-md-3 text-center">
-                            <fieldset class="custom-border">
-                                <legend class="custom-border">Acciones</legend>
-                                <div class="col-md-6">
-                                    <br>
-                                    <label class="">PDF</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       PDF
-                                    </button><br><br>
-                                    <label>Enviar Por Correo</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       E-mail
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Hoja de Cálculo</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       Excel
-                                    </button><br><br>
-                                    <br>
-                                    <label>Imprimir</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-print"></span> 
-                                       Imprimir
-                                    </button>
-                                    
-                                </div>                                                                
-                            </fieldset>
+                    <fieldset class="custom-border">
+                        <legend class="custom-border">Acciones</legend>
+                            <br>
+                            <div class="col-md-6 text-center">
+                                <label>PDF</label>
+                                    <form class="form-horizontal" action="ReporteDocumentosUnidadServlet" method="post">
+                                        <input type="hidden" name="OPCION_DE_SALIDA" value="1">
+                                    <input type="hidden" name="CONDICION" value="<%=consultaSql2 %>">                                    
+                                     <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                               
+                                </form>
+                                 <br>       
+                            <label>Enviar Por Correo</label>
+                            <button type="submit" class="btn btn-success form-control">
+                                <span class="glyphicon glyphicon-file"></span> 
+                                E-mail
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Hoja de Cálculo</label>
+                            <div style="border:1px solid; background-color: #32B232; padding:6px; color:white; " id="buttons"></div>
+                            <br>
+                        </div>           
+                    </fieldset>
                         </div>
                     </div>
 
 
-                    <div class="row">
+                   <div class="row">
                         <h5>Resultados de la busqueda</h5>
                         <div class="col-md-12">
-                            <table class="table text-center">
+                            <table id="tablaInstituciones" class="table text-center">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
                                         <th>Unidad</th>
                                         <th>Tipo de Documento</th>
-                                        <th>Fecha de Emision</th>
+                                        <th>Fecha de Emisión</th>
                                         <th>Solicitante</th>
                                         <th>Facultad</th>
                                         <th>Tipo de Becario</th>
                                         <th>Observaciones</th>
+                                        <th>Ver Documento</th>
+                                        
                                     </tr>  
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>###</td>
-                                        <td>Nombre Unidad</td>
-                                        <td>Documento</td>
-                                        <td>##/##/####</td>
-                                        <td>Nombre Solicitante</td>
-                                        <td>Nombre de la Facultad</td>
-                                        <td>Tipo Becario</td>
-                                        <td>Observaciones</td>
-                                    </tr>
-                                    <tr>
-                                        <td>###</td>
-                                        <td>Nombre Unidad</td>
-                                        <td>Documento</td>
-                                        <td>##/##/####</td>
-                                        <td>Nombre Solicitante</td>
-                                        <td>Nombre de la Facultad</td>
-                                        <td>Tipo Becario</td>
-                                        <td>Observaciones</td>
-                                    </tr>
+                                    <%
+                                        try {
+                                            Integer i = 0;
+                                            String progreso = "";
+                                            while (rs.next()) {
+                                                i = i + 1;
+                                                out.write("<tr>");
+                                                out.write("<td>" + i + "</td>");
+                                                out.write("<td>" + rs.getString(1) + "</td>");
+                                                out.write("<td>" + rs.getString(2) + "</td>");
+                                                out.write("<td>" + rs.getString(3) + "</td>");
+                                                out.write("<td>" + rs.getString(4) + "</td>");
+                                                out.write("<td>" + rs.getString(5) + "</td>");
+                                                out.write("<td>" + rs.getString(6) + "</td>");
+                                                out.write("<td>" + rs.getString(7) + "</td>");
+                                                out.write("<td>");
+                                                out.write("<center>");
+                                                
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(8) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
+                                                    
+                                                out.write("</center>");
+                                                out.write("</td>");
+                                                
+                                                
+                                            }
+                                        }
+                                        catch (Exception ex){
+                                            System.out.println("error: " + ex);
+                                        }
+                                        
+                                        %>
                                 </tbody>
                             </table>
                         </div>
@@ -307,7 +392,48 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
+<script type="text/javascript" src="js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="js/buttons.print.min.js"></script>
+<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
 <script type="text/javascript">
+    $(document).ready(function() {
+    var tabla=$('#tablaInstituciones').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+        var buttons = new $.fn.dataTable.Buttons(tabla, {
+     buttons: [      
+        'csv', 'excel'
+    ]
+}).container().appendTo($('#buttons'));
+} );
     $(function () {
         $('#fIngresoIni').datepicker({
             format: 'yyyy-mm-dd',

@@ -254,22 +254,34 @@
                                
                               //  + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
-                  consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS NOMBRE, "
-                                + "OF.TIPO_OFERTA_BECA, OF.FECHA_INICIO, I.PAIS, OF.NOMBRE_OFERTA, TD.TIPO_DOCUMENTO, OBS.OBSERVACION_O, F.FACULTAD, P.ID_PROGRESO "
-                                + "FROM DETALLE_USUARIO DU "
-                                + "JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD "
-                                + "JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO "
-                                + "JOIN TIPO_USUARIO TU ON U.ID_TIPO_USUARIO=TU.ID_TIPO_USUARIO "
-                                + "JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO "
-                                + "JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE "
-                                + "JOIN PROGRESO P ON E.ID_PROGRESO=P.ID_PROGRESO "
-                                + "JOIN OFERTA_BECA OF ON SB.ID_OFERTA_BECA=OF.ID_OFERTA_BECA "
-                                + "JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE "
-                                + "JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO "
-                                + "JOIN INSTITUCION I ON OF.ID_INSTITUCION_ESTUDIO=I.ID_INSTITUCION "
-                                + "JOIN OBSERVACIONES OBS ON OBS.ID_EXPEDIENTE=E.ID_EXPEDIENTE "
-                                + "WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUMENTO='PENDIENTE' ";
-                               // + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
+        consultaSql = "SELECT  CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS Nombre, "
+	+ "OB.TIPO_OFERTA_BECA, I.PAIS, B.FECHA_INICIO, OB.TIPO_ESTUDIO,  TD.TIPO_DOCUMENTO, "
+	+ "OB.TIPO_ESTUDIO, F.FACULTAD, D.OBSERVACION_O, "
+	+ "( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
+							+ "WHERE P.ID_PROGRESO >= 9 ) THEN "
+							+ "'SI' "
+							+ "ELSE 'NO' "
+							+ "END) AS 'Contrato Firmado', "
+	+ "( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
+							+ "WHERE P.ID_PROGRESO >=12  ) THEN "
+							+ "'SI' "
+							+ "ELSE 'NO' "
+							+ "END) AS 'Toma Deposeción' "
+        + "FROM DOCUMENTO D "
+
+        + "JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO " 
+        + "JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE "   
+        + "JOIN BECA B ON B.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
+        + "JOIN SOLICITUD_DE_BECA SB ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
+        + "JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA "
+        + "JOIN INSTITUCION I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION "
+        + "JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO "
+        + "JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO " 
+        + "JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO "
+        + "JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD "
+
+        + "WHERE D.ESTADO_DOCUMENTO='PENDIENTE' AND U.ID_TIPO_USUARIO = 2 "
+        + "AND E.ESTADO_EXPEDIENTE='ABIERTO' " ;     // + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
                     if (request.getParameter("TIPO_BECA").toString().length()>0) {
                             tipoBeca = request.getParameter("TIPO_BECA");
@@ -370,7 +382,7 @@
                                     <%
                                         try {
                                             Integer i = 0;
-                                            String progreso = "";
+                                            
                                             while (rs.next()) {
                                                 i = i + 1;
                                                 out.write("<tr>");
@@ -378,29 +390,14 @@
                                                 out.write("<td>" + rs.getString(1) + "</td>");
                                                 out.write("<td> </td>");
                                                 out.write("<td>" + rs.getString(2) + "</td>");
-                                                out.write("<td>" + rs.getString(3) + "</td>");
                                                 out.write("<td>" + rs.getString(4) + "</td>");
+                                                out.write("<td>" + rs.getString(3) + "</td>");
                                                 out.write("<td>" + rs.getString(5) + "</td>");
-                                                if((rs.getString(9).equals("11")) ){
-                                                progreso = "Si";    
-                                                out.write("<td>" + progreso +"</td>");
-                                                }else{
-                                                progreso = "No";
-                                                 out.write("<td>" + progreso +"</td>"); 
-                                                } 
-                                                
+                                                out.write("<td>" + rs.getString(10) + "</td>");
                                                 out.write("<td>" + rs.getString(6) + "</td>");
-                                                
-                                                 if((rs.getString(9).equals("11")) ){
-                                                progreso = "Si";    
-                                                out.write("<td>" + progreso +"</td>");
-                                                }else{
-                                                progreso = "No";
-                                                 out.write("<td>" + progreso +"</td>"); 
-                                                } 
-                                                
+                                                out.write("<td>" + rs.getString(11) + "</td>");
                                                 out.write("<td>" + rs.getString(8) + "</td>");
-                                                out.write("<td>" + rs.getString(7) + "</td>");
+                                                out.write("<td>" + rs.getString(9) + "</td>");
                                             }
                                         }
                                         catch (Exception ex){

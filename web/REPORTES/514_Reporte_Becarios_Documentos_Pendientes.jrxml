@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2cdb93b-aa94-4e52-ab0d-57e030fd360a">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="92c9ffa3-aaa9-4ce4-b239-ae8cdd9d5a0a">
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -13,34 +10,53 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="condicion" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS NOMBRE, 
-       OF.TIPO_OFERTA_BECA AS "Tipo de Beca", OF.FECHA_INICIO AS "Fecha de Inicio de Beca", 
-       I.PAIS AS Pais, OF.NOMBRE_OFERTA AS "Estudio Realizado", TD.TIPO_DOCUMENTO AS Documento,
-       OBS.OBSERVACION_O AS Observaciones, F.FACULTAD AS Facultad
-FROM DETALLE_USUARIO DU 
-JOIN FACULTAD  F 	ON DU.ID_FACULTAD=F.ID_FACULTAD 
-JOIN USUARIO U 		ON DU.ID_USUARIO=U.ID_USUARIO 
-JOIN TIPO_USUARIO TU 	ON U.ID_TIPO_USUARIO=TU.ID_TIPO_USUARIO 
-JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO 
-JOIN EXPEDIENTE  E 	ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE 
-JOIN PROGRESO P 	ON E.ID_PROGRESO=P.ID_PROGRESO 
-JOIN OFERTA_BECA OF 	ON SB.ID_OFERTA_BECA=OF.ID_OFERTA_BECA 
-JOIN DOCUMENTO  D 	ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE 
-JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO 
-JOIN INSTITUCION I 	ON OF.ID_INSTITUCION_ESTUDIO=I.ID_INSTITUCION 
-JOIN OBSERVACIONES OBS 	ON OBS.ID_EXPEDIENTE=E.ID_EXPEDIENTE 
-WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUMENTO='PENDIENTE' $P!{condicion}]]>
+		<![CDATA[
+SELECT  CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS Nombre,
+	OB.TIPO_OFERTA_BECA AS "Tipo de Beca", I.PAIS AS Pais, B.FECHA_INICIO AS "Fecha de Inicio de Beca", 
+	OB.TIPO_ESTUDIO AS "Estudo Realizado",  TD.TIPO_DOCUMENTO AS Documento,
+	F.FACULTAD AS Facultad, D.OBSERVACION_O AS Observaciones,
+	( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P
+							WHERE P.ID_PROGRESO >= 9 ) THEN
+							'SI'
+							ELSE 'NO'
+							END) AS "Contrato Firmado",
+	( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P
+							WHERE P.ID_PROGRESO >=12  ) THEN
+							'SI'
+							ELSE 'NO'
+							END) AS "Toma Deposeción"
+FROM DOCUMENTO D
+
+JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO 
+JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE   
+JOIN BECA B ON B.ID_EXPEDIENTE = E.ID_EXPEDIENTE
+JOIN SOLICITUD_DE_BECA SB ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE
+JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA 
+JOIN INSTITUCION I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION
+JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO
+JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO
+JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO
+JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD
+
+WHERE D.ESTADO_DOCUMENTO='PENDIENTE' AND U.ID_TIPO_USUARIO = 2 
+AND E.ESTADO_EXPEDIENTE='ABIERTO'
+
+
+
+
+]]>
 	</queryString>
-	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="Nombre" class="java.lang.String"/>
 	<field name="Tipo de Beca" class="java.lang.String"/>
 	<field name="Fecha de Inicio de Beca" class="java.sql.Date"/>
 	<field name="Pais" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Estudio Realizado" class="java.lang.String"/>
+	<field name="Estudo Realizado" class="java.lang.String"/>
+	<field name="Contrato Firmado" class="java.lang.String"/>
 	<field name="Documento" class="java.lang.String"/>
+	<field name="Toma Deposeción" class="java.lang.String"/>
 	<field name="Facultad" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -51,33 +67,33 @@ WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUM
 	<title>
 		<band height="136" splitType="Stretch">
 			<image>
-				<reportElement x="1" y="2" width="87" height="95" uuid="0c143eec-f04b-4f4c-b52b-d002904de1b1"/>
-				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
+				<reportElement x="0" y="0" width="164" height="126" uuid="d3b98aa7-cd01-40f7-bc90-4a354e79c7d6"/>
+				<imageExpression><![CDATA["coffee.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="172" y="0" width="461" height="58" uuid="7d4253f1-a23f-4ade-8778-2de8167b725c"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="18" pdfFontName="Times-Roman"/>
+				<reportElement style="Title" x="270" y="0" width="263" height="62" uuid="848f5214-6160-4773-973b-2706fecbd5ee"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
+				<text><![CDATA[Coffee Title]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="164" y="46" width="479" height="48" forecolor="#000000" uuid="d4123a24-1ba2-4f58-bf8a-4b9f4d1c6283"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Roman"/>
+				<reportElement style="SubTitle" x="303" y="62" width="196" height="22" uuid="27014483-809f-4a3e-9bb3-b98d35991e79"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS DE LA UNIVERSIDAD DE EL SALVADOR]]></text>
+				<text><![CDATA[Coffee SubTitle]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="154" y="94" width="489" height="32" uuid="fcad6091-1fc9-4be6-a8d8-8df18a5b81b7"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="18" isBold="false"/>
+				<reportElement x="172" y="94" width="383" height="42" uuid="6cda204b-41b4-4546-a455-7b85761259f0"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
 				</textElement>
-				<text><![CDATA[REPORTE DE BECARIO CON DOCUMENTOS PENDIENTES]]></text>
+				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
 			</staticText>
 			<image>
-				<reportElement x="715" y="2" width="87" height="95" uuid="f005bb48-9aa0-4f5e-9b36-37a514ec25bd"/>
-				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
+				<reportElement x="633" y="-73" width="219" height="209" uuid="2b482efd-08a7-4228-a36f-8e23e3bd8a4f"/>
+				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -87,41 +103,49 @@ WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUM
 	<columnHeader>
 		<band height="16" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="e0759f88-dd78-454c-880c-f2f4bde824df"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="dcf89120-d2cd-4156-a9bc-6f62104b89bf"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="0" y="0" width="100" height="15" forecolor="#736343" uuid="49992e66-9bc5-4e4a-b888-6233f02f23c8"/>
-				<text><![CDATA[NOMBRE]]></text>
+				<reportElement style="Column header" x="0" y="0" width="80" height="15" forecolor="#736343" uuid="3ff2e9cb-e6df-4c86-a939-becd7fbdb9d0"/>
+				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="100" y="0" width="100" height="15" forecolor="#736343" uuid="20b15627-d129-4d8b-9fb4-d65cb8f86ec1"/>
+				<reportElement style="Column header" x="80" y="0" width="80" height="15" forecolor="#736343" uuid="8a70a11b-9eb0-4f81-b6d9-f0adf768b1cd"/>
 				<text><![CDATA[Tipo de Beca]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="200" y="0" width="100" height="15" forecolor="#736343" uuid="0a39cd5f-9f75-4b37-b43b-6cc2c38ca07c"/>
+				<reportElement style="Column header" x="160" y="0" width="80" height="15" forecolor="#736343" uuid="8b486780-4e0d-4080-80a6-34ab332912bc"/>
 				<text><![CDATA[Fecha de Inicio de Beca]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="300" y="0" width="100" height="15" forecolor="#736343" uuid="0abdec39-2323-4c6f-816b-e1f529ccd28f"/>
+				<reportElement style="Column header" x="240" y="0" width="80" height="15" forecolor="#736343" uuid="4f2c852d-dc96-4c5d-a9fb-8770bbf5e01c"/>
 				<text><![CDATA[Pais]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="400" y="0" width="100" height="15" forecolor="#736343" uuid="1be26ec9-e238-4878-97be-fc2309779be6"/>
-				<text><![CDATA[Estudio Realizado]]></text>
+				<reportElement style="Column header" x="320" y="0" width="80" height="15" forecolor="#736343" uuid="9ba91e09-e505-4642-850e-849567abcb8b"/>
+				<text><![CDATA[Estudo Realizado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="500" y="0" width="100" height="15" forecolor="#736343" uuid="59e4f3ca-06b3-4939-9835-a881fea496fb"/>
+				<reportElement style="Column header" x="400" y="0" width="80" height="15" forecolor="#736343" uuid="29c8a995-64f2-4b98-9bc1-82e4e087fd80"/>
+				<text><![CDATA[Contrato Firmado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="480" y="0" width="80" height="15" forecolor="#736343" uuid="902a9c57-b3ac-4ac9-95d9-be1eba6d696b"/>
 				<text><![CDATA[Documento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="600" y="0" width="100" height="15" forecolor="#736343" uuid="5549b864-1259-47ba-bcf0-975a732cf9af"/>
+				<reportElement style="Column header" x="560" y="0" width="80" height="15" forecolor="#736343" uuid="7552e7c7-ceea-48f3-9f77-5c185ed7f19c"/>
+				<text><![CDATA[Toma Deposeción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="640" y="0" width="80" height="15" forecolor="#736343" uuid="ce53c7c4-79ec-4d20-b3ff-f5c8fc4ab73e"/>
 				<text><![CDATA[Facultad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="700" y="0" width="100" height="15" forecolor="#736343" uuid="ef114d5d-510b-4c96-9d8f-825e7de75426"/>
+				<reportElement style="Column header" x="720" y="0" width="80" height="15" forecolor="#736343" uuid="1023b9e4-8971-40a0-add4-a45132f92858"/>
 				<text><![CDATA[Observaciones]]></text>
 			</staticText>
 		</band>
@@ -129,61 +153,45 @@ WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUM
 	<detail>
 		<band height="15" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="4b2c5952-a7fb-4ea9-8e85-caf0c739ac4a"/>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="dc7f1fa7-4e14-46b1-aa4b-92f33a1222c4"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="0" y="0" width="100" height="15" uuid="700c618b-9428-44a5-a1a1-b87efbfcc1c4"/>
-					<textElement>
-						<font size="10"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+					<reportElement style="Detail" x="0" y="0" width="80" height="15" uuid="e0fb3283-9197-491b-8e7c-6eb064dae252"/>
+					<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="100" y="0" width="100" height="15" uuid="ca317192-9507-494b-b1ad-5c5a2daadbab"/>
-					<textElement>
-						<font size="10"/>
-					</textElement>
+					<reportElement style="Detail" x="80" y="0" width="80" height="15" uuid="d1e52dc3-c6bc-4f48-99c1-a1273a78b776"/>
 					<textFieldExpression><![CDATA[$F{Tipo de Beca}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="200" y="0" width="100" height="15" uuid="6452c5c7-8969-4e22-80e0-6b5c8254ed61"/>
-					<textElement>
-						<font size="10"/>
-					</textElement>
+					<reportElement style="Detail" x="160" y="0" width="80" height="15" uuid="342cc9a8-49aa-48fb-97a1-06526c0353e3"/>
 					<textFieldExpression><![CDATA[$F{Fecha de Inicio de Beca}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="300" y="0" width="100" height="15" uuid="1420d686-8b0a-4711-a9ad-c758a1eb05a9"/>
-					<textElement>
-						<font size="10"/>
-					</textElement>
+					<reportElement style="Detail" x="240" y="0" width="80" height="15" uuid="f4226797-dddc-4c33-8903-030e5fda82f2"/>
 					<textFieldExpression><![CDATA[$F{Pais}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="400" y="0" width="100" height="15" uuid="f95807cf-257c-4dd3-aa79-d08505c5a029"/>
-					<textElement>
-						<font size="10"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{Estudio Realizado}]]></textFieldExpression>
+					<reportElement style="Detail" x="320" y="0" width="80" height="15" uuid="50d9b8cc-0eae-42cd-b5e9-c56b2c56e464"/>
+					<textFieldExpression><![CDATA[$F{Estudo Realizado}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="500" y="0" width="100" height="15" uuid="59b24a46-8e34-4e79-a0cd-5b8eaa1bfe14"/>
-					<textElement>
-						<font size="10"/>
-					</textElement>
+					<reportElement style="Detail" x="400" y="0" width="80" height="15" uuid="d12321ad-0075-4131-b1d6-3b2f5358ba34"/>
+					<textFieldExpression><![CDATA[$F{Contrato Firmado}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="480" y="0" width="80" height="15" uuid="6fb7848e-4017-4f29-8a36-011352a9e5d7"/>
 					<textFieldExpression><![CDATA[$F{Documento}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="600" y="0" width="100" height="15" uuid="ea751197-49f5-43ac-8684-01a17cf89c90"/>
-					<textElement>
-						<font size="10"/>
-					</textElement>
+					<reportElement style="Detail" x="560" y="0" width="80" height="15" uuid="34a0b691-0db0-4cb2-8624-096724c18a36"/>
+					<textFieldExpression><![CDATA[$F{Toma Deposeción}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="640" y="0" width="80" height="15" uuid="c718d932-f359-4abd-a86c-580ce5fa8bd2"/>
 					<textFieldExpression><![CDATA[$F{Facultad}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="700" y="0" width="100" height="15" uuid="0b0c74dc-a894-43f9-acb3-0f1bb8a27ff6"/>
-					<textElement>
-						<font size="10"/>
-					</textElement>
+					<reportElement style="Detail" x="720" y="0" width="80" height="15" uuid="93d31f9d-a354-4dac-bb4f-5ba0f4a0fb22"/>
 					<textFieldExpression><![CDATA[$F{Observaciones}]]></textFieldExpression>
 				</textField>
 			</frame>
@@ -192,7 +200,7 @@ WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUM
 	<columnFooter>
 		<band height="6" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="9cc4c06c-3998-4782-999d-b9f72546e0a1"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="238bee39-ca14-4391-8579-32817f71aab1"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
@@ -202,23 +210,23 @@ WHERE U.ID_TIPO_USUARIO = 2 AND E.ESTADO_EXPEDIENTE='ABIERTO' AND D.ESTADO_DOCUM
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="f35cbd9b-7752-44f4-91cf-a8fad3ce6d80"/>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="383a7433-dbcd-478c-ba50-667cc32462df"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="38473abb-4eb7-4b33-8a42-90fcb34a403b"/>
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="30c87f8e-20f0-464d-b061-862e7a0b0937"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="2e118221-041f-4450-bf5c-b1334035a83a"/>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="4f983cfd-95c2-4ca5-a9c9-0407f6840f27"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="9936db44-1193-4f46-9785-f6f37659e51a"/>
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="0d3a19e1-9474-4719-ad4d-920ef86c6189"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
