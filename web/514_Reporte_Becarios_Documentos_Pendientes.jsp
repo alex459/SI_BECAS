@@ -197,11 +197,13 @@
                                                 <br>
                                                 <select name="DOCUMENTO" id="DOCUMENTO" class="form-control">
                                                     <option value="">Seleccione Tipo de Documento</option>
-                                                    <option value="TÍTULO ACADÉMICO">Título Académco</option>
-                                                    <option value="PARTIDA DE NACIMIENTO" >Partida de Nacimiento</option>
-                                                    <option value="DUI">DUI</option>
-                                                    <option value="CURRÍCULUM VITAE" >Currículum Vitae</option>
-                                                
+                                                    <option value="TITULO OBTENIDO">Título Obtenido</option>
+                                                    <option value="CERTIFICACION DE NOTAS" >Certificación de Notas</option>
+                                                    <option value="ACTA DE EVALUACION DE TESIS">Acta de Evaluación de Tesis</option>
+                                                    <option value="CONSTANCIA DE EGRESADO" >Constancia de Eresado</option>
+                                                    <option value="ACTA DE TOMA DE POSESION" >Acta de Toma de Posesión</option>
+                                                    <option value="PROYECTO EN QUE APOYARA">Proyecto en que Apoyara</option>
+                                                    
                                                 </select>
                                             </div>
                                             
@@ -257,6 +259,13 @@
         consultaSql = "SELECT  CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS Nombre, "
 	+ "OB.TIPO_OFERTA_BECA, I.PAIS, B.FECHA_INICIO, OB.TIPO_ESTUDIO,  TD.TIPO_DOCUMENTO, "
 	+ "OB.TIPO_ESTUDIO, F.FACULTAD, D.OBSERVACION_O, "
+        + "  (CASE WHEN (SELECT COUNT(EX.ID_EXPEDIENTE) FROM EXPEDIENTE EX,USUARIO USU, SOLICITUD_DE_BECA SDB "
+							+ "WHERE EX.ID_EXPEDIENTE=SDB.ID_EXPEDIENTE "
+							+ "AND USU.ID_USUARIO=SDB.ID_USUARIO "
+							+ "AND USU.ID_USUARIO=U.ID_USUARIO "
+							+ ")>= 2 THEN 'SI' "
+							+ "ELSE 'NO' "
+							+ "END) AS 'Segunda Beca', "
 	+ "( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
 							+ "WHERE P.ID_PROGRESO >= 9 ) THEN "
 							+ "'SI' "
@@ -281,7 +290,7 @@
         + "JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD "
 
         + "WHERE D.ESTADO_DOCUMENTO='PENDIENTE' AND U.ID_TIPO_USUARIO = 2 "
-        + "AND E.ESTADO_EXPEDIENTE='ABIERTO' " ;     // + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
+        + "AND E.ESTADO_EXPEDIENTE='ABIERTO' AND E.ID_PROGRESO IN ('12', '13', '14', '15', '16') " ;     // + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
                     if (request.getParameter("TIPO_BECA").toString().length()>0) {
                             tipoBeca = request.getParameter("TIPO_BECA");
@@ -388,14 +397,14 @@
                                                 out.write("<tr>");
                                                 out.write("<td>" + i + "</td>");
                                                 out.write("<td>" + rs.getString(1) + "</td>");
-                                                out.write("<td> </td>");
+                                                out.write("<td>" + rs.getString(10) + "</td>");
                                                 out.write("<td>" + rs.getString(2) + "</td>");
                                                 out.write("<td>" + rs.getString(4) + "</td>");
                                                 out.write("<td>" + rs.getString(3) + "</td>");
                                                 out.write("<td>" + rs.getString(5) + "</td>");
-                                                out.write("<td>" + rs.getString(10) + "</td>");
-                                                out.write("<td>" + rs.getString(6) + "</td>");
                                                 out.write("<td>" + rs.getString(11) + "</td>");
+                                                out.write("<td>" + rs.getString(6) + "</td>");
+                                                out.write("<td>" + rs.getString(12) + "</td>");
                                                 out.write("<td>" + rs.getString(8) + "</td>");
                                                 out.write("<td>" + rs.getString(9) + "</td>");
                                             }
