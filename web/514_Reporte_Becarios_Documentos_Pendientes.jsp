@@ -352,11 +352,7 @@
                                
                                 </form>
                                  <br>       
-                            <label>Enviar Por Correo</label>
-                            <button type="submit" class="btn btn-success form-control">
-                                <span class="glyphicon glyphicon-file"></span> 
-                                E-mail
-                            </button>
+
                         </div>
                         <div class="col-md-6">
                             <label>Hoja de Cálculo</label>
