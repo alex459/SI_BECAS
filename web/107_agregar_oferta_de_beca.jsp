@@ -274,7 +274,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="perfil">Perfil de la beca: </label>                                
+                            <label for="perfil">Requerimientos: </label>                                
                         </div>
                         <div class="col-md-9">                                
                             <textarea class="form-control" id="perfilBeca" maxlength="2000" name="perfilBeca" ng-model="datos.Perfil" ng-required="true"></textarea>
@@ -286,7 +286,7 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <input type="submit" class="btn btn-primary" name="submit" value="Agregar oferta" ng-disabled="!AgregarOfertaBeca.$valid">
-                            <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
+                            <a href="principal.jsp" type="submit" class="btn btn-danger" name="submit">Cancelar</a>
                         </div>
                     </div>
                 </fieldset>

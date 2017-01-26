@@ -263,7 +263,7 @@
                             + " NOMBRE_INSTITUCION, OFERTA_BECA.ID_DOCUMENTO AS ID_DOCUMENTO, PAIS FROM "
                             + " OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_DOCUMENTO "
                             + " AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
-                            + " AND OFERTA_BECA_ACTIVA=1 ";
+                            + " AND OFERTA_BECA_ACTIVA=1";
                     String nombre = "", tipoEstudio = "", instOfertante = "", instEstudio = "";
                     if (!request.getParameter("nombreOferta").isEmpty()) {
                         nombre = request.getParameter("nombreOferta");

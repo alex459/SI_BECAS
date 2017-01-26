@@ -341,7 +341,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <input type="submit" class="btn btn-primary" name="submit" value="Modificar oferta" ng-disabled="!AgregarOfertaBeca.$valid">
-                        <input type="submit" class="btn btn-danger" name="submit" value="Cancelar">
+                        <a href="principal.jsp" type="submit" class="btn btn-danger" name="submit">Cancelar</a>
                     </div>
                 </div>
             </fieldset>

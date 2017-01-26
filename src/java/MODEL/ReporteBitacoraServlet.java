@@ -124,30 +124,10 @@ public class ReporteBitacoraServlet extends HttpServlet {
 
             }
 
-            if ("2".equals(opcion_de_salida)) { //SALIDA EN XLS
-                /*JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\101_reporte_bitacora.jrxml");
-                ConexionBD conexionBD = new ConexionBD();
-                conexionBD.abrirConexion();
-                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametersMap, conexionBD.conn);
-                conexionBD.cerrarConexion();
-                JRXlsExporter exporter = new JRXlsExporter();
-                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "C:\\a.xls");
-                exporter.exportReport();*/
-
-            }
-
-            if ("3".equals(opcion_de_salida)) { //SALIDA EN XLS
-
-            }
-
-            if ("4".equals(opcion_de_salida)) { //SALIDA EN XLS
-
-            }
-
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Error: " + ex);
+            response.sendRedirect("106_bitacora.jsp");
         }
 
     }
