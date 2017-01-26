@@ -180,11 +180,11 @@
                                                 <select name="tipoBecario" id="tipoBecario" class="form-control">
                                                     <option value="">Seleccione Tipo de Solicitante</option>
                                                     <option value="CANDIDATO">Candidato</option>
-                                                    <option value="ACTIVO">Activo</option>
-                                                    <option value="CONTRACTUAL">Contractual</option>
-                                                    <option value="INACTIVO">Inactivo</option>
-                                                    <option value="LIBERADO">Liberado</option>
-                                                    <option value="INCUMPLIMIENTO DE CONTRATO">Incumplimiento de Contrato</option>
+                                                    <option value="ACTIVO"> Becario Activo</option>
+                                                    <option value="CONTRACTUAL">Becario Contractual</option>
+                                                    <option value="INACTIVO"> Becario Inactivo</option>
+                                                    <option value="LIBERADO">Becario Liberado</option>
+                                                    <option value="INCUMPLIMIENTO DE CONTRATO">Becario en Incumplimiento de Contrato</option>
                                                 </select>
                                             </div>
                                         </div>
