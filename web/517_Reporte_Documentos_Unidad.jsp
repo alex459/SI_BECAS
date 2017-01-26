@@ -173,12 +173,12 @@
                                         <div class="col-md-6">
                                             <div class="col-md-4">
                                                 <br>
-                                                <label>Tipo de Becario:</label>
+                                                <label>Tipo de Solicitante:</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
                                                 <select name="tipoBecario" id="tipoBecario" class="form-control">
-                                                    <option value="">Seleccione Tipo de Becario</option>
+                                                    <option value="">Seleccione Tipo de Solicitante</option>
                                                     <option value="CANDIDATO">Candidato</option>
                                                     <option value="ACTIVO">Activo</option>
                                                     <option value="CONTRACTUAL">Contractual</option>
@@ -308,7 +308,7 @@
                                         <th>Fecha de Emisión</th>
                                         <th>Solicitante</th>
                                         <th>Facultad</th>
-                                        <th>Tipo de Becario</th>
+                                        <th>Tipo de Solicitante</th>
                                         <th>Observaciones</th>
                                         <th>Ver Documento</th>
                                         
