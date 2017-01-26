@@ -148,11 +148,8 @@
                             <label for="textinput">Codigo de usuario : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="CARNET" name="CARNET" ng-init="datos.codigo = '<%=carnet%>'" type="text" placeholder="ingrese un codigo para el usuario" class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
-                            <span class="text-danger" ng-show="!ActualizarUsuario.$pristine && ActualizarUsuario.CARNET.$error.required">El codigo es requerido.</span>
-                            <span class="text-danger" ng-show="ActualizarUsuario.CARNET.$error.minlength">Minimo 7 caracteres.</span>
-                            <span class="text-danger" ng-show="ActualizarUsuario.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
-                            <small id="help1"></small>
+                            <input value = "<%=carnet%>" type="text" class="form-control input-md" disabled="true">                            
+                            <input id="CARNET" name="CARNET" value = "<%=carnet%>" type="hidden">
                         </div>
                         <div class="col-md-3 text-right">                                   
                             <label for="textinput">Email : </label>                                

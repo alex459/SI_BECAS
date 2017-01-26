@@ -99,10 +99,10 @@
                             <label for="textinput">Codigo de usuario : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="CARNET" name="CARNET" type="text" placeholder="ingrese un codigo para el usuario." class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
+                            <input id="CARNET" name="CARNET" type="text" placeholder="ingrese un codigo para el usuario." class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="20">
                             <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CARNET.$error.required">El usuario es requerido.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.minlength">Minimo 7 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.minlength">Minimo 3 caracteres.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.pattern">Solo se permiten letras, numeros y punto. (a-z, A-Z, 0-9 y punto).</span>
                             <small id="help1"></small>
                         </div>
                         <div class="col-md-3 text-right">                                   

@@ -76,7 +76,7 @@
             fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("FECHA2"))) + " 23:59:59";
             consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
         } else {
-            fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse("01/01/2016"))+ " 00:00:00";
+            fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse("01/01/2016")) + " 00:00:00";
             fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(modifiedDate)) + " 23:59:59";
             consultaSql = consultaSql.concat(" AND B.FECHA_BITACORA BETWEEN '" + fecha1 + "' AND '" + fecha2 + "'");
         }
@@ -292,73 +292,14 @@
                                     <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
                                 </form>                                    
                             </div>
-                            <div class="col-md-6 text-center">
-                                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
-                                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
-                                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
-                                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
-                                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
-                                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
-                                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
-                                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
-                                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
-                                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
-                                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
-                                    <input type="hidden" name="OPCION_DE_SALIDA" value="2">
-                                    <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_excel.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
-                                </form> 
-                            </div>
+
+                            <div class="col-md-6 text-center">                                
+                                <div style="border:1px solid; background-color: #32B232; padding:6px; color:white; " id="buttons"></div>
+                                <br>
+                            </div> 
                         </div>
 
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-6 text-center">
-                                <label for="textinput">Enviar por correo</label>
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <label for="textinput">Imprimir</label>
-                            </div>
-                        </div>
-
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-6 text-center">
-                                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
-                                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
-                                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
-                                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
-                                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
-                                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
-                                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
-                                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
-                                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
-                                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
-                                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
-                                    <input type="hidden" name="OPCION_DE_SALIDA" value="3">
-                                    <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_correo.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
-                                </form>
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <form class="form-horizontal" action="ReporteBitacoraServlet" method="post">
-                                    <input type="hidden" name="REPORTE_NOMBRE1" value="<%=nombre1%>">
-                                    <input type="hidden" name="REPORTE_NOMBRE2" value="<%=nombre2%>">
-                                    <input type="hidden" name="REPORTE_APELLIDO1" value="<%=apellido1%>">
-                                    <input type="hidden" name="REPORTE_APELLIDO2" value="<%=apellido2%>">
-                                    <input type="hidden" name="REPORTE_FECHA1" value="<%=fecha1%>">
-                                    <input type="hidden" name="REPORTE_FECHA2" value="<%=fecha2%>">
-                                    <input type="hidden" name="REPORTE_ID_ACCION_MENOR" value="<%=id_accion_menor%>">
-                                    <input type="hidden" name="REPORTE_ID_ACCION_MAYOR" value="<%=id_accion_mayor%>">
-                                    <input type="hidden" name="REPORTE_NOMBRE_USUARIO" value="JOSE ALEXIS BELTRAN SERRANO">
-                                    <input type="hidden" name="REPORTE_ROL_USUARIO" value="ADMINISTRADOR">
-                                    <input type="hidden" name="OPCION_DE_SALIDA" value="4">
-                                    <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_imprimir.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
-                                </form>
-                            </div>
-                        </div>
-
-                        <br>
+                        <br>                    
 
                     </fieldset>
                 </div>
@@ -379,7 +320,7 @@
 
                 <div class="col-md-12">
 
-                    <table class="table table-bordered"></br>                        
+                    <table id="tabla" class="table table-bordered"></br>                        
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -406,7 +347,7 @@
                                             out.write("<td>" + rs.getString(4) + "</td>");
                                             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                             String data = df.format(rs.getDate(5));
-                                            out.write("<td>" + data + "</td>");                                            
+                                            out.write("<td>" + data + "</td>");
                                             out.write("<td>" + rs.getTimestamp(5).getHours() + ":" + rs.getTimestamp(5).getMinutes() + ":" + rs.getTimestamp(5).getSeconds() + "</td>");
                                             out.write("</tr>");
                                         }
@@ -481,6 +422,54 @@
                                                     });
                                                 });
 </script>
+
+
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
+<script type="text/javascript" src="js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="js/buttons.print.min.js"></script>
+<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
+<script type="text/javascript">
+                                                $(document).ready(function () {
+                                                    var tabla = $('#tabla').DataTable(
+                                                            {
+                                                                "language":
+                                                                        {
+                                                                            "sProcessing": "Procesando...",
+                                                                            "sLengthMenu": "Mostrar _MENU_ registros",
+                                                                            "sZeroRecords": "No se encontraron resultados",
+                                                                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                                                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                                                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                                                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                                                            "sInfoPostFix": "",
+                                                                            "sSearch": "Buscar:",
+                                                                            "sUrl": "",
+                                                                            "sInfoThousands": ",",
+                                                                            "sLoadingRecords": "Cargando...",
+                                                                            "oPaginate": {
+                                                                                "sFirst": "Primero",
+                                                                                "sLast": "Último",
+                                                                                "sNext": "Siguiente",
+                                                                                "sPrevious": "Anterior"
+                                                                            },
+                                                                            "oAria": {
+                                                                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                                                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                                                            }
+                                                                        }
+                                                            }
+                                                    );
+                                                    var buttons = new $.fn.dataTable.Buttons(tabla, {
+                                                        buttons: [
+                                                            'csv', 'excel'
+                                                        ]
+                                                    }).container().appendTo($('#buttons'));
+                                                });
+</script>
+
+
+
 <script>
     $.validator.setDefaults({
         submitHandler: function () {
