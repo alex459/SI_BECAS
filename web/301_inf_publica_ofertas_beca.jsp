@@ -85,9 +85,6 @@
 <p class="text-right"></p>
 
 
-<%-- todo el menu esta contenido en la siguiente linea
-     el menu puede ser cambiado en la pagina menu.jsp --%>
-<jsp:include page="menu.jsp"></jsp:include>
 
 </head>
 <body>
@@ -102,6 +99,34 @@
 
             <br></br> 
         </div><!-- TITULO DE LA PANTALLA -->  
+        <nav class="navbar navbar-custom" role="navigation">
+                    <div class="navbar-header">
+
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </button> <a class="navbar-brand active" href="index.jsp">Inicio</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        
+                        <ul class="nav navbar-nav">
+                            <li>
+                                        <a href="documentos.jsp">Documentos</a>                                   
+                            </li>
+                            <li>
+                                        <a href="301_inf_publica_ofertas_beca.jsp">Ofertas de beca</a>                                   
+                            </li>
+                        </ul>
+                        
+                        <ul class="nav navbar-nav navbar-right">						
+                            
+                            <li>
+                                <a href="login.jsp">Iniciar Sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </nav>
 
         <div class="row"><!-- CONTENIDO DE LA PANTALLA -->  
             <fieldset class="custom-border"> 

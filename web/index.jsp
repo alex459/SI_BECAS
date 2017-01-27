@@ -49,6 +49,9 @@
                             <li>
                                         <a href="documentos.jsp">Documentos</a>                                   
                             </li>
+                            <li>
+                                        <a href="301_inf_publica_ofertas_beca.jsp">Ofertas de beca</a>                                   
+                            </li>
                         </ul>
                         
                         <ul class="nav navbar-nav navbar-right">						
