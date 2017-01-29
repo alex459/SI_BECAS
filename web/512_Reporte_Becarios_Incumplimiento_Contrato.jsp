@@ -250,13 +250,17 @@
                     ArrayList<DetalleUsuario> listaUser = new ArrayList();
                     ArrayList<Observaciones> listaObs = new ArrayList();
                     ArrayList<Facultad> listaFacultades = new ArrayList();
+                     ArrayList<String> SegBeca = new ArrayList();
+                    ArrayList<String> TomaPos = new ArrayList();
                     OfertaBeca temp = new OfertaBeca();
                     Institucion temp2 = new Institucion();
                     DetalleUsuario temp3 = new DetalleUsuario();
                     Observaciones temp4 = new Observaciones();
                     Facultad temp5 = new Facultad();
                     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                     String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="", tipoBecario="";
+                    String tempSegBec="";
+                    String temptomaPos="";
+                    String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="", tipoBecario="";
                     String queryParam=""; 
                     
                        String consultaSql2 = "";
@@ -277,21 +281,40 @@
                         
                         //formando la consulta
                         String consultaSql = "";
-                        consultaSql = " SELECT distinct "
-                        + "CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU)"
-                        + "  AS NOMBRE, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,"
-                        + "  INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,"
-                        + " OBS.OBSERVACION_O AS OBSERVACION_O, OB.FECHA_INICIO AS FECHA_INICIO, "
-                        + " OB.FECHA_CIERRE AS FECHA_CIERRE , FA.FACULTAD AS FACULTAD FROM "
-                        + " DETALLE_USUARIO DU,  FACULTAD FA, OFERTA_BECA OB, OBSERVACIONES OBS,iNSTITUCION INS, "
-                        + " SOLICITUD_DE_BECA SDB,EXPEDIENTE EX, USUARIO US, TIPO_USUARIO TU, PROGRESO PR"
-                        + "  WHERE DU.ID_FACULTAD=FA.ID_FACULTAD AND US.ID_USUARIO=DU.ID_USUARIO AND"
-                        + " DU.ID_USUARIO=SDB.ID_USUARIO AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA"
-                        + " AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND "
-                        + " SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND EX.ID_EXPEDIENTE=OBS.ID_EXPEDIENTE"
-                        + " AND EX.ID_PROGRESO=PR.ID_PROGRESO AND US.ID_TIPO_USUARIO= 2 "
-                        + " AND EX.ESTADO_EXPEDIENTE='ABIERTO' AND INS.TIPO_INSTITUCION='OFERTANTE' "
-                        + "AND PR.ESTADO_BECARIO='INCUMPLIMIENTO' ";
+                        consultaSql = " SELECT DISTINCT   CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) "
+                        +"  AS NOMBRE, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,"
+                        +"  INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,"
+                        +"  OBS.OBSERVACION_O AS OBSERVACION_O, OB.FECHA_INICIO AS FECHA_INICIO, "
+                        +" OB.FECHA_CIERRE AS FECHA_CIERRE , FA.FACULTAD AS FACULTAD,"
+			+" (CASE WHEN (SELECT COUNT(EX.ID_EXPEDIENTE) FROM EXPEDIENTE EX,USUARIO USU, SOLICITUD_DE_BECA SDB "
+			+" WHERE EX.ID_EXPEDIENTE=SDB.ID_EXPEDIENTE "
+			+" AND USU.ID_USUARIO=SDB.ID_USUARIO "
+			+" AND USU.ID_USUARIO=U.ID_USUARIO "
+			+" )>= 2 THEN 'SI' "
+			+" ELSE 'NO' "
+			+" END) AS 'SegundaBeca', "
+                        +" ( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
+			+" WHERE P.ID_PROGRESO >= 9 ) THEN "
+			+" 'SI' "
+			+" ELSE 'NO' "
+			+" END) AS 'ContratoFirmado', "
+                        +" ( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
+			+" WHERE P.ID_PROGRESO >=12  ) THEN "
+			+" 'SI' "
+			+" ELSE 'NO' "
+			+" END) AS 'TomaPosesion' "
+			+" FROM "
+                        +"  DETALLE_USUARIO DU,  FACULTAD FA, OFERTA_BECA OB, OBSERVACIONES OBS,iNSTITUCION INS, "
+			+"  USUARIO U,PROGRESO P, SOLICITUD_DE_BECA SB, OFERTA_BECA OF,"
+                        +"  SOLICITUD_DE_BECA SDB,EXPEDIENTE E, USUARIO US, TIPO_USUARIO TU, PROGRESO PR"
+                        +"  WHERE DU.ID_FACULTAD=FA.ID_FACULTAD AND US.ID_USUARIO=DU.ID_USUARIO AND SB.ID_OFERTA_BECA=OF.ID_OFERTA_BECA  AND"
+                        +"  U.ID_USUARIO=SB.ID_USUARIO AND P.ID_PROGRESO=E.ID_PROGRESO AND"
+                        +" DU.ID_USUARIO=SDB.ID_USUARIO AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA"
+                        +" AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND "
+                        +" SDB.ID_EXPEDIENTE=E.ID_EXPEDIENTE AND E.ID_EXPEDIENTE=OBS.ID_EXPEDIENTE"
+                        +" AND E.ID_PROGRESO=PR.ID_PROGRESO AND US.ID_TIPO_USUARIO= 2 "
+                        +" AND E.ESTADO_EXPEDIENTE='ABIERTO' AND INS.TIPO_INSTITUCION='OFERTANTE' "
+                        +" AND PR.ESTADO_BECARIO='INCUMPLIMIENTO'  ";
                         if (request.getParameter("tipoBeca").toString().length()>0) {
                             tipoBeca = request.getParameter("tipoBeca");
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
@@ -355,14 +378,17 @@
                             temp3.setNombre1Du(rs.getString("NOMBRE"));
                             temp4.setObservacion(rs.getString("OBSERVACION_O"));
                             temp5.setFacultad(rs.getString("FACULTAD"));
-                            
+                            //segunda beca y toma de posesion
+                            tempSegBec=rs.getString("SegundaBeca");
+                            temptomaPos=rs.getString("TomaPosesion");
 
                             lista2.add(temp);
                             listaIns.add(temp2);
                             listaUser.add(temp3);
                             listaObs.add(temp4);
                             listaFacultades.add(temp5);
-
+                            SegBeca.add(tempSegBec);
+                            TomaPos.add(temptomaPos);
                         }
                         //con el rs se llenara la tabla de resultados
                     } catch (Exception ex) {
@@ -381,12 +407,7 @@
                                      <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
                                
                                 </form><br><br>
-                                  <br>       
-                            <label>Enviar Por Correo</label>
-                            <button type="submit" class="btn btn-success form-control">
-                                <span class="glyphicon glyphicon-file"></span> 
-                                E-mail
-                            </button>
+                                  <br> 
                         </div>
                         <div class="col-md-6">
                             <label>Hoja de Cálculo</label>
@@ -407,14 +428,15 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Nombre</th>
-                                     <!--   <th>2da beca</th> -->
+                                        <th>2da beca</th> 
                                         <th>Tipo de Beca</th>
                                         <th>Fecha de Inicio de Beca</th>
                                         <th>Fecha de Finalizacion de Beca</th>
                                         <th>Pais</th>
                                         <th>Estudio Realizado</th>
                                         <th>Institucion que Financia</th>
-                                     <!--   <th>Toma de posesión</th> -->                                        <th>Facultad</th>
+                                       <th>Toma de posesión</th>
+                                        <th>Facultad</th>
                                         <th>Observaciones</th>
                                     </tr>  
                                 </thead>
@@ -427,14 +449,14 @@
                                         out.write("<tr>");
                                         out.write("<td>" + j + "</td>");
                                         out.write("<td>" + listaUser.get(i).getNombre1Du() + "</td>");
-                                    //    out.write("<td> </td>");
+                                        out.write("<td>" + SegBeca.get(i) + "</td>");
                                         out.write("<td>" + lista2.get(i).getTipoOfertaBeca() + "</td>");                                        
                                         out.write("<td>" + df.format(lista2.get(i).getFechaInicio()) + "</td>");
                                         out.write("<td>" + df.format(lista2.get(i).getFechaCierre()) + "</td>");
                                         out.write("<td>" + listaIns.get(i).getPais() + "</td>");
                                         out.write("<td>" + lista2.get(i).getTipoEstudio() + "</td>");
                                         out.write("<td>" + listaIns.get(i).getNombreInstitucion() + "</td>");
-                                     //   out.write("<td> </td>");
+                                        out.write("<td>" + TomaPos.get(i) + "</td>");
                                         out.write("<td>" + listaFacultades.get(i).getFacultad() + "</td>");
                                         out.write("<td>" + listaObs.get(i).getObservacion() + "</td>");
                                         out.write("</tr>");

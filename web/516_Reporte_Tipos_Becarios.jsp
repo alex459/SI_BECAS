@@ -184,7 +184,7 @@
                                                     <option value="CONTRACTUAL">Contractual</option>
                                                     <option value="INACTIVO">Inactivo</option>
                                                     <option value="LIBERADO">Liberado</option>
-                                                    <option value="INCUMPLIMIENTO DE CONTRATO">Incumplimiento de Contrato</option>
+                                                    <option value="INCUMPLIMIENTO">Incumplimiento de Contrato</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -253,11 +253,15 @@
                     ArrayList<DetalleUsuario> listaUser = new ArrayList();
                     ArrayList<Progreso> listaProg = new ArrayList();
                     ArrayList<Facultad> listaFacultades = new ArrayList();
+                    ArrayList<String> SegBeca = new ArrayList();
+                    ArrayList<String> TomaPos = new ArrayList();
                     OfertaBeca temp = new OfertaBeca();
                     Institucion temp2 = new Institucion();
                     DetalleUsuario temp3 = new DetalleUsuario();
                     Progreso temp4 = new Progreso();
                     Facultad temp6 = new Facultad();
+                    String tempSegBec="";
+                    String temptomaPos="";
                     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                            
                             String consultaSql2 = "";    
@@ -277,7 +281,24 @@
                 + " SB.ID_EXPEDIENTE,CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS NOMBRE, "
                 + " OF.FECHA_CIERRE, OF.TIPO_ESTUDIO,"
                 + " OF.TIPO_OFERTA_BECA, OF.FECHA_INICIO, OF.NOMBRE_OFERTA,I.NOMBRE_INSTITUCION, I.PAIS,F.FACULTAD, P.ESTADO_BECARIO "
-                + " ,P.ID_PROGRESO "
+                + " ,P.ID_PROGRESO, "
+                + "  (CASE WHEN (SELECT COUNT(EX.ID_EXPEDIENTE) FROM EXPEDIENTE EX,USUARIO USU, SOLICITUD_DE_BECA SDB "
+							+ "WHERE EX.ID_EXPEDIENTE=SDB.ID_EXPEDIENTE "
+							+ "AND USU.ID_USUARIO=SDB.ID_USUARIO "
+							+ "AND USU.ID_USUARIO=U.ID_USUARIO "
+							+ ")>= 2 THEN 'SI' "
+							+ "ELSE 'NO' "
+							+ "END) AS 'SegundaBeca', "
+	+ "( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
+							+ "WHERE P.ID_PROGRESO >= 9 ) THEN "
+							+ "'SI' "
+							+ "ELSE 'NO' "
+							+ "END) AS 'ContratoFirmado', "
+	+ "( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
+							+ "WHERE P.ID_PROGRESO >=12  ) THEN "
+							+ "'SI' "
+							+ "ELSE 'NO' "
+							+ "END) AS 'TomaPosesion' "
                 + " FROM FACULTAD F,DETALLE_USUARIO DU , USUARIO U, TIPO_USUARIO TU , SOLICITUD_DE_BECA SB, OFERTA_BECA OF,"
                 + " INSTITUCION I ,EXPEDIENTE E, PROGRESO P WHERE DU.ID_FACULTAD=F.ID_FACULTAD AND DU.ID_USUARIO=U.ID_USUARIO"
                 + " AND U.ID_USUARIO=SB.ID_USUARIO AND SB.ID_OFERTA_BECA=OF.ID_OFERTA_BECA AND SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE"
@@ -334,13 +355,18 @@
                             temp3.setNombre1Du(rs.getString("NOMBRE"));
                             temp4.setIdProgreso(rs.getInt("ID_PROGRESO"));
                             temp4.setEstadoBecario(rs.getString("ESTADO_BECARIO"));
-                            temp6.setFacultad(rs.getString("FACULTAD"));                           
+                            temp6.setFacultad(rs.getString("FACULTAD"));   
+                            //segunda beca y toma de posesion
+                            tempSegBec=rs.getString("SegundaBeca");
+                            temptomaPos=rs.getString("TomaPosesion");
 
                             lista2.add(temp);
                             listaIns.add(temp2);
                             listaUser.add(temp3);
                             listaProg.add(temp4);
                             listaFacultades.add(temp6);
+                            SegBeca.add(tempSegBec);
+                            TomaPos.add(temptomaPos);
                         }
                           
                           }
@@ -364,12 +390,7 @@
                                      <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
                                
                                 </form>
-                             <br>       
-                            <label>Enviar Por Correo</label>
-                            <button type="submit" class="btn btn-success form-control">
-                                <span class="glyphicon glyphicon-file"></span> 
-                                E-mail
-                            </button>
+                             <br>  
                         </div>
                         <div class="col-md-6">
                             <label>Hoja de Cálculo</label>
@@ -389,14 +410,14 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Nombre</th>
-                                      <!--  <th>2a. Beca</th> -->
+                                        <th>2a. Beca</th> 
                                         <th>Tipo de Beca</th>
                                         <th>Fecha de Inicio de Beca</th>
                                         <th>Fecha de Finalizacion de Beca</th>
                                         <th>Pais</th>
                                         <th>Estudio Realizado</th>
                                         <th>Institucion que Financia</th>
-                                       <!-- <th>Toma de Posesión</th> -->
+                                        <th>Toma de Posesión</th> 
                                         <th>Facultad</th>
                                         <th>Tipo Becario</th>
                                     </tr>  
@@ -409,14 +430,14 @@
                                                 out.write("<tr>");
                                                 out.write("<td>" + i+1 + "</td>");
                                                 out.write("<td>" + listaUser.get(i).getNombre1Du() + "</td>");
-                                            //    out.write("<td> </td>");
+                                                out.write("<td>" + SegBeca.get(i) + "</td>");
                                                 out.write("<td>" + lista2.get(i).getTipoOfertaBeca() + "</td>");
                                                 out.write("<td>" + df.format(lista2.get(i).getFechaInicio()) + "</td>");
                                                 out.write("<td>" + df.format(lista2.get(i).getFechaCierre()) + "</td>");
                                                 out.write("<td>" + listaIns.get(i).getPais() + "</td>");
                                                 out.write("<td>" + lista2.get(i).getTipoEstudio() + "</td>");
                                                 out.write("<td>" + listaIns.get(i).getNombreInstitucion() + "</td>");
-                                               // out.write("<td> </td>");
+                                                out.write("<td>" + TomaPos.get(i) + "</td>");
                                                 out.write("<td>" + listaFacultades.get(i).getFacultad() + "</td>");
                                                 out.write("<td>" + listaProg.get(i).getEstadoBecario() + "</td>");
                                                  i++;

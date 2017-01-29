@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="511_Reporte_Institucion_Financiera" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5973cedc-8fa4-4451-ada3-95a7a86c5e96">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="511_Reporte_Institucion_Financiera" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5973cedc-8fa4-4451-ada3-95a7a86c5e96">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -90,39 +90,39 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Row" x="0" y="0" width="89" height="15" forecolor="#736343" uuid="db36d3c3-c84a-4a01-830f-a786c38d9444"/>
+				<reportElement style="Row" x="0" y="0" width="142" height="15" forecolor="#736343" uuid="db36d3c3-c84a-4a01-830f-a786c38d9444"/>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="89" y="0" width="89" height="15" forecolor="#736343" uuid="05b8fc82-ecaa-42e4-9eae-d5f92f7e29f1"/>
+				<reportElement style="Row" x="142" y="0" width="89" height="15" forecolor="#736343" uuid="05b8fc82-ecaa-42e4-9eae-d5f92f7e29f1"/>
 				<text><![CDATA[FACULTAD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="178" y="0" width="74" height="15" forecolor="#736343" uuid="009c6702-e191-4b49-9fce-345b797bd77e"/>
+				<reportElement style="Row" x="231" y="0" width="74" height="15" forecolor="#736343" uuid="009c6702-e191-4b49-9fce-345b797bd77e"/>
 				<text><![CDATA[TIPO OFERTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="252" y="0" width="89" height="15" forecolor="#736343" uuid="9d3ea6c8-48c0-4985-9c0f-7035d6423bed"/>
+				<reportElement style="Row" x="305" y="0" width="89" height="15" forecolor="#736343" uuid="9d3ea6c8-48c0-4985-9c0f-7035d6423bed"/>
 				<text><![CDATA[TIPO ESTUDIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="341" y="0" width="89" height="15" forecolor="#736343" uuid="31b490b8-7240-4c0a-9c6b-a3a51262b620"/>
+				<reportElement style="Row" x="398" y="0" width="89" height="15" forecolor="#736343" uuid="31b490b8-7240-4c0a-9c6b-a3a51262b620"/>
 				<text><![CDATA[FECHA INICIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="431" y="0" width="89" height="15" forecolor="#736343" uuid="fa5c606b-4f1b-4212-af07-5d8f10c90479"/>
+				<reportElement style="Row" x="488" y="0" width="89" height="15" forecolor="#736343" uuid="fa5c606b-4f1b-4212-af07-5d8f10c90479"/>
 				<text><![CDATA[FECHA CIERRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="520" y="0" width="103" height="15" forecolor="#736343" uuid="e40ffb29-a833-4248-93ed-c89e4d9e8fc7"/>
+				<reportElement style="Row" x="578" y="0" width="139" height="15" forecolor="#736343" uuid="e40ffb29-a833-4248-93ed-c89e4d9e8fc7"/>
 				<text><![CDATA[OBSERVACIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="623" y="0" width="110" height="15" forecolor="#736343" uuid="21707c04-fb34-4db5-84a4-41f59fb03c23"/>
+				<reportElement style="Row" x="720" y="1" width="177" height="15" forecolor="#736343" uuid="21707c04-fb34-4db5-84a4-41f59fb03c23"/>
 				<text><![CDATA[INSTITUCIÓN OFER.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="733" y="0" width="68" height="15" forecolor="#736343" uuid="11f000ce-3efc-4a9c-9121-d23170033f18"/>
+				<reportElement style="Row" x="897" y="0" width="68" height="15" forecolor="#736343" uuid="11f000ce-3efc-4a9c-9121-d23170033f18"/>
 				<text><![CDATA[PAÍS]]></text>
 			</staticText>
 		</band>
@@ -130,41 +130,41 @@
 	<detail>
 		<band height="15" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="75fc750f-50ca-4490-a1a6-fbc34fbbeebb"/>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="965" height="15" uuid="75fc750f-50ca-4490-a1a6-fbc34fbbeebb"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="0" y="0" width="89" height="15" uuid="cf545c70-6136-4c1c-8efb-8e2ecd00e617"/>
+					<reportElement style="Row" x="0" y="0" width="142" height="15" uuid="cf545c70-6136-4c1c-8efb-8e2ecd00e617"/>
 					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="89" y="0" width="89" height="15" uuid="7b9db278-3643-47d2-bfb1-5b74196e62d7"/>
+					<reportElement style="Row" x="142" y="0" width="89" height="15" uuid="7b9db278-3643-47d2-bfb1-5b74196e62d7"/>
 					<textFieldExpression><![CDATA[$F{FACULTAD}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="178" y="0" width="74" height="15" uuid="7bc4fdf5-6ef5-49f7-862c-4374297ddb95"/>
+					<reportElement style="Row" x="231" y="0" width="74" height="15" uuid="7bc4fdf5-6ef5-49f7-862c-4374297ddb95"/>
 					<textFieldExpression><![CDATA[$F{TIPO_OFERTA_BECA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="252" y="0" width="89" height="15" uuid="564e3319-583c-4da7-a868-e0d34224ee68"/>
+					<reportElement style="Row" x="305" y="0" width="89" height="15" uuid="564e3319-583c-4da7-a868-e0d34224ee68"/>
 					<textFieldExpression><![CDATA[$F{TIPO_ESTUDIO}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="340" y="0" width="89" height="15" uuid="43489d7e-68bc-4695-8a8a-476e48195419"/>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement style="Row" x="406" y="0" width="68" height="15" uuid="43489d7e-68bc-4695-8a8a-476e48195419"/>
 					<textFieldExpression><![CDATA[$F{FECHA_INICIO}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="431" y="0" width="89" height="15" uuid="37085809-b566-45ea-92f2-96ad601ead63"/>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement style="Row" x="498" y="0" width="66" height="15" uuid="37085809-b566-45ea-92f2-96ad601ead63"/>
 					<textFieldExpression><![CDATA[$F{FECHA_CIERRE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="520" y="0" width="103" height="15" uuid="291d9afa-97f7-40b1-8cf8-a12c6b18ad5f"/>
+					<reportElement style="Row" x="578" y="0" width="139" height="15" uuid="291d9afa-97f7-40b1-8cf8-a12c6b18ad5f"/>
 					<textFieldExpression><![CDATA[$F{OBSERVACION_O}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="623" y="0" width="110" height="15" uuid="7ab2c888-35a2-4b7a-a7f6-e4645a0e7dbd"/>
+					<reportElement style="Row" x="720" y="0" width="177" height="15" uuid="7ab2c888-35a2-4b7a-a7f6-e4645a0e7dbd"/>
 					<textFieldExpression><![CDATA[$F{NOMBRE_INSTITUCION}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="733" y="0" width="68" height="15" uuid="507a2a24-6e00-4f12-9925-e16668ccd54a"/>
+					<reportElement style="Row" x="897" y="0" width="68" height="15" uuid="507a2a24-6e00-4f12-9925-e16668ccd54a"/>
 					<textFieldExpression><![CDATA[$F{PAIS}]]></textFieldExpression>
 				</textField>
 			</frame>
@@ -183,16 +183,16 @@
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="3fe04fea-0c0e-49a2-a5e3-0337f2f08264"/>
+				<reportElement mode="Opaque" x="-20" y="1" width="1007" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="3fe04fea-0c0e-49a2-a5e3-0337f2f08264"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="ea4dcbbc-0711-4798-b87d-ccdf2ce7b4f9"/>
+					<reportElement style="Column header" x="942" y="1" width="40" height="20" forecolor="#736343" uuid="ea4dcbbc-0711-4798-b87d-ccdf2ce7b4f9"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="4a101044-be15-4425-8448-0e4d2d068dd3"/>
+					<reportElement style="Column header" x="862" y="1" width="80" height="20" forecolor="#736343" uuid="4a101044-be15-4425-8448-0e4d2d068dd3"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>

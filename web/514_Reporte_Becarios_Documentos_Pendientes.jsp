@@ -364,6 +364,7 @@
                     </div>
                     
                     <div class="row">
+                        <fieldset class="custom-border">
                         <h5>Resultados de la busqueda</h5>
                         <div class="col-md-12">
                             <table id="tablaInstituciones" class="table text-center">
@@ -413,6 +414,7 @@
                                 </tbody>
                             </table>
                         </div>
+                                </fieldset>
                     </div>
         </fieldset>
     </div>  

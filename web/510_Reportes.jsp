@@ -92,7 +92,8 @@
 
 
 <body>
-
+     <br> <br> <br> <br>
+    <fieldset class="custom-border">
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Reportes</H3>
         <div class="row">
@@ -108,8 +109,10 @@
             </div>
         </div>
         
-    </div>  
-
+    </div> 
+        </fieldset>
+    <br><br><br><br><br><br>
+    <br>
 
 
 

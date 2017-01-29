@@ -330,12 +330,7 @@
                                      <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
                                
                                 </form>
-                             <br>       
-                            <label>Enviar Por Correo</label>
-                            <button type="submit" class="btn btn-success form-control">
-                                <span class="glyphicon glyphicon-file"></span> 
-                                E-mail
-                            </button>
+                             <br>  
                         </div>
                         <div class="col-md-6">
                             <label>Hoja de Cálculo</label>
