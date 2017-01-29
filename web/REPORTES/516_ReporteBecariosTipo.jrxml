@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="516_ReporteBecariosTipo" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="99e8dd0b-3a17-410b-96ca-0715ecf1ca6d">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="40"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -79,11 +79,11 @@
 				<text><![CDATA[REPORTE DE BECARIOS POR TIPO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Title" x="251" y="41" width="492" height="62" uuid="6e23eba7-4e94-4e96-b284-4936c4768798"/>
+				<reportElement style="Title" x="238" y="31" width="527" height="62" uuid="6e23eba7-4e94-4e96-b284-4936c4768798"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS]]></text>
+				<text><![CDATA[CONSEJO DE BECAS Y DE INVESTIGACIONES CIENTÍFICAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="242" y="1" width="509" height="62" uuid="b716b923-4e21-4b28-a34c-252ea23969da"/>

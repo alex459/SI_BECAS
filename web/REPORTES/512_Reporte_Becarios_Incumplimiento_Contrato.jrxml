@@ -81,11 +81,11 @@ AND E.ID_PROGRESO=PR.ID_PROGRESO AND US.ID_TIPO_USUARIO= 2 AND E.ESTADO_EXPEDIEN
 				<text><![CDATA[REPORTE DE BECARIOS CON INCUMPLIMIENTO DE CONTRATO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Title" x="250" y="50" width="492" height="62" uuid="c7371e0b-3979-4ca7-a7bc-cbfd030e7d05"/>
+				<reportElement style="Title" x="237" y="40" width="524" height="62" uuid="c7371e0b-3979-4ca7-a7bc-cbfd030e7d05"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS]]></text>
+				<text><![CDATA[CONSEJO DE BECAS Y DE INVESTIGACIONES CIENTÍFICAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="243" y="10" width="509" height="62" uuid="a28aff5b-909c-4c8a-8da7-886c0d051a48"/>

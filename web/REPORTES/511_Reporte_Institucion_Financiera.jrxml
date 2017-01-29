@@ -63,11 +63,11 @@
 				<text><![CDATA[REPORTE DE BECARIOS POR INSTITUCIÓN FINANCIERA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Title" x="245" y="50" width="492" height="62" uuid="40c94469-7c8d-4819-bbd7-9d3fa5ef409f"/>
+				<reportElement style="Title" x="233" y="39" width="526" height="62" uuid="40c94469-7c8d-4819-bbd7-9d3fa5ef409f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS]]></text>
+				<text><![CDATA[CONSEJO DE BECAS Y DE INVESTIGACIONES CIENTÍFICAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="244" y="10" width="509" height="62" uuid="56ce6ec5-facf-4aa8-92c1-a0555640fe56"/>
