@@ -96,8 +96,23 @@
                                     <div class="col-md-4 text-right">
                                         <label for="textinput">Nombre del becario : </label>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input id="textinput" name="NOM_BECARIO" type="text" placeholder="ingrese el nombre del becario" class="form-control input-md">
+                                    <div class="col-md-4">
+                                        <input id="textinput" name="NOM_BECARIO1" type="text" placeholder="Primer nombre" class="form-control input-md">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input id="textinput" name="NOM_BECARIO2" type="text" placeholder="Segundo nombre" class="form-control input-md">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4 text-right">
+                                        
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input id="textinput" name="APELL_BECARIO1" type="text" placeholder="Primer apellido" class="form-control input-md">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input id="textinput" name="APELL_BECARIO2" type="text" placeholder="Segundo apellido" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
@@ -145,7 +160,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="TIPO_BECA" class="form-control">                            
-                                            <option value=0>Seleccone tipo de beca</option>
+                                            <option value="">Seleccione tipo de beca</option>
+                                            <option value="INTERNA">INTERNA</option>
+                                            <option value="EXTERNA">EXTERNA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -159,41 +176,42 @@
                             response.setContentType("text/html;charset=UTF-8");
                             request.setCharacterEncoding("UTF-8");
                             String carnet;
-                            String nombre;
+                            String nombre1;
+                            String nombre2;
+                            String apellido1;
+                            String apellido2;
                             Integer id_facultad;
                             Integer id_univ_estudio;
-                            Integer id_tipo_beca;
+                            String tipo_beca;
                             ConexionBD conexionbd = null;
                             ResultSet rs = null;
 
                             try {
                                 carnet = request.getParameter("ID_USUARIO");
-                                nombre = request.getParameter("NOM_BECARIO");
+                                nombre1 = request.getParameter("NOM_BECARIO1");
+                                nombre2 = request.getParameter("NOM_BECARIO2");
+                                apellido1 = request.getParameter("APELL_BECARIO1");
+                                apellido2 = request.getParameter("APELL_BECARIO2");
                                 id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
                                 id_univ_estudio = Integer.parseInt(request.getParameter("UNIV_ESTUDIO"));
-                                id_tipo_beca = Integer.parseInt(request.getParameter("TIPO_BECA"));
+                                tipo_beca = request.getParameter("TIPO_BECA");
 
                                 //formando la consulta
                                 String consultaSql;
 
                                 consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, F.FACULTAD, SC.NOMBRE_INSTITUCION, SC.TIPO_OFERTA_BECA, P.ESTADO_BECARIO"+
                                         " FROM FACULTAD F INNER JOIN DETALLE_USUARIO DU ON F.ID_FACULTAD = DU.ID_FACULTAD INNER JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO"+
-                                        " JOIN (SELECT I.NOMBRE_INSTITUCION, OB.TIPO_OFERTA_BECA, SB.ID_USUARIO, SB.ID_EXPEDIENTE"+
+                                        " JOIN (SELECT I.NOMBRE_INSTITUCION, OB.TIPO_OFERTA_BECA, SB.ID_USUARIO, SB.ID_EXPEDIENTE, I.ID_INSTITUCION"+
                                                 " FROM INSTITUCION I INNER JOIN OFERTA_BECA OB ON I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO NATURAL JOIN SOLICITUD_DE_BECA SB) SC ON U.ID_USUARIO = SC.ID_USUARIO"+
-                                        " INNER JOIN EXPEDIENTE E ON SC.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO";
+                                        " INNER JOIN EXPEDIENTE E ON SC.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND U.NOMBRE_USUARIO LIKE '%" + carnet + "%' AND SC.TIPO_OFERTA_BECA LIKE '%" + tipo_beca + "%'";
 
-                                //if (id_tipo_de_usuario == 0) {
+                                if (id_facultad != 0) {
+                                    consultaSql = consultaSql.concat(" AND F.ID_FACULTAD = " + id_facultad + " ");
+                                } 
+                                if (id_univ_estudio != 0) {
+                                    consultaSql = consultaSql.concat(" AND SC.ID_INSTITUCION = " + id_univ_estudio+" ");
+                                }
 
-                                //} else {
-                                  //  consultaSql = consultaSql.concat(" AND U.ID_TIPO_USUARIO = " + id_tipo_de_usuario + " ");
-                                //}
-                                //if (id_facultad == 0) {
-
-                                //} else {
-                                  //  consultaSql = consultaSql.concat(" AND DU.ID_FACULTAD = " + id_facultad);
-                                //}
-
-                                //out.write(consultaSql);
                                 //realizando la consulta
                                 conexionbd = new ConexionBD();
                                 rs = conexionbd.consultaSql(consultaSql);
@@ -220,7 +238,6 @@
                                     try {
                                         Integer i = 0;
                                         while (rs.next()) {
-                                            i = i + 1;
                                             out.write("<tr>");
                                             out.write("<td>" + rs.getString(1) + "</td>");
                                             out.write("<td>" + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5)+"</td>");
@@ -230,12 +247,12 @@
                                             out.write("<td>" + rs.getString(9) + "</td>");
                                             out.write("<td>");
                                             out.write("<center>");
-                                            out.write("<form style='display:inline;' action='202_1_modificar_estado_del_becario.jsp' method='post'>");
-                                            out.write("<input type='submit' class='btn btn-success' name='submit' value='Mostrar usuario'>");
-                                            out.write("</form>");
+                                            out.write("<form style='display:inline;' action='' method='post'><input type='hidden'></form> ");
+                                            out.write("<form style='display:inline;' action='202_1_modificar_estado_del_becario.jsp' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(1) + "'><input type='submit' class='btn btn-success' name='submit' value='Modificar'></form> ");
                                             out.write("</center>");
                                             out.write("</td>");
                                             out.write("</tr>");
+                                            i = i + 1;
                                         }
                                     } catch (Exception ex) {
                                         System.out.println("error: " + ex);
