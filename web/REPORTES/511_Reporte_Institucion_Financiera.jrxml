@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="511_Reporte_Institucion_Financiera" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5973cedc-8fa4-4451-ada3-95a7a86c5e96">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="19"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -47,22 +47,8 @@
 	</background>
 	<title>
 		<band height="136" splitType="Stretch">
-			<staticText>
-				<reportElement style="Title" x="167" y="39" width="492" height="62" uuid="bbbf1d8f-0451-4849-9afe-4c7ea658cdee"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="18" pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS DE LA UNIVERSIDAD DE EL SALVADOR]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="174" y="102" width="514" height="22" forecolor="#000000" uuid="c06194ad-eaa7-4391-b874-46749371e3cf"/>
-				<textElement>
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[REPORTE DE BECARIOS POR INSTITUCION FINANCIERA]]></text>
-			</staticText>
 			<image>
-				<reportElement x="733" y="-1" width="87" height="95" uuid="f7ad6aab-c849-4e64-a77b-47d02eded8a1"/>
+				<reportElement x="899" y="-1" width="87" height="95" uuid="f7ad6aab-c849-4e64-a77b-47d02eded8a1"/>
 				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<image>
@@ -70,7 +56,21 @@
 				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="164" y="-6" width="509" height="62" uuid="1fc35240-693c-467b-ae75-9e4dca24a9d5"/>
+				<reportElement style="SubTitle" x="253" y="90" width="479" height="22" forecolor="#000000" uuid="f342494d-6274-40c2-9814-3cc83a8ad598"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE BECARIOS POR INSTITUCIÓN FINANCIERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="245" y="50" width="492" height="62" uuid="40c94469-7c8d-4819-bbd7-9d3fa5ef409f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="244" y="10" width="509" height="62" uuid="56ce6ec5-facf-4aa8-92c1-a0555640fe56"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>

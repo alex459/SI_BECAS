@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ceb89b45-73ff-44a0-af67-ef1326fc7d33">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ceb89b45-73ff-44a0-af67-ef1326fc7d33">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -30,31 +30,31 @@
 				<reportElement x="1" y="2" width="87" height="95" uuid="04062630-4bd2-4229-bcd0-5d9238bb54f1"/>
 				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
+			<image>
+				<reportElement x="898" y="2" width="87" height="95" uuid="0c0d0d09-7456-4e1b-bde1-5a86747ff87f"/>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement style="Title" x="172" y="0" width="461" height="62" uuid="cad46086-59d1-47de-8021-cd8af0a4ade1"/>
+				<reportElement style="SubTitle" x="264" y="90" width="461" height="22" forecolor="#000000" uuid="21021b96-6225-4767-8a41-04855da66c01"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE INSITUCIONES CON BECARIOS ACTIVOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="250" y="50" width="492" height="62" uuid="a997cbda-4676-406d-9d24-3a306229e31b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="234" y="10" width="509" height="62" uuid="d0227499-1005-4407-a575-70e4a32b96ef"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="172" y="51" width="474" height="43" forecolor="#000000" uuid="905b6cb7-7817-4317-b26e-dfe5218c7d31"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS DE LA UNIVERSIDAD DE EL SALVADOR]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="164" y="104" width="494" height="22" uuid="52a48295-ddf0-4961-8026-55179ea33075"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="18"/>
-				</textElement>
-				<text><![CDATA[REPORTES DE INSTITUCIONES CON BECARIOS ACTIVOS]]></text>
-			</staticText>
-			<image>
-				<reportElement x="713" y="2" width="87" height="95" uuid="0c0d0d09-7456-4e1b-bde1-5a86747ff87f"/>
-				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -69,19 +69,19 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="0" y="0" width="200" height="15" forecolor="#736343" uuid="f243cc8b-c51a-4df4-8ede-fd260b57a1fd"/>
+				<reportElement style="Column header" x="0" y="0" width="231" height="15" forecolor="#736343" uuid="f243cc8b-c51a-4df4-8ede-fd260b57a1fd"/>
 				<text><![CDATA[INSTITUCIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="200" y="0" width="200" height="15" forecolor="#736343" uuid="369b7b67-af46-45e9-8d00-e6351c5cc506"/>
+				<reportElement style="Column header" x="231" y="0" width="200" height="15" forecolor="#736343" uuid="369b7b67-af46-45e9-8d00-e6351c5cc506"/>
 				<text><![CDATA[PAÍS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="400" y="0" width="200" height="15" forecolor="#736343" uuid="79613a76-fda0-46ce-91c8-43a69e8b6036"/>
+				<reportElement style="Column header" x="433" y="0" width="316" height="15" forecolor="#736343" uuid="79613a76-fda0-46ce-91c8-43a69e8b6036"/>
 				<text><![CDATA[PÁGINA WEB]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="600" y="0" width="200" height="15" forecolor="#736343" uuid="e6e75490-4b1a-4984-a6c6-8334f54325f2"/>
+				<reportElement style="Column header" x="749" y="0" width="200" height="15" forecolor="#736343" uuid="e6e75490-4b1a-4984-a6c6-8334f54325f2"/>
 				<text><![CDATA[CANTIDAD DE BECARIOS]]></text>
 			</staticText>
 		</band>
@@ -89,30 +89,30 @@
 	<detail>
 		<band height="15" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="96327a81-fed5-4062-9145-72a1800a551d"/>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="965" height="15" uuid="96327a81-fed5-4062-9145-72a1800a551d"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="0" y="0" width="200" height="15" uuid="65bd85df-41fb-40f3-ad70-d81b8a54503c"/>
+					<reportElement style="Detail" x="0" y="0" width="231" height="15" uuid="65bd85df-41fb-40f3-ad70-d81b8a54503c"/>
 					<textElement>
 						<font size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{INSTITUCIÓN}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="200" y="0" width="200" height="15" uuid="d23d90c3-8381-44d6-a336-36f8b887a9c5"/>
+					<reportElement style="Detail" x="247" y="0" width="176" height="15" uuid="d23d90c3-8381-44d6-a336-36f8b887a9c5"/>
 					<textElement>
 						<font size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{PAÍS}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="400" y="0" width="200" height="15" uuid="aa70fda7-0cd4-471b-8090-43e2692a2582"/>
+					<reportElement style="Detail" x="433" y="0" width="316" height="15" uuid="aa70fda7-0cd4-471b-8090-43e2692a2582"/>
 					<textElement>
 						<font size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{PÁGINA WEB}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="600" y="0" width="200" height="15" uuid="e154e948-fa3a-466a-bdd6-756cfe24dce7"/>
+					<reportElement style="Detail" x="799" y="0" width="134" height="15" uuid="e154e948-fa3a-466a-bdd6-756cfe24dce7"/>
 					<textElement>
 						<font size="10"/>
 					</textElement>
@@ -134,20 +134,20 @@
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="18566320-efb5-4a42-aac8-42548927c081"/>
+				<reportElement mode="Opaque" x="-21" y="1" width="1009" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="18566320-efb5-4a42-aac8-42548927c081"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="2b0e08b3-f0e2-4f9e-80fb-542354df9074"/>
+					<reportElement style="Column header" x="946" y="1" width="40" height="20" forecolor="#736343" uuid="2b0e08b3-f0e2-4f9e-80fb-542354df9074"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="1ded9480-6618-445e-8160-dc4993c92776"/>
+					<reportElement style="Column header" x="866" y="1" width="80" height="20" forecolor="#736343" uuid="1ded9480-6618-445e-8160-dc4993c92776"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="6839bd08-3a56-4e32-b582-cf2264e037cb"/>

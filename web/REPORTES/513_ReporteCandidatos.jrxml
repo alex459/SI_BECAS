@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="513_ReporteCandidatos" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8f31927-d4f1-4725-b7b9-440338c699ae">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="24"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -51,14 +51,14 @@ AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='AB
 	<title>
 		<band height="136" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="165" y="39" width="492" height="62" uuid="85e5b11c-428a-4d7b-955b-a592bbf5c63c"/>
+				<reportElement style="Title" x="232" y="44" width="492" height="62" uuid="85e5b11c-428a-4d7b-955b-a592bbf5c63c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS DE LA UNIVERSIDAD DE EL SALVADOR]]></text>
+				<text><![CDATA[CONSEJO DE BECAS E INVESTIGACIÓNES CIENTIFICAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="255" y="98" width="368" height="22" forecolor="#000000" uuid="52b01de8-b4d2-4219-a955-1b31bf4427b5"/>
+				<reportElement style="SubTitle" x="322" y="84" width="368" height="22" forecolor="#000000" uuid="52b01de8-b4d2-4219-a955-1b31bf4427b5"/>
 				<textElement>
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
@@ -73,7 +73,7 @@ AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='AB
 				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="150" y="-12" width="509" height="62" uuid="b581d939-6aa5-4fbf-87a3-e55981ebd4a8"/>
+				<reportElement style="Title" x="223" y="4" width="509" height="62" uuid="b581d939-6aa5-4fbf-87a3-e55981ebd4a8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" pdfFontName="Times-Roman"/>
 				</textElement>
@@ -125,7 +125,7 @@ AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='AB
 	<detail>
 		<band height="15" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="0" y="0" width="960" height="15" uuid="64593157-e121-4ed9-ab47-0c98d707d620"/>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="965" height="15" uuid="64593157-e121-4ed9-ab47-0c98d707d620"/>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Row" x="0" y="0" width="214" height="15" uuid="da50e639-92c3-4b9c-a802-16b5e1360398"/>
 					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
@@ -170,16 +170,16 @@ AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND EX.ESTADO_EXPEDIENTE='AB
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="40ef1d7a-c66f-4478-ab30-1feb0d7ff64d"/>
+				<reportElement mode="Opaque" x="-21" y="1" width="1009" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="40ef1d7a-c66f-4478-ab30-1feb0d7ff64d"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="4b9c7c03-799d-4e9a-8864-5857df9990c0"/>
+					<reportElement style="Column header" x="944" y="1" width="40" height="20" forecolor="#736343" uuid="4b9c7c03-799d-4e9a-8864-5857df9990c0"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="237e4549-17e0-4d5d-82a6-d8ef3db41434"/>
+					<reportElement style="Column header" x="864" y="1" width="80" height="20" forecolor="#736343" uuid="237e4549-17e0-4d5d-82a6-d8ef3db41434"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
