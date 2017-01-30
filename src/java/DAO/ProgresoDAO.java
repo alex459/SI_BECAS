@@ -115,4 +115,25 @@ public class ProgresoDAO extends ConexionBD{
         }
         return exito;
     }
+    
+    public Integer consultarId(String progresoName) {
+        Progreso temp = new Progreso();
+        Integer idProgreso = 0;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT ID_PROGRESO FROM PROGRESO where NOMBRE_PROGRESO = '" +progresoName+"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                idProgreso = rs.getInt("ID_PROGRESO");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return idProgreso;
+    }
 }

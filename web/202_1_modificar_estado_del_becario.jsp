@@ -26,7 +26,7 @@
             " FROM FACULTAD F INNER JOIN DETALLE_USUARIO DU ON F.ID_FACULTAD = DU.ID_FACULTAD INNER JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO"+
             " JOIN (SELECT I.NOMBRE_INSTITUCION, OB.TIPO_OFERTA_BECA, SB.ID_USUARIO, SB.ID_EXPEDIENTE, I.ID_INSTITUCION"+
                     " FROM INSTITUCION I INNER JOIN OFERTA_BECA OB ON I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO NATURAL JOIN SOLICITUD_DE_BECA SB) SC ON U.ID_USUARIO = SC.ID_USUARIO"+
-            " INNER JOIN EXPEDIENTE E ON SC.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE U.NOMBRE_USUARIO LIKE '%" + id_usuario + "%'";
+            " INNER JOIN EXPEDIENTE E ON SC.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE ESTADO_EXPEDIENTE = 'ABIERTO' AND U.NOMBRE_USUARIO LIKE '%" + id_usuario + "%'";
 
         ResultSet rs = null;
         ConexionBD conexionBD = new ConexionBD();
@@ -114,7 +114,7 @@
             </div><!-- TITULO DE LA PANTALLA -->  
 
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <form class="form-horizontal" name= "ActualizarEstadoBecario" action="" method="post" novalidate>
+                <form class="form-horizontal" name= "ActualizarEstadoBecario" action="ModificarEstadoDeBecarioServlet" method="post" novalidate>
                     <fieldset class="custom-border">
                         <legend class="custom-border">Modificar estado de becario</legend>
                         <div class="col-md-6 col-md-offset-3">
@@ -161,7 +161,7 @@
                                         <label for="textinput">Tipo de beca : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <label><%=idExpediente +" "+tipo_beca+" "+idProgreso%></label>
+                                        <label><%=tipo_beca%></label>
                                     </div>
                                 </div>
                                 <br>
@@ -170,33 +170,31 @@
                                         <label for="textinput">Estado del becario : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <select id="selectbasic" name="ESTADO_BECARIO" class="form-control">   
-                                            <option value=""></option>
-                                            <option value="ACTIVO">ACTIVO</option>
-                                            <option value="CONTRACTUAL">CONTRACTUAL</option>
-                                            <option value="INACTIVO">INACTIVO</option>
-                                            <option value="LIBERADO">LIBERADO</option>
-                                        </select>
+                                        <!--<select name="repeatSelect" id="repeatSelect" ng-model="data.model">
+                                        <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+                                      </select>-->
+                                    <select data-ng-model="option1" data-ng-options="option for option in options1" data-ng-change="getOptions2()" style="width: -moz-available;"></select>
+                                    <!-- <select data-ng-model="option2" data-ng-options="option for option in options2"></select> -->
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label>Comentario :</label>
+                                        <label for="textinput">Progreso : </label>
                                     </div>
-                                    <div class="col-md-7">
-                                        <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                    </div>                                                            
-                                    <div class="col-md-1"></div>
+                                    <div class="col-md-6">
+                                        <select name="PROGRESO_BECARIO" data-ng-model="option2" data-ng-options="option for option in options2" style="width: -moz-available;"></select>
+                                    </div>
                                 </div>
                                 <br>
                                 <div class="row text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Consultar">
+                                    <input type="hidden" name="idExpediente" value="<%=idExpediente%>">
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Modificar">
                                 </div>
                             </fieldset>
                         </div>
                     </fieldset>
-                </form>
+                </form>              
             </div><!-- CONTENIDO DE LA PANTALLA -->
         </div>
 
@@ -221,11 +219,11 @@
                                     Tél: +(503) 2511- 2016
                             </p>
                     </div>
-            </div>
-
+            </div>      
+        
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/scripts.js"></script>
         <script src="js/angular.min.js"></script>
+        <script src="js/actualizarEstadoBecario.js"></script>
     </body>
 </html>

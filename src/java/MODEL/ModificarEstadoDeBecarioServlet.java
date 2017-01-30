@@ -5,15 +5,13 @@
  */
 package MODEL;
 
-import DAO.DetalleUsuarioDAO;
-import DAO.UsuarioDAO;
+import DAO.ExpedienteDAO;
 import DAO.ProgresoDAO;
-import POJO.DetalleUsuario;
-import POJO.Progreso;
-import POJO.Usuario;
+import POJO.Expediente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Manuel Miranda
  */
+@WebServlet(name = "ModificarEstadoDeBecarioServlet", urlPatterns = {"/ModificarEstadoDeBecarioServlet"})
 public class ModificarEstadoDeBecarioServlet extends HttpServlet {
 
     /**
@@ -36,13 +35,28 @@ public class ModificarEstadoDeBecarioServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+        String progresoString = request.getParameter("PROGRESO_BECARIO");
+        String progresoName =  progresoString.substring(7, progresoString.length());
+        Integer idExpediente = Integer.parseInt(request.getParameter("idExpediente"));
         
-        Usuario usuario = new Usuario();
-        DetalleUsuario detalleUsuario = new DetalleUsuario();
-        Progreso progreso = new Progreso();
-        ProgresoDAO progresoDao = new ProgresoDAO();
-        DetalleUsuarioDAO detalleUsuarioDao = new DetalleUsuarioDAO();
+        Expediente expediente = new Expediente();
+        ExpedienteDAO expedienteDAO = new ExpedienteDAO();
+        ProgresoDAO progresoDAO = new ProgresoDAO();
+        Integer idProgreso = 0;
+        Boolean actualizarProgreso = false;
+        
+        idProgreso = progresoDAO.consultarId(progresoName);
+        expediente = expedienteDAO.consultarPorId(idExpediente);
+        
+        expediente.setIdProgreso(idProgreso);
+        actualizarProgreso = expedienteDAO.actualizarIdProgreso(expediente);
+        
+        if(actualizarProgreso){
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ha actualizado satisfactoriamente el estado del becario.");
+        }
+        else{
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el estado del becario.");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

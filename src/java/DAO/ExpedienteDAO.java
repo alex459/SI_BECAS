@@ -168,5 +168,24 @@ public class ExpedienteDAO extends ConexionBD {
         }
         return exito;
     }
+        
+    public boolean actualizarIdProgreso(Expediente expediente){
+        boolean exito = false;
+
+        this.abrirConexion(); 
+        try {
+            stmt = conn.createStatement();
+
+            String sql = "UPDATE EXPEDIENTE SET ID_PROGRESO = "+ expediente.getIdProgreso()+" WHERE ID_EXPEDIENTE =" +expediente.getIdExpediente();
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
     
 }
