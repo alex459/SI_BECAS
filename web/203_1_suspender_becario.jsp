@@ -19,14 +19,14 @@
         return;
      }
      
-    String id_usuario = request.getParameter("ID_USUARIO");
+    String idUsuario = request.getParameter("ID_USUARIO");
     String consultaSql;
 
     consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, F.FACULTAD, SC.NOMBRE_INSTITUCION, SC.TIPO_OFERTA_BECA, P.ESTADO_BECARIO, SC.ID_EXPEDIENTE, P.ID_PROGRESO"+
             " FROM FACULTAD F INNER JOIN DETALLE_USUARIO DU ON F.ID_FACULTAD = DU.ID_FACULTAD INNER JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO"+
             " JOIN (SELECT I.NOMBRE_INSTITUCION, OB.TIPO_OFERTA_BECA, SB.ID_USUARIO, SB.ID_EXPEDIENTE, I.ID_INSTITUCION"+
                     " FROM INSTITUCION I INNER JOIN OFERTA_BECA OB ON I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO NATURAL JOIN SOLICITUD_DE_BECA SB) SC ON U.ID_USUARIO = SC.ID_USUARIO"+
-            " INNER JOIN EXPEDIENTE E ON SC.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE ESTADO_EXPEDIENTE = 'ABIERTO' AND U.NOMBRE_USUARIO LIKE '%" + id_usuario + "%'";
+            " INNER JOIN EXPEDIENTE E ON SC.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE ESTADO_EXPEDIENTE = 'ABIERTO' AND U.NOMBRE_USUARIO LIKE '%" + idUsuario + "%'";
 
     ResultSet rs = null;
     ConexionBD conexionBD = new ConexionBD();
@@ -113,7 +113,7 @@
             </div><!-- TITULO DE LA PANTALLA -->  
 
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                <form class="form-horizontal" action="" method="post">
+                <form class="form-horizontal" action="SuspenderBecarioServlet" method="post">
                     <fieldset class="custom-border">
                         <legend class="custom-border">Suspender becario</legend>
                         <div class="col-md-6 col-md-offset-3">
@@ -124,7 +124,7 @@
                                         <label for="textinput">Id usuario : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <label><%=id_usuario%></label>
+                                        <label><%=idUsuario%></label>
                                     </div>
                                 </div>
                                 <br>
@@ -169,25 +169,22 @@
                                         <label for="textinput">Estado del becario : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <!--<select name="repeatSelect" id="repeatSelect" ng-model="data.model">
-                                        <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-                                      </select>-->
-                                    <select data-ng-model="option1" data-ng-options="option for option in options1" data-ng-change="getOptions2()" style="width: -moz-available;"></select>
-                                    <!-- <select data-ng-model="option2" data-ng-options="option for option in options2"></select> -->
+                                        <label><%=estado_becario%></label>
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Progreso : </label>
+                                        <label for="textinput">Suspender becario : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <select name="PROGRESO_BECARIO" data-ng-model="option2" data-ng-options="option for option in options2" style="width: -moz-available;"></select>
+                                        <input type="checkbox" name="SUSPENDER_BECARIO" value="True">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row text-center">
                                     <input type="hidden" name="idExpediente" value="<%=idExpediente%>">
+                                    <input type="hidden" name="idUsuario" value="<%=idUsuario%>">
                                     <input type="submit" class="btn btn-primary" name="submit" value="Modificar">
                                 </div>
                             </fieldset>
