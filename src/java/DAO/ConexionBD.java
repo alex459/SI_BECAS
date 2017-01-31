@@ -1,10 +1,13 @@
 package DAO;
 
 //import POJO.Usuario;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class ConexionBD {
 
@@ -18,11 +21,51 @@ public class ConexionBD {
     public ResultSet rs = null;
 
     public ConexionBD() {
-        this.enlace = "jdbc:mariadb://localhost:3306/bd_becas";
-        this.controlador = "org.mariadb.jdbc.Driver";
-        this.error = " ";
-        this.usuario = "root";
-        this.contrasenia = "";
+        Properties prop = new Properties();
+        InputStream input = null;
+        String driver = new String();
+        String ip_server = new String();
+        String port_server = new String();
+        String database_name = new String();
+        String controller = new String();
+        String database_user = new String();
+        String database_password = new String();
+
+        try {
+            String ubicacion = ConexionBD.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            ubicacion = ubicacion.replace("ConexionBD.class", "config.properties");
+            //el archivo de configuracion debe llamarse config.properties
+            input = new FileInputStream(ubicacion.toString());
+            System.out.print(ubicacion.toString());
+            // cargando archivo de configuracion.
+            prop.load(input);
+
+            // obteniendo propiedades.
+            driver = prop.getProperty("driver");
+            ip_server = prop.getProperty("ip_server");
+            port_server = prop.getProperty("port_server");
+            database_name = prop.getProperty("database_name");
+            controller = prop.getProperty("controller");
+            database_user = prop.getProperty("database_user");
+            database_password = prop.getProperty("database_password");
+                        
+            //ejemplo this.enlace = "jdbc:mariadb://localhost:3306/bd_becas";
+            this.enlace = driver.toString() + ip_server.toString() + port_server.toString() + database_name.toString();
+            //ejemplo this.controlador = "org.mariadb.jdbc.Driver";
+            this.controlador = controller.toString();
+            this.error = " ";
+            //ejemplo this.usuario = "root";
+            this.usuario = database_user.toString();
+            //ejemplo this.contrasenia = ""
+            this.contrasenia = database_password.toString();  
+            
+            System.out.println("Enlace:"+enlace.toString()+" controlador:"+controller.toString()+" usuario:"+database_user.toString()+" clave:"+database_password.toString());
+            
+        } catch (Exception ex) {
+            
+            System.out.println("Error al leer archivo de configuracion. " + ex);
+        }
+        
     }
 
     public void abrirConexion() {
@@ -31,45 +74,48 @@ public class ConexionBD {
             conn = DriverManager.getConnection(enlace, usuario, contrasenia);
         } catch (Exception e) {
             System.out.println("error al abrir conexion: " + e);
-        }        
+        }
     }
-        
+
     public void cerrarConexion() {
         try {
-            if(rs!=null)
+            if (rs != null) {
                 rs.close();
-            if(stmt!=null)
+            }
+            if (stmt != null) {
                 stmt.close();
-            if(conn!=null)
+            }
+            if (conn != null) {
                 conn.close();
+            }
         } catch (Exception e) {
             System.out.println("error al cerrar conexion: " + e);
         }
 
-    }  
-    
+    }
+
     //retorna un resulset de la consulta sql
-    public ResultSet consultaSql(String consulta){
+    public ResultSet consultaSql(String consulta) {
         ResultSet rs = null;
         this.abrirConexion();
         try {
-            stmt = conn.createStatement();                                    
+            stmt = conn.createStatement();
             rs = stmt.executeQuery(consulta);
-            this.cerrarConexion();            
+            this.cerrarConexion();
 
         } catch (Exception e) {
             System.out.println("Error " + e);
         }
 
-        return rs;      
+        return rs;
     }
-    
+
     //retorna un resulset de la consulta sql
-    public boolean ejecutarSql(String sentenciaSql){
+    public boolean ejecutarSql(String sentenciaSql) {
         boolean respuesta = false;
         this.abrirConexion();
         try {
-            stmt = conn.createStatement();            
+            stmt = conn.createStatement();
             stmt.execute(sentenciaSql);
             respuesta = true;
             this.cerrarConexion();
@@ -78,8 +124,7 @@ public class ConexionBD {
         } finally {
             this.cerrarConexion();
         }
-        return respuesta;    
+        return respuesta;
     }
-    
-    
+
 }
