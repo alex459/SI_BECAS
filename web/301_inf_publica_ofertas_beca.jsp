@@ -205,7 +205,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="col-md-6 text-right">
-                                    <label for="institucionEstudio">Institucion de estudio :</label>                                
+                                    <label for="institucionEstudio">Institucion de estudio :</label><br>                               
                                 </div>
                                 <div class="col-md-6">                                
                                     <select id="institucionEstudio" name="institucionEstudio" class="form-control">
@@ -218,7 +218,7 @@
                                         <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
                                         <% }
                                         %>    
-                                    </select>
+                                    </select><br>
                                 </div>
                             </div>
                         </div>
