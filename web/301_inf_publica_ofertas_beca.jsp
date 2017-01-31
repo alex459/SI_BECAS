@@ -161,7 +161,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="col-md-6 text-right">
-                                        <label for="institucionOfertante">Institucion ofertante : </label>                                
+                                        <label for="institucionOfertante">Institución ofertante : </label>                                
                                     </div>
                                     <div class="col-md-6">
                                         <select id="institucionOferente" name="institucionOferente" class="form-control">
@@ -205,7 +205,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="col-md-6 text-right">
-                                    <label for="institucionEstudio">Institucion de estudio :</label><br>                               
+                                    <label for="institucionEstudio">Institución de estudio :</label><br>                               
                                 </div>
                                 <div class="col-md-6">                                
                                     <select id="institucionEstudio" name="institucionEstudio" class="form-control">

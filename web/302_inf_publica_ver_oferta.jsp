@@ -331,7 +331,7 @@
                                     <button type="submit" name='submit' class="btn btn-success">
                                             <span class="glyphicon glyphicon-check"></span> 
                                             Aplicar beca
-                                        </button>
+                                    </button><br>
                                     </form></br>
                                         <form action="DocumentoOferta" method="post"  target="_blank"> 
                                                     <input type="hidden" name="id" value="<%=idDoc%>">
