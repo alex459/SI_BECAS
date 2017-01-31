@@ -79,7 +79,7 @@
 
 
     <div class="container-fluid">
-        <H3 class="text-center" style="color:#E42217;">Buscar Acuerdo</H3>
+        <H3 class="text-center" style="color:#E42217;">Buscar AcuerdoS Emetidos</H3>
         <fieldset class="custom-border">
                 <legend class="custom-border">Acuerdos</legend>
                 
@@ -156,14 +156,20 @@
                                             </div>
                                             <br>
                                             <div class="row">
-                                                <div class="col-md-6">  
-                                                    <label for="textinput">Fecha Resolución: </label>
-                                                    <div class="input-group date">
-                                                       <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
-                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                    </div>
-                                                
-                                                </div>
+                                                <div class="col-md-6 ">
+                                       <div class="col-md-6">          
+                                            <label for="fIngresoIni">Fecha Resolución (inicio) :</label> 
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">      
+                                            <label for="fIngresoFin">Fecha de Resolución  (fin) :</label>
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                                 <div class="col-md-6">
                                                     <label for="textinput">FACULTAD: </label>
                                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">
@@ -265,7 +271,7 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Codigo de Empleado</th>
+                                        <th>Código de Empleado</th>
                                         <th>Solicitante</th>
                                         <th>Unidad</th>
                                         <th>Fecha de Resolución</th>
@@ -303,7 +309,7 @@
                                                         if(idProgreso == 8){
                                                             if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
+                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                             }else{
@@ -319,7 +325,7 @@
                                                         if(idProgreso == 8){
                                                             if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
+                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                             }else{
@@ -334,7 +340,7 @@
                                                 case 142:
                                                     if(idProgreso == 9 || idProgreso ==22){                                                            
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
+                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
                                                         }else{
@@ -347,7 +353,7 @@
                                                     if(idProgreso == 16){
                                                             
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Editar'></form> ");
+                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
                                                         }else{

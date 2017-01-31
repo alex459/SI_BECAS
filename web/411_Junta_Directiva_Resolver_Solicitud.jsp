@@ -43,10 +43,12 @@
     response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
     request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
     Integer idFacultad = 0;
+    String nombreFacultad="";
     try {
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
         idFacultad = DetUsDao.obtenerFacultad(user);
+        nombreFacultad = DetUsDao.obtenerNombreFacultad(user);
     } catch (Exception e) {
         e.printStackTrace();
     }
@@ -187,7 +189,7 @@
     </div>
     <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
     <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
-    <p class="text-right" style="font-weight:bold;">Facultad: <%= idFacultad%></p>
+    <p class="text-right" style="font-weight:bold;">Facultad: <%= nombreFacultad %></p>
 
 
     <%-- todo el menu esta contenido en la siguiente linea
@@ -217,7 +219,7 @@
                                     <tr>
                                         <td>Solicitante: </td>
                                         <td><%=nombres%> </td>
-                                    <td>Codigo de Empleado: </td>
+                                    <td>Código de Empleado: </td>
                                     <td><%=codigo_usuario%> </td>
                                 </tr>
 

@@ -21,10 +21,13 @@
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
     Integer idFacultad = 0;
+    String nombreFacultad="";
     try {
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
         idFacultad = DetUsDao.obtenerFacultad(user);
+        
+        nombreFacultad = DetUsDao.obtenerNombreFacultad(user);
     } catch (Exception e) {
         e.printStackTrace();
     }
@@ -74,7 +77,7 @@
 
     <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
     <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
-    <p class="text-right" style="font-weight:bold;">Facultad: <%= idFacultad%></p>
+    <p class="text-right" style="font-weight:bold;">Facultad: <%= nombreFacultad %></p>
 
     <%-- todo el menu esta contenido en la siguiente linea
      el menu puede ser cambiado en la pagina menu.jsp --%>
@@ -82,7 +85,7 @@
         <body ng-app="solicitudAcuerdosPendientesJuntaDirectivaApp" ng-controller="solicitudAcuerdosPendientesJuntaDirectivaCtrl">
 
             <div class="container-fluid">
-                <H3 class="text-center" style="color:#E42217;">Buscar Acuerdo</H3>
+                <H3 class="text-center" style="color:#E42217;">Buscar Acuerdo Emitidos</H3>
                 <fieldset class="custom-border">
                     <legend class="custom-border">Acuerdos</legend>
 
@@ -135,21 +138,27 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-md-6">   
-                                            <label for="textinput">Codigo de Usuario: </label>  
+                                            <label for="textinput">Código de Usuario: </label>  
                                             <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
                                             <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.CARNET.$error.minlength">Minimo 7 caracteres.</span>
                                             <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
                                             <small id="help5"></small>
                                         </div>
 
-                                        <div class="col-md-6">   
-                                            <label for="textinput">Fecha Resolucion: </label>
+                                         <div class="col-md-6 ">
+                                        <div class="col-md-6">          
+                                            <label for="fIngresoIni">Fecha Solicitud (inicio) :</label> 
                                             <div class="input-group date">
-                                                <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
-
                                         </div>
+                                        <div class="col-md-6">      
+                                            <label for="fIngresoFin">Fecha de solicitud (fin) :</label>
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     </div>
                                     <br>
@@ -306,7 +315,7 @@
                                                         if(idProgreso == 2){
                                                             if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                             }else{
@@ -322,7 +331,7 @@
                                                         if(idProgreso == 5){
                                                             if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                             }else{
@@ -335,10 +344,11 @@
                                                         }
                                                     break;
                                                 case 121:
+                                                    
                                                         if(idProgreso == 5){
                                                             if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                             }else{
@@ -350,10 +360,11 @@
                                                             out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                         }
                                                     break;
+                                                    
                                                 case 136:
                                                     if(idProgreso == 9 || idProgreso ==12){                                                            
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
                                                         }else{
@@ -366,7 +377,7 @@
                                                     if(idProgreso == 9){
                                                             
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
                                                         }else{
@@ -379,7 +390,7 @@
                                                     if(idProgreso == 13){
                                                             if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                             }else{
@@ -387,7 +398,7 @@
                                                             }
                                                         }else if(idProgreso == 12){                                                            
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
                                                         }else{

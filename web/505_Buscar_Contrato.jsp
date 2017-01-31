@@ -146,14 +146,20 @@
                                             </div>
                                             <br>
                                             <div class="row">
-                                                <div class="col-md-6">  
-                                                    <label for="textinput">Fecha de Firma: </label>
-                                                    <div class="input-group date">
-                                                       <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
-                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <div class="col-md-6 ">
+                                       <div class="col-md-6">          
+                                            <label for="fIngresoIni">Fecha de Firma (inicio) :</label> 
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">      
+                                            <label for="fIngresoFin">Fecha de Firma  (fin) :</label>
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
                                                     </div>
-                                                
-                                                </div>
                                                 <div class="col-md-6">
                                                     <label for="textinput">FACULTAD: </label>
                                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">
@@ -287,6 +293,8 @@
                                                     out.write("<form style='display:inline;' action='502_Resolver_Solicitudes_Asesoria_Contrato.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(10) + "' ><input type='hidden' name='ID_EXPEDIENTE' value='" + rs.getString(9) + "' ><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                     //VER DOCUMENTO
                                                     out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(10) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                    
+                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(10) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                 } else {
                                                     out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(10) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                 }
@@ -294,6 +302,8 @@
                                                 // no se puede editar
                                                 //VER DOCUMENTO
                                                 out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                            
+                                                              out.write("<form style='display:inline;' action='414_Consejo_Superior_Universitario_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(10) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                             }                                                                                    
                                         
                                         out.write("</center>");

@@ -35,10 +35,12 @@
 
 <% 
     Integer idFacultad = 0;
+    String nombreFacultad="";
      try{
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
         idFacultad = DetUsDao.obtenerFacultad(user);
+        nombreFacultad = DetUsDao.obtenerNombreFacultad(user);
     } catch (Exception e){
         e.printStackTrace();
     }
@@ -61,8 +63,10 @@
         <meta name="description" content="Source code generated using layoutit.com">
         <meta name="author" content="LayoutIt!">
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
         <div class="row">
             <div class="col-md-4">
@@ -84,7 +88,7 @@
 
          <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
     <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
-    <p class="text-right" style="font-weight:bold;">Facultad: <%= idFacultad %></p>
+    <p class="text-right" style="font-weight:bold;">Facultad: <%= nombreFacultad %></p>
 
         <%-- todo el menu esta contenido en la siguiente linea
         el menu puede ser cambiado en la pagina menu.jsp --%>
@@ -156,21 +160,26 @@
                                         <br>
                                        <div class="row">
                                        <div class="col-md-6">   
-                                            <label for="textinput">Codigo de Usuario: </label>  
+                                            <label for="textinput">Código de Usuario: </label>  
                                             <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
                                             <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.CARNET.$error.minlength">Minimo 7 caracteres.</span>
                                             <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
                                             <small id="help5"></small>
                                         </div>
-                                        
-                                        <div class="col-md-6">   
-                                            <label for="textinput">Fecha Solicitud: </label>
+                                        <div class="col-md-6 ">
+                                       <div class="col-md-6">          
+                                            <label for="fIngresoIni">Fecha Solicitud (inicio) :</label> 
                                             <div class="input-group date">
-                                                 <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
-                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
-                                                
                                         </div>
+                                        <div class="col-md-6">      
+                                            <label for="fIngresoFin">Fecha de solicitud (fin) :</label>
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                         <br>
                                     
                                    
@@ -250,7 +259,7 @@
                         <h5>Resultados</h5>
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <table class="table text-center">
+                            <table id="tablaAcuerdos" class="table table-bordered text-center">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -324,18 +333,52 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
-        <script src="js/solicitudAcuerdosPendientesComisionBecas.js"></script>
+                <script src="js/solicitudAcuerdosPendientesComisionBecas.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
         <script type="text/javascript">
-                                                        $(function () {
-                                                            $('.input-group.date').datepicker({
-                                                                format: 'yyyy-mm-dd',
-                                                                calendarWeeks: true,
-                                                                todayHighlight: true,
-                                                                autoclose: true,
-                                                                
-                                                            });
-                                                        });
+            $(document).ready(function() {
+    $('#tablaAcuerdos').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+                                                $(function () {
+                                                    $('.input-group.date').datepicker({
+                                                        format: 'yyyy-mm-dd',
+                                                        calendarWeeks: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true
+                                                    });
+                                                });
         </script>
-    </body>
+
+</body>
 </html>
+

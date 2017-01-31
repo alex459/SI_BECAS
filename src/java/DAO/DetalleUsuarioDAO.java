@@ -202,6 +202,26 @@ public class DetalleUsuarioDAO extends ConexionBD {
         return idFacultad;
     }
     
+    public String obtenerNombreFacultad (String user){
+        String Facultad = new String();
+        this.abrirConexion();
+        
+        try{
+            stmt = conn.createStatement();
+            String sql = "SELECT FACULTAD FROM DETALLE_USUARIO DU JOIN USUARIO US ON DU.ID_USUARIO = US.ID_USUARIO JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD WHERE US.NOMBRE_USUARIO =\"" + user +"\"" ;                         
+             ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                Facultad = rs.getString("FACULTAD");
+            }
+            
+        } catch (Exception e){
+            
+        }
+        
+        return Facultad;
+    }
     
     //consultar por USUARIO
     public DetalleUsuario consultarPorUser(String user) {

@@ -141,14 +141,20 @@
                                             </div>
                                             <br>
                                             <div class="row">
-                                                <div class="col-md-6">  
-                                                    <label for="textinput">Fecha Solicitud: </label>
-                                                    <div class="input-group date">
-                                                       <input type="text" class="form-control" name="FECHA1" placeholder="YYYY-MM-DD">
-                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                    </div>
-                                                
-                                                </div>
+                                                 <div class="col-md-6 ">
+                                       <div class="col-md-6">          
+                                            <label for="fIngresoIni">Fecha Solicitud (inicio) :</label> 
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">      
+                                            <label for="fIngresoFin">Fecha de Solicitud  (fin) :</label>
+                                            <div class="input-group date">
+                                                <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                                 <div class="col-md-6">
                                                     <label for="textinput">FACULTAD: </label>
                                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">
