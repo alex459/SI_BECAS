@@ -36,56 +36,69 @@
 <!-- fin de proceso de seguridad de login -->
 
 <% 
-    response.setContentType("text/html;charset=UTF-8"); 
+    //lineas para tildes
+    response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
+        
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Cache-Control", "must-revalidate");
+    response.setHeader("Cache-Control", "no-cache");
+    HttpSession actual = request.getSession();
+    String rol = (String) actual.getAttribute("rol");
+    String user = (String) actual.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
     OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
     ArrayList<OfertaBeca> lista = ofertaBecaDAO.consultarTodos();
     AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
 %>
 
 
-
-
 <!DOCTYPE html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistema informático para la administración de becas de postgrado</title>
+<html>
+   <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
+        <title>Sistema informático para la administración de becas de postgrado</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/customfieldset.css" rel="stylesheet">    
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
-        </h3>
-    </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
+        <meta name="description" content="Source code generated using layoutit.com">
+        <meta name="author" content="LayoutIt!">
 
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+        <link href="css/customfieldset.css" rel="stylesheet">
+        <div class="row">
+            <div class="col-md-4">
+                <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+                <h3 class="text-center" >
+                    <p class="text-danger">Universidad De El Salvador</p>
+                </h3>
+            </div>
+            <div class="col-md-8">
+                <div class="col-xs-12" style="height:50px;"></div>
+                <h2 class="text-center">
+                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
+                </h2>
+                <h3 class="text-center">
+                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
+                </h3>
+            </div>
+        </div>
 
+        <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
+        <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
 
-<p class="text-right"></p>
-<p class="text-right"></p>
-
-
-
+        <%-- todo el menu esta contenido en la siguiente linea
+        el menu puede ser cambiado en la pagina menu.jsp --%>
+        <jsp:include page="menu_corto.jsp"></jsp:include>    
 </head>
 <body>
 
@@ -93,40 +106,13 @@
 
         <div class="row"><!-- TITULO DE LA PANTALLA -->
 
-            <h2>
-                <p class="text-center" style="color:#cf2a27">Ofertas de beca</p>
-            </h2>
+            <h3>
+                <p class="text-center" style="color:#cf2a27">Ofertas de Beca</p>
+            </h3>
 
             <br></br> 
         </div><!-- TITULO DE LA PANTALLA -->  
-        <nav class="navbar navbar-custom" role="navigation">
-                    <div class="navbar-header">
-
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                        </button> <a class="navbar-brand active" href="index.jsp">Inicio</a>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        
-                        <ul class="nav navbar-nav">
-                            <li>
-                                        <a href="documentos.jsp">Documentos</a>                                   
-                            </li>
-                            <li>
-                                        <a href="301_inf_publica_ofertas_beca.jsp">Ofertas de beca</a>                                   
-                            </li>
-                        </ul>
-                        
-                        <ul class="nav navbar-nav navbar-right">						
-                            
-                            <li>
-                                <a href="login.jsp">Iniciar Sesión</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </nav>
+        
 
         <div class="row"><!-- CONTENIDO DE LA PANTALLA -->  
             <fieldset class="custom-border"> 
@@ -291,7 +277,7 @@
                             + " NOMBRE_INSTITUCION, OFERTA_BECA.ID_DOCUMENTO AS ID_DOCUMENTO, PAIS FROM "
                             + " OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_DOCUMENTO "
                             + " AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
-                            + " AND OFERTA_BECA_ACTIVA=1 "
+                            + " AND OFERTA_BECA_ACTIVA=1 AND FECHA_CIERRE >= (SELECT CURRENT_DATE FROM DUAL) "
                             + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'"; 
                 if(instEstudio!=null){                    
                     int idEst = institucionDAO.consultarIdPorNombre(instEstudio);
@@ -348,10 +334,10 @@
                     <legend class="custom-border">Ofertas de beca en el sistema</legend>
                     <div class="row">
                         <div class="col-md-12">
-                            <table  id="tablaResultados" class="table">
+                            <table  id="tablaResultados" class="table table-bordered">
 
                                 <thead>
-                                    <tr class="success">
+                                    <tr>
                                         <th>Nombre de la oferta</th>
                                         <th>Tipo de beca</th>
                                         <th>Fecha limite</th>
@@ -363,7 +349,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    
                                         <%
                                             System.out.println("AAAA"+lista2.size());
                                             if (lista2.size() >= 0) {
