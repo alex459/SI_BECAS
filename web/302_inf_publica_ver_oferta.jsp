@@ -108,9 +108,9 @@
         rs = conexionbd.consultaSql(consultaSql);
         if (rs.next()) {
             temp2.setNombreInstitucion(rs.getString("NOMBRE_INSTITUCION"));
-            temp2.setPais("PAIS");
-            temp2.setPaginaWeb("PAGINA_WEB");
-            temp2.setEmail("EMAIL");
+            temp2.setPais(rs.getString("PAIS"));
+            temp2.setPaginaWeb(rs.getString("PAGINA_WEB"));
+            temp2.setEmail(rs.getString("EMAIL"));
         }
         //con el rs se llenara la tabla de resultados
     } catch (Exception ex) {
@@ -194,7 +194,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labeltitulo" value="Titulo del proyecto:" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labeltitulo" value="Título del proyecto:" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="titulo" value="<%=nombreOferta %>" disabled>    
@@ -205,7 +205,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelinstofer" value="Institución oferente:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelinstofer" value="Institución ofertante:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="instOferente" value="<%=nombreInstOfer %>" disabled>    
@@ -284,7 +284,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelPerfil" value="Perfil participantes:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelPerfil" value="Requisitos participantes:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="perfil" value="<%=perfil %>" disabled>    

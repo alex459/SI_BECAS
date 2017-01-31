@@ -101,6 +101,7 @@
 
                         <div class="col-md-12">
                             <table class="table table-bordered">
+                                <%if (lista.isEmpty()) {}else{%>
                                 <thead>
                                     <tr class="success">
                                         <th>No</th>
@@ -110,6 +111,7 @@
                                         <th>Acción</th>
                                     </tr>                                   
                                 </thead>
+                                <%}%>
                                 <tbody class="text-center">                                
                                 <%if (lista.isEmpty()) {
                                         out.write("<tr><h3 class='text-primary'>No ha realizado ninguna solicitud</h3></tr>");
