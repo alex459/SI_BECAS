@@ -3,6 +3,7 @@
     Created on : 11-09-2016, 09:41:03 PM
     Author     : aquel
 --%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,17 +11,38 @@
 <%@page import="DAO.TipoDocumentoDAO"%>
 <%@page import="DAO.DetalleUsuarioDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
+
+
+<!-- inicio proceso de seguridad de login -->
+<%@page import="MODEL.Utilidades"%>
+
+
 <%
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
 
+    
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
+    String id_usuario_login = (String) actual.getAttribute("id_user_login");
     String rol = (String) actual.getAttribute("rol");
     String user = (String) actual.getAttribute("user");
-    Integer idFacultad = 0;
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("4");
+    tipo_usuarios_permitidos.add("9");
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user == null) {
+        response.sendRedirect("logout.jsp");
+    }
+    
+    
+    Integer idFacultad = 0;    
+    AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
     try {
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
@@ -29,10 +51,7 @@
     } catch (Exception e) {
         e.printStackTrace();
     }
-    if (user == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
+   
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -220,6 +239,9 @@
                         String aprobado = "APROBADO";
                         String denegado = "DENEGADO";
                         String juntaD = "JUNTA DIRECTIVA";
+                        
+                        String fIngresoIni = request.getParameter("fIngresoIni");
+                        String fIngresoFin = request.getParameter("fIngresoFin");
 
                         if (nombre1 != null) {
                         } else {
@@ -246,12 +268,21 @@
                             fecha1 = "";
                         };
                         consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO, E.ESTADO_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN ('APROBADO','DENEGADO','REVISION') AND TD.DEPARTAMENTO='" + juntaD + "' AND F.ID_FACULTAD='" + idFacultad + "' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'";
-
+                        
+                        if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                            java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                            java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                            consultaSql = consultaSql.concat(" AND D.FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        }
+                       
+                        
                         if (id_tipo_documento == 0) {
 
                         } else {
                             consultaSql = consultaSql.concat(" AND TD.ID_TIPO_DOCUMENTO = " + id_tipo_documento);
                         }
+                        
+                        
 
                         conexionbd = new ConexionBD();
                         rs = conexionbd.consultaSql(consultaSql);
@@ -591,9 +622,9 @@
         <script src="js/scripts.js"></script>
         <script src="js/solicitudAcuerdosPendientesJuntaDirectiva.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript">
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript">
    $(document).ready(function() {
     $('#tablaResultados').DataTable(
             {
