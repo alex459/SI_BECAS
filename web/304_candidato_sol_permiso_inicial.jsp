@@ -98,7 +98,7 @@
 <body ng-app = "solicitudApp" ng-controller="SolicitarPermisoCtrl">
 
     <div class="container-fluid">        
-                <H3 class="text-center" style="color:#E42217;">Solicitud de permiso inicial</H3>
+                <H3 class="text-center" style="color:#E42217;">Solicitud de Permiso Inicial</H3>
         <fieldset class="custom-border">
                 <legend class="custom-border">Solicitud de permiso inicial</legend>
         <div class="row">
@@ -130,10 +130,10 @@
                 <div class="row"> 
                     <div class="col-md-2"></div>
                     <div class="col-md-3">
-                        <label> Carta de Solicitud de permiso inicial:</label>
+                        <label> Carta de Solicitud de Permiso Inicial:</label>
                     </div>
                     <div class="col-md-5">
-                        <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
+                        <input type="file" size="2048" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
                         <span class="text-danger" ng-show="solicitudPermisoInicial.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
                     </div>
                     <div class="col-md-2"></div>

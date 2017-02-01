@@ -106,7 +106,7 @@
 
 <body>
     <div class="container-fluid">
-        <H3 class="text-center" style="color:#E42217;">Estado del proceso de beca</H3>
+        <H3 class="text-center" style="color:#E42217;">Estado del Proceso de Beca</H3>
         <fieldset class="custom-border">
                 <legend class="custom-border">Becas</legend>
         <div class="row">            
@@ -125,7 +125,7 @@
                     <tbody>
                         
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Permiso inicial de junta directiva</td>
+                            <td style="background-color:#728FCE; color:white">Permiso de Gestión de Beca de Junta Directiva</td>
                             <%
                              if(expediente.getIdProgreso()<1)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
@@ -154,11 +154,11 @@
                                  out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
                                }
                                else if(expediente.getEstadoProgreso().equals("DENEGADO")){
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-danger' disabled>");
                                  out.write("<span class='glyphicon glyphicon-alert'></span>");
                                }
                                else {
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-success' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                                }
                              }else{ 
@@ -170,7 +170,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Autorización inicial del consejo de becas</td>
+                            <td style="background-color:#728FCE; color:white">Autorización Inicial del Consejo de Becas</td>
                             <%
                              if(expediente.getIdProgreso()<2)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
@@ -198,11 +198,11 @@
                                  out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
                                }
                                else if(expediente.getEstadoProgreso().equals("DENEGADO")){
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-danger' disabled>");
                                  out.write("<span class='glyphicon glyphicon-alert'></span>");
                                }
                                else {
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-success' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                                }
                              }else{ 
@@ -214,7 +214,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Dictamen de la comisión de beca</td>
+                            <td style="background-color:#728FCE; color:white">Dictamen de la Comisión de Beca</td>
                             <%
                              if(expediente.getIdProgreso()<3)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
@@ -242,11 +242,11 @@
                                  out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
                                }
                                else if(expediente.getEstadoProgreso().equals("DENEGADO")){
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-danger' disabled>");
                                  out.write("<span class='glyphicon glyphicon-alert'></span>");
                                }
                                else {
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-success' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                                }
                              }else{ 
@@ -257,7 +257,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Acuerdos de permisos de beca de junta directiva</td>
+                            <td style="background-color:#728FCE; color:white">Acuerdos de Permisos de Beca de Junta Directiva</td>
                             <%
                              if(expediente.getIdProgreso()<4)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
@@ -285,11 +285,11 @@
                                  out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
                                }
                                else if(expediente.getEstadoProgreso().equals("DENEGADO")){
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-danger' disabled>");
                                  out.write("<span class='glyphicon glyphicon-alert'></span>");
                                }
                                else {
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-success' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                                }
                              }else{ 
@@ -300,7 +300,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Solicitud de beca</td>
+                            <td style="background-color:#728FCE; color:white">Solicitud de Beca</td>
                             <%
                              if(expediente.getIdProgreso()<5)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
@@ -328,11 +328,11 @@
                                  out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
                                }
                                else if(expediente.getEstadoProgreso().equals("DENEGADO")){
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-danger' disabled>");
                                  out.write("<span class='glyphicon glyphicon-alert'></span>");
                                }
                                else {
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-success' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                                }
                              }else{ 
@@ -344,7 +344,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Resolución del expediente de beca</td>
+                            <td style="background-color:#728FCE; color:white">Resolución del Expediente de Beca</td>
                             <%
                              if(expediente.getIdProgreso()<6)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
@@ -372,11 +372,11 @@
                                  out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
                                }
                                else if(expediente.getEstadoProgreso().equals("DENEGADO")){
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-danger' disabled>");
                                  out.write("<span class='glyphicon glyphicon-alert'></span>");
                                }
                                else {
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-success' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                                }
                              }else{ 
@@ -387,7 +387,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Acuerdos de beca del consejo superior universitario</td>
+                            <td style="background-color:#728FCE; color:white">Acuerdos de beca del Consejo Superior Universitario</td>
                             <%
                              if(expediente.getIdProgreso()<7)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
@@ -415,11 +415,11 @@
                                  out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
                                }
                                else if(expediente.getEstadoProgreso().equals("DENEGADO")){
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-danger' disabled>");
                                  out.write("<span class='glyphicon glyphicon-alert'></span>");
                                }
                                else {
-                                   out.write("<button type='submit' class='btn btn-default' disabled>");
+                                   out.write("<button type='submit' class='btn btn-success' disabled>");
                                  out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
                                }
                              }else{ 
@@ -441,14 +441,14 @@
                             <%if(expedienteAbierto == false){%>
                                 <br>
                                 <p>Aun no ha iniciado el proceso para adquirir una beca de postgrado, 
-                                    para ver las ofertas disponibles presione el botón “ver ofertas”.</p><br>
+                                    para ver las ofertas disponibles presione el botón “Ver Ofertas”.</p><br>
                                 <div class="row text-center">
                                     <a href="301_inf_publica_ofertas_beca.jsp" class="btn btn-success">Ver Ofertas</a>
                                 </div>
                                 
                             <%}else if(expediente.getIdProgreso() == 1){%>
                                 <br>
-                                <p>En esta etapa debe de solicitar el Acuerdo de Permiso Inicial para poder gestionar la beca ante el Consejo de Becas.</p><br>
+                                <p>En esta etapa debe de solicitar el Acuerdo de Permiso de Gestion de Beca para poder solicitar el Acuerdo de Autorización Inicial ante el Consejo de Becas.</p><br>
                                 <p>Los documentos que debe adjuntar son:</p><br>
                                 <p>Obligatorios</p><br>
                                 <ul>
@@ -460,10 +460,10 @@
                                     <li>Carta de solicitud de la institución que oferta la beca).</li>
                                 </ul>
                                 <div class="row text-center">
-                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")||expediente.getEstadoProgreso().equals("REVISION")||expediente.getEstadoProgreso().equals("DENEGADO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
-                                    <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
-                                    <a href="304_candidato_sol_permiso_inicial.jsp" class="btn btn-success">Actualizar documentación</a>
+                                    <%}else if(expediente.getEstadoProgreso().equals("CORRECCION")){%>
+                                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="304_candidato_sol_permiso_inicial.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
@@ -475,18 +475,22 @@
                                 <p>Los documentos que debe adjuntar son:</p><br>
                                 <p>Obligatorios</p><br>
                                 <ul>
-                                    <li>Carta de solicitud de Autorización Inicial para poder gestionar el Dictamen de propuesta a Junta Directiva a la Comisión de Becas de su Facultad.</li>
-                                </ul>
-                                <p>Opcionales</p><br>
-                                <ul>
-                                    <li>Carta de Solicitud o recomendación de la Escuela o Departamento en que labora</li>
-                                    <li>Carta de solicitud de la institución que oferta la beca).</li>
-                                </ul>
+                                    <li>Carta de solicitud de Autorización Inicial para poder gestionar el Dictamen de propuesta ante Junta Directiva a la Comisión de Becas de su Facultad.</li>
+                                    <li>Título de la UES o incorparado de la misma</li>
+                                    <li>Certificación de Notas</li>
+                                    <li>Copia de DUI</li>
+                                    <li>Tipo de Nombramiento</li>
+                                    <li>Carta del Jefe o Jefa donde se especifique que fue elegido(a) sometiéndose al proceso de selección respectivo</li>
+                                    <li>Plan de Estudios de Posgrado a realizar</li>
+                                    <li>Constancia que refleje que no tiene pendiente Expediente disciplinario abierto</li>
+                                    <li>constancia médica extendida por Bienestar Universitario</li>
+                                </ul>                                
+                                
                                 <div class="row text-center">
-                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")||expediente.getEstadoProgreso().equals("REVISION")||expediente.getEstadoProgreso().equals("DENEGADO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
-                                    <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
-                                    <a href="306_candidato_sol_autorizacion_inicial.jsp" class="btn btn-success">Actualizar documentación</a>
+                                    <%}else if(expediente.getEstadoProgreso().equals("CORRECCION")){%>
+                                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="306_candidato_sol_autorizacion_inicial.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
@@ -494,7 +498,7 @@
                                 
                             <%}else if(expediente.getIdProgreso() == 3){%>
                                 <br>
-                                <p>En esta etapa debe de solicitar el Dictamen de Propuesta a la Comisión de Becas de su Facultad.</p><br>
+                                <p>En esta etapa debe de solicitar el Dictamen de Propuesta ante Junta Directiva a la Comisión de Becas de su Facultad.</p><br>
                                 <p>Los documentos que debe adjuntar son:</p><br>
                                 <ul>
                                     <li>Carta de solicitud de dictamen de propuesta ante Junta Directiva dirigida a la Comisión de Becas de su Facultad.</li>
@@ -505,10 +509,10 @@
                                     <li>Carta de legalización de maestría ante el MINED. (solo para becas internas)</li>
                                 </ul>
                                 <div class="row text-center">
-                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")||expediente.getEstadoProgreso().equals("REVISION")||expediente.getEstadoProgreso().equals("DENEGADO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
-                                    <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
-                                    <a  href="307_candidato_sol_dictamen_propuesta.jsp" class="btn btn-success">Actualizar documentación</a>
+                                    <%}else if(expediente.getEstadoProgreso().equals("CORRECCION")){%>
+                                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="307_candidato_sol_dictamen_propuesta.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
@@ -534,10 +538,10 @@
                                     <li>Poder Judicial otorgado a su apoderado.</li>
                                 </ul>
                                 <div class="row text-center">
-                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")){%>
+                                    <% if(expediente.getEstadoProgreso().equals("EN PROCESO")||expediente.getEstadoProgreso().equals("REVISION")||expediente.getEstadoProgreso().equals("DENEGADO")){%>
                                     <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Ver Estado de Solicitud</a>
-                                    <%}else if(expediente.getEstadoProgreso().equals("REVISION")){%>
-                                    <a href="308_candidato_sol_beca1.jsp" class="btn btn-success">Actualizar documentación</a>
+                                    <%}else if(expediente.getEstadoProgreso().equals("CORRECCION")){%>
+                                    <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-success">Actualizar documentación</a>
                                     <%}else{%>
                                     <a href="308_candidato_sol_beca1.jsp" class="btn btn-success">Solicitar Ahora</a>
                                     <%}%>
@@ -568,20 +572,27 @@
                     
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
+                            
+                        </div></br>
+                        
+                    </div>
+                </div>
+            </div>  
+                        
+        </div></fieldset>
+        <div class="row text-center">
                             <form style='display:inline; align-content: center;' action='CancelarProcesoCandidato' method='post'>
                                 <input type='hidden' name='id_exp' value='<%=expediente.getIdExpediente() %>'>
                           <%   
                               if(expedienteAbierto)
-                                  out.write("<button style='align-content: center;' id='cancelar' name='cancelar' class='btn b5tn-danger'>Cancelar proceso</button>");
+                                  out.write("<button style='align-content: center;' id='cancelar' name='cancelar' class='btn btn-danger'>Cancelar proceso</button>");
                               else    
                                   out.write("<button id='cancelar' name='cancelar' class='btn btn-danger' disabled>Cancelar proceso</button>");
                                  %>
                          </form>
-                        </div></br>
-                    </div>
-                </div>
-            </div>  
-        </div></fieldset>
+                         
+                        </div>
+        <div class="row text-center"><br></div>
 
         <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
             <div class="col-md-6">
