@@ -216,7 +216,8 @@
                     String queryParam=""; 
                      
                     String consultaSql="";
-                    
+                    String fIngresoIni = request.getParameter("fIngresoIni");
+                    String fIngresoFin = request.getParameter("fIngresoFin");
                 
                     consultaSql = "SELECT 	TD.DEPARTAMENTO AS Unidad, TD.TIPO_DOCUMENTO AS 'Tipo de documento', D.FECHA_INGRESO AS 'fecha de emisión', "
                                 + "CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU,' ', DU.APELLIDO1_DU,' ', DU.APELLIDO2_DU) AS Solicitante, "
@@ -255,7 +256,11 @@
                             tipoBecario = request.getParameter("tipoBecario");
                             consultaSql2 = consultaSql2.concat(" AND P.ESTADO_BECARIO='" + tipoBecario + "' ");
                         }          
-                               
+                    if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                        java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                        java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                        consultaSql2 = consultaSql2.concat(" AND D.FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                    }           
                                
                     
                     

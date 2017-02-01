@@ -164,7 +164,7 @@
                                                     <option value="">Seleccione Tipo de Estudio</option>
                                                     <option value="MAESTRIA">Maestria</option>
                                                     <option value="DOCTORADO">Doctorado</option>
-                                                    <option value="ESPECIALIZACION">Especializacion</option>
+                                                    <option value="ESPECIALIZACION">Especialización</option>
                                                 </select>
                                             </div>
                                         </div>
