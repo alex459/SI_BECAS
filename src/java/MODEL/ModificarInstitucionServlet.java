@@ -60,8 +60,14 @@ public class ModificarInstitucionServlet extends HttpServlet {
             
             bandera1 = institucionDao.actualizar(institucion);
             
+            
             if(bandera1){
-                Utilidades.mostrarMensaje(response, 1, "Exito", "Se modifico la institucion correctamente.");
+                if(institucionDao.validarInstitucionRepetida(institucion.getNombreInstitucion(), institucion.getPais())){
+                Utilidades.nuevaBitacora(2, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se actualizo la institución "+ institucion.getNombreInstitucion() + ".","");
+                Utilidades.mostrarMensaje(response, 1, "Exito", "Se modificó la institucion correctamente.");
+                }else{
+                    Utilidades.mostrarMensaje(response, 2, "Error", "Ya existe una institución con el mismo nombre en el mismo país.");
+                }
             }else{
                 Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo modificar la institucion.");
             }

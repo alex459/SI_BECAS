@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AgregarInstitucionServlet")
 
 public class AgregarInstitucionServlet extends HttpServlet {
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,30 +34,33 @@ public class AgregarInstitucionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
-        Institucion institucion = new Institucion(); 
+
+        Institucion institucion = new Institucion();
         InstitucionDAO institucionDAO = new InstitucionDAO();
-        
-         //parte de lectura desde el jsp y guardado en bd  
-         
-         
+
+        //parte de lectura desde el jsp y guardado en bd  
         int idInstitucion = institucionDAO.getSiguienteId();
-        int institucionActiva =1;
+        int institucionActiva = 1;
+        InstitucionDAO institucionDao = new InstitucionDAO();
         institucion.setIdInstitucion(idInstitucion);
-        institucion.setNombreInstitucion(request.getParameter("text_NomInstitucion")); 
+        institucion.setNombreInstitucion(request.getParameter("text_NomInstitucion"));
         institucion.setTipoInstitucion(request.getParameter("select_tipoInstitucion"));
-        institucion.setPais(request.getParameter("tex_paisInstitucion")); 
+        institucion.setPais(request.getParameter("tex_paisInstitucion"));
         institucion.setPaginaWeb(request.getParameter("tex_webInstitucion"));
-        institucion.setEmail(request.getParameter("tex_correoInstitucion")); 
+        institucion.setEmail(request.getParameter("tex_correoInstitucion"));
         institucion.setInstitucionActiva(institucionActiva);
-        
-        institucionDAO.ingresar(institucion);
-        
-        Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el institucion correctamente.");
-        
+
+        if (institucionDao.validarInstitucionRepetida(institucion.getNombreInstitucion(), institucion.getPais())) {
+            institucionDAO.ingresar(institucion);
+            Utilidades.nuevaBitacora(1, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se ingresó la institución " + institucion.getNombreInstitucion() + ".", "");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el institucion correctamente.");
+        } else {
+            Utilidades.mostrarMensaje(response, 3, "Error", "Ya existe una institución con el mismo nombre en el mismo país.");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

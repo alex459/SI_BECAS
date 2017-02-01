@@ -254,4 +254,25 @@ public class InstitucionDAO extends ConexionBD{
 
         return temp;
     }
+    
+    public boolean validarInstitucionRepetida(String NombreInstitucion, String Pais){
+        boolean respuesta = true;
+        Institucion temp = new Institucion(); 
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM INSTITUCION WHERE NOMBRE_INSTITUCION = '"+NombreInstitucion+"' AND PAIS = '"+Pais+"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                respuesta = false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        return respuesta;
+    }
+    
 }

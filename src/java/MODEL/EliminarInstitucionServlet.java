@@ -61,6 +61,7 @@ public class EliminarInstitucionServlet extends HttpServlet {
             bandera1 = institucionDao.actualizar(institucion);
             
             if(bandera1){
+                Utilidades.nuevaBitacora(4, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se dio de baja la institución "+ institucion.getNombreInstitucion() + ".","");         
                 Utilidades.mostrarMensaje(response, 1, "Exito", "Se desactivo la institucion correctamente.");
             }else{
                 Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo desactivar la institucion.");

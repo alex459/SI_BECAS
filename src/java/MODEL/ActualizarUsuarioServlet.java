@@ -107,10 +107,8 @@ public class ActualizarUsuarioServlet extends HttpServlet {
             if (bandera1 && bandera2) {
             TipoUsuario tipoUsuario = new TipoUsuario();
             TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
-            tipoUsuario.setIdTipoUsuario(usuario.getIdTipoUsuario());
-            //en proceso
-            //tipoUsuario = tipoUsuarioDao.c
-            Utilidades.nuevaBitacora(2, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se cambio el rol del usuario "+usuario.getNombreUsuario() + " a " + usuario.getIdTipoUsuario(),""); 
+            tipoUsuario = tipoUsuarioDao.consultarPorId(usuario.getIdTipoUsuario());
+            Utilidades.nuevaBitacora(2, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se cambio el rol del usuario "+usuario.getNombreUsuario() + " a " + tipoUsuario.getTipoUsuario() + ".",""); 
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizo el usuario correctamente.");
             } else {
                 Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario.");
