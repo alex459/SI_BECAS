@@ -103,6 +103,7 @@
             
         case 2:
             publicos = docComision.consultarJuntaDirectivaExpeProceso1(id_expedie);
+            id_p =1;
             break;
 
         case 4:

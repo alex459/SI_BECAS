@@ -429,6 +429,49 @@
                             </form>
                             </td>
                         </tr>
+                        <tr>
+                            <td style="background-color:#728FCE; color:white">Asesoría de Contrato de Beca</td>
+                            <%
+                             if(expediente.getIdProgreso()<8)
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
+                             else if(expediente.getIdProgreso()==8)
+                                 { 
+                               if(expediente.getEstadoProgreso().equals("REVISION"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>En Revisión </td>");
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO"))
+                                 out.write("<td style='background-color:#E5E4E2; color:black;'>Denegado</td>");
+                               else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>En proceso</td>"); 
+                             }
+                             else 
+                                out.write("<td style='background-color:#E5E4E2; color:black;'>Finalizado</td>");
+                                    %>
+                            <td class="text-center" style="background-color:white;">
+                            <form style='display:inline; color:black;' >
+                              <%
+                             if(expediente.getIdProgreso()<8){
+                                 out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-lock'></span>");
+                             }else if(expediente.getIdProgreso()==8){ 
+                               if(expediente.getEstadoProgreso().equals("REVISION")){
+                                out.write("<button type='submit' class='btn btn-default' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-exclamation-sign'></span>"); 
+                               }
+                               else if(expediente.getEstadoProgreso().equals("DENEGADO")){
+                                   out.write("<button type='submit' class='btn btn-danger' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-alert'></span>");
+                               }
+                               else {
+                                   out.write("<button type='submit' class='btn btn-success' disabled>");
+                                 out.write("<span class='glyphicon glyphicon-arrow-left'></span>");
+                               }
+                             }else{ 
+                                out.write("<button type='submit' class='btn btn-success' disabled>");
+                                out.write("<span class='glyphicon glyphicon-check'></span> ");
+                             }%>
+                            </form>
+                            </td>
+                        </tr>
                     </tbody>
                 </table> 
                 </div>

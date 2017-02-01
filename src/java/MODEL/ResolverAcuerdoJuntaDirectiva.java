@@ -292,6 +292,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                 }
 
                             }// FIN ACTUALIZAR
+                            idProgreso = 1;
                             estado = "DENEGADO";
                             break;
                         case 4:
@@ -305,6 +306,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                     documentoDao.eliminarDocumento(idAcuerdoSolicitado);
                                 }
                             }// FIN ACTUALIZAR
+                            idProgreso = 4;
                             estado = "DENEGADO";
                             break;
                         case 10:
@@ -331,7 +333,8 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                     //NADA
                                 }//FIN idAcuerdoSolicitado
                             }// FIN ACTUALIZAR
-                            estado = "DENEGADO";
+                            idProgreso = 9;
+                            estado = "PENDIENTE";
                             break;
                         case 13:
                             //SOLICITUD DE ACUERDO DE GESTION DE COMPROMISO CONTRACTUAL
