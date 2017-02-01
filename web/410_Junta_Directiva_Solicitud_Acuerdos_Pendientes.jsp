@@ -3,6 +3,7 @@
     Created on : 11-09-2016, 09:16:41 PM
     Author     : aquel
 --%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page import="POJO.TipoDocumento"%>
 <%@page import="DAO.TipoDocumentoDAO"%>
 <%@page import="java.sql.ResultSet"%>
@@ -39,6 +40,7 @@
     request.setCharacterEncoding("UTF-8");
     
     Integer idFacultad = 0;
+    AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
      try{
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
@@ -128,7 +130,7 @@
                                             <div class="row">
                                             
                                             <div class="col-md-3">                                                                                    
-                                                <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="Primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
                                                 <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
                                                 <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                     
@@ -145,7 +147,7 @@
                                                 <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                             </div> 
                                             <div class="col-md-3">
-                                                <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                                <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="Segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
                                                 <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
                                                 <span class="text-danger" ng-show="solicitudAcuerdosPendientesJuntaDirectiva.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                                             </div>
@@ -177,7 +179,7 @@
                                                 <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
                                         </div>
-                                    </div>
+                                        </div>
                                                                          
                                     </div>
                                     <br>
@@ -240,6 +242,8 @@
             String pendiente = "PENDIENTE";
             String juntaD= "JUNTA DIRECTIVA";
             
+            String fIngresoIni = request.getParameter("fIngresoIni");
+            String fIngresoFin = request.getParameter("fIngresoFin");
             if(nombre1!=null) {} else {nombre1="";};
             if(nombre2!=null) {} else {nombre2="";};
             if(apellido1!=null) {} else {apellido1="";};
@@ -247,8 +251,14 @@
             if(carnet!=null) {} else {carnet="";};
             if(fecha1!=null) {} else {fecha1="";};
             consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, DU.DEPARTAMENTO, F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO, D.ESTADO_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('"+pendiente+"','REVISION') AND TD.DEPARTAMENTO='"+juntaD+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'";
-             
-          if (id_tipo_documento == 0) {
+            
+            if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                            java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                            java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                            consultaSql = consultaSql.concat(" AND D.FECHA_SOLICITUD BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        }
+            
+            if (id_tipo_documento == 0) {
 
                     } else {
                         consultaSql = consultaSql.concat(" AND TD.ID_TIPO_DOCUMENTO = " + id_tipo_documento);
