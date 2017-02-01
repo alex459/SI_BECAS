@@ -144,7 +144,7 @@
                                             <br>
                                             <div class="row">
                                                 <div class="col-md-6">   
-                                                    <label for="textinput">Codigo de Usuario: </label>  
+                                                    <label for="textinput">Código de Usuario: </label>  
                                                     <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
                                                     <span class="text-danger" ng-show="solicitudAcuerdosPendientesConsejoSuperiorUniversitario.CARNET.$error.minlength">Minimo 7 caracteres.</span>
                                                     <span class="text-danger" ng-show="solicitudAcuerdosPendientesConsejoSuperiorUniversitario.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
@@ -178,7 +178,7 @@
                                                 
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="textinput">FACULTAD: </label>
+                                                    <label for="textinput">Facultad: </label>
                                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">
                                                             <option value="0">SELECCIONE FACULTAD</option>    
                                                                 <%
@@ -276,7 +276,7 @@
                         <h5>Resultados</h5>
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <table id="tablaAcuerdos" class="table table-bordered text-center">
+                            <table  id="tablaResultados" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -353,13 +353,14 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
+        <script src="js/scripts.js"></script>
         <script src="js/solicitudAcuerdosPendientesConsejoSuperiorUniversitario.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-    $('#tablaAcuerdos').DataTable(
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function() {
+    $('#tablaResultados').DataTable(
             {
                  "language": 
 {
@@ -389,16 +390,43 @@
             }
                 );
 } );
-                                                $(function () {
-                                                    $('.input-group.date').datepicker({
-                                                        format: 'yyyy-mm-dd',
-                                                        calendarWeeks: true,
-                                                        todayHighlight: true,
-                                                        autoclose: true
-                                                    });
-                                                });
-        </script>
-
+    
+                                           $(function () {
+        $('#fIngresoIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fIngresoFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+        $('#fCierreIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fCierreFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: new Date()
+        }).on('change.dp', function (e) {
+            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+    });
+    
+</script>
 </body>
 </html>
-

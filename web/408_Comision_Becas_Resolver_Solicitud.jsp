@@ -45,12 +45,10 @@
     response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
     request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
     Integer idFacultad = 0;
-    String nombreFacultad="";
     try {
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
         idFacultad = DetUsDao.obtenerFacultad(user);
-        nombreFacultad = DetUsDao.obtenerNombreFacultad(user);
     } catch (Exception e) {
         e.printStackTrace();
     }
@@ -140,7 +138,6 @@
     <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
     <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
     
-    <p class="text-right" style="font-weight:bold;">Facultad: <%= nombreFacultad %></p>
 
     <%-- todo el menu esta contenido en la siguiente linea
          el menu puede ser cambiado en la pagina menu.jsp --%>
