@@ -46,9 +46,8 @@
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
     HttpSession actual = request.getSession();
-    String rol = (String) actual.getAttribute("rol");
-    String user = (String) actual.getAttribute("user");
-    if (user == null) {
+    String rol=(String)actual.getAttribute("rol");
+    String user=(String)actual.getAttribute("user");
         response.sendRedirect("login.jsp");
         return;
     }
