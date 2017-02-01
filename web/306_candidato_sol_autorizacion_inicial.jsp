@@ -98,9 +98,9 @@
     <body ng-app = "solicitudApp" ng-controller="SolicitarAutorizacionCtrl">
 
         <div class="container-fluid">        
-            <H3 class="text-center" style="color:#E42217;">Solicitud de autorización inicial</H3>
+            <H3 class="text-center" style="color:#E42217;">Solicitud de Autorización Inicial</H3>
             <fieldset class="custom-border">
-                <legend class="custom-border">Solicitud de autorización inicial al Consejo De Becas</legend>
+                <legend class="custom-border">Solicitud de Autorización Inicial al Consejo De Becas</legend>
                 <div class="row">
                     <div class="col-md-12">
                         <fieldset class="custom-border">
@@ -108,7 +108,7 @@
                         <%if (expediente.getIdProgreso() == 2) {%>
                         <% if (expediente.getEstadoProgreso().equals("EN PROCESO") || expediente.getEstadoProgreso().equals("REVISION")) {%>
                         <div class="text-center">
-                            <h3 class="text-danger"> Ya ha realizado una solicitud de Acuerdo de Autorizacion Inicial</h3>
+                            <h3 class="text-danger"> Ya ha realizado una solicitud de Acuerdo de Autorización Inicial</h3>
                             <a href="303_candidato_estado_solicitudes.jsp" class="btn btn-primary">Ver Estado de Solicitud</a>
                         </div>
                         <%} else {%>
@@ -116,88 +116,88 @@
                             <div class="row"> 
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <label> Carta de Solicitud de Autorizacion inicial:</label>
+                                    <label> Carta de Solicitud de Autorización inicial:</label><br><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
-                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                                 <div class="col-md-2"></div>                    
                             </div>
                             <div class="row"> 
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <label> Título de la UES:</label>
+                                    <label> Título de la UES:</label><br><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" class="" name="titulo" accept="application/pdf" ng-model="titulo" valid-file required>
-                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.titulo.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.titulo.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                                 <div class="col-md-2"></div>                    
                             </div>
                             <div class="row"> 
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <label> Certificación de Notas:</label>
+                                    <label> Certificación de Notas:</label><br><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" class="" name="certificacion" accept="application/pdf" ng-model="certificacion" valid-file required>
-                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.certificacion.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.certificacion.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                                 <div class="col-md-2"></div>                    
                             </div>
                             <div class="row"> 
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <label> Copia de DUI:</label>
+                                    <label> Copia de DUI:</label><br><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" class="" name="dui" accept="application/pdf" ng-model="dui" valid-file required>
-                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.dui.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.dui.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                                 <div class="col-md-2"></div>                    
                             </div>
                             <div class="row"> 
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <label> Tipo de Nombramiento:</label>
+                                    <label> Tipo de Nombramiento:</label><br><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" class="" name="nombramiento" accept="application/pdf" ng-model="nombramiento" valid-file required>
-                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.nombramiento.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.nombramiento.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                                 <div class="col-md-2"></div>                    
                             </div>
                             <div class="row"> 
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <label> Carta del Jefe o Jefa donde se especifique que fue elegido(a) sometiéndose al proceso de selección respectivo:</label>
+                                    <label> Carta del Jefe o Jefa donde se especifique que fue elegido(a) sometiéndose al proceso de selección respectivo:</label><br><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" class="" name="cartaJefe" accept="application/pdf" ng-model="cartaJefe" valid-file required>
-                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.cartaJefe.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.cartaJefe.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                                 <div class="col-md-2"></div>                    
                             </div>
                             <div class="row"> 
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <label> Constancia que refleje que no tiene pendiente Expediente disciplinario abierto:</label>
+                                    <label> Constancia que refleje que no tiene pendiente Expediente disciplinario abierto:</label><br><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" class="" name="constanciaExpediente" accept="application/pdf" ng-model="constanciaExpediente" valid-file required>
-                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.constanciaExpediente.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.constanciaExpediente.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                                 <div class="col-md-2"></div>                    
                             </div>
                             <div class="row"> 
                                 <div class="col-md-1"></div>
                                 <div class="col-md-4">
-                                    <label> Constancia médica extendida por Bienestar Universitario:</label>
+                                    <label> Constancia médica extendida por Bienestar Universitario:</label><br><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" class="" name="constanciaBienestar" accept="application/pdf" ng-model="constanciaBienestar" valid-file required>
-                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.constanciaBienestar.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <span class="text-danger" ng-show="solicitudAutorizacionInicial.constanciaBienestar.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                                 <div class="col-md-2"></div>                    
                             </div>
@@ -207,8 +207,7 @@
                             <div class="row text-center">
                                 <br>
                                 <input type="hidden" name="idExpediente" value="<%=expediente.getIdExpediente()%>">
-                                <input type="hidden" name="user" value="<%=user%>">
-                                <input type="hidden" name="nAnexos" value="{{Nanexos - 1}}">
+                                <input type="hidden" name="user" value="<%=user%>">                                
                                 <input type="submit" name="guardar" value="Enviar" class="btn btn-success" ng-disabled="!solicitudAutorizacionInicial.$valid">
                             </div> 
                         </form>

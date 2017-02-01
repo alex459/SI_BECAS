@@ -37,21 +37,6 @@
 %>
 <!-- fin de proceso de seguridad de login -->
 
-<%
-    //lineas para tildes
-    response.setContentType("text/html;charset=UTF-8");
-    request.setCharacterEncoding("UTF-8");
-        
-    response.setHeader("Cache-Control", "no-store");
-    response.setHeader("Cache-Control", "must-revalidate");
-    response.setHeader("Cache-Control", "no-cache");
-    HttpSession actual = request.getSession();
-    String rol=(String)actual.getAttribute("rol");
-    String user=(String)actual.getAttribute("user");
-        response.sendRedirect("login.jsp");
-        return;
-    }
-%>
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

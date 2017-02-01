@@ -13,6 +13,7 @@ import POJO.Expediente;
 import POJO.TipoDocumento;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -45,8 +46,7 @@ public class SolicitarAutorizacionInicialServlet extends HttpServlet {
         //Recuperando datos del formulario
         InputStream cartaSolicitud = null;
         String user = request.getParameter("user");
-        Integer idExpediente = Integer.parseInt(request.getParameter("idExpediente"));
-        Integer nAnexos = Integer.parseInt(request.getParameter("nAnexos"));
+        Integer idExpediente = Integer.parseInt(request.getParameter("idExpediente"));        
         Part filePart = request.getPart("cartaSolicitud");
         if (filePart != null) {
             cartaSolicitud = filePart.getInputStream();
@@ -77,36 +77,67 @@ public class SolicitarAutorizacionInicialServlet extends HttpServlet {
             documento.setObservacion(obs);
             documento.setEstadoDocumento("INGRESADO");
             boolean ingresarDocumento = documentoDao.Ingresar(documento);
-        
-            if(ingresarDocumento == true){
-            //Ingresar anexos
-                if(nAnexos >0){
-                    InputStream archivoAnexo = null;
-                    for (int i = 1; i < nAnexos+1; i++) {
-                        String varTipo = "tipoAnexo" +i;
-                        String varNombreDocumento = "anexo" +i;
-                        Documento anexo = new Documento();
-                        Integer idAnexo = documentoDao.getSiguienteId();
-                        tip = Integer.parseInt(request.getParameter(varTipo));
-                        tipo = tipoDao.consultarPorId(tip);
-                        filePart = null;
-                        filePart = request.getPart(varNombreDocumento);
-                        if (filePart != null) {
-                            archivoAnexo = filePart.getInputStream();
+            
+            //Ingresando Documentacion necesaria para la Solicitud
+            //documentos
+                        ArrayList<String> documentos = new ArrayList<>();
+                        documentos.add("titulo");
+                        documentos.add("certificacion");
+                        documentos.add("dui");
+                        documentos.add("nombramiento");
+                        documentos.add("cartaJefe");
+                        documentos.add("constanciaExpediente");
+                        documentos.add("constanciaBienestar");
+                        ArrayList<Integer> tipos = new ArrayList<>();
+                        tipos.add(124);
+                        tipos.add(128);
+                        tipos.add(126);
+                        tipos.add(161);
+                        tipos.add(123);
+                        tipos.add(160);
+                        tipos.add(129);
+
+                        //Recuperando datos del formulario                        
+                        InputStream documentoAdjunto = null;
+                        obs = "DOCUMENTO ADJUNTO PARA SOLICITUD DE AUTORIZACION INICIAL DEL USUARIO: " + user;                        
+                        TipoDocumento tipoDocumento = new TipoDocumento();
+                        for (int i = 0; i < 7; i++) {
+                            Documento anexo = new Documento();
+                            //Comparando si exite documento
+                            Integer idTipo = tipos.get(i);
+                            Integer idDocumento = documentoDao.ExisteDocumento(expediente.getIdExpediente(), idTipo);
+                            filePart = null;
+                            filePart = request.getPart(documentos.get(i));
+                            if (filePart != null) {
+                                documentoAdjunto = filePart.getInputStream();
+                            }
+
+                            if (idDocumento == 0) {
+                                //Ingresar Documento
+                                idDocumento = documentoDao.getSiguienteId();
+                                tipoDocumento = tipoDao.consultarPorId(idTipo);
+                                anexo.setIdDocumento(idDocumento);
+                                anexo.setIdTipoDocumento(tipoDocumento);
+                                anexo.setIdExpediente(expediente);
+                                anexo.setDocumentoDigital(documentoAdjunto);
+                                anexo.setObservacion(obs);
+                                anexo.setEstadoDocumento("INGRESADO");
+                                documentoDao.Ingresar(anexo);
+                            } else {
+                                //Actualizar Documento
+                                anexo = documentoDao.ObtenerPorId(idDocumento);
+                                anexo.setDocumentoDigital(documentoAdjunto);
+                                documentoDao.ActualizarDocumentoObservacion(anexo);
+                            }
+
                         }
-                        obs = "ANEXO DEL USUARIO: " + user;
+            
+            
+            
+            
+        
+            if(ingresarDocumento == true){            
                 
-                        anexo.setIdDocumento(idAnexo);
-                        anexo.setIdTipoDocumento(tipo);
-                        anexo.setIdExpediente(expediente);
-                        anexo.setDocumentoDigital(archivoAnexo);
-                        anexo.setObservacion(obs);
-                        anexo.setEstadoDocumento("INGRESADO");
-                        documentoDao.Ingresar(anexo);
-                    }
-                }else{
-                    //Nada NO hay Documentacion Anexada
-                }
             //Solicitar Documento
                 Documento acuerdo = new Documento();
                 Date fechaHoy = new Date();
