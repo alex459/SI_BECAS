@@ -16,6 +16,8 @@
     </head>
     <body bgcolor="gray">
         <%
+            response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
+            request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
 
             int tipo_mensaje = 2;
             String titulo = "Mensaje";
@@ -26,6 +28,7 @@
                 tipo_mensaje = Integer.parseInt(request.getParameter("TIPO_MENSAJE"));
                 titulo = request.getParameter("TITULO");
                 mensaje = request.getParameter("MENSAJE");
+                mensaje = mensaje.toUpperCase();
             } catch (Exception ex) {
 
             }

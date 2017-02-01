@@ -58,7 +58,7 @@ public class AgregarInstitucionServlet extends HttpServlet {
             Utilidades.nuevaBitacora(1, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se ingresó la institución " + institucion.getNombreInstitucion() + ".", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el institucion correctamente.");
         } else {
-            Utilidades.mostrarMensaje(response, 3, "Error", "Ya existe una institución con el mismo nombre en el mismo país.");
+            Utilidades.mostrarMensaje(response, 3, "Error", "Ya existe una institucion con el mismo nombre en el mismo pais.");
         }
 
     }

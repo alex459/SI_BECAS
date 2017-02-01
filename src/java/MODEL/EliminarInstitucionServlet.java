@@ -64,12 +64,12 @@ public class EliminarInstitucionServlet extends HttpServlet {
                 Utilidades.nuevaBitacora(4, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se dio de baja la institución "+ institucion.getNombreInstitucion() + ".","");         
                 Utilidades.mostrarMensaje(response, 1, "Exito", "Se desactivo la institucion correctamente.");
             }else{
-                Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo desactivar la institucion.");
+                Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo desactivar la instituci&oacute;n.");
             }
             
         }catch(Exception ex){
             System.out.println("ERROR: "+ex);
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo desactivar la institucion.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo desactivar la instituci&oacute;n.");
         }
     }
 
