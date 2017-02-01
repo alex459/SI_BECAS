@@ -243,7 +243,7 @@
                             <%
                                 TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
                                 ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
-                                listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();                                
+                                listaTiposDeUsuarios = tipoUsuarioDao.consultarTodosMenosBecarios();                                
                                 out.write("<option value=" + id_tipo_usuario + ">" + tipo_usuario + "</option>");
                                 for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
                                     out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");

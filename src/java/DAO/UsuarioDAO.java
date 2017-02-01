@@ -36,7 +36,7 @@ public class UsuarioDAO extends ConexionBD {
 
         return usuario;
     }
-    
+
     //obtener el siguiente id (autoincremental)
     public Integer getSiguienteId() {
         Integer siguienteId = -1;
@@ -48,7 +48,7 @@ public class UsuarioDAO extends ConexionBD {
             this.cerrarConexion();
 
             while (rs.next()) {
-                siguienteId = rs.getInt("X") + 1;                
+                siguienteId = rs.getInt("X") + 1;
             }
 
         } catch (Exception e) {
@@ -57,26 +57,25 @@ public class UsuarioDAO extends ConexionBD {
 
         return siguienteId;
     }
-    
-    public boolean ingresar(Usuario usuario, Integer id_user_login){
+
+    public boolean ingresar(Usuario usuario, Integer id_user_login) {
         boolean exito = false;
-        
+
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "INSERT INTO USUARIO(ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE) VALUES("+usuario.getIdUsuario()+", "+usuario.getIdTipoUsuario()+", '"+usuario.getNombreUsuario()+"', MD5('"+usuario.getClave()+"'))";
+            String sql = "INSERT INTO USUARIO(ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE) VALUES(" + usuario.getIdUsuario() + ", " + usuario.getIdTipoUsuario() + ", '" + usuario.getNombreUsuario() + "', MD5('" + usuario.getClave() + "'))";
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
             Utilidades.nuevaBitacora(1, id_user_login, "Se ingreso un nuevo usuario.", sql);
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error " + e);
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
         return exito;
     }
-    
 
     public boolean login(String nombre, String clave) {
         boolean logeo = false;
@@ -89,7 +88,7 @@ public class UsuarioDAO extends ConexionBD {
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
             if (rs.next()) {
-                
+
                 int ID_USUARIO = rs.getInt("ID_USUARIO");
                 int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
                 String NOMBRE_USUARIO = rs.getString("NOMBRE_USUARIO");
@@ -100,8 +99,8 @@ public class UsuarioDAO extends ConexionBD {
                 usuario.setNombreUsuario(NOMBRE_USUARIO);
                 usuario.setClave(CLAVE);
                 logeo = true;
-                Utilidades.nuevaBitacora(5, ID_USUARIO, "usuario logeado con id "+ID_USUARIO+" y nombre "+NOMBRE_USUARIO, sql);
-                
+                Utilidades.nuevaBitacora(5, ID_USUARIO, "usuario logeado con id " + ID_USUARIO + " y nombre " + NOMBRE_USUARIO, sql);
+
             }
 
             if (logeo) {
@@ -127,11 +126,11 @@ public class UsuarioDAO extends ConexionBD {
                 variablesDeSesion.usuarioActual.setNombreUsuario(usuario.getNombreUsuario());
                 variablesDeSesion.usuarioActual.setClave(usuario.getClave());
                 variablesDeSesion.usuarioActual.setIdTipoUsuario(usuario.getIdTipoUsuario());
-                
+
                 variablesDeSesion.tipoUsuarioActual.setIdTipoUsuario(tipoUsuario.getIdTipoUsuario());
                 variablesDeSesion.tipoUsuarioActual.setTipoUsuario(tipoUsuario.getTipoUsuario());
                 variablesDeSesion.tipoUsuarioActual.setDescripcionTipoUsuario(tipoUsuario.getDescripcionTipoUsuario());
-                
+
             }
 
         } catch (Exception e) {
@@ -139,7 +138,7 @@ public class UsuarioDAO extends ConexionBD {
         }
         return logeo;
     }
-    
+
     public boolean login_ldap(String nombre) {
         boolean logeo = false;
         Usuario usuario = new Usuario();
@@ -151,7 +150,7 @@ public class UsuarioDAO extends ConexionBD {
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
             if (rs.next()) {
-                
+
                 int ID_USUARIO = rs.getInt("ID_USUARIO");
                 int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
                 String NOMBRE_USUARIO = rs.getString("NOMBRE_USUARIO");
@@ -162,8 +161,8 @@ public class UsuarioDAO extends ConexionBD {
                 usuario.setNombreUsuario(NOMBRE_USUARIO);
                 usuario.setClave(CLAVE);
                 logeo = true;
-                Utilidades.nuevaBitacora(5, ID_USUARIO, "usuario logeado con id "+ID_USUARIO+" y nombre "+NOMBRE_USUARIO, sql);
-                
+                Utilidades.nuevaBitacora(5, ID_USUARIO, "usuario logeado con id " + ID_USUARIO + " y nombre " + NOMBRE_USUARIO, sql);
+
             }
 
             if (logeo) {
@@ -189,11 +188,11 @@ public class UsuarioDAO extends ConexionBD {
                 variablesDeSesion.usuarioActual.setNombreUsuario(usuario.getNombreUsuario());
                 variablesDeSesion.usuarioActual.setClave(usuario.getClave());
                 variablesDeSesion.usuarioActual.setIdTipoUsuario(usuario.getIdTipoUsuario());
-                
+
                 variablesDeSesion.tipoUsuarioActual.setIdTipoUsuario(tipoUsuario.getIdTipoUsuario());
                 variablesDeSesion.tipoUsuarioActual.setTipoUsuario(tipoUsuario.getTipoUsuario());
                 variablesDeSesion.tipoUsuarioActual.setDescripcionTipoUsuario(tipoUsuario.getDescripcionTipoUsuario());
-                
+
             }
 
         } catch (Exception e) {
@@ -202,23 +201,24 @@ public class UsuarioDAO extends ConexionBD {
         return logeo;
     }
 
-    public boolean actualizar(Usuario usuario,Integer id_user_login){
+    public boolean actualizar(Usuario usuario, Integer id_user_login) {
         boolean exito = false;
-        
+
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
             String sql = new String();
-            if(usuario.getClave().length()>0)
-                sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+usuario.getIdTipoUsuario()+", NOMBRE_USUARIO = '"+usuario.getNombreUsuario()+"', CLAVE =MD5('"+usuario.getClave()+"') WHERE ID_USUARIO = "+usuario.getIdUsuario();
-            else
-                sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+usuario.getIdTipoUsuario()+", NOMBRE_USUARIO = '"+usuario.getNombreUsuario()+"' WHERE ID_USUARIO = "+usuario.getIdUsuario();
+            if (usuario.getClave().length() > 0) {
+                sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = " + usuario.getIdTipoUsuario() + ", NOMBRE_USUARIO = '" + usuario.getNombreUsuario() + "', CLAVE =MD5('" + usuario.getClave() + "') WHERE ID_USUARIO = " + usuario.getIdUsuario();
+            } else {
+                sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = " + usuario.getIdTipoUsuario() + ", NOMBRE_USUARIO = '" + usuario.getNombreUsuario() + "' WHERE ID_USUARIO = " + usuario.getIdUsuario();
+            }
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error " + e);
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
         return exito;
@@ -226,22 +226,128 @@ public class UsuarioDAO extends ConexionBD {
 
     //cambia el rol del usuario a inactivo
     public boolean darDeBajaUsuario(Usuario usuario, Integer id_user_login) {
-        usuario.setIdTipoUsuario(10); //pasa a ser inactivo
+
         boolean exito = false;
-        
+
+        boolean validacion = false;
+        validacion = this.validarParaDarDeBaja(usuario);
+
+        if (validacion) {
+            usuario.setIdTipoUsuario(10); //pasa a ser inactivo
+            this.abrirConexion();
+            try {
+                stmt = conn.createStatement();
+                String sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = " + usuario.getIdTipoUsuario() + " WHERE ID_USUARIO = '" + usuario.getIdUsuario() + "'";
+                stmt.execute(sql);
+                exito = true;
+                this.cerrarConexion();
+            } catch (Exception e) {
+                System.out.println("Error " + e);
+            } finally {
+                this.cerrarConexion();
+            }
+        } else {
+            exito = false;
+        }
+        return exito;
+    }
+
+    public boolean validarParaDarDeBaja(Usuario usuario) {
+        boolean respuesta = true;
+
+        //validando que no sea becario.
+        this.abrirConexion();
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+usuario.getIdTipoUsuario()+" WHERE ID_USUARIO = '"+usuario.getIdUsuario()+"'";
-            stmt.execute(sql);
-            exito = true;
+            String sql = "SELECT * FROM usuario where ID_USUARIO = '" + usuario.getIdUsuario() + " AND ID_TIPO_USUARIO NOT IN (2)'";
+            ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
-        }catch (Exception e) {
+            while (rs.next()) {
+                respuesta = false;
+            }
+
+        } catch (Exception e) {
             System.out.println("Error " + e);
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
-        return exito;
+
+        //validando que no sea un candidato con expediente abierto.
+        ExpedienteDAO expDao = new ExpedienteDAO();
+        respuesta = !expDao.expedienteAbierto(usuario.getNombreUsuario());
+
+        //validando que si es administrador entonces que almenos exista otro administrador.
+        boolean admin = false;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM usuario where ID_USUARIO = '" + usuario.getIdUsuario() + " AND ID_TIPO_USUARIO IN (9)'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            while (rs.next()) {
+                //si es administrador
+                admin = true;
+            }
+
+            int N_ADMIN = 1;
+            if (admin) {
+                stmt = conn.createStatement();
+                String sql2 = "SELECT count(*) as N_ADMIN FROM usuario where ID_TIPO_USUARIO IN (9)'";
+                ResultSet rs2 = stmt.executeQuery(sql);
+                this.cerrarConexion();
+
+                while (rs.next()) {
+                    //verificando que sean mas de 1 administrador
+                    N_ADMIN = rs.getInt("N_ADMIN");
+                }
+            }
+
+            if (N_ADMIN == 1) {
+                respuesta = false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        } finally {
+            this.cerrarConexion();
+        }
+
+        //validando que si usuario del consejo de becas entonces que almenos exista otro usuario del consejo de becas.
+        boolean cbic = false;
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM usuario where ID_USUARIO = '" + usuario.getIdUsuario() + " AND ID_TIPO_USUARIO IN (8)'";
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+            while (rs.next()) {
+                //si es usuario del consejo de becas
+                cbic = true;
+            }
+
+            int N_CBIC = 1;
+            if (admin) {
+                stmt = conn.createStatement();
+                String sql2 = "SELECT count(*) as N_CBIC FROM usuario where ID_TIPO_USUARIO IN (8)'";
+                ResultSet rs2 = stmt.executeQuery(sql);
+                this.cerrarConexion();
+
+                while (rs.next()) {
+                    //verificando que sean mas de 1 usuario de consejo de becas
+                    N_CBIC = rs.getInt("N_CBIC");
+                }
+            }
+
+            if (N_CBIC == 1) {
+                respuesta = false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        } finally {
+            this.cerrarConexion();
+        }
+
+        return respuesta;
     }
 
     public Usuario consultarPorNombreUsuario(String nombre_usuario) {
@@ -249,7 +355,7 @@ public class UsuarioDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre_usuario+"'";
+            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre_usuario + "'";
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
             while (rs.next()) {
@@ -269,39 +375,38 @@ public class UsuarioDAO extends ConexionBD {
 
         return usuario;
     }
-    
+
     //sirve para detectar si el nombre de usuario ya esta repetido en la base de datos.
-    public boolean nombreDeUsuarioRepetido(String nombre_usuario){
+    public boolean nombreDeUsuarioRepetido(String nombre_usuario) {
         boolean respuesta = true;
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT NOMBRE_USUARIO FROM usuario where NOMBRE_USUARIO = '" +nombre_usuario+"'";
+            String sql = "SELECT NOMBRE_USUARIO FROM usuario where NOMBRE_USUARIO = '" + nombre_usuario + "'";
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
-            while (rs.next()) {                
+            while (rs.next()) {
                 respuesta = false;
                 break;
             }
 
         } catch (Exception e) {
             System.out.println("Error " + e);
-        }                
+        }
         return respuesta;
     }
-    
-    
+
     public Integer obtenerIdUsuario(String nombre_usuario) {
-        Integer idUsuario=0;
+        Integer idUsuario = 0;
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_USUARIO FROM usuario where NOMBRE_USUARIO = '" + nombre_usuario+"'";
+            String sql = "SELECT ID_USUARIO FROM usuario where NOMBRE_USUARIO = '" + nombre_usuario + "'";
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
             while (rs.next()) {
                 idUsuario = rs.getInt("ID_USUARIO");
-                
+
             }
 
         } catch (Exception e) {
@@ -310,26 +415,25 @@ public class UsuarioDAO extends ConexionBD {
 
         return idUsuario;
     }
-    
 
-    public boolean actualizarRolPorIdUsuario(int id, int idRol){
+    public boolean actualizarRolPorIdUsuario(int id, int idRol) {
         boolean exito = false;
-        
+
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = "+ idRol+" WHERE ID_USUARIO = "+id;
+            String sql = "UPDATE USUARIO SET ID_TIPO_USUARIO = " + idRol + " WHERE ID_USUARIO = " + id;
             stmt.execute(sql);
             exito = true;
             this.cerrarConexion();
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error " + e);
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
         return exito;
     }
-    
+
     //consultar todos los correos de los usuarios
     public ArrayList<String> consultarTodosLosCorreos() {
         ArrayList<String> lista = new ArrayList<String>();
@@ -345,24 +449,24 @@ public class UsuarioDAO extends ConexionBD {
             }
         } catch (Exception e) {
             System.out.println("Error " + e);
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
 
         return lista;
     }
-    
+
     public ArrayList<String> consultarCorreosPorID(Integer[] userID) {
         ArrayList<String> lista = new ArrayList<String>();
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
             String sql = "SELECT EMAIL FROM USUARIO, DETALLE_USUARIO WHERE USUARIO.ID_USUARIO = DETALLE_USUARIO.ID_USUARIO AND USUARIO.ID_USUARIO IN (";
-            for( int i = 0 ; i < userID.length; i++ ) {
-                sql = sql + userID[i]+",";
+            for (int i = 0; i < userID.length; i++) {
+                sql = sql + userID[i] + ",";
             }
-            String newSQL = sql.substring(0, sql.length()-1)+")";
-            
+            String newSQL = sql.substring(0, sql.length() - 1) + ")";
+
             ResultSet rs = stmt.executeQuery(newSQL);
             this.cerrarConexion();
             while (rs.next()) {
@@ -371,7 +475,7 @@ public class UsuarioDAO extends ConexionBD {
             }
         } catch (Exception e) {
             System.out.println("Error " + e);
-        }finally{
+        } finally {
             this.cerrarConexion();
         }
 

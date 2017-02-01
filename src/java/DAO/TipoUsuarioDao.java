@@ -77,4 +77,38 @@ public class TipoUsuarioDao extends ConexionBD{
         return lista;
     }
     
+    //consultar todos menos becarios.
+    public ArrayList<TipoUsuario> consultarTodosMenosBecarios() {
+        ArrayList<TipoUsuario> lista = new ArrayList<TipoUsuario>();
+        TipoUsuario temp = new TipoUsuario();
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM TIPO_USUARIO WHERE TIPO_USUARIO NOT IN('BECARIO')" ;
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            while (rs.next()) {
+                temp = new TipoUsuario();
+                
+                int ID_TIPO_USUARIO = rs.getInt("ID_TIPO_USUARIO");
+                String TIPO_USUARIO = rs.getString("TIPO_USUARIO");
+                String DESCRIPCION_TIPO_USUARIO = rs.getString("DESCRIPCION_TIPO_USUARIO");
+                                
+                temp.setIdTipoUsuario(ID_TIPO_USUARIO);
+                temp.setTipoUsuario(TIPO_USUARIO);
+                temp.setDescripcionTipoUsuario(DESCRIPCION_TIPO_USUARIO);
+                
+                lista.add(temp);
+                
+            }
+            
+            this.cerrarConexion();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return lista;
+    }
+    
 }

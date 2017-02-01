@@ -245,7 +245,7 @@
                     //realizando la consulta
                     conexionbd = new ConexionBD();
                     rs = conexionbd.consultaSql(consultaSql);
-                    Utilidades.nuevaBitacora(3, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , request.getSession().getAttribute("user").toString(), consultaSql);
+                    Utilidades.nuevaBitacora(3, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se consulto los usuarios.", consultaSql);
                     //con el rs se llenara la tabla de resultados
                 } catch (Exception ex) {
 

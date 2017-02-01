@@ -201,11 +201,12 @@
                             <%
                                 TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
                                 ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
-                                listaTiposDeUsuarios = tipoUsuarioDao.consultarTodos();
+                                listaTiposDeUsuarios = tipoUsuarioDao.consultarTodosMenosBecarios();
                                 for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
                                     out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");
                                 }
                             %>    
+                        </select>   
                         </select> 
                         <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.ID_TIPO_USUARIO.$error.required">El Tipo de Usuario es requerido.</span>
 
