@@ -15,12 +15,10 @@
     String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
     Integer idFacultad = 0;
-    String nombreFacultad="";
      try{
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
         idFacultad = DetUsDao.obtenerFacultad(user);
-        nombreFacultad = DetUsDao.obtenerNombreFacultad(user);
     } catch (Exception e){
         e.printStackTrace();
     }
@@ -69,9 +67,8 @@
             </div>
         </div>
 
-         <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-    <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
-    <p class="text-right" style="font-weight:bold;">Facultad: <%= nombreFacultad %></p>
+        <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
+        <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
 
         <%-- todo el menu esta contenido en la siguiente linea
         el menu puede ser cambiado en la pagina menu.jsp --%>
@@ -237,7 +234,7 @@
                         <h5>Resultados</h5>
                         <%-- <div class="col-md-1"></div>--%>
                         <div class="col-md-12">
-                            <table id="tablaAcuerdos" class="table table-bordered text-center">
+                            <table  id="tablaResultados" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -334,16 +331,17 @@
 </div>    
 
 
-<script src="js/jquery.min.js"></script>
+        <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
+        <script src="js/scripts.js"></script>
         <script src="js/solicitudAcuerdosPendientesComisionBecas.js"></script>
         <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-    $('#tablaAcuerdos').DataTable(
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function() {
+    $('#tablaResultados').DataTable(
             {
                  "language": 
 {
@@ -373,16 +371,43 @@
             }
                 );
 } );
-                                                $(function () {
-                                                    $('.input-group.date').datepicker({
-                                                        format: 'yyyy-mm-dd',
-                                                        calendarWeeks: true,
-                                                        todayHighlight: true,
-                                                        autoclose: true
-                                                    });
-                                                });
-        </script>
-
+    
+                                           $(function () {
+        $('#fIngresoIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fIngresoFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+        $('#fCierreIni').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fCierreFin').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: new Date()
+        }).on('change.dp', function (e) {
+            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
+        });
+    });
+    
+</script>
 </body>
 </html>
-
