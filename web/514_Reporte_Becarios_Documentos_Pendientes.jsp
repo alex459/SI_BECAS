@@ -141,7 +141,7 @@
                                             <div class="col-md-8">
                                                 <br>
                                               <select id="selectbasic" name="ID_FACULTAD" class="form-control">
-                                                            <option value="0">SELECCIONE FACULTAD</option>    
+                                                            <option value="0">Seleccione facultad</option>    
                                                                 <%
                                                                     FacultadDAO facultadDao = new FacultadDAO();
                                                                     ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();

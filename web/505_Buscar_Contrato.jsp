@@ -137,7 +137,7 @@
                                         
                                                 <div class="col-md-6">   
                                                     <label for="textinput">Expediente :</label>  
-                                                         <input id="ID_EXPEDIENTE" name="ID_EXPEDIENTE" type="text" placeholder="Ingrese numero de expediente a buscar" class="form-control input-md" ng-model="datos.idexpediente" ng-pattern="/^[0-9]*$/" minlength="1" maxlength="4">
+                                                         <input id="ID_EXPEDIENTE" name="ID_EXPEDIENTE" type="text" placeholder="Ingrese número de expediente a buscar" class="form-control input-md" ng-model="datos.idexpediente" ng-pattern="/^[0-9]*$/" minlength="1" maxlength="4">
                                                             <span class="text-danger" ng-show="solicitudAsesoriaContrato.ID_EXPEDIENTE.$error.minlength">Minimo 1 caracteres.</span>
                                                             <span class="text-danger" ng-show="solicitudAsesoriaContrato.ID_EXPEDIENTE.$error.pattern">Solo se permiten numeros. (0-9).</span>
                                 
@@ -163,7 +163,7 @@
                                                 <div class="col-md-6">
                                                     <label for="textinput">Facultad: </label>
                                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">
-                                                            <option value="0">SELECCIONE FACULTAD</option>    
+                                                            <option value="0">Seleccione facultad</option>    
                                                                 <%
                                                                     FacultadDAO facultadDao = new FacultadDAO();
                                                                     ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
