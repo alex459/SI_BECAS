@@ -57,7 +57,7 @@
 
     ConexionBD conexionBD = new ConexionBD();
 
-    String consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, E.ID_EXPEDIENTE,CONCAT(IFNULL(DU.DEPARTAMENTO, ''), ' ',F.FACULTAD ) AS UNIDAD, TD.TIPO_DOCUMENTO, D.FECHA_SOLICITUD, P.ID_PROGRESO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE D.ID_DOCUMENTO = " + id_documento;
+    String consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ', IFNULL(DU.NOMBRE2_DU, ''), ' ', DU.APELLIDO1_DU, ' ', IFNULL(DU.APELLIDO2_DU, '')) AS NOMBRES, U.NOMBRE_USUARIO, E.ID_EXPEDIENTE,CONCAT(IFNULL(DU.DEPARTAMENTO, ''), ' ',F.FACULTAD ) AS UNIDAD, TD.TIPO_DOCUMENTO, D.FECHA_SOLICITUD, P.ID_PROGRESO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE D.ID_DOCUMENTO = " + id_documento;
     ResultSet rs = null;
 
     String nombres = new String();
@@ -320,7 +320,7 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
                                     <fieldset class="custom-border">
-                                        <legend class="custom-border"> Resolucion</legend>
+                                        <legend class="custom-border"> Resolución</legend>
                                         <%if (accion.equals("insertar")) {%>
                                         <form  name="resolverSolComisionBecas" action="ResolverAcuerdoJuntaDirectiva" method="POST" enctype="multipart/form-data" novalidate>           
 
@@ -336,11 +336,11 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label>Observacion:</label>
+                                                    <label>Observación:</label>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observacion del documento</span><br>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observación del documento</span><br>
                                                 </div>                                                            
                                                 <div class="col-md-1"></div>
                                             </div>
@@ -359,14 +359,14 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
-                                                            <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoCorreccion()"> Solicitar Correccion
+                                                            <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoCorreccion()"> Solicitar Corrección
                                                         </label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1"></div>   
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolución.</span>
                                             </div> 
                                             <%if (id_p == 1 || id_p == 10 || id_p == 12 || id_p == 13 || id_p == 20) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
@@ -374,7 +374,7 @@
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%> 
                                             <div class="row" ng-show="mostrartipocorrecion">
-                                                <div class="text-center"><br><br><label>Seleccione el Tipo de Correccion a solicitar:</label></div>
+                                                <div class="text-center"><br><br><label>Seleccione el Tipo de Corrección a solicitar:</label></div>
                                                 <div class="col-md-4"></div> 
                                                 <div class="col-md-3">
                                                     <label class="form-control-static" ng-click="">
@@ -389,20 +389,20 @@
                                                 <div class="col-md-2"></div>                                                                                                 
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de correccion.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de corrección.</span>
                                             </div> 
                                             <%}%>
                                             <%if (id_p == 20) {%>
                                             <div class="row" ng-show="mostrarfechaprorroga">
                                                 <br><br>
                                                 <div class="col-md-6">
-                                                    <label>Ingrese la fecha de fin de la prorroga:</label>
+                                                    <label>Ingrese la fecha de fin de la prórroga:</label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="input-group date">
                                                         <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="fecharequerida"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                                                     </div>
-                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.fechaCierre.$error.required">Ingrese una fecha de fin de prorroga.</span>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.fechaCierre.$error.required">Ingrese una fecha de fin de prórroga.</span>
                                                 </div>                                                
                                             </div>
                                             <%}%>
@@ -459,7 +459,7 @@
                                                 </div>
                                                 <div class="col-md-7">
                                                     <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observacion del documento</span><br>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observación del documento</span><br>
                                                 </div>                                                            
                                                 <div class="col-md-1"></div>
                                             </div>
@@ -478,14 +478,14 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
-                                                            <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoCorreccion()"> Solicitar Correccion
+                                                            <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true" ng-click="CambiarEstadoCorreccion()"> Solicitar Corrección
                                                         </label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1"></div>   
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolución.</span>
                                             </div> 
                                             <%if (id_p == 1 || id_p == 10 || id_p == 12 || id_p == 13 || id_p == 20) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
@@ -493,7 +493,7 @@
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
-                                                <div class="text-center"><br><br><label>Seleccione el Tipo de Correccion a solicitar:</label></div>
+                                                <div class="text-center"><br><br><label>Seleccione el Tipo de Corrección a solicitar:</label></div>
                                                 <div class="col-md-4"></div> 
                                                 <div class="col-md-3">
                                                     <label class="form-control-static" ng-click="">
@@ -508,7 +508,7 @@
                                                 <div class="col-md-2"></div>                                                                                                 
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de correccion.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de corrección.</span>
                                             </div> 
                                             <%}%>
                                             <%if (id_p == 20) {%>
