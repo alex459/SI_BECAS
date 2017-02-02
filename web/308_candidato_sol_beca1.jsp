@@ -3,6 +3,7 @@
     Created on : 10-16-2016, 05:09:17 PM
     Author     : MauricioBC
 --%>
+<%@page import="POJO.DetalleUsuario"%>
 <%@page import="POJO.Expediente"%>
 <%@page import="DAO.ExpedienteDAO"%>
 <%@page import="POJO.Facultad"%>
@@ -94,7 +95,9 @@
     } catch (Exception e) {
         e.printStackTrace();
     }
-
+    //Obteniendo Datos personales registrados
+    DetalleUsuarioDAO detDao = new DetalleUsuarioDAO();
+    DetalleUsuario detalle = detDao.consultarPorUser(user);
 
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -143,10 +146,10 @@
     </head>
 
 
-    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos =<%=departamentosJSON%>; municipios =<%=municipiosJSON%>; facultad = '<%=facultad.getFacultad()%>'; user = '<%=user%>'; nombreOferta = '<%=nombreOferta%>'; nombreInstitucion = '<%=nombreInstitucion%>'; duracion = '<%=duracion%>'; pais = '<%=pais%>'; tipoBeca = '<%=tipoBeca%>';">
+    <body ng-app = "solicitudbecaApp" ng-controller="solicitudCtrl" ng-init="departamentos =<%=departamentosJSON%>; municipios =<%=municipiosJSON%>; facultad = '<%=facultad.getFacultad()%>'; user = '<%=user%>'; nombreOferta = '<%=nombreOferta%>'; nombreInstitucion = '<%=nombreInstitucion%>'; duracion = '<%=duracion%>'; pais = '<%=pais%>'; tipoBeca = '<%=tipoBeca%>'; data.nombre = '<%=detalle.getNombre1Du()%>'; data.nombre2 = '<%=detalle.getNombre2Du()%>'; data.apellido1 = '<%=detalle.getApellido1Du()%>'; data.apellido2 = '<%=detalle.getApellido2Du()%>'; data.genero = '<%=detalle.getGenero()%>';">
 
     <div class="container-fluid" ng-init="oferta={nombre:'<%=nombreOferta%>',institucion: '<%=nombreInstitucion%>'}" >
-        <H3 class="text-center" style="color:#E42217;">Solicitud de beca</H3>
+        <H3 class="text-center" style="color:#E42217;">Solicitud de Beca</H3>
         <fieldset class="custom-border">
             <legend class="custom-border">Solicitud de beca de postgrado</legend>
             <%if (expediente.getIdProgreso() == 5) {%>

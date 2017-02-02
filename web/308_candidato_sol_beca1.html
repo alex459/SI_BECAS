@@ -18,27 +18,27 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <label for="textinput">Primer nombre</label>
+                    <label for="textinput">Primer Nombre</label>
                     <input id="nombre1" name="nombre1" placeholder="ingrese su primer nombre" class="form-control input-md" ng-model = "data.nombre" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1.$error.required">El Primer Nombre es requerido.</span>
                     <span class="text-danger" ng-show="solicitud.nombre1.$error.minlength">Minimo 3 caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.nombre1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
-                    <label for="textinput">Segundo nombre</label>
+                    <label for="textinput">Segundo Nombre</label>
                     <input id="textinput" name="nombre2"  placeholder="ingrese su segundo nombre" class="form-control input-md" ng-model = "data.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
                     <span class="text-danger" ng-show="solicitud.nombre2.$error.minlength">Minimo 3 caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.nombre2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
-                    <label for="textinput">Primer apellido</label>
+                    <label for="textinput">Primer Apellido</label>
                     <input name="apellido1" type="text" placeholder="ingrese su primer apellido" class="form-control input-md" ng-model ="data.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1.$error.required">El Primer Apellido es requerido.</span>
                     <span class="text-danger" ng-show="solicitud.apellido1.$error.minlength">Minimo 3 caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.apellido1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
-                    <label for="textinput">Segundo apellido</label>
+                    <label for="textinput">Segundo Apellido</label>
                     <input name="apellido2" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md" ng-model ="data.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
                     <span class="text-danger" ng-show="solicitud.apellido2.$error.minlength">Minimo 3 caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.apellido2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
@@ -46,14 +46,14 @@
             </div></br>
             <div class="row">
                 <div class="col-md-4">
-                    <label for="textinput">Fecha de nacimiento</label>
+                    <label for="textinput">Fecha de Nacimiento</label>
                     <div class="input-group date">
-                        <input type="text" name="fechaNacimiento" class="form-control" ng-disabled="true" ng-model="data.fecha_nacimiento" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                        <input type="text" name="fechaNacimiento" class="form-control" ng-disabled="" ng-model="data.fecha_nacimiento" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                     </div>
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.fechaNacimiento.$error.required">Debe de introducir su fecha de nacimiento.</span>
                 </div>
                 <div class="col-md-4">
-                    <label for="textinput">Lugar de nacimiento, Departamento</label>
+                    <label for="textinput">Lugar de Nacimiento, Departamento</label>
                     <select name="departamentoNacimiento" class="form-control" ng-model ="data.departamento_nacimiento" ng-change="activarmunicipios()" ng-required="true">
                         <option ng-repeat="option in departamentos" value="{{option.idDepartamento}}">{{option.nombreDepartamento}}</option>
                     </select>
@@ -81,7 +81,7 @@
                             <input type="radio" name="genero" value="F" ng-model ="data.genero" ng-required="true">
                             Femenino
                         </label> <br>
-                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.genero.$error.required">Debe de Seleccionar su genero.</span>
+                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.genero.$error.required">Debe de Seleccionar su género.</span>
                     </div>    
                 </div>
 
@@ -118,7 +118,7 @@
             </div></br>
             <div class="row">
                 <div class="col-md-2">
-                    <h5>Teléfono</h5>
+                    <h4>Teléfono</h4>
                 </div>
             </div>
             <div class="row">
