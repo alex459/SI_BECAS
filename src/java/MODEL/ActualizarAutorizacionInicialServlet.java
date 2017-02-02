@@ -40,6 +40,10 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
             String accCartaEscuela = request.getParameter("accCartaEscuela");
             String accCartaInstitucion = request.getParameter("accCartaInstitucion");
             String accDui = request.getParameter("accDui");
+            String accNombramiento = request.getParameter("accNombramiento");
+            String accCartaJefe = request.getParameter("accCartaJefe");
+            String accConstanciaExpediente = request.getParameter("accConstanciaExpediente");
+            String accConstanciaMedica = request.getParameter("accConstanciaMedica");
 
             int id_documento = 0;
             Date fechaHoy = new Date();
@@ -227,7 +231,7 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
                 case "actualizar":
                     //Actualizar Documento
                     //Obteniendo el id del documento y el documento                    
-                    filePart = request.getPart("dui");
+                    filePart = request.getPart("Dui");
                     if (filePart != null) {
                         archivo = filePart.getInputStream();
                     }
@@ -258,7 +262,203 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
                     break;
             }
             
-            if(accCarta.equals("ninguna") && accCartaEscuela.equals("ninguna") && accCartaInstitucion.equals("ninguna")){
+            //Tipo Nombramiento
+            switch (accNombramiento) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 161);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("Nombramiento");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 161);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
+                        tip= 161;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            //Carta Jefe Escuela o Departamento
+            switch (accCartaJefe) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 123);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("CartaJefe");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 123);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
+                        tip= 123;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            //Constancia que refleje que no tiene pendiente Expediente disciplinario abierto
+            switch (accConstanciaExpediente) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 160);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("ConstanciaExpediente");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 160);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
+                        tip= 160;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            //Constancia médica extendida por Bienestar Universitario
+            switch (accConstanciaMedica) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 129);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("ConstanciaMedica");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 129);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
+                        tip= 129;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            if(accCarta.equals("ninguna") && accCartaEscuela.equals("ninguna") && accCartaInstitucion.equals("ninguna") && accDui.equals("ninguna") && accNombramiento.equals("ninguna") && accCartaJefe.equals("ninguna") && accConstanciaExpediente.equals("ninguna") && accConstanciaMedica.equals("ninguna")){
                 //no se realizo ninguna accion, Conservar estado y progreso 
             } else{
                 //CAMBIAR DOCUMENTO,PROGRESO Y ESTADO A PENDIENTE

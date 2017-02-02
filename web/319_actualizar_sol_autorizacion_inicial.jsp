@@ -269,6 +269,130 @@
                             <div class="col-md-1"></div>
                         </div>
                         
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-static"> Tipo de Nombramiento:</label>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accNombramiento"  value="ninguna"  ng-model ="accNombramiento" ng-required="true" ng-click="NadaNombramiento()">
+                                                Ninguna
+                                            </label>
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accNombramiento"  value="actualizar"  ng-model ="accNombramiento" ng-required="true" ng-click="ActualizarNombramiento()">
+                                                Actualizar
+                                            </label>                                             
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" ng-show="mostrarNombramiento">
+                                            <input type="file" class="" name="Nombramiento" accept="application/pdf" ng-model="Nombramiento" valid-file ng-required="mostrarNombramiento">
+                                            <span class="text-danger" ng-show="solicitudPermisoInicial.Nombramiento.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-static"> Carta del Jefe(a) donde se especifique que fue elegido(a) sometiéndose al proceso de selección respectivo:</label>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCartaJefe"  value="ninguna"  ng-model ="accCartaJefe" ng-required="true" ng-click="NadaCartaJefe()">
+                                                Ninguna
+                                            </label>
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accCartaJefe"  value="actualizar"  ng-model ="accCartaJefe" ng-required="true" ng-click="ActualizarCartaJefe()">
+                                                Actualizar
+                                            </label>                                             
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" ng-show="mostrarCartaJefe">
+                                            <input type="file" class="" name="CartaJefe" accept="application/pdf" ng-model="CartaJefe" valid-file ng-required="mostrarCartaJefe">
+                                            <span class="text-danger" ng-show="solicitudPermisoInicial.CartaJefe.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-static"> Constancia que refleje que no tiene pendiente Expediente disciplinario abierto:</label>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accConstanciaExpediente"  value="ninguna"  ng-model ="accConstanciaExpediente" ng-required="true" ng-click="NadaConstanciaExpediente()">
+                                                Ninguna
+                                            </label>
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accConstanciaExpediente"  value="actualizar"  ng-model ="accConstanciaExpediente" ng-required="true" ng-click="ActualizarConstanciaExpediente()">
+                                                Actualizar
+                                            </label>                                             
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" ng-show="mostrarConstanciaExpediente">
+                                            <input type="file" class="" name="ConstanciaExpediente" accept="application/pdf" ng-model="ConstanciaExpediente" valid-file ng-required="mostrarConstanciaExpediente">
+                                            <span class="text-danger" ng-show="solicitudPermisoInicial.ConstanciaExpediente.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-static"> Constancia médica extendida por Bienestar Universitario:</label>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accConstanciaMedica"  value="ninguna"  ng-model ="accConstanciaMedica" ng-required="true" ng-click="NadaConstanciaMedica()">
+                                                Ninguna
+                                            </label>
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accConstanciaMedica"  value="actualizar"  ng-model ="accConstanciaMedica" ng-required="true" ng-click="ActualizarConstanciaMedica()">
+                                                Actualizar
+                                            </label>                                             
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" ng-show="mostrarConstanciaMedica">
+                                            <input type="file" class="" name="ConstanciaMedica" accept="application/pdf" ng-model="ConstanciaMedica" valid-file ng-required="mostrarConstanciaMedica">
+                                            <span class="text-danger" ng-show="solicitudPermisoInicial.ConstanciaMedica.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        
                                                                         
                         <div class="row text-center">
                             <input type="hidden" name="idExpediente" value="<%=idexp%>">

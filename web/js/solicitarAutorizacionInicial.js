@@ -117,6 +117,54 @@ solicitudApp.controller('SolicitarAutorizacionCtrl',['$scope', function ($scope)
         $scope.mostrarDui = $scope.mostrarDui = false;
         $scope.mostrarDui = $scope.mostrarDui = !$scope.mostrarDui;
     };
+    
+    $scope.accNombramiento = "ninguna";
+    $scope.mostrarNombramiento = false;
+    $scope.NadaNombramiento = function (){
+        $scope.accNombramiento = $scope.accNombramiento="ninguna";        
+        $scope.mostrarNombramiento = $scope.mostrarNombramiento = false;
+    };
+    $scope.ActualizarNombramiento = function (){
+        $scope.accNombramiento = $scope.accNombramiento="actualizar";
+        $scope.mostrarNombramiento = $scope.mostrarNombramiento = false;
+        $scope.mostrarNombramiento = $scope.mostrarNombramiento = !$scope.mostrarNombramiento;
+    };
+    
+    $scope.accCartaJefe = "ninguna";
+    $scope.mostrarCartaJefe = false;
+    $scope.NadaCartaJefe = function (){
+        $scope.accCartaJefe = $scope.accCartaJefe="ninguna";        
+        $scope.mostrarCartaJefe = $scope.mostrarCartaJefe = false;
+    };
+    $scope.ActualizarCartaJefe = function (){
+        $scope.accCartaJefe = $scope.accCartaJefe="actualizar";
+        $scope.mostrarCartaJefe = $scope.mostrarCartaJefe = false;
+        $scope.mostrarCartaJefe = $scope.mostrarCartaJefe = !$scope.mostrarCartaJefe;
+    };
+    
+    $scope.accConstanciaExpediente = "ninguna";
+    $scope.mostrarConstanciaExpediente = false;
+    $scope.NadaConstanciaExpediente = function (){
+        $scope.accConstanciaExpediente = $scope.accConstanciaExpediente="ninguna";        
+        $scope.mostrarConstanciaExpediente = $scope.mostrarConstanciaExpediente = false;
+    };
+    $scope.ActualizarConstanciaExpediente = function (){
+        $scope.accConstanciaExpediente = $scope.accConstanciaExpediente="actualizar";
+        $scope.mostrarConstanciaExpediente = $scope.mostrarConstanciaExpediente = false;
+        $scope.mostrarConstanciaExpediente = $scope.mostrarConstanciaExpediente = !$scope.mostrarConstanciaExpediente;
+    };
+    
+    $scope.accConstanciaMedica = "ninguna";
+    $scope.mostrarConstanciaMedica = false;
+    $scope.NadaConstanciaMedica = function (){
+        $scope.accConstanciaMedica = $scope.accConstanciaMedica="ninguna";        
+        $scope.mostrarConstanciaMedica = $scope.mostrarConstanciaMedica = false;
+    };
+    $scope.ActualizarConstanciaMedica = function (){
+        $scope.accConstanciaMedica = $scope.accConstanciaMedica="actualizar";
+        $scope.mostrarConstanciaMedica = $scope.mostrarConstanciaMedica = false;
+        $scope.mostrarConstanciaMedica = $scope.mostrarConstanciaMedica = !$scope.mostrarConstanciaMedica;
+    };
   }]);
   
   solicitudApp.directive('validFile',function(){
