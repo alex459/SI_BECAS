@@ -90,7 +90,8 @@
             consultaSql = consultaSql.concat(" AND A.ID_ACCION BETWEEN " + id_accion_menor + " AND " + id_accion_mayor);
 
         }
-
+        
+        consultaSql = consultaSql.concat(" ORDER BY B.ID_BITACORA ASC");
         //out.write(consultaSql);
         //realizando la consulta
         rs = conexionBD.consultaSql(consultaSql);

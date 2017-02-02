@@ -59,7 +59,7 @@ public class ConexionBD {
             //ejemplo this.contrasenia = ""
             this.contrasenia = database_password.toString();  
             
-            System.out.println("Enlace:"+enlace.toString()+" controlador:"+controller.toString()+" usuario:"+database_user.toString()+" clave:"+database_password.toString());
+            //System.out.println("Enlace:"+enlace.toString()+" controlador:"+controller.toString()+" usuario:"+database_user.toString()+" clave:"+database_password.toString());
             
         } catch (Exception ex) {
             
