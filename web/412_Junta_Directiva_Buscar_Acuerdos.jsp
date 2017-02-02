@@ -76,6 +76,7 @@
         <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
         <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
+        
     <div class="row">
         <div class="col-md-4">
             <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -674,23 +675,7 @@
         }).on('change.dp', function (e) {
             $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
         });
-        $('#fCierreIni').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        }).on('change.dp', function (e) {
-            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
-        });
-        $('#fCierreFin').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true,
-            startDate: new Date()
-        }).on('change.dp', function (e) {
-            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
-        });
+       
     });
     
 </script>
