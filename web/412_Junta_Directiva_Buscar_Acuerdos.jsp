@@ -3,6 +3,8 @@
     Created on : 11-09-2016, 09:41:03 PM
     Author     : aquel
 --%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
@@ -216,7 +218,8 @@
                     String carnet;
                     Integer id_tipo_documento;
                     String documento;
-                    String fecha1;
+                   
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     ConexionBD conexionbd = null;
 
                     ResultSet rs = null;
@@ -233,7 +236,6 @@
                         carnet = request.getParameter("CARNET");
                         id_tipo_documento = Integer.parseInt(request.getParameter("ID_TIPO_DOCUMENTO"));
                         documento = request.getParameter("ID_TIPO_DOCUMENTO");
-                        fecha1 = request.getParameter("FECHA1");
                         String consultaSql = "";
                         //String pendiente = "PENDIENTE";
                         String aprobado = "APROBADO";
@@ -263,11 +265,9 @@
                         } else {
                             carnet = "";
                         };
-                        if (fecha1 != null) {
-                        } else {
-                            fecha1 = "";
-                        };
-                        consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO, E.ESTADO_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN ('APROBADO','DENEGADO','REVISION') AND TD.DEPARTAMENTO='" + juntaD + "' AND F.ID_FACULTAD='" + idFacultad + "' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'";
+                    
+                    
+                        consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO, E.ESTADO_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN ('APROBADO','DENEGADO','REVISION') AND TD.DEPARTAMENTO='" + juntaD + "' AND F.ID_FACULTAD='" + idFacultad + "' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' ";
                         
                         if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                             java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
