@@ -39,26 +39,26 @@
                                                         <option value="POSTGRADO">POSTGRADO</option>
                                                         <option value="OTRA">OTRA</option>
                                                     </select>
-                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.tipo}}.$error.required">Seleccione el tipo de Educacion.</span>
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.tipo}}.$error.required">Seleccione el tipo de Educación.</span>
                                                 </td>
                                                     <td>
                                                         <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                         <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.grado}}.$error.required">Ingrese el grado alcanzado.</span>
-                                                        <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.minlength">Minimo 10 caracteres.</span>
-                                                        <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.minlength">Mínimo 10 caracteres.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                                                     </td>
                                                 <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
-                                                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.institucion}}.$error.required">Ingrese el nombre de la Institucion.</span>
-                                                        <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.minlength">Minimo 10 caracteres.</span>
-                                                        <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.institucion}}.$error.required">Ingrese el nombre de la Institución.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.minlength">Mínimo 10 caracteres.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                                                 </td>
                                                 <td>
                                                     <div class="input-group date">
                                                         <input type="text" name="{{x.anyo}}" class="form-control" ng-disabled="false" ng-model="aux.auxAnyoEdu[$index]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="aux.auxAnyoEdu[$index]"></i></span>
                                                     </div>
-                                                    <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.required">Ingrese el Año de graduacion del Estudio.</span>
-                                                        <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.min">Año minimo permitido 1940.</span>
-                                                        <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.pattern">Solo se permiten letras digitos. (0-9).</span>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.required">Ingrese el Año de graduación del Estudio.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.min">Año mínimo permitido 1940.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.pattern">Solo se permiten letras dígitos. (0-9).</span>
                                                 </td>
                                                 <td>
                                                     <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarEducacion()">Eliminar</a></td>
@@ -66,7 +66,7 @@
                                         </tbody>
                                     </table>
                                     <div class="row text-center">
-                                        <a href="" class="btn btn-primary" ng-click="agregarEducacion()" ng-show="verAgregarEducacion">Agregar Nueva Educacion</a>
+                                        <a href="" class="btn btn-primary" ng-click="agregarEducacion()" ng-show="verAgregarEducacion">Agregar Nueva Educación</a>
                                     </div>
                                 </div> 
                             </div></br>
@@ -78,7 +78,7 @@
                                         <thead>
                                             <tr class="success">
                                                 <th>No</th>
-                                                <th>Titulo de Proyecto</th>
+                                                <th>Título de Proyecto</th>
                                                 <th>Publicado</th>
                                                 <th>Acción</th>
                                             </tr>
@@ -90,8 +90,8 @@
                                                 <td>
                                                     <input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.titulo}}.$error.required">Ingrese el nombre del proyecto.</span>
-                                                    <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.minlength">Minimo 10 caracteres.</span>
-                                                    <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.minlength">Mínimo 10 caracteres.</span>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                                                 </td>
                                                 <td>
                                                     <div class="row">
@@ -200,11 +200,11 @@
 <script type="text/javascript">
                         $(function () {
                             $('.input-group.date').datepicker({
-                                format: 'yyyy-mm-dd',
-                                calendarWeeks: true,
-                                todayHighlight: true,
+                                calendarWeeks: false,                                
                                 autoclose: true,
-                                startDate: new Date()
+                                startDate: new Date().getFullYear(),
+                                minDate: 1970,
+                                maxDate: new Date().getFullYear(),
                             });
                         });
 

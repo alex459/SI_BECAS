@@ -20,9 +20,9 @@
                                 <div class="col-md-4 col-md-offset-4">
                                     <label for="textinput">Profesión</label>
                                     <input name="profesion" type="text" placeholder="ingrese el nombre de su profesión" class="form-control input-md" ng-model="data.profesion" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
-                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.profesion.$error.required">Ingrese su profesion.</span>
-                                    <span class="text-danger" ng-show="solicitud.profesion.$error.minlength">Minimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.profesion.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.profesion.$error.required">Ingrese su profesión.</span>
+                                    <span class="text-danger" ng-show="solicitud.profesion.$error.minlength">Mínimo 10 caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.profesion.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                                 </div> 
                             </div></br>
                              <div class="row">
@@ -30,8 +30,8 @@
                                     <label for="textinput">Cargo actual</label>
                                     <input name="cargo" type="text" placeholder="ingrese el nombre de su cargo actual" class="form-control input-md" ng-model="data.cargo" ng-required="true" minlength="10" maxlength="50" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.cargo.$error.required">Ingrese su cargo actual.</span>
-                                    <span class="text-danger" ng-show="solicitud.cargo.$error.minlength">Minimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.cargo.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                    <span class="text-danger" ng-show="solicitud.cargo.$error.minlength">Mínimo 10 caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.cargo.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                                 </div> 
                             </div></br>
                              <div class="row">
@@ -39,8 +39,8 @@
                                     <label for="textinput">Departamento (Unidad)</label>
                                     <input name="unidad" type="text" placeholder="ingrese el nombre de su departamento" class="form-control input-md" ng-model="data.unidad" ng-required="true" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.unidad.$error.required">Ingrese la unidad o departamento en el que labora.</span>
-                                    <span class="text-danger" ng-show="solicitud.unidad.$error.minlength">Minimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.unidad.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                    <span class="text-danger" ng-show="solicitud.unidad.$error.minlength">Mínimo 10 caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.unidad.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                                 </div> 
                             </div></br>
                              <div class="row">
@@ -55,7 +55,7 @@
                                     <div class="input-group date">
                                         <input name="fechaContratacion" type="text" class="form-control" ng-disabled="true" ng-model="data.fecha_contratacion" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
-                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.fechaContratacion.$error.required">Ingrese la fecha en que comenzo a laborar en la Universidad de El Salvador.</span>
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.fechaContratacion.$error.required">Ingrese la fecha en que comenzó a laborar en la Universidad de El Salvador.</span>
                                 </div>
                             </div></br>                            
                             <div class="row"></div>

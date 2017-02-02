@@ -21,27 +21,27 @@
                     <label for="textinput">Primer Nombre</label>
                     <input id="nombre1" name="nombre1" placeholder="ingrese su primer nombre" class="form-control input-md" ng-model = "data.nombre" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1.$error.required">El Primer Nombre es requerido.</span>
-                    <span class="text-danger" ng-show="solicitud.nombre1.$error.minlength">Minimo 3 caracteres.</span>
-                    <span class="text-danger" ng-show="solicitud.nombre1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1.$error.minlength">Mínimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Segundo Nombre</label>
                     <input id="textinput" name="nombre2"  placeholder="ingrese su segundo nombre" class="form-control input-md" ng-model = "data.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
-                    <span class="text-danger" ng-show="solicitud.nombre2.$error.minlength">Minimo 3 caracteres.</span>
-                    <span class="text-danger" ng-show="solicitud.nombre2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                    <span class="text-danger" ng-show="solicitud.nombre2.$error.minlength">Mínimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre2.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Primer Apellido</label>
                     <input name="apellido1" type="text" placeholder="ingrese su primer apellido" class="form-control input-md" ng-model ="data.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1.$error.required">El Primer Apellido es requerido.</span>
-                    <span class="text-danger" ng-show="solicitud.apellido1.$error.minlength">Minimo 3 caracteres.</span>
-                    <span class="text-danger" ng-show="solicitud.apellido1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1.$error.minlength">Mínimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Segundo Apellido</label>
                     <input name="apellido2" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md" ng-model ="data.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
-                    <span class="text-danger" ng-show="solicitud.apellido2.$error.minlength">Minimo 3 caracteres.</span>
-                    <span class="text-danger" ng-show="solicitud.apellido2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                    <span class="text-danger" ng-show="solicitud.apellido2.$error.minlength">Mínimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido2.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                 </div>  
             </div></br>
             <div class="row">

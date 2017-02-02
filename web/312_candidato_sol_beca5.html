@@ -21,7 +21,7 @@
                             <div class="row no-gutter">
                                 <div class="col-md-12">
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="labeltitulo" value="Titulo a Obtener:" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
+                                        <input type="text" class="form-control" id="labeltitulo" value="Título a Obtener:" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
                                     </div>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" id="titulo" ng-value="nombreOferta" ng-disabled="true">    
@@ -67,6 +67,7 @@
                                 <div class="col-md-12">     
                                     <br><br><label>Beneficios que espera obtener:</label>
                                     <textarea class="form-control" name="beneficios" ng-model="data.beneficios" ng-required="true" minlength="10" maxlength="1024"></textarea><br>
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.beneficios.$error.required">Ingrese los beneficios que espera obtener.</span>
                                 </div>
                             </div> 
                             <div class="row">
