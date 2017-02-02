@@ -49,6 +49,9 @@ public class loginLDAPServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NoSuchAlgorithmException, KeyManagementException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        int tiempo_de_logeo = 60;
+        
         try (PrintWriter out = response.getWriter()) {
 
             // Evitando error de certificacion en del LDAP.
@@ -124,7 +127,7 @@ public class loginLDAPServlet extends HttpServlet {
 
                     if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
                         HttpSession sesion = request.getSession();
-                        sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
+                        sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
                         sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
                         sesion.setAttribute("user", usuario_obj.getNombreUsuario());
                         sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
@@ -154,7 +157,7 @@ public class loginLDAPServlet extends HttpServlet {
                     //
                     if (usuarioDao.login_ldap(usuario_obj.getNombreUsuario())) {
                         HttpSession sesion = request.getSession();
-                        sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
+                        sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
                         sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
                         sesion.setAttribute("user", usuario_obj.getNombreUsuario());
                         sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
@@ -166,7 +169,7 @@ public class loginLDAPServlet extends HttpServlet {
                         //enviar al login.                                               }
                         System.out.println("Credenciales validas LDAP e invalidas en SIABP. Enviando al registro.");
                         HttpSession sesion = request.getSession();
-                        sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
+                        sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
                         sesion.setAttribute("id_user_login", "0");
                         sesion.setAttribute("user", usuario);
                         sesion.setAttribute("rol", "1");
@@ -190,7 +193,7 @@ public class loginLDAPServlet extends HttpServlet {
 
                 if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
                     HttpSession sesion = request.getSession();
-                    sesion.setMaxInactiveInterval(3600); //3600 segundos, 1 hora max para sesion activa            
+                    sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
                     sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
                     sesion.setAttribute("user", usuario_obj.getNombreUsuario());
                     sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
