@@ -101,6 +101,22 @@ solicitudApp.controller('SolicitarAutorizacionCtrl',['$scope', function ($scope)
         $scope.mostrarProyecto = $scope.mostrarProyecto = false;
         $scope.mostrarProyecto = $scope.mostrarProyecto = !$scope.mostrarProyecto;
     };
+    
+    $scope.accDui = "ninguna";
+    $scope.mostrarDui = false;
+    $scope.EliminarDui = function (){
+        $scope.accDui = $scope.accDui="eliminar";        
+        $scope.mostrarDui = $scope.mostrarDui = false;
+    };
+    $scope.NadaDui = function (){
+        $scope.accDui = $scope.accDui="ninguna";        
+        $scope.mostrarDui = $scope.mostrarDui = false;
+    };
+    $scope.ActualizarDui = function (){
+        $scope.accDui = $scope.accDui="actualizar";
+        $scope.mostrarDui = $scope.mostrarDui = false;
+        $scope.mostrarDui = $scope.mostrarDui = !$scope.mostrarDui;
+    };
   }]);
   
   solicitudApp.directive('validFile',function(){

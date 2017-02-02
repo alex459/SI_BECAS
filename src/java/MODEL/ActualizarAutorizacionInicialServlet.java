@@ -39,6 +39,7 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
             String accCarta = request.getParameter("accCarta");
             String accCartaEscuela = request.getParameter("accCartaEscuela");
             String accCartaInstitucion = request.getParameter("accCartaInstitucion");
+            String accDui = request.getParameter("accDui");
 
             int id_documento = 0;
             Date fechaHoy = new Date();
@@ -109,14 +110,14 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
             }
             
             
-            //Carta de Solicitud de la Escuela
+            //Titulo de la UES
             switch (accCartaEscuela) {
                 case "ninguna":
                     //No hacer nada
                     break;
                 case "eliminar":
                     //Obteniendo el id del documento
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 101);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 124);
                     if (id_documento != 0) {
                         //eliminar
                         documentoDao.eliminarDocumento(id_documento);
@@ -131,7 +132,7 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
                     if (filePart != null) {
                         archivo = filePart.getInputStream();
                     }
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 101);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 124);
                     if (id_documento != 0) {
                         //Actualizar
                         documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
@@ -142,7 +143,7 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
                         //Agregar
                         idDoc = documentoDao.getSiguienteId();
                         obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
-                        tip= 101;
+                        tip= 124;
                         tipo = tipoDao.consultarPorId(tip);
 
                         documento.setIdDocumento(idDoc);
@@ -159,14 +160,14 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
             }
             
             
-            //Carta de Solicitud de la Institucion que oferta la beca
+            //Certificación de Notas
             switch (accCartaInstitucion) {
                 case "ninguna":
                     //No hacer nada
                     break;
                 case "eliminar":
                     //Obteniendo el id del documento
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 102);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 128);
                     if (id_documento != 0) {
                         //eliminar
                         documentoDao.eliminarDocumento(id_documento);
@@ -181,7 +182,7 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
                     if (filePart != null) {
                         archivo = filePart.getInputStream();
                     }
-                    id_documento = documentoDao.ExisteDocumento(idExpediente, 102);
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 128);
                     if (id_documento != 0) {
                         //Actualizar
                         documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
@@ -192,7 +193,56 @@ public class ActualizarAutorizacionInicialServlet extends HttpServlet {
                         //Agregar
                         idDoc = documentoDao.getSiguienteId();
                         obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
-                        tip= 102;
+                        tip= 128;
+                        tipo = tipoDao.consultarPorId(tip);
+
+                        documento.setIdDocumento(idDoc);
+                        documento.setIdTipoDocumento(tipo);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setIdExpediente(expediente);
+                        documento.setObservacion(obs);
+                        documento.setEstadoDocumento("INGRESADO");
+                        documentoDao.Ingresar(documento);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            //DUI
+            switch (accDui) {
+                case "ninguna":
+                    //No hacer nada
+                    break;
+                case "eliminar":
+                    //Obteniendo el id del documento
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 126);
+                    if (id_documento != 0) {
+                        //eliminar
+                        documentoDao.eliminarDocumento(id_documento);
+                    } else {
+                        //nada
+                    }
+                    break;
+                case "actualizar":
+                    //Actualizar Documento
+                    //Obteniendo el id del documento y el documento                    
+                    filePart = request.getPart("dui");
+                    if (filePart != null) {
+                        archivo = filePart.getInputStream();
+                    }
+                    id_documento = documentoDao.ExisteDocumento(idExpediente, 126);
+                    if (id_documento != 0) {
+                        //Actualizar
+                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                        documento.setDocumentoDigital(archivo);
+                        documento.setFechaIngreso(sqlDate);
+                        documentoDao.ActualizarDocDig(documento);
+                    } else {
+                        //Agregar
+                        idDoc = documentoDao.getSiguienteId();
+                        obs = "DOCUMENTO ADJUNTO DEL expediente " + idExpediente;
+                        tip= 126;
                         tipo = tipoDao.consultarPorId(tip);
 
                         documento.setIdDocumento(idDoc);

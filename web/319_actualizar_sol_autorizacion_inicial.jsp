@@ -90,18 +90,18 @@
     <body ng-app = "solicitudApp" ng-controller="SolicitarAutorizacionCtrl">
 
         <div class="container-fluid">        
-            <H3 class="text-center" style="color:#E42217;">Editar Solicitud de Autorizacion Inicial</H3>
+            <H3 class="text-center" style="color:#E42217;">Editar Solicitud de Autorización Inicial</H3>
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Solicitud de Autorizacion Inicial</legend>
+                        <legend class="custom-border">Solicitud de Autorización Inicial</legend>
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
                                 <fieldset class="custom-border">
                                     <legend class="custom-border">Documentos Adjuntados</legend>
-                                    <table class="table text-center">
+                                    <table class="table table-bordered text-center">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -143,7 +143,7 @@
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label class="form-control-static"> Carta de Solicitud de Autorizacion Inicial</label>
+                                            <label class="form-control-static"> Carta de Solicitud de Autorización Inicial</label>
                                         </div>   
                                         <div class="col-md-6">
                                             <label class="radio-inline" for="radios-0">
@@ -177,7 +177,7 @@
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label class="form-control-static"> Carta de solicitud de la Escuela o Departamento:</label>
+                                            <label class="form-control-static"> Título de la UES:</label>
                                         </div>   
                                         <div class="col-md-6">
                                             <label class="radio-inline" for="radios-0">
@@ -188,10 +188,7 @@
                                                 <input type="radio" name="accCartaEscuela"  value="actualizar"  ng-model ="accCartaEscuela" ng-required="true" ng-click="ActualizarCartaEscuela()">
                                                 Actualizar
                                             </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaEscuela"  value="eliminar"  ng-model ="accCartaEscuela" ng-required="true" ng-click="EliminarCartaEscuela()">
-                                                Eliminar
-                                            </label> 
+                                            
                                         </div> 
                                     </div>
                                     <div class="row">
@@ -214,7 +211,7 @@
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label class="form-control-static"> Carta de solicitud de la Institucion que oferta la beca:</label>
+                                            <label class="form-control-static"> Certificación de Notas:</label>
                                         </div>   
                                         <div class="col-md-6">
                                             <label class="radio-inline" for="radios-0">
@@ -225,10 +222,7 @@
                                                 <input type="radio" name="accCartaInstitucion"  value="actualizar"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="ActualizarCartaInstitucion()">
                                                 Actualizar
                                             </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaInstitucion"  value="eliminar"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="EliminarCartaInstitucion()">
-                                                Eliminar
-                                            </label> 
+                                            
                                         </div> 
                                     </div>
                                     <div class="row">
@@ -243,6 +237,38 @@
                             </div>
                             <div class="col-md-1"></div>
                         </div>
+                        
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-static"> Copia de DUI:</label>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accDui"  value="ninguna"  ng-model ="accDui" ng-required="true" ng-click="NadaDui()">
+                                                Ninguna
+                                            </label>
+                                            <label class="radio-inline" for="radios-0">
+                                                <input type="radio" name="accDui"  value="actualizar"  ng-model ="accDui" ng-required="true" ng-click="ActualizarDui()">
+                                                Actualizar
+                                            </label>                                             
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" ng-show="mostrarDui">
+                                            <input type="file" class="" name="Dui" accept="application/pdf" ng-model="Dui" valid-file ng-required="mostrarDui">
+                                            <span class="text-danger" ng-show="solicitudPermisoInicial.Dui.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        
                                                                         
                         <div class="row text-center">
                             <input type="hidden" name="idExpediente" value="<%=idexp%>">
