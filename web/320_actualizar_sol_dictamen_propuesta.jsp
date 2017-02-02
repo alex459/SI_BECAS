@@ -75,13 +75,13 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Solicitud de Dictamen de Propuesta</legend>
+                        <legend class="custom-border">Solicitud de Dictamen de Propuesta ante Junta Directiva</legend>
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
                                 <fieldset class="custom-border">
                                     <legend class="custom-border">Documentos Adjuntados</legend>
-                                    <table class="table text-center">
+                                    <table class="table table-bordered text-center">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -111,7 +111,7 @@
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10 text-center">
-                            <label>Seleccione la accion que desea realizar</label>
+                            <label>Seleccione la acción que desea realizar</label>
                         </div>
                         <div class="col-md-1"></div>                        
                     </div>
@@ -168,10 +168,7 @@
                                                 <input type="radio" name="accCartaEscuela"  value="actualizar"  ng-model ="accCartaEscuela" ng-required="true" ng-click="ActualizarCartaEscuela()">
                                                 Actualizar
                                             </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaEscuela"  value="eliminar"  ng-model ="accCartaEscuela" ng-required="true" ng-click="EliminarCartaEscuela()">
-                                                Eliminar
-                                            </label> 
+                                            
                                         </div> 
                                     </div>
                                     <div class="row">
@@ -203,10 +200,7 @@
                                                 <input type="radio" name="accCartaInstitucion"  value="actualizar"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="ActualizarCartaInstitucion()">
                                                 Actualizar
                                             </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaInstitucion"  value="eliminar"  ng-model ="accCartaInstitucion" ng-required="true" ng-click="EliminarCartaInstitucion()">
-                                                Eliminar
-                                            </label> 
+                                            
                                         </div> 
                                     </div>
                                     <div class="row">
@@ -238,10 +232,7 @@
                                                 <input type="radio" name="accPlan"  value="actualizar"  ng-model ="accPlan" ng-required="true" ng-click="ActualizarPlan()">
                                                 Actualizar
                                             </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accPlan"  value="eliminar"  ng-model ="accPlan" ng-required="true" ng-click="EliminarPlan()">
-                                                Eliminar
-                                            </label> 
+                                            
                                         </div> 
                                     </div>
                                     <div class="row">
@@ -273,10 +264,6 @@
                                                 <input type="radio" name="accConstanciaRRHH"  value="actualizar"  ng-model ="accConstanciaRRHH" ng-required="true" ng-click="ActualizarConstanciaRRHH()">
                                                 Actualizar
                                             </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accConstanciaRRHH"  value="eliminar"  ng-model ="accConstanciaRRHH" ng-required="true" ng-click="EliminarConstanciaRRHH()">
-                                                Eliminar
-                                            </label> 
                                         </div> 
                                     </div>
                                     <div class="row">
@@ -307,10 +294,6 @@
                                             <label class="radio-inline" for="radios-0">
                                                 <input type="radio" name="accCartaMined"  value="actualizar"  ng-model ="accCartaMined" ng-required="true" ng-click="ActualizarCartaMined()">
                                                 Actualizar
-                                            </label> 
-                                            <label class="radio-inline" for="radios-0">
-                                                <input type="radio" name="accCartaMined"  value="eliminar"  ng-model ="accCartaMined" ng-required="true" ng-click="EliminarCartaMined()">
-                                                Eliminar
                                             </label> 
                                         </div> 
                                     </div>

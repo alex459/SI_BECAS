@@ -57,7 +57,7 @@
     Integer id_expedie = Integer.parseInt(request.getParameter("ID_EXPEDIENTE"));
     ConexionBD conexionBD = new ConexionBD();
     //out.write(id_expediente);
-    String consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, E.ID_EXPEDIENTE,CONCAT(DU.DEPARTAMENTO, ' ',F.FACULTAD ) AS UNIDAD, TD.TIPO_DOCUMENTO, D.FECHA_SOLICITUD, P.ID_PROGRESO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE D.ID_DOCUMENTO = " + id_documento;
+    String consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ', DU.NOMBRE2_DU, ' ', DU.APELLIDO1_DU, ' ', DU.APELLIDO2_DU) AS NOMBRES, U.NOMBRE_USUARIO, E.ID_EXPEDIENTE,CONCAT(IFNULL(DU.DEPARTAMENTO, ''), ' ',F.FACULTAD ) AS UNIDAD, TD.TIPO_DOCUMENTO, D.FECHA_SOLICITUD, P.ID_PROGRESO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE D.ID_DOCUMENTO = " + id_documento;
     ResultSet rs = null;
 
     String nombres = new String();
@@ -147,9 +147,9 @@
     <body ng-app="resolverSolComisionBecasApp" ng-controller="resolverSolComisionBecasCtrl">
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Acuerdo</p>
-                </h2>
+                <h3>
+                    <p class="text-center" style="color:#cf2a27"> Resolver Solicitud de Dictamen</p>
+                </h3>
 
                 <br></br>
 
@@ -202,7 +202,7 @@
                             <div class="row">
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
-                                    <table class="table">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
@@ -236,7 +236,7 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
                                     <fieldset class="custom-border">
-                                        <legend class="custom-border"> Resolucion</legend>
+                                        <legend class="custom-border"> Resolución</legend>
                                         <%if (accion.equals("insertar")) {%>
                                         <form  name="resolverSolComisionBecas" action="ResolverDictamen" method="POST" enctype="multipart/form-data" novalidate>           
                                             <div class="row" >
@@ -251,11 +251,11 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label>Observacion:</label>
+                                                    <label>Observación:</label>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observacion del documento</span><br>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observación del documento</span><br>
                                                 </div>
                                                 <div class="col-md-1"></div>
                                             </div>
@@ -274,20 +274,20 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
-                                                            <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true"> Solicitar Correccion
+                                                            <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true"> Solicitar Corrección
                                                         </label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1"></div>   
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolución.</span>
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
-                                                <div class="text-center"><br><br><label>Seleccione el Tipo de Correccion a solicitar:</label></div>
+                                                <div class="text-center"><br><br><label>Seleccione el Tipo de Corrección a solicitar:</label></div>
                                                 <div class="col-md-4"></div> 
                                                 <div class="col-md-3">
                                                     <label class="form-control-static" ng-click="">
@@ -302,7 +302,7 @@
                                                 <div class="col-md-2"></div>                                                                                                 
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de correccion.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de corrección.</span>
                                             </div> 
                                             <%}%>
                                             <div class="row text-center">
@@ -319,10 +319,10 @@
                                             Documento acuerdo = docComision.obtenerInformacionDocumentoPorId(Integer.parseInt(id_documento));
                                         %>
                                         <div class="row">
-                                            <table class="table">
+                                            <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>Acuerdo Ingresado</th><th>Observacion</th><th>Documento</th>
+                                                        <th>Acuerdo Ingresado</th><th>Observación</th><th>Documento</th>
                                                     </tr>                                                        
                                                 </thead>
                                                 <tbody>
@@ -352,11 +352,11 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label>Observacion:</label>
+                                                    <label>Observación:</label>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observacion del documento</span><br>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observación del documento</span><br>
                                                 </div>
                                                 <div class="col-md-1"></div>
                                             </div>
@@ -375,20 +375,20 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label class="btn btn-info" ng-click="CambiarEstadoCorreccion()">
-                                                            <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true"> Solicitar Correccion
+                                                            <input type="radio" name="resolucion" value="CORRECCION" autocomplete="off" ng-model="resolucion" ng-required="true"> Solicitar Corrección
                                                         </label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1"></div>   
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolucion.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.resolucion.$error.required">Debe Seleccionar una Resolución.</span>
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
-                                                <div class="text-center"><br><br><label>Seleccione el Tipo de Correccion a solicitar:</label></div>
+                                                <div class="text-center"><br><br><label>Seleccione el Tipo de Corrección a solicitar:</label></div>
                                                 <div class="col-md-4"></div> 
                                                 <div class="col-md-3">
                                                     <label class="form-control-static" ng-click="">
@@ -403,7 +403,7 @@
                                                 <div class="col-md-2"></div>                                                                                                 
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de correccion.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de corrección.</span>
                                             </div> 
                                             <%}%>
                                             <div class="row text-center">

@@ -143,10 +143,10 @@ public class SolicitarDictamenServlet extends HttpServlet {
         
         if(solicitarAcuerdo== true){
             
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Acuerdo de Autorizacion Inicial correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Dictamen de Propuesta correctamente.");
         }
         else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud del Acuerdo de Autorizacion Inicial.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud del Dictamen de Propuesta.");
         
     }
 

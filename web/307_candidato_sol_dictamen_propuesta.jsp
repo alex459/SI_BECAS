@@ -101,7 +101,7 @@
     <div class="container-fluid">        
             <H3 class="text-center" style="color:#E42217;">Solicitud de Dictamen de Propuesta</H3>
         <fieldset class="custom-border">
-                <legend class="custom-border">Solicitud de dictamen de propuesta</legend>
+                <legend class="custom-border">Solicitud de Dictamen de Propuesta ante Junta Directiva</legend>
         <div class="row">
             <div class="col-md-12">                
                 <fieldset class="custom-border">
@@ -117,7 +117,7 @@
                                 <div class="row"> 
                                     <div class="col-md-2"></div>
                                     <div class="col-md-3">
-                                        <label> Carta de Solicitud de Autorizacion inicial:</label>
+                                        <label> Carta de Solicitud de Dictamen de Propuesta:</label>
                                     </div>
                                     <div class="col-md-5">
                                         <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
