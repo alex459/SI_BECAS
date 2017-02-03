@@ -7,6 +7,8 @@
 <%@page import="MODEL.Utilidades"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.variablesDeSesion"%>
+<%@page import="POJO.Pais"%>
+<%@page import="DAO.PaisDAO"%>
 <%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
@@ -116,46 +118,53 @@
                                     <div class="col-md-4 text-right">
                                         <label for="textinput">Pais : </label>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input id="tex_paisInstitucion" name="tex_paisInstitucion" type="text" placeholder="ingrese el pais" class="form-control input-md" ng-model="datos.pais"  ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="20" >
+                                    <div class="col-md-6">                                        
+                                        <select id="tex_paisInstitucion" name="tex_paisInstitucion" class="form-control">
+                                            <option value="%%">TODOS</option>
+                                        <%
+                                            PaisDAO paisDao = new PaisDAO();
+                                            ArrayList<Pais> listaPais = new ArrayList<Pais>();
+                                            listaPais = paisDao.consultarTodos();
+                                            for (int i = 0; i < listaPais.size(); i++) {
+                                                out.write("<option value=" + listaPais.get(i).getNombrePais() + ">" + listaPais.get(i).getNombrePais() + "</option>");
+                                            }
+                                        %>    
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Tipo de institucion : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control">                            
+                                        <option value="">TODOS</option>
+                                        <option value="Ofertante">OFERTANTE</option>
+                                        <option value="Estudio">ESTUDIO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Mostrar Instituciones : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="select_Institucion_activaOinactiva" name="select_Institucion_activaOinactiva"  class="form-control">                            
+                                        <option value="1">ACTIVAS</option>
+                                        <option value="2">INACTIVAS</option>
+                                        <option value="">TODAS</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
 
-                                        <span class="text-danger" ng-show="consultarInst.tex_paisInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                        <span class="text-danger" ng-show="consultarInst.tex_paisInstitucion.$error.pattern">Solo se permiten letras mayusculas (A-Z) .</span>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-4 text-right">
-                                        <label for="textinput">Tipo de institucion : </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control">                            
-                                            <option value="">Seleccione Tipo de Institución</option>
-                                            <option value="Ofertante">Ofertante</option>
-                                            <option value="Estudio">Estudio</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-4 text-right">
-                                        <label for="textinput">Mostrar Instituciones : </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select id="select_Institucion_activaOinactiva" name="select_Institucion_activaOinactiva"  class="form-control">                            
-                                            <option value="1">ACTIVAS</option>
-                                            <option value="2">INACTIVAS</option>
-                                            <option value="">TODAS</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br>
-
-                                <div class="row text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Buscar"> 
-                                </div>
-                            </fieldset>
-                        </div>
+                            <div class="row text-center">
+                                <input type="submit" class="btn btn-primary" name="submit" value="Buscar"> 
+                            </div>
+                        </fieldset>
+                    </div>
 
                     <%
                         String nombre;
@@ -222,7 +231,7 @@
                             <th>Página web</th>
                             <th>Correo electronico</th>
                             <th>Estado</th>
-                            
+
                             </thead>
                             <tbody>
                                 <%

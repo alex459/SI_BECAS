@@ -71,10 +71,14 @@ public class AgregarDocumentoServlet extends HttpServlet {
         documento.setObservacion(obs);
         documento.setEstadoDocumento(Estado);
         
-        
+        TipoDocumento tipoDocumento  = new TipoDocumento();
+        TipoDocumentoDAO tipoDocumentoDao = new TipoDocumentoDAO();        
+        tipoDocumento = tipoDocumentoDao.consultarPorId(documento.getIdTipoDocumento().getIdTipoDocumento());
+                
         boolean ing = documentoDao.Ingresar(documento);
         
         if(ing= true){
+            Utilidades.nuevaBitacora(1, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se Ingreso el documento " + tipoDocumento.getTipoDocumento() + " con id " + documento.getIdDocumento() + ".", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el Documento correctamente.");
         }
         else

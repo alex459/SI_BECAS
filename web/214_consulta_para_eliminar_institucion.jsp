@@ -1,19 +1,13 @@
-<%-- 
-    Document   : 213_consulta_para_modificar_institucion
-    Created on : 12-08-2016, 09:39:54 AM
-    Author     : jose
---%>
 
-<%-- 
-    Document   : 213_consulta_para_modificar_institucion
-    Created on : 12-08-2016, 09:39:54 AM
-    Author     : jose
---%>
+
+<%@page import="POJO.Pais"%>
+<%@page import="DAO.PaisDAO"%>
 
 <!-- inicio proceso de seguridad de login -->
 <%@page import="MODEL.Utilidades"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.variablesDeSesion"%>
+
 <%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
@@ -124,37 +118,44 @@
                                         <label for="textinput">Pais : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="tex_paisInstitucion" name="tex_paisInstitucion" type="text" placeholder="ingrese el pais" class="form-control input-md" ng-model="datos.pais"  ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="20" >
-
-                                        <span class="text-danger" ng-show="consultaParaModificarInstitucion.tex_paisInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                        <span class="text-danger" ng-show="consultaParaModificarInstitucion.tex_paisInstitucion.$error.pattern">Solo se permiten letras mayusculas (A-Z).</span>
-                                    </div>
+                                        <select id="tex_paisInstitucion" name="tex_paisInstitucion" class="form-control">
+                                            <option value="%%">TODOS</option>
+                                        <%
+                                            PaisDAO paisDao = new PaisDAO();
+                                            ArrayList<Pais> listaPais = new ArrayList<Pais>();
+                                            listaPais = paisDao.consultarTodos();
+                                            for (int i = 0; i < listaPais.size(); i++) {
+                                                out.write("<option value=" + listaPais.get(i).getNombrePais() + ">" + listaPais.get(i).getNombrePais() + "</option>");
+                                            }
+                                        %>    
+                                    </select>
                                 </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-4 text-right">
-                                        <label for="textinput">Tipo de institucion : </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control">                            
-                                            <option value="">Seleccione Tipo de Institución</option>
-                                            <option value="OFERTANTE">OFERTANTE</option>
-                                            <option value="ESTUDIO">ESTUDIO</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Tipo de institucion : </label>
                                 </div>
-                                <br>                                
-                                <div class="row text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!consultaParaModificarInstitucion.$valid"> 
+                                <div class="col-md-6">
+                                    <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control">                            
+                                        <option value="">TODOS</option>
+                                        <option value="OFERTANTE">OFERTANTE</option>
+                                        <option value="ESTUDIO">ESTUDIO</option>
+                                    </select>
                                 </div>
-                            </fieldset>
-                        </div>
-                </form>
+                            </div>
+                            <br>                                
+                            <div class="row text-center">
+                                <input type="submit" class="btn btn-primary" name="submit" value="Buscar" ng-disabled="!consultaParaModificarInstitucion.$valid"> 
+                            </div>
+                        </fieldset>
+                    </div>
+            </form>
             <%
                 String nombre;
                 String pais;
                 String tipo;
-                String activaOinactiva="1";
+                String activaOinactiva = "1";
 
                 ConexionBD conexionbd = null;
 
@@ -163,20 +164,29 @@
                 try {
                     nombre = request.getParameter("text_NomInstitucion");
                     pais = request.getParameter("tex_paisInstitucion");
-                    tipo = request.getParameter("select_tipoInstitucion");                    
+                    tipo = request.getParameter("select_tipoInstitucion");
 
                     //formando la consulta
                     String consultaSql;
                     //out.write(consultaSql);
                     //realizando la consulta
 
-                    if(nombre!=null) {} else {nombre="";};
-                    if(pais!=null) {} else {pais="";};
-                    if(tipo!=null) {} else {tipo="";};                                         
-                    
-                    consultaSql = "SELECT NOMBRE_INSTITUCION, TIPO_INSTITUCION, PAIS, PAGINA_WEB, EMAIL,ID_INSTITUCION  FROM  INSTITUCION WHERE NOMBRE_INSTITUCION LIKE '%"+nombre+"%' AND PAIS LIKE '%"+pais+"%' AND TIPO_INSTITUCION LIKE '%"+tipo+"%' AND INSTITUCION_ACTIVA = 1";
+                    if (nombre != null) {
+                    } else {
+                        nombre = "";
+                    };
+                    if (pais != null) {
+                    } else {
+                        pais = "";
+                    };
+                    if (tipo != null) {
+                    } else {
+                        tipo = "";
+                    };
+
+                    consultaSql = "SELECT NOMBRE_INSTITUCION, TIPO_INSTITUCION, PAIS, PAGINA_WEB, EMAIL,ID_INSTITUCION  FROM  INSTITUCION WHERE NOMBRE_INSTITUCION LIKE '%" + nombre + "%' AND PAIS LIKE '%" + pais + "%' AND TIPO_INSTITUCION LIKE '%" + tipo + "%' AND INSTITUCION_ACTIVA = 1";
                     System.out.println(consultaSql);
-                    
+
                     conexionbd = new ConexionBD();
                     rs = conexionbd.consultaSql(consultaSql);
                     //con el rs se llenara la tabla de resultados
@@ -207,7 +217,7 @@
                             try {
                                 Integer i = 0;
                                 while (rs.next()) {
-                                    
+
                                     i = i + 1;
                                     out.write("<tr>");
                                     out.write("<td>" + i + "</td>");
@@ -215,7 +225,7 @@
                                     out.write("<td>" + rs.getString(2) + "</td>");
                                     out.write("<td>" + rs.getString(3) + "</td>");
                                     out.write("<td>" + rs.getString(4) + "</td>");
-                                    out.write("<td>" + rs.getString(5) + "</td>");                                    
+                                    out.write("<td>" + rs.getString(5) + "</td>");
                                     out.write("<td>");
                                     out.write("<center>");
                                     out.write("<form style='display:inline;' action='207_eliminar_institucion.jsp' method='post'><input type='hidden' name='ID_INSTITUCION' value='" + rs.getString(6) + "'><input type='submit' class='btn btn-success' name='submit' value='Mostrar institución'></form> ");

@@ -60,7 +60,7 @@ public class Utilidades {
         java.util.Date now = calendar.getTime();
         java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
         temp1.setFechaBitacora(currentTimestamp);
-        temp1.setDescripcion(Descripcion);
+        temp1.setDescripcion(Descripcion.toUpperCase());
         temp1.setSqlScript(Sql_Script.replaceAll("'", "''"));
         temp2.ingresar(temp1);
     }

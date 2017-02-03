@@ -56,7 +56,7 @@ public class ModificarDocumentoServlet extends HttpServlet {
         
         documento.setIdDocumento(idDoc);
         documento.setDocumentoDigital(archivo);
-        documento.setObservacion(obs);
+        documento.setObservacion(obs);        
 
         boolean act = false;
         if (filePart.getSize() >0){
@@ -66,6 +66,8 @@ public class ModificarDocumentoServlet extends HttpServlet {
         }
         
         if(act= true){
+            
+            Utilidades.nuevaBitacora(2, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se actualizo el documento " + documentoDao.consultarNombreDelTipoDocumentoPorIdDocumento(documento.getIdDocumento()) + " con id " + documento.getIdDocumento() + ".", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ha actualizado el Documento correctamente.");
         }
         else

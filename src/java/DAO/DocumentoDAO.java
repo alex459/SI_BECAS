@@ -1429,4 +1429,24 @@ public class DocumentoDAO extends ConexionBD{
         }
         return lista;
     }
+    
+    public String consultarNombreDelTipoDocumentoPorIdDocumento(int id_documento){
+        String respuesta = new String();        
+        this.abrirConexion();        
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT TD.TIPO_DOCUMENTO FROM DOCUMENTO D NATURAL JOIN TIPO_DOCUMENTO TD WHERE D.ID_DOCUMENTO = "+id_documento;
+            ResultSet rs = stmt.executeQuery(sql);            
+            while (rs.next()) {                
+                respuesta = rs.getString("TIPO_DOCUMENTO");                
+            }            
+            this.cerrarConexion();
+        }catch(Exception ex){
+            System.out.println("Error: " + ex);
+        }finally{
+            this.cerrarConexion();
+        }
+        return respuesta;
+    }
+    
 }

@@ -36,10 +36,12 @@ public class EliminarDocumentoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Integer idDoc = Integer.parseInt(request.getParameter("id"));
         DocumentoDAO documentoDao = new DocumentoDAO();
+        String nombre_tipo_documento = documentoDao.consultarNombreDelTipoDocumentoPorIdDocumento(idDoc);
         boolean eli = documentoDao.eliminarDocumento(idDoc);
         int id=0;
         
         if(eli= true){
+            Utilidades.nuevaBitacora(4, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se elimino el documento " + nombre_tipo_documento + " con id " + idDoc + ".", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se elimino el Documento correctamente.");
         }
         else
