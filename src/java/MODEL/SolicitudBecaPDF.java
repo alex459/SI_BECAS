@@ -69,6 +69,7 @@ public class SolicitudBecaPDF extends HttpServlet {
             String municipioN = request.getParameter("municipioNacimiento");
             String departamentoNacimiento = departamentoDao.consultarNombrePorId(Integer.parseInt(departamentoN));
             String municipioNacimiento = municipioDao.consultarNombrePorId(Integer.parseInt(municipioN));
+            municipioNacimiento = municipioNacimiento +","+departamentoNacimiento;
             String genero = request.getParameter("genero");
             String direccion = request.getParameter("direccion");
             String departamentoD = request.getParameter("departamentoDireccion");
@@ -167,6 +168,9 @@ public class SolicitudBecaPDF extends HttpServlet {
                     ListaTituloProyecto.add(tituloProyecto);
                     ListaPublicado.add(publicado);
                 }
+            }else{
+                ListaTituloProyecto.add("NINGUNA");
+                    ListaPublicado.add("-");
             }
 
             if (nAsociacion > 0) {
@@ -177,6 +181,8 @@ public class SolicitudBecaPDF extends HttpServlet {
                     //Agregando a Lista
                     ListaNombreAsociacion.add(nombreAsociacion);
                 }
+            } else{
+               ListaNombreAsociacion.add("NINGUNA"); 
             }
 
             if (nIdioma > 0) {
