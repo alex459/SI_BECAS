@@ -8,12 +8,11 @@ package MODEL;
 import DAO.ConexionBD;
 import DAO.DepartamentoDAO;
 import DAO.MunicipioDAO;
-import POJO.Departamento;
-import POJO.Municipio;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -57,8 +56,14 @@ public class SolicitudBecaPDF extends HttpServlet {
             //leyendo parametros del jsp
             String nombre1 = request.getParameter("nombre1");
             String nombre2 = request.getParameter("nombre2");
+            if (nombre2.equals("") || nombre2 == null) {
+                nombre2 = "-";
+            }
             String apellido1 = request.getParameter("apellido1");
             String apellido2 = request.getParameter("apellido2");
+            if (apellido2.equals("") || apellido2 == null) {
+                apellido2 = "-";
+            }
             String fechaNacimiento = request.getParameter("fechaNacimiento");
             String departamentoN = request.getParameter("departamentoNacimiento");
             String municipioN = request.getParameter("municipioNacimiento");
@@ -74,16 +79,26 @@ public class SolicitudBecaPDF extends HttpServlet {
             String telMovil = request.getParameter("telMovil");
             String telOficina = request.getParameter("telOficina");
             //Falta calcular la edad
-            String edad = "100";
-
+            Date fechaActual = new Date();
+            String edad = "";
+            try{
+            edad = CalcularEdad(StringAFecha(fechaNacimiento), fechaActual);
+            }catch(Exception e){              
+            }
             String profesion = request.getParameter("profesion");
             String cargo = request.getParameter("cargo");
             String unidad = request.getParameter("unidad");
             String facultad = request.getParameter("facultad");
             String fechaContratacion = request.getParameter("fechaContratacion");
+
             //calcular tiempo de servicio
             String tiempoServicio = "";
- 
+            try{
+            Date fcontratacion = StringAFecha(fechaContratacion);            
+            tiempoServicio = CalcularFecha(fcontratacion, fechaActual);
+            }catch(Exception e){              
+            }
+            
             boolean checkProyecto = Boolean.parseBoolean(request.getParameter("checkProyecto"));
             boolean checkAsociacion = Boolean.parseBoolean(request.getParameter("checkAsociacion"));
             Integer nEducacion = Integer.parseInt(request.getParameter("nEducacion"));
@@ -220,7 +235,6 @@ public class SolicitudBecaPDF extends HttpServlet {
             String beneficios = request.getParameter("beneficios");
 
             //Falta obtener Becas Anteriores ListaBecasAnteriores
-            
             String nombre1R1 = request.getParameter("nombre1R1");
             String nombre2R1 = request.getParameter("nombre2R1");
             String apellido1R1 = request.getParameter("apellido1R1");
@@ -231,7 +245,7 @@ public class SolicitudBecaPDF extends HttpServlet {
             String departamentoR1 = departamentoDao.consultarNombrePorId(idDepartamentoR1);
             String municipioR1 = municipioDao.consultarNombrePorId(idMunicipioR1);
             String telR1 = request.getParameter("telefonoR1");
-            
+
             String nombre1R2 = request.getParameter("nombre1R2");
             String nombre2R2 = request.getParameter("nombre2R2");
             String apellido1R2 = request.getParameter("apellido1R2");
@@ -242,7 +256,7 @@ public class SolicitudBecaPDF extends HttpServlet {
             String departamentoR2 = departamentoDao.consultarNombrePorId(idDepartamentoR2);
             String municipioR2 = municipioDao.consultarNombrePorId(idMunicipioR2);
             String telR2 = request.getParameter("telefonoR2");
-            
+
             String nombre1R3 = request.getParameter("nombre1R3");
             String nombre2R3 = request.getParameter("nombre2R3");
             String apellido1R3 = request.getParameter("apellido1R3");
@@ -353,6 +367,61 @@ public class SolicitudBecaPDF extends HttpServlet {
         System.out.println("fechanice!");
         return fecha;
     }
+    
+    //Funcion que calcula el tiempo que ha laborado en la universidad
+    public String CalcularFecha(Date fcontratacion, Date fechaActual){
+        String tiempoServicio ="";
+            //Fecha inicio en objeto Calendar 
+            Calendar startCalendar = Calendar.getInstance();
+            startCalendar.setTime(fcontratacion);
+            //Fecha finalización en objeto Calendar
+            Calendar endCalendar = Calendar.getInstance();
+            endCalendar.setTime(fechaActual);
+            //Cálculo de meses para las fechas de inicio y finalización
+            int startMes = (startCalendar.get(Calendar.YEAR) * 12) + startCalendar.get(Calendar.MONTH);
+            int endMes = (endCalendar.get(Calendar.YEAR) * 12) + endCalendar.get(Calendar.MONTH);
+            //Diferencia en meses entre las dos fechas
+            int diffMonth = endMes - startMes;
+            //Calculando Años y meses
+            int anyos = diffMonth / 12;
+            int mesesDeAnyos = anyos * 12;
+            diffMonth = diffMonth - mesesDeAnyos;
+            if (anyos != 0) {
+                if (diffMonth != 0) {
+                    tiempoServicio = anyos + " AÑOS " + diffMonth + " MESES";
+                } else {
+                    tiempoServicio = anyos + " AÑOS ";
+                }
+            } else{
+               tiempoServicio = diffMonth +" MESES"; 
+            }
+        return tiempoServicio;
+    }
+    
+    //Funcion que calcula edad a partir de la fecha de nacimiento
+    public String CalcularEdad(Date fechaNacimiento, Date fechaActual){
+        String edad ="";
+        try{
+            //Fecha inicio en objeto Calendar 
+            Calendar startCalendar = Calendar.getInstance();
+            startCalendar.setTime(fechaNacimiento);
+            //Fecha finalización en objeto Calendar
+            Calendar endCalendar = Calendar.getInstance();
+            endCalendar.setTime(fechaActual);
+            //Cálculo de meses para las fechas de inicio y finalización
+            int startMes = (startCalendar.get(Calendar.YEAR) * 12) + startCalendar.get(Calendar.MONTH);
+            int endMes = (endCalendar.get(Calendar.YEAR) * 12) + endCalendar.get(Calendar.MONTH);
+            //Diferencia en meses entre las dos fechas
+            int diffMonth = endMes - startMes;
+            //Calculando Años y meses
+            int anyos = diffMonth / 12;
+            int mesesDeAnyos = anyos * 12;
+            edad = anyos + " AÑOS";
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return edad;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -392,5 +461,6 @@ public class SolicitudBecaPDF extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
 
 }
