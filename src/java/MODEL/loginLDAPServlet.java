@@ -50,7 +50,7 @@ public class loginLDAPServlet extends HttpServlet {
             throws ServletException, IOException, NoSuchAlgorithmException, KeyManagementException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int tiempo_de_logeo = 60;
+        int tiempo_de_logeo = 3600;
         
         try (PrintWriter out = response.getWriter()) {
 

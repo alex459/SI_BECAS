@@ -5,6 +5,8 @@
 --%>
 <%@page import="POJO.Institucion"%>
 <%@page import="DAO.InstitucionDAO"%>
+<%@page import="POJO.Pais"%>
+<%@page import="DAO.PaisDAO"%>
 
 <!-- inicio proceso de seguridad de login -->
 <%@page import="MODEL.Utilidades"%>
@@ -47,33 +49,33 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/customfieldset.css" rel="stylesheet">
-        
-        <div class="row">
-            <div class="col-md-4">
-                <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-                <h3 class="text-center" >
-                    <p class="text-danger">Universidad De El Salvador</p>
-                </h3>
-            </div>
-            <div class="col-md-8">
-                <div class="col-xs-12" style="height:50px;"></div>
-                <h2 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-                </h2>
-                <h3 class="text-center">
-                    <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-                </h3>
-            </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
+            <h3 class="text-center" >
+                <p class="text-danger">Universidad De El Salvador</p>
+            </h3>
         </div>
+        <div class="col-md-8">
+            <div class="col-xs-12" style="height:50px;"></div>
+            <h2 class="text-center">
+                <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
+            </h2>
+            <h3 class="text-center">
+                <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
+            </h3>
+        </div>
+    </div>
 
-        <p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-        <p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+    <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
 
-        <%-- todo el menu esta contenido en la siguiente linea
-         el menu puede ser cambiado en la pagina menu.jsp --%>
-        <jsp:include page="menu_corto.jsp"></jsp:include>
-        
+    <%-- todo el menu esta contenido en la siguiente linea
+     el menu puede ser cambiado en la pagina menu.jsp --%>
+    <jsp:include page="menu_corto.jsp"></jsp:include>
+
     </head>
     <body ng-app="AgregarInstitucionApp" ng-controller="AgregarInstitucionCtrl">
         <div class="container-fluid">
@@ -85,35 +87,41 @@
             </div><!-- TITULO DE LA PANTALLA -->  
 
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
-                
+
                 <form class="form-horizontal" name="agregarInst" action="AgregarInstitucionServlet" method="post" novalidate >
                     <fieldset class="custom-border">
                         <legend class="custom-border">Datos de Institucion</legend>
-                    
-                    <div class="row col-md-6 col-md-offset-3">
-                        <div class="row">
-                            
-                            <div class="col-md-4 text-right">
-                                <label for="textinput">Nombre de la institucion : </label>
+
+                        <div class="row col-md-6 col-md-offset-3">
+                            <div class="row">
+
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Nombre de la institucion : </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="text_NomInstitucion" name="text_NomInstitucion" type="text"  placeholder="ingrese el nombre de institucion" class="form-control input-md" ng-model="datos.nombreInst" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
+                                    <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.text_NomInstitucion.$error.required">El nombre de la Institucion es requerido.</span>
+                                    <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.minlength">Minimo 3 caracteres</span>
+                                    <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.pattern">Solo se permiten letras mayusculas (A-Z) .</span>
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                <input id="text_NomInstitucion" name="text_NomInstitucion" type="text"  placeholder="ingrese el nombre de institucion" class="form-control input-md" ng-model="datos.nombreInst" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
-                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.text_NomInstitucion.$error.required">El nombre de la Institucion es requerido.</span>
-                                <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.pattern">Solo se permiten letras mayusculas (A-Z) .</span>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4 text-right">
-                                <label for="textinput">Pais : </label>
-                            </div>
-                            <div class="col-md-6">
-                                <input id="tex_paisInstitucion" name="tex_paisInstitucion" type="text"  placeholder="ingrese el pais" class="form-control input-md" ng-model="datos.pais" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="20" >
-                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_paisInstitucion.$error.required">El nombre del pais es requerido.</span>
-                                <span class="text-danger" ng-show="agregarInst.tex_paisInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                <span class="text-danger" ng-show="agregarInst.tex_paisInstitucion.$error.pattern">Solo se permiten letras mayusculas.</span>
-                                <small id="help2"></small>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-right">
+                                    <label for="textinput">Pais : </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="tex_paisInstitucion" name="tex_paisInstitucion" class="form-control" ng-model="datos.pais" ng-required="true">
+                                    <%
+                                        PaisDAO paisDao = new PaisDAO();
+                                        ArrayList<Pais> listaPais = new ArrayList<Pais>();
+                                        listaPais = paisDao.consultarTodos();
+                                        for (int i = 0; i < listaPais.size(); i++) {
+                                            out.write("<option value=" + listaPais.get(i).getNombrePais() + ">" + listaPais.get(i).getNombrePais() + "</option>");
+                                        }
+                                    %>    
+                                </select>
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_paisInstitucion.$error.required">El País es requerido.</span>
                             </div>
                         </div>
                         <br>
@@ -143,8 +151,8 @@
                             </div>
                         </div>
                         <br>
-                        
-                        
+
+
                         <div class="row">
                             <div class="col-md-4 text-right">
                                 <label for="textinput">Tipo de institucion : </label>
@@ -155,9 +163,9 @@
                                     <option value="OFERTANTE">OFERTANTE</option>
                                     <option value="ESTUDIO">ESTUDIO</option>
                                     <option value="OFERTANTE Y ESTUDIO">OFERTANTE Y ESTUDIO</option>
-                               </select>
+                                </select>
                                 <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.select_tipoInstitucion.$error.required">La Tipo es requerida.</span>
-                  
+
                             </div>
                         </div>
                         <br>
@@ -167,38 +175,38 @@
                         </div>
                     </div>
                 </fieldset>
-                </form>    
-            </div><!-- CONTENIDO DE LA PANTALLA -->
+            </form>    
+        </div><!-- CONTENIDO DE LA PANTALLA -->
+    </div>
+
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
         </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
+        </div>
+    </div>
 
-            <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-                    <div class="col-md-6">
-                            <h3>
-                                    Dirección
-                            </h3>
-                            <p>
-                                    2016 Universidad De El Salvador  <br/>
-                                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                            </p>
-                    </div>
-                    <div class="col-md-6">
-                            <h3>
-                                    Información de contacto
-                            </h3>
-                            <p>
-                                    Universidad De El Salvador
-                                    Tél: +(503) 2511-2000 <br/>
-                                    Consejo de becas
-                                    Tél: +(503) 2511- 2016
-                            </p>
-                    </div>
-            </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/agregarInstitucion.js"></script>
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/angular.min.js"></script>
-        <script src="js/agregarInstitucion.js"></script>
-        
-       
-    </body>
+
+</body>
 </html>

@@ -8,7 +8,8 @@
 <%@page import="DAO.ConexionBD"%>
 <%@page import="POJO.Institucion"%>
 <%@page import="DAO.InstitucionDAO"%>
-
+<%@page import="POJO.Pais"%>
+<%@page import="DAO.PaisDAO"%>
 <!-- inicio proceso de seguridad de login -->
 <%@page import="MODEL.Utilidades"%>
 <%@page import="java.util.ArrayList"%>
@@ -150,12 +151,18 @@
                             <div class="col-md-4 text-right">
                                 <label for="textinput">Pais : </label>
                             </div>
-                            <div class="col-md-6">
-                                <input id="tex_paisInstitucion" name="tex_paisInstitucion" type="text"  placeholder="ingrese el pais" class="form-control input-md" ng-model="datos.pais" ng-init="datos.pais = '<%=PAIS%>'" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="20" >
-                                <span class="text-danger" ng-show="!modificarInst.$pristine && modificarInst.tex_paisInstitucion.$error.required">El nombre del pais es requerido.</span>
-                                <span class="text-danger" ng-show="modificarInst.tex_paisInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                <span class="text-danger" ng-show="modificarInst.tex_paisInstitucion.$error.pattern">Solo se permiten letras mayusculas (A-Z).</span>
-                                <small id="help2"></small>
+                            <div class="col-md-6">                                
+                                <select id="tex_paisInstitucion" name="tex_paisInstitucion" class="form-control">
+                                    <option value="<%=PAIS%>"><%=PAIS%></option>
+                                    <%
+                                        PaisDAO paisDao = new PaisDAO();
+                                        ArrayList<Pais> listaPais = new ArrayList<Pais>();
+                                        listaPais = paisDao.consultarTodos();
+                                        for (int i = 0; i < listaPais.size(); i++) {
+                                            out.write("<option value=" + listaPais.get(i).getNombrePais() + ">" + listaPais.get(i).getNombrePais() + "</option>");
+                                        }
+                                    %>    
+                                </select>
                             </div>
                         </div>
                         <br>

@@ -206,8 +206,7 @@
                                     out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");
                                 }
                             %>    
-                        </select>   
-                        </select> 
+                        </select>                           
                         <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.ID_TIPO_USUARIO.$error.required">El Tipo de Usuario es requerido.</span>
 
                     </div>
