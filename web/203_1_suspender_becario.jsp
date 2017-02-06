@@ -185,7 +185,7 @@
                                 <div class="row text-center">
                                     <input type="hidden" name="idExpediente" value="<%=idExpediente%>">
                                     <input type="hidden" name="idUsuario" value="<%=idUsuario%>">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Modificar">
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Suspender">
                                 </div>
                             </fieldset>
                         </div>
