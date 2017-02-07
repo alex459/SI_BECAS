@@ -47,57 +47,61 @@ public class EnviarCorreo {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties config = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
-            config.load(resourceStream);           
+            config.load(resourceStream);
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("No se pudo leer el archivo de configuracion." + ex);
         }
-        
+
         final String gmailAccount = config.getProperty("gmail.account");
-            final String gmailPassword = config.getProperty("gmail.password");
-            final String[] attachmentFiles = config.getProperty("attachmentfiles").split(";");
-            String[] emailDestinations = new String[0];
-            if (userID == null) {
-                emailDestinations = getAllDestinations();
-            } else {
-                emailDestinations = getDestinations(userID);
-            }                                                            
-            
-            
-            
-            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(gmailAccount, gmailPassword);
-                }
-            });
+        final String gmailPassword = config.getProperty("gmail.password");
+        final String[] attachmentFiles = config.getProperty("attachmentfiles").split(";");
+        String[] emailDestinations = new String[0];
+        if (userID == null) {
+            emailDestinations = getAllDestinations();
+        } else {
+            emailDestinations = getDestinations(userID);
+        }
 
-            for (int i = 0; i < emailDestinations.length; i++) {
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(gmailAccount, gmailPassword);
+            }
+        });
 
-                try {
-                    Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(gmailAccount));
-                    message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestinations[i]));
-                    message.setSubject(emailSubject);
-                    BodyPart messageBodyPart = new MimeBodyPart();
-                    messageBodyPart.setText(emailTextBody);
-                    Multipart multipart = new MimeMultipart();
-                    for (String attachmentFile : attachmentFiles) {
-                        if (!"".equalsIgnoreCase(attachmentFile)) {
-                            addAttachment(multipart, attachmentFile);
-                        }
-                    }
+        Message message = new MimeMessage(session);
 
-                    //Setting email text message
-                    multipart.addBodyPart(messageBodyPart);
+        try {
 
-                    //set the attachments to the email
-                    message.setContent(multipart);
-                    Transport.send(message);
-                    System.out.println("Correo enviado a " + emailDestinations[i]);
-                } catch (Exception ex) {
-                    System.out.println("No se puedo enviar el correo a " + emailDestinations[i] + ". Error " + ex);
+            for (String emailDestination : emailDestinations) {
+                message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestination));
+            }
+
+            message.setFrom(new InternetAddress(gmailAccount));
+            message.setSubject(emailSubject);
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(emailTextBody);
+            Multipart multipart = new MimeMultipart();
+            for (String attachmentFile : attachmentFiles) {
+                if (!"".equalsIgnoreCase(attachmentFile)) {
+                    addAttachment(multipart, attachmentFile);
                 }
             }
+
+            //Setting email text message
+            multipart.addBodyPart(messageBodyPart);
+
+            //set the attachments to the email
+            message.setContent(multipart);
+            Transport.send(message);
+            for (int i = 0; i < emailDestinations.length; i++) {
+                System.out.println("Correo enviado a " + emailDestinations[i]);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Error enviando correos. " + ex);
+        }
 
     }
 

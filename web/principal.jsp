@@ -13,31 +13,31 @@
     String rol = "";
     String user = "";
     Integer tipo_usuario_logeado = 0;
-    try{
-    response.setHeader("Cache-Control", "no-store");
-    response.setHeader("Cache-Control", "must-revalidate");
-    response.setHeader("Cache-Control", "no-cache");
-    HttpSession actual = request.getSession();
-    id_usuario_login = (String) actual.getAttribute("id_user_login");
-    rol = (String) actual.getAttribute("rol");
-    user = (String) actual.getAttribute("user");
-    tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
-    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
-    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
-    tipo_usuarios_permitidos.add("1");
-    tipo_usuarios_permitidos.add("2");
-    tipo_usuarios_permitidos.add("3");
-    tipo_usuarios_permitidos.add("4");
-    tipo_usuarios_permitidos.add("5");
-    tipo_usuarios_permitidos.add("6");
-    tipo_usuarios_permitidos.add("7");
-    tipo_usuarios_permitidos.add("8");
-    tipo_usuarios_permitidos.add("9");
-    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
-    if (!autorizacion || user==null) {
-        response.sendRedirect("logout.jsp");        
-    }
-    }catch(Exception e) {
+    try {
+        response.setHeader("Cache-Control", "no-store");
+        response.setHeader("Cache-Control", "must-revalidate");
+        response.setHeader("Cache-Control", "no-cache");
+        HttpSession actual = request.getSession();
+        id_usuario_login = (String) actual.getAttribute("id_user_login");
+        rol = (String) actual.getAttribute("rol");
+        user = (String) actual.getAttribute("user");
+        tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+        ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+        //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+        tipo_usuarios_permitidos.add("1");
+        tipo_usuarios_permitidos.add("2");
+        tipo_usuarios_permitidos.add("3");
+        tipo_usuarios_permitidos.add("4");
+        tipo_usuarios_permitidos.add("5");
+        tipo_usuarios_permitidos.add("6");
+        tipo_usuarios_permitidos.add("7");
+        tipo_usuarios_permitidos.add("8");
+        tipo_usuarios_permitidos.add("9");
+        boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+        if (!autorizacion || user == null) {
+            response.sendRedirect("logout.jsp");
+        }
+    } catch (Exception e) {
         response.sendRedirect("logout.jsp");
     }
 %>
@@ -81,8 +81,8 @@
 
 
 
-<p class="text-right" style="font-weight:bold;">Rol: <%= rol %></p>
-<p class="text-right" style="font-weight:bold;">Usuario: <%= user %></p>
+<p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+<p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
 
 <%-- todo el menu esta contenido en la siguiente linea
@@ -94,40 +94,39 @@
 
 
 
-    <div class="container-fluid">
-        
-        <div style="width: 100%">
-            <center>
-            
-            <img src="img/portada1.jpg">                        
+    <div class="row" >
+        <center>
+            <div class="col-md-12 text-center" style="background:url(img/portada1.jpg) no-repeat center top scroll;background-size: 99% auto;">
+                <img src="img/portada1.jpg" class="img-rounded" alt="Cinque Terre" width="100%">
+            </div>            
         </center>
-        </div>
-        
-        <br></br> 
+    </div>
 
-        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-            <div class="col-md-6">
-                <h3>
-                    Dirección
-                </h3>
-                <p>
-                    2016 Universidad De El Salvador  <br/>
-                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-                </p>
-            </div>
-            <div class="col-md-6">
-                <h3>
-                    Información de contacto
-                </h3>
-                <p>
-                    Universidad De El Salvador
-                    Tél: +(503) 2511-2000 <br/>
-                    Consejo de becas
-                    Tél: +(503) 2511- 2016
-                </p>
-            </div>
+    <br></br>
+
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
         </div>
     </div>
+
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

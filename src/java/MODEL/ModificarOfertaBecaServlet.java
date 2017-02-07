@@ -119,6 +119,7 @@ public class ModificarOfertaBecaServlet extends HttpServlet {
         ofertaBeca.setOfertaBecaActiva(1);
         Boolean exito=ofertaBecaDAO.modificar(ofertaBeca);
         if(exito){
+            Utilidades.nuevaBitacora(2, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se modifico la oferta de beca: " + ofertaBeca.getNombreOferta() + " con id "+ofertaBeca.getIdOfertaBeca()+".", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se modifico la oferta correctamente.");
         }else{
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo modificar la oferta de beca");

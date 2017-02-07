@@ -137,7 +137,7 @@
                     </div>
                     <div class="col-md-3">                                
                         <input id="APELLIDO1_DU" name="APELLIDO1_DU" type="text" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
-                        <span class="text-danger" ng-show="!registrarUsuario.$pristine && agregarUsuario.APELLIDO1_DU.$error.required">El Primer Apellido es requerido.</span>
+                        <span class="text-danger" ng-show="!registrarUsuario.$pristine && registrarUsuario.APELLIDO1_DU.$error.required">El Primer Apellido es requerido.</span>
                         <span class="text-danger" ng-show="registrarUsuario.APELLIDO1_DU.$error.minlength">Minimo 3 caracteres.</span>
                         <span class="text-danger" ng-show="registrarUsuario.APELLIDO1_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
                         <small id="help4"></small>
@@ -201,7 +201,7 @@
                     <div class="col-md-12 text-center">
 
                         <input type="submit" class="btn btn-primary" name="submit" value="Registrarme" ng-disabled="!registrarUsuario.$valid">
-
+                        <a href ="login.jsp"class="btn btn-danger">Cancelar</a>
                     </div>
                 </div>
 

@@ -105,6 +105,8 @@ public class ConexionBD {
 
         } catch (Exception e) {
             System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
         }
 
         return rs;

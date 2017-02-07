@@ -41,7 +41,7 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8"); 
+        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         //Agarrando el pdf
         Integer tip = 2; //id del tipo de documento = oferta de beca
@@ -51,12 +51,12 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         if (filePart != null) {
             archivo = filePart.getInputStream();
         }
-        
+
         Date fechaHoy = new Date();
         OfertaBeca ofertaBeca = new OfertaBeca();
         OfertaBecaDAO ofertaBecaDAO = new OfertaBecaDAO();
         InstitucionDAO institucionDAO = new InstitucionDAO();
-        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());  
+        java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
         Documento documento = new Documento();
         DocumentoDAO docdao = new DocumentoDAO();
         TipoDocumento tipo = new TipoDocumento();
@@ -69,70 +69,74 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         ofertaBeca.setIdInstitucionEstudio(institucionDAO.consultarIdPorNombre(request.getParameter("institucionEstudio")));
         ofertaBeca.setIdInstitucionFinanciera(institucionDAO.consultarIdPorNombre(request.getParameter("institucionOferente")));
         //Insertando el pdf
-        int idDoc=docdao.getSiguienteId();
+        int idDoc = docdao.getSiguienteId();
         tipo = tipoDao.consultarPorId(tip);
         Integer idexp = 0;
-        Expediente idexpediente = expDao.consultarPorId(idexp);  
-        String Estado = "Difusion";        
+        Expediente idexpediente = expDao.consultarPorId(idexp);
+        String Estado = "Difusion";
         documento.setIdDocumento(idDoc);
         documento.setIdTipoDocumento(tipo);
         documento.setDocumentoDigital(archivo);
         documento.setIdExpediente(idexpediente);
         documento.setObservacion(obs);
-        documento.setEstadoDocumento(Estado);     
+        documento.setEstadoDocumento(Estado);
         boolean ing = docdao.Ingresar(documento);
-        System.out.println("resultado de doc "+ing);
-        
+
         //asignar valores a oferta de beca
         ofertaBeca.setIdDocumento(idDoc);
         ofertaBeca.setNombreOferta(request.getParameter("nombreOferta"));
         ofertaBeca.setTipoOfertaBeca(request.getParameter("tipoBeca"));
-        
-        System.out.println("PRUEBA");
+
         ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
-       //  System.out.println(request.getParameter("fechaCierre"));
-       ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
+        //  System.out.println(request.getParameter("fechaCierre"));
+        ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
         java.sql.Date sqlDate2 = new java.sql.Date(StringAFecha(request.getParameter("fechaCierre")).getTime());
         ofertaBeca.setFechaCierre(sqlDate2);
         ofertaBeca.setModalidad(request.getParameter("modalidad"));
         java.sql.Date sqlDate3 = new java.sql.Date(StringAFecha(request.getParameter("fechaInicio")).getTime());
         ofertaBeca.setFechaInicio(sqlDate3);
-        
+
         ofertaBeca.setIdioma(request.getParameter("idioma"));
         ofertaBeca.setPerfil(request.getParameter("perfilBeca"));
-        ofertaBeca.setFinanciamiento(request.getParameter("financiamiento"));        
+        ofertaBeca.setFinanciamiento(request.getParameter("financiamiento"));
         ofertaBeca.setFechaIngreso(sqlDate);
         ofertaBeca.setTipoEstudio(request.getParameter("tipoEstudio"));
         ofertaBeca.setOfertaBecaActiva(1);
-       // int iduser=Integer.parseInt(request.getSession().getAttribute("id_usuario_login").toString());  
-        Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);                
-        
-        if(exito){
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la oferta correctamente.");
+        // int iduser=Integer.parseInt(request.getSession().getAttribute("id_usuario_login").toString());  
+        Boolean exito = ofertaBecaDAO.ingresar(ofertaBeca);
+
+        if (exito) {
+
+            //ENVIANDO CORREOS
+            //Preparando correo a enviar
+            Integer[] id_usuarios = null;
+            // userID almacena los ID de los usuarios a los que se les enviara el correo, si se declara null
+            // el correo se enviara a todos los usuarios del sistema
+            String tituloEmail = "Nueva Oferta de Beca de Postgrado";
+            String mensajeEmail = "Oferta: ";
+            mensajeEmail = mensajeEmail + ofertaBeca.getNombreOferta() + "\n\nPara más información acerca de la oferta de beca por favor visitar "
+                    + "el módulo Ofertas de Beca en la siguiente aplicación\n\n";
+            String requestURL = request.getRequestURL().toString();
+            String servlet = request.getServletPath();
+            String appURLRoot = requestURL.replace(servlet, "");
+            mensajeEmail = mensajeEmail + appURLRoot + "/";
+            Utilidades.EnviarCorreo(tituloEmail, mensajeEmail, id_usuarios);
+
+            //NUEVA BITACORA
+            Utilidades.nuevaBitacora(1, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se ingreso la oferta de beca: " + ofertaBeca.getNombreOferta() + " con id "+ofertaBeca.getIdOfertaBeca()+".", "");
             
-        //Preparando correo a enviar
-        Integer[] id_usuarios = null;
-        // userID almacena los ID de los usuarios a los que se les enviara el correo, si se declara null
-        // el correo se enviara a todos los usuarios del sistema
-        String tituloEmail = "Nueva Oferta de Beca de Postgrado";
-        String mensajeEmail = "Oferta: ";
-        mensajeEmail = mensajeEmail+ofertaBeca.getNombreOferta()+"\n\nPara más información acerca de la oferta de beca por favor visitar "
-                + "el módulo Ofertas de Beca en la siguiente aplicación\n\n";        
-        String requestURL = request.getRequestURL().toString();
-        String servlet = request.getServletPath();
-        String appURLRoot = requestURL.replace(servlet, "");        
-        mensajeEmail = mensajeEmail+appURLRoot+"/";
-        Utilidades.EnviarCorreo(tituloEmail, mensajeEmail, id_usuarios);
-        }else{
+            //REDIRECCIONANDO
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la oferta correctamente.");
+        } else {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la oferta");
-        } 
+        }
     }
 
     public Date StringAFecha(String Sfecha) {
         SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
         try {
-            fecha = formatoDelTexto.parse(Sfecha);           
+            fecha = formatoDelTexto.parse(Sfecha);
         } catch (ParseException ex) {
 
             ex.printStackTrace();

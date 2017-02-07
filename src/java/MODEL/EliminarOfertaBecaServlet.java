@@ -32,10 +32,12 @@ public class EliminarOfertaBecaServlet extends HttpServlet {
         java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());        
 
         //parte de lectura desde el jsp y guardado en bd     
-        ofertaBeca.setIdOfertaBeca(Integer.parseInt(request.getParameter("ID_OFERTA_BECA")));     
+        ofertaBeca.setIdOfertaBeca(Integer.parseInt(request.getParameter("ID_OFERTA_BECA"))); 
+        ofertaBeca = ofertaBecaDAO.consultarPorId(ofertaBeca.getIdOfertaBeca());
         System.out.println("ID RECIBIDO "+Integer.parseInt(request.getParameter("ID_OFERTA_BECA")));
         Boolean exito=ofertaBecaDAO.eliminar(ofertaBeca);
         if(exito){
+            Utilidades.nuevaBitacora(4, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se dio de baja la oferta de beca: " + ofertaBeca.getNombreOferta() + " con id "+ofertaBeca.getIdOfertaBeca()+".", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se deshabilito la oferta correctamente.");
         }else{
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo deshabilitar la oferta de beca");
