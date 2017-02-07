@@ -22,7 +22,6 @@ public class ConexionBD {
 
     public ConexionBD() {
         Properties prop = new Properties();
-        InputStream input = null;
         String driver = new String();
         String ip_server = new String();
         String port_server = new String();
@@ -32,14 +31,16 @@ public class ConexionBD {
         String database_password = new String();
 
         try {
-            String ubicacion = ConexionBD.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            ubicacion = ubicacion.replace("ConexionBD.class", "config.properties");
-            //el archivo de configuracion debe llamarse config.properties
-            input = new FileInputStream(ubicacion.toString());
-            System.out.print(ubicacion.toString());
-            // cargando archivo de configuracion.
-            prop.load(input);
 
+            
+            String resourceName = "config.properties";
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+                prop.load(resourceStream);
+            } catch (Exception ex) {
+
+                System.out.println("Error al leer archivo de configuracion. " + ex);
+            }
             // obteniendo propiedades.
             driver = prop.getProperty("driver");
             ip_server = prop.getProperty("ip_server");
@@ -48,7 +49,7 @@ public class ConexionBD {
             controller = prop.getProperty("controller");
             database_user = prop.getProperty("database_user");
             database_password = prop.getProperty("database_password");
-                        
+
             //ejemplo this.enlace = "jdbc:mariadb://localhost:3306/bd_becas";
             this.enlace = driver.toString() + ip_server.toString() + port_server.toString() + database_name.toString();
             //ejemplo this.controlador = "org.mariadb.jdbc.Driver";
@@ -57,15 +58,14 @@ public class ConexionBD {
             //ejemplo this.usuario = "root";
             this.usuario = database_user.toString();
             //ejemplo this.contrasenia = ""
-            this.contrasenia = database_password.toString();  
-            
+            this.contrasenia = database_password.toString();
+
             //System.out.println("Enlace:"+enlace.toString()+" controlador:"+controller.toString()+" usuario:"+database_user.toString()+" clave:"+database_password.toString());
-            
         } catch (Exception ex) {
-            
+
             System.out.println("Error al leer archivo de configuracion. " + ex);
         }
-        
+
     }
 
     public void abrirConexion() {
