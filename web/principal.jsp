@@ -96,8 +96,8 @@
 
     <div class="row" >
         <center>
-            <div class="col-md-12 text-center" style="background:url(img/portada1.jpg) no-repeat center top scroll;background-size: 99% auto;">
-                <img src="img/portada1.jpg" class="img-rounded" alt="Cinque Terre" width="100%">
+            <div class="col-md-12 text-center">
+                <img src="img/portada1.jpg" class="img-rounded" width="100%">
             </div>            
         </center>
     </div>

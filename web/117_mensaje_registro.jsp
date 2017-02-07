@@ -49,7 +49,7 @@
             <br>
             <br>
             <br>
-            <form class="form-horizontal" action="login_ldap.jsp" method="post">
+            <form class="form-horizontal" action="login.jsp" method="post">
                 <fieldset class="custom-border">
                     <br>
                     <br>
