@@ -1,6 +1,7 @@
 package MODEL;
 
 import DAO.BitacoraDAO;
+import DAO.EnviarCorreo;
 import DAO.UsuarioDAO;
 import POJO.Bitacora;
 import POJO.Usuario;
@@ -65,6 +66,14 @@ public class Utilidades {
         temp2.ingresar(temp1);
     }
 
+    /**
+     * Compara si el usuario logeado se encuentra en los
+     * usuario permitidos dentro del sistema. Si el usuario
+     * no tiene permiso retorna false sino true.
+     *
+     * @param tipo_usuario_logeado
+     * @param tipo_usuarios_permitidos
+     */
     public static boolean verificarPermisos(Integer tipo_usuario_logeado, ArrayList<String> tipo_usuarios_permitidos) {
         boolean respuesta = false;
         
@@ -77,6 +86,25 @@ public class Utilidades {
             
         }
         return respuesta;
+    }
+    
+    /**
+     * El metodo se utiliza para enviar correos electronicos
+     * a los usuarios especificados. Si no se especifica los
+     * usuarios el mensaje se enviara a todos los usuarios
+     * del sistema. 
+     * Ejemplo de id_usuarios = [1,2,3,4] (Enviando a los usuarios con id 1,2,3 y 4)
+     * Ejemplo de id_usuarios = null (enviando a todos los usuarios del sistema.)
+     *
+     * @param tituloEmail
+     * @param mensajeEmail
+     * @param id_usuarios
+     */
+    public static void EnviarCorreo(String tituloEmail, String mensajeEmail, Integer [] id_usuarios){
+        
+        EnviarCorreo envcorreos = new EnviarCorreo();        
+        envcorreos.enviarCorreos(tituloEmail, mensajeEmail, id_usuarios);                
+        
     }
 
 }

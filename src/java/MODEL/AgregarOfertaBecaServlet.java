@@ -62,7 +62,6 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         TipoDocumento tipo = new TipoDocumento();
         TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
         ExpedienteDAO expDao = new ExpedienteDAO();
-        EnviarCorreo envcorreos = new EnviarCorreo();
 
         //parte de lectura desde el jsp y guardado en bd     
         int idOfertaBeca = ofertaBecaDAO.getSiguienteId();
@@ -106,26 +105,24 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         ofertaBeca.setTipoEstudio(request.getParameter("tipoEstudio"));
         ofertaBeca.setOfertaBecaActiva(1);
        // int iduser=Integer.parseInt(request.getSession().getAttribute("id_usuario_login").toString());  
-        Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);
-        
-        //Preparando correo a enviar
-        Integer[] userID = null;
-        // userID almacena los ID de los usuarios a los que se les enviara el correo, si se declara null
-        // el correo se enviara a todos los usuarios del sistema
-        String asuntoEmail = "Nueva Oferta de Beca de Postgrado";
-        String cuerpoEmail = "Oferta: ";
-        cuerpoEmail = cuerpoEmail+ofertaBeca.getNombreOferta()+"\n\nPara más información acerca de la oferta de beca por favor visitar "
-                + "el módulo Ofertas de Beca en la siguiente aplicación\n\n";
-        
-        String requestURL = request.getRequestURL().toString();
-        String servlet = request.getServletPath();
-        String appURLRoot = requestURL.replace(servlet, "");
-        
-        cuerpoEmail = cuerpoEmail+appURLRoot+"/";
+        Boolean exito=ofertaBecaDAO.ingresar(ofertaBeca);                
         
         if(exito){
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la oferta correctamente.");
-            envcorreos.enviarCorreos(asuntoEmail, cuerpoEmail, userID);
+            
+        //Preparando correo a enviar
+        Integer[] id_usuarios = null;
+        // userID almacena los ID de los usuarios a los que se les enviara el correo, si se declara null
+        // el correo se enviara a todos los usuarios del sistema
+        String tituloEmail = "Nueva Oferta de Beca de Postgrado";
+        String mensajeEmail = "Oferta: ";
+        mensajeEmail = mensajeEmail+ofertaBeca.getNombreOferta()+"\n\nPara más información acerca de la oferta de beca por favor visitar "
+                + "el módulo Ofertas de Beca en la siguiente aplicación\n\n";        
+        String requestURL = request.getRequestURL().toString();
+        String servlet = request.getServletPath();
+        String appURLRoot = requestURL.replace(servlet, "");        
+        mensajeEmail = mensajeEmail+appURLRoot+"/";
+        Utilidades.EnviarCorreo(tituloEmail, mensajeEmail, id_usuarios);
         }else{
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la oferta");
         } 
