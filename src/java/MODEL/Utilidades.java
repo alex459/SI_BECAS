@@ -101,7 +101,7 @@ public class Utilidades {
      * @param id_usuarios
      */
     public static void EnviarCorreo(String tituloEmail, String mensajeEmail, Integer [] id_usuarios){
-        
+                
         EnviarCorreo envcorreos = new EnviarCorreo();        
         envcorreos.enviarCorreos(tituloEmail, mensajeEmail, id_usuarios);                
         

@@ -9,6 +9,7 @@ import DAO.UsuarioDAO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.cert.X509Certificate;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -24,6 +25,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 /**
  *
@@ -35,7 +39,7 @@ public class EnviarCorreo {
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.trust", "smtpserver");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
@@ -43,9 +47,13 @@ public class EnviarCorreo {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties config = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
-            config.load(resourceStream);
-
-            final String gmailAccount = config.getProperty("gmail.account");
+            config.load(resourceStream);           
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("No se pudo leer el archivo de configuracion." + ex);
+        }
+        
+        final String gmailAccount = config.getProperty("gmail.account");
             final String gmailPassword = config.getProperty("gmail.password");
             final String[] attachmentFiles = config.getProperty("attachmentfiles").split(";");
             String[] emailDestinations = new String[0];
@@ -53,9 +61,11 @@ public class EnviarCorreo {
                 emailDestinations = getAllDestinations();
             } else {
                 emailDestinations = getDestinations(userID);
-            }
-
-            Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            }                                                            
+            
+            
+            
+            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(gmailAccount, gmailPassword);
                 }
@@ -88,11 +98,6 @@ public class EnviarCorreo {
                     System.out.println("No se puedo enviar el correo a " + emailDestinations[i] + ". Error " + ex);
                 }
             }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println("No se pudo leer el archivo de configuracion." + ex);
-        }
 
     }
 
