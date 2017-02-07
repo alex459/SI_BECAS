@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54ad7314-eff1-49cb-9d31-28411484dcd2">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="0" uuid="54ad7314-eff1-49cb-9d31-28411484dcd2">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="163"/>
+	<property name="ireport.y" value="386"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -49,6 +49,10 @@
 	<parameter name="ListaFechaInicioCargo" class="java.util.List"/>
 	<parameter name="ListaFechaFinCargo" class="java.util.List"/>
 	<parameter name="ListaResponsabilidad" class="java.util.List"/>
+	<parameter name="institucionEstudio" class="java.lang.String"/>
+	<parameter name="tipoBeca" class="java.lang.String"/>
+	<parameter name="gradoObtener" class="java.lang.String"/>
+	<parameter name="tiempoBeca" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -56,7 +60,7 @@
 		<band height="744" splitType="Stretch">
 			<image>
 				<reportElement x="13" y="1" width="98" height="89" uuid="7d2cded7-47aa-44f3-baa9-5927dce57df4"/>
-				<imageExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="77" y="11" width="353" height="20" uuid="fd529e67-3439-48b0-8884-31e55d676e80"/>
@@ -73,7 +77,7 @@
 				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="105" width="555" height="639" uuid="fda6fa7b-3c6c-4042-9761-e5e40a7cb7e9"/>
+				<reportElement x="0" y="105" width="562" height="639" uuid="fda6fa7b-3c6c-4042-9761-e5e40a7cb7e9"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="14" y="111" width="15" height="20" uuid="818fd9a1-f037-4184-8c0c-783b9adeae5c"/>
@@ -128,17 +132,17 @@
 				<text><![CDATA[10.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="168" y="315" width="119" height="20" uuid="3784914d-de6c-49f0-baf2-71ab3e84b4a6"/>
-				<textElement>
+				<reportElement x="149" y="323" width="119" height="20" uuid="3784914d-de6c-49f0-baf2-71ab3e84b4a6"/>
+				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[TITULO DEL CARGO]]></text>
 			</staticText>
 			<line>
-				<reportElement x="15" y="542" width="524" height="1" uuid="6ddcbdff-dc66-49d7-8875-c8df71c789b2"/>
+				<reportElement x="15" y="577" width="524" height="1" uuid="6ddcbdff-dc66-49d7-8875-c8df71c789b2"/>
 			</line>
 			<staticText>
-				<reportElement x="304" y="332" width="54" height="20" uuid="e56e7dd0-fb60-4706-8edd-2f764dff7ab9"/>
+				<reportElement x="287" y="334" width="54" height="20" uuid="e56e7dd0-fb60-4706-8edd-2f764dff7ab9"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -152,38 +156,38 @@
 				<text><![CDATA[FECHAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="29" y="315" width="90" height="20" uuid="f06d6704-a406-4853-ad77-0f685b0d514d"/>
+				<reportElement x="29" y="323" width="90" height="20" uuid="f06d6704-a406-4853-ad77-0f685b0d514d"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[LUGAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="15" y="553" width="15" height="20" uuid="090f62e4-e180-4ca2-b836-f2607221665d"/>
+				<reportElement x="15" y="583" width="15" height="20" uuid="090f62e4-e180-4ca2-b836-f2607221665d"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[11.]]></text>
 			</staticText>
 			<line>
-				<reportElement x="14" y="599" width="524" height="1" uuid="bbd9bffd-c38e-498a-9390-f3b8f7a40cb7"/>
+				<reportElement x="15" y="622" width="524" height="1" uuid="bbd9bffd-c38e-498a-9390-f3b8f7a40cb7"/>
 			</line>
 			<staticText>
-				<reportElement x="41" y="553" width="412" height="20" uuid="62ae8cd2-aaa9-477c-a8de-65d4de20eb51"/>
+				<reportElement x="41" y="583" width="412" height="20" uuid="62ae8cd2-aaa9-477c-a8de-65d4de20eb51"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUCION DE ESTUDIOS QUE PROPONE (LUGAR Y PAIS)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="15" y="613" width="15" height="20" uuid="96b064ba-8f77-47f7-b934-99f5fc188947"/>
+				<reportElement x="15" y="627" width="15" height="20" uuid="96b064ba-8f77-47f7-b934-99f5fc188947"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[12.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="41" y="613" width="462" height="20" uuid="584f10a3-ea1c-4332-b079-15d09434475b"/>
+				<reportElement x="41" y="627" width="462" height="20" uuid="584f10a3-ea1c-4332-b079-15d09434475b"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
@@ -209,7 +213,7 @@
 				<reportElement x="398" y="132" width="1" height="132" uuid="3d12b4e9-8230-4ea5-aaea-cf193e193437"/>
 			</line>
 			<staticText>
-				<reportElement x="375" y="332" width="54" height="20" uuid="bf462c97-c6b9-4015-8e2c-21fd70f5d8af"/>
+				<reportElement x="360" y="335" width="54" height="20" uuid="bf462c97-c6b9-4015-8e2c-21fd70f5d8af"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -219,29 +223,29 @@
 				<reportElement x="23" y="347" width="515" height="1" uuid="e9ffc184-9335-4746-87c2-937a121316ac"/>
 			</line>
 			<line>
-				<reportElement x="157" y="315" width="1" height="209" uuid="2b3aa1db-c304-44dc-9054-74d8f81fd057"/>
+				<reportElement x="139" y="315" width="1" height="244" uuid="2b3aa1db-c304-44dc-9054-74d8f81fd057"/>
 			</line>
 			<line>
-				<reportElement x="287" y="315" width="1" height="209" uuid="f10c41bc-0d52-4b96-824b-f465c549c02f"/>
+				<reportElement x="272" y="315" width="1" height="244" uuid="f10c41bc-0d52-4b96-824b-f465c549c02f"/>
 			</line>
 			<line>
-				<reportElement x="429" y="315" width="1" height="209" uuid="146edc20-35ab-4a9e-a1b1-017ae1fbb051"/>
+				<reportElement x="414" y="315" width="1" height="244" uuid="146edc20-35ab-4a9e-a1b1-017ae1fbb051"/>
 			</line>
 			<line>
-				<reportElement x="358" y="335" width="1" height="189" uuid="c9b2dc54-d6bf-4a41-a5b7-30065961c5d1"/>
+				<reportElement x="342" y="335" width="1" height="224" uuid="c9b2dc54-d6bf-4a41-a5b7-30065961c5d1"/>
 			</line>
 			<staticText>
-				<reportElement x="430" y="315" width="125" height="20" uuid="fc0b8b24-03e5-4d9c-b754-398dadccbadd"/>
+				<reportElement x="421" y="323" width="125" height="20" uuid="fc0b8b24-03e5-4d9c-b754-398dadccbadd"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[RESPONSABILIDADES]]></text>
 			</staticText>
 			<line>
-				<reportElement x="289" y="331" width="140" height="1" uuid="c92296f0-2ead-4ab4-b51f-dab3b5a1c550"/>
+				<reportElement x="272" y="333" width="140" height="1" uuid="c92296f0-2ead-4ab4-b51f-dab3b5a1c550"/>
 			</line>
 			<staticText>
-				<reportElement x="40" y="660" width="412" height="20" uuid="4be1c2b2-4870-42eb-bd92-fb2ffacc4eed"/>
+				<reportElement x="40" y="667" width="412" height="20" uuid="4be1c2b2-4870-42eb-bd92-fb2ffacc4eed"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
@@ -255,44 +259,14 @@
 				<text><![CDATA[TIEMPO REQUERIDO PARA COMPLETAR LOS ESTUDIOS:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement x="0" y="350" width="153" height="64" uuid="15e2c7ec-e65f-43e3-a94c-14203bf803fe"/>
+				<reportElement x="0" y="350" width="136" height="64" uuid="15e2c7ec-e65f-43e3-a94c-14203bf803fe"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataset1" uuid="4fad9329-c965-4927-9c33-73546e50c3cc">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaLugarCargo})]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="64" width="153">
+					<jr:listContents height="64" width="136">
 						<textField>
-							<reportElement x="0" y="2" width="147" height="62" uuid="85e72c98-07ca-40e1-8646-37aa8ca9cfc7"/>
-							<textElement textAlignment="Justified" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
-						</textField>
-					</jr:listContents>
-				</jr:list>
-			</componentElement>
-			<componentElement>
-				<reportElement x="158" y="350" width="129" height="64" uuid="28bb78ca-e7b6-43e3-935f-4d7b9db61123"/>
-				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-					<datasetRun subDataset="dataset2" uuid="d19cc864-ac52-4b62-9289-cd586602f4b6">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaCargoAnterior})]]></dataSourceExpression>
-					</datasetRun>
-					<jr:listContents height="64" width="129">
-						<textField>
-							<reportElement x="0" y="2" width="129" height="62" uuid="8187c108-fdec-4a2e-ac3e-750f1db3c8cd"/>
-							<textElement textAlignment="Justified" verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
-						</textField>
-					</jr:listContents>
-				</jr:list>
-			</componentElement>
-			<componentElement>
-				<reportElement x="289" y="350" width="69" height="64" uuid="8b152936-d62b-4286-9e06-aacf89344cc1"/>
-				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-					<datasetRun subDataset="dataset3" uuid="77a1d02c-425f-42b9-86b2-72311209faeb">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaFechaInicioCargo})]]></dataSourceExpression>
-					</datasetRun>
-					<jr:listContents height="64" width="69">
-						<textField>
-							<reportElement x="0" y="2" width="69" height="62" uuid="c3c5e195-6576-4c8d-a264-b4dcd1db9b6e"/>
+							<reportElement x="0" y="2" width="136" height="62" uuid="85e72c98-07ca-40e1-8646-37aa8ca9cfc7"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
 						</textField>
@@ -300,7 +274,37 @@
 				</jr:list>
 			</componentElement>
 			<componentElement>
-				<reportElement x="358" y="350" width="71" height="64" uuid="86dc5ddf-0ce2-4a3f-b409-4e23f585ba18"/>
+				<reportElement x="140" y="352" width="129" height="64" uuid="28bb78ca-e7b6-43e3-935f-4d7b9db61123"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset2" uuid="d19cc864-ac52-4b62-9289-cd586602f4b6">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaCargoAnterior})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="64" width="129">
+						<textField>
+							<reportElement x="0" y="2" width="129" height="62" uuid="8187c108-fdec-4a2e-ac3e-750f1db3c8cd"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="273" y="352" width="69" height="64" uuid="8b152936-d62b-4286-9e06-aacf89344cc1"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset3" uuid="77a1d02c-425f-42b9-86b2-72311209faeb">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaFechaInicioCargo})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="64" width="69">
+						<textField>
+							<reportElement x="0" y="0" width="69" height="62" uuid="c3c5e195-6576-4c8d-a264-b4dcd1db9b6e"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="343" y="352" width="71" height="64" uuid="86dc5ddf-0ce2-4a3f-b409-4e23f585ba18"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataset4" uuid="6f739efe-e93d-4624-a85d-721322354eb7">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaFechaFinCargo})]]></dataSourceExpression>
@@ -315,15 +319,15 @@
 				</jr:list>
 			</componentElement>
 			<componentElement>
-				<reportElement x="429" y="350" width="126" height="64" uuid="eb993e34-ffd2-481f-8899-997312dcde7f"/>
+				<reportElement x="419" y="354" width="135" height="64" uuid="eb993e34-ffd2-481f-8899-997312dcde7f"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataset5" uuid="a96b4670-52fc-4730-a570-555295d23d1a">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaResponsabilidad})]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="64" width="126">
+					<jr:listContents height="64" width="135">
 						<textField>
-							<reportElement x="1" y="2" width="125" height="62" uuid="a15bb27b-185c-4edc-b842-e957a7a1f00a"/>
-							<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+							<reportElement x="1" y="2" width="134" height="62" uuid="a15bb27b-185c-4edc-b842-e957a7a1f00a"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
 						</textField>
 					</jr:listContents>
@@ -389,9 +393,25 @@
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
+			<textField>
+				<reportElement x="41" y="724" width="498" height="20" uuid="3434ea92-6327-499f-8919-c3b4dd8088de"/>
+				<textFieldExpression><![CDATA[$P{tiempoBeca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="687" width="497" height="20" uuid="78a67478-7f8c-4bd7-b825-190a529b6ed5"/>
+				<textFieldExpression><![CDATA[$P{gradoObtener}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="647" width="492" height="20" uuid="2cbf18de-a20a-4b51-9c0b-a93dc5db1e56"/>
+				<textFieldExpression><![CDATA[$P{tipoBeca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="47" y="603" width="491" height="20" uuid="1bd6c28f-2404-4676-8b91-70f54951830b"/>
+				<textFieldExpression><![CDATA[$P{institucionEstudio}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<detail>
-		<band height="8" splitType="Stretch"/>
+		<band height="1" splitType="Stretch"/>
 	</detail>
 </jasperReport>
