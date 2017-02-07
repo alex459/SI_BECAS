@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54ad7314-eff1-49cb-9d31-28411484dcd2">
-	<property name="ireport.zoom" value="0.5"/>
+	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="14"/>
+	<property name="ireport.y" value="211"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -13,6 +13,12 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
+	<subDataset name="dataset1" uuid="cd373c61-347a-4bdc-8103-afef656a99b5">
+		<field name="_THIS" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset2" uuid="26e37f86-1bc4-4191-84ff-e9fac9e46809">
+		<field name="_THIS" class="java.lang.String"/>
+	</subDataset>
 	<parameter name="ListaSemestre" class="java.util.List"/>
 	<parameter name="ListaProgramaEstudio" class="java.util.List"/>
 	<parameter name="beneficios" class="java.lang.String"/>
@@ -22,7 +28,7 @@
 	<title>
 		<band height="730" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="99" width="555" height="631" uuid="fda6fa7b-3c6c-4042-9761-e5e40a7cb7e9"/>
+				<reportElement x="0" y="90" width="555" height="631" uuid="fda6fa7b-3c6c-4042-9761-e5e40a7cb7e9"/>
 			</rectangle>
 			<image>
 				<reportElement x="13" y="1" width="98" height="89" uuid="7d2cded7-47aa-44f3-baa9-5927dce57df4"/>
@@ -43,68 +49,88 @@
 				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="111" width="15" height="20" uuid="818fd9a1-f037-4184-8c0c-783b9adeae5c"/>
+				<reportElement x="10" y="105" width="15" height="20" uuid="818fd9a1-f037-4184-8c0c-783b9adeae5c"/>
 				<textElement>
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[13.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="36" y="111" width="199" height="20" uuid="5ca24faa-9851-4a2a-8e50-3e9ab928ec58"/>
+				<reportElement x="36" y="105" width="199" height="20" uuid="5ca24faa-9851-4a2a-8e50-3e9ab928ec58"/>
 				<textElement>
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[PROGRAMA DE ESTUDIOS A REALIZAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="131" width="277" height="20" uuid="76360dbb-ea31-41f5-99eb-ce2556878b2d"/>
+				<reportElement x="186" y="125" width="277" height="20" uuid="76360dbb-ea31-41f5-99eb-ce2556878b2d"/>
 				<textElement textAlignment="Center">
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[PROGRAMA]]></text>
 			</staticText>
 			<line>
-				<reportElement x="10" y="510" width="524" height="1" uuid="6ddcbdff-dc66-49d7-8875-c8df71c789b2"/>
+				<reportElement x="10" y="544" width="524" height="1" uuid="6ddcbdff-dc66-49d7-8875-c8df71c789b2"/>
 			</line>
 			<staticText>
-				<reportElement x="10" y="523" width="15" height="20" uuid="090f62e4-e180-4ca2-b836-f2607221665d"/>
+				<reportElement x="10" y="548" width="15" height="20" uuid="090f62e4-e180-4ca2-b836-f2607221665d"/>
 				<textElement>
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[14.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="36" y="523" width="412" height="20" uuid="62ae8cd2-aaa9-477c-a8de-65d4de20eb51"/>
+				<reportElement x="36" y="548" width="412" height="20" uuid="62ae8cd2-aaa9-477c-a8de-65d4de20eb51"/>
 				<textElement>
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[BENEFICIOS QUE ESPERA OBTENER CON LOS ESTUDIOS PROPUESTOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="55" y="131" width="60" height="20" uuid="0e9981af-a92a-4d7e-902a-43b7970edb3b"/>
+				<reportElement x="55" y="125" width="60" height="20" uuid="0e9981af-a92a-4d7e-902a-43b7970edb3b"/>
 				<textElement>
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[SEMESTRE]]></text>
 			</staticText>
 			<line>
-				<reportElement x="37" y="151" width="462" height="1" uuid="692153c7-b421-4f37-95d1-4fb935d9b3a8"/>
+				<reportElement x="37" y="141" width="462" height="1" uuid="692153c7-b421-4f37-95d1-4fb935d9b3a8"/>
 			</line>
 			<line>
-				<reportElement x="142" y="131" width="1" height="309" uuid="0a0147f0-800e-4492-835f-2463ef372199"/>
+				<reportElement x="143" y="125" width="1" height="409" uuid="0a0147f0-800e-4492-835f-2463ef372199"/>
 			</line>
 			<textField>
-				<reportElement x="15" y="553" width="519" height="162" uuid="168bdc41-6a16-48b3-b612-a9a5432d8d59"/>
+				<reportElement x="15" y="568" width="519" height="147" uuid="168bdc41-6a16-48b3-b612-a9a5432d8d59"/>
 				<textFieldExpression><![CDATA[$P{beneficios}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="25" y="163" width="100" height="322" uuid="1eba99c7-9bf6-4e65-8d85-21b2466e18d5"/>
-				<textFieldExpression><![CDATA[""+$P{ListaSemestre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="157" y="163" width="377" height="322" uuid="0bc21a79-26b7-4d03-84d1-853e51f53119"/>
-				<textFieldExpression><![CDATA[""+$P{ListaProgramaEstudio}]]></textFieldExpression>
-			</textField>
+			<componentElement>
+				<reportElement x="147" y="145" width="400" height="37" uuid="3efdafee-0049-4bca-9f40-57986a93dfa8"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset1" uuid="3a17845e-41f4-415c-9461-7d1b80e380ec">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaProgramaEstudio})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="37" width="400">
+						<textField>
+							<reportElement x="0" y="0" width="400" height="37" uuid="61f7062d-1169-462e-828e-ee3fdfcc1a97"/>
+							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="10" y="145" width="123" height="37" uuid="b01bdbbb-8c1b-4b19-8de6-c949f44bb099"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset2" uuid="46f2d1f3-dc8b-44e7-9328-10de933e9592">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{ListaSemestre})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="37" width="123">
+						<textField>
+							<reportElement x="3" y="0" width="120" height="37" uuid="eca57e22-5197-4baa-b19a-60bf703b30fa"/>
+							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
 		</band>
 	</title>
 	<detail>

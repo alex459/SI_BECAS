@@ -137,7 +137,7 @@ public class loginLDAPServlet extends HttpServlet {
                     } else {
                         //Credenciales invalidas en la base entonces
                         //enviar al login_ldap.                                               
-                        response.sendRedirect("login_ldap.jsp");
+                        response.sendRedirect("login.jsp");
                         System.out.println("Credenciales invalidas LDAP y SIABP");                                                                        
                         
                     }

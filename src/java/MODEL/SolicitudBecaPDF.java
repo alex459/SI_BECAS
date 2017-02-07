@@ -71,11 +71,12 @@ public class SolicitudBecaPDF extends HttpServlet {
             String municipioNacimiento = municipioDao.consultarNombrePorId(Integer.parseInt(municipioN));
             municipioNacimiento = municipioNacimiento +","+departamentoNacimiento;
             String genero = request.getParameter("genero");
-            String direccion = request.getParameter("direccion");
+            String direccionD = request.getParameter("direccion");
             String departamentoD = request.getParameter("departamentoDireccion");
             String municipioD = request.getParameter("municipioDireccion");
             String departamentoDireccion = departamentoDao.consultarNombrePorId(Integer.parseInt(departamentoD));
             String municipioDireccion = municipioDao.consultarNombrePorId(Integer.parseInt(municipioD));
+            String direccion = direccionD +", " + municipioDireccion + "' "+ departamentoDireccion;
             String telCasa = request.getParameter("telCasa");
             String telMovil = request.getParameter("telMovil");
             String telOficina = request.getParameter("telOficina");
@@ -241,37 +242,61 @@ public class SolicitudBecaPDF extends HttpServlet {
             String beneficios = request.getParameter("beneficios");
 
             //Falta obtener Becas Anteriores ListaBecasAnteriores
-            String nombre1R1 = request.getParameter("nombre1R1");
+            String nombre1R1N = request.getParameter("nombre1R1");
             String nombre2R1 = request.getParameter("nombre2R1");
+            if (nombre2R1.equals("") || nombre2R1 == null) {
+                nombre2R1 = "";
+            }
             String apellido1R1 = request.getParameter("apellido1R1");
             String apellido2R1 = request.getParameter("apellido2R1");
-            String domicilioR1 = request.getParameter("direccionR1");
+            if (apellido2R1.equals("") || apellido2R1 == null) {
+                apellido2R1 = "";
+            }
+            String nombre1R1 = nombre1R1N + " "+ nombre2R1 + " "+ apellido1R1 +" "+ apellido2R1;
+            String domicilioR1D = request.getParameter("direccionR1");
             Integer idMunicipioR1 = Integer.parseInt(request.getParameter("municipioR1"));
             Integer idDepartamentoR1 = Integer.parseInt(request.getParameter("departamentoR1"));
             String departamentoR1 = departamentoDao.consultarNombrePorId(idDepartamentoR1);
             String municipioR1 = municipioDao.consultarNombrePorId(idMunicipioR1);
+            String domicilioR1 = domicilioR1D +" ,"+municipioR1 +" ,"+departamentoR1;
             String telR1 = request.getParameter("telefonoR1");
 
-            String nombre1R2 = request.getParameter("nombre1R2");
+            String nombre1R2N = request.getParameter("nombre1R2");
             String nombre2R2 = request.getParameter("nombre2R2");
+            if (nombre2R2.equals("") || nombre2R2 == null) {
+                nombre2R2 = "";
+            }
             String apellido1R2 = request.getParameter("apellido1R2");
             String apellido2R2 = request.getParameter("apellido2R2");
-            String domicilioR2 = request.getParameter("direccionR2");
+            if (apellido2R2.equals("") || apellido2R2 == null) {
+                apellido2R2 = "";
+            }
+            String nombre1R2 = nombre1R2N + " "+ nombre2R2 + " "+ apellido1R2 +" "+ apellido2R2;
+            String domicilioR2D = request.getParameter("direccionR2");
             Integer idMunicipioR2 = Integer.parseInt(request.getParameter("municipioR2"));
             Integer idDepartamentoR2 = Integer.parseInt(request.getParameter("departamentoR2"));
             String departamentoR2 = departamentoDao.consultarNombrePorId(idDepartamentoR2);
             String municipioR2 = municipioDao.consultarNombrePorId(idMunicipioR2);
+            String domicilioR2 = domicilioR1D +" ,"+municipioR2 +" ,"+departamentoR2;
             String telR2 = request.getParameter("telefonoR2");
 
-            String nombre1R3 = request.getParameter("nombre1R3");
+            String nombre1R3N = request.getParameter("nombre1R3");
             String nombre2R3 = request.getParameter("nombre2R3");
+            if (nombre2R3.equals("") || nombre2R3 == null) {
+                nombre2R3 = "";
+            }
             String apellido1R3 = request.getParameter("apellido1R3");
-            String apellido2R3 = request.getParameter("apellido2R3");
-            String domicilioR3 = request.getParameter("direccionR3");
+            String apellido2R3 = request.getParameter("apellido2R3");            
+            if (apellido2R3.equals("") || apellido2R3 == null) {
+                apellido2R3 = "";
+            }
+            String nombre1R3 = nombre1R3N + " "+ nombre2R3 + " "+ apellido1R3 +" "+ apellido2R3;
+            String domicilioR3D = request.getParameter("direccionR3");
             Integer idMunicipioR3 = Integer.parseInt(request.getParameter("municipioR3"));
             Integer idDepartamentoR3 = Integer.parseInt(request.getParameter("departamentoR3"));
             String departamentoR3 = departamentoDao.consultarNombrePorId(idDepartamentoR3);
             String municipioR3 = municipioDao.consultarNombrePorId(idMunicipioR3);
+            String domicilioR3 = domicilioR3D +" ,"+municipioR3 +" ,"+departamentoR3;
             String telR3 = request.getParameter("telefonoR3");
 
             //preparando parametros para el reporte
