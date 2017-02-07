@@ -9,6 +9,7 @@ import DAO.ConexionBD;
 import DAO.DepartamentoDAO;
 import DAO.MunicipioDAO;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,11 +50,13 @@ public class SolicitudBecaPDF extends HttpServlet {
         request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
 
         try {
+            //obteniendo el usuario
+            String user = request.getParameter("user");
             //pojos y daos
             DepartamentoDAO departamentoDao = new DepartamentoDAO();
             MunicipioDAO municipioDao = new MunicipioDAO();
 
-            //leyendo parametros del jsp
+        //leyendo parametros del jsp
             String nombre1 = request.getParameter("nombre1");
             String nombre2 = request.getParameter("nombre2");
             if (nombre2.equals("") || nombre2 == null) {
@@ -80,7 +83,7 @@ public class SolicitudBecaPDF extends HttpServlet {
             String telCasa = request.getParameter("telCasa");
             String telMovil = request.getParameter("telMovil");
             String telOficina = request.getParameter("telOficina");
-            //Falta calcular la edad
+            //CALCULANDO LA EDAD
             Date fechaActual = new Date();
             String edad = "";
             try{
@@ -161,10 +164,15 @@ public class SolicitudBecaPDF extends HttpServlet {
             if (nInvestigacion > 0) {
                 for (int i = 1; i < nInvestigacion + 1; i++) {
                     String vartitulo = "tituloProyecto" + i;
-                    String varpublicado = "publicado" + i;
+                    String varpublicado = "publicado" + i;                    
                     //Recuperando informacion
                     String tituloProyecto = request.getParameter(vartitulo);
                     String publicado = request.getParameter(varpublicado);
+                    if (publicado.equals("1")){
+                        publicado ="SI";
+                    } else{
+                        publicado ="NO";
+                    }
                     //Agregando a Lista
                     ListaTituloProyecto.add(tituloProyecto);
                     ListaPublicado.add(publicado);
@@ -298,7 +306,46 @@ public class SolicitudBecaPDF extends HttpServlet {
             String municipioR3 = municipioDao.consultarNombrePorId(idMunicipioR3);
             String domicilioR3 = domicilioR3D +" ,"+municipioR3 +" ,"+departamentoR3;
             String telR3 = request.getParameter("telefonoR3");
-
+            
+            //OBTENIENDO DATOS DE LA BECA SOLICITADA
+            String institucionEstudio="";
+            String tipoBeca ="";
+            String gradoObtener="";
+            String tiempoBeca ="";
+             try{
+                ConexionBD conexionBD = new ConexionBD();
+                String consultaSql = "SELECT NOMBRE_OFERTA, TIPO_ESTUDIO, NOMBRE_INSTITUCION, PAIS, DURACION FROM oferta_beca OB JOIN institucion I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION JOIN solicitud_de_beca SB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA JOIN expediente E ON E.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN usuario U ON U.ID_USUARIO = SB.ID_USUARIO WHERE NOMBRE_USUARIO = '"+user+"' AND E.ESTADO_EXPEDIENTE = 'ABIERTO' ";
+                ResultSet rs = conexionBD.consultaSql(consultaSql);
+                String becaAnt="";
+                while (rs.next()) {
+                    institucionEstudio = rs.getString("NOMBRE_INSTITUCION")+", "+rs.getString("PAIS");
+                    tipoBeca = rs.getString("TIPO_ESTUDIO");
+                    gradoObtener = rs.getString("NOMBRE_OFERTA");
+                    tiempoBeca = rs.getString("DURACION") +" MESES";
+                }
+                
+                
+            } catch(Exception e){
+                e.printStackTrace();
+            } 
+            //OBTENIENDO BECAS ANTERIORES DEL CANDIDATO
+            try{
+                ConexionBD conexionBD = new ConexionBD();
+                String consultaSql = "SELECT OB.NOMBRE_OFERTA, B.ID_EXPEDIENTE FROM beca B JOIN solicitud_de_beca SB ON B.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN usuario U ON U.ID_USUARIO = SB.ID_USUARIO JOIN oferta_beca OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA WHERE U.NOMBRE_USUARIO = '" + user+"'";
+                ResultSet rs = conexionBD.consultaSql(consultaSql);
+                String becaAnt="";
+                while (rs.next()) {
+                    becaAnt = rs.getString("NOMBRE_OFERTA") +" ---- Expediente: "+ rs.getInt("ID_EXPEDIENTE");
+                    ListaBecasAnteriores.add(becaAnt);
+                }
+                if (ListaBecasAnteriores.size() <1){
+                    ListaBecasAnteriores.add("NINGUNA");
+                }
+                conexionBD.cerrarConexion();
+            } catch(Exception e){
+                e.printStackTrace();
+            }            
+            
             //preparando parametros para el reporte
             Map parametersMap = new HashMap();
             parametersMap.put("nombre1", nombre1);
@@ -366,6 +413,10 @@ public class SolicitudBecaPDF extends HttpServlet {
             parametersMap.put("departamentoR3", departamentoR3);
             parametersMap.put("municipioR3", municipioR3);
             parametersMap.put("telR3", telR3);
+            parametersMap.put("institucionEstudio", institucionEstudio);
+            parametersMap.put("tipoBeca", tipoBeca);
+            parametersMap.put("gradoObtener", gradoObtener);
+            parametersMap.put("tiempoBeca", tiempoBeca);
 
             ConexionBD conexionBD = new ConexionBD();
             conexionBD.abrirConexion();

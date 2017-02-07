@@ -193,7 +193,7 @@
 
     for (int i = 0; i < investigacion.size(); i++) {
         int n = i + 1;
-        proyectos = proyectos + "{id:" + n + ", titulo: 'tituloProyecto" + n + "', publicado:'publicado:" +  n + "'}";
+        proyectos = proyectos + "{id:" + n + ", titulo: 'tituloProyecto" + n + "', publicado:'publicado" +  n + "'}";
         auxTituloProy = auxTituloProy + "'" + investigacion.get(i).getTituloInvestigacion()+ "'";
         auxPublicado = auxPublicado + "" + investigacion.get(i).getPublicado()+ "";
         if (i != investigacion.size() - 1) {
