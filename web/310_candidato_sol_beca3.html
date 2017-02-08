@@ -1,19 +1,20 @@
 <div>
     <div class="col-md-2">
-                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
-                    <li><a href="#/">Datos personales</a></li>
-                    <li><a href="#/laboral">Información laboral</a></li>
-                    <li  class="active"><a href="#/educacion">Educación</a></li>
-                    <li><a href="#/cargos">Cargos desempeñados</a></li>
-                    <li><a href="#/oferta">Información de beca</a></li>
-                    <li><a href="#/referencias">Referencias personales</a></li>
-                    <li><a href="#/documentos">Adjuntar documentos</a></li>
-                </ul>
-            </div>  
-            <div class="col-md-10">
-                    <fieldset class="custom-border">
-                <legend class="custom-border">Educación</legend>            
-                            <div class="row">  
+        <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+            <li><a href="#/">Datos personales</a></li>
+            <li><a href="#/laboral">Información laboral</a></li>
+            <li  class="active"><a href="#/educacion">Educación</a></li>
+            <li><a href="#/cargos">Cargos desempeñados</a></li>
+            <li><a href="#/oferta">Información de beca</a></li>
+            <li><a href="#/referencias">Referencias personales</a></li>
+            <li><a href="#/documentos">Adjuntar documentos</a></li>
+        </ul>
+    </div>  
+    <div class="col-md-10">
+
+        <fieldset class="custom-border">
+            <legend class="custom-border">Educación</legend>
+            <div class="row">  
                                 <div class="col-md-12">
                                     <table class="table table-bordered">
                                         <label>Estudios Realizados</label>
@@ -52,13 +53,26 @@
                                                         <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.minlength">Mínimo 10 caracteres.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                                                 </td>
-                                                <td>
+                                                <td>                                                    
                                                     <div class="input-group date">
-                                                        <input type="text" name="{{x.anyo}}" class="form-control" ng-disabled="false" ng-model="aux.auxAnyoEdu[$index]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="aux.auxAnyoEdu[$index]"></i></span>
+                                                        <input name="{{x.anyo}}" type="text" class="form-control" ng-disabled="" ng-model="aux.auxAnyoEdu[$index]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
+                                                    
                                                     <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.required">Ingrese el Año de graduación del Estudio.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.min">Año mínimo permitido 1940.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.pattern">Solo se permiten letras dígitos. (0-9).</span>
+                                                
+                                                <script type="text/javascript">
+    $(function () {
+        $('.input-group.date').datepicker({
+            format: " yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            startDate: '1960'            
+        });
+    });
+
+</script>
                                                 </td>
                                                 <td>
                                                     <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarEducacion()">Eliminar</a></td>
@@ -169,7 +183,7 @@
                                                         <option value="REGULAR">REGULAR</option>
                                                         <option value="BIEN">BIEN</option>
                                                         <option value="EXCELENTE">EXCELENTE</option>
-                                                     </select>
+                                                     </select>                                                    
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelEscritura}}.$error.required">Seleccione un nivel.</span>
                                                 </td>
                                                 <td><a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarIdioma()">Eliminar</a></td>
@@ -181,31 +195,19 @@
                                     </div>
                                 </div> 
                             </div>
-                            <div class="row">
+                            <div class="row">                              
                             </div></br>
                             <div class="row">
                             </div></br>
-                        </fieldset>         
-                <div class="row">
-                    <div class="col-md-4 col-lg-offset-4">
-                        <a href="#/cargos"><button class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</button></a> 
-                        <a href="#/laboral" class="btn btn-primary">Regresar</a>
-                        <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
-                    </div>
-                </div></br>
-            </br>
+        </fieldset>              
+        <div class="row">
+            <div class="col-md-4 col-lg-offset-4">
+                <a href="#/cargos"><button class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</button></a> 
+                <a href="#/laboral" class="btn btn-primary">Regresar</a>
+                <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
+            </div>
         </div>
+    </div> 
+
 </div>
 
-<script type="text/javascript">
-                        $(function () {
-                            $('.input-group.date').datepicker({
-                                calendarWeeks: false,                                
-                                autoclose: true,
-                                startDate: new Date().getFullYear(),
-                                minDate: 1970,
-                                maxDate: new Date().getFullYear(),
-                            });
-                        });
-
-</script>
