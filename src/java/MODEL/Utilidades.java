@@ -42,7 +42,7 @@ public class Utilidades {
 
     /**
      * Metodo para registrar una bitacora nueva. Id_Accion puede ser 1-INGRESAR,
-     * 2-ACTUALIZAR, 3-CONSULTAR, 4-ELIMINAR, 5-LOGIN, 6-LOGOUT, 7-REPORTE.
+     * 2-ACTUALIZAR, 3-CONSULTAR, 4-ELIMINAR, 5-LOGIN, 6-LOGOUT, 7-REPORTE, 8-APROBADO, 9-DENEGADO, 10-CORRECCION
      * usuario_sesion es el usuario logeado, en jsp o en servlet se pude obtener
      * con sesion.getParameter("user"). Ejemplo de Descripcion: "Se ingreso un
      * nuevo usuario al sistema con carnet xxxx".
@@ -105,6 +105,19 @@ public class Utilidades {
         EnviarCorreo envcorreos = new EnviarCorreo();        
         envcorreos.enviarCorreos(tituloEmail, mensajeEmail, id_usuarios);                
         
+    }
+    
+    //recibe la url de una pagina web y obtiene la raiz.
+    public static String ObtenerUrlRaiz(String RequestURL){
+        String respuesta = new String();
+        for(int i = RequestURL.length()-1; i>=0; i--){
+            if(RequestURL.charAt(i) == '/'){
+                respuesta = RequestURL.substring(0, i);
+                //System.out.println(respuesta);
+                i = 0;                
+            }
+        }                
+        return respuesta;
     }
 
 }

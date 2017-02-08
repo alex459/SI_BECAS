@@ -11,6 +11,7 @@ import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.OfertaBecaDAO;
 import DAO.ProrrogaDAO;
+import DAO.SolocitudBecaDAO;
 import DAO.TipoDocumentoDAO;
 import POJO.Beca;
 import POJO.Documento;
@@ -531,6 +532,44 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
             expediente.setEstadoProgreso(estado);
             expDao.actualizarExpediente(expediente);
             //MOSTRAR MENSAJE DE EXITO
+                        
+            
+            //BITACORA Y CORREO-------------------------------------------------
+            try{
+            SolocitudBecaDAO solicitudBecaDao = new SolocitudBecaDAO();
+            String nombre_tipo_documento = documento.getIdTipoDocumento().getTipoDocumento();
+            int id_usuario_correo = solicitudBecaDao.consultarPorIdExpediente(expediente.getIdExpediente()).getIdUsuario();
+            Integer []lista_usuarios = new Integer[1];
+            lista_usuarios[0] = id_usuario_correo;
+            
+            switch (resolucion){
+                case "APROBADO":{
+                    Utilidades.nuevaBitacora(8, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " aprobo el documento : "+nombre_tipo_documento+".", "");
+                    Utilidades.EnviarCorreo("RESOLUCION DE SOLICITUD DE BECA DE POSTGRADO UES", "UNIVERSIDAD DE EL SALVADOR.\n\n"+request.getSession().getAttribute("rol").toString()+" HA APROBADO SU SOLICITUD. \n\n PARA MAS DETALLES CONSULTE: " + Utilidades.ObtenerUrlRaiz(request.getRequestURL().toString()), lista_usuarios);
+                    break;
+                }
+                case "DENEGADO":{
+                    Utilidades.nuevaBitacora(9, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " denego el documento : "+nombre_tipo_documento+".", "");
+                    Utilidades.EnviarCorreo("RESOLUCION DE SOLICITUD DE BECA DE POSTGRADO UES", "UNIVERSIDAD DE EL SALVADOR.\n\n"+request.getSession().getAttribute("rol").toString()+" HA DENEGADO SU SOLICITUD. \n\n PARA MAS DETALLES CONSULTE: " + Utilidades.ObtenerUrlRaiz(request.getRequestURL().toString()), lista_usuarios);
+                    break;
+                }
+                case "CORRECCION":{
+                        if(request.getParameter("tipoCorreccion").equals("documento")){
+                            Utilidades.nuevaBitacora(10, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " solicito correccion del documento : "+nombre_tipo_documento+".", "");
+                            Utilidades.EnviarCorreo("RESOLUCION DE SOLICITUD DE BECA DE POSTGRADO UES", "UNIVERSIDAD DE EL SALVADOR.\n\n"+request.getSession().getAttribute("rol").toString()+" HA PEDIDO CORRECCION DE SU SOLICITUD. \n\n PARA MAS DETALLES CONSULTE: " + Utilidades.ObtenerUrlRaiz(request.getRequestURL().toString()), lista_usuarios);
+                        }else{
+                            Utilidades.nuevaBitacora(10, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " solicito correccion del acuerdo.", "");
+                        }
+                    
+                    break;
+                }
+            }
+            }catch(Exception ex){
+                ex.printStackTrace();
+                System.out.println("Error en bitacora o correos en junta directiva. "+ex);
+            }
+            //BITACORA Y CORREO-------------------------------------------------
+            
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
         } catch (Exception e) {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");

@@ -90,7 +90,7 @@
                 
                 
                 //menu de candidatos. todos menos el becarios
-                if(t==id_candidato || t==id_comision || t==id_csu || t==id_fiscalia || t==id_director_consejo || t==id_admin){                                                            
+                if(t==id_candidato || t==id_director_consejo || t==id_admin){                                                            
                     menuValido = true;
                     out.write("<ul class='nav navbar-nav'>");
                     out.write("<li class='dropdown'>");

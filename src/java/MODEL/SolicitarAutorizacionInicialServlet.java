@@ -173,7 +173,7 @@ public class SolicitarAutorizacionInicialServlet extends HttpServlet {
         }
         
         if(solicitarAcuerdo== true){
-            
+            Utilidades.nuevaBitacora(11, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " solicito la Autorizacion Inicial.", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Acuerdo de Autorizacion Inicial correctamente.");
         }
         else

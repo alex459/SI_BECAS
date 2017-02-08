@@ -142,7 +142,7 @@ public class SolicitarDictamenServlet extends HttpServlet {
         }
         
         if(solicitarAcuerdo== true){
-            
+            Utilidades.nuevaBitacora(11, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString() + " realizo la Solicitud de Dictamen de Propuesta ante Junta Directiva.", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Dictamen de Propuesta correctamente.");
         }
         else

@@ -226,7 +226,7 @@
                                     <tr>
                                         <td>Solicitante: </td>
                                         <td><%=nombres%> </td>
-                                    <td>Código de Empleado: </td>
+                                    <td>Usuario: </td>
                                     <td><%=codigo_usuario%> </td>
                                 </tr>
 

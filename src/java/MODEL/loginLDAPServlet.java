@@ -200,11 +200,12 @@ public class loginLDAPServlet extends HttpServlet {
                     sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
                     response.sendRedirect("principal.jsp");
                 } else {
-                    response.sendRedirect("login_ldap.jsp");
+                    response.sendRedirect("login.jsp");
                 }
 
             }catch (Exception ex) {
                 System.out.println("Error en el login_ldap: "+ex);
+                response.sendRedirect("login.jsp");
             }
 
         }
