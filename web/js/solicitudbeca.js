@@ -238,7 +238,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Naso= 2;
     $scope.verAgregarAsociacion= true;
     $scope.agregarAsociacion = function(){
-    if($scope.Nedu <=3){
+    if($scope.Naso <=3){
         $scope.data.asociaciones.push({
             id: $scope.Naso,
             asociacion: "asociacion"+$scope.Naso
