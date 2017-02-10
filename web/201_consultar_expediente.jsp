@@ -88,7 +88,7 @@
                                         <label for="textinput">N° Expediente : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="textinput" name="ID_USUARIO" type="text" placeholder="ingrese el Id del usuario" class="form-control input-md">
+                                        <input id="textinput" name="NUM_EXPEDIENTE" type="text" placeholder="ingrese el Id del usuario" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
@@ -165,7 +165,7 @@
                         <%
                             response.setContentType("text/html;charset=UTF-8");
                             request.setCharacterEncoding("UTF-8");
-                            String carnet;
+                            String numExpedienteString;
                             String nombre1;
                             String nombre2;
                             String apellido1;
@@ -173,11 +173,12 @@
                             Integer id_facultad;
                             Integer idEstado;
                             Integer idProgreso;
+                            Integer numExpediente;
                             ConexionBD conexionbd = null;
                             ResultSet rs = null;
 
                             try {
-                                carnet = request.getParameter("ID_USUARIO");
+                                numExpedienteString = request.getParameter("NUM_EXPEDIENTE");
                                 nombre1 = request.getParameter("NOM_BECARIO1");
                                 nombre2 = request.getParameter("NOM_BECARIO2");
                                 apellido1 = request.getParameter("APELL_BECARIO1");
@@ -191,10 +192,17 @@
 
                                 consultaSql = "SELECT E.ID_EXPEDIENTE, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, F.FACULTAD, P.NOMBRE_PROGRESO, E.ESTADO_EXPEDIENTE FROM FACULTAD F INNER JOIN DETALLE_USUARIO DU ON F.ID_FACULTAD = DU.ID_FACULTAD INNER JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO INNER JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO = SB.ID_USUARIO INNER JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO";
 
+                                if (!"".equals(numExpedienteString)) {
+                                    numExpediente = Integer.parseInt(numExpedienteString);
+                                    //consultaSql = consultaSql.concat(" AND SC.ID_INSTITUCION = " + idEstado+" ");
+                                }
                                 if (id_facultad != 0) {
                                     consultaSql = consultaSql.concat(" AND F.ID_FACULTAD = " + id_facultad + " ");
                                 } 
                                 if (idEstado != 0) {
+                                    consultaSql = consultaSql.concat(" AND SC.ID_INSTITUCION = " + idEstado+" ");
+                                }
+                                if (idProgreso != 0) {
                                     consultaSql = consultaSql.concat(" AND SC.ID_INSTITUCION = " + idEstado+" ");
                                 }
 
@@ -232,7 +240,7 @@
                                             out.write("<td>");
                                             out.write("<center>");
                                             out.write("<form style='display:inline;' action='' method='post'><input type='hidden'></form> ");
-                                            out.write("<form style='display:inline;' action='' method='post'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(1) + "'><input type='submit' class='btn btn-success' name='submit' value='Consultar'></form> ");
+                                            out.write("<form style='display:inline;' action='201_1_detalle_expediente.jsp' method='post'><input type='hidden' name='NUM_EXPEDIENTE' value='" + rs.getString(1) + "'><input type='submit' class='btn btn-success' name='submit' value='Consultar'></form> ");
                                             out.write("</center>");
                                             out.write("</td>");
                                             out.write("</tr>");
