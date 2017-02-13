@@ -51,7 +51,7 @@ public class ProgresoDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_PROGRESO, NOBMRE_PROGRESO, DESCRIPCION_PROGRESO, ESTADO_BECARIO, ESTADO_PROGRESO FROM PROGRESO" ;
+            String sql = "SELECT ID_PROGRESO, NOMBRE_PROGRESO, DESCRIPCION_PROGRESO, ESTADO_BECARIO FROM PROGRESO" ;
             ResultSet rs = stmt.executeQuery(sql);
             
 
@@ -61,12 +61,10 @@ public class ProgresoDAO extends ConexionBD{
                 String NOMBRE_PROGRESO=rs.getString("NOMBRE_PROGRESO");
                 String DESCRIPCION_PROGRESO=rs.getString("DESCRIPCION_PROGRESO");
                 String ESTADO_BECARIO=rs.getString("ESTADO_BECARIO");
-                String ESTADO_PROGRESO=rs.getString("ESTADO_PROGRESO");
                 temp.setIdProgreso(ID_PROGRESO);
                 temp.setNombreProgreso(NOMBRE_PROGRESO);
                 temp.setDescripcionProgreso(DESCRIPCION_PROGRESO);
                 temp.setEstadoBecario(ESTADO_BECARIO);
-                temp.setEstadoProgreso(ESTADO_PROGRESO);
                 lista.add(temp);
             }
             

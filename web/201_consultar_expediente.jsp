@@ -4,6 +4,8 @@
     Author     : Manuel Miranda
 --%>
 
+<%@page import="POJO.Progreso"%>
+<%@page import="DAO.ProgresoDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="DAO.InstitucionDAO"%>
@@ -88,7 +90,7 @@
                                         <label for="textinput">N° Expediente : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="textinput" name="NUM_EXPEDIENTE" type="text" placeholder="ingrese el Id del usuario" class="form-control input-md">
+                                        <input id="textinput" name="NUM_EXPEDIENTE" type="text" placeholder="ingrese el numero de expediente" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
@@ -122,7 +124,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">   
-                                            <option value=0></option>
+                                            <option value=0>Seleccione facultad</option>
                                             <%
                                                 FacultadDAO facultadDao = new FacultadDAO();
                                                 ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
@@ -140,8 +142,10 @@
                                         <label for="textinput">Estado : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <select id="selectbasic" name="ESTADO" class="form-control">                            
-                                            <option value=0>Seleccione estado</option>
+                                        <select id="selectbasic" name="ESTADO_EXPEDIENTE" class="form-control">                            
+                                            <option value="">Seleccione estado</option>
+                                            <option value="ABIERTO">ABIERTO</option>
+                                            <option value="CERRADO">CERRADO</option>
                                         </select>
                                     </div>
                                 </div>
@@ -153,6 +157,14 @@
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="PROGRESO" class="form-control">                            
                                             <option value=0>Seleccione progreso</option>
+                                            <%
+                                                ProgresoDAO progresoDao = new ProgresoDAO();
+                                                ArrayList<Progreso> listaProgresos = new ArrayList<Progreso>();
+                                                listaProgresos = progresoDao.consultarTodos();
+                                                for (int i = 0; i < listaProgresos.size(); i++) {
+                                                    out.write("<option value=" + listaProgresos.get(i).getIdProgreso() + ">" + listaProgresos.get(i).getNombreProgreso() + "</option>");
+                                                }
+                                            %>
                                         </select>
                                     </div>
                                 </div>
@@ -170,8 +182,8 @@
                             String nombre2;
                             String apellido1;
                             String apellido2;
+                            String estadoExpediente;
                             Integer id_facultad;
-                            Integer idEstado;
                             Integer idProgreso;
                             Integer numExpediente;
                             ConexionBD conexionbd = null;
@@ -183,27 +195,28 @@
                                 nombre2 = request.getParameter("NOM_BECARIO2");
                                 apellido1 = request.getParameter("APELL_BECARIO1");
                                 apellido2 = request.getParameter("APELL_BECARIO2");
+                                estadoExpediente = request.getParameter("ESTADO_EXPEDIENTE");
                                 id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
-                                idEstado = Integer.parseInt(request.getParameter("ESTADO"));
                                 idProgreso = Integer.parseInt(request.getParameter("PROGRESO"));
 
                                 //formando la consulta
                                 String consultaSql;
 
-                                consultaSql = "SELECT E.ID_EXPEDIENTE, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, F.FACULTAD, P.NOMBRE_PROGRESO, E.ESTADO_EXPEDIENTE FROM FACULTAD F INNER JOIN DETALLE_USUARIO DU ON F.ID_FACULTAD = DU.ID_FACULTAD INNER JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO INNER JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO = SB.ID_USUARIO INNER JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO";
+                                consultaSql = "SELECT E.ID_EXPEDIENTE, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, F.FACULTAD, P.NOMBRE_PROGRESO, E.ESTADO_EXPEDIENTE "
+                                        + "FROM FACULTAD F INNER JOIN DETALLE_USUARIO DU ON F.ID_FACULTAD = DU.ID_FACULTAD INNER JOIN "
+                                            + "USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO INNER JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO = SB.ID_USUARIO "
+                                            + "INNER JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO "
+                                        + "WHERE DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND E.ESTADO_EXPEDIENTE LIKE '%" + estadoExpediente + "%'";
 
                                 if (!"".equals(numExpedienteString)) {
                                     numExpediente = Integer.parseInt(numExpedienteString);
-                                    //consultaSql = consultaSql.concat(" AND SC.ID_INSTITUCION = " + idEstado+" ");
+                                    consultaSql = consultaSql.concat(" AND E.ID_EXPEDIENTE = " + numExpediente+" ");
                                 }
                                 if (id_facultad != 0) {
                                     consultaSql = consultaSql.concat(" AND F.ID_FACULTAD = " + id_facultad + " ");
-                                } 
-                                if (idEstado != 0) {
-                                    consultaSql = consultaSql.concat(" AND SC.ID_INSTITUCION = " + idEstado+" ");
                                 }
                                 if (idProgreso != 0) {
-                                    consultaSql = consultaSql.concat(" AND SC.ID_INSTITUCION = " + idEstado+" ");
+                                    consultaSql = consultaSql.concat(" AND P.ID_PROGRESO = " + idProgreso+" ");
                                 }
 
                                 //realizando la consulta
