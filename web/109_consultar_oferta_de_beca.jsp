@@ -336,7 +336,7 @@
                     <legend class="custom-border">Ofertas de beca en el sistema</legend>
                     <div class="row">
                         <div class="col-md-12">
-                            <table  id="tablaResultados" class="table">
+                            <table  id="tablaResultados" class="table table-bordered">
                                 <thead>
                                     <tr class="success">
                                         <th>Nombre de la oferta</th>

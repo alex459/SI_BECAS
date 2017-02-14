@@ -121,9 +121,9 @@
 <body ng-app="modificarInstitucionApp" ng-controller="modificarInstitucionCtrl">
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-            <h2>
-                <p class="text-center" style="color:#cf2a27">Modificar institucion</p>
-            </h2>
+            <h3>
+                <p class="text-center" style="color:#cf2a27">Modificar Institución</p>
+            </h3>
             <br></br> 
         </div><!-- TITULO DE LA PANTALLA -->  
 
@@ -131,13 +131,13 @@
 
             <form class="form-horizontal" name="modificarInst" action="ModificarInstitucionServlet" method="post" novalidate >
                 <fieldset class="custom-border">
-                    <legend class="custom-border">Paso 2: Modifique los datos de la institucion.</legend>
+                    <legend class="custom-border">Paso 2: Modifique los datos de la institución.</legend>
 
                     <div class="row col-md-6 col-md-offset-3">
                         <div class="row">
 
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Nombre de la institucion : </label>
+                                <label for="textinput">Nombre de la institución : </label>
                             </div>
                             <div class="col-md-8">
                                 <input id="text_NomInstitucion" name="text_NomInstitucion" type="text" placeholder="ingrese el nombre de institución" class="form-control input-md" ng-model="datos.nombreInst" ng-init="datos.nombreInst = '<%=NOMBRE_INSTITUCION%>'" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
@@ -149,7 +149,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Pais : </label>
+                                <label for="textinput">País : </label>
                             </div>
                             <div class="col-md-6">                                
                                 <select id="tex_paisInstitucion" name="tex_paisInstitucion" class="form-control">
@@ -168,7 +168,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Pagina web : </label>
+                                <label for="textinput">Página web : </label>
                             </div>
                             <div class="col-md-6">
                                 <input id="tex_webInstitucion" name="tex_webInstitucion" type="url" placeholder="ingrese la url"  class="form-control input-md" ng-model="datos.url" ng-init="datos.url = '<%=URL%>'" ng-required="true"  minlength="3" maxlength="100" >
@@ -181,7 +181,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Correo electronico : </label>
+                                <label for="textinput">Correo electrónico : </label>
                             </div>
                             <div class="col-md-6">
                                 <input id="tex_correoInstitucion" name="tex_correoInstitucion" type="email"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-init="datos.correo = '<%=EMAIL%>'" ng-required="true"  minlength="3" maxlength="30" >
@@ -196,7 +196,7 @@
 
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Tipo de institucion : </label>
+                                <label for="textinput">Tipo de institución : </label>
                             </div>
                             <div class="col-md-6">
                                 <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control"> 

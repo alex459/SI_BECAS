@@ -350,7 +350,7 @@
                     <legend class="custom-border">Ofertas de beca en el sistema</legend>
                     <div class="row">
                         <div class="col-md-12">
-                            <table  id="tablaResultados"  class="table">
+                            <table  id="tablaResultados"  class="table table-bordered">
 
                                 <thead>
                                     <tr class="success">
@@ -433,7 +433,7 @@
 <script src="js/scripts.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
     $('#tablaResultados').DataTable(

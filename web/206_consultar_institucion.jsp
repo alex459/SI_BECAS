@@ -87,9 +87,9 @@
     <body ng-app="ConsultarInstitucionApp" ng-controller="ConsultarInstitucionCtrl">
         <div class="container-fluid" >
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27">Consultar institucion</p>
-                </h2>
+                <h3>
+                    <p class="text-center" style="color:#cf2a27">Consultar Institución</p>
+                </h3>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
@@ -98,13 +98,13 @@
 
                 <form class="form-horizontal" name="consultarInst" action="206_consultar_institucion.jsp" method="post" novalidate>
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Consultar institucion</legend>
+                        <legend class="custom-border">Consultar institución</legend>
                         <div class="col-md-6 col-md-offset-3">
                             <fieldset class="custom-border">
                                 <legend class="custom-border">filtros:</legend>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Nombre de la institucion : </label>
+                                        <label for="textinput">Nombre de la institución : </label>
                                     </div>
                                     <div class="col-md-8">
                                         <input id="text_NomInstitucion" name="text_NomInstitucion" type="text" placeholder="ingrese el nombre de instirucion" class="form-control input-md" ng-model="datos.nombreInst"  ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
@@ -222,7 +222,7 @@
 
                     <br>
                     <div class="row">
-                        <table class="table">
+                        <table id="tablaUsuarios" class="table table-bordered">
                             <thead>
                             <th>No</th>
                             <th>Nombre de la institución</th>
@@ -295,5 +295,41 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/consultarInstitucion.js"></script>
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript">
+   $(document).ready(function() {
+    $('#tablaUsuarios').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+    
+</script>
 </body>
 </html>
