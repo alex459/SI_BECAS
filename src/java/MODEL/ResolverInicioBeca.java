@@ -9,6 +9,7 @@ import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
 import DAO.OfertaBecaDAO;
+import DAO.SolocitudBecaDAO;
 import DAO.UsuarioDAO;
 import POJO.Beca;
 import POJO.Documento;
@@ -93,6 +94,33 @@ public class ResolverInicioBeca extends HttpServlet {
                 expediente.setEstadoProgreso("REVISION");
                 expDao.actualizarExpediente(expediente);
             }
+            
+            try{
+            //BITACORA Y CORREO-------------------------------------------------
+            SolocitudBecaDAO solicitudBecaDao = new SolocitudBecaDAO();
+            int id_usuario_correo = solicitudBecaDao.consultarPorIdExpediente(expediente.getIdExpediente()).getIdUsuario();
+            Integer []lista_usuarios = new Integer[1];
+            lista_usuarios[0] = id_usuario_correo;
+            UsuarioDAO userDao = new UsuarioDAO();
+            String nombre_usuario_beca = userDao.consultarPorId(id_usuario_correo).getNombreUsuario();
+            
+            switch (resolucion){
+                case "APROBADO":{
+                    Utilidades.nuevaBitacora(8, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " aprobo una beca al usuario : "+ nombre_usuario_beca+".", "");
+                    Utilidades.EnviarCorreo("APROBACION DE BECA DE POSTGRADO UES", "UNIVERSIDAD DE EL SALVADOR.\n\n"+request.getSession().getAttribute("rol").toString()+" HA APROBADO SU BECA DE POSTGRADO.\n\n PARA MAS DETALLES CONSULTE: " + Utilidades.ObtenerUrlRaiz(request.getRequestURL().toString()), lista_usuarios);
+                    break;
+                }                
+                case "CORRECCION":{                        
+                    Utilidades.nuevaBitacora(10, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " solicito correccion a fiscalia por el contrato de beca.", "");                                                                        
+                    break;
+                }
+            }
+            }catch(Exception ex){
+                ex.printStackTrace();
+                System.out.println("Error en bitacora o correos en el consejo de becas. "+ex);
+            }
+            //BITACORA Y CORREO-------------------------------------------------
+            
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
         } catch (Exception e) {
             e.printStackTrace();

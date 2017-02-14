@@ -180,7 +180,7 @@ public class loginLDAPServlet extends HttpServlet {
 
             } catch (java.net.UnknownHostException e_UnknownHost) {
 
-                System.out.println("Sin conexion al LDAP: "+e_UnknownHost);
+                System.out.println("servidor LDAP no encontrado: "+e_UnknownHost);
                 //si no se puede conectar al ldap entonces que se 
                 //trate de conectar a la base de datos del sistema.
                 Usuario usuario_obj = new Usuario();
@@ -204,8 +204,28 @@ public class loginLDAPServlet extends HttpServlet {
                 }
 
             }catch (Exception ex) {
-                System.out.println("Error en el login_ldap: "+ex);
-                response.sendRedirect("login.jsp");
+                System.out.println("error en servidor LDAP: "+ex);
+                //si no se puede conectar al ldap entonces que se 
+                //trate de conectar a la base de datos del sistema.
+                Usuario usuario_obj = new Usuario();
+                UsuarioDAO usuarioDao = new UsuarioDAO();
+                TipoUsuario tipoUsuario = new TipoUsuario();
+
+                usuario_obj.setNombreUsuario(usuario);
+                usuario_obj.setClave(contrasena);
+                usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
+
+                if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
+                    HttpSession sesion = request.getSession();
+                    sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
+                    sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
+                    sesion.setAttribute("user", usuario_obj.getNombreUsuario());
+                    sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
+                    sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
+                    response.sendRedirect("principal.jsp");
+                } else {
+                    response.sendRedirect("login.jsp");
+                }
             }
 
         }

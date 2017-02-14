@@ -122,6 +122,7 @@ public class AgregarDocumentoFinalizacionBecaServlet extends HttpServlet {
         }
         
         if(ingresarDocumento == true){
+            Utilidades.nuevaBitacora(11, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " agrego documentos de finalizacion de beca.", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se han agregado correctamente los documentos de finalización de beca");
         }
         else

@@ -79,7 +79,7 @@
 
 
     <div class="container-fluid">
-        <H3 class="text-center" style="color:#E42217;">Buscar AcuerdoS Emetidos</H3>
+        <H3 class="text-center" style="color:#E42217;">Buscar Acuerdo Emitidos</H3>
         <fieldset class="custom-border">
                 <legend class="custom-border">Acuerdos</legend>
                 

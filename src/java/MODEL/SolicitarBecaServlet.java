@@ -561,7 +561,8 @@ public class SolicitarBecaServlet extends HttpServlet {
                         String beneficios = request.getParameter("beneficios");
                         solicitud.setBeneficios(beneficios);
                         solicitud.setFechaSolicitud(sqlDate);
-                        solicitudBecaDao.actualizar(solicitud);
+                        solicitudBecaDao.actualizar(solicitud);                        
+                        Utilidades.nuevaBitacora(11, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se agrego la solicitud de beca por el usuario "+ user + " en el expediente " + exp.getIdExpediente() + ".","");         
                         Utilidades.mostrarMensaje(response, 1, "Exito", "Se realizo la solicitud satisfactoriamente.");
 
                     } else {

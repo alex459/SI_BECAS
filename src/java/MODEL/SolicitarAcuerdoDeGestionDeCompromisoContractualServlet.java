@@ -108,8 +108,10 @@ public class SolicitarAcuerdoDeGestionDeCompromisoContractualServlet extends Htt
             }
         }
 
-        if(solicitarAcuerdo== true)
+        if(solicitarAcuerdo== true){
+            Utilidades.nuevaBitacora(11, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " solicito el acuerdo de gestion de compromiso contractual.", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el acuerdo de gestion de compromiso contractual correctamente.");
+        }
         else
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud de acuerdo de gestion de compromiso contractual.");
 

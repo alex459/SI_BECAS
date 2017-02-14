@@ -105,6 +105,7 @@ public class SolicitarAcuerdoDeGestionDeLiberacionServlet extends HttpServlet {
         }
 
         if(solicitarAcuerdo== true){
+            Utilidades.nuevaBitacora(11, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " solicito el acuerdo de gestion de liberacion.", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el acuerdo de gestion de liberacion correctamente.");
         }else{
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud de acuerdo de gestion de liberacion.");

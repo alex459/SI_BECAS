@@ -193,6 +193,7 @@ public class SolicitarProrroga extends HttpServlet {
         idexpediente.setEstadoProgreso("EN PROCESO");
                     expDao.actualizarExpediente(idexpediente);
         if ((ing1 == true) && (ing2 == true) && (ing3 == true)) {
+            Utilidades.nuevaBitacora(11, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " solicito una prorroga de estudio.", "");
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso la solicitud correctamente.");
         } else {
             Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar la solicitud");

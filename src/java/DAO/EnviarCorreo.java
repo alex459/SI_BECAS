@@ -42,6 +42,7 @@ public class EnviarCorreo {
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
+        //props.put("mail.smtp.port", "25");
 
         String resourceName = "config.properties";
         ClassLoader loader = Thread.currentThread().getContextClassLoader();

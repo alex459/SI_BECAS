@@ -100,7 +100,7 @@
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='301_inf_publica_ofertas_beca.jsp'>Ofertas de becas</a></li>");                    
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='303_candidato_estado_solicitudes.jsp'>Estado de solicitudes</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='305_candidato_estado_proceso.jsp'>Estado de proceso de beca</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='304_candidato_sol_permiso_inicial.jsp'>Solicitud de Permiso Inicial</a></li>");
+                    out.write("<li><a style='background-color: #cf2a27; color:white' href='304_candidato_sol_permiso_inicial.jsp'>Solicitud de permiso de gestion de beca</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='306_candidato_sol_autorizacion_inicial.jsp'>Solicitud de autorizacion inicial</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='307_candidato_sol_dictamen_propuesta.jsp'>Solicitud de dictamen de propuesta</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='308_candidato_sol_beca1.jsp'>Solicitud de beca</a></li>");
