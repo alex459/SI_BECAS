@@ -197,7 +197,7 @@
                         </div>
                         <div class="col-md-3">                                
 
-                            <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control" ng-model="datos.tipoUsuario" ng-required="true">
+                            <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control" ng-model="datos.tipoUsuario" ng-required="true" ng-change="mostrarfacultades()">
                             <%
                                 TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
                                 ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
@@ -216,14 +216,7 @@
                     <div class="col-md-3">                                
 
                         <select id="selectbasic" name="ID_FACULTAD" class="form-control" ng-model="datos.facultad" ng-required="true">
-                            <%
-                                FacultadDAO facultadDao = new FacultadDAO();
-                                ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
-                                listaFacultades = facultadDao.consultarTodos();
-                                for (int i = 0; i < listaFacultades.size(); i++) {
-                                    out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
-                                }
-                            %>                    
+                            <option ng-repeat="option in facultades" value="{{option.id}}">{{option.nombre}}</option>                   
                         </select>
                         <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.ID_FACULTAD.$error.required">La Facultad es requerida.</span>
                     </div>              

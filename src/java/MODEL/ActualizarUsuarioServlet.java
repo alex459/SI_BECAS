@@ -56,7 +56,7 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         String mensaje = new String();
         
         //parte de lectura desde el jsp y guardado en bd     
-        
+        try{
         usuario.setIdUsuario(Integer.parseInt(request.getParameter("ID_USUARIO")));
         usuario.setIdTipoUsuario(Integer.parseInt(request.getParameter("ID_TIPO_USUARIO")));
         usuario.setNombreUsuario(request.getParameter("CARNET"));
@@ -73,7 +73,10 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         detalleUsuario.setApellido2Du(request.getParameter("APELLIDO2_DU"));
         detalleUsuario.setEmail(request.getParameter("EMAIL"));
         detalleUsuario.setGenero(request.getParameter("GENERO"));
-        
+        }catch(Exception e){
+            e.printStackTrace();
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario. Ingrese una facultad " + mensaje);
+        }
         
         //validacion 2
         if (clave2.equals(usuario.getClave())) {

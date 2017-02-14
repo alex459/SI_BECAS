@@ -148,7 +148,7 @@
                             <label for="textinput">Codigo de usuario : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input value = "<%=carnet%>" type="text" class="form-control input-md" disabled="true">                            
+                            <input value = "<%=carnet%>" type="text" class="form-control input-md" ng-disabled="true">                            
                             <input id="CARNET" name="CARNET" value = "<%=carnet%>" type="hidden">
                         </div>
                         <div class="col-md-3 text-right">                                   
@@ -233,40 +233,33 @@
 
                     <br>
 
-                    <div class="row">
+                    <div class="row" ng-init="datos.tipoUsuario='<%=id_tipo_usuario%>';  datos.facultad='<%=id_facultad%>'; mostrarfacultades()">
                         <div class="col-md-3 text-right">
                             <label for="textinput">Rol del usuario :</label>                                
                         </div>
                         <div class="col-md-3">                                
 
-                            <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control">
+                            <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control" ng-model="datos.tipoUsuario" ng-required="true" ng-change="mostrarfacultades()">
                             <%
                                 TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
                                 ArrayList<TipoUsuario> listaTiposDeUsuarios = new ArrayList<TipoUsuario>();
-                                listaTiposDeUsuarios = tipoUsuarioDao.consultarTodosMenosBecarios();                                
-                                out.write("<option value=" + id_tipo_usuario + ">" + tipo_usuario + "</option>");
+                                listaTiposDeUsuarios = tipoUsuarioDao.consultarTodosMenosBecarios();                                                                
                                 for (int i = 0; i < listaTiposDeUsuarios.size(); i++) {
                                     out.write("<option value=" + listaTiposDeUsuarios.get(i).getIdTipoUsuario() + ">" + listaTiposDeUsuarios.get(i).getTipoUsuario() + "</option>");
                                 }
                             %>    
                         </select> 
+                        <span class="text-danger" ng-show="ActualizarUsuario.ID_TIPO_USUARIO.$error.required">El Tipo de Usuario es requerido.</span>
                     </div>
                     <div class="col-md-3 text-right">
                         <label for="textinput">Facultad :</label>                                
                     </div>
                     <div class="col-md-3">                                
 
-                        <select id="selectbasic" name="ID_FACULTAD" class="form-control">
-                            <%
-                                FacultadDAO facultadDao = new FacultadDAO();
-                                ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
-                                listaFacultades = facultadDao.consultarTodos();
-                                out.write("<option value=" + id_facultad + ">" + facultad + "</option>");
-                                for (int i = 0; i < listaFacultades.size(); i++) {
-                                    out.write("<option value=" + listaFacultades.get(i).getIdFacultad() + ">" + listaFacultades.get(i).getFacultad() + "</option>");
-                                }
-                            %>                    
+                        <select id="selectbasic" name="ID_FACULTAD" class="form-control" ng-model="datos.facultad" ng-required="true">
+                            <option ng-repeat="option in facultades" value="{{option.id}}">{{option.nombre}}</option>                                   
                         </select>
+                        <span class="text-danger" ng-show="ActualizarUsuario.ID_FACULTAD.$error.required">La Facultad es requerida.</span>
                     </div>              
                 </div>
 

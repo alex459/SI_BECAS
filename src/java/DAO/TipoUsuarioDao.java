@@ -84,7 +84,7 @@ public class TipoUsuarioDao extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM TIPO_USUARIO WHERE TIPO_USUARIO NOT IN('BECARIO')" ;
+            String sql = "SELECT * FROM TIPO_USUARIO WHERE TIPO_USUARIO NOT IN('BECARIO','INACTIVO O ANÓNIMO')" ;
             ResultSet rs = stmt.executeQuery(sql);
             
             while (rs.next()) {
