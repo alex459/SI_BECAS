@@ -85,9 +85,9 @@
 
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-            <h2>
-                <p class="text-center" style="color:#cf2a27">Dar de baja a usuario</p>
-            </h2>
+            <h3>
+                <p class="text-center" style="color:#cf2a27">Dar de Baja a Usuario</p>
+            </h3>
 
             <br></br>
 

@@ -88,9 +88,9 @@
 
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
-            <h2>
+            <h3>
                 <p class="text-center" style="color:#cf2a27">Modificar Oferta de Beca</p>
-            </h2>
+            </h3>
 
             <br></br>
 
