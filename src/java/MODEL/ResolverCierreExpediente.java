@@ -8,6 +8,7 @@ package MODEL;
 import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import DAO.ExpedienteDAO;
+import DAO.SolocitudBecaDAO;
 import DAO.UsuarioDAO;
 import POJO.Documento;
 import POJO.Expediente;
@@ -73,6 +74,31 @@ public class ResolverCierreExpediente extends HttpServlet {
                 exitoActExpediente = expDao.actualizarExpediente(expediente);
             }
             if (exitoActExpediente == true){
+                    
+                    //BITACORA Y CORREO-------------------------------------------------
+            try{
+            SolocitudBecaDAO solicitudBecaDao = new SolocitudBecaDAO();            
+            int id_usuario_correo = solicitudBecaDao.consultarPorIdExpediente(expediente.getIdExpediente()).getIdUsuario();
+            Integer []lista_usuarios = new Integer[1];
+            lista_usuarios[0] = id_usuario_correo;
+            
+            switch (resolucion){
+                case "CERRAR":{
+                    Utilidades.nuevaBitacora(8, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " se cerro el expediente y finalizo la beca de postgrado.", "");
+                    Utilidades.EnviarCorreo("FINALIZACION DE BECA DE POSTGRADO UES", "UNIVERSIDAD DE EL SALVADOR.\n\n"+request.getSession().getAttribute("rol").toString()+" HA FINALIZADO EL PROCESO DE BECA DE POSTRADO. \n\n PARA MAS DETALLES CONSULTE: " + Utilidades.ObtenerUrlRaiz(request.getRequestURL().toString()), lista_usuarios);
+                    break;
+                }
+                case "REVISION":{
+                    Utilidades.nuevaBitacora(10, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString()+ " se solicito correccion al Consejo Superior Universitario.", "");                    
+                    break;                                
+                }
+            }
+            }catch(Exception ex){
+                ex.printStackTrace();
+                System.out.println("Error en bitacora o correos en junta directiva. "+ex);
+            }
+            //BITACORA Y CORREO-------------------------------------------------
+                
                     Utilidades.mostrarMensaje(response, 1, "Exito", "Se resolvio la solicitud satisfactoriamente.");
                 } else{
                     Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo resolver la solicitud.");

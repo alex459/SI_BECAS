@@ -42,7 +42,7 @@ public class Utilidades {
 
     /**
      * Metodo para registrar una bitacora nueva. Id_Accion puede ser 1-INGRESAR,
-     * 2-ACTUALIZAR, 3-CONSULTAR, 4-ELIMINAR, 5-LOGIN, 6-LOGOUT, 7-REPORTE, 8-APROBADO, 9-DENEGADO, 10-CORRECCION
+     * 2-ACTUALIZAR, 3-CONSULTAR, 4-ELIMINAR, 5-LOGIN, 6-LOGOUT, 7-REPORTE, 8-APROBADO, 9-DENEGADO, 10-CORRECCION, 11-SOLICITUD
      * usuario_sesion es el usuario logeado, en jsp o en servlet se pude obtener
      * con sesion.getParameter("user"). Ejemplo de Descripcion: "Se ingreso un
      * nuevo usuario al sistema con carnet xxxx".
