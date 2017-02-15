@@ -59,7 +59,7 @@
 				<imageExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<rectangle>
-				<reportElement x="445" y="8" width="102" height="63" uuid="64f56f2f-4b76-42e2-8895-36515a63b080"/>
+				<reportElement x="445" y="0" width="102" height="110" uuid="64f56f2f-4b76-42e2-8895-36515a63b080"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="82" y="81" width="363" height="20" uuid="838c05a5-0ead-448b-9a13-d93a77837d39"/>

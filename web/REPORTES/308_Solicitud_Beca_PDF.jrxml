@@ -63,7 +63,7 @@
 	<parameter name="gradoObtener" class="java.lang.String"/>
 	<parameter name="tiempoBeca" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT FACULTAD FROM FACULTAD WHERE ID_FACULTAD=1]]>

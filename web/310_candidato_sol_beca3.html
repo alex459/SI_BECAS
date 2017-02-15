@@ -43,12 +43,12 @@
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.tipo}}.$error.required">Seleccione el tipo de Educación.</span>
                                                 </td>
                                                     <td>
-                                                        <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                        <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index]" ng-required="true" minlength="10" maxlength="80" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                         <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.grado}}.$error.required">Ingrese el grado alcanzado.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.minlength">Mínimo 10 caracteres.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                                                     </td>
-                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index]" ng-required="true" minlength="10" maxlength="30" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el nombre de la institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index]" ng-required="true" minlength="10" maxlength="125" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                                         <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.institucion}}.$error.required">Ingrese el nombre de la Institución.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.minlength">Mínimo 10 caracteres.</span>
                                                         <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
@@ -103,11 +103,12 @@
                                             <tr ng-repeat="x in data.proyectos" >
                                                 <td>{{$index + 1}}</td>
                                                 <td>
-                                                    <input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                    <input name="{{x.titulo}}" type="text" placeholder="Titulo del proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="125" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                    <span ng-show="!checkProyecto">
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.titulo}}.$error.required">Ingrese el nombre del proyecto.</span>
                                                     <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.minlength">Mínimo 10 caracteres.</span>
                                                     <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
-                                                </td>
+                                                </td></span>
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-sm-2"></div>
@@ -121,10 +122,12 @@
                                                         </div>
                                                         <div class="col-sm-2"></div>
                                                     </div>
+                                                    <span ng-show="!checkProyecto">
                                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.publicado}}.$error.required">Seleccione si fue publicado</span>
+                                                    </span>
                                                 </td>
                                                 <td>
-                                                    <input type="checkBox" ng-show="$first&&$last" ng-model="checkProyecto" ng-click="cambiarcheckProyecto()"> <label ng-show="$first&&$last">Ninguno</label>
+                                                    <input type="checkBox" name="cheque1" ng-show="$first&&$last" ng-model="checkProyecto" ng-click="cambiarcheckProyecto()"> <label ng-show="$first&&$last">Ninguno</label>
                                                     <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarProyecto()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
@@ -203,9 +206,9 @@
         </fieldset>              
         <div class="row">
             <div class="col-md-4 col-lg-offset-4">
-                <a href="#/cargos"><button class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</button></a> 
-                <a href="#/laboral" class="btn btn-primary">Regresar</a>
                 <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
+                <a href="#/laboral" class="btn btn-primary">Regresar</a>
+                <a href="#/cargos"><button class="btn btn-success" ng-disabled="!solicitud.$valid">Continuar</button></a>                                 
             </div>
         </div>
     </div> 

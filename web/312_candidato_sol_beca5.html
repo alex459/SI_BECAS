@@ -84,7 +84,9 @@
                                         <tbody>
                                             <tr ng-repeat="x in data.programas">
                                                 <td> <input type="number" name="{{semestre}}" class="form-control" ng-disabled="true" ng-value="{{$index +1}}" ng-model="aux.auxSemestre[$index]"></td>
-                                                <td> <textarea class="form-control" id="textarea" name="{{x.programa}}" ng-model="aux.auxPrograma[$index]" ng-required="true" minlength="10" maxlength="1024"></textarea></td>
+                                                <td> <textarea class="form-control" id="textarea" name="{{x.programa}}" ng-model="aux.auxPrograma[$index]" ng-required="true" minlength="5" maxlength="1024"></textarea>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.programa}}.$error.required">Ingrese el programa de estudio del semestre.</span>
+                                                </td>
                                                 <td><a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarPrograma()">Eliminar</a></td>
                                             </tr>
                                         </tbody>
@@ -97,9 +99,9 @@
                         </fieldset>
                 <div class="row">
                     <div class="col-md-4 col-lg-offset-4">
-                        <a href="#/referencias"><button class="btn btn-primary" ng-disabled="!solicitud.$valid">Continuar</button></a> 
-                        <a href="#/cargos"><button class="btn btn-primary">Regresar</button></a>
                         <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
+                        <a href="#/cargos"><button class="btn btn-primary">Regresar</button></a> 
+                        <a href="#/referencias"><button class="btn btn-success" ng-disabled="!solicitud.$valid">Continuar</button></a>                                                
                     </div>
                 </div>
             </div> 
