@@ -372,6 +372,21 @@ public class ResolverConsejoBecas extends HttpServlet {
                             idProgreso = 20;
                             estado = "REVISION";
                             break;
+                        case 25:
+                            //SOLICITUD DE PRORROGA
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                            } else {
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 136);
+                            acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                            acuerdoAnterior.setEstadoDocumento("REVISION");
+                            acuerdoAnterior.setObservacion(observacion);
+                            documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            idProgreso = 10;
+                            estado = "REVISION";
+                            break;
                         default:
                             break;
                     } //FIN SWITCH PROGRESO
@@ -570,6 +585,21 @@ public class ResolverConsejoBecas extends HttpServlet {
                             acuerdoAnterior.setObservacion(observacion);
                             documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                             idProgreso = 20;
+                            estado = "REVISION";
+                            break;
+                        case 25:
+                            //SOLICITUD DE PRORROGA
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                            } else {
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 136);
+                            acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                            acuerdoAnterior.setEstadoDocumento("REVISION");
+                            acuerdoAnterior.setObservacion(observacion);
+                            documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            idProgreso = 10;
                             estado = "REVISION";
                             break;
                         default:

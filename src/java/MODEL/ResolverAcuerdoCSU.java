@@ -252,6 +252,28 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             idProgreso = 21;
                             estado = "REVISION";                            
                             break;
+                            case 26:
+                            //ACUERDO DE AÑO CONTRACTUAL
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                                //obteniendo ACUERDO DEL CONSEJO DE BECAS y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 162);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            } else {
+                                //ACTUALIZAR
+                                //obteniendo ACUERDO DEL CONSEJO DE BECAS y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 162);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                            }// FIN ACTUALIZAR
+                            idProgreso = 25;
+                            estado = "REVISION";
+                            break;
                         default:
                             break;
                     } //FIN SWITCH PROGRESO
@@ -356,6 +378,40 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             acuerdoAnterior.setObservacion(observacion);
                             documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                             idProgreso = 21;
+                            estado = "REVISION";
+                            break;
+                            case 26:
+                            //ACUERDO DE AÑO FISCAL
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo ACUERDO DE AÑO FISCAL DEL CONSEJO DE BECAS y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 162);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   
+                                    //No EXISTE
+                                }
+                            } else {
+                                //ACTUALIZAR
+                                if (tipoCorreccion.equals("documento")){
+                                    //REALIZAR SOLICITUD DE REVISION DE DOCUMENTO
+                                    //obteniendo ACUERDO DE AÑO FISCAL DEL CONSEJO DE BECAS y cambiando estado a REVISION    
+                                    idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 162);
+                                    acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoAnterior.setEstadoDocumento("REVISION");
+                                    acuerdoAnterior.setObservacion(observacion);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
+                                }else{
+                                    //REALIZAR SOLICITUD DE CORRECCION DE SOLICITUD   
+                                    //No EXISTE
+                                }
+                            }// FIN ACTUALIZAR
+                            idProgreso = 25;
                             estado = "REVISION";
                             break;
                         default:

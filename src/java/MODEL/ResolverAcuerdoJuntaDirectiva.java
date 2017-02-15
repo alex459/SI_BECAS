@@ -343,9 +343,15 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                 //INSERTAR
                             } else {
                                 //ACTUALIZAR
+                                //ELIMINAR ACUERDO SOLICITADO
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 162);
+                                if (idAcuerdoSolicitado != 0) {
+                                    documentoDao.eliminarDocumento(idAcuerdoSolicitado);
+                                }
                             }// FIN ACTUALIZAR
+
                             idProgreso = 9;
-                            estado = "PENDIENTE";
+                            estado = "PENDIENTE";                            
                             break;
                         case 12:
                             //SOLICITUD INICIO DE SERVICIO CONTRACTUAL
