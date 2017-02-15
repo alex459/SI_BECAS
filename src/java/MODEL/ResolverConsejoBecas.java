@@ -245,6 +245,43 @@ public class ResolverConsejoBecas extends HttpServlet {
                             idProgreso = 22;
                             estado = "EN PROCESO";
                             break;
+                            case 25:
+                            //SOLICITUD DE PRORROGA
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                                //SOLICITAR ACUERDO AL CONSEJO DE BECAS
+                                acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                acuerdoSolicitar.setIdExpediente(expediente);
+                                acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                acuerdoSolicitar.setObservacion(obs);
+                                tipoDoc = tipoDao.consultarPorId(163);
+                                acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                documentoDao.solicitarDocumento(acuerdoSolicitar);
+                            } else {
+                                //ACTUALIZAR
+                                idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 163);
+                                if (idAcuerdoSolicitado != 0) {
+                                    //ACTUALIZAR DOCUMENTO SOLICITADO
+                                    acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    documentoDao.ActualizarEstadoDocumento(acuerdoSolicitar);
+                                } else {
+                                    //REALIZAR SOLICITUD
+                                    acuerdoSolicitar.setIdDocumento(documentoDao.getSiguienteId());
+                                    acuerdoSolicitar.setIdExpediente(expediente);
+                                    acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                    acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                    acuerdoSolicitar.setObservacion(obs);
+                                    tipoDoc = tipoDao.consultarPorId(163);
+                                    acuerdoSolicitar.setIdTipoDocumento(tipoDoc);
+                                    documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                }
+                            }// FIN ACTUALIZAR
+                            idProgreso = 26;
+                            estado = "EN PROCESO";
+                            break;
                         default:
                             break;
                     } //FIN SWITCH PROGRESO

@@ -166,6 +166,17 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             }
                             idProgreso = 9;
                             estado = "PENDIENTE";
+                            break;
+                            case 26:
+                            //ACUERDO DE LIBERACION DEL COMPROMISO CONTRACTUAL
+                            if (accion.equals("insertar")) {
+                                //INSERTAR
+                            } else {
+                                //ACTUALIZAR
+                            }// FIN ACTUALIZAR
+                            idProgreso = 9;
+                            estado = "PENDIENTE";
+                            break;
                         default:
                             break;
                     } //FIN SWITCH PROGRESO

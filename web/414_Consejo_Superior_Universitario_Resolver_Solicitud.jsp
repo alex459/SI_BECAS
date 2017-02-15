@@ -108,6 +108,9 @@
         case 22:
             publicos = docComision.consultarConsejoSuperiorUniversitario22(id_expedie);
             break;
+        case 26:
+            publicos = docComision.consultarConsejoSuperiorUniversitario26(id_expedie);
+            break;
             
         case 9:
             publicos = docComision.consultarConsejoSuperiorUniversitario22(id_expedie);
@@ -230,7 +233,7 @@
                             <div class="row">
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
-                                    <table class="table">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th>
@@ -349,7 +352,7 @@
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else if (id_p == 7 || id_p == 15 || id_p == 22) {%> 
+                                            <%} else if (id_p == 7 || id_p == 15 || id_p == 22 || id_p == 26) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -453,7 +456,7 @@
                                             </div> 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else if (id_p == 7 || id_p == 15 || id_p == 22) {%> 
+                                            <%} else if (id_p == 7 || id_p == 15 || id_p == 22 || id_p == 26) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">

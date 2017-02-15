@@ -132,6 +132,12 @@
         case 22:
             publicos = docComision.consultarConsejoBecas21(id_expedie);
             break;
+        case 25:
+            publicos = docComision.consultarConsejoBecas25(id_expedie);
+            break;
+        case 26:
+            publicos = docComision.consultarConsejoBecas25(id_expedie);
+            break;
         default:
             break;
     }
@@ -370,7 +376,7 @@
 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else if (id_p == 12 || id_p == 21) {%> 
+                                            <%} else if (id_p == 12 || id_p == 21 || id_p == 25) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
@@ -479,7 +485,7 @@
 
                                             <%if (id_p == 1) {%>
                                             <input type="hidden" name="tipoCorreccion" value="solicitud">
-                                            <%} else if (id_p == 12 || id_p == 21) {%> 
+                                            <%} else if (id_p == 12 || id_p == 21 || id_p == 25) {%> 
                                             <input type="hidden" name="tipoCorreccion" value="documento">
                                             <%} else {%>                                            
                                             <div class="row" ng-show="mostrartipocorrecion">
