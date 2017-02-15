@@ -54,30 +54,30 @@
                     out.write("<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Administración<strong class='caret'></strong></a>");
                     out.write("<ul class='dropdown-menu'>");
                     
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#' >===Administración de usuarios===</a></li>");
+                    out.write("<li><a style='background: #cc0000; color:white' href='#' ><b><center>Administración de usuarios</center></b></a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='101_agregar_usuario.jsp'>Agregar usuario</a></li>");                    
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='112_consulta_para_actualizar_usuario.jsp'>Actualizar usuarios</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='103_consultar_usuario.jsp'>Consultar usuarios</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='113_consulta_para_dar_de_baja_usuario.jsp'>Dar de baja usuarios</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='114_consulta_para_modificar_roles.jsp'>Modificar roles</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='106_bitacora.jsp'>Bitacora</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de becas===</a></li>");                    
+                    out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Administración de becas</center></b></a></li>");                    
                     if(t==id_director_consejo || t==id_admin)
                     {out.write("<li><a style='background-color: #cf2a27; color:white' href='107_agregar_oferta_de_beca.jsp'>Agregar oferta de beca</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='109_consultar_oferta_de_beca.jsp'>Consultar/Modificar oferta de beca</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='110_eliminar_oferta_de_beca.jsp'>Deshabilitar oferta de beca</a></li>");}
                     
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='111_reporte_de_beca.jsp'>Reporte de oferta de becas</a></li>");
-                    if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de becarios===</a></li>");
+                    if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background: #cc0000; color:white' href='#'><b></center>Administración de becarios</center></b></a></li>");
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='201_consultar_expediente.jsp'>Consultar expediente</a></li>");
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='202_consulta_modificar_estado_de_becario.jsp'>Modificar estado de becario</a></li>");
                     if(t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='203_consulta_suspender_becario.jsp'>Suspender becario</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de instituciones===</a></li>");
+                    out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Administración de instituciones</center></b></a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='204_agregar_institucion.jsp'>Agregar institución</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='213_consulta_para_modificar_institucion.jsp'>Modificar institución</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='206_consultar_institucion.jsp'>Consultar institución</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='214_consulta_para_eliminar_institucion.jsp'>Eliminar institución</a></li>");
-                    out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Administración de documentos===</a></li>");
+                    out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Administración de documentos</center></b></a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='208_agregar_documento.jsp'>Agregar documento</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='209_modificar_documento.jsp'>Modificar documento</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='210_consultar_documento.jsp'>Consultar documento</a></li>");
@@ -139,17 +139,16 @@
                     out.write("<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Solicitudes y acuerdos<strong class='caret'></strong></a>");
                     out.write("<ul class='dropdown-menu'>");
                     
-                    if(t==id_comision || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Comision de Becas===</a></li>");
+                    if(t==id_comision || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Comision de Becas</center></b></a></li>");
                     if(t==id_comision || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='407_Comision_Becas_Solicitud_Acuerdos_Pendientes.jsp'>Solicitudes de dictamenes pendientes</a></li>");
                     if(t==id_comision || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='409_Comision_Becas_Buscar_Acuerdo.jsp'>Buscar dictamenes emitidos</a></li>");
-                    if(t==id_junta || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Junta Directiva===</a></li>");
+                    if(t==id_junta || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Junta Directiva</center></b></a></li>");
                     if(t==id_junta || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='410_Junta_Directiva_Solicitud_Acuerdos_Pendientes.jsp'>Solicitudes de acuerdos pendientes</a></li>");
                     if(t==id_junta || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='412_Junta_Directiva_Buscar_Acuerdos.jsp'>Buscar acuerdos emitidos</a></li>");
-                    if(t==id_csu || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Consejo Superior Universitario===</a></li>");
+                    if(t==id_csu || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Consejo Superior Universitario</center></b></a></li>");
                     if(t==id_csu || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='413_Consejo_Superior_Universitario_Solicitud_Acuerdos_Pendientes.jsp'>Solicitudes de acuerdos pendientes</a></li>");
                     if(t==id_csu || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='415_Consejo_Superior_Universitario_Buscar_Acuerdos.jsp'>Buscar acuerdos emitidos</a></li>");
-                    // if(t==id_csu || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>Buscar acuerdos emitidos</a></li>");
-                    if(t==id_fiscalia || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='#'>===Fiscalia===</a></li>");
+                    if(t==id_fiscalia || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Fiscalia</center></b></a></li>");
                     if(t==id_fiscalia || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='501_Solicitudes_Asesoria_Contrato.jsp'>Solicitudes de asesorias de contrato de beca</a></li>");
                     if(t==id_fiscalia || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='505_Buscar_Contrato.jsp'>Buscar contrato de beca</a></li>");
                     if(t==id_fiscalia || t==id_colaborador_consejo || t==id_director_consejo || t==id_admin)out.write("<li><a style='background-color: #cf2a27; color:white' href='503_Solicitudes_Reintegro_Beca.jsp'>Solicitud de reintegro de beca</a></li>");                    
