@@ -86,9 +86,9 @@
     <body ng-app="consultaParaModificarInstitucionApp" ng-controller="consultaParaModificarInstitucionCtrl">
         <div class="container-fluid" >
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
-                    <p class="text-center" style="color:#cf2a27">Eliminar institucion</p>
-                </h2>
+                <h3>
+                    <p class="text-center" style="color:#cf2a27">Eliminar Institución</p>
+                </h3>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
@@ -103,7 +103,7 @@
                                 <legend class="custom-border">filtros:</legend>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Nombre de la institucion : </label>
+                                        <label for="textinput">Nombre de la institución : </label>
                                     </div>
                                     <div class="col-md-8">
                                         <input id="text_NomInstitucion" name="text_NomInstitucion" type="text" placeholder="ingrese el nombre de instirucion" class="form-control input-md" ng-model="datos.nombreInst"  ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
@@ -115,7 +115,7 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Pais : </label>
+                                        <label for="textinput">País : </label>
                                     </div>
                                     <div class="col-md-6">
                                         <select id="tex_paisInstitucion" name="tex_paisInstitucion" class="form-control">
@@ -134,7 +134,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-4 text-right">
-                                    <label for="textinput">Tipo de institucion : </label>
+                                    <label for="textinput">Tipo de institución : </label>
                                 </div>
                                 <div class="col-md-6">
                                     <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control">                            
@@ -202,14 +202,14 @@
 
             <br>
             <div class="row">
-                <table class="table">
+                <table id="tablaUsuarios" class="table table-bordered">
                     <thead>
                     <th>No</th>
                     <th>Nombre de la institución</th>
                     <th>Tipo institución</th>
                     <th>País</th>
                     <th>Página web</th>
-                    <th>Correo electronico</th>
+                    <th>Correo electrónico</th>
                     <th>Opción</th>
                     </thead>
                     <tbody>
@@ -274,5 +274,41 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/consultaParaModificarInstitucion.js"></script>
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript">
+   $(document).ready(function() {
+    $('#tablaUsuarios').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+    
+</script>
 </body>
 </html>

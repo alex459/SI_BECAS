@@ -326,9 +326,9 @@
                                                     break;
                                                 case 131:
                                                         if(idProgreso == 7){
-                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
+                                                            if(estadoProgreso.equals("EN PROCESO") || estadoProgreso.equals("CORRECCION")){
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                             }else{
@@ -344,7 +344,7 @@
                                                         if(idProgreso == 22){
                                                             if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                             }else{
@@ -359,7 +359,7 @@
                                                 case 152:
                                                     if(idProgreso == 9 || idProgreso ==12){                                                            
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
                                                         }else{
@@ -372,7 +372,7 @@
                                                     if(idProgreso == 15){
                                                             
                                                               //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='509_Consejo_Becas_Buscar_Acuerdo.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
+                                                              out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
                                                               //VER DOCUMENTO
                                                               out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
                                                         }else{

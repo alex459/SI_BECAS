@@ -179,10 +179,10 @@ public class SolocitudBecaDAO extends ConexionBD{
             this.cerrarConexion();
 
             while (rs.next()) {
-
+ 
                 int ID_SOLICITUD=rs.getInt("ID_SOLICITUD");
                 int ID_USUARIO=rs.getInt("ID_USUARIO");
-                int ID_EXPEDIENTE=rs.getInt("ID_SOLICITUD");
+                int ID_EXPEDIENTE=rs.getInt("ID_EXPEDIENTE");
                 int ID_OFERTA_BECA=rs.getInt("ID_OFERTA_BECA");
                 Date FECHA_SOLICITUD =rs.getDate("FECHA_SOLICITUD");
                 String BENEFICIOS=rs.getString("BENEFICIOS");
