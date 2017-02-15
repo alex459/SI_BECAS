@@ -43,10 +43,10 @@
                         <h2 class="form-signin-heading">Ingrese sus datos:</h2>
                         <fieldset>
                             <div class="form-group">
-                                <input id="usuario" class="form-control" placeholder="Usuario" name="usuario" autofocus="" ng-model="datos.user" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="5" maxlength="20">                                                                
+                                <input id="usuario" class="form-control" placeholder="Usuario" name="usuario" autofocus="" ng-model="datos.user" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="30">                                                                
                                 <span class="text-danger" ng-show="!login.$pristine && login.usuario.$error.required">El usuario es requerido.</span>
-                                <span class="text-danger" ng-show="login.usuario.$error.minlength">Minimo 20 caracteres.</span>
-                                <span class="text-danger" ng-show="login.usuario.$error.pattern">Solo se permiten letras y numeros. (a-z, A-Z, 0-9 y punto).</span>
+                                <span class="text-danger" ng-show="login.usuario.$error.minlength">Minimo 3 caracteres.</span>
+                                <span class="text-danger" ng-show="login.usuario.$error.pattern">Solo se permiten letras y numeros.</span>
                             </div>
                             <div class="form-group">
                                 <input id="contrasena" class="form-control" placeholder="Contraseña" name="contrasena" type="password" value="" ng-model="datos.pass" ng-required="true" maxlength="15" minlength="3">

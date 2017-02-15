@@ -91,39 +91,43 @@
 
 </head>
 <body>
-
-
-
-    <div class="row" >
-        <center>
-            <div class="col-md-12 text-center">
-                <img src="img/portada1.jpg" class="img-rounded" width="100%">
-            </div>            
-        </center>
-    </div>
-
-    <br></br>
-
-    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-        <div class="col-md-6">
-            <h3>
-                Dirección
-            </h3>
-            <p>
-                2016 Universidad De El Salvador  <br/>
-                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-            </p>
+  
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                
+                <div class="col-xs-12" style="height:50px;"></div>
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="col-md-12">				
+                            <img alt="Bootstrap Image Preview" src="img/portada1.jpg" align="middle"  class="img-responsive center-block">
+                        </div>				                          	
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6">
-            <h3>
-                Información de contacto
-            </h3>
-            <p>
-                Universidad De El Salvador
-                Tél: +(503) 2511-2000 <br/>
-                Consejo de becas
-                Tél: +(503) 2511- 2016
-            </p>
+
+        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+            <div class="col-md-6">
+                <h3>
+                    Dirección
+                </h3>
+                <p>
+                    2016 Universidad De El Salvador  <br/>
+                    Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h3>
+                    Información de contacto
+                </h3>
+                <p>
+                    Universidad De El Salvador
+                    Tél: +(503) 2511-2000 <br/>
+                    Consejo de becas
+                    Tél: +(503) 2511- 2016
+                </p>
+            </div>
         </div>
     </div>
 

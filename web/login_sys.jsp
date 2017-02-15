@@ -48,16 +48,16 @@
                         <h2 class="form-signin-heading">Ingrese sus datos:</h2>
                         <fieldset>
                             <div class="form-group">
-                                <input id="user" class="form-control" placeholder="Usuario" name="user" autofocus="" ng-model="datos.user" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">                                                                
+                                <input id="user" class="form-control" placeholder="Usuario" name="user" autofocus="" ng-model="datos.user" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="30">                                                                
                                 <span class="text-danger" ng-show="!login.$pristine && login.user.$error.required">El usuario es requerido.</span>
                                 <span class="text-danger" ng-show="login.user.$error.minlength">Minimo 7 caracteres.</span>
-                                <span class="text-danger" ng-show="login.user.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
+                                <span class="text-danger" ng-show="login.user.$error.pattern">Solo se permiten letras y numeros</span>
                             </div>
                             <div class="form-group">
-                                <input id="pass" class="form-control" placeholder="Contraseña" name="pass" type="password" value="" ng-model="datos.pass" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">
+                                <input id="pass" class="form-control" placeholder="Contraseña" name="pass" type="password" value="" ng-model="datos.pass" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" maxlength="10" minlength="6">
                                 <span class="text-danger" ng-show="!login.$pristine && login.pass.$error.required">La Contraseña es requerida.</span>
                                 <span class="text-danger" ng-show="login.pass.$error.minlength">Minimo 6 caracteres.</span>
-                                <span class="text-danger" ng-show="login.pass.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
+                                <span class="text-danger" ng-show="login.pass.$error.pattern">Solo se permiten caracteres alfanumericos</span>
                             </div>
                         </fieldset> 
                         <button class="btn btn-lg btn-success btn-block" type="submit" ng-disabled="!login.$valid">Ingresar</button>
