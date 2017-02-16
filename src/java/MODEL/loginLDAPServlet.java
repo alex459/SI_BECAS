@@ -52,6 +52,34 @@ public class loginLDAPServlet extends HttpServlet {
         
         int tiempo_de_logeo = 3600;
         
+        
+        try{
+            Usuario usuario_obj = new Usuario();
+                UsuarioDAO usuarioDao = new UsuarioDAO();
+                TipoUsuario tipoUsuario = new TipoUsuario();
+                String usuario = request.getParameter("usuario");
+                String contrasena = request.getParameter("contrasena");
+                usuario_obj.setNombreUsuario(usuario);
+                usuario_obj.setClave(contrasena);
+                usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
+
+                if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
+                    HttpSession sesion = request.getSession();
+                    sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
+                    sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
+                    sesion.setAttribute("user", usuario_obj.getNombreUsuario());
+                    sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
+                    sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
+                    response.sendRedirect("principal.jsp");
+                }else{
+                    System.out.println("No se pudo logear al sistema. Intentando con LDAP");
+                }
+            
+        }catch(Exception ex){
+            System.out.println("Error en login del sistema: "+ex);
+        }
+        
+        
         try (PrintWriter out = response.getWriter()) {
 
             // Evitando error de certificacion en del LDAP.
