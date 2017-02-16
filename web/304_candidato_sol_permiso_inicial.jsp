@@ -98,9 +98,9 @@
 <body ng-app = "solicitudApp" ng-controller="SolicitarPermisoCtrl">
 
     <div class="container-fluid">        
-                <H3 class="text-center" style="color:#E42217;">Solicitud de Permiso Inicial</H3>
+                <H3 class="text-center" style="color:#E42217;">Solicitud de Permiso de Gestion de Beca</H3>
         <fieldset class="custom-border">
-                <legend class="custom-border">Solicitud de permiso inicial</legend>
+                <legend class="custom-border">Solicitud de Permiso de Gestion de Beca</legend>
         <div class="row">
             <div class="col-md-12">
                 
@@ -130,7 +130,7 @@
                 <div class="row"> 
                     <div class="col-md-2"></div>
                     <div class="col-md-3">
-                        <label> Carta de Solicitud de Permiso Inicial:</label>
+                        <label> Carta de Solicitud de Permiso de Gestion de Beca:</label>
                     </div>
                     <div class="col-md-5">
                         <input type="file" size="2048" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>

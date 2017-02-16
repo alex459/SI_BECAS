@@ -87,18 +87,18 @@
     <body ng-app = "solicitudApp" ng-controller="SolicitarPermisoCtrl">
 
         <div class="container-fluid">        
-            <H3 class="text-center" style="color:#E42217;">Editar Solicitud de permiso inicial</H3>
+            <H3 class="text-center" style="color:#E42217;">Editar Solicitud de Permiso de Gestión de Beca</H3>
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Solicitud de permiso inicial</legend>
+                        <legend class="custom-border">Solicitud de Permiso de Gestión de Beca</legend>
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
                                 <fieldset class="custom-border">
                                     <legend class="custom-border">Documentos Adjuntados</legend>
-                                    <table class="table text-center">
+                                    <table class="table table-bordered text-center">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -140,7 +140,7 @@
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label class="form-control-static"> Carta de Solicitud de permiso inicial:</label>
+                                            <label class="form-control-static"> Carta de Solicitud de Permiso de Gestión de Beca:</label>
                                         </div>   
                                         <div class="col-md-6">
                                             <label class="radio-inline" for="radios-0">
