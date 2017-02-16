@@ -84,7 +84,7 @@ public class UsuarioDAO extends ConexionBD {
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre + "' AND CLAVE= '" + clave + "'";
+            String sql = "SELECT ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE FROM usuario where NOMBRE_USUARIO = '" + nombre + "' AND CLAVE= MD5('" + clave + "')";
             ResultSet rs = stmt.executeQuery(sql);
             this.cerrarConexion();
             if (rs.next()) {
