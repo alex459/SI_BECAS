@@ -213,7 +213,7 @@
                     <div class="row">
                         <h5>Resultados</h5>
                         <div class="col-md-12">
-                            <table class="table text-center">
+                            <table class="table  table-bordered text-center">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
