@@ -106,7 +106,7 @@
     <div class="container-fluid">
         <H3 class="text-center" style="color:#E42217;">Reporte de Ofertas de Beca</H3>
         <fieldset class="custom-border">
-                <legend class="custom-border">Reporte de ofertas de beca</legend>
+                <legend class="custom-border">Reporte de Ofertas de Beca</legend>
                     
                     <div class="row">            
                         <div class="col-md-9">
@@ -121,10 +121,10 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="col-md-6 text-right">                                   
-                                            <label for="nombreOferta">Nombre de la oferta : </label>                                
+                                            <label for="nombreOferta">Nombre de la Oferta : </label>                                
                                         </div>
                                         <div class="col-md-6">
-                                            <input id="nombreOferta" name="nombreOferta" type="text" placeholder="ingrese el nombre de la oferta" class="form-control input-md">                                                                
+                                            <input id="nombreOferta" name="nombreOferta" type="text" placeholder="Ingrese el Nombre de la Oferta" class="form-control input-md">                                                                
                                         </div>
 
                                     </div>    
@@ -132,7 +132,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="col-md-6 text-right">
-                                                    <label for="fIngresoIni">Fecha de ingreso (inicio) :</label>                                
+                                                    <label for="fIngresoIni">Fecha de Ingreso (Inicio) :</label>                                
                                                 </div>
                                                 <div class="col-md-6">                                
                                                     <div class="input-group date">
@@ -142,7 +142,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="col-md-6 text-right">
-                                                    <label for="fIngresoFin">Fecha de ingreso (fin):</label>                                
+                                                    <label for="fIngresoFin">Fecha de Ingreso (Fin):</label>                                
                                                 </div>
                                                 <div class="col-md-6">                                
                                                     <div class="input-group date">
@@ -156,7 +156,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="col-md-6 text-right">
-                                            <label for="institucionOfertante">Institucion ofertante : </label>                                
+                                            <label for="institucionOfertante">Institucion Ofertante : </label>                                
                                         </div>
                                         <div class="col-md-6">
                                             <select id="institucionOferente" name="institucionOferente" class="form-control">
@@ -164,7 +164,7 @@
                                                 InstitucionDAO institucionDAO = new InstitucionDAO();
                                                 ArrayList<Institucion> listaInstitucion = new ArrayList();
                                                 listaInstitucion = institucionDAO.consultarActivosPorTipo("OFERTANTE");
-                                            %><option value="" disabled selected>Seleccione una institución</option><%
+                                            %><option value="" disabled selected>Seleccione una Institución</option><%
                                                 for (int i = 0; i < listaInstitucion.size(); i++) {%>
                                             <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
                                             <%   }
@@ -176,7 +176,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="col-md-6 text-right">
-                                                <label for="fCierreIni">Fecha de cierre (inicio) :</label>                                
+                                                <label for="fCierreIni">Fecha de Cierre (Inicio) :</label>                                
                                             </div>
                                             <div class="col-md-6">                                
                                                 <div class="input-group date">
@@ -186,7 +186,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="col-md-6 text-right">
-                                                <label for="fCierreFin">Fecha de cierre (fin) :</label>                                
+                                                <label for="fCierreFin">Fecha de Cierre (Fin) :</label>                                
                                             </div>
                                             <div class="col-md-6">                                
                                                 <div class="input-group date">
@@ -197,10 +197,11 @@
                                     </div>   
                                 </div>
                             </div>      
+                            
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="col-md-6 text-right">
-                                        <label for="institucionEstudio">Institucion de estudio :</label>                                
+                                        <label for="institucionEstudio">Institucion de Estudio :</label>                                
                                     </div>
                                     <div class="col-md-6">                                
                                         <select id="institucionEstudio" name="institucionEstudio" class="form-control">
@@ -208,7 +209,7 @@
                                                 InstitucionDAO institucionDAO2 = new InstitucionDAO();
                                                 ArrayList<Institucion> listaInstitucion2 = new ArrayList();
                                                 listaInstitucion2 = institucionDAO2.consultarActivosPorTipo("ESTUDIO");
-                                            %><option value="" disabled selected>Seleccione una institución</option><%
+                                            %><option value="" disabled selected>Seleccione una Institución</option><%
                                                 for (int i = 0; i < listaInstitucion2.size(); i++) {%>
                                             <option value="<%=listaInstitucion2.get(i).getNombreInstitucion()%>"> <%= listaInstitucion2.get(i).getNombreInstitucion()%> </option>
                                             <% }
@@ -221,11 +222,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="col-md-6 text-right">
-                                        <label for="tipoEstudio">Tipo de estudio :</label>                                
+                                        <label for="tipoEstudio">Tipo de Estudio :</label>                                
                                     </div>
                                     <div class="col-md-6"> 
                                         <select id="tipoEstudio" name="tipoEstudio" class="form-control">
-                                            <option value="">Seleccione una opción</option>
+                                            <option value="">Seleccione una Opción</option>
                                             <option value="MAESTRIA">MAESTRIA</option>
                                             <option value="DOCTORADO">DOCTORADO</option>
                                             <option value="ESPECIALIZACIÓN">ESPECIALIZACIÓN</option>
@@ -367,20 +368,20 @@
                         <h5>Resultados de la busqueda</h5>
                         <div class="row">    
                 <fieldset class="custom-border">
-                    <legend class="custom-border">Ofertas de beca en el sistema</legend>
+                    <legend class="custom-border">Ofertas de Beca en el Sistema</legend>
                     <div class="row">
                         <div class="col-md-12">
                             <table id="tablaResultados" class="table table-bordered">
 
                                 <thead>
                                     <tr class="success">
-                                        <th>Nombre de la oferta</th>
-                                        <th>Tipo de beca</th>
-                                        <th>Fecha limite</th>
+                                        <th>Nombre de la Oferta</th>
+                                        <th>Tipo de Beca</th>
+                                        <th>Fecha Límite</th>
                                         <th>País</th>
-                                        <th>Tipo estudio</th>
-                                        <th>Institución de estudio</th>
-                                        <th>Institución financiera</th>
+                                        <th>Tipo Estudio</th>
+                                        <th>Institución de Estudio</th>
+                                        <th>Institución Financiera</th>
                                     </tr>
                                 </thead>
                                 <tbody>
