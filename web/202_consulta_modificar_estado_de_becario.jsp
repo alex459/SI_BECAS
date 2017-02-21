@@ -71,7 +71,7 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Modificar estado de becario</p>
+                    <p class="text-center" style="color:#cf2a27">Modificar Estado de Becario</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -79,7 +79,7 @@
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 <form class="form-horizontal" action="202_consulta_modificar_estado_de_becario.jsp" method="post">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Modificar estado de becario</legend>
+                        <legend class="custom-border">Modificar Estado de Becario</legend>
                         <div class="col-md-6 col-md-offset-3">
                             <fieldset class="custom-border">
                                 <legend class="custom-border">filtros</legend>

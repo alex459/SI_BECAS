@@ -71,7 +71,7 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Suspender becario</p>
+                    <p class="text-center" style="color:#cf2a27">Suspender Becario</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -79,7 +79,7 @@
             <div class="col-md-12"><!-- CONTENIDO DE LA PANTALLA -->
                 <form class="form-horizontal" action="203_consulta_suspender_becario.jsp" method="post">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Suspender becario</legend>
+                        <legend class="custom-border">Suspender Becario</legend>
                         <div class="col-md-6 col-md-offset-3">
                             <fieldset class="custom-border">
                                 <legend class="custom-border">filtros</legend>

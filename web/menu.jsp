@@ -81,7 +81,7 @@
                         out.write("<li><a style='background-color: #cf2a27; color:white' href='201_consultar_expediente.jsp'>Consultar Expediente</a></li>");
                     }
                     if (t == id_director_consejo || t == id_admin) {
-                        out.write("<li><a style='background-color: #cf2a27; color:white' href='202_consulta_modificar_estado_de_becario.jsp'>Modificar estado de becario</a></li>");
+                        out.write("<li><a style='background-color: #cf2a27; color:white' href='202_consulta_modificar_estado_de_becario.jsp'>Modificar Estado de Becario</a></li>");
                     }
                     if (t == id_director_consejo || t == id_admin) {
                         out.write("<li><a style='background-color: #cf2a27; color:white' href='203_consulta_suspender_becario.jsp'>Suspender Becario</a></li>");

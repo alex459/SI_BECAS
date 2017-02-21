@@ -103,7 +103,7 @@
         <div class="row"><!-- TITULO DE LA PANTALLA -->
 
             <h3>
-                <p class="text-center" style="color:#cf2a27">Consultar Ofertas de Beca</p>
+                <p class="text-center" style="color:#cf2a27">Consultar/Modificar Ofertas de Beca</p>
             </h3>
 
             <br></br> 

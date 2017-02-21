@@ -155,7 +155,7 @@
         <div class="row"><!-- TITULO DE LA PANTALLA -->
 
             <h3>
-                <p class="text-center" style="color:#cf2a27">Bitacora</p>
+                <p class="text-center" style="color:#cf2a27">Bitácora</p>
             </h3>
 
             <br></br> 
