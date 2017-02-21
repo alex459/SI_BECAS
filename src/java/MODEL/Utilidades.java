@@ -5,8 +5,10 @@ import DAO.EnviarCorreo;
 import DAO.UsuarioDAO;
 import POJO.Bitacora;
 import POJO.Usuario;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Properties;
 import javax.servlet.http.HttpServletResponse;
 
 public class Utilidades {
@@ -118,6 +120,23 @@ public class Utilidades {
             }
         }                
         return respuesta;
+    }
+    
+    public static String ObtenerAyuda(){
+         Properties prop = new Properties();
+        String helpUrl = new String();        
+        
+        String resourceName = "config.properties";
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+                prop.load(resourceStream);
+            } catch (Exception ex) {
+
+                System.out.println("Error al leer archivo de configuracion. " + ex);
+            }
+            // obteniendo propiedades.
+            helpUrl = prop.getProperty("helpUrl");
+            return helpUrl;
     }
 
 }
