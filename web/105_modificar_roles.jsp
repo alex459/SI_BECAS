@@ -125,14 +125,14 @@
 
         <form class="form-horizontal" action="ModificarRolesServlet" method="post">
             <fieldset class="custom-border">  
-                <legend class="custom-border">Paso 2: Seleccione el nuevo rol y de clic en Modificar rol</legend>
+                <legend class="custom-border">Paso 2: Seleccione el nuevo rol y de clic en Modificar Rol</legend>
 
 
                 <div class="row"> 
                     <div class="col-md-3">                                                                                                                
                     </div>
                     <div class="col-md-3 text-right">                                   
-                        <label for="textinput">Codigo de empleado : </label>                            
+                        <label for="textinput">Código de Empleado : </label>                            
                     </div>
                     <div class="col-md-3 text-center">                                                        
                         <input id="textinput" name="textinput" type="text" class="form-control input-md" value = "<%=carnet%>" disabled>                            
@@ -154,7 +154,7 @@
                         <table class="table table-bordered"></br>                                                        
                             <tbody>
                                 <tr>
-                                    <td>Nombre de usuario </td>
+                                    <td>Nombre de Usuario </td>
                                     <td><%=nombres%> </td>
                                 </tr>
                                 
@@ -183,7 +183,7 @@
                     <div class="col-md-3">                                                                                                                
                     </div>
                     <div class="col-md-3 text-right">                                   
-                        <label for="textinput">Tipo de usuario : </label>                            
+                        <label for="textinput">Tipo de Usuario : </label>                            
                     </div>
                     <div class="col-md-3 text-center">                                                        
 
@@ -208,7 +208,7 @@
 
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <input type="submit" class="btn btn-primary" name="submit" value="Modificar rol">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Modificar Rol">
                     </div>
                 </div>
 
