@@ -164,7 +164,7 @@
 
         <div class="col-md-12">            
             <fieldset class="custom-border">  
-                <legend class="custom-border">Bitacora</legend> 
+                <legend class="custom-border">Bitácora</legend> 
 
 
                 <div class="row">   
@@ -180,7 +180,7 @@
                                         <label for="textinput" style="color:#cf2a27">Ingrese los filtros de busqueda</label>
                                     </div>
                                     <div class="col-md-6 text-center">
-                                        <label for="textinput">Rango para las fechas de busqueda</label>
+                                        <label for="textinput">Rango Para las fechas de Busqueda</label>
                                     </div>
                                 </div>
 
@@ -188,7 +188,7 @@
 
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <label for="textinput">Tipo de operacion</label>
+                                        <label for="textinput">Tipo de Operación</label>
                                     </div>
                                     <div class="col-md-3">
                                         <select id="selectbasic" name="ID_ACCION" class="form-control"> 
@@ -223,7 +223,7 @@
 
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label for="textinput">Nombre de usuario</label>
+                                    <label for="textinput">Nombre de Usuario</label>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="row">
@@ -251,7 +251,7 @@
 
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <input type="submit" class="btn btn-primary" name="submit" value="Realizar busqueda">
+                                    <input type="submit" class="btn btn-primary" name="submit" value="Realizar Busqueda">
                                 </div>
                             </div>                                
                         </fieldset>
@@ -270,7 +270,7 @@
                                 <label for="textinput">PDF</label>
                             </div>                                                                        
                             <div class="col-md-6 text-center">
-                                <label for="textinput">Hoja de calculo</label>
+                                <label for="textinput">Hoja de Cálculo</label>
                             </div>
                         </div>
 
@@ -314,7 +314,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <label for="textinput">Resultados de la busqueda</label>
+                    <label for="textinput">Resultados de la Busqueda</label>
                 </div>                    
             </div>           
             <div class="row">   
@@ -325,10 +325,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nombre de usuario</th>
-                                <th>Codigo de usuario</th>
-                                <th>Tipo de operacion</th>
-                                <th>Operacion realizada</th>
+                                <th>Nombre de Usuario</th>
+                                <th>Código de Usuario</th>
+                                <th>Tipo de Operación</th>
+                                <th>Operación Realizada</th>
                                 <th>Fecha</th>
                                 <th>Hora</th>
                             </tr>
