@@ -93,25 +93,25 @@
 
             <form name= "agregarUsuario" class="form-horizontal" action="AgregarUsuarioServlet" method="post" novalidate>
                 <fieldset class="custom-border">  
-                    <legend class="custom-border">Datos personales</legend>
+                    <legend class="custom-border">Datos Personales</legend>
                     <div class="row"> 
                         <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Codigo de usuario : </label>                                
+                            <label for="textinput">Código de Usuario : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="CARNET" name="CARNET" type="text" placeholder="ingrese un codigo para el usuario." class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="20">
+                            <input id="CARNET" name="CARNET" type="text" placeholder="Ingrese un código para el usuario." class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="20">
                             <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CARNET.$error.required">El usuario es requerido.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.minlength">Minimo 3 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.pattern">Solo se permiten letras, numeros y punto. (a-z, A-Z, 0-9 y punto).</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.minlength">Mínimo 3 caracteres.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.pattern">Solo se permiten letras, números y punto. (a-z, A-Z, 0-9 y punto).</span>
                             <small id="help1"></small>
                         </div>
                         <div class="col-md-3 text-right">                                   
                             <label for="textinput">Email : </label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="EMAIL" name="EMAIL" type="email"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
-                            <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.EMAIL.$error.required">El correo electronico requerido.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.EMAIL.$error.minlength">Minimo 3 caracteres</span>
+                            <input id="EMAIL" name="EMAIL" type="email"  placeholder="Ingrese el correo electrónico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
+                            <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.EMAIL.$error.required">El correo electrónico requerido.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.EMAIL.$error.minlength">Mínimo 3 caracteres</span>
                             <span class="text-danger" ng-show="agregarUsuario.EMAIL.$error.email">Solo permite formato: ejemplo usuario@ues.com).</span>
                         </div>                        
                     </div> 
@@ -120,22 +120,22 @@
 
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Primer nombre : </label>                             
+                            <label for="textinput">Primer Nombre : </label>                             
                         </div>
                         <div class="col-md-3">
-                            <input id="NOMBRE1_DU" name="NOMBRE1_DU" type="text" placeholder="ingrese el primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
+                            <input id="NOMBRE1_DU" name="NOMBRE1_DU" type="text" placeholder="Ingrese el Primer Nombre" class="form-control input-md" ng-model="datos.nombre1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
                             <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.NOMBRE1_DU.$error.required">El Primer Nombre es requerido.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.NOMBRE1_DU.$error.minlength">Minimo 3 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.NOMBRE1_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                            <span class="text-danger" ng-show="agregarUsuario.NOMBRE1_DU.$error.minlength">Mínimo 3 caracteres.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.NOMBRE1_DU.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                             <small id="help2"></small>
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Segundo nombre :</label>                                
+                            <label for="textinput">Segundo Nombre :</label>                                
                         </div>
                         <div class="col-md-3">
-                            <input id="NOMBRE2_DU" name="NOMBRE2_DU" type="text"  placeholder="ingrese el segundo nombre" class="form-control input-md" ng-model="datos.nombre2"  ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">    
-                            <span class="text-danger" ng-show="agregarUsuario.NOMBRE2_DU.$error.minlength">Minimo 3 caracteres</span>
-                            <span class="text-danger" ng-show="agregarUsuario.NOMBRE2_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                            <input id="NOMBRE2_DU" name="NOMBRE2_DU" type="text"  placeholder="Ingrese el Segundo Nombre" class="form-control input-md" ng-model="datos.nombre2"  ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">    
+                            <span class="text-danger" ng-show="agregarUsuario.NOMBRE2_DU.$error.minlength">Mínimo 3 caracteres</span>
+                            <span class="text-danger" ng-show="agregarUsuario.NOMBRE2_DU.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                             <small id="help3"></small>
                         </div>  
                     </div>
@@ -144,22 +144,22 @@
 
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Primer apellido :</label>                                
+                            <label for="textinput">Primer Apellido :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="APELLIDO1_DU" name="APELLIDO1_DU" type="text" placeholder="ingrese el primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
+                            <input id="APELLIDO1_DU" name="APELLIDO1_DU" type="text" placeholder="Ingrese el Primer Apellido" class="form-control input-md" ng-model="datos.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
                             <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.APELLIDO1_DU.$error.required">El Primer Apellido es requerido.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.APELLIDO1_DU.$error.minlength">Minimo 3 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.APELLIDO1_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                            <span class="text-danger" ng-show="agregarUsuario.APELLIDO1_DU.$error.minlength">Mínimo 3 caracteres.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.APELLIDO1_DU.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                             <small id="help4"></small>
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Segundo apellido :</label>                                                            
+                            <label for="textinput">Segundo Apellido :</label>                                                            
                         </div>
                         <div class="col-md-3">                                
-                            <input id="APELLIDO2_DU" name="APELLIDO2_DU" type="text" placeholder="ingrese el segundo apellido" class="form-control input-md"ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
-                            <span class="text-danger" ng-show="agregarUsuario.APELLIDO2_DU.$error.minlength">Minimo 3 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.APELLIDO2_DU.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                            <input id="APELLIDO2_DU" name="APELLIDO2_DU" type="text" placeholder="Ingrese el Segundo Apellido" class="form-control input-md"ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3"> 
+                            <span class="text-danger" ng-show="agregarUsuario.APELLIDO2_DU.$error.minlength">Mínimo 3 caracteres.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.APELLIDO2_DU.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                             <small id="help5"></small>
                         </div>              
                     </div>                      
@@ -171,20 +171,20 @@
                             <label for="textinput">Contraseña :</label>                                
                         </div>
                         <div class="col-md-3">                                
-                            <input id="CLAVE" name="CLAVE" type="password"  placeholder="ingrese una contraseña" class="form-control input-md" ng-model="datos.contrasena1" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">
+                            <input id="CLAVE" name="CLAVE" type="password"  placeholder="Ingrese una contraseña" class="form-control input-md" ng-model="datos.contrasena1" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">
                             <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CLAVE.$error.required">La Contraseña es requerida.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CLAVE.$error.minlength">Minimo 6 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CLAVE.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CLAVE.$error.minlength">Mínimo 6 caracteres.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CLAVE.$error.pattern">Solo se permiten caracteres alfanuméricos (A-Z y 0-9).</span>
                             <small id="help6"></small>
                         </div>
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Confirmar contraseña :</label>                                
+                            <label for="textinput">Confirmar Contraseña :</label>                                
                         </div>
                         <div class="col-md-3">                                
                             <input id="CLAVE2" name="CLAVE2" type="password" placeholder="ingrese nuevamente la contraseña" class="form-control input-md" ng-model="datos.contrasena2" ng-required="true" ng-pattern="/^[A-Z0-9]*$/" maxlength="10" minlength="6">
-                            <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CLAVE2.$error.required">Debe Confirmar la Contraseña.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CLAVE2.$error.minlength">Minimo 6 caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CLAVE2.$error.pattern">Solo se permiten caracteres alfanumericos (A-Z y 0-9).</span>
+                            <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CLAVE2.$error.required">Debe confirmar la Contraseña.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CLAVE2.$error.minlength">Mínimo 6 caracteres.</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CLAVE2.$error.pattern">Solo se permiten caracteres alfanuméricos (A-Z y 0-9).</span>
                             <small id="help7"></small>
                         </div>              
                     </div>
@@ -193,7 +193,7 @@
 
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Rol del usuario :</label>                                
+                            <label for="textinput">Rol del Usuario :</label>                                
                         </div>
                         <div class="col-md-3">                                
 
