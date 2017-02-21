@@ -105,7 +105,7 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2 class="text-center" style="color:#cf2a27">
-                    Solicitar Acuerdo de Gestion de Compromiso Contractual
+                    Solicitar Acuerdo de Gestión de Compromiso Contractual
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  

@@ -102,7 +102,7 @@
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2 class="text-center" style="color:#cf2a27">
-                    Agregar documentos finalización de beca
+                    Agregar Documentos Finalización de Beca
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  

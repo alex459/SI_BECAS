@@ -100,7 +100,7 @@
     <div class="container-fluid">        
                 <H3 class="text-center" style="color:#E42217;">Solicitud de Permiso de Gestion de Beca</H3>
         <fieldset class="custom-border">
-                <legend class="custom-border">Solicitud de Permiso de Gestion de Beca</legend>
+                <legend class="custom-border">Solicitud de Permiso de Gestión de Beca</legend>
         <div class="row">
             <div class="col-md-12">
                 
