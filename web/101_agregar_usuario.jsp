@@ -102,7 +102,7 @@
                             <input id="CARNET" name="CARNET" type="text" placeholder="Ingrese un Código para el Usuario." class="form-control input-md" ng-model="datos.codigo" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="20">
                             <span class="text-danger" ng-show="!agregarUsuario.$pristine && agregarUsuario.CARNET.$error.required">El Usuario es Requerido.</span>
                             <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.minlength">Mínimo 3 Caracteres.</span>
-                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.pattern">Solo se Permiten Letras, números y punto. (a-z, A-Z, 0-9 y punto).</span>
+                            <span class="text-danger" ng-show="agregarUsuario.CARNET.$error.pattern">Solo se Permiten Letras, Números y Punto. (a-z, A-Z, 0-9 y punto).</span>
                             <small id="help1"></small>
                         </div>
                         <div class="col-md-3 text-right">                                   
