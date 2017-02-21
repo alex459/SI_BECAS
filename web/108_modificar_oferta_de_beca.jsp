@@ -111,28 +111,28 @@
             %>
             <input value="<%=id_oferta%>" id="idOferta" name="idOferta" hidden>
             <fieldset class="custom-border">  
-                <legend class="custom-border">Modificar oferta de beca</legend>
+                <legend class="custom-border">Modificar Oferta de Beca</legend>
                 <div class="row"> 
                     <div class="col-md-3 text-right">                                   
-                        <label for="nombreOferta">Nombre de la oferta : </label>                                
+                        <label for="nombreOferta">Nombre de la Oferta : </label>                                
                     </div>
                     <div class="col-md-3">
                         <input id="nombreOferta" name="nombreOferta" type="text" ng-pattern="/^[0-9A-ZÁÉÍÓÚÑ ]*$/" minlength="10" maxlength="100" placeholder="ingrese el nombre de la oferta" class="form-control input-md" ng-model="datos.nombreOferta" ng-required="true" ng-init="datos.nombreOferta = '<%= ofertaActual.getNombreOferta()%>'">
-                        <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.nombreOferta.$error.required">Debe ingresar un nombre para la oferta de beca.</span>
-                        <span class="text-danger" ng-show="AgregarOfertaBeca.nombreOferta.$error.minlength">Minimo 10 caracteres</span>
-                        <span class="text-danger" ng-show="AgregarOfertaBeca.nombreOferta.$error.pattern">Solo se permiten letras mayuscular y numeros (A-Z y 0-9).</span>
+                        <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.nombreOferta.$error.required">Debe Ingresar un Nombre para la Oferta de Beca.</span>
+                        <span class="text-danger" ng-show="AgregarOfertaBeca.nombreOferta.$error.minlength">Mínimo 10 Caracteres</span>
+                        <span class="text-danger" ng-show="AgregarOfertaBeca.nombreOferta.$error.pattern">Solo se Permiten Letras Mayúscular y Numeros (A-Z y 0-9).</span>
                     </div>
                     <div class="col-md-3 text-right">
                         <label for="duracion">Duracion (Meses) : </label>                                
                     </div>
                     <div class="col-md-3 text-right">
-                        <input id="duracion" name="duracion" value="<%= ofertaActual.getDuracion()%>" type="number" min="1" max="60" placeholder="cambiar" required class="form-control input-md">                                                                
+                        <input id="duracion" name="duracion" value="<%= ofertaActual.getDuracion()%>" type="number" min="1" max="60" placeholder="Cambiar" required class="form-control input-md">                                                                
                     </div>                        
                 </div> 
                 <br>
                 <div class="row">
                     <div class="col-md-3 text-right">
-                        <label for="institucionOfertante">Institucion ofertante : </label>                                
+                        <label for="institucionOfertante">Institucion Ofertante : </label>                                
                     </div>
                     <div class="col-md-3">
                         <select id="institucionOferente" name="institucionOferente" class="form-control">
@@ -182,7 +182,7 @@
 
                 <div class="row">
                     <div class="col-md-3 text-right">
-                        <label for="textinput">Institucion de estudio :</label>                                
+                        <label for="textinput">Institución de Estudio :</label>                                
                     </div>
                     <div class="col-md-3">                                
 
@@ -206,7 +206,7 @@
 
                     </div>
                     <div class="col-md-3 text-right">
-                        <label for="textinput">Fecha inicio de estudio :</label>                                
+                        <label for="textinput">Fecha Inicio de Estudio :</label>                                
                     </div>
                     <div class="col-md-3">                                                            
                         <div class="input-group date">
@@ -217,7 +217,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-3 text-right">
-                        <label for="tipoEstudio">Tipo de estudio :</label>                                
+                        <label for="tipoEstudio">Tipo de Estudio :</label>                                
                     </div>
                     <div class="col-md-3"> 
                         <select id="tipoEstudio" name="tipoEstudio" class="form-control">
@@ -240,7 +240,7 @@
                         </select>
                     </div>
                     <div class="col-md-3 text-right">
-                        <label for="fechaCierre">Fecha limite para aplicar :</label>                                
+                        <label for="fechaCierre">Fecha Limite para Aplicar :</label>                                
                     </div>
                     <div class="col-md-3">                                
                         <div class="input-group date">
@@ -251,7 +251,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-3 text-right">    
-                        <label for="tipoBeca">Tipo de beca: </label>      
+                        <label for="tipoBeca">Tipo de Beca: </label>      
                     </div>
                     <div class="col-md-3">                                
                         <select id="tipoBeca" name="tipoBeca" class="form-control">
@@ -316,7 +316,7 @@
                     </div>
                     <div class="row"> 
                         <div class="col-md-3 text-right">
-                            <label for="textinput">Seleccione un nuevo archivo si desea modificar:</label>                                
+                            <label for="textinput">Seleccione un Nuevo Archivo si Desea Modificar:</label>                                
                         </div>
                         <div class="col-md-3">      
                             <input type="file" name="doc_digital" accept="application/pdf" >
@@ -329,7 +329,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-3 text-right">
-                        <label for="perfilBeca">Perfil de la beca: </label>                                
+                        <label for="perfilBeca">Perfil de la Beca: </label>                                
                     </div>
                     <div class="col-md-9">                                
                         <textarea class="form-control" id="perfilBeca" name="perfilBeca" maxlength="2000" value="" required>
@@ -340,7 +340,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <input type="submit" class="btn btn-primary" name="submit" value="Modificar oferta" ng-disabled="!AgregarOfertaBeca.$valid">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Modificar Oferta" ng-disabled="!AgregarOfertaBeca.$valid">
                         <a href="principal.jsp" type="submit" class="btn btn-danger" name="submit">Cancelar</a>
                     </div>
                 </div>
