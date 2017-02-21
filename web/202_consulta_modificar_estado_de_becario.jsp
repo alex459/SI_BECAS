@@ -226,12 +226,12 @@
                            <table id="tablaResultados" class="table table-bordered">
                                 <thead>
                                     <th>Usuario</th>
-                                    <th>Nombre del becario</th>
+                                    <th>Nombre del Becario</th>
                                     <th>Facultad</th>
                                     <th>Universidad</th>
-                                    <th>Tipo de beca</th>
+                                    <th>Tipo de Beca</th>
                                     <th>Estado</th>
-                                    <th>Opcion</th>
+                                    <th>Opción</th>
                                 </thead>
                                 <tbody>
                                  <%       
