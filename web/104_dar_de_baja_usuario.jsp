@@ -127,7 +127,7 @@
                         <div class="col-md-3">                                                                                                                
                         </div>
                         <div class="col-md-3 text-right">                                   
-                            <label for="textinput">Codigo de usuario : </label>                            
+                            <label for="textinput">Código de Usuario : </label>                            
                         </div>
                         <div class="col-md-3 text-center">                                                        
                             <input id="textinput" name="textinput" type="text" class="form-control input-md" value = "<%=carnet%>" disabled>                            
@@ -149,7 +149,7 @@
                             <table class="table table-bordered"></br>                                                        
                                 <tbody>
                                     <tr>
-                                        <td>Nombre de usuario </td>
+                                        <td>Nombre de Usuario </td>
                                         <td><%=nombres%> </td>
 
                                     </tr>

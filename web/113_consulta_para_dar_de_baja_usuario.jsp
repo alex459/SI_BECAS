@@ -108,12 +108,12 @@
 
                                 <div class="row"> 
                                     <div class="col-md-1 text-right">
-                                        <label for="textinput">Codigo de Usuario : </label>                                
+                                        <label for="textinput">Código de Usuario : </label>                                
                                     </div>
                                     <div class="col-md-7">
-                                        <input id="CARNET" name="CARNET" type="text" placeholder="ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="30">
-                                        <span class="text-danger" ng-show="consultarUsuario.CARNET.$error.minlength">Minimo 3 caracteres.</span>
-                                        <span class="text-danger" ng-show="consultarUsuario.CARNET.$error.pattern">Solo se permiten letras mayusculas, numeros y punto(.).</span>
+                                        <input id="CARNET" name="CARNET" type="text" placeholder="Ingrese el Usuario a Buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="30">
+                                        <span class="text-danger" ng-show="consultarUsuario.CARNET.$error.minlength">Mínimo 3 Caracteres.</span>
+                                        <span class="text-danger" ng-show="consultarUsuario.CARNET.$error.pattern">Solo se Permiten Letras Mayúsculas, Números y Punto(.).</span>
                                     </div>
                                     <div class="col-md-1 text-right">
                                         <label for="textinput">Facultad :</label>                                
@@ -145,31 +145,31 @@
                                     <div class="row">
 
                                         <div class="col-md-3">                                                                                    
-                                            <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">                                            
-                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
-                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                            <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="Primer Nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">                                            
+                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE1.$error.minlength">Mínimo 3 Caracteres.</span>
+                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                         </div>
                                         <div class="col-md-3">    
-                                            <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">                                            
-                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
-                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                            <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="Segundo Nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">                                            
+                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE2.$error.minlength">Mínimo 3 Caracteres.</span>
+                                            <span class="text-danger" ng-show="consultarUsuario.NOMBRE2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                         </div> 
                                         <div class="col-md-3">
-                                            <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">                                            
-                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
-                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                            <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="Primer Apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">                                            
+                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO1.$error.minlength">Mínimo 3 Caracteres.</span>
+                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                         </div> 
                                         <div class="col-md-3">
-                                            <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
-                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
-                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                            <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="Segundo Apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO2.$error.minlength">Mínimo 3 Caracteres.</span>
+                                            <span class="text-danger" ng-show="consultarUsuario.APELLIDO2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                         </div>
 
                                     </div>
                                 </div>
 
                                 <div class="col-md-1 text-right">
-                                    <label for="textinput">Tipo de usuario :</label>                                
+                                    <label for="textinput">Tipo de Usuario :</label>                                
                                 </div>
                                 <div class="col-md-3">                                
                                     <select id="selectbasic" name="ID_TIPO_USUARIO" class="form-control">
@@ -258,11 +258,11 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nombre de empleado</th>
-                                <th>Codigo de usuario</th>
+                                <th>Nombre de Empleado</th>
+                                <th>Código de Usuario</th>
                                 <th>Facultad</th>
-                                <th>Tipo de empleado</th>
-                                <th>Accion</th>
+                                <th>Tipo de Empleado</th>
+                                <th>Acción</th>
                             </tr>
                         </thead>
                         <tbody>                            
