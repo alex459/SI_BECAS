@@ -82,25 +82,25 @@
                         <legend class="custom-border">Modificar Estado de Becario</legend>
                         <div class="col-md-6 col-md-offset-3">
                             <fieldset class="custom-border">
-                                <legend class="custom-border">filtros</legend>
+                                <legend class="custom-border">Filtros</legend>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Codigo : </label>
+                                        <label for="textinput">Código : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="textinput" name="ID_USUARIO" type="text" placeholder="ingrese el Id del usuario" class="form-control input-md">
+                                        <input id="textinput" name="ID_USUARIO" type="text" placeholder="Ingrese el Id del Usuario" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Nombre del becario : </label>
+                                        <label for="textinput">Nombre del Becario : </label>
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="textinput" name="NOM_BECARIO1" type="text" placeholder="Primer nombre" class="form-control input-md">
+                                        <input id="textinput" name="NOM_BECARIO1" type="text" placeholder="Primer Nombre" class="form-control input-md">
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="textinput" name="NOM_BECARIO2" type="text" placeholder="Segundo nombre" class="form-control input-md">
+                                        <input id="textinput" name="NOM_BECARIO2" type="text" placeholder="Segundo Nombre" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
@@ -109,10 +109,10 @@
                                         
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="textinput" name="APELL_BECARIO1" type="text" placeholder="Primer apellido" class="form-control input-md">
+                                        <input id="textinput" name="APELL_BECARIO1" type="text" placeholder="Primer Apellido" class="form-control input-md">
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="textinput" name="APELL_BECARIO2" type="text" placeholder="Segundo apellido" class="form-control input-md">
+                                        <input id="textinput" name="APELL_BECARIO2" type="text" placeholder="Segundo Apellido" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">   
-                                            <option value=0></option>
+                                            <option value=0>Seleccione Facultad</option>
                                             <%
                                                 FacultadDAO facultadDao = new FacultadDAO();
                                                 ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
@@ -137,11 +137,11 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Universidad de estudio : </label>
+                                        <label for="textinput">Universidad de Estudio : </label>
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="UNIV_ESTUDIO" class="form-control">                            
-                                            <option value=0></option>
+                                            <option value=0>Seleccione Universiad de Estudio</option>
                                             <%
                                                 InstitucionDAO institucionDao = new InstitucionDAO();
                                                 ArrayList<Institucion> listaInstitucionEst = new ArrayList<Institucion>();
@@ -156,11 +156,11 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Tipo de beca : </label>
+                                        <label for="textinput">Tipo de Beca : </label>
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="TIPO_BECA" class="form-control">                            
-                                            <option value="">Seleccione tipo de beca</option>
+                                            <option value="">Seleccione tipo de Beca</option>
                                             <option value="INTERNA">INTERNA</option>
                                             <option value="EXTERNA">EXTERNA</option>
                                         </select>
@@ -223,7 +223,7 @@
                         %>                            
                         <br>
                         <div class="row"><!-- Tabla de Resultados-->
-                           <table class="table">
+                           <table id="tablaResultados" class="table table-bordered">
                                 <thead>
                                     <th>Usuario</th>
                                     <th>Nombre del becario</th>
@@ -292,5 +292,42 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+            $('#tablaResultados').DataTable(
+                {
+                     "language": 
+    {
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+    }
+            }
+                );
+    } );
+    
+    
+    </script>    
     </body>
 </html>
