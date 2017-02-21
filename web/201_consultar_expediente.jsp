@@ -90,19 +90,19 @@
                                         <label for="textinput">N° Expediente : </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="textinput" name="NUM_EXPEDIENTE" type="text" placeholder="ingrese el numero de expediente" class="form-control input-md">
+                                        <input id="textinput" name="NUM_EXPEDIENTE" type="text" placeholder="ingrese el Número de Expediente" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Nombre del becario : </label>
+                                        <label for="textinput">Nombre del Becario : </label>
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="textinput" name="NOM_BECARIO1" type="text" placeholder="Primer nombre" class="form-control input-md">
+                                        <input id="textinput" name="NOM_BECARIO1" type="text" placeholder="Primer Nombre" class="form-control input-md">
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="textinput" name="NOM_BECARIO2" type="text" placeholder="Segundo nombre" class="form-control input-md">
+                                        <input id="textinput" name="NOM_BECARIO2" type="text" placeholder="Segundo Nombre" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
@@ -111,10 +111,10 @@
                                         
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="textinput" name="APELL_BECARIO1" type="text" placeholder="Primer apellido" class="form-control input-md">
+                                        <input id="textinput" name="APELL_BECARIO1" type="text" placeholder="Primer Apellido" class="form-control input-md">
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="textinput" name="APELL_BECARIO2" type="text" placeholder="Segundo apellido" class="form-control input-md">
+                                        <input id="textinput" name="APELL_BECARIO2" type="text" placeholder="Segundo Apellido" class="form-control input-md">
                                     </div>
                                 </div>
                                 <br>
@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">   
-                                            <option value=0>Seleccione facultad</option>
+                                            <option value=0>Seleccione Facultad</option>
                                             <%
                                                 FacultadDAO facultadDao = new FacultadDAO();
                                                 ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
@@ -143,7 +143,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="ESTADO_EXPEDIENTE" class="form-control">                            
-                                            <option value="">Seleccione estado</option>
+                                            <option value="">Seleccione Estado</option>
                                             <option value="ABIERTO">ABIERTO</option>
                                             <option value="CERRADO">CERRADO</option>
                                         </select>
@@ -156,7 +156,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectbasic" name="PROGRESO" class="form-control">                            
-                                            <option value=0>Seleccione progreso</option>
+                                            <option value=0>Seleccione Progreso</option>
                                             <%
                                                 ProgresoDAO progresoDao = new ProgresoDAO();
                                                 ArrayList<Progreso> listaProgresos = new ArrayList<Progreso>();
@@ -230,14 +230,14 @@
                         %>                            
                         <br>
                         <div class="row"><!-- Tabla de Resultados-->
-                           <table class="table">
+                           <table id="tablaResultados" class="table table-bordered">
                                 <thead>
                                     <th>No. Expediente</th>
-                                    <th>Nombre del becario</th>
+                                    <th>Nombre del Becario</th>
                                     <th>Facultad</th>
                                     <th>Progreso</th>
                                     <th>Estado</th>
-                                    <th>Opcion</th>
+                                    <th>Opción</th>
                                 </thead>
                                 <tbody>
                                  <%       
@@ -297,5 +297,42 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#tablaResultados').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+    
+    
+    </script>    
     </body>
 </html>
