@@ -137,13 +137,13 @@
                         <div class="row">
 
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Nombre de la institución : </label>
+                                <label for="textinput">Nombre de la Institución : </label>
                             </div>
                             <div class="col-md-8">
-                                <input id="text_NomInstitucion" name="text_NomInstitucion" type="text" placeholder="ingrese el nombre de institución" class="form-control input-md" ng-model="datos.nombreInst" ng-init="datos.nombreInst = '<%=NOMBRE_INSTITUCION%>'" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
-                                <span class="text-danger" ng-show="!modificarInst.$pristine && modificarInst.text_NomInstitucion.$error.required">El nombre de la Institucion es requerido.</span>
-                                <span class="text-danger" ng-show="modificarInst.text_NomInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                <span class="text-danger" ng-show="modificarInst.text_NomInstitucion.$error.pattern">Solo se permiten letras mayuscular (A-Z).</span>
+                                <input id="text_NomInstitucion" name="text_NomInstitucion" type="text" placeholder="Ingrese el Nombre de Institución" class="form-control input-md" ng-model="datos.nombreInst" ng-init="datos.nombreInst = '<%=NOMBRE_INSTITUCION%>'" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
+                                <span class="text-danger" ng-show="!modificarInst.$pristine && modificarInst.text_NomInstitucion.$error.required">El Nombre de la Institución es Requerido.</span>
+                                <span class="text-danger" ng-show="modificarInst.text_NomInstitucion.$error.minlength">Mínimo 3 Caracteres</span>
+                                <span class="text-danger" ng-show="modificarInst.text_NomInstitucion.$error.pattern">Solo se Permiten Letras Mayúscular (A-Z).</span>
                             </div>
                         </div>
                         <br>
@@ -168,26 +168,26 @@
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Página web : </label>
+                                <label for="textinput">Página Web : </label>
                             </div>
                             <div class="col-md-6">
                                 <input id="tex_webInstitucion" name="tex_webInstitucion" type="url" placeholder="ingrese la url"  class="form-control input-md" ng-model="datos.url" ng-init="datos.url = '<%=URL%>'" ng-required="true"  minlength="3" maxlength="100" >
-                                <span class="text-danger" ng-show="!modificarInst.$pristine && modificarInst.tex_webInstitucion.$error.required">El nombre de la ULR es requerido.</span>
-                                <span class="text-danger" ng-show="modificarInst.tex_webInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                <span class="text-danger" ng-show="modificarInst.tex_webInstitucion.$error.url">Solo se permiten formato url: http://ejemplo.com.</span> 
+                                <span class="text-danger" ng-show="!modificarInst.$pristine && modificarInst.tex_webInstitucion.$error.required">El Nombre de la ULR es Requerido.</span>
+                                <span class="text-danger" ng-show="modificarInst.tex_webInstitucion.$error.minlength">Mínimo 3 Caracteres</span>
+                                <span class="text-danger" ng-show="modificarInst.tex_webInstitucion.$error.url">Solo se Permiten Formato Url: http://ejemplo.com.</span> 
                                 <small id="help3"></small>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Correo electrónico : </label>
+                                <label for="textinput">Correo Electrónico : </label>
                             </div>
                             <div class="col-md-6">
-                                <input id="tex_correoInstitucion" name="tex_correoInstitucion" type="email"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-init="datos.correo = '<%=EMAIL%>'" ng-required="true"  minlength="3" maxlength="30" >
-                                <span class="text-danger" ng-show="!modificarInst.$pristine && modificarInst.tex_correoInstitucion.$error.required">El correo electronico requerido.</span>
-                                <span class="text-danger" ng-show="modificarInst.tex_correoInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                <span class="text-danger" ng-show="modificarInst.tex_correoInstitucion.$error.email">Solo permite formato: ejemplo ejemplo@ejemplo.com).</span>
+                                <input id="tex_correoInstitucion" name="tex_correoInstitucion" type="email"  placeholder="Ingrese el Correo Electrónico" class="form-control input-md"  ng-model="datos.correo" ng-init="datos.correo = '<%=EMAIL%>'" ng-required="true"  minlength="3" maxlength="30" >
+                                <span class="text-danger" ng-show="!modificarInst.$pristine && modificarInst.tex_correoInstitucion.$error.required">El Correo Electrónico requerido.</span>
+                                <span class="text-danger" ng-show="modificarInst.tex_correoInstitucion.$error.minlength">Mínimo 3 Caracteres</span>
+                                <span class="text-danger" ng-show="modificarInst.tex_correoInstitucion.$error.email">Solo Permite Formato: Ejemplo ejemplo@ejemplo.com).</span>
                                 <small id="help4"></small>
                             </div>
                         </div>
@@ -196,7 +196,7 @@
 
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Tipo de institución : </label>
+                                <label for="textinput">Tipo de Institución : </label>
                             </div>
                             <div class="col-md-6">
                                 <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control"> 
