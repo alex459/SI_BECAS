@@ -105,7 +105,7 @@
         <div class="row">
             <div class="col-md-12">                
                 <fieldset class="custom-border">
-                    <legend class="custom-border">Adjuntar documentación necesaria</legend>
+                    <legend class="custom-border">Adjuntar Documentación Necesaria</legend>
                     <%if(expediente.getIdProgreso() == 3){%>
                         <% if(expediente.getEstadoProgreso().equals("EN PROCESO") || expediente.getEstadoProgreso().equals("REVISION")){%>
                             <div class="text-center">

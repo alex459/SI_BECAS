@@ -3,45 +3,45 @@
     <div class="col-md-2">
         <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
             <li class="active"><a href="#/">Datos personales</a></li>
-            <li><a href="#/laboral">Información laboral</a></li>
+            <li><a href="#/laboral">Información Laboral</a></li>
             <li><a href="#/educacion">Educación</a></li>
-            <li><a href="#/cargos">Cargos desempeñados</a></li>
-            <li><a href="#/oferta">Información de beca</a></li>
-            <li><a href="#/referencias">Referencias personales</a></li>
-            <li><a href="#/documentos">Adjuntar documentos</a></li>
+            <li><a href="#/cargos">Cargos Desempeñados</a></li>
+            <li><a href="#/oferta">Información de Beca</a></li>
+            <li><a href="#/referencias">Referencias Personales</a></li>
+            <li><a href="#/documentos">Adjuntar Documentos</a></li>
         </ul>
     </div>  
     <div class="col-md-10">
         <fieldset class="custom-border">
-            <legend class="custom-border">Datos personales</legend>
+            <legend class="custom-border">Datos Personales</legend>
             <div class="row">                                   
             </div>
             <div class="row">
                 <div class="col-md-3">
                     <label for="textinput">Primer Nombre</label>
                     <input id="nombre1" name="nombre1" placeholder="ingrese su primer nombre" class="form-control input-md" ng-model = "data.nombre" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1.$error.required">El Primer Nombre es requerido.</span>
-                    <span class="text-danger" ng-show="solicitud.nombre1.$error.minlength">Mínimo 3 caracteres.</span>
-                    <span class="text-danger" ng-show="solicitud.nombre1.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1.$error.required">El Primer Nombre es Requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1.$error.minlength">Mínimo 3 Caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Segundo Nombre</label>
                     <input id="textinput" name="nombre2"  placeholder="ingrese su segundo nombre" class="form-control input-md" ng-model = "data.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
-                    <span class="text-danger" ng-show="solicitud.nombre2.$error.minlength">Mínimo 3 caracteres.</span>
-                    <span class="text-danger" ng-show="solicitud.nombre2.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                    <span class="text-danger" ng-show="solicitud.nombre2.$error.minlength">Mínimo 3 Caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Primer Apellido</label>
                     <input name="apellido1" type="text" placeholder="ingrese su primer apellido" class="form-control input-md" ng-model ="data.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1.$error.required">El Primer Apellido es requerido.</span>
-                    <span class="text-danger" ng-show="solicitud.apellido1.$error.minlength">Mínimo 3 caracteres.</span>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1.$error.required">El Primer Apellido es Requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1.$error.minlength">Mínimo 3 Caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.apellido1.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Segundo Apellido</label>
                     <input name="apellido2" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md" ng-model ="data.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
-                    <span class="text-danger" ng-show="solicitud.apellido2.$error.minlength">Mínimo 3 caracteres.</span>
-                    <span class="text-danger" ng-show="solicitud.apellido2.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                    <span class="text-danger" ng-show="solicitud.apellido2.$error.minlength">Mínimo 3 Caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                 </div>  
             </div></br>
             <div class="row">
@@ -50,21 +50,21 @@
                     <div class="input-group date">
                         <input type="text" name="fechaNacimiento" class="form-control" ng-disabled="" ng-model="data.fecha_nacimiento" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
                     </div>
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.fechaNacimiento.$error.required">Debe de introducir su fecha de nacimiento.</span>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.fechaNacimiento.$error.required">Debe de Introducir su Fecha de Nacimiento.</span>
                 </div>
                 <div class="col-md-4">
                     <label for="textinput">Lugar de Nacimiento, Departamento</label>
                     <select name="departamentoNacimiento" class="form-control" ng-model ="data.departamento_nacimiento" ng-change="activarmunicipios()" ng-required="true">
                         <option ng-repeat="option in departamentos" value="{{option.idDepartamento}}">{{option.nombreDepartamento}}</option>
                     </select>
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.departamentoNacimiento.$error.required">Debe de Seleccionar el Departamento de su nacimiento.</span>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.departamentoNacimiento.$error.required">Debe de Seleccionar el Departamento de su Nacimiento.</span>
                 </div>
                 <div class="col-md-4">
                     <label for="textinput">Municipio</label>
                     <select name="municipioNacimiento" class="form-control" ng-model ="data.municipio_nacimiento" ng-required="true" ng-disabled="activarMunicipios">
                         <option ng-repeat="option in municipios|filter:{idDepartamento:data.departamento_nacimiento}" value="{{option.idMunicipio}}">{{option.nombreMunicipio}}</option>
                     </select>
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.municipioNacimiento.$error.required">Debe de Seleccionar el Municipio de su nacimiento.</span>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.municipioNacimiento.$error.required">Debe de Seleccionar el Municipio de su Nacimiento.</span>
                 </div>  
             </div></br>
             <div class="row">
@@ -81,13 +81,13 @@
                             <input type="radio" name="genero" value="F" ng-model ="data.genero" ng-required="true">
                             Femenino
                         </label> <br>
-                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.genero.$error.required">Debe de Seleccionar su género.</span>
+                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.genero.$error.required">Debe de Seleccionar su Género.</span>
                     </div>    
                 </div>
 
 
             </div></br>
-            <legend></legend>
+            
             <div class="row">
                 <div class="col-md-2">
                     <h4>Domicilio</h4>
@@ -125,23 +125,23 @@
                 <div class="col-md-3">
                     <label for="textinput">Casa</label>
                     <input name="telCasa" type="text" placeholder="ingrese el número de teléfono de casa" class="form-control input-md" ng-model = "data.tel_casa" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telCasa.$error.required">Debe ingresar el numero de telefono de su casa.</span>
-                    <span class="text-danger" ng-show="solicitud.telCasa.$error.minlength">Debe ingresar 8 digitos.</span>
-                    <span class="text-danger" ng-show="solicitud.telCasa.$error.pattern">Solo se permiten numeros. (0-9).</span>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telCasa.$error.required">Debe ingresar el Número de Teléfono de su Casa.</span>
+                    <span class="text-danger" ng-show="solicitud.telCasa.$error.minlength">Debe Ingresar 8 Digitos.</span>
+                    <span class="text-danger" ng-show="solicitud.telCasa.$error.pattern">Solo se Permiten Números. (0-9).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Móvil</label>
                     <input name="telMovil" type="text" placeholder="ingrese el número de teléfono móvil" class="form-control input-md" ng-model = "data.tel_movil" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telMovil.$error.required">Debe ingresar su numero de telefono movil.</span>
-                    <span class="text-danger" ng-show="solicitud.telMovil.$error.minlength">Debe ingresar 8 digitos.</span>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telMovil.$error.required">Debe Ingresar su Núumero de Teléfono Movil.</span>
+                    <span class="text-danger" ng-show="solicitud.telMovil.$error.minlength">Debe Ingresar 8 Digitos.</span>
                     <span class="text-danger" ng-show="solicitud.telMovil.$error.pattern">Solo se permiten numeros. (0-9).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Oficina</label>
                     <input name="telOficina" type="text" placeholder="ingrese el número de teléfono de oficina" class="form-control input-md" ng-model = "data.tel_oficina" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telOficina.$error.required">Debe ingresar el numero de telefono de su oficina.</span>
-                    <span class="text-danger" ng-show="solicitud.telOficina.$error.minlength">Debe ingresar 8 digitos.</span>
-                    <span class="text-danger" ng-show="solicitud.telOficina.$error.pattern">Solo se permiten numeros. (0-9).</span>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telOficina.$error.required">Debe ingresar el Número de Teléfono de su Oficina.</span>
+                    <span class="text-danger" ng-show="solicitud.telOficina.$error.minlength">Debe Ingresar 8 Digitos.</span>
+                    <span class="text-danger" ng-show="solicitud.telOficina.$error.pattern">Solo se Permiten Números. (0-9).</span>
                 </div>
             </div></br>
             <div class="row"></div>
