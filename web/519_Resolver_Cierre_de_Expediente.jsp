@@ -175,7 +175,7 @@ String accion="insertar";*/
                                     <tr>
                                     <td>Solicitante: </td>
                                     <td><%=nombres%> </td>
-                                    <td>Codigo de Empleado: </td>
+                                    <td>Código de Empleado: </td>
                                     <td><%=codigo_usuario%> </td>
                                     </tr>
                                     
@@ -239,7 +239,7 @@ String accion="insertar";*/
                                             <div class="col-md-1"></div>
                                             <div class="col-md-10">
                                                 <fieldset class="custom-border">
-                                                    <legend class="custom-border"> Resolucion</legend>
+                                                    <legend class="custom-border"> Resolución</legend>
                                                     <form  name="resolverCierre" action="ResolverCierreExpediente" method="POST" novalidate>           
                                                         <div class="row text-center">
                                                             <div class="col-md-1"></div>

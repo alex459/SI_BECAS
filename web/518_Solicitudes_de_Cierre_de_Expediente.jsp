@@ -106,26 +106,26 @@
                                                     <div class="row">
                                             
                                                         <div class="col-md-3">                                                                                    
-                                                            <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                            <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="Primer Nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.NOMBRE1.$error.minlength">Mínimo 3 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.NOMBRE1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
 
                                                         </div>
                                             
                                                         <div class="col-md-3">    
-                                                            <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                            <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="Segundo Nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.NOMBRE2.$error.minlength">Mínimo 3 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.NOMBRE2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                                         </div> 
                                                         <div class="col-md-3">
-                                                            <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                            <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="Primer Apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.APELLIDO1.$error.minlength">Mínimo 3 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.APELLIDO1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                                         </div> 
                                                         <div class="col-md-3">
-                                                            <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
-                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
-                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                            <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="Segundo Apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.APELLIDO2.$error.minlength">Mínimo 3 caracteres.</span>
+                                                            <span class="text-danger" ng-show="solicitudCierreExpedientePendiente.APELLIDO2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                                         </div>
 
                                                     </div> 
@@ -143,7 +143,7 @@
                                                 <div class="col-md-6">   
                                                     <label for="textinput">Tipo de Documento :</label>  
                                                          <select id="selectbasic" name="ID_TIPO_DOCUMENTO" class="form-control">
-                                                                <option value="0">CONSULTAR TIPO DOCUMENTO</option> 
+                                                                <option value="0">Consultar Tipo Documento</option> 
                                                                 
                                                                 <%
                                                                     TipoDocumentoDAO tipoDocumentoDao = new TipoDocumentoDAO();
@@ -160,9 +160,9 @@
                                             <br>
                                             <div class="row">
                                                 <div class="col-md-6">  
-                                                    <label for="textinput">ESTADO EXPEDIENTE: </label>
+                                                    <label for="textinput">Estado Expediente: </label>
                                                         <select id="selectbasic" name="ESTADO" class="form-control">
-                                                            <option value="">SELECCIONE ESTADO DEL EXPEDIENTE</option>    
+                                                            <option value="">Seleccione Estado Del Expediente</option>    
                                                             <option value="DENEGADO">DENEGADO</option>
                                                             <option value="FINALIZADO">FINALIZADO</option>
                                                         </select>
@@ -252,7 +252,7 @@
                     <div class="row">
                         <h5>Resultados</h5>
                         <div class="col-md-12">
-                            <table class="table text-center">
+                            <table  id="tablaResultados" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -325,5 +325,41 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/solicitudCierreExpediente.js"></script>
+    
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+   $(document).ready(function() {
+    $('#tablaResultados').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+            }
+                );
+        } );
+    </script>
     </body>
 </html>
