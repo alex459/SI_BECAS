@@ -2,12 +2,12 @@
                 <div class="col-md-2">
                 <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
                     <li><a href="#/">Datos personales</a></li>
-                    <li  class="active"><a href="#/laboral">Información laboral</a></li>
+                    <li  class="active"><a href="#/laboral">Información Laboral</a></li>
                     <li><a href="#/educacion">Educación</a></li>
-                    <li><a href="#/cargos">Cargos desempeñados</a></li>
-                    <li><a href="#/oferta">Información de beca</a></li>
-                    <li><a href="#/referencias">Referencias personales</a></li>
-                    <li><a href="#/documentos">Adjuntar documentos</a></li>
+                    <li><a href="#/cargos">Cargos Desempeñados</a></li>
+                    <li><a href="#/oferta">Información de Beca</a></li>
+                    <li><a href="#/referencias">Referencias Personales</a></li>
+                    <li><a href="#/documentos">Adjuntar Documentos</a></li>
                 </ul>
             </div>  
             <div class="col-md-10">
@@ -19,28 +19,28 @@
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-4">
                                     <label for="textinput">Profesión</label>
-                                    <input name="profesion" type="text" placeholder="ingrese el nombre de su profesión" class="form-control input-md" ng-model="data.profesion" ng-required="true" minlength="10" maxlength="70" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
-                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.profesion.$error.required">Ingrese su profesión.</span>
-                                    <span class="text-danger" ng-show="solicitud.profesion.$error.minlength">Mínimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.profesion.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                                    <input name="profesion" type="text" placeholder="Ingrese el Nombre de su Profesión" class="form-control input-md" ng-model="data.profesion" ng-required="true" minlength="10" maxlength="70" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.profesion.$error.required">Ingrese su Profesión.</span>
+                                    <span class="text-danger" ng-show="solicitud.profesion.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.profesion.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                 </div> 
                             </div></br>
                              <div class="row">
                                 <div class="col-md-4 col-md-offset-4">
                                     <label for="textinput">Cargo actual</label>
-                                    <input name="cargo" type="text" placeholder="ingrese el nombre de su cargo actual" class="form-control input-md" ng-model="data.cargo" ng-required="true" minlength="10" maxlength="80" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
-                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.cargo.$error.required">Ingrese su cargo actual.</span>
-                                    <span class="text-danger" ng-show="solicitud.cargo.$error.minlength">Mínimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.cargo.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                                    <input name="cargo" type="text" placeholder="Ingrese el Nombre de su Cargo Actual" class="form-control input-md" ng-model="data.cargo" ng-required="true" minlength="10" maxlength="80" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.cargo.$error.required">Ingrese su Cargo Actual.</span>
+                                    <span class="text-danger" ng-show="solicitud.cargo.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.cargo.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                 </div> 
                             </div></br>
                              <div class="row">
                                 <div class="col-md-4 col-md-offset-4">
                                     <label for="textinput">Departamento (Unidad)</label>
-                                    <input name="unidad" type="text" placeholder="ingrese el nombre de su departamento" class="form-control input-md" ng-model="data.unidad" ng-required="true" minlength="10" maxlength="120" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
-                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.unidad.$error.required">Ingrese la unidad o departamento en el que labora.</span>
-                                    <span class="text-danger" ng-show="solicitud.unidad.$error.minlength">Mínimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.unidad.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                                    <input name="unidad" type="text" placeholder="Ingrese el Nombre de su Departamento" class="form-control input-md" ng-model="data.unidad" ng-required="true" minlength="10" maxlength="120" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.unidad.$error.required">Ingrese la Unidad o Departamento en el que Labora.</span>
+                                    <span class="text-danger" ng-show="solicitud.unidad.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.unidad.$error.pattern">Solo se Cermiten Letras Mayúsculas. (A-Z).</span>
                                 </div> 
                             </div></br>
                              <div class="row">

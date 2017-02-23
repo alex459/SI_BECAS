@@ -19,27 +19,27 @@
             <div class="row">
                 <div class="col-md-3">
                     <label for="textinput">Primer Nombre</label>
-                    <input id="nombre1" name="nombre1" placeholder="ingrese su primer nombre" class="form-control input-md" ng-model = "data.nombre" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                    <input id="nombre1" name="nombre1" placeholder="Ingrese su Primer Nombre" class="form-control input-md" ng-model = "data.nombre" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1.$error.required">El Primer Nombre es Requerido.</span>
                     <span class="text-danger" ng-show="solicitud.nombre1.$error.minlength">Mínimo 3 Caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.nombre1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Segundo Nombre</label>
-                    <input id="textinput" name="nombre2"  placeholder="ingrese su segundo nombre" class="form-control input-md" ng-model = "data.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                    <input id="textinput" name="nombre2"  placeholder="Ingrese su Segundo Nombre" class="form-control input-md" ng-model = "data.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
                     <span class="text-danger" ng-show="solicitud.nombre2.$error.minlength">Mínimo 3 Caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.nombre2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Primer Apellido</label>
-                    <input name="apellido1" type="text" placeholder="ingrese su primer apellido" class="form-control input-md" ng-model ="data.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                    <input name="apellido1" type="text" placeholder="Ingrese su Primer Apellido" class="form-control input-md" ng-model ="data.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1.$error.required">El Primer Apellido es Requerido.</span>
                     <span class="text-danger" ng-show="solicitud.apellido1.$error.minlength">Mínimo 3 Caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.apellido1.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Segundo Apellido</label>
-                    <input name="apellido2" type="text" placeholder="ingrese su segundo apellido" class="form-control input-md" ng-model ="data.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                    <input name="apellido2" type="text" placeholder="Ingrese su Segundo Apellido" class="form-control input-md" ng-model ="data.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
                     <span class="text-danger" ng-show="solicitud.apellido2.$error.minlength">Mínimo 3 Caracteres.</span>
                     <span class="text-danger" ng-show="solicitud.apellido2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                 </div>  
@@ -124,22 +124,22 @@
             <div class="row">
                 <div class="col-md-3">
                     <label for="textinput">Casa</label>
-                    <input name="telCasa" type="text" placeholder="ingrese el número de teléfono de casa" class="form-control input-md" ng-model = "data.tel_casa" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <input name="telCasa" type="text" placeholder="Ingrese el Número de Teléfono de Casa" class="form-control input-md" ng-model = "data.tel_casa" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telCasa.$error.required">Debe ingresar el Número de Teléfono de su Casa.</span>
                     <span class="text-danger" ng-show="solicitud.telCasa.$error.minlength">Debe Ingresar 8 Digitos.</span>
                     <span class="text-danger" ng-show="solicitud.telCasa.$error.pattern">Solo se Permiten Números. (0-9).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Móvil</label>
-                    <input name="telMovil" type="text" placeholder="ingrese el número de teléfono móvil" class="form-control input-md" ng-model = "data.tel_movil" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <input name="telMovil" type="text" placeholder="Ingrese el Número de Teléfono Móvil" class="form-control input-md" ng-model = "data.tel_movil" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telMovil.$error.required">Debe Ingresar su Núumero de Teléfono Movil.</span>
                     <span class="text-danger" ng-show="solicitud.telMovil.$error.minlength">Debe Ingresar 8 Digitos.</span>
-                    <span class="text-danger" ng-show="solicitud.telMovil.$error.pattern">Solo se permiten numeros. (0-9).</span>
+                    <span class="text-danger" ng-show="solicitud.telMovil.$error.pattern">Solo se Permiten Números. (0-9).</span>
                 </div>
                 <div class="col-md-3">
                     <label for="textinput">Oficina</label>
-                    <input name="telOficina" type="text" placeholder="ingrese el número de teléfono de oficina" class="form-control input-md" ng-model = "data.tel_oficina" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
-                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telOficina.$error.required">Debe ingresar el Número de Teléfono de su Oficina.</span>
+                    <input name="telOficina" type="text" placeholder="Ingrese el Número de Teléfono de Oficina" class="form-control input-md" ng-model = "data.tel_oficina" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telOficina.$error.required">Debe Ingresar el Número de Teléfono de su Oficina.</span>
                     <span class="text-danger" ng-show="solicitud.telOficina.$error.minlength">Debe Ingresar 8 Digitos.</span>
                     <span class="text-danger" ng-show="solicitud.telOficina.$error.pattern">Solo se Permiten Números. (0-9).</span>
                 </div>

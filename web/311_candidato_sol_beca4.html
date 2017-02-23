@@ -1,28 +1,28 @@
 <div>
     <div class="col-md-2">
         <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
-            <li><a href="#/">Datos personales</a></li>
-            <li><a href="#/laboral">Información laboral</a></li>
+            <li><a href="#/">Datos Personales</a></li>
+            <li><a href="#/laboral">Información Laboral</a></li>
             <li><a href="#/educacion">Educación</a></li>
-            <li class="active"><a href="#/cargos">Cargos desempeñados</a></li>
-            <li><a href="#/oferta">Información de beca</a></li>
-            <li><a href="#/referencias">Referencias personales</a></li>
-            <li><a href="#/documentos">Adjuntar documentos</a></li>
+            <li class="active"><a href="#/cargos">Cargos Desempeñados</a></li>
+            <li><a href="#/oferta">Información de Beca</a></li>
+            <li><a href="#/referencias">Referencias Personales</a></li>
+            <li><a href="#/documentos">Adjuntar Documentos</a></li>
         </ul>
     </div>  
     <div class="col-md-10">
         <fieldset class="custom-border">
-            <legend class="custom-border">Cargos desempeñados</legend>
+            <legend class="custom-border">Cargos Desempeñados</legend>
 
             <div class="row">
                 <div class="col-md-12">
-                    <label>Asociaciones Profecionales a las que pertenece</label>
+                    <label>Asociaciones Profecionales a las que Pertenece</label>
                     <table class="table table-bordered">
 
                         <thead>
                             <tr class="success">
                                 <th>No</th>
-                                <th>Asociación profesional</th>
+                                <th>Asociación Profesional</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -30,10 +30,10 @@
                             <tr ng-repeat="x in data.asociaciones">
                                 <td>{{$index + 1}}</td>
                                 <td>
-                                    <input name="{{x.asociacion}}" type="text" placeholder="Ingrese el nombre de la Asociación Profecional a la que pertenece" class="form-control input-md" ng-model="aux.auxAsociacion[$index]" ng-required="!checkAsociacion" ng-disabled="checkAsociacion" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
-                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.asociacion}}.$error.required">Ingrese el nombre de la Asociación.</span>
-                                    <span class="text-danger" ng-show="solicitud.{{x.asociacion}}.$error.minlength">Mínimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.{{x.asociacion}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                                    <input name="{{x.asociacion}}" type="text" placeholder="Ingrese el Nombre de la Asociación Profecional a la que Pertenece" class="form-control input-md" ng-model="aux.auxAsociacion[$index]" ng-required="!checkAsociacion" ng-disabled="checkAsociacion" minlength="10" maxlength="100" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.asociacion}}.$error.required">Ingrese el Nombre de la Asociación.</span>
+                                    <span class="text-danger" ng-show="solicitud.{{x.asociacion}}.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.{{x.asociacion}}.$error.pattern">Solo se Permiten letras Mayúsculas. (A-Z).</span>
                                 </td>
                                 <td>
                                     <input type="checkBox" ng-show="$first && $last" ng-model="checkAsociacion" ng-click="cambiarcheckAsociacion()"> <label ng-show="$first && $last">Ninguno</label>
@@ -54,7 +54,7 @@
                         <thead>
                             <tr class="success">
                                 <th>No</th>
-                                <th>Lugar y Título del cargo</th>
+                                <th>Lugar y Título del Cargo</th>
                                 <th>Periodo</th>
                                 <th>Responsabilidades</th>
                                 <th>Acción</th>
@@ -65,15 +65,15 @@
                                 <td> {{$index + 1}}</td>
                                 <td>
                                     <label>Lugar del Cargo:</label>
-                                    <input  name="{{x.lugar}}" type="text" placeholder="Ingrese el nombre del lugar en el cual tuvo el cargo" class="form-control input-md" ng-model="aux.auxLugar[$index]" ng-required="true" minlength="10" maxlength="125" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <input  name="{{x.lugar}}" type="text" placeholder="Ingrese el Nombre del Lugar en el Cual Tuvo el Cargo" class="form-control input-md" ng-model="aux.auxLugar[$index]" ng-required="true" minlength="10" maxlength="125" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
                                     <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.lugar}}.$error.required">Ingrese el Lugar.</span>
-                                    <span class="text-danger" ng-show="solicitud.{{x.lugar}}.$error.minlength">Mínimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.{{x.lugar}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                                    <span class="text-danger" ng-show="solicitud.{{x.lugar}}.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.{{x.lugar}}.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                     <br><label>Título del Cargo:</label>
-                                    <input  name="{{x.cargo}}" type="text" placeholder="Ingrese el nombre del cargo" class="form-control input-md" ng-model="aux.auxCargo[$index]" ng-required="true" minlength="10" maxlength="80" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
-                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.cargo}}.$error.required">Ingrese el nombre del cargo.</span>
-                                    <span class="text-danger" ng-show="solicitud.{{x.cargo}}.$error.minlength">Mínimo 10 caracteres.</span>
-                                    <span class="text-danger" ng-show="solicitud.{{x.cargo}}.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                                    <input  name="{{x.cargo}}" type="text" placeholder="Ingrese el Nombre del Cargo" class="form-control input-md" ng-model="aux.auxCargo[$index]" ng-required="true" minlength="10" maxlength="80" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.cargo}}.$error.required">Ingrese el Nombre del Cargo.</span>
+                                    <span class="text-danger" ng-show="solicitud.{{x.cargo}}.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.{{x.cargo}}.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                 </td>
                                 <td>
                                     <label>Fecha de Inicio:</label>
