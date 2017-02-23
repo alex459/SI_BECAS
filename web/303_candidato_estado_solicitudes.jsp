@@ -97,7 +97,7 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
                     <fieldset class="custom-border">
-                        <legend class="custom-border">Solicitudes realizadas</legend>
+                        <legend class="custom-border">Solicitudes Realizadas</legend>
 
                         <div class="col-md-12">
                             <table class="table table-bordered">

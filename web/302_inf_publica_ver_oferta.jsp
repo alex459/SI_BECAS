@@ -184,17 +184,17 @@
 
     <div class="container-fluid">
         <fieldset class="custom-border">
-            <legend class="custom-border">Detalle de oferta de beca</legend>
+            <legend class="custom-border">Detalle de oferta de Beca</legend>
             <div class="row">
                 <div class="col-md-12">
                     <div class="container">
-                        <h3 class="text-center" style="color:#E42217;">Información de la beca</h3>
+                        <h3 class="text-center" style="color:#E42217;">Información de la Beca</h3>
                         <div class="bootstrap-iso">
                             <form class="form-horizontal">
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labeltitulo" value="Título del proyecto:" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labeltitulo" value="Título del Proyecto:" disabled style="font-weight: bold; background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="titulo" value="<%=nombreOferta %>" disabled>    
@@ -205,7 +205,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelinstofer" value="Institución ofertante:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelinstofer" value="Institución Ofertante:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="instOferente" value="<%=nombreInstOfer %>" disabled>    
@@ -216,7 +216,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelinstestu" value="Institución de estudio:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelinstestu" value="Institución de Estudio:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" id="instEstudio" value="<%=nombreInstEst %>" disabled>    
@@ -233,7 +233,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelTipoBeca" value="Tipo de beca:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelTipoBeca" value="Tipo de Beca:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" id="tipoBeca" value="<%=tipoOferta %>" disabled>    
@@ -256,7 +256,7 @@
                                             <input type="text" class="form-control" id="duracion" value='<%=duracion+" meses"%>' disabled>    
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelFechainicio" value="Fecha de inicio:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelFechainicio" value="Fecha de Inicio:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" id="fechaInicio" value="<%=df.format(temp.getFechaInicio()) %>" disabled>    
@@ -284,7 +284,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelPerfil" value="Requisitos participantes:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelPerfil" value="Requisitos Participantes:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="perfil" value="<%=perfil %>" disabled>    
@@ -295,7 +295,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelpagina" value="Página web:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelpagina" value="Página Web:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="pagina" value="<%=pagina %>" disabled>    
@@ -306,7 +306,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelemail" value="Correo electrónico:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelemail" value="Correo Electrónico:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="correo" value="<%=email %>" disabled>    
@@ -317,7 +317,7 @@
                                 <div class="row no-gutter">
                                     <div class="col-md-12">                                       
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" id="labelCierre" value="Cierre convocatoria:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
+                                            <input type="text" class="form-control" id="labelCierre" value="Cierre Convocatoria:" disabled style="font-weight: bold;background-color:#728FCE; color:white">    
                                         </div>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="cierre" value="<%=df.format(temp.getFechaCierre()) %>" disabled>    

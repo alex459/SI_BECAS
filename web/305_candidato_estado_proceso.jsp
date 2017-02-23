@@ -112,7 +112,7 @@
         <div class="row">            
             
             <div class="col-md-6">
-                <h3>Procesos y estados</h3>
+                <h3>Procesos y Estados</h3>
                 <div class = "panel panel-default">
                    <table class="table table-bordered">
                     <thead>
@@ -387,7 +387,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color:#728FCE; color:white">Acuerdos de beca del Consejo Superior Universitario</td>
+                            <td style="background-color:#728FCE; color:white">Acuerdos de Beca del Consejo Superior Universitario</td>
                             <%
                              if(expediente.getIdProgreso()<7)
                                  out.write("<td style='background-color:#E5E4E2; color:black;'>Pendiente</td>");
