@@ -95,7 +95,7 @@
         <div class="container-fluid" >
             <div class="row"><!-- TITULO DE LA PANTALLA -->
                 <h2>
-                    <p class="text-center" style="color:#cf2a27">Solicitudes de Acuerdos Pendientes</p>
+                    <p class="text-center" style="color:#cf2a27">Solicitudes de Dictámenes Pendientes</p>
                 </h2>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
@@ -105,7 +105,7 @@
                 
                 
                 <fieldset class="custom-border">
-                    <legend class="custom-border">Solicitudes de Acuerdos Pendientes</legend>
+                    <legend class="custom-border">Solicitudes de Dictámenes Pendientes</legend>
                     <form name="solicitudAcuerdosPendientesComisionBecas" class="form-horizontal" action="407_Comision_Becas_Solicitud_Acuerdos_Pendientes.jsp" method="post" novalidate>
     
                     <div class="row">      <!-- FILTROS -->
@@ -126,26 +126,26 @@
                                             <div class="row">
                                             
                                             <div class="col-md-3">                                                                                    
-                                                <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="Primer nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.NOMBRE1.$error.minlength">Minimo 3 caracteres.</span>
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.NOMBRE1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                <input id="NOMBRE1" name="NOMBRE1" type="text" placeholder="Primer Nombre" class="form-control input-md" ng-model="datos.nombre1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.NOMBRE1.$error.minlength">Mínimo 3 Caracteres.</span>
+                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.NOMBRE1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                     
                                             </div>
                                             
                                             <div class="col-md-3">    
-                                                <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="Segundo nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.NOMBRE2.$error.minlength">Minimo 3 caracteres.</span>
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.NOMBRE2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                <input id="NOMBRE2" name="NOMBRE2" type="text" placeholder="Segundo Nombre" class="form-control input-md" ng-model="datos.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.NOMBRE2.$error.minlength">Mínimo 3 Caracteres.</span>
+                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.NOMBRE2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                             </div> 
                                             <div class="col-md-3">
-                                                <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="Primer apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.APELLIDO1.$error.minlength">Minimo 3 caracteres.</span>
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.APELLIDO1.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                <input id="APELLIDO1" name="APELLIDO1" type="text" placeholder="Primer Apellido" class="form-control input-md" ng-model="datos.apellido1" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">                                            
+                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.APELLIDO1.$error.minlength">Mínimo 3 Caracteres.</span>
+                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.APELLIDO1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                             </div> 
                                             <div class="col-md-3">
-                                                <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="Segundo apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.APELLIDO2.$error.minlength">Minimo 3 caracteres.</span>
-                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.APELLIDO2.$error.pattern">Solo se permiten letras mayusculas. (A-Z).</span>
+                                                <input id="APELLIDO2" name="APELLIDO2" type="text" placeholder="Segundo Apellido" class="form-control input-md" ng-model="datos.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="15" minlength="3">
+                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.APELLIDO2.$error.minlength">Mínimo 3 Caracteres.</span>
+                                                <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.APELLIDO2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
                                             </div>
 
                                             </div> 
@@ -158,9 +158,9 @@
                                        <div class="row">
                                        <div class="col-md-6">   
                                             <label for="textinput">Código de Usuario: </label>  
-                                            <input id="CARNET" name="CARNET" type="text" placeholder="Ingrese el usuario a buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
-                                            <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.CARNET.$error.minlength">Minimo 7 caracteres.</span>
-                                            <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.CARNET.$error.pattern">Solo se permiten letras mayusculas y numeros. (A-Z, 0-9).</span>
+                                            <input id="CARNET" name="CARNET" type="text" placeholder="Ingrese el Usuario a Buscar" class="form-control input-md" ng-model="datos.codigo" ng-pattern="/^[A-Z0-9]*$/" minlength="7" maxlength="7">
+                                            <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.CARNET.$error.minlength">Mínimo 7 Caracteres.</span>
+                                            <span class="text-danger" ng-show="solicitudAcuerdosPendientesComisionBecas.CARNET.$error.pattern">Solo se Permiten Letras Mayúsculas y Números. (A-Z, 0-9).</span>
                                             <small id="help5"></small>
                                         </div>
                                         <div class="col-md-6 ">

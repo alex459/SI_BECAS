@@ -245,7 +245,7 @@
                                                 </div>
                                                 <div class="col-md-8" ng-show="requerido">
                                                     <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" valid-file ng-required="requerido">
-                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.doc_digital.$invalid && requerido">Debe ingresar un documento en formato PDF.</span>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.doc_digital.$invalid && requerido">Debe Ingresar un Documento en Formato PDF.</span>
 
                                                 </div>
                                             </div>
@@ -255,7 +255,7 @@
                                                 </div>
                                                 <div class="col-md-7">
                                                     <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la observación del documento</span><br>
+                                                    <span class="text-danger" ng-show="resolverSolComisionBecas.observacion.$error.required">Ingrese la Observación del Documento</span><br>
                                                 </div>
                                                 <div class="col-md-1"></div>
                                             </div>
@@ -302,7 +302,7 @@
                                                 <div class="col-md-2"></div>                                                                                                 
                                             </div>
                                             <div class="row text-center">
-                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un tipo de corrección.</span>
+                                                <span class="text-danger" ng-show="!resolverSolComisionBecas.$pristine && resolverSolComisionBecas.tipoCorreccion.$error.required">Debe Seleccionar un Tipo de Corrección.</span>
                                             </div> 
                                             <%}%>
                                             <div class="row text-center">

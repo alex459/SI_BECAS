@@ -156,10 +156,10 @@
                         out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Comision de Becas</center></b></a></li>");
                     }
                     if (t == id_comision || t == id_colaborador_consejo || t == id_director_consejo || t == id_admin) {
-                        out.write("<li><a style='background-color: #cf2a27; color:white' href='407_Comision_Becas_Solicitud_Acuerdos_Pendientes.jsp'>Solicitudes de Dictamenes Pendientes</a></li>");
+                        out.write("<li><a style='background-color: #cf2a27; color:white' href='407_Comision_Becas_Solicitud_Acuerdos_Pendientes.jsp'>Solicitudes de Dictámenes Pendientes</a></li>");
                     }
                     if (t == id_comision || t == id_colaborador_consejo || t == id_director_consejo || t == id_admin) {
-                        out.write("<li><a style='background-color: #cf2a27; color:white' href='409_Comision_Becas_Buscar_Acuerdo.jsp'>Buscar Dictamenes Emitidos</a></li>");
+                        out.write("<li><a style='background-color: #cf2a27; color:white' href='409_Comision_Becas_Buscar_Acuerdo.jsp'>Buscar Dictámenes Emitidos</a></li>");
                     }
                     if (t == id_junta || t == id_colaborador_consejo || t == id_director_consejo || t == id_admin) {
                         out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Junta Directiva</center></b></a></li>");
