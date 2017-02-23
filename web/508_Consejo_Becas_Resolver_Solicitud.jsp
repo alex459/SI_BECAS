@@ -305,7 +305,7 @@
                                         <tr>
                                             <th>Fecha Fin de Beca</th>
                                             <th>Fecha Fin Prorroga</th>
-                                            <th>Institucion</th>
+                                            <th>Institución</th>
                                             <th>Titulo a Obtener</th>                                                    
                                         </tr>
                                     </thead>
