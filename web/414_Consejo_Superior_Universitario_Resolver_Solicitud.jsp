@@ -302,7 +302,7 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
                                     <fieldset class="custom-border">
-                                        <legend class="custom-border"> Resolucion</legend>
+                                        <legend class="custom-border"> Resolución</legend>
                                         <%if (accion.equals("insertar")) {%>
                                         <form  name="resolverSolConsejoSuperiorUniversitario" action="ResolverAcuerdoCSU" method="POST" enctype="multipart/form-data" novalidate>           
 
@@ -318,7 +318,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label>Observacion:</label>
+                                                    <label>Observación:</label>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
@@ -422,7 +422,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label>Observacion:</label>
+                                                    <label>Observación:</label>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
