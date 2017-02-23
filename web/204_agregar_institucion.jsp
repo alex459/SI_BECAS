@@ -96,13 +96,13 @@
                             <div class="row">
 
                                 <div class="col-md-4 text-right">
-                                    <label for="textinput">Nombre de la institución : </label>
+                                    <label for="textinput">Nombre de la Institución : </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input id="text_NomInstitucion" name="text_NomInstitucion" type="text"  placeholder="ingrese el nombre de institucion" class="form-control input-md" ng-model="datos.nombreInst" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
-                                    <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.text_NomInstitucion.$error.required">El nombre de la Institucion es requerido.</span>
-                                    <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                    <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.pattern">Solo se permiten letras mayusculas (A-Z) .</span>
+                                    <input id="text_NomInstitucion" name="text_NomInstitucion" type="text"  placeholder="Ingrese el Nombre de Institucion" class="form-control input-md" ng-model="datos.nombreInst" ng-required="true" ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
+                                    <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.text_NomInstitucion.$error.required">El nombre de la Institución es Requerido.</span>
+                                    <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.minlength">Mínimo 3 Caracteres</span>
+                                    <span class="text-danger" ng-show="agregarInst.text_NomInstitucion.$error.pattern">Solo se Permiten Letras Mayúsculas (A-Z) .</span>
                                 </div>
                             </div>
                             <br>
@@ -112,7 +112,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <select id="tex_paisInstitucion" name="tex_paisInstitucion" class="form-control" ng-model="datos.pais" ng-required="true">
-                                    <%
+                                        
+                                        <%
                                         PaisDAO paisDao = new PaisDAO();
                                         ArrayList<Pais> listaPais = new ArrayList<Pais>();
                                         listaPais = paisDao.consultarTodos();
@@ -121,32 +122,32 @@
                                         }
                                     %>    
                                 </select>
-                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_paisInstitucion.$error.required">El País es requerido.</span>
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_paisInstitucion.$error.required">El País es Requerido.</span>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Página web : </label>
+                                <label for="textinput">Página Web : </label>
                             </div>
                             <div class="col-md-6">
                                 <input id="tex_webInstitucion" name="tex_webInstitucion" type="url" placeholder="ingrese la url"  class="form-control input-md" ng-model="datos.url" ng-required="true"  minlength="3" maxlength="100" >
-                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_webInstitucion.$error.required">El nombre de la ULR es requerido.</span>
-                                <span class="text-danger" ng-show="agregarInst.tex_webInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                <span class="text-danger" ng-show="agregarInst.tex_webInstitucion.$error.url">Solo se permiten formato url: http://ejemplo.com</span> 
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_webInstitucion.$error.required">El Nombre de la ULR es Requerido.</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_webInstitucion.$error.minlength">Mínimo 3 Caracteres</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_webInstitucion.$error.url">Solo se Permiten Formato Url: http://ejemplo.com</span> 
                                 <small id="help3"></small>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Correo electrónico : </label>
+                                <label for="textinput">Correo Electrónico : </label>
                             </div>
                             <div class="col-md-6">
-                                <input id="tex_correoInstitucion" name="tex_correoInstitucion" type="email"  placeholder="ingrese el correo electronico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
-                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_correoInstitucion.$error.required">El correo electronico requerido.</span>
-                                <span class="text-danger" ng-show="agregarInst.tex_correoInstitucion.$error.minlength">Minimo 3 caracteres</span>
-                                <span class="text-danger" ng-show="agregarInst.tex_correoInstitucion.$error.email">Solo permite formato: ejemplo institucion@ejemplo.com).</span>
+                                <input id="tex_correoInstitucion" name="tex_correoInstitucion" type="email"  placeholder="Ingrese el Correo Electrónico" class="form-control input-md"  ng-model="datos.correo" ng-required="true"  minlength="3" maxlength="30" >
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.tex_correoInstitucion.$error.required">El Correo Electrónico es Requerido.</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_correoInstitucion.$error.minlength">Mínimo 3 Caracteres</span>
+                                <span class="text-danger" ng-show="agregarInst.tex_correoInstitucion.$error.email">Solo Permite Formato: Ejemplo institucion@ejemplo.com).</span>
                                 <small id="help4"></small>
                             </div>
                         </div>
@@ -155,16 +156,16 @@
 
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <label for="textinput">Tipo de institución : </label>
+                                <label for="textinput">Tipo de Institución : </label>
                             </div>
                             <div class="col-md-6">
                                 <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control" ng-model="datos.tipoInst" ng-required="true"> 
-                                    <option value="">Seleccione tipo de institucion</option>
+                                    <option value="">Seleccione Tipo de Institución</option>
                                     <option value="OFERTANTE">OFERTANTE</option>
                                     <option value="ESTUDIO">ESTUDIO</option>
                                     <option value="OFERTANTE Y ESTUDIO">OFERTANTE Y ESTUDIO</option>
                                 </select>
-                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.select_tipoInstitucion.$error.required">La Tipo es requerida.</span>
+                                <span class="text-danger" ng-show="!agregarInst.$pristine && agregarInst.select_tipoInstitucion.$error.required">La Tipo es Requerida.</span>
 
                             </div>
                         </div>
