@@ -405,7 +405,8 @@
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
             todayHighlight: true,
-            autoclose: true
+            autoclose: true,
+            endDate: '-0y'
         }).on('change.dp', function (e) {
             $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
         });
@@ -413,7 +414,8 @@
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
             todayHighlight: true,
-            autoclose: true
+            autoclose: true,
+            endDate: '-0y'
         }).on('change.dp', function (e) {
             $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
         });
