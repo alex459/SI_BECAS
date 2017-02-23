@@ -143,7 +143,7 @@ String accion="insertar";
                                     <tr>
                                     <td>Solicitante: </td>
                                     <td><%=nombres%> </td>
-                                    <td>Codigo de Empleado: </td>
+                                    <td>Código de Empleado: </td>
                                     <td><%=codigo_usuario%> </td>
                                     </tr>
                                     
@@ -212,7 +212,7 @@ String accion="insertar";
                                             <div class="col-md-1"></div>
                                             <div class="col-md-10">
                                                 <fieldset class="custom-border">
-                                                    <legend class="custom-border"> Resolucion</legend>
+                                                    <legend class="custom-border"> Resolución</legend>
                                                     <form  name="resolverSolFiscaliaAsesoriaContrato" action="ResolverReintegroFiscalia" method="POST" enctype="multipart/form-data" novalidate>           
                                                         
                                                        <div class="row" >
@@ -227,7 +227,7 @@ String accion="insertar";
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <label>Observacion:</label>
+                                                                <label>Observación:</label>
                                                             </div>
                                                             <div class="col-md-7">
                                                                 <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>

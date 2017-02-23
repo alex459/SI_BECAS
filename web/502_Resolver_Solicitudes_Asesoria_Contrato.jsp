@@ -153,7 +153,7 @@ String accion="insertar";
                                     <tr>
                                     <td>Solicitante: </td>
                                     <td><%=nombres%> </td>
-                                    <td>Codigo de Empleado: </td>
+                                    <td>Código de Empleado: </td>
                                     <td><%=codigo_usuario%> </td>
                                     </tr>
                                     
@@ -231,7 +231,7 @@ String accion="insertar";
                                                             </div>
                                                             <div class="col-md-8" ng-show="requerido">
                                                                 <input type="file" name="doc_digital" accept="application/pdf" ng-model="acuerdo" valid-file ng-required="requerido">
-                                                                <span class="text-danger" ng-show="resolverSolFiscaliaAsesoriaContrato.doc_digital.$invalid&&requerido">Debe ingresar un documento en formato PDF.</span>
+                                                                <span class="text-danger" ng-show="resolverSolFiscaliaAsesoriaContrato.doc_digital.$invalid&&requerido">Debe Ingresar un Documento en Formato PDF.</span>
 
                                                             </div>
                                                         </div>
@@ -241,7 +241,7 @@ String accion="insertar";
                                                             </div>
                                                             <div class="col-md-7">
                                                                 <textarea class="form-control" name="observacion" ng-model="observacion" maxlength="1024" ng-required="obsReq"></textarea>
-                                                                <span class="text-danger" ng-show="resolverSolFiscaliaAsesoriaContrato.observacion.$error.required">Ingrese la observacion del documento</span><br>
+                                                                <span class="text-danger" ng-show="resolverSolFiscaliaAsesoriaContrato.observacion.$error.required">Ingrese la Observacion del Documento</span><br>
                                                             </div>
                                                             <div class="col-md-1"></div>
                                                         </div>
