@@ -124,7 +124,7 @@
                         <table id="tablaUsuarios" class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th><th>Observaciones</th><th>Accion</th>
+                                            <th>No.</th><th>Tipo de Documento</th><th>Documento Digital</th><th>Observaciones</th><th>Acción</th>
                                         </tr>   
                                     </thead>
                                     <%int i =0;%>

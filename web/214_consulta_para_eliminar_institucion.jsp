@@ -100,16 +100,16 @@
                         <legend class="custom-border">Paso 1: Busque la institución que desea eliminar.</legend>
                         <div class="col-md-6 col-md-offset-3">
                             <fieldset class="custom-border">
-                                <legend class="custom-border">filtros:</legend>
+                                <legend class="custom-border">Filtros:</legend>
                                 <div class="row">
                                     <div class="col-md-4 text-right">
-                                        <label for="textinput">Nombre de la institución : </label>
+                                        <label for="textinput">Nombre de la Institución : </label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input id="text_NomInstitucion" name="text_NomInstitucion" type="text" placeholder="ingrese el nombre de instirucion" class="form-control input-md" ng-model="datos.nombreInst"  ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
+                                        <input id="text_NomInstitucion" name="text_NomInstitucion" type="text" placeholder="Ingrese el Nombre de Instirucion" class="form-control input-md" ng-model="datos.nombreInst"  ng-pattern="/^[A-ZÁÉÍÓÚÑ ]*$/" minlength="3" maxlength="100" >
 
-                                        <span class="text-danger" ng-show="consultaParaModificarInstitucion.text_NomInstitucion.$error.minlength">Minimo 3 letras</span>
-                                        <span class="text-danger" ng-show="consultaParaModificarInstitucion.text_NomInstitucion.$error.pattern">Solo se permiten letras mayusculas (A-Z).</span>
+                                        <span class="text-danger" ng-show="consultaParaModificarInstitucion.text_NomInstitucion.$error.minlength">Mínimo 3 Letras</span>
+                                        <span class="text-danger" ng-show="consultaParaModificarInstitucion.text_NomInstitucion.$error.pattern">Solo se Permiten Letras Mayúsculas (A-Z).</span>
                                     </div>
                                 </div>
                                 <br>
@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select id="tex_paisInstitucion" name="tex_paisInstitucion" class="form-control">
-                                            <option value="%%">TODOS</option>
+                                            <option value="%%">Todos</option>
                                         <%
                                             PaisDAO paisDao = new PaisDAO();
                                             ArrayList<Pais> listaPais = new ArrayList<Pais>();
@@ -134,11 +134,11 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-4 text-right">
-                                    <label for="textinput">Tipo de institución : </label>
+                                    <label for="textinput">Tipo de Institución : </label>
                                 </div>
                                 <div class="col-md-6">
                                     <select id="select_tipoInstitucion" name="select_tipoInstitucion"  class="form-control">                            
-                                        <option value="">TODOS</option>
+                                        <option value="">Todos</option>
                                         <option value="OFERTANTE">OFERTANTE</option>
                                         <option value="ESTUDIO">ESTUDIO</option>
                                     </select>
@@ -205,11 +205,11 @@
                 <table id="tablaUsuarios" class="table table-bordered">
                     <thead>
                     <th>No</th>
-                    <th>Nombre de la institución</th>
-                    <th>Tipo institución</th>
+                    <th>Nombre de la Institución</th>
+                    <th>Tipo Institución</th>
                     <th>País</th>
-                    <th>Página web</th>
-                    <th>Correo electrónico</th>
+                    <th>Página Web</th>
+                    <th>Correo Electrónico</th>
                     <th>Opción</th>
                     </thead>
                     <tbody>
