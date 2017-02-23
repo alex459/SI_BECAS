@@ -138,5 +138,9 @@ public class Utilidades {
             helpUrl = prop.getProperty("helpUrl");
             return helpUrl;
     }
+    
+    public static int ObtenerTiempoDeSesion(){
+        return 3600; //3600 segundos es igual a 1 hora.
+    }
 
 }

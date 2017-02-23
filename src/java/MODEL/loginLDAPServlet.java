@@ -50,7 +50,7 @@ public class loginLDAPServlet extends HttpServlet {
             throws ServletException, IOException, NoSuchAlgorithmException, KeyManagementException {
         response.setContentType("text/html;charset=UTF-8");
 
-        int tiempo_de_logeo = 3600;
+        int tiempo_de_logeo = Utilidades.ObtenerTiempoDeSesion();
         boolean login_base = false;
 
         try {

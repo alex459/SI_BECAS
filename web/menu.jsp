@@ -11,12 +11,17 @@
     <head>
 
         <%@page import="MODEL.variablesDeSesion"%>
-        <%
-            boolean menuValido = false;
+        <%  
+            if(request.getSession().isNew()){
+                response.sendRedirect("login.jsp");
+            }
+            
+            boolean menuValido = false;            
             response.setHeader("Cache-Control", "no-store");
             response.setHeader("Cache-Control", "must-revalidate");
             response.setHeader("Cache-Control", "no-cache");
             HttpSession actual = request.getSession();
+            actual.setMaxInactiveInterval(Utilidades.ObtenerTiempoDeSesion());
             String r = (String) actual.getAttribute("rol");
             String u = (String) actual.getAttribute("user");
             Integer t = (Integer) actual.getAttribute("id_tipo_usuario");
@@ -219,7 +224,8 @@
                 }
 
                 if (!menuValido) {
-                    response.sendRedirect("logout.jsp");
+                    request.getSession().invalidate();
+                    response.sendRedirect("login.jsp");
                 }
 
             %>
