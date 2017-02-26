@@ -4,20 +4,20 @@
     Author     : next
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sistema inform√°tico para la administraci√≥n de becas de postgrado</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Sistema inform·tico para la administraciÛn de becas de postgrado</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/customfieldset.css" rel="stylesheet">
     </head>
     <body bgcolor="gray">
         <%
-            response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y √±
-            request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y √±
+            response.setContentType("text/html;charset=ISO-8859-1"); //lineas importantes para leer tildes y Ò
+            request.setCharacterEncoding("ISO-8859-1"); //lineas importantes para leer tildes y Ò
 
             int tipo_mensaje = 2;
             String titulo = "Mensaje";
@@ -27,7 +27,7 @@
             try {
                 tipo_mensaje = Integer.parseInt(request.getParameter("TIPO_MENSAJE"));
                 titulo = request.getParameter("TITULO");
-                mensaje = request.getParameter("MENSAJE");
+                mensaje = new String(request.getParameter("MENSAJE").getBytes(),"ISO-8859-1");		
                 mensaje = mensaje.toUpperCase();
             } catch (Exception ex) {
 

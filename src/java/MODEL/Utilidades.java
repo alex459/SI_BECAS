@@ -6,10 +6,13 @@ import DAO.UsuarioDAO;
 import POJO.Bitacora;
 import POJO.Usuario;
 import java.io.InputStream;
+//import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+
 
 public class Utilidades {
 
@@ -25,7 +28,12 @@ public class Utilidades {
     public static void mostrarMensaje(HttpServletResponse response, int tipo_mensaje, String titulo, String mensaje) {
         //TIPO_MENSAJE 1-exito, 2-info, 3-warning, 4-error        
         try {
-            response.sendRedirect("115_mensaje_general.jsp?TIPO_MENSAJE=" + tipo_mensaje + "&TITULO=" + titulo + "&MENSAJE=" + mensaje);
+            // texto de prueba
+            // mensaje="esto es un string con Ñ y tílde ñÑñÑ Ñ í á é ú";
+            response.setContentType("text/html;charset=ISO-8859-1");
+            String charset = "ISO-8859-1";
+            String link = String.format("115_mensaje_general.jsp?TIPO_MENSAJE=%s&TITULO=%s&MENSAJE=%s", URLEncoder.encode(String.valueOf(tipo_mensaje), charset),URLEncoder.encode(titulo, charset), URLEncoder.encode(mensaje, charset));
+            response.sendRedirect(response.encodeRedirectURL(link));
         } catch (Exception ex) {
 
         }
