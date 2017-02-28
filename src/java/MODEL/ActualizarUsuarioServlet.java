@@ -112,7 +112,7 @@ public class ActualizarUsuarioServlet extends HttpServlet {
             TipoUsuarioDao tipoUsuarioDao = new TipoUsuarioDao();
             tipoUsuario = tipoUsuarioDao.consultarPorId(usuario.getIdTipoUsuario());
             Utilidades.nuevaBitacora(2, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se actualizo el usuario "+usuario.getNombreUsuario() +".",""); 
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizo el usuario correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizó el usuario correctamente.");
             } else {
                 Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario.");
             }

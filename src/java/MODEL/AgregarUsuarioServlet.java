@@ -105,7 +105,7 @@ public class AgregarUsuarioServlet extends HttpServlet {
             //Redireccionando a la pagina de mensaje general    
             if (bandera1 && bandera2) {
                 //Utilidades.nuevaBitacora(1, request.getSession().getAttribute("user").toString(), "Se ingreso el usuario " + usuario.getNombreUsuario() + ".");
-                Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingreso el usuario correctamente.");
+                Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingresó el usuario correctamente.");
             } else {
                 Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el usuario. ");
             }
