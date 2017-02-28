@@ -219,7 +219,7 @@
                             <label for="tipoBeca">Tipo de Beca: </label>                                
                         </div>
                         <div class="col-md-3">    
-                            <select id="tipoBeca" name="tipoBeca" class="form-control" ng-model="datos.tipoB" ng-required="true">
+                            <select id="tipoBeca" name="tipoBeca" class="form-control" ng-model="datos.tipoB" ng-required="false" ng-disabled="true">
                                 <option value="">Seleccione una Opción</option>
                                 <option value="INTERNA">INTERNA</option>
                                 <option value="EXTERNA">EXTERNA</option>                                

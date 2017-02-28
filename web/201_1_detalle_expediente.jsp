@@ -4,6 +4,9 @@
     Author     : Manuel Miranda
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="POJO.Documento"%>
+<%@page import="DAO.DocumentoDAO"%>
 <%@page import="DAO.OfertaBecaDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <%
@@ -23,6 +26,7 @@
     String estado = "";
     String carnet = "";
     String oferta = "";
+    ArrayList<Documento> documentos = new ArrayList<Documento>();
 
     try {
         OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
@@ -32,6 +36,8 @@
         estado = request.getParameter("estado");
         carnet = request.getParameter("carnet");
         oferta = ofertaDao.obtenerTituloBeca(idExpediente);
+        DocumentoDAO documentoDao = new DocumentoDAO();
+        documentos = documentoDao.documentosExpediente(idExpediente);
     } catch (Exception e) {
         e.printStackTrace();
     }
@@ -132,8 +138,23 @@
                                         <th>Documento</th>
                                         <th>Estado</th>
                                         <th>Observacion</th>
+                                        <th>Documento Digital</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    <% for (int i = 0; i < documentos.size(); i++) {
+                                            out.write("<tr>");
+                                            out.write("<td>" + i + "</td>");
+                                            out.write("<td>" + documentos.get(i).getIdTipoDocumento().getTipoDocumento() + "</td>");
+                                            out.write("<td>" + documentos.get(i).getEstadoDocumento() + "</td>");
+                                            out.write("<td>" + documentos.get(i).getObservacion() + "</td>");
+                                            out.write("<td>");
+                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + documentos.get(i).getIdDocumento() + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Expediente'></form> ");
+                                            out.write("</td>");
+                                            out.write("</tr>");
+                                            }%>
+                                    
+                                </tbody>
                             </table>
                         </fieldset>
                     </div>
@@ -173,42 +194,42 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/angular.min.js"></script>
-            <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-    $('#Documentos').DataTable(
-            {
-                 "language": 
-{
-	"sProcessing":     "Procesando...",
-	"sLengthMenu":     "Mostrar _MENU_ registros",
-	"sZeroRecords":    "No se encontraron resultados",
-	"sEmptyTable":     "Ningún dato disponible en esta tabla",
-	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-	"sInfoPostFix":    "",
-	"sSearch":         "Buscar:",
-	"sUrl":            "",
-	"sInfoThousands":  ",",
-	"sLoadingRecords": "Cargando...",
-	"oPaginate": {
-		"sFirst":    "Primero",
-		"sLast":     "Último",
-		"sNext":     "Siguiente",
-		"sPrevious": "Anterior"
-	},
-	"oAria": {
-		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-	}
-}
-            }
-                );
-} );
-    
-    
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Documentos').DataTable(
+                    {
+                        "language":
+                                {
+                                    "sProcessing": "Procesando...",
+                                    "sLengthMenu": "Mostrar _MENU_ registros",
+                                    "sZeroRecords": "No se encontraron resultados",
+                                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                    "sInfoPostFix": "",
+                                    "sSearch": "Buscar:",
+                                    "sUrl": "",
+                                    "sInfoThousands": ",",
+                                    "sLoadingRecords": "Cargando...",
+                                    "oPaginate": {
+                                        "sFirst": "Primero",
+                                        "sLast": "Último",
+                                        "sNext": "Siguiente",
+                                        "sPrevious": "Anterior"
+                                    },
+                                    "oAria": {
+                                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                    }
+                                }
+                    }
+            );
+        });
+
+
     </script>  
 </body>
 </html>
