@@ -43,15 +43,15 @@
                         <h2 class="form-signin-heading">Ingrese sus datos:</h2>
                         <fieldset>
                             <div class="form-group">
-                                <input id="usuario" class="form-control" placeholder="Usuario" name="usuario" autofocus="" ng-model="datos.user" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="30">                                                                
-                                <span class="text-danger" ng-show="!login.$pristine && login.usuario.$error.required">El usuario es requerido.</span>
-                                <span class="text-danger" ng-show="login.usuario.$error.minlength">Minimo 3 caracteres.</span>
-                                <span class="text-danger" ng-show="login.usuario.$error.pattern">Solo se permiten letras y numeros.</span>
+                                <input id="usuario" class="form-control" placeholder="Usuario" name="usuario" autofocus="" ng-model="datos.user" ng-required="true" ng-pattern="/^[a-zA-Z0-9.]*$/" minlength="3" maxlength="30" style="text-align: center; font-size: 20px;">                                                                
+                                <span class="text-danger" ng-show="!login.$pristine && login.usuario.$error.required"><center>El usuario es requerido.</center></span>
+                                <span class="text-danger" ng-show="login.usuario.$error.minlength" ><center>Minimo 3 caracteres.</center></span>
+                                <span class="text-danger" ng-show="login.usuario.$error.pattern" ><center>Solo se permiten letras y numeros.</center></span>
                             </div>
                             <div class="form-group">
-                                <input id="contrasena" class="form-control" placeholder="Contraseña" name="contrasena" type="password" value="" ng-model="datos.pass" ng-required="true" maxlength="15" minlength="3">
-                                <span class="text-danger" ng-show="!login.$pristine && login.pass.$error.required">La Contraseña es requerida.</span>
-                                <span class="text-danger" ng-show="login.contrasena.$error.minlength">Minimo 3 caracteres.</span>                                
+                                <input id="contrasena" class="form-control" placeholder="Contraseña" name="contrasena" type="password" value="" ng-model="datos.pass" ng-required="true" maxlength="15" minlength="3" style="text-align: center; font-size: 20px;">
+                                <span class="text-danger" ng-show="!login.$pristine && login.pass.$error.required"><center>La Contraseña es requerida.</center></span>
+                                <span class="text-danger" ng-show="login.contrasena.$error.minlength"><center>Minimo 3 caracteres.</center></span>                                
                             </div>
                         </fieldset> 
                         <button class="btn btn-lg btn-success btn-block" type="submit" ng-disabled="!login.$valid">Ingresar</button>
