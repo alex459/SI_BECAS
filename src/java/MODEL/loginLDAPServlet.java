@@ -7,6 +7,7 @@ import POJO.Usuario;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -30,8 +31,13 @@ import javax.net.ssl.X509TrustManager;
 import java.security.cert.X509Certificate;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "loginLDAPServlet", urlPatterns = {"/loginLDAPServlet"})
@@ -60,7 +66,7 @@ public class loginLDAPServlet extends HttpServlet {
             String usuario = request.getParameter("usuario");
             String contrasena = request.getParameter("contrasena");
             usuario_obj.setNombreUsuario(usuario);
-            usuario_obj.setClave(contrasena);            
+            usuario_obj.setClave(contrasena);
             login_base = usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave());
             if (login_base) {
                 usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
@@ -82,104 +88,26 @@ public class loginLDAPServlet extends HttpServlet {
         if (!login_base) {
             try (PrintWriter out = response.getWriter()) {
 
-                // Evitando error de certificacion en del LDAP.
-                TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
-
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                    }
-
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                    }
-                }
-                };
-                SSLContext sc = SSLContext.getInstance("SSL");
-                sc.init(null, trustAllCerts, new java.security.SecureRandom());
-                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-                HostnameVerifier allHostsValid = new HostnameVerifier() {
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                };
-                HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-
-                //Parametros
-                String usuario = request.getParameter("usuario");
-                String contrasena = request.getParameter("contrasena");
-                String urlParameters = "usuario=" + usuario + "&contrasena=" + contrasena;
-
                 try {
 
                     //conectando con LDAP
-                    String USER_AGENT = "Mozilla/5.0";
-                    String url1 = "https://ldap.ues.edu.sv/autentificacion/control.php";
-                    URL obj = new URL(url1);
-                    HttpURLConnection con1;
-                    con1 = (HttpURLConnection) obj.openConnection();
-                    con1.setRequestProperty("User-Agent", USER_AGENT);
-                    con1.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-                    //Enviando POST
-                    con1.setDoOutput(true);
-                    DataOutputStream wr = new DataOutputStream(con1.getOutputStream());
-                    wr.writeBytes(urlParameters);
-                    wr.flush();
-                    wr.close();
-                    int responseCode = con1.getResponseCode();
-                    BufferedReader in = new BufferedReader(
-                            new InputStreamReader(con1.getInputStream()));
-                    String inputLine;
-                    StringBuffer responseD = new StringBuffer();
-                    while ((inputLine = in.readLine()) != null) {
-                        responseD.append(inputLine);
-                    }
-                    //obteniendo respuesta
-                    String htmlContent = new String();
-                    for (int i = 0; i < responseD.length(); i++) {
-                        htmlContent = htmlContent + responseD.charAt(i);
-                    }
-                    System.out.println("contenido" + htmlContent);
-                    in.close();
+                    String usuario = request.getParameter("usuario");
+                    String contrasena = request.getParameter("contrasena");
+                    DirContext ctx = this.loginLDAP(usuario, contrasena);
+                    boolean result = ctx != null;
                     //validando login
-                    if (htmlContent.contains("Datos incorrectos")) {
-                        //Credenciales invalidas, entonces intenta revisar 
-                        //la base del sistema para logearse.
-                        Usuario usuario_obj = new Usuario();
-                        UsuarioDAO usuarioDao = new UsuarioDAO();
-                        TipoUsuario tipoUsuario = new TipoUsuario();
-
-                        usuario_obj.setNombreUsuario(usuario);
-                        usuario_obj.setClave(contrasena);                        
-                        if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
-                            usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
-                            HttpSession sesion = request.getSession();
-                            sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
-                            sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
-                            sesion.setAttribute("user", usuario_obj.getNombreUsuario());
-                            sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
-                            sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
-                            response.sendRedirect("principal.jsp");
-                            System.out.println("Credenciales invalidas en LDAP y validas en SIABP");
-                        } else {
-                            //Credenciales invalidas en la base entonces
-                            //enviar al login_ldap.                                               
-                            response.sendRedirect("login.jsp");
-                            System.out.println("Credenciales invalidas LDAP y SIABP");
-
-                        }
-
-                    } else {
+                    
+                    if (result) {
                         //Credenciales validas en LDAP. entonces consultar
-                        //la base de datos del sistema.
-                        System.out.println("CONTENIDO QUE REGRESA LDAP :" + htmlContent);
+                        //la base de datos del sistema.                       
                         Usuario usuario_obj = new Usuario();
                         UsuarioDAO usuarioDao = new UsuarioDAO();
                         TipoUsuario tipoUsuario = new TipoUsuario();
 
                         usuario_obj.setNombreUsuario(usuario);
-                        usuario_obj.setClave(contrasena);                        
-                        //
+                        usuario_obj.setClave(contrasena);
+                        
+                        //El usuario ya se encuentra registrado. ingresando!!
                         if (usuarioDao.login_ldap(usuario_obj.getNombreUsuario())) {
                             usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
                             HttpSession sesion = request.getSession();
@@ -192,7 +120,7 @@ public class loginLDAPServlet extends HttpServlet {
                             System.out.println("Credenciales validas en LDAP y validas en SIABP");
                         } else {
                             //Credenciales validas en el LDAP
-                            //enviar al login.                                               }
+                            //registrando el usuario por primera vez en la base del sistema.
                             System.out.println("Credenciales validas LDAP e invalidas en SIABP. Enviando al registro.");
                             HttpSession sesion = request.getSession();
                             sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
@@ -202,56 +130,17 @@ public class loginLDAPServlet extends HttpServlet {
                             sesion.setAttribute("id_tipo_usuario", 1);
                             response.sendRedirect("116_registrar_usuario.jsp");
                         }
-                    }
-
-                } catch (java.net.UnknownHostException e_UnknownHost) {
-
-                    System.out.println("servidor LDAP no encontrado: " + e_UnknownHost);
-                    //si no se puede conectar al ldap entonces que se 
-                    //trate de conectar a la base de datos del sistema.
-                    Usuario usuario_obj = new Usuario();
-                    UsuarioDAO usuarioDao = new UsuarioDAO();
-                    TipoUsuario tipoUsuario = new TipoUsuario();
-
-                    usuario_obj.setNombreUsuario(usuario);
-                    usuario_obj.setClave(contrasena);                    
-
-                    if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
-                        usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
-                        HttpSession sesion = request.getSession();
-                        sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
-                        sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
-                        sesion.setAttribute("user", usuario_obj.getNombreUsuario());
-                        sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
-                        sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
-                        response.sendRedirect("principal.jsp");
                     } else {
+                        //Acceso denegado. Credenciales invalidas
                         response.sendRedirect("login.jsp");
-                    }
+                        System.out.println("Credenciales invalidas LDAP y SIABP");
 
+                    }
                 } catch (Exception ex) {
-                    System.out.println("error en servidor LDAP: " + ex);
-                    //si no se puede conectar al ldap entonces que se 
-                    //trate de conectar a la base de datos del sistema.
-                    Usuario usuario_obj = new Usuario();
-                    UsuarioDAO usuarioDao = new UsuarioDAO();
-                    TipoUsuario tipoUsuario = new TipoUsuario();
-
-                    usuario_obj.setNombreUsuario(usuario);
-                    usuario_obj.setClave(contrasena);                    
-
-                    if (usuarioDao.login(usuario_obj.getNombreUsuario(), usuario_obj.getClave())) {
-                        usuario_obj = usuarioDao.consultarPorNombreUsuario(usuario_obj.getNombreUsuario());
-                        HttpSession sesion = request.getSession();
-                        sesion.setMaxInactiveInterval(tiempo_de_logeo); //3600 segundos, 1 hora max para sesion activa            
-                        sesion.setAttribute("id_user_login", usuario_obj.getIdUsuario().toString());
-                        sesion.setAttribute("user", usuario_obj.getNombreUsuario());
-                        sesion.setAttribute("rol", getRol(usuario_obj.getNombreUsuario(), usuarioDao));
-                        sesion.setAttribute("id_tipo_usuario", usuario_obj.getIdTipoUsuario());
-                        response.sendRedirect("principal.jsp");
-                    } else {
+                    //Error. regresando al login
+                    System.out.println("error en servidor LDAP: " + ex);                    
                         response.sendRedirect("login.jsp");
-                    }
+                    
                 }
 
             }
@@ -278,6 +167,50 @@ public class loginLDAPServlet extends HttpServlet {
             System.out.println("Error " + e);
         }
         return rol;
+    }
+
+    public DirContext loginLDAP(String userName, String passWord) {
+
+        DirContext ctx = null;
+        String principal = new String();
+        Hashtable<String, String> env = new Hashtable<String, String>();
+        try {
+           
+            Properties prop = new Properties();
+            String resourceName = "config.properties";
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+                prop.load(resourceStream);
+            } catch (Exception ex) {
+                System.out.println("Error al leer archivo de configuracion. " + ex);
+                return null;
+            }
+            // obteniendo propiedades.
+            
+            String LDAPurl = prop.getProperty("LDAP.url");           
+            String LDAPgrupo = prop.getProperty("LDAP.group");
+            String LDAPbase  = prop.getProperty("LDAP.base");            
+            String LDAPSecurity = prop.getProperty("LDAP.security");
+            String LDAPfactory = prop.getProperty("LDAP.factory");
+            
+            //preparando el mensaje
+            principal = "uid=" + userName + "," + LDAPgrupo + "," + LDAPbase;
+            env = new Hashtable<String, String>();
+            env.put(Context.INITIAL_CONTEXT_FACTORY, LDAPfactory);            
+            env.put(Context.PROVIDER_URL, LDAPurl);
+            env.put(Context.SECURITY_AUTHENTICATION, LDAPSecurity);
+            env.put(Context.SECURITY_PRINCIPAL, principal);
+            env.put(Context.SECURITY_CREDENTIALS, passWord);
+
+            //intentando conectar con LDAP
+            ctx = new InitialDirContext(env);
+            return ctx;
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return ctx;
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
