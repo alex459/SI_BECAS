@@ -4,7 +4,7 @@
     Author     : MauricioBC
 --%>
 
-    <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -49,7 +49,7 @@
                                         <a href="documentos.jsp">Documentos</a>                                   
                             </li>
                             <li>
-                                        <a href="301_inf_publica_ofertas_beca.jsp">Ofertas de beca</a>                                   
+                                        <a href="805_inf_publica_oferta_de_beca.jsp">Ofertas de beca</a>                                   
                             </li>
                         </ul>
                         
