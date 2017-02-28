@@ -14,7 +14,9 @@ import java.util.ArrayList;
  */
 public class OfertaBecaDAO extends ConexionBD{
     
+    //Metodo que permite el ingreso de una oferta de beca
     public boolean ingresar(OfertaBeca ofertaBeca){
+        //variable que permite saber si se ingreso correctamente el nuevo registro
         boolean exito = false;        
         this.abrirConexion();
         try {
@@ -204,6 +206,7 @@ public class OfertaBecaDAO extends ConexionBD{
         return tipo;
     }
      
+     //Permite consultar el id de la oferta de beca de un expediente
      public Integer consultarPorExpediente(int id) {
         Integer idOferta = 0;
         this.abrirConexion();

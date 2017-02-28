@@ -182,10 +182,10 @@ public class SolicitarPermisoInicialServlet extends HttpServlet {
         
         if(solicitarAcuerdo== true){
             Utilidades.nuevaBitacora(11, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), request.getSession().getAttribute("user").toString() + " realizo la solicitud de permiso de gestion de beca.", "");            
-            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Acuerdo de Permiso Inicial correctamente.");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "Se solicito el Acuerdo de Permiso de Gestión de Beca correctamente.");
         }
         else
-            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud del Acuerdo de Permiso Inicial.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo realizar la solicitud del Acuerdo de Permiso de Gestión de Beca.");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

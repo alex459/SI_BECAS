@@ -70,9 +70,9 @@
     <body>
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
+                <h3>
                     <p class="text-center" style="color:#cf2a27">Suspender Becario</p>
-                </h2>
+                </h3>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
@@ -203,7 +203,7 @@
                                         " FROM FACULTAD F INNER JOIN DETALLE_USUARIO DU ON F.ID_FACULTAD = DU.ID_FACULTAD INNER JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO"+
                                         " JOIN (SELECT I.NOMBRE_INSTITUCION, OB.TIPO_OFERTA_BECA, SB.ID_USUARIO, SB.ID_EXPEDIENTE, I.ID_INSTITUCION"+
                                                 " FROM INSTITUCION I INNER JOIN OFERTA_BECA OB ON I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO NATURAL JOIN SOLICITUD_DE_BECA SB) SC ON U.ID_USUARIO = SC.ID_USUARIO"+
-                                        " INNER JOIN EXPEDIENTE E ON SC.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE ESTADO_EXPEDIENTE = 'ABIERTO' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND U.NOMBRE_USUARIO LIKE '%" + carnet + "%' AND SC.TIPO_OFERTA_BECA LIKE '%" + tipo_beca + "%'";
+                                        " INNER JOIN EXPEDIENTE E ON SC.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO WHERE ESTADO_EXPEDIENTE = 'ABIERTO' AND P.ESTADO_BECARIO NOT IN ('CANDIDATO') AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND U.NOMBRE_USUARIO LIKE '%" + carnet + "%' AND SC.TIPO_OFERTA_BECA LIKE '%" + tipo_beca + "%'";
 
                                 if (id_facultad != 0) {
                                     consultaSql = consultaSql.concat(" AND F.ID_FACULTAD = " + id_facultad + " ");
@@ -223,7 +223,7 @@
                         %> 
                         <br>
                         <div class="row">
-                           <table class="table">
+                            <table id="tablaBecarios" class="table table-bordered">
                                 <thead>
                                     <th>Usuario</th>
                                     <th>Nombre del becario</th>
@@ -292,5 +292,41 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
+        <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript">
+   $(document).ready(function() {
+    $('#tablaBecarios').DataTable(
+            {
+                 "language": 
+{
+	"sProcessing":     "Procesando...",
+	"sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"sInfoPostFix":    "",
+	"sSearch":         "Buscar:",
+	"sUrl":            "",
+	"sInfoThousands":  ",",
+	"sLoadingRecords": "Cargando...",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Último",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+	},
+	"oAria": {
+		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	}
+}
+            }
+                );
+} );
+    
+</script>
     </body>
 </html>

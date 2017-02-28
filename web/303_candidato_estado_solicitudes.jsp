@@ -114,7 +114,7 @@
                                 <%}%>
                                 <tbody class="text-center">                                
                                 <%if (lista.isEmpty()) {
-                                        out.write("<tr><h3 class='text-primary'>No ha realizado ninguna solicitud</h3></tr>");
+                                        out.write("<tr><h3 class='text-primary'></h3></tr>");
                                     } else {
                                         Documento acuerdo = new Documento();
                                         int numero = 1;

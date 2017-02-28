@@ -72,9 +72,9 @@
     <body>
         <div class="container-fluid">
             <div class="row"><!-- TITULO DE LA PANTALLA -->
-                <h2>
+                <h3>
                     <p class="text-center" style="color:#cf2a27">Consultar Expediente</p>
-                </h2>
+                </h3>
                 <br></br> 
             </div><!-- TITULO DE LA PANTALLA -->  
 
@@ -202,7 +202,7 @@
                                 //formando la consulta
                                 String consultaSql;
 
-                                consultaSql = "SELECT E.ID_EXPEDIENTE, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, F.FACULTAD, P.NOMBRE_PROGRESO, E.ESTADO_EXPEDIENTE "
+                                consultaSql = "SELECT E.ID_EXPEDIENTE, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, F.FACULTAD, P.NOMBRE_PROGRESO, E.ESTADO_EXPEDIENTE, DU.CARNET "
                                         + "FROM FACULTAD F INNER JOIN DETALLE_USUARIO DU ON F.ID_FACULTAD = DU.ID_FACULTAD INNER JOIN "
                                             + "USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO INNER JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO = SB.ID_USUARIO "
                                             + "INNER JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE INNER JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO "
@@ -243,7 +243,9 @@
                                  <%       
                                     try {
                                         Integer i = 0;
+                                        String nombre = "";
                                         while (rs.next()) {
+                                            nombre = rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5);
                                             out.write("<tr>");
                                             out.write("<td>" + rs.getString(1) + "</td>");
                                             out.write("<td>" + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5)+"</td>");
@@ -253,7 +255,7 @@
                                             out.write("<td>");
                                             out.write("<center>");
                                             out.write("<form style='display:inline;' action='' method='post'><input type='hidden'></form> ");
-                                            out.write("<form style='display:inline;' action='201_1_detalle_expediente.jsp' method='post'><input type='hidden' name='NUM_EXPEDIENTE' value='" + rs.getString(1) + "'><input type='submit' class='btn btn-success' name='submit' value='Consultar'></form> ");
+                                            out.write("<form style='display:inline;' action='201_1_detalle_expediente.jsp' method='post'><input type='hidden' name='idExpediente' value='" + rs.getString(1) + "'><input type='hidden' name='nombre' value='" + nombre + "'><input type='hidden' name='facultad' value='" + rs.getString(6) + "'><input type='hidden' name='estado' value='" + rs.getString(8) + "'><input type='hidden' name='carnet' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Expediente'></form> ");
                                             out.write("</center>");
                                             out.write("</td>");
                                             out.write("</tr>");
