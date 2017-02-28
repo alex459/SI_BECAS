@@ -400,7 +400,7 @@
                 );
 } );
     
-                                           $(function () {
+        $(function () {
         $('#fIngresoIni').datepicker({
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
