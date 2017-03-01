@@ -3,6 +3,9 @@
     Created on : 28/10/2016, 03:45:30 PM
     Author     : adminPC
 --%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="POJO.Facultad"%>
@@ -148,13 +151,13 @@
                                             <div class="row">
                                                 <div class="col-md-6 ">
                                        <div class="col-md-6">          
-                                            <label for="fIngresoIni">Fecha de Firma (Inicio) :</label> 
+                                            <label for="fIngresoIni">Fecha de Ingreso de Documento (Inicio) :</label> 
                                             <div class="input-group date">
                                                 <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">      
-                                            <label for="fIngresoFin">Fecha de Firma  (Fin) :</label>
+                                            <label for="fIngresoFin">Fecha de Ingreso de Documento   (Fin) :</label>
                                             <div class="input-group date">
                                                 <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
@@ -162,8 +165,9 @@
                                                     </div>
                                                 <div class="col-md-6">
                                                     <label for="textinput">Facultad: </label>
+                                                   
                                                         <select id="selectbasic" name="ID_FACULTAD" class="form-control">
-                                                            <option value="0">Seleccione facultad</option>    
+                                                            <option value="0">Seleccione Facultad</option>    
                                                                 <%
                                                                     FacultadDAO facultadDao = new FacultadDAO();
                                                                     ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
@@ -196,8 +200,9 @@
                 String carnet;
                 String expediente;
                 Integer id_facultad;
-                String fecha1;
-                
+                //String fecha1;
+                AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 ConexionBD conexionbd = null;
                
                 ResultSet rs = null;
@@ -215,22 +220,32 @@
             carnet = request.getParameter("CARNET");  
             expediente = request.getParameter("ID_EXPEDIENTE");
             id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
-            fecha1 = request.getParameter("FECHA1");
+            //fecha1 = request.getParameter("FECHA1");
             
             String documento= "134";
             String consultaSql="";
             
+            String fIngresoIni = request.getParameter("fIngresoIni");
+            String fIngresoFin = request.getParameter("fIngresoFin");
             if(nombre1!=null) {} else {nombre1="";};
             if(nombre2!=null) {} else {nombre2="";};
             if(apellido1!=null) {} else {apellido1="";};
             if(apellido2!=null) {} else {apellido2="";};
             if(carnet!=null) {} else {carnet="";};
-            if(fecha1!=null) {} else {fecha1="";};
+            //if(fecha1!=null) {} else {fecha1="";};
             if(expediente!=null) {} else {expediente="";};
             
-          consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU,  DU.APELLIDO1_DU,  DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD ,D.FECHA_INGRESO, E.ID_EXPEDIENTE, D.ID_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO FROM EXPEDIENTE E JOIN SOLICITUD_DE_BECA SB ON E.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO JOIN DETALLE_USUARIO DU ON U.ID_USUARIO = DU.ID_USUARIO JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE TD.ID_TIPO_DOCUMENTO = '"+documento+"' AND DU.NOMBRE1_DU LIKE '%"+nombre1+"%' AND DU.NOMBRE2_DU LIKE '%"+nombre2+"%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND E.ID_EXPEDIENTE LIKE '%" + expediente + "%' AND SB.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'  ";
+          consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU,  DU.APELLIDO1_DU,  DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD ,D.FECHA_INGRESO, E.ID_EXPEDIENTE, D.ID_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO FROM EXPEDIENTE E JOIN SOLICITUD_DE_BECA SB ON E.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO JOIN DETALLE_USUARIO DU ON U.ID_USUARIO = DU.ID_USUARIO JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE TD.ID_TIPO_DOCUMENTO = '"+documento+"' AND DU.NOMBRE1_DU LIKE '%"+nombre1+"%' AND DU.NOMBRE2_DU LIKE '%"+nombre2+"%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND E.ID_EXPEDIENTE LIKE '%" + expediente + "%'   ";
            //PRUEBA   out.write(consultaSql);
           
+           if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                            java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                            java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                            consultaSql = consultaSql.concat(" AND D.FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        }
+           
+           
+           
           if (id_facultad == 0) 
           {
 
@@ -400,7 +415,8 @@
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
             todayHighlight: true,
-            autoclose: true
+            autoclose: true,
+            endDate: '-0y'
         }).on('change.dp', function (e) {
             $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
         });
@@ -408,27 +424,12 @@
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
             todayHighlight: true,
-            autoclose: true
+            autoclose: true,
+            endDate: '-0y'
         }).on('change.dp', function (e) {
             $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
         });
-        $('#fCierreIni').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        }).on('change.dp', function (e) {
-            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
-        });
-        $('#fCierreFin').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true,
-            startDate: new Date()
-        }).on('change.dp', function (e) {
-            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
-        });
+        
     });
     
 </script>
