@@ -73,6 +73,8 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/customfieldset.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+        <link href="css/customfieldset.css" rel="stylesheet">
         
         <div class="row">
             <div class="col-md-4">

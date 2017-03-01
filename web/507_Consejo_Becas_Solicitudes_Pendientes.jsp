@@ -4,6 +4,9 @@
     Author     : adminPC
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="POJO.Facultad"%>
@@ -34,6 +37,9 @@
     if (!autorizacion || user == null) {
         response.sendRedirect("logout.jsp");
     }
+    
+
+    AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
 %>
 <!-- fin de proceso de seguridad de login -->
 
@@ -55,6 +61,10 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/customfieldset.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
+        <link href="css/customfieldset.css" rel="stylesheet">
+        
+        
         <div class="row">
             <div class="col-md-4">
                 <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
@@ -218,7 +228,9 @@
                 String carnet;
                 Integer id_tipo_documento;
                 Integer id_facultad;
-                String fecha1;
+                //String fecha1;
+                
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 ConexionBD conexionbd = null;
                
                 ResultSet rs = null;
@@ -236,22 +248,30 @@
             carnet = request.getParameter("CARNET");  
             id_tipo_documento = Integer.parseInt(request.getParameter("ID_TIPO_DOCUMENTO"));
             id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
-            fecha1 = request.getParameter("FECHA1");
+            //fecha1 = request.getParameter("FECHA1");
             String pendiente = "PENDIENTE";
             String consejoB= "CONSEJO DE BECAS";
             
             String consultaSql="";
-            
+            String fIngresoIni = request.getParameter("fIngresoIni");
+            String fIngresoFin = request.getParameter("fIngresoFin");
             if(nombre1!=null) {} else {nombre1="";};
             if(nombre2!=null) {} else {nombre2="";};
             if(apellido1!=null) {} else {apellido1="";};
             if(apellido2!=null) {} else {apellido2="";};
             if(carnet!=null) {} else {carnet="";};
-            if(fecha1!=null) {} else {fecha1="";};
+            //if(fecha1!=null) {} else {fecha1="";};
             
-            consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO, D.ESTADO_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('"+pendiente+"','REVISION') AND TD.DEPARTAMENTO='"+consejoB+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'  ";
+            consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO, D.ESTADO_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('"+pendiente+"','REVISION') AND TD.DEPARTAMENTO='"+consejoB+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'   ";
              
-          if (id_tipo_documento == 0) {
+             if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                            java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                            java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                            consultaSql = consultaSql.concat(" AND D.FECHA_SOLICITUD BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        }
+            
+            
+            if (id_tipo_documento == 0) {
 
                     } else {
                         consultaSql = consultaSql.concat(" AND TD.ID_TIPO_DOCUMENTO = " + id_tipo_documento + " ");
@@ -401,7 +421,8 @@
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
             todayHighlight: true,
-            autoclose: true
+            autoclose: true,
+            endDate: '-0y'
         }).on('change.dp', function (e) {
             $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
         });
@@ -409,27 +430,12 @@
             format: 'yyyy-mm-dd',
             calendarWeeks: true,
             todayHighlight: true,
-            autoclose: true
+            autoclose: true,
+            endDate: '-0y'
         }).on('change.dp', function (e) {
             $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
         });
-        $('#fCierreIni').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        }).on('change.dp', function (e) {
-            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
-        });
-        $('#fCierreFin').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true,
-            startDate: new Date()
-        }).on('change.dp', function (e) {
-            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
-        });
+       
     });
     
 </script>

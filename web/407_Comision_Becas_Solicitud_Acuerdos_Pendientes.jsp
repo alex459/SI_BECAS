@@ -3,6 +3,9 @@
     Created on : 11-08-2016, 09:49:28 PM
     Author     : aquel
 --%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="DAO.DetalleUsuarioDAO"%>
@@ -35,6 +38,7 @@
 
 <% 
     Integer idFacultad = 0;
+    AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
      try{
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
@@ -200,7 +204,8 @@
                 String apellido1;
                 String apellido2;
                 String carnet;
-                String fecha1;
+               // String fecha1;
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 ConexionBD conexionbd = null;
                
                 ResultSet rs = null;
@@ -216,19 +221,27 @@
             apellido1 = request.getParameter("APELLIDO1");
             apellido2 = request.getParameter("APELLIDO2");
             carnet = request.getParameter("CARNET");    
-            fecha1 = request.getParameter("FECHA1");
+            //fecha1 = request.getParameter("FECHA1");
             String consultaSql="";
             String pendiente = "PENDIENTE";
             String comisionB= "COMISION DE BECAS";
             
+            
+             String fIngresoIni = request.getParameter("fIngresoIni");
+            String fIngresoFin = request.getParameter("fIngresoFin");
             if(nombre1!=null) {} else {nombre1="";};
             if(nombre2!=null) {} else {nombre2="";};
             if(apellido1!=null) {} else {apellido1="";};
             if(apellido2!=null) {} else {apellido2="";};
             if(carnet!=null) {} else {carnet="";};
-            if(fecha1!=null) {} else {fecha1="";};
-            consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO, E.ID_EXPEDIENTE, D.ESTADO_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('"+pendiente+"','REVISION') AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'   ;";
+            //if(fecha1!=null) {} else {fecha1="";};
+            consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_SOLICITUD, TD.TIPO_DOCUMENTO, D.ID_DOCUMENTO, E.ID_EXPEDIENTE, D.ESTADO_DOCUMENTO FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('"+pendiente+"','REVISION') AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'    ";
             
+              if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                            java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                            java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                            consultaSql = consultaSql.concat(" AND D.FECHA_SOLICITUD BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        }
             
                    
             

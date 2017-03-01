@@ -3,18 +3,43 @@
     Created on : 11-08-2016, 10:16:29 PM
     Author     : aquel
 --%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="MODEL.AgregarOfertaBecaServlet"%>
+<%@page import="MODEL.Utilidades"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="DAO.DetalleUsuarioDAO"%>
 <%@page import="MODEL.variablesDeSesion"%>
 <% 
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
+    
     HttpSession actual = request.getSession();
+    
+    String id_usuario_login = (String) actual.getAttribute("id_user_login");
     String rol=(String)actual.getAttribute("rol");
     String user=(String)actual.getAttribute("user");
+    Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
+    
+    ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
+    //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("3");
+    tipo_usuarios_permitidos.add("9");
+    boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
+    if (!autorizacion || user == null) {
+        response.sendRedirect("logout.jsp");
+    }
+    
+    
+    
     Integer idFacultad = 0;
+    AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
      try{
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
@@ -22,10 +47,7 @@
     } catch (Exception e){
         e.printStackTrace();
     }
-     if(user==null){
-     response.sendRedirect("login.jsp");
-        return;
-     }
+     
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,8 +56,7 @@
 <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <%response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+        <%
         %>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -143,13 +164,13 @@
                                         
                                          <div class="col-md-6 ">
                                        <div class="col-md-6">          
-                                            <label for="fIngresoIni">Fecha Solicitud (Inicio) :</label> 
+                                            <label for="fIngresoIni">Fecha Resolución (Inicio) :</label> 
                                             <div class="input-group date">
                                                 <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">      
-                                            <label for="fIngresoFin">Fecha de Solicitud (Fin) :</label>
+                                            <label for="fIngresoFin">Fecha de Resolución (Fin) :</label>
                                             <div class="input-group date">
                                                 <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                             </div>
@@ -179,7 +200,9 @@
                 String apellido1;
                 String apellido2;
                 String carnet;
-                String fecha1;
+                //String fecha1;
+                
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 ConexionBD conexionbd = null;
                
                 ResultSet rs = null;
@@ -195,22 +218,29 @@
             apellido1 = request.getParameter("APELLIDO1");
             apellido2 = request.getParameter("APELLIDO2");
             carnet = request.getParameter("CARNET");    
-            fecha1 = request.getParameter("FECHA1");
+            //fecha1 = request.getParameter("FECHA1");
             String consultaSql="";
             //String pendiente = "PENDIENTE";
             String aprobado = "APROBADO";
             String denegado = "DENEGADO";
             String comisionB= "COMISION DE BECAS";
             
+            String fIngresoIni = request.getParameter("fIngresoIni");
+            String fIngresoFin = request.getParameter("fIngresoFin");
+            
             if(nombre1!=null) {} else {nombre1="";};
             if(nombre2!=null) {} else {nombre2="";};
             if(apellido1!=null) {} else {apellido1="";};
             if(apellido2!=null) {} else {apellido2="";};
             if(carnet!=null) {} else {carnet="";};
-            if(fecha1!=null) {} else {fecha1="";};
-            consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, E.ID_EXPEDIENTE, E.ID_PROGRESO, E.ESTADO_PROGRESO,E.ESTADO_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE (D.ESTADO_DOCUMENTO='"+aprobado+"' OR D.ESTADO_DOCUMENTO='"+denegado+"') AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' AND D.FECHA_SOLICITUD LIKE '%" + fecha1 + "%'   ;";
+            //if(fecha1!=null) {} else {fecha1="";};
+            consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, E.ID_EXPEDIENTE, E.ID_PROGRESO, E.ESTADO_PROGRESO,E.ESTADO_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD  F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE  E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO  D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO  TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE (D.ESTADO_DOCUMENTO='"+aprobado+"' OR D.ESTADO_DOCUMENTO='"+denegado+"') AND TD.DEPARTAMENTO='"+comisionB+"' AND F.ID_FACULTAD='"+idFacultad+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'    ";
             
-            
+            if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                            java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
+                            java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
+                            consultaSql = consultaSql.concat(" AND D.FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        }
                    
             
             
@@ -409,23 +439,7 @@
         }).on('change.dp', function (e) {
             $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
         });
-        $('#fCierreIni').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        }).on('change.dp', function (e) {
-            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
-        });
-        $('#fCierreFin').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true,
-            startDate: new Date()
-        }).on('change.dp', function (e) {
-            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
-        });
+      
     });
     
 </script>
