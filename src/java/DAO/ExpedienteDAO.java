@@ -188,4 +188,21 @@ public class ExpedienteDAO extends ConexionBD {
         return exito;
     }
     
+    //Permite consultar si un usuario posee expediente abierto con el id de usuario
+        public boolean expedienteAbiertoPorIdUsuario(Integer id_usuario){
+            boolean expediente = false;
+            this.abrirConexion();
+            try {
+                stmt = conn.createStatement();
+                String sql = "SELECT ex.ID_EXPEDIENTE from expediente ex join solicitud_de_beca sb on ex.ID_EXPEDIENTE = sb.ID_EXPEDIENTE join usuario u on u.ID_USUARIO = sb.ID_USUARIO where ex.ESTADO_EXPEDIENTE = \"ABIERTO\" and u.ID_USUARIO ="+id_usuario ;
+                ResultSet rs = stmt.executeQuery(sql);
+                this.cerrarConexion();
+                expediente = rs.next();
+            }catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+            
+            return expediente;
+        }
+    
 }
