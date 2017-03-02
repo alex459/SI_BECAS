@@ -26,111 +26,55 @@
     <fieldset class="custom-border">
         <legend class="custom-border">Documentación</legend>
 
-        <div class="row">   
-            <div class="col-md-6">
-                <label class="text-danger">Adjuntar los Siguientes Documentos</label>
-            </div> 
-        </div>                            
         <div class="row">
-            <div class="col-md-6">
-                <label>SOLICITUD DE BECA FIRMADA: </label>
-            </div>
-            <div class="col-md-5">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
                 <div class="row">
-                    <input name="solicitudFirmada" type="file" accept="application/pdf" ng-model="solicitudFirmada" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.solicitudFirmada.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>       
-        <div class="row">
-            <div class="col-md-6">
-                <label>DICTAMEN DEL JEFE DEL DEPARTAMENTO O ESCUELA QUE MANIFIESTA ELECCION POR CONCURSO DE OPOSICIÓN: </label>
-            </div>
-            <div class="col-md-5">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 text-center">
+                        <label>Seleccione la accion que desea realizar</label>
+                    </div>
+                    <div class="col-md-1"></div>                        
+                </div>
+
                 <div class="row">
-                    <input name="dictamenJefe" type="file" accept="application/pdf" ng-model="dictamenJefe" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.dictamenJefe.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>
-        <div class="row">
-            <div class="col-md-6">
-                <label>TÍTULO ACADÉMICO: </label>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-control-static"> Carta de Solicitud de Autorización Inicial</label>
+                                </div>   
+                                <div class="col-md-6">
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accCarta"  value="ninguna"  ng-model ="accCarta" ng-required="true" ng-click="NadaCarta()">
+                                        Ninguna
+                                    </label>
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accCarta"  value="actualizar"  ng-model ="accCarta" ng-required="true" ng-click="ActualizarCarta()">
+                                        Actualizar
+                                    </label> 
+
+                                </div> 
+                            </div>
+                            <div class="row" ng-show="mostrarCarta">
+                                <div class="col-md-12">
+                                    <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file ng-required="mostrarCarta">
+                                    <span class="text-danger" ng-show="solicitudPermisoInicial.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+
             </div>
-            <div class="col-md-5">
-                <div class="row">
-                    <input name="tituloAcademico" type="file" accept="application/pdf" ng-model="tituloAcademico" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.tituloAcademico.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>
-        <div class="row">
-            <div class="col-md-6">
-                <label>PARTIDA DE NACIMIENTO: </label>
-            </div>
-            <div class="col-md-5">
-                <div class="row">
-                    <input name="partida" type="file" accept="application/pdf" ng-model="partida" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.partida.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>
-        <div class="row">
-            <div class="col-md-6">
-                <label>DUI: </label>
-            </div>
-            <div class="col-md-5">
-                <div class="row">
-                    <input name="dui" type="file" accept="application/pdf" ng-model="dui" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.dui.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>
-        <div class="row">
-            <div class="col-md-6">
-                <label>CURRÍCULUM VITAE: </label>
-            </div>
-            <div class="col-md-5">
-                <div class="row">
-                    <input name="curriculo" type="file" accept="application/pdf" ng-model="curriculo" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.curriculo.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>
-        <div class="row">
-            <div class="col-md-6">
-                <label>NOTAS GLOBALES: </label>
-            </div>
-            <div class="col-md-5">
-                <div class="row">
-                    <input name="notas" type="file" accept="application/pdf" ng-model="notas" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.notas.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>
-        <div class="row">
-            <div class="col-md-6">
-                <label>CERTIFICADO DE SALUD: </label>
-            </div>
-            <div class="col-md-5">
-                <div class="row">
-                    <input name="certificado" type="file" accept="application/pdf" ng-model="certificado" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.certificado.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>
-        <div class="row">
-            <div class="col-md-6">
-                <label>PODER JUDICIAL OTORGADO A SU APODERADO: </label>
-            </div>
-            <div class="col-md-5">
-                <div class="row">
-                    <input name="poder" type="file" accept="application/pdf" ng-model="poder" valid-file required>
-                        <span class="text-danger" ng-show="solicitud.poder.$invalid">Debe Ingresar un Documento en Formato PDF.</span>
-                </div>                               
-            </div>      
-        </div><br>
-        
+            <div class="col-md-1"></div>
+        </div>
+
         <div>
             <input type="hidden" name="user" ng-value = "user" >
             <input type="hidden" name="nombre1" ng-value = "data.nombre" >
@@ -189,12 +133,12 @@
                 <input type="hidden" name="{{x.institucion}}" ng-value="aux.auxInstitucionEdu[$index]">
                 <input type="hidden" name="{{x.anyo}}" ng-value="aux.auxAnyoEdu[$index]"><br>
             </div>
-            <input type="hidden" name="nEducacion" ng-value = "{{Nedu-1}}" >
+            <input type="hidden" name="nEducacion" ng-value = "{{Nedu - 1}}" >
             <div class="row" ng-repeat="x in data.proyectos">
                 <input type="hidden" name="{{x.titulo}}" ng-value="aux.auxTituloProy[$index]">
                 <input type="hidden" name="{{x.publicado}}" ng-value="aux.auxPublicado[$index]">
             </div>
-            <input type="hidden" name="nInvestigacion" ng-value = "{{Nproy-1}}" >
+            <input type="hidden" name="nInvestigacion" ng-value = "{{Nproy - 1}}" >
             <input type="hidden" name="checkProyecto" ng-value = "{{checkProyecto}}" >
             <div class="row" ng-repeat="x in data.idiomas">
                 <input type="hidden" name="{{x.idioma}}" ng-value="aux.auxIdioma[$index]">
@@ -202,11 +146,11 @@
                 <input type="hidden" name="{{x.nivelLectura}}" ng-value="aux.auxNivelLectura[$index]">
                 <input type="hidden" name="{{x.nivelEscritura}}" ng-value="aux.auxNivelEscritura[$index]"><br>
             </div>
-            <input type="hidden" name="nIdioma" ng-value = "{{Nidi-1}}" >
+            <input type="hidden" name="nIdioma" ng-value = "{{Nidi - 1}}" >
             <div class="row" ng-repeat="x in data.asociaciones">
                 <input type="hidden" name="{{x.asociacion}}" ng-value="aux.auxAsociacion[$index]">
             </div>
-            <input type="hidden" name="nAsociacion" ng-value = "{{Naso-1}}" >
+            <input type="hidden" name="nAsociacion" ng-value = "{{Naso - 1}}" >
             <input type="hidden" name="checkAsociacion" ng-value = "{{checkAsociacion}}" >
             <div class="row" ng-repeat="x in data.cargos">
                 <input type="hidden" name="{{x.lugar}}" ng-value="aux.auxLugar[$index]">
@@ -215,20 +159,20 @@
                 <input type="hidden" name="{{x.fechaFin}}" ng-value="aux.auxFechaFin[$index]">
                 <input type="hidden" name="{{x.responsabilidades}}" ng-value="aux.auxResponsabilidades[$index]">
             </div>
-            <input type="hidden" name="nCargos" ng-value = "{{Ncar-1}} " >
+            <input type="hidden" name="nCargos" ng-value = "{{Ncar - 1}} " >
             <div class="row" ng-repeat="x in data.programas">
                 <input type="hidden" name="{{x.semestre}}" ng-value="aux.auxSemestre[$index]">
                 <input type="hidden" name="{{x.programa}}" ng-value="aux.auxPrograma[$index]">
             </div>
-            <input type="hidden" name="nPrograma" ng-value = "{{Npro-1}} " >
+            <input type="hidden" name="nPrograma" ng-value = "{{Npro - 1}} " >
         </div>
-      
+
     </fieldset>            
     <div class="row">
         <div class="col-md-4 col-lg-offset-4">
             <a href=""><button id="button2id" name="cancelar" class="btn btn-danger">Cancelar</button></a>
             <a href=""><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>                        
-            <input type="submit" name="enviar" class="btn btn-success" value="Enviar" ng-disabled="!solicitud.$valid" ng-click="cambiarUrlSolicitud()">            
+            <input type="submit" name="enviar" class="btn btn-success" value="Guardar" ng-disabled="!solicitud.$valid" ng-click="cambiarUrlSolicitud()">            
         </div>
     </div></br>
 </div> 

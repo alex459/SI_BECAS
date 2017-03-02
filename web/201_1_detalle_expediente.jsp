@@ -4,6 +4,8 @@
     Author     : Manuel Miranda
 --%>
 
+<%@page import="DAO.ObservacionesDAO"%>
+<%@page import="POJO.Observaciones"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="POJO.Documento"%>
 <%@page import="DAO.DocumentoDAO"%>
@@ -27,6 +29,7 @@
     String carnet = "";
     String oferta = "";
     ArrayList<Documento> documentos = new ArrayList<Documento>();
+    ArrayList<Observaciones> observaciones = new ArrayList<Observaciones>();
 
     try {
         OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
@@ -38,6 +41,8 @@
         oferta = ofertaDao.obtenerTituloBeca(idExpediente);
         DocumentoDAO documentoDao = new DocumentoDAO();
         documentos = documentoDao.documentosExpediente(idExpediente);
+        ObservacionesDAO observacionDao = new ObservacionesDAO();
+        observaciones = observacionDao.consultarPorExpediente(idExpediente);
     } catch (Exception e) {
         e.printStackTrace();
     }
@@ -127,6 +132,11 @@
                 </div>
 
                 <div class="row">
+                    <br>
+                    <br>
+                </div>
+
+                <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
                         <fieldset class="custom-border">
@@ -137,14 +147,16 @@
                                         <th>No.</th>
                                         <th>Documento</th>
                                         <th>Estado</th>
-                                        <th>Observacion</th>
+                                        <th>Observación</th>
                                         <th>Documento Digital</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% for (int i = 0; i < documentos.size(); i++) {
+                                    <% int nu =0;
+                                        for (int i = 0; i < documentos.size(); i++) {
+                                            nu=nu+1;
                                             out.write("<tr>");
-                                            out.write("<td>" + i + "</td>");
+                                            out.write("<td>" + nu + "</td>");
                                             out.write("<td>" + documentos.get(i).getIdTipoDocumento().getTipoDocumento() + "</td>");
                                             out.write("<td>" + documentos.get(i).getEstadoDocumento() + "</td>");
                                             out.write("<td>" + documentos.get(i).getObservacion() + "</td>");
@@ -152,10 +164,67 @@
                                             out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + documentos.get(i).getIdDocumento() + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Expediente'></form> ");
                                             out.write("</td>");
                                             out.write("</tr>");
-                                            }%>
-                                    
+                                        }%>
+
                                 </tbody>
                             </table>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <fieldset class="custom-border">
+                            <legend class="custom-border">Observaciones</legend>
+                            <!-- Formularios de ingreso de observacion-->
+                            <div class="row">
+                                <form action="AgregarObservacionExpedienteServlet" method="post">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10">
+                                        <div class="col-md-2">
+                                            <label>Observación:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <textarea name="observacion" class="form-control"></textarea>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="hidden" name="idExpediente" value="<%=idExpediente%>">
+                                            <input type="submit" value="Guardar" class="btn btn-success">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </form>
+                            </div>
+                            <!-- Tabla de observaciones-->
+                            <div class="row">
+                                <br><br>
+                                <table id="Observaciones" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Observación</th>
+                                            <th>Acción</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% int n =0;
+                                        for (int i = 0; i < observaciones.size(); i++) {
+                                            n=n+1;
+                                            out.write("<tr>");
+                                            out.write("<td>" + n + "</td>");
+                                            out.write("<td>" + observaciones.get(i).getObservacion() + "</td>");                                            
+                                            out.write("<td>");
+                                            out.write("<form style='display:inline;' action='EliminarObservacionExpedienteServlet' method='post'><input type='hidden' name='idObservacion' value='" + observaciones.get(i).getIdObservacion() + "'><input type='submit' class='btn btn-danger' name='submit' value='Eliminar'></form> ");
+                                            out.write("</td>");
+                                            out.write("</tr>");
+                                        }%>
+
+                                </tbody>
+                                </table>
+                            </div>
                         </fieldset>
                     </div>
                     <div class="col-md-1"></div>
@@ -231,5 +300,40 @@
 
 
     </script>  
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Observaciones').DataTable(
+                    {
+                        "language":
+                                {
+                                    "sProcessing": "Procesando...",
+                                    "sLengthMenu": "Mostrar _MENU_ registros",
+                                    "sZeroRecords": "No se encontraron resultados",
+                                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                    "sInfoPostFix": "",
+                                    "sSearch": "Buscar:",
+                                    "sUrl": "",
+                                    "sInfoThousands": ",",
+                                    "sLoadingRecords": "Cargando...",
+                                    "oPaginate": {
+                                        "sFirst": "Primero",
+                                        "sLast": "Último",
+                                        "sNext": "Siguiente",
+                                        "sPrevious": "Anterior"
+                                    },
+                                    "oAria": {
+                                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                    }
+                                }
+                    }
+            );
+        });
+
+
+    </script> 
 </body>
 </html>

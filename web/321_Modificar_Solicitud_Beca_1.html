@@ -1,0 +1,171 @@
+<div>
+
+    <div class="col-md-2">
+        <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+            <li class="active"><a href="#/">Datos Personales</a></li>
+            <li><a href="#/laboral">Información Laboral</a></li>
+            <li><a href="#/educacion">Educación</a></li>
+            <li><a href="#/cargos">Cargos Desempeñados</a></li>
+            <li><a href="#/oferta">Información de Beca</a></li>
+            <li><a href="#/referencias">Referencias Personales</a></li>
+            <li><a href="#/documentos">Adjuntar Documentos</a></li>
+        </ul>
+    </div>  
+    <div class="col-md-10">
+        <fieldset class="custom-border">
+            <legend class="custom-border">Datos Personales</legend>
+            <div class="row">                                   
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="textinput">Primer Nombre</label>
+                    <input id="nombre1" name="nombre1" placeholder="Ingrese su Primer Nombre" class="form-control input-md" ng-model = "data.nombre" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.nombre1.$error.required">El Primer Nombre es Requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1.$error.minlength">Mínimo 3 Caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre1.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
+                </div>
+                <div class="col-md-3">
+                    <label for="textinput">Segundo Nombre</label>
+                    <input id="textinput" name="nombre2"  placeholder="Ingrese su Segundo Nombre" class="form-control input-md" ng-model = "data.nombre2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                    <span class="text-danger" ng-show="solicitud.nombre2.$error.minlength">Mínimo 3 Caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.nombre2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
+                </div>
+                <div class="col-md-3">
+                    <label for="textinput">Primer Apellido</label>
+                    <input name="apellido1" type="text" placeholder="Ingrese su Primer Apellido" class="form-control input-md" ng-model ="data.apellido1" ng-required="true" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.apellido1.$error.required">El Primer Apellido es Requerido.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1.$error.minlength">Mínimo 3 Caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido1.$error.pattern">Solo se permiten letras mayúsculas. (A-Z).</span>
+                </div>
+                <div class="col-md-3">
+                    <label for="textinput">Segundo Apellido</label>
+                    <input name="apellido2" type="text" placeholder="Ingrese su Segundo Apellido" class="form-control input-md" ng-model ="data.apellido2" ng-pattern="/^[A-ZÑÁÉÍÓÚ]*$/" maxlength="20" minlength="3">
+                    <span class="text-danger" ng-show="solicitud.apellido2.$error.minlength">Mínimo 3 Caracteres.</span>
+                    <span class="text-danger" ng-show="solicitud.apellido2.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
+                </div>  
+            </div></br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="textinput">Fecha de Nacimiento</label>
+                    <div class="input-group date">
+                        <input type="text" name="fechaNacimiento" class="form-control" ng-disabled="" ng-model="data.fecha_nacimiento" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                    </div>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.fechaNacimiento.$error.required">Debe de Introducir su Fecha de Nacimiento.</span>
+                </div>
+                <div class="col-md-4">
+                    <label for="textinput">Lugar de Nacimiento, Departamento</label>
+                    <select name="departamentoNacimiento" class="form-control" ng-model ="data.departamento_nacimiento" ng-change="activarmunicipios()" ng-required="true">
+                        <option ng-repeat="option in departamentos" value="{{option.idDepartamento}}">{{option.nombreDepartamento}}</option>
+                    </select>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.departamentoNacimiento.$error.required">Debe de Seleccionar el Departamento de su Nacimiento.</span>
+                </div>
+                <div class="col-md-4">
+                    <label for="textinput">Municipio</label>
+                    <select name="municipioNacimiento" class="form-control" ng-model ="data.municipio_nacimiento" ng-required="true" ng-disabled="activarMunicipios">
+                        <option ng-repeat="option in municipios|filter:{idDepartamento:data.departamento_nacimiento}" value="{{option.idMunicipio}}">{{option.nombreMunicipio}}</option>
+                    </select>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.municipioNacimiento.$error.required">Debe de Seleccionar el Municipio de su Nacimiento.</span>
+                </div>  
+            </div></br>
+            <div class="row">
+                <div class="col-md-12">        
+                    <div class="col-md-2">
+                        <label class="control-label" for="radios">Género</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="radio-inline" for="radios-0">
+                            <input type="radio" name="genero"  value="M"  ng-model ="data.genero" ng-required="true">
+                            Masculino
+                        </label> 
+                        <label class="radio-inline" for="radios-1">
+                            <input type="radio" name="genero" value="F" ng-model ="data.genero" ng-required="true">
+                            Femenino
+                        </label> <br>
+                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.genero.$error.required">Debe de Seleccionar su Género.</span>
+                    </div>    
+                </div>
+
+
+            </div></br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Domicilio</h4>
+                </div>
+            </div>
+            <div class="row">                                
+                <div class="col-md-12">
+                    <label class="control-label" for="textarea">Dirección</label>                    
+                    <textarea class="form-control" name="direccion" ng-model ="data.direccion" ng-required="true"></textarea>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.direccion.$error.required">Debe ingresar la direccion de su domicilio.</span>
+                </div>
+            </div></br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="textinput">Departamento de Domicilio</label>
+                    <select name="departamentoDireccion" class="form-control" ng-model ="data.departamento_direccion" ng-change="activarmunicipiosDomicilio()" ng-required="true">
+                        <option ng-repeat="option in departamentos" value="{{option.idDepartamento}}">{{option.nombreDepartamento}}</option>
+                    </select>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.departamentoDireccion.$error.required">Debe de Seleccionar el Departamento de su domicilio.</span>
+                </div>
+                <div class="col-md-4">
+                    <label for="textinput">Municipio de Domicilio</label>
+                    <select name="municipioDomicilio" class="form-control" ng-model ="data.municipio_direccion" ng-required="true" ng-disabled="activarMunicipiosDomicilio">
+                        <option ng-repeat="option in municipios|filter:{idDepartamento:data.departamento_direccion}" value="{{option.idMunicipio}}">{{option.nombreMunicipio}}</option>
+                    </select>
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.municipioDomicilio.$error.required">Debe de Seleccionar el Municipio de su domicilio.</span>
+                </div>   
+            </div></br>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Teléfono</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="textinput">Casa</label>
+                    <input name="telCasa" type="text" placeholder="Ingrese el Número de Teléfono de Casa" class="form-control input-md" ng-model = "data.tel_casa" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telCasa.$error.required">Debe ingresar el Número de Teléfono de su Casa.</span>
+                    <span class="text-danger" ng-show="solicitud.telCasa.$error.minlength">Debe Ingresar 8 Digitos.</span>
+                    <span class="text-danger" ng-show="solicitud.telCasa.$error.pattern">Solo se Permiten Números. (0-9).</span>
+                </div>
+                <div class="col-md-3">
+                    <label for="textinput">Móvil</label>
+                    <input name="telMovil" type="text" placeholder="Ingrese el Número de Teléfono Móvil" class="form-control input-md" ng-model = "data.tel_movil" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telMovil.$error.required">Debe Ingresar su Núumero de Teléfono Movil.</span>
+                    <span class="text-danger" ng-show="solicitud.telMovil.$error.minlength">Debe Ingresar 8 Digitos.</span>
+                    <span class="text-danger" ng-show="solicitud.telMovil.$error.pattern">Solo se Permiten Números. (0-9).</span>
+                </div>
+                <div class="col-md-3">
+                    <label for="textinput">Oficina</label>
+                    <input name="telOficina" type="text" placeholder="Ingrese el Número de Teléfono de Oficina" class="form-control input-md" ng-model = "data.tel_oficina" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="8" maxlength="8">
+                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.telOficina.$error.required">Debe Ingresar el Número de Teléfono de su Oficina.</span>
+                    <span class="text-danger" ng-show="solicitud.telOficina.$error.minlength">Debe Ingresar 8 Digitos.</span>
+                    <span class="text-danger" ng-show="solicitud.telOficina.$error.pattern">Solo se Permiten Números. (0-9).</span>
+                </div>
+            </div></br>
+            <div class="row"></div>
+        </fieldset>              
+        <div class="row">
+            <div class="col-md-4 col-lg-offset-4">
+                <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
+                <a href="#/laboral"> <button class="btn btn-success" ng-disabled="!solicitud.$valid">Continuar</button></a>                
+            </div>
+        </div>
+    </div> 
+
+</div>
+
+<script type="text/javascript">
+                        $(function () {
+                            $('.input-group.date').datepicker({
+                                format: 'yyyy-mm-dd',
+                                calendarWeeks: true,
+                                todayHighlight: true,
+                                autoclose: true,
+                                startDate: '-70y',
+                                endDate: '-20y'
+                            });
+                        });
+
+</script>

@@ -1,0 +1,217 @@
+<div>
+    <div class="col-md-2">
+        <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+            <li><a href="#/">Datos Personales</a></li>
+            <li><a href="#/laboral">Información Laboral</a></li>
+            <li  class="active"><a href="#/educacion">Educación</a></li>
+            <li><a href="#/cargos">Cargos Desempeñados</a></li>
+            <li><a href="#/oferta">Información de Beca</a></li>
+            <li><a href="#/referencias">Referencias Personales</a></li>
+            <li><a href="#/documentos">Adjuntar Documentos</a></li>
+        </ul>
+    </div>  
+    <div class="col-md-10">
+
+        <fieldset class="custom-border">
+            <legend class="custom-border">Educación</legend>
+            <div class="row">  
+                                <div class="col-md-12">
+                                    <table class="table table-bordered">
+                                        <label>Estudios Realizados</label>
+                                        <thead>
+                                            <tr class="success">
+                                                <th>No</th>
+                                                <th>Tipo de Educación</th>
+                                                <th>Grado Alcanzado</th>
+                                                <th>Institución</th>
+                                                <th>Año</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr ng-repeat="x in data.educacion">
+                                                <td>{{$index + 1}}</td>                                                
+                                                <td> 
+                                                    <select name="{{x.tipo}}" class="form-control" ng-model="aux.auxTipoEdu[$index]" ng-required="true">
+                                                        <option value="PRIMARIA">PRIMARIA</option>
+                                                        <option value="SECUNDARIA">SECUNDARIA</option>
+                                                        <option value="UNIVERSITARIA">UNIVERSITARIA</option>
+                                                        <option value="POSTGRADO">POSTGRADO</option>
+                                                        <option value="OTRA">OTRA</option>
+                                                    </select>
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.tipo}}.$error.required">Seleccione el Tipo de Educación.</span>
+                                                </td>
+                                                    <td>
+                                                        <input type="text" name="{{x.grado}}" class="form-control" ng-model="aux.auxGradoEdu[$index]" ng-required="true" minlength="10" maxlength="80" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.grado}}.$error.required">Ingrese el Grado Alcanzado.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.minlength">Mínimo 10 Caracteres.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.grado}}.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
+                                                    </td>
+                                                <td><input name="{{x.institucion}}" type="text" placeholder="Ingrese el Nombre de la Institución" class="form-control input-md" ng-model="aux.auxInstitucionEdu[$index]" ng-required="true" minlength="10" maxlength="125" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                        <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.institucion}}.$error.required">Ingrese el Nombre de la Institución.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.minlength">Mínimo 10 Caracteres.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.institucion}}.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
+                                                </td>
+                                                <td>                                                    
+                                                    <div class="input-group date">
+                                                        <input name="{{x.anyo}}" type="text" class="form-control" ng-disabled="" ng-model="aux.auxAnyoEdu[$index]" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div>
+                                                    
+                                                    <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.required">Ingrese el Año de Graduación del Estudio.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.min">Año Mínimo Permitido 1940.</span>
+                                                        <span class="text-danger" ng-show="solicitud.{{x.anyo}}.$error.pattern">Solo se Permiten Letras Dígitos. (0-9).</span>
+                                                
+                                                <script type="text/javascript">
+    $(function () {
+        $('.input-group.date').datepicker({
+            format: " yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            startDate: '-59y',
+            endDate: '-0y'
+        });
+    });
+
+</script>
+                                                </td>
+                                                <td>
+                                                    <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarEducacion()">Eliminar</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row text-center">
+                                        <a href="" class="btn btn-primary" ng-click="agregarEducacion()" ng-show="verAgregarEducacion">Agregar Nueva Educación</a>
+                                    </div>
+                                </div> 
+                            </div></br>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered">
+                                        <label>Trabajo de Investigación o Tesis Realizada </label>
+                                        <thead>
+                                            <tr class="success">
+                                                <th>No</th>
+                                                <th>Título de Proyecto</th>
+                                                <th>Publicado</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr ng-repeat="x in data.proyectos" >
+                                                <td>{{$index + 1}}</td>
+                                                <td>
+                                                    <input name="{{x.titulo}}" type="text" placeholder="Titulo del Proyecto" class="form-control input-md" ng-model="aux.auxTituloProy[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto" minlength="10" maxlength="125" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                                    <span ng-show="!checkProyecto">
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.titulo}}.$error.required">Ingrese el Nombre del Proyecto.</span>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.minlength">Mínimo 10 Caracteres.</span>
+                                                    <span class="text-danger" ng-show="solicitud.{{x.titulo}}.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
+                                                </td></span>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-2"></div>
+                                                        <div class="col-sm-4">
+                                                            <input type="radio" name="{{x.publicado}}" value="1" ng-model="aux.auxPublicado[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto" ng-checked="limpiarProyecto()">
+                                                            <label>  Si </label>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <input type="radio" name="{{x.publicado}}" value="0" ng-model="aux.auxPublicado[$index]" ng-required="!checkProyecto" ng-disabled="checkProyecto">
+                                                            <label>  No </label>
+                                                        </div>
+                                                        <div class="col-sm-2"></div>
+                                                    </div>
+                                                    <span ng-show="!checkProyecto">
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.publicado}}.$error.required">Seleccione si fue publicado</span>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <input type="checkBox" name="cheque1" ng-show="$first&&$last" ng-model="checkProyecto" ng-click="cambiarcheckProyecto()"> <label ng-show="$first&&$last">Ninguno</label>
+                                                    <a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarProyecto()">Eliminar</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row text-center">
+                                        <a href="" class="btn btn-primary" ng-click="agregarProyecto()" ng-show="!checkProyecto&&verAgregarProyecto">Agregar Nuevo Proyecto</a>
+                                    </div>
+                                    </div>
+                                </div>
+                                
+                            </div></br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Idiomas Manejados </label>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr class="success">
+                                                <th>No</th>
+                                                <th>Idioma</th>
+                                                <th>Nivel de Habla</th>
+                                                <th>Nivel de Lectura</th>
+                                                <th>Nivel de Escritura</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="x in data.idiomas">
+                                                <td>{{$index + 1}} </td>
+                                                <td> <select name="{{x.idioma}}" ng-model="aux.auxIdioma[$index]" class="form-control" ng-required="true">
+                                                        <option value="ESPANOL">ESPAÑOL</option>
+                                                        <option value="INGLES">INGLES</option>
+                                                        <option value="FRANCES">FRANCES</option>
+                                                        <option value="PORTUGUES">PORTUGUES</option>
+                                                        <option value="ALEMAN">ALEMAN</option>
+                                                        <option value="ITALIANO">ITALIANO</option>
+                                                        <option value="MANDARIN">MANDARIN</option>
+                                                        <option value="JAPONES">JAPONES</option>
+                                                        <option value="RUSO">RUSO</option>
+                                                    </select> 
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.idioma}}.$error.required">Seleccione un idioma.</span>
+                                                </td>
+                                                <td> <select name="{{x.nivelHabla}}" class="form-control" ng-model="aux.auxNivelHabla[$index]" ng-required="true">
+                                                        <option value="REGULAR">REGULAR</option>
+                                                        <option value="BIEN">BIEN</option>
+                                                        <option value="EXCELENTE">EXCELENTE</option>
+                                                     </select> 
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelHabla}}.$error.required">Seleccione un nivel.</span>
+                                                </td>
+                                                <td> <select name="{{x.nivelLectura}}" class="form-control" ng-model="aux.auxNivelLectura[$index]" ng-required="true">
+                                                        <option value="REGULAR">REGULAR</option>
+                                                        <option value="BIEN">BIEN</option>
+                                                        <option value="EXCELENTE">EXCELENTE</option>
+                                                     </select>  
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelLectura}}.$error.required">Seleccione un nivel.</span>
+                                                </td>
+                                                <td> <select name="{{x.nivelEscritura}}" class="form-control" ng-model="aux.auxNivelEscritura[$index]" ng-required="true">
+                                                        <option value="REGULAR">REGULAR</option>
+                                                        <option value="BIEN">BIEN</option>
+                                                        <option value="EXCELENTE">EXCELENTE</option>
+                                                     </select>                                                    
+                                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.{{x.nivelEscritura}}.$error.required">Seleccione un nivel.</span>
+                                                </td>
+                                                <td><a name="eliminar" class="btn btn-danger" ng-show="!$first&&$last" ng-click="eliminarIdioma()">Eliminar</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row text-center">
+                                        <a href="" class="btn btn-primary" ng-click="agregarIdioma()" ng-show="verAgregarIdioma" >Agregar Nuevo Idioma</a>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="row">                              
+                            </div></br>
+                            <div class="row">
+                            </div></br>
+        </fieldset>              
+        <div class="row">
+            <div class="col-md-4 col-lg-offset-4">
+                <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
+                <a href="#/laboral" class="btn btn-primary">Regresar</a>
+                <a href="#/cargos"><button class="btn btn-success" ng-disabled="!solicitud.$valid">Continuar</button></a>                                 
+            </div>
+        </div>
+    </div> 
+
+</div>
+

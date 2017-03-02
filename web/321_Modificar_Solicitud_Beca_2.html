@@ -1,0 +1,86 @@
+<div>
+                <div class="col-md-2">
+                <ul id="sidebar" class="nav nav-pills nav-stacked" style="max-width: 200px;">
+                    <li><a href="#/">Datos Personales</a></li>
+                    <li  class="active"><a href="#/laboral">Información Laboral</a></li>
+                    <li><a href="#/educacion">Educación</a></li>
+                    <li><a href="#/cargos">Cargos Desempeñados</a></li>
+                    <li><a href="#/oferta">Información de Beca</a></li>
+                    <li><a href="#/referencias">Referencias Personales</a></li>
+                    <li><a href="#/documentos">Adjuntar Documentos</a></li>
+                </ul>
+            </div>  
+            <div class="col-md-10">
+                
+                        <fieldset class="custom-border">
+                <legend class="custom-border">Información laboral</legend>
+                            <div class="row">                                   
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput">Profesión</label>
+                                    <input name="profesion" type="text" placeholder="Ingrese el Nombre de su Profesión" class="form-control input-md" ng-model="data.profesion" ng-required="true" minlength="10" maxlength="70" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.profesion.$error.required">Ingrese su Profesión.</span>
+                                    <span class="text-danger" ng-show="solicitud.profesion.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.profesion.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
+                                </div> 
+                            </div></br>
+                             <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput">Cargo actual</label>
+                                    <input name="cargo" type="text" placeholder="Ingrese el Nombre de su Cargo Actual" class="form-control input-md" ng-model="data.cargo" ng-required="true" minlength="10" maxlength="80" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.cargo.$error.required">Ingrese su Cargo Actual.</span>
+                                    <span class="text-danger" ng-show="solicitud.cargo.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.cargo.$error.pattern">Solo se Permiten Letras Mayúsculas. (A-Z).</span>
+                                </div> 
+                            </div></br>
+                             <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput">Departamento (Unidad)</label>
+                                    <input name="unidad" type="text" placeholder="Ingrese el Nombre de su Departamento" class="form-control input-md" ng-model="data.unidad" ng-required="true" minlength="10" maxlength="120" ng-pattern="/^[A-ZÑÁÉÍÓÚ ]*$/">
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.unidad.$error.required">Ingrese la Unidad o Departamento en el que Labora.</span>
+                                    <span class="text-danger" ng-show="solicitud.unidad.$error.minlength">Mínimo 10 Caracteres.</span>
+                                    <span class="text-danger" ng-show="solicitud.unidad.$error.pattern">Solo se Cermiten Letras Mayúsculas. (A-Z).</span>
+                                </div> 
+                            </div></br>
+                             <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <label for="textinput">Facultad</label>
+                                    <input type="text" class="form-control" ng-value="facultad" disabled="true">
+                                </div> 
+                            </div></br>
+                            <div class="row">
+                                 <div class="col-md-4 col-md-offset-4">
+                                    <label>Fecha de Contratación</label>
+                                    <div class="input-group date">
+                                        <input name="fechaContratacion" type="text" class="form-control" ng-disabled="" ng-model="data.fecha_contratacion" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                    <span class="text-danger" ng-show="!solicitud.$pristine && solicitud.fechaContratacion.$error.required">Ingrese la fecha en que comenzó a laborar en la Universidad de El Salvador.</span>
+                                </div>
+                            </div></br>                            
+                            <div class="row"></div>
+                    </fieldset>              
+                <div class="row">
+                        <div class="col-md-4 col-lg-offset-4">
+                            <a href="principal.jsp" class="btn btn-danger">Cancelar</a>
+                            <a href="#/"><button id="button1id" name="regresar" class="btn btn-primary">Regresar</button></a>
+                            <a href="#/educacion"><button id="button1id" name="continuar" class="btn btn-success" ng-disabled="!solicitud.$valid">Continuar</button></a>                                                        
+                        </div>
+                </div>
+            </div> 
+            
+</div>
+
+<script type="text/javascript">
+                        $(function () {
+                            $('.input-group.date').datepicker({
+                                format: 'yyyy-mm-dd',
+                                calendarWeeks: true,
+                                todayHighlight: true,
+                                autoclose: true,
+                                startDate: '-50y',
+                                endDate: '-2y'
+                            });
+                        });
+
+</script>
