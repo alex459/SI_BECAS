@@ -32,44 +32,206 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-10 text-center">
-                        <label>Seleccione la accion que desea realizar</label>
+                        <label>Seleccione la acción que desea realizar</label>
                     </div>
                     <div class="col-md-1"></div>                        
                 </div>
 
-                <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                <div class="row"><!--Documento-->                    
+                    <div class="col-md-12">                        
+                        <div class="col-md-12">                            
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label class="form-control-static"> Carta de Solicitud de Autorización Inicial</label>
+                                <div class="col-md-8">
+                                    <label class="form-control-static"> SOLICITUD DE BECA FIRMADA:</label>
                                 </div>   
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="radio-inline" for="radios-0">
-                                        <input type="radio" name="accCarta"  value="ninguna"  ng-model ="accCarta" ng-required="true" ng-click="NadaCarta()">
+                                        <input type="radio" name="accSolicitudFirmada"  value="ninguna"  ng-model ="accSolicitudFirmada" ng-required="true" ng-click="NadaSolicitudFirmada()">
                                         Ninguna
                                     </label>
                                     <label class="radio-inline" for="radios-0">
-                                        <input type="radio" name="accCarta"  value="actualizar"  ng-model ="accCarta" ng-required="true" ng-click="ActualizarCarta()">
+                                        <input type="radio" name="accSolicitudFirmada"  value="actualizar"  ng-model ="accSolicitudFirmada" ng-required="true" ng-click="ActualizarSolicitudFirmada()">
                                         Actualizar
                                     </label> 
-
                                 </div> 
-                            </div>
-                            <div class="row" ng-show="mostrarCarta">
+                            </div>                            
+                            <div class="row" ng-show="mostrarSolicitudFirmada">
                                 <div class="col-md-12">
-                                    <input type="file" class="" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file ng-required="mostrarCarta">
-                                    <span class="text-danger" ng-show="solicitudPermisoInicial.cartaSolicitud.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                    <input type="file" class="" name="solicitudFirmada" accept="application/pdf" ng-model="solicitudFirmada" valid-file ng-required="mostrarSolicitudFirmada">
+                                    <span class="text-danger" ng-show="solicitud.solicitudFirmada.$invalid">Debe ingresar un documento en formato PDF.</span>
                                 </div>
                             </div>
                         </div>
-
-
-                    </div>
-                    <div class="col-md-1"></div>
-                </div>
+                    </div>                    
+                </div><!--Fin Documento-->
+                
+                <div class="row"><!--Documento-->                    
+                    <div class="col-md-12">                        
+                        <div class="col-md-12">                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-control-static"> DICTAMEN DEL JEFE DEL DEPARTAMENTO O ESCUELA QUE MANIFIESTA ELECCION POR CONCURSO DE OPOSICIÓN:</label>
+                                </div>   
+                                <div class="col-md-4">
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accDictamenJefe"  value="ninguna"  ng-model ="accDictamenJefe" ng-required="true" ng-click="NadaDictamenJefe()">
+                                        Ninguna
+                                    </label>
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accDictamenJefe"  value="actualizar"  ng-model ="accDictamenJefe" ng-required="true" ng-click="ActualizarDictamenJefe()">
+                                        Actualizar
+                                    </label> 
+                                </div> 
+                            </div>                            
+                            <div class="row" ng-show="mostrarDictamenJefe">
+                                <div class="col-md-12">
+                                    <input type="file" class="" name="dictamenJefe" accept="application/pdf" ng-model="dictamenJefe" valid-file ng-required="mostrarDictamenJefe">
+                                    <span class="text-danger" ng-show="solicitud.dictamenJefe.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div><!--Fin Documento-->
+                
+                <div class="row"><!--Documento-->                    
+                    <div class="col-md-12">                        
+                        <div class="col-md-12">                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-control-static"> TÍTULO ACADÉMICO:</label>
+                                </div>   
+                                <div class="col-md-4">
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accTituloAcademico"  value="ninguna"  ng-model ="accTituloAcademico" ng-required="true" ng-click="NadaTituloAcademico()">
+                                        Ninguna
+                                    </label>
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accTituloAcademico"  value="actualizar"  ng-model ="accTituloAcademico" ng-required="true" ng-click="ActualizarTituloAcademico()">
+                                        Actualizar
+                                    </label> 
+                                </div> 
+                            </div>                            
+                            <div class="row" ng-show="mostrarTituloAcademico">
+                                <div class="col-md-12">
+                                    <input type="file" class="" name="tituloAcademico" accept="application/pdf" ng-model="tituloAcademico" valid-file ng-required="mostrarTituloAcademico">
+                                    <span class="text-danger" ng-show="solicitud.tituloAcademico.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div><!--Fin Documento-->
+                
+                <div class="row"><!--Documento-->                    
+                    <div class="col-md-12">                        
+                        <div class="col-md-12">                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-control-static"> PARTIDA DE NACIMIENTO:</label>
+                                </div>   
+                                <div class="col-md-4">
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accPartida"  value="ninguna"  ng-model ="accPartida" ng-required="true" ng-click="NadaPartida()">
+                                        Ninguna
+                                    </label>
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accPartida"  value="actualizar"  ng-model ="accPartida" ng-required="true" ng-click="ActualizarPartida()">
+                                        Actualizar
+                                    </label> 
+                                </div> 
+                            </div>                            
+                            <div class="row" ng-show="mostrarPartida">
+                                <div class="col-md-12">
+                                    <input type="file" class="" name="partida" accept="application/pdf" ng-model="partida" valid-file ng-required="mostrarPartida">
+                                    <span class="text-danger" ng-show="solicitud.partida.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div><!--Fin Documento-->
+                
+                <div class="row"><!--Documento-->                    
+                    <div class="col-md-12">                        
+                        <div class="col-md-12">                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-control-static"> DUI:</label>
+                                </div>   
+                                <div class="col-md-4">
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accDui"  value="ninguna"  ng-model ="accDui" ng-required="true" ng-click="NadaDui()">
+                                        Ninguna
+                                    </label>
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accDui"  value="actualizar"  ng-model ="accDui" ng-required="true" ng-click="ActualizarDui()">
+                                        Actualizar
+                                    </label> 
+                                </div> 
+                            </div>                            
+                            <div class="row" ng-show="mostrarDui">
+                                <div class="col-md-12">
+                                    <input type="file" class="" name="dui" accept="application/pdf" ng-model="dui" valid-file ng-required="mostrarDui">
+                                    <span class="text-danger" ng-show="solicitud.dui.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div><!--Fin Documento-->
+                
+                <div class="row"><!--Documento-->                    
+                    <div class="col-md-12">                        
+                        <div class="col-md-12">                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-control-static"> CURRÍCULUM VITAE:</label>
+                                </div>   
+                                <div class="col-md-4">
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accCurriculo"  value="ninguna"  ng-model ="accCurriculo" ng-required="true" ng-click="NadaCurriculo()">
+                                        Ninguna
+                                    </label>
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accCurriculo"  value="actualizar"  ng-model ="accCurriculo" ng-required="true" ng-click="ActualizarCurriculo()">
+                                        Actualizar
+                                    </label> 
+                                </div> 
+                            </div>                            
+                            <div class="row" ng-show="mostrarCurriculo">
+                                <div class="col-md-12">
+                                    <input type="file" class="" name="curriculo" accept="application/pdf" ng-model="curriculo" valid-file ng-required="mostrarCurriculo">
+                                    <span class="text-danger" ng-show="solicitud.curriculo.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div><!--Fin Documento-->
+                
+                <div class="row"><!--Documento-->                    
+                    <div class="col-md-12">                        
+                        <div class="col-md-12">                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-control-static"> NOTAS GLOBALES:</label>
+                                </div>   
+                                <div class="col-md-4">
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accNotas"  value="ninguna"  ng-model ="accNotas" ng-required="true" ng-click="NadaNotas()">
+                                        Ninguna
+                                    </label>
+                                    <label class="radio-inline" for="radios-0">
+                                        <input type="radio" name="accNotas"  value="actualizar"  ng-model ="accNotas" ng-required="true" ng-click="ActualizarNotas()">
+                                        Actualizar
+                                    </label> 
+                                </div> 
+                            </div>                            
+                            <div class="row" ng-show="mostrarNotas">
+                                <div class="col-md-12">
+                                    <input type="file" class="" name="notas" accept="application/pdf" ng-model="notas" valid-file ng-required="mostrarNotas">
+                                    <span class="text-danger" ng-show="solicitud.notas.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div><!--Fin Documento-->
 
             </div>
             <div class="col-md-1"></div>
