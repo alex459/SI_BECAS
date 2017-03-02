@@ -83,7 +83,9 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         
         //validacion 1 //que sea un becario o candidato que tiene un proceso de beca
         Usuario usuarioAnterior = new Usuario();
+        DetalleUsuario detalleUsuarioAnterior = new DetalleUsuario();
         usuarioAnterior = usuarioDao.consultarPorId(usuarioActualizado.getIdUsuario());
+        detalleUsuarioAnterior = detalleUsuarioDao.consultarPorId(detalleUsuarioActualizado.getIdDetalleUsuario());
         if(usuarioAnterior.getIdTipoUsuario() != usuarioActualizado.getIdTipoUsuario()){
             if(usuarioAnterior.getIdTipoUsuario() == 1 || usuarioAnterior.getIdTipoUsuario() == 2){
                 ExpedienteDAO expedienteDao = new ExpedienteDAO();
@@ -131,9 +133,11 @@ public class ActualizarUsuarioServlet extends HttpServlet {
         
         if (validacion1 && validacion2 && validacion3 && validacion4) {
             int id_user_login = Integer.parseInt(request.getSession().getAttribute("id_user_login").toString());
-            bandera1 = usuarioDao.actualizar(usuarioActualizado, id_user_login); //guardando usuario
-            bandera2 = detalleUsuarioDao.actualizarOpcion2(detalleUsuarioActualizado, id_user_login); //guardando detalle usuario
-
+            
+            bandera1 = usuarioDao.actualizar(usuarioActualizado); //guardando usuario
+            bandera2 = detalleUsuarioDao.actualizarOpcion2(detalleUsuarioActualizado); //guardando detalle usuario            
+            
+            
             //Redireccionando a la pagina de mensaje general    
             if (bandera1 && bandera2) {
             TipoUsuario tipoUsuario = new TipoUsuario();
@@ -143,6 +147,8 @@ public class ActualizarUsuarioServlet extends HttpServlet {
             Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizó el usuario correctamente.");
             } else {
                 Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo actualizar el usuario.");
+                usuarioDao.actualizar(usuarioAnterior);
+                detalleUsuarioDao.actualizarOpcion2(detalleUsuarioAnterior);
             }
 
         }else{

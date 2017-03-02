@@ -99,13 +99,15 @@ public class AgregarUsuarioServlet extends HttpServlet {
             
             //id_usuario es para la bitacora.
             int id_user_login = Integer.parseInt(request.getSession().getAttribute("id_user_login").toString());
-            bandera1 = usuarioDao.ingresar(usuario, id_user_login); //guardando usuario
-            bandera2 = detalleUsuarioDao.ingresarOpcion2(detalleUsuario, id_user_login); //guardando detalle usuario
+            bandera1 = usuarioDao.ingresar(usuario); //guardando usuario
+            bandera2 = detalleUsuarioDao.ingresarOpcion2(detalleUsuario); //guardando detalle usuario            
 
             //Redireccionando a la pagina de mensaje general    
             if (bandera1 && bandera2) {
                 //Utilidades.nuevaBitacora(1, request.getSession().getAttribute("user").toString(), "Se ingreso el usuario " + usuario.getNombreUsuario() + ".");
+                Utilidades.nuevaBitacora(1, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()), "Se agrego un nuevo usuario con codigo: "+usuario.getNombreUsuario()+".", "");
                 Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingresó el usuario correctamente.");
+                
             } else {
                 Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el usuario. ");
             }

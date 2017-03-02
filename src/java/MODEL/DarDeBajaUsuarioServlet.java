@@ -5,6 +5,7 @@
  */
 package MODEL;
 
+import DAO.ExpedienteDAO;
 import DAO.UsuarioDAO;
 import POJO.Usuario;
 import java.io.IOException;
@@ -39,19 +40,43 @@ public class DarDeBajaUsuarioServlet extends HttpServlet {
         
         Usuario usuario = new Usuario();
         UsuarioDAO usuarioDao = new UsuarioDAO();
-
-        boolean bandera;
         
+        boolean validacion1 = false; //usuario candidato o becario con proceso activo.
+        boolean validacion2 = false; //dar de baja a uno mismo.                        
+        String mensaje = new String();
         String nombre_usuario = request.getParameter("CARNET");
         usuario = usuarioDao.consultarPorNombreUsuario(nombre_usuario);
         int id_user_login = Integer.parseInt(request.getSession().getAttribute("id_user_login").toString());
+        boolean bandera;
+        
+        //validacion1
+        if(usuario.getIdTipoUsuario() == 1 || usuario.getIdTipoUsuario() == 2 ){
+            ExpedienteDAO expedienteDao = new ExpedienteDAO();
+            if(expedienteDao.expedienteAbiertoPorIdUsuario(usuario.getIdUsuario())){
+                validacion1=false;
+                mensaje = mensaje.concat("No se puede dar de baja a un usuario que se encuentre en un proceso de beca.");
+            }else{
+                validacion1=true;
+            }
+        }else{
+            validacion1 = true;
+        }
+        
+        //validacion2
+        if(request.getSession().getAttribute("user").equals(usuario.getNombreUsuario())){
+            validacion2 = false;
+            mensaje = mensaje.concat("No se puede dar de baja a su usuario mientras esta logeado.");
+        }else{
+            validacion2 = true;
+        }                        
+        
         bandera = usuarioDao.darDeBajaUsuario(usuario, id_user_login);
 
         if (bandera) {            
-            Utilidades.nuevaBitacora(2, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se dio de baja al usuario "+nombre_usuario, "");
-            Utilidades.mostrarMensaje(response, 1, "Exito", "El usuario "+nombre_usuario+" se ha desactivado.");
+            Utilidades.nuevaBitacora(2, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se ha dado de baja al usuario "+nombre_usuario, "");
+            Utilidades.mostrarMensaje(response, 1, "Exito", "El usuario "+nombre_usuario+" se ha dado de baja.");
         } else {
-            Utilidades.mostrarMensaje(response, 2, "Error", "El usuario "+nombre_usuario+" no pudo ser desactivado.");
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se puede actualizar el usuario. " + mensaje);
         }
     }
 

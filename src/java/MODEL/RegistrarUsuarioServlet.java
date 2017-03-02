@@ -84,12 +84,12 @@ public class RegistrarUsuarioServlet extends HttpServlet {
             
             //id_usuario es para la bitacora.
             int id_user_login = Integer.parseInt(request.getSession().getAttribute("id_user_login").toString());
-            bandera1 = usuarioDao.ingresar(usuario, 9); //guardando usuario
-            bandera2 = detalleUsuarioDao.ingresarOpcion2(detalleUsuario, id_user_login); //guardando detalle usuario
+            bandera1 = usuarioDao.ingresar(usuario); //guardando usuario
+            bandera2 = detalleUsuarioDao.ingresarOpcion2(detalleUsuario); //guardando detalle usuario
 
             //Redireccionando a la pagina de mensaje general    
             if (bandera1 && bandera2) {
-                //Utilidades.nuevaBitacora(1, request.getSession().getAttribute("user").toString(), "Se ingreso el usuario " + usuario.getNombreUsuario() + ".");                
+                Utilidades.nuevaBitacora(1, usuario.getIdUsuario(), "Se ingreso el usuario " + usuario.getNombreUsuario() + ".","");                
                 Utilidades.mostrarMensajeOpcion2(response, 1, "Exito", "Se ha registrado correctamente. Ingrese nuevamente.");                
             } else {
                 Utilidades.mostrarMensajeOpcion2(response, 2, "Error", "No se pudo registrar correctamente.");

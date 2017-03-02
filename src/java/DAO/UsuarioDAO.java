@@ -58,7 +58,7 @@ public class UsuarioDAO extends ConexionBD {
         return siguienteId;
     }
 
-    public boolean ingresar(Usuario usuario, Integer id_user_login) {
+    public boolean ingresar(Usuario usuario) {
         boolean exito = false;
 
         this.abrirConexion();
@@ -67,8 +67,7 @@ public class UsuarioDAO extends ConexionBD {
             String sql = "INSERT INTO USUARIO(ID_USUARIO, ID_TIPO_USUARIO, NOMBRE_USUARIO, CLAVE) VALUES(" + usuario.getIdUsuario() + ", " + usuario.getIdTipoUsuario() + ", '" + usuario.getNombreUsuario() + "', MD5('" + usuario.getClave() + "'))";
             stmt.execute(sql);
             exito = true;
-            this.cerrarConexion();
-            Utilidades.nuevaBitacora(1, id_user_login, "Se ingreso un nuevo usuario.", sql);
+            this.cerrarConexion();            
         } catch (Exception e) {
             System.out.println("Error " + e);
         } finally {
@@ -201,7 +200,7 @@ public class UsuarioDAO extends ConexionBD {
         return logeo;
     }
 
-    public boolean actualizar(Usuario usuario, Integer id_user_login) {
+    public boolean actualizar(Usuario usuario) {
         boolean exito = false;
 
         this.abrirConexion();
