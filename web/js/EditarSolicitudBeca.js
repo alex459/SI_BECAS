@@ -346,13 +346,10 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function ($routeProvider)
                 $scope.pestana = $scope.pestana = "_blank";
             };
             $scope.cambiarUrlSolicitud = function () {
-                $scope.url = $scope.url = "SolicitarBecaServlet";
+                $scope.url = $scope.url = "EditarSolicitudBecaServlet";
                 $scope.pestana = $scope.pestana = "";
             };
-            $scope.cambiarUrlDocumento = function () {
-                $scope.url = $scope.url = "verDocumentoConsejo";
-                $scope.pestana = $scope.pestana = "";
-            };
+
 
             $scope.accSolicitudFirmada = "ninguna";
             $scope.mostrarSolicitudFirmada = false;
