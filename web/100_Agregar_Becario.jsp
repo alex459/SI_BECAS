@@ -46,6 +46,9 @@
         nombre2 = request.getParameter("nombre2");
         apellido1 = request.getParameter("apellido1");
         apellido2 = request.getParameter("apellido2");
+        if (nombre1.equals(null) || apellido1.equals(null)){
+            response.sendRedirect("Agregar_Becario_Consulta.jsp");
+        }
         OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
         ofertas = ofertaDao.consultarTodos();
         InstitucionDAO institucionDAO = new InstitucionDAO();
@@ -53,6 +56,7 @@
         listaInstitucion2 = institucionDAO.consultarActivosPorTipo("ESTUDIO");
     } catch (Exception e) {
         e.printStackTrace();
+        response.sendRedirect("Agregar_Becario_Consulta.jsp");
     }
 %>
 
@@ -257,39 +261,78 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">                    
-                        <div class="col-md-12">
-                            <div class="col-md-2">
-                                <label>Estado de la Beca: </label><br>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="col-md-3">
-                                    <label>Realización de Estudio</label>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <fieldset class="custom-border">
+                                <legend class="custom-border">Estado de la Beca</legend>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                        <div class="col-md-5">
+                                            <label class="form-control-static">Realización de Estudio</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="radio" name="estado" class="form-control" value="estudio" ng-click="activarEstudio()">
+                                        </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="radio" name="estado" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                        <div class="col-md-5">
+                                            <label class="form-control-static">Servicio Contractual</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="radio" name="estado" class="form-control" value="servicio" ng-click="activarContractual()">
+                                        </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>Servicio Contractual</label>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                        <div class="col-md-5">
+                                            <label class="form-control-static">Gestión de Compromiso Contractual</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="radio" name="estado" class="form-control" value="compromiso" ng-click="activarCompromiso()">
+                                        </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="radio" name="estado" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                        <div class="col-md-5">
+                                            <label class="form-control-static">Gestión de Liberación</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="radio" name="estado" class="form-control" value="liberacion" ng-click="activarLiberacion()">
+                                        </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>Gestión de liberacion</label>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                        <div class="col-md-5">
+                                            <label class="form-control-static">Beca Finalizada</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="radio" name="estado" class="form-control" value="becaFinalizada" ng-click="activarBecaFinalizada()">
+                                        </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="radio" name="estado" class="form-control"><br>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                        <div class="col-md-5">
+                                            <label class="form-control-static">Reintegro de Beca</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="radio" name="estado" class="form-control" value="reintegro" ng-click="activarEstudio()">
+                                        </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>Finalizada</label>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                        <div class="col-md-5">
+                                            <label class="form-control-static">Finalizada por Reintegro de Beca</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="radio" name="estado" class="form-control" value="finReintegro" ng-click="activarFinReintegro()">
+                                        </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="radio" name="estado" class="form-control"><br>
-                                </div>                                
-                            </div>
+                            </fieldset>
                         </div>
-                    </div>
+                        <div class="col-md-3"></div>
+                    </div>                    
 
                     <div class="row">
                         <div class="col-md-1"></div>
@@ -401,7 +444,7 @@
                                 </div>
 
                                 <!--Documentos de Inicio de Servicio Contractual-->
-                                <div>
+                                <div ng-show="verContractual">
                                     <fieldset class="custom-border">
                                         <legend class="custom-border">Documentos de Finalización de Estudios</legend>
                                         <div class="row">
@@ -454,9 +497,106 @@
                                         </div>
                                     </fieldset>
                                 </div>
+
+                                <!--Documentos de Gestión de Compromiso Contractual -->
+                                <div ng-show="verCompromiso">
+                                    <fieldset class="custom-border">
+                                        <legend class="custom-border">Documentos de Gestión de Compromiso Contractual </legend>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Carta De Oficina De RRHH que cumplió con el tiempo acordado:</label><br>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="file" name="cartaRRHH" accept="application/pdf" ng-model="cartaRRHH" valid-file required><br>
+                                            </div>
+                                        </div>                                        
+                                    </fieldset>
+                                </div>
+                                
+                                <!--Documentos de Gestión de Liberación -->
+                                <div ng-show="verLiberacion">
+                                    <fieldset class="custom-border">
+                                        <legend class="custom-border">Documentos de Gestión de Liberación </legend>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Acuerdo de Gestión de Compromiso Contractual:</label><br>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="file" name="acuerdoGestionContractual" accept="application/pdf" ng-model="acuerdoGestionContractual" valid-file required><br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Carta de Solicitud de  Acuerdo de Gestión de Liberación:</label><br>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="file" name="cartaSolicitudLiberacion" accept="application/pdf" ng-model="cartaSolicitudLiberacion" valid-file required><br>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                                <!--Documentos de Beca Finalizada por Reintegro -->
+                                <div ng-show="verFinReintegro">
+                                    <fieldset class="custom-border">
+                                        <legend class="custom-border">Documentos de Finalización de Beca por Reintegro</legend>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Acta de Reintegro de Beca:</label><br>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="file" name="acuerdoGestionLiberacion" accept="application/pdf" ng-model="acuerdoGestionLiberacion" valid-file required><br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Acuerdo de Gestión de Liberación:</label><br>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="file" name="acuerdoGestionLiberacion" accept="application/pdf" ng-model="acuerdoGestionLiberacion" valid-file required><br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Acuerdo de Liberacion del Compromiso Contractual:</label><br>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="file" name="acuerdoLiberacion" accept="application/pdf" ng-model="acuerdoLiberacion" valid-file required><br>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                                <!--Documentos de Beca Finalizada -->
+                                <div ng-show="verBecaFinalizada">
+                                    <fieldset class="custom-border">
+                                        <legend class="custom-border">Documentos de Finalización de Beca </legend>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Acuerdo de Gestión de Liberación:</label><br>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="file" name="acuerdoGestionLiberacion" accept="application/pdf" ng-model="acuerdoGestionLiberacion" valid-file required><br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Acuerdo de Liberacion del Compromiso Contractual:</label><br>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="file" name="acuerdoLiberacion" accept="application/pdf" ng-model="acuerdoLiberacion" valid-file required><br>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
                             </fieldset>
                         </div>
                         <div class="col-md-1"></div>
+                    </div>
+                    
+                    <div class="row text-center">
+                        <input type="submit" name="guardar" value="Guardar" class="btn btn-success">
                     </div>
                 </fieldset>
             </div>

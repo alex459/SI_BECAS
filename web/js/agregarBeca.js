@@ -51,6 +51,67 @@ angular.module('AgregarBecaApp', []).controller('AgregarBecaCtrl', function ($sc
             }
         }
     };
+    $scope.activarEstudio = function(){
+        $scope.verContractual = $scope.verContractual = false;  
+        $scope.verCompromiso = $scope.verCompromiso = false;
+        $scope.verLiberacion = $scope.verLiberacion = false;
+        $scope.verBecaFinalizada = $scope.verBecaFinalizada = false;
+        $scope.verFinReintegro = $scope.verFinReintegro = false;
+    };
+    $scope.verContractual = false;
+    $scope.activarContractual = function(){
+        $scope.verContractual = $scope.verContractual = false;  
+        $scope.verCompromiso = $scope.verCompromiso = false;
+        $scope.verLiberacion = $scope.verLiberacion = false;
+        $scope.verBecaFinalizada = $scope.verBecaFinalizada = false;
+        $scope.verFinReintegro = $scope.verFinReintegro = false;
+        $scope.verContractual = $scope.verContractual = !$scope.verContractual;
+    };
+    $scope.verCompromiso = false;
+    $scope.activarCompromiso = function(){
+        $scope.verContractual = $scope.verContractual = false;  
+        $scope.verCompromiso = $scope.verCompromiso = false;
+        $scope.verLiberacion = $scope.verLiberacion = false;
+        $scope.verBecaFinalizada = $scope.verBecaFinalizada = false;
+        $scope.verFinReintegro = $scope.verFinReintegro = false;
+        $scope.verContractual = $scope.verContractual = !$scope.verContractual;
+        $scope.verCompromiso = $scope.verCompromiso = !$scope.verCompromiso;
+    };
+    $scope.verLiberacion = false;
+    $scope.activarLiberacion = function(){
+        $scope.verContractual = $scope.verContractual = false;  
+        $scope.verCompromiso = $scope.verCompromiso = false;
+        $scope.verLiberacion = $scope.verLiberacion = false;
+        $scope.verBecaFinalizada = $scope.verBecaFinalizada = false;
+        $scope.verFinReintegro = $scope.verFinReintegro = false;
+        $scope.verContractual = $scope.verContractual = !$scope.verContractual;
+        $scope.verCompromiso = $scope.verCompromiso = !$scope.verCompromiso;
+        $scope.verLiberacion = $scope.verLiberacion = !$scope.verLiberacion;
+    };
+    $scope.verBecaFinalizada = false;
+    $scope.activarBecaFinalizada = function(){
+        $scope.verContractual = $scope.verContractual = false;  
+        $scope.verCompromiso = $scope.verCompromiso = false;
+        $scope.verLiberacion = $scope.verLiberacion = false;
+        $scope.verBecaFinalizada = $scope.verBecaFinalizada = false;
+        $scope.verFinReintegro = $scope.verFinReintegro = false;
+        $scope.verBecaFinalizada = $scope.verBecaFinalizada = false;
+        $scope.verContractual = $scope.verContractual = !$scope.verContractual;
+        $scope.verCompromiso = $scope.verCompromiso = !$scope.verCompromiso;
+        $scope.verLiberacion = $scope.verLiberacion = !$scope.verLiberacion;
+        $scope.verBecaFinalizada = $scope.verBecaFinalizada = !$scope.verBecaFinalizada;
+    };
+    
+    $scope.verFinReintegro = false;
+    $scope.activarFinReintegro = function(){
+        $scope.verContractual = $scope.verContractual = false;  
+        $scope.verCompromiso = $scope.verCompromiso = false;
+        $scope.verLiberacion = $scope.verLiberacion = false;
+        $scope.verBecaFinalizada = $scope.verBecaFinalizada = false;
+        $scope.verFinReintegro = $scope.verFinReintegro = false;
+        $scope.verFinReintegro = $scope.verFinReintegro = !$scope.verFinReintegro;
+    };
+    
 });
 
 
