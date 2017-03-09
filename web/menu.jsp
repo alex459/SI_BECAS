@@ -89,11 +89,12 @@
                         out.write("<li><a style='background-color: #cf2a27; color:white' href='202_consulta_modificar_estado_de_becario.jsp'>Modificar Estado de Becario</a></li>");
                     }
                     if (t == id_director_consejo || t == id_admin) {
-                        out.write("<li><a style='background-color: #cf2a27; color:white' href='203_consulta_suspender_becario.jsp'>Suspender Becario</a></li>");
-                    }
-                    if (t == id_director_consejo || t == id_admin) {
                         out.write("<li><a style='background-color: #cf2a27; color:white' href='100_Agregar_Becario.jsp'>Agregar Becario</a></li>");
                     }
+                    if (t == id_director_consejo || t == id_admin) {
+                        out.write("<li><a style='background-color: #cf2a27; color:white' href='203_consulta_suspender_becario.jsp'>Suspender Becario</a></li>");
+                    }
+                  
                     out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Administración de Instituciones</center></b></a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='204_agregar_institucion.jsp'>Agregar Institución</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='213_consulta_para_modificar_institucion.jsp'>Modificar Institución</a></li>");
