@@ -18,23 +18,9 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <div class="row">
-                    <div class="col-md-4">
-                        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-                        <h3 class="text-center" >
-                            <p class="text-danger">Universidad De El Salvador</p>
-                        </h3>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="col-xs-12" style="height:50px;"></div>
-                        <h2 class="text-center">
-                            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-                        </h2>
-                        <h3 class="text-center">
-                            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-                        </h3>
-                    </div>
-                </div>
+    
+    <jsp:include page="cabecera.jsp"></jsp:include>
+    
                 <nav class="navbar navbar-custom" role="navigation">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -85,15 +71,19 @@
                             </p>
                             <h3>Misión:</h3>  
                             <p>
-                                Promover y prever la formación, capacitación y especialización a nivel superior de postgrado al personal
-                                académico y administrativo, por medio de la información concerniente a las necesidades de postgrados 
-                                existentes en las facultades, además de la gestión de becas nacionales e internacionales, logrando de
-                                esta manera contar con profesionales académicos y administrativos de alta calidad en función de la excelencia
-                                académica de los estudiantes de la Universidad de El Salvador.	
+                                Promover y prever la formación, capacitación a nivel superior de postgrado del Personal
+                                Académico y Profesional Administrativo no docente, por medio de la información concerniente
+                                a las necesidades de posgrados existentes en las facultades. A través de la gestión de becas
+                                nacionales e internacionales, logrando de esta manera contar con profesionales académicos
+                                administrativos de alta calidad, en función de la excelencia académica de los estudiantes
+                                de la  Universidad de El Salvador.	
                             </p>
                             <h3>Visión:</h3>
                             <p>
-                                Ser un ente con un alto nivel de calidad académica con credibilidad y confianza nacional e internacional.	
+                                Que el Consejo de Becas de Postgrado, sea el ente encargado de lograr la especialización del
+                                Personal Académico y Profesional Administrativo no Docente, con un alto nivel de calidad
+                                académica, con credibilidad y confianza nacional e institucional, en beneficio de la
+                                excelencia académica.	
                             </p>
                         </div>	
                     </div>
@@ -111,7 +101,7 @@
                     Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
                 </p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <h3>
                     Información de contacto
                 </h3>
@@ -120,6 +110,13 @@
                     Tél: +(503) 2511-2000 <br/>
                     Consejo de becas
                     Tél: +(503) 2511- 2016
+                </p>
+            </div>
+            <div class="col-md-1">
+                <br>
+                <br>
+                <p>
+                    <a href="creditos.jsp" class="btn btn-danger" >Creditos</a>
                 </p>
             </div>
         </div>

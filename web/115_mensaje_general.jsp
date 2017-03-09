@@ -13,6 +13,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/customfieldset.css" rel="stylesheet">
+        <jsp:include page="cabecera.jsp"></jsp:include>
     </head>
     <body bgcolor="gray">
         <%
