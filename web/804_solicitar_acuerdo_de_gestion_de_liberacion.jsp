@@ -133,7 +133,7 @@
                                 <div class="col-md-8 col-md-offset-2 row">
                                     <div class="row">
                                         <div class="col-md-5">
-                                            Carta de solicitud:
+                                            Carta de solicitud de acuerdo de gestion de liberación:
                                         </div>
                                         <div class="col-md-7">
                                             <input type="file" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>

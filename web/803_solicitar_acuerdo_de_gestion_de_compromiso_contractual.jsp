@@ -124,7 +124,7 @@
                                 <div class="col-md-8 col-md-offset-2 row">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            Carta de solicitud:
+                                            Carta de solicitud de Gestión de Compromiso Contractual:
                                         </div>
                                         <div class="col-md-6">
                                             <input type="file" name="cartaSolicitud" accept="application/pdf" ng-model="cartaSolicitud" valid-file required>
@@ -134,7 +134,7 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            Carta de RRHH:
+                                            Carta de Recuros Humanos de cumplimiento de servicio contractual:
                                         </div>
                                         <div class="col-md-6">
                                             <input type="file" name="cartaRRHH" accept="application/pdf" ng-model="cartaRRHH" valid-file required>

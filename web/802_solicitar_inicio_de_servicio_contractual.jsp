@@ -124,7 +124,7 @@
                                 <div class="col-md-8 col-md-offset-2 row">
                                     <div class="row">
                                         <div class="col-md-5">
-                                            Acta de toma de posesión:
+                                            Acta de toma de posesión de su cargo:
                                         </div>
                                         <div class="col-md-7">
                                             <input type="file" name="actaPosesion" accept="application/pdf" ng-model="actaPosesion" valid-file required>
@@ -134,7 +134,7 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-md-5">
-                                            Proyecto en que apoyara:
+                                            Proyecto mediante el cual se compromete a multiplicar los conocimientos adquiridos durante la beca:
                                         </div>
                                         <div class="col-md-7">
                                             <input type="file" name="proyectoApoyara" accept="application/pdf" ng-model="proyectoApoyara" valid-file required>
@@ -144,7 +144,7 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-md-5">
-                                            Carta de solicitud para Junta Directiva:
+                                            Carta de solicitud para Junta Directiva de inicio de servicio contractual:
                                         </div>
                                         <div class="col-md-7">
                                             <input type="file" name="solicitudJD" accept="application/pdf" ng-model="solicitudJD" valid-file required>
