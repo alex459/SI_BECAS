@@ -109,7 +109,7 @@
     <body ng-app="AgregarBecaApp" ng-controller="AgregarBecaCtrl">
         <!--TITULO DE PANTALLA-->
         <h3 class="text-center" style="color:#cf2a27">
-            Agregar Beca
+            Agregar Becario
         </h3>
         <div class="row" ng-init="nombre1 = '<%=nombre1%>'; nombre2 = '<%=nombre2%>';">
         <form>

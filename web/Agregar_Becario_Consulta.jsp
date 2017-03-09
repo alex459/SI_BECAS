@@ -85,7 +85,7 @@
     <div class="container-fluid">
         <div class="row"><!-- TITULO DE LA PANTALLA -->
             <h3>
-                <p class="text-center" style="color:#cf2a27">Agregar Beca</p>
+                <p class="text-center" style="color:#cf2a27">Agregar Becario</p>
             </h3>
 
             <br></br>
