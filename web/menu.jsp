@@ -91,6 +91,9 @@
                     if (t == id_director_consejo || t == id_admin) {
                         out.write("<li><a style='background-color: #cf2a27; color:white' href='203_consulta_suspender_becario.jsp'>Suspender Becario</a></li>");
                     }
+                    if (t == id_director_consejo || t == id_admin) {
+                        out.write("<li><a style='background-color: #cf2a27; color:white' href='100_Agregar_Becario.jsp'>Agregar Becario</a></li>");
+                    }
                     out.write("<li><a style='background: #cc0000; color:white' href='#'><b><center>Administración de Instituciones</center></b></a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='204_agregar_institucion.jsp'>Agregar Institución</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='213_consulta_para_modificar_institucion.jsp'>Modificar Institución</a></li>");
@@ -218,6 +221,7 @@
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='518_Solicitudes_de_Cierre_de_Expediente.jsp'>Solicitudes de Cierre de Expediente</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='510_Reportes.jsp'>Reportes</a></li>");
                     out.write("<li><a style='background-color: #cf2a27; color:white' href='522_Becas_Expiradas.jsp'>Becas Expiradas</a></li>");
+                    
                     out.write("</ul>");
                     out.write("</li>");
                     out.write("</ul>");
