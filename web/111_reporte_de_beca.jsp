@@ -255,6 +255,7 @@
                 Institucion temp2 = new Institucion();
                 Documento temp3 = new Documento();
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String consultaSql = "", consultaSql2="";
                 try {
                     String nombre = "", tipoEstudio = "", instOfertante = "", instEstudio = "";
                     if (!request.getParameter("nombreOferta").isEmpty()) {
@@ -270,33 +271,33 @@
                     String fCierreIni = request.getParameter("fCierreIni");
                     String fCierreFin = request.getParameter("fCierreFin");
                     //formando la consulta
-                    String consultaSql = "";
+                    
                     consultaSql = "SELECT ID_OFERTA_BECA, NOMBRE_OFERTA,IDIOMA,TIPO_OFERTA_BECA,TIPO_ESTUDIO,FECHA_CIERRE, "
                             + " ID_INSTITUCION_ESTUDIO, ID_INSTITUCION_FINANCIERA, "
                             + " NOMBRE_INSTITUCION, OFERTA_BECA.ID_DOCUMENTO AS ID_DOCUMENTO, PAIS FROM "
                             + " OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_DOCUMENTO "
                             + " AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=INSTITUCION.ID_INSTITUCION "
-                            + " AND OFERTA_BECA_ACTIVA=1 "
-                            + "AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%'";
+                            + " AND OFERTA_BECA_ACTIVA=1 ";
+                    consultaSql2 = consultaSql2.concat(" AND TIPO_ESTUDIO LIKE '%" + tipoEstudio + "%' AND nombre_oferta like '%" + nombre + "%' ");       
                     if (instEstudio != null) {
                         int idEst = institucionDAO.consultarIdPorNombre(instEstudio);
-                        consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=" + idEst + " ");
+                        consultaSql2 = consultaSql2.concat(" AND OFERTA_BECA.ID_INSTITUCION_ESTUDIO=" + idEst + " ");
                     }
                     if (instOfertante != null) {
                         int idFin = institucionDAO.consultarIdPorNombre(instOfertante);
-                        consultaSql = consultaSql.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
+                        consultaSql2 = consultaSql2.concat(" AND OFERTA_BECA.ID_INSTITUCION_FINANCIERA=" + idFin + " ");
                     }
                     if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                         java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                         java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
                     }
                     if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                         java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                        consultaSql = consultaSql.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ;");
                     }
-                    consultaSql = consultaSql.concat(";");
+                    consultaSql = consultaSql.concat(consultaSql2);
                     System.out.println(consultaSql);
                     //realizando la consulta
                     conexionbd = new ConexionBD();
@@ -330,36 +331,25 @@
                         </div>
 
                         <div class="col-md-3 text-center">
-                            <fieldset class="custom-border">
-                                <legend class="custom-border">Acciones</legend>
-                                <div class="col-md-6">
-                                    <br>
-                                    <label class="">PDF</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       PDF
-                                    </button><br><br>
-                                    <label>Enviar Por Correo</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       E-mail
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Hoja de Cálculo</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-file"></span> 
-                                       Excel
-                                    </button><br><br>
-                                    <br>
-                                    <label>Imprimir</label>
-                                    <button type="submit" class="btn btn-success form-control">
-                                       <span class="glyphicon glyphicon-print"></span> 
-                                       Imprimir
-                                    </button>
-                                    
-                                </div>                                                                
-                            </fieldset>
+                           <fieldset class="custom-border">
+                        <legend class="custom-border">Acciones</legend>
+                            <br>
+                            <div class="col-md-6 text-center">
+                                <label>PDF</label>
+                                <form class="form-horizontal" action="ReporteOfertasBecaServlet" method="post">
+                                    <input type="hidden" name="OPCION_DE_SALIDA" value="1">
+                                    <input type="hidden" name="CONDICION" value="<%=consultaSql2 %>">                                    
+                                     <input type="submit" class="btn btn-primary" name="submit" value=" " style="background-image: url(img/106_icono_de_pdf.png); background-repeat: no-repeat; background-size: 100%; background-size: 25px 25px;">
+                               
+                                </form>
+                             <br>  
+                        </div>
+                        <div class="col-md-6">
+                            <label>Hoja de Cálculo</label>
+                            <div style="border:1px solid; background-color: #32B232; padding:6px; color:white; " id="buttons"></div>
+                            <br>
+                        </div>           
+                    </fieldset>
                         </div>
                     </div>
 
@@ -452,9 +442,12 @@
 <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="js/buttons.print.min.js"></script>
+<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-    $('#tablaResultados').DataTable(
+     $(document).ready(function() {
+    var tabla= $('#tablaResultados').DataTable(
             {
                  "language": 
 {
@@ -481,10 +474,17 @@
 		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 	}
 }
-            }
+             }
+                   
                 );
+         var buttons = new $.fn.dataTable.Buttons(tabla, {
+     buttons: [
+        'csv', 'excel'
+    ]
+}).container().appendTo($('#buttons'));
+        
 } );
-    
+
     $(function () {
         $('#fIngresoIni').datepicker({
             format: 'yyyy-mm-dd',
