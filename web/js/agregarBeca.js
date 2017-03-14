@@ -1,4 +1,6 @@
-angular.module('AgregarBecaApp', []).controller('AgregarBecaCtrl', function ($scope) {
+var solicitudApp=angular.module('AgregarBecaApp', []);
+solicitudApp.controller('AgregarBecaCtrl', ['$scope',function ($scope) {
+
     $scope.checkOferta = !true;
     $scope.mostrarFormularioOferta = function (){
         if ($scope.checkOferta === true){
@@ -112,6 +114,20 @@ angular.module('AgregarBecaApp', []).controller('AgregarBecaCtrl', function ($sc
         $scope.verFinReintegro = $scope.verFinReintegro = !$scope.verFinReintegro;
     };
     
+}]);
+  
+  solicitudApp.directive('validFile',function(){
+    return {
+        require:'ngModel',
+        link:function(scope,el,attrs,ngModel){
+
+            //change event is fired when file is selected
+            el.bind('change',function(){
+                 scope.$apply(function(){
+                     ngModel.$setViewValue(el.val());
+                     ngModel.$render();
+                 });
+            });
+        }
+    };
 });
-
-

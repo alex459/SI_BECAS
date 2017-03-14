@@ -246,6 +246,56 @@ public class OfertaBecaDAO extends ConexionBD{
 
         return titulo;
     } 
+     
+     //Metodo que permite el ingreso de una oferta de beca para la migracion de datos
+    public boolean ingresarOfertaMigracion(OfertaBeca ofertaBeca){
+        //variable que permite saber si se ingreso correctamente el nuevo registro
+        boolean exito = false;        
+        this.abrirConexion();
+        try {
+            stmt = conn.createStatement();
+            String sql = "INSERT INTO OFERTA_BECA(ID_OFERTA_BECA,ID_INSTITUCION_ESTUDIO,ID_INSTITUCION_FINANCIERA,"
+                    + " NOMBRE_OFERTA,TIPO_OFERTA_BECA, TIPO_ESTUDIO,OFERTA_BECA_ACTIVA)"
+                    + " VALUES("+ofertaBeca.getIdOfertaBeca()+", "+ofertaBeca.getIdInstitucionEstudio()+", "+ofertaBeca.getIdInstitucionFinanciera()+","
+                    + ""+ofertaBeca.getNombreOferta()+"','"+ofertaBeca.getTipoOfertaBeca()+"',"
+                    + "'"+ofertaBeca.getTipoEstudio()+"',0);";
+            System.out.println(sql);
+            stmt.execute(sql);
+            exito = true;
+            this.cerrarConexion();
+            
+        }catch (Exception e) {
+            System.out.println("Error " + e);
+        }finally{
+            this.cerrarConexion();
+        }
+        return exito;
+    }
+    
+    //Permite obtener si la oferta de beca es interna o externa segun el el id de la institucion
+    public String ObtenerTipoOfertaBeca(int idInstitucionEstudio) {
+        String tipo = null;
+        this.abrirConexion();
+        try {
+            String pais =  "";
+            stmt = conn.createStatement();
+            String sql = "SELECT PAIS FROM institucion WHERE ID_INSTITUCION = " + idInstitucionEstudio;
+            ResultSet rs = stmt.executeQuery(sql);
+            this.cerrarConexion();
+
+            while (rs.next()) {
+                pais = rs.getString("PAIS");
+                if (pais.equals("EL SALVADOR")){
+                    tipo = "INTERNA";
+                }else{
+                    tipo = "EXTERNA";
+                }                
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        return tipo;
+    } 
 }
 
 
