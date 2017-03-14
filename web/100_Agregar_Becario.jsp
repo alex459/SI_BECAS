@@ -546,16 +546,7 @@
                                                 <input type="file" name="acuerdoGestionContractual" accept="application/pdf" ng-model="acuerdoGestionContractual" valid-file ng-required="verLiberacion">
                                                 <span class="text-danger" ng-show="agregarBecario.acuerdoGestionContractual.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-7">
-                                                <label>Carta de Solicitud de  Acuerdo de Gestión de Liberación:</label><br>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <input type="file" name="cartaSolicitudLiberacion" accept="application/pdf" ng-model="cartaSolicitudLiberacion" valid-file ng-required="verLiberacion">
-                                                <span class="text-danger" ng-show="agregarBecario.cartaSolicitudLiberacion.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
-                                            </div>
-                                        </div>
+                                        </div>                                        
                                     </fieldset>
                                 </div>
 
