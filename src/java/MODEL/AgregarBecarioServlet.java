@@ -5,6 +5,7 @@
  */
 package MODEL;
 
+import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import java.io.IOException;
 import java.text.ParseException;
@@ -22,11 +23,14 @@ import POJO.OfertaBeca;
 import DAO.InstitucionDAO;
 import DAO.SolocitudBecaDAO;
 import DAO.TipoDocumentoDAO;
+import DAO.UsuarioDAO;
+import POJO.Beca;
 import POJO.Documento;
 import POJO.SolicitudDeBeca;
 import POJO.TipoDocumento;
 import java.io.InputStream;
 import java.util.ArrayList;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 
 /**
@@ -34,6 +38,7 @@ import javax.servlet.http.Part;
  * @author adminPC
  */
 @WebServlet(name = "AgregarBecarioServlet", urlPatterns = {"/AgregarBecarioServlet"})
+@MultipartConfig(maxFileSize = 16177215)
 public class AgregarBecarioServlet extends HttpServlet {
 
     /**
@@ -51,8 +56,10 @@ public class AgregarBecarioServlet extends HttpServlet {
 
         //LEER DATOS DEL JSP
         try {
-            int ID_USUARIO = Integer.parseInt(request.getParameter("ID_USUARIO"));
-            boolean checkOferta = Boolean.getBoolean(request.getParameter("checkOferta"));
+            boolean checkOferta = Boolean.parseBoolean(request.getParameter("checkOferta"));
+            String valorcheck = request.getParameter("valorcheck");
+            int ID_USUARIO = Integer.parseInt(request.getParameter("ID_USUARIO"));            
+            
             String fechaInicioBeca = request.getParameter("fechaInicio");
             String fechaFinBeca = request.getParameter("fechaFin");
 
@@ -63,16 +70,17 @@ public class AgregarBecarioServlet extends HttpServlet {
                 Expediente expediente = new Expediente();
                 expediente.setIdExpediente(idExpediente);
                 expediente.setIdProgreso(9);
-                expediente.setEstadoExpediente("ABIERTO");
+                String estadoExpediente = "ABIERTO";
+                expediente.setEstadoExpediente(estadoExpediente);
                 expediente.setEstadoProgreso("PENDIENTE");
                 boolean expedienteCreado = expedienteDao.ingresar(expediente);
                 if (expedienteCreado == true) {
                     //Obtener o crear oferta de beca
                     int idOferta = 0;
                     OfertaBeca ofertaBeca = new OfertaBeca();
+                    OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
                     if (checkOferta == true) {
-                        //Crear la oferta  
-                        OfertaBecaDAO ofertaDao = new OfertaBecaDAO();                        
+                        //Crear la oferta                          
                         InstitucionDAO institucionDAO = new InstitucionDAO();
                         //obtener los datos del jsp
                         String nombreOferta = request.getParameter("nombreOferta");
@@ -89,6 +97,7 @@ public class AgregarBecarioServlet extends HttpServlet {
                     } else {
                         //Obtener el id de la oferta
                         idOferta = Integer.parseInt(request.getParameter("oferta"));
+                        ofertaBeca = ofertaDao.consultarPorId(idOferta);
                     }
 
                     //Crear solicitud de Beca
@@ -106,7 +115,7 @@ public class AgregarBecarioServlet extends HttpServlet {
                         solicitud.setFechaSolicitud(sqlDate);
                         boolean ingresarSolicitud = solDao.ingresar(solicitud);
 
-                        if (ingresarSolicitud == true) {                            
+                        if (ingresarSolicitud == true) {
                             //Ingresar documentos obligatorios                            
                             //documentos
                             ArrayList<String> documentos = new ArrayList<>();
@@ -122,15 +131,15 @@ public class AgregarBecarioServlet extends HttpServlet {
                             tipos.add(103);
                             tipos.add(105);
                             tipos.add(112);
-                            if(ofertaBeca.getTipoOfertaBeca().equals("INTERNA")){
+                            if (ofertaBeca.getTipoOfertaBeca().equals("INTERNA")) {
                                 tipos.add(120);
-                            }else{
+                            } else {
                                 tipos.add(121);
                             }
                             tipos.add(131);
-                            if(ofertaBeca.getTipoOfertaBeca().equals("INTERNA")){
+                            if (ofertaBeca.getTipoOfertaBeca().equals("INTERNA")) {
                                 tipos.add(132);
-                            }else{
+                            } else {
                                 tipos.add(133);
                             }
                             tipos.add(134);
@@ -138,7 +147,10 @@ public class AgregarBecarioServlet extends HttpServlet {
                             //documentos segun proceso
                             String estado = request.getParameter("estado");
                             int idProgreso = 9;
-                            switch (estado){
+                            DocumentoDAO documentoDao = new DocumentoDAO();
+                            TipoDocumento tipoDocumento = new TipoDocumento();
+                            TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
+                            switch (estado) {
                                 case "estudio":
                                     idProgreso = 9;
                                     break;
@@ -159,7 +171,7 @@ public class AgregarBecarioServlet extends HttpServlet {
                                     tipos.add(148);
                                     break;
                                 case "compromiso":
-                                    idProgreso =13;
+                                    idProgreso = 13;
                                     //Agregando documentos del proceso
                                     documentos.add("tituloObtenido");
                                     tipos.add(143);
@@ -177,7 +189,7 @@ public class AgregarBecarioServlet extends HttpServlet {
                                     tipos.add(154);
                                     break;
                                 case "liberacion":
-                                    idProgreso =14;
+                                    idProgreso = 14;
                                     //Agregando documentos del proceso
                                     documentos.add("tituloObtenido");
                                     tipos.add(143);
@@ -194,10 +206,10 @@ public class AgregarBecarioServlet extends HttpServlet {
                                     documentos.add("cartaRRHH");
                                     tipos.add(154);
                                     documentos.add("acuerdoGestionContractual");
-                                    tipos.add(155);                                    
+                                    tipos.add(155);
                                     break;
                                 case "becaFinalizada":
-                                    idProgreso =16;
+                                    idProgreso = 16;
                                     //Agregando documentos del proceso
                                     documentos.add("tituloObtenido");
                                     tipos.add(143);
@@ -214,33 +226,55 @@ public class AgregarBecarioServlet extends HttpServlet {
                                     documentos.add("cartaRRHH");
                                     tipos.add(154);
                                     documentos.add("acuerdoGestionContractual");
-                                    tipos.add(155); 
+                                    tipos.add(155);
                                     documentos.add("acuerdoGestionLiberacion");
                                     tipos.add(157);
                                     documentos.add("acuerdoLiberacion");
                                     tipos.add(158);
+                                    estadoExpediente = "CERRADO";
                                     break;
                                 case "reintegro":
                                     idProgreso = 23;
                                     //Solicitar Reintegro
+                                    Documento acuerdoSolicitar = new Documento();
+                                    String obs = "LA BECA HA EXPIRADO";
+                                    tipoDocumento = tipoDao.consultarPorId(159);
+                                    int idDoc = documentoDao.getSiguienteId();
+                                    Date fechaActual = new Date();
+                                    java.sql.Date hoy = new java.sql.Date(fechaActual.getTime());
+                                    int idActa = documentoDao.ExisteDocumento(idExpediente, 159);
+                                    if (idActa == 0) {
+                                        acuerdoSolicitar.setIdDocumento(idDoc);
+                                        acuerdoSolicitar.setIdExpediente(expediente);
+                                        acuerdoSolicitar.setFechaSolicitud(hoy);
+                                        acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                        acuerdoSolicitar.setObservacion(obs);
+                                        acuerdoSolicitar.setIdTipoDocumento(tipoDocumento);
+                                        documentoDao.solicitarDocumento(acuerdoSolicitar);
+                                    } else {
+                                        acuerdoSolicitar = documentoDao.obtenerInformacionDocumentoPorId(idActa);
+                                        acuerdoSolicitar.setFechaSolicitud(sqlDate);
+                                        acuerdoSolicitar.setEstadoDocumento("PENDIENTE");
+                                        acuerdoSolicitar.setObservacion(obs);
+                                        documentoDao.ActualizarResolverCorreccion(acuerdoSolicitar);
+                                    }
+
                                     break;
                                 case "finReintegro":
-                                    idProgreso =16;
+                                    idProgreso = 16;
                                     documentos.add("actaReintegro");
                                     tipos.add(159);
                                     documentos.add("acuerdoGestionLiberacion2");
                                     tipos.add(157);
                                     documentos.add("acuerdoLiberacion2");
-                                    tipos.add(158); 
+                                    tipos.add(158);
+                                    estadoExpediente = "CERRADO";
                                     break;
                             }
                             //Recuperando datos del formulario                        
                             InputStream documentoAdjunto = null;
-                            String obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
-                            TipoDocumento tipoDocumento = new TipoDocumento();                            
-                            //Ingresando documentos al Expediente
-                            DocumentoDAO documentoDao = new DocumentoDAO();
-                            TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
+                            String obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";                            
+                            //Ingresando documentos al Expediente                                                        
                             for (int i = 0; i < documentos.size(); i++) {
                                 Documento anexo = new Documento();
                                 //Comparando si exite documento
@@ -261,7 +295,7 @@ public class AgregarBecarioServlet extends HttpServlet {
                                     anexo.setIdExpediente(expediente);
                                     anexo.setDocumentoDigital(documentoAdjunto);
                                     anexo.setObservacion(obs);
-                                    anexo.setEstadoDocumento("INGRESADO");
+                                    anexo.setEstadoDocumento("APROBADO");
                                     documentoDao.Ingresar(anexo);
                                 } else {
                                     //Actualizar Documento
@@ -270,63 +304,63 @@ public class AgregarBecarioServlet extends HttpServlet {
                                     documentoDao.ActualizarDocumentoObservacion(anexo);
                                 }
                             }
-                            
+
                             //Crear Beca
-                            //Actualizar Expediente
+                            java.sql.Date fechaInicio = new java.sql.Date(StringAFecha(fechaInicioBeca).getTime());
+                            java.sql.Date fechaFin = new java.sql.Date(StringAFecha(fechaFinBeca).getTime());
+                            BecaDAO becaDao = new BecaDAO();
+                            Beca beca = new Beca();
+                            beca.setIdExpediente(idExpediente);
+                            beca.setFechaInicio(fechaInicio);
+                            beca.setFechaFin(fechaFin);
+                            beca.setIdBeca(becaDao.getSiguienteId());
+                            boolean ingresoBeca = becaDao.ingresar(beca);
+
+                            if (ingresoBeca == true) {
+                                //Actualizar Expediente
+                                expediente.setIdProgreso(idProgreso);
+                                expediente.setEstadoExpediente(estadoExpediente);
+                                expedienteDao.actualizarExpediente(expediente);
+                                if (estadoExpediente.equals("ABIERTO")){
+                                    //Actualizar de candidato a becario
+                                    UsuarioDAO usuarioDao = new UsuarioDAO();
+                                    usuarioDao.actualizarRolPorIdUsuario(ID_USUARIO, 2);
+                                }
+                                 Utilidades.mostrarMensaje(response, 1, "Exito", "Se ingresó el becario satisfactoriamente.");
+                            } else {
+                                //Eliminar Documentos, Oferta y Expediente y solicitud
+                                documentoDao.eliminarDocumentosExpediente(idExpediente);
+                                solDao.eliminarDocumentosExpediente(idExpediente);
+                                expedienteDao.eliminarPermanentemente(idExpediente);
+                                Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el becario.");
+                            }
                         } else {
-                            //Eliminar Oferta y Expediente
+                            //Eliminar Expediente
+                            expedienteDao.eliminarPermanentemente(idExpediente);
+                            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el becario.");
                         }
 
                     } else {
                         //Eliminar el expediente
+                        expedienteDao.eliminarPermanentemente(idExpediente);
+                        Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el becario.");
                     }
 
                 } else {
                     //Mostrar mensaje de error
+                    expedienteDao.eliminarPermanentemente(idExpediente);
+                    Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el becario.");
                 }
             } else {
                 //No se puede crear el becario, mostrar mensaje de error
+                Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el becario.");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             //No se pudieron leer los datos, mostrar mensaje de error
-        }
-        //CREAR EXPEDIENTE
-
-        /*if oferta (esta en el sistema)
-	Agarrar datos
-else 
-	Agregar*/
-//crear la solicitud de beca
-//ingresar documentos obligatorios
-//Crear Beca
-//estadoExpediente = Abierto
-/*switch (estado)
-	case Realización de Estudio: 
-		idProgreso = 9
-	case Servicio Contractual:
-		idProgreso = 12
-		guardar documentos del proceso
-	case Gestión de Compromiso Contractual:
-		idProgreso =13
-		guardar documentos del proceso
-	case Gestión de Liberación:
-		idProgreso =14
-		guardar documentos del proceso
-	case Gestión de Beca Finalizada:
-		idProgreso =16
-		guardar documentos del proceso
-		estadoExpediente = Cerrado
-	case Reintegro de Beca:
-		idProgreso = 23
-		solicitar acta de reintegro
-	case Finalizada por Reintegro de Beca:
-		idProgreso = 16
-		guardar documentos del proceso
-		estadoExpediente = Cerrado
-         */
-//Actualizar progreso del expediente
+            Utilidades.mostrarMensaje(response, 2, "Error", "No se pudo ingresar el becario.");
+        }        
     }
 
     //Metodo que permite convertir un texto en fecha

@@ -184,6 +184,22 @@ public class OfertaBecaDAO extends ConexionBD{
         }
         return exito;
     } 
+     
+     //Elimina un expediente PERMANENTEMENTE de la BD
+        public Boolean eliminarPermanentemente(Integer id) {
+        this.abrirConexion();
+        Boolean exito =false;
+        try {
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM oferta_beca WHERE ID_OFERTA_BECA =" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            exito=true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }        
+        return exito;
+    }
     
      public String ObtenerTipoBeca(Integer id) {
         

@@ -108,7 +108,7 @@
                                         int idExpediente = 0;
                                         ConexionBD conexionbd = new ConexionBD();
                                         ResultSet rs = null;
-                                        String consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, OB.NOMBRE_OFERTA, I.NOMBRE_INSTITUCION, B.FECHA_FIN, E.ID_EXPEDIENTE FROM detalle_usuario DU JOIN solicitud_de_beca SB ON SB.ID_USUARIO = DU.ID_USUARIO JOIN beca B ON B.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN oferta_beca OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA JOIN institucion I ON I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO JOIN expediente E ON E.ID_EXPEDIENTE = B.ID_EXPEDIENTE WHERE E.ID_PROGRESO IN (9,10,11,20,21,22) AND B.FECHA_FIN > (SELECT CURRENT_DATE FROM DUAL)";
+                                        String consultaSql = "SELECT DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, OB.NOMBRE_OFERTA, I.NOMBRE_INSTITUCION, B.FECHA_FIN, E.ID_EXPEDIENTE FROM detalle_usuario DU JOIN solicitud_de_beca SB ON SB.ID_USUARIO = DU.ID_USUARIO JOIN beca B ON B.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN oferta_beca OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA JOIN institucion I ON I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO JOIN expediente E ON E.ID_EXPEDIENTE = B.ID_EXPEDIENTE WHERE E.ID_PROGRESO IN (9,10,11,20,21,22) AND B.FECHA_FIN < (SELECT CURRENT_DATE FROM DUAL)";
                                         rs = conexionbd.consultaSql(consultaSql);
                                         while (rs.next()) {
                                             becario = rs.getString("NOMBRE1_DU")+" "+rs.getString("NOMBRE2_DU") +" " + rs.getString("APELLIDO1_DU") +" " + rs.getString("APELLIDO2_DU");
