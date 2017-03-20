@@ -68,6 +68,47 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
+            <fieldset class="custom-border">
+                <legend class="custom-border">Modificar Becario</legend>
+                <div class="row">
+                <!--Tabla-->
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                    <td>Becario: </td>
+                                    <td></td>
+                                    <td>Expediente: </td>
+                                    <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <td>Título de Beca: </td>
+                                    <td></td>
+                                    <td>País: </td>
+                                    <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Institución de Estudio:</td>
+                                    <td></td>
+                                    <td>Institución Oferente: </td>
+                                    <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Fecha de Inicio:</td>
+                                    <td></td>
+                                    <td>Fecha de Fin:</td>
+                                    <td></td>
+                                    </tr>
+                                    
+                                </tbody>    
+                            </table>
+                </div>
+                <!--Fin Tabla-->
+            </div>
+            </fieldset>
             
         </div>
         <div class="col-md-1"></div>
