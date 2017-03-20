@@ -227,6 +227,7 @@
 
                     //out.write(consultaSql);
                     //realizando la consulta
+                    consultaSql = consultaSql.concat(" ORDER BY U.ID_USUARIO DESC");
                     conexionbd = new ConexionBD();
                     rs = conexionbd.consultaSql(consultaSql);
 

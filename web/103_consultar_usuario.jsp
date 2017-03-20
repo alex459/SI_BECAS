@@ -227,6 +227,7 @@
                     //out.write(consultaSql);
                     //realizando la consulta
                     conexionbd = new ConexionBD();
+                    consultaSql = consultaSql.concat(" ORDER BY U.ID_USUARIO DESC");
                     rs = conexionbd.consultaSql(consultaSql);
                     Utilidades.nuevaBitacora(3, Integer.parseInt(request.getSession().getAttribute("id_user_login").toString()) , "Se consulto los usuarios.", consultaSql);
                     //con el rs se llenara la tabla de resultados
