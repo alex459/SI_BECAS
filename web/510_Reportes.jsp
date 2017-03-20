@@ -63,26 +63,25 @@
 
 
 <body>
-    <br> <br> <br> <br>
     <fieldset class="custom-border">
         <div class="container-fluid">
             <H3 class="text-center" style="color:#E42217;">Reportes</H3>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-10">
-                    <a href="511_Reporte_Institucion_Financiera.jsp">Reporte de Becarios por Institucion Financiera</a><br><br>
-                    <a href="512_Reporte_Becarios_Incumplimiento_Contrato.jsp">Reporte de Becarios con Incumplimiento de Contrato</a><br><br>
-                    <a href="513_Reporte_Candidatos.jsp">Reporte de Candidatos a Beca</a><br><br>
-                    <a href="514_Reporte_Becarios_Documentos_Pendientes.jsp">Reporte de Becarios con Documentos Pendientes</a><br><br>
-                    <a href="515_Reporte_Institucion_Becarios_Activos.jsp">Reporte de Instituciones con Becarios Activos</a><br><br>
-                    <a href="516_Reporte_Tipos_Becarios.jsp">Reporte por Tipos de Becarios </a><br><br>
-                    <a href="517_Reporte_Documentos_Unidad.jsp">Reporte de Documentos Emitidos por Unidad</a><br><br>
+            <div class="row">                
+                <div class="col-md-12">
+                    <center>                                            
+                        <a class="btn btn-primary" style="width: 500px;" href="511_Reporte_Institucion_Financiera.jsp">Reporte de Becarios por Institucion Financiera</a><br><br>
+                        <a class="btn btn-primary" style="width: 500px;" href="512_Reporte_Becarios_Incumplimiento_Contrato.jsp">Reporte de Becarios con Incumplimiento de Contrato</a><br><br>
+                        <a class="btn btn-primary" style="width: 500px;" href="513_Reporte_Candidatos.jsp">Reporte de Candidatos a Beca</a><br><br>
+                        <a class="btn btn-primary" style="width: 500px;" href="514_Reporte_Becarios_Documentos_Pendientes.jsp">Reporte de Becarios con Documentos Pendientes</a><br><br>
+                        <a class="btn btn-primary" style="width: 500px;" href="515_Reporte_Institucion_Becarios_Activos.jsp">Reporte de Instituciones con Becarios Activos</a><br><br>
+                        <a class="btn btn-primary" style="width: 500px;" href="516_Reporte_Tipos_Becarios.jsp">Reporte por Tipos de Becarios </a><br><br>
+                        <a class="btn btn-primary" style="width: 500px;" href="517_Reporte_Documentos_Unidad.jsp">Reporte de Documentos Emitidos por Unidad</a><br><br>
+                    </center>
                 </div>
             </div>
 
         </div> 
-    </fieldset>
-    <br><br><br><br><br><br>
+    </fieldset>    
     <br>
 
 
