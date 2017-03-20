@@ -431,37 +431,7 @@
                                     <span class="text-danger" ng-show="agregarBecario.contrato.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
                                 </div>
                             </div>
-
-                            <!--Anexos-->
-                            <div class="row">
-                                <div class="row text-right">
-                                    <div class="col-md-10">
-                                        <a ng-click="agregar()" ng-show="verAgregar">Agregar Otro Documento</a><br><br>
-                                    </div>
-                                    <div class="col-md-2"></div>                    
-                                </div>
-
-                                <div class="row text-left" ng-repeat="x in anexos">
-                                    <div class="col-md-1"></div>  
-                                    <div class="col-md-2">
-                                        <label>Tipo de Documento: </label><br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <select  name="{{x.tipo}}" class="form-control" ng-required="true">
-                                            <option ng-repeat="option in tipos" value="{{option.id}}">{{option.tipoDocumento}}</option>
-                                        </select>
-                                        <span class="text-danger" ng-show="!agregarBecario.$pristine && agregarBecario.{{x.tipo}}.$error.required">Debe de Seleccionar un Tipo de Documento.</span><br><br>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="file" name="{{x.nombre}}" accept="application/pdf" ng-model="docAnexo" valid-file ng-required="true"><br>
-                                        <span class="text-danger" ng-show="agregarBecario.{{x.nombre}}.$invalid">Debe ingresar un documento en formato PDF.</span><br><br>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <a class="btn btn-danger" ng-click="eliminar(item)">Eliminar</a><br>
-                                    </div>
-                                    <div class="col-md-1"></div>  
-                                </div>   
-                            </div>
+                            
 
                             <!--Documentos de Inicio de Servicio Contractual-->
                             <div ng-show="verContractual">

@@ -22,8 +22,8 @@
     tipo_usuarios_permitidos.add("8");
     tipo_usuarios_permitidos.add("9");
     boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
-    if (!autorizacion || user==null) {
-        response.sendRedirect("logout.jsp");        
+    if (!autorizacion || user == null) {
+        response.sendRedirect("logout.jsp");
     }
 %>
 <!-- fin de proceso de seguridad de login -->
@@ -58,31 +58,42 @@
          el menu puede ser cambiado en la pagina menu.jsp --%>
     <jsp:include page="menu_corto.jsp"></jsp:include>
 
-    </head>
-    <body>
-        
-        
-        <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
-    <div class="col-md-6">
-        <h3>
-            Dirección
-        </h3>
-        <p>
-            2016 Universidad De El Salvador  <br/>
-            Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
-        </p>
+</head>
+<body>
+    <!--TITULO DE PANTALLA-->
+    <h3 class="text-center" style="color:#cf2a27">
+        Modificar Becario
+    </h3>
+    <!--FIN TITULO DE PANTALLA-->
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            
+        </div>
+        <div class="col-md-1"></div>
     </div>
-    <div class="col-md-6">
-        <h3>
-            Información de contacto
-        </h3>
-        <p>
-            Universidad De El Salvador
-            Tél: +(503) 2511-2000 <br/>
-            Consejo de becas
-            Tél: +(503) 2511- 2016
-        </p>
+
+    <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
+        <div class="col-md-6">
+            <h3>
+                Dirección
+            </h3>
+            <p>
+                2016 Universidad De El Salvador  <br/>
+                Ciudad Universitaria, Final de Av.Mártires y Héroes del 30 julio, San Salvador, El Salvador, América Central. 
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                Información de contacto
+            </h3>
+            <p>
+                Universidad De El Salvador
+                Tél: +(503) 2511-2000 <br/>
+                Consejo de becas
+                Tél: +(503) 2511- 2016
+            </p>
+        </div>
     </div>
-</div>
-    </body>
+</body>
 </html>
