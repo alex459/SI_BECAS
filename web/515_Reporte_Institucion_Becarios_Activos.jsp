@@ -317,7 +317,7 @@
                         <fieldset class="custom-border">
                         <h5>Resultados de la busqueda</h5>
                         <div class="col-md-12">
-                            <table id="tablaInstituciones" class="table text-center">
+                            <table id="tablaInstituciones" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -387,17 +387,16 @@
 </div>
 
 <script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
-<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/scripts.js"></script>
+        <script src="js/solicitudAcuerdosPendientesComisionBecas.js"></script>
+        <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
-<script type="text/javascript" src="js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="js/buttons.print.min.js"></script>
-<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-    var tabla=$('#tablaInstituciones').DataTable(
+   $(document).ready(function() {
+    $('#tablaInstituciones').DataTable(
             {
                  "language": 
 {
@@ -426,47 +425,11 @@
 }
             }
                 );
-        var buttons = new $.fn.dataTable.Buttons(tabla, {
-     buttons: [      
-        'csv', 'excel'
-    ]
-}).container().appendTo($('#buttons'));
 } );
-    $(function () {
-        $('#fIngresoIni').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        }).on('change.dp', function (e) {
-            $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
-        });
-        $('#fIngresoFin').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        }).on('change.dp', function (e) {
-            $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
-        });
-        $('#fCierreIni').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true
-        }).on('change.dp', function (e) {
-            $('#fCierreFin').datepicker('setStartDate', new Date($(this).val()));
-        });
-        $('#fCierreFin').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true,
-            startDate: new Date()
-        }).on('change.dp', function (e) {
-            $('#fCierreIni').datepicker('setEndDate', new Date($(this).val()));
-        });
-    });
+    
+   
+
+    
 </script>
 </body>
 </html>
