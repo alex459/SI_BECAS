@@ -55,11 +55,9 @@ public class AgregarBecarioServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         //LEER DATOS DEL JSP
-        try {
-            boolean checkOferta = Boolean.parseBoolean(request.getParameter("checkOferta"));
-            String valorcheck = request.getParameter("valorcheck");
-            int ID_USUARIO = Integer.parseInt(request.getParameter("ID_USUARIO"));            
-            
+        try {            
+            int ID_USUARIO = Integer.parseInt(request.getParameter("ID_USUARIO"));         
+            String checkOferta = request.getParameter("checkOferta");            
             String fechaInicioBeca = request.getParameter("fechaInicio");
             String fechaFinBeca = request.getParameter("fechaFin");
 
@@ -79,12 +77,13 @@ public class AgregarBecarioServlet extends HttpServlet {
                     int idOferta = 0;
                     OfertaBeca ofertaBeca = new OfertaBeca();
                     OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
-                    if (checkOferta == true) {
+                    if (checkOferta.equals("true")) {
                         //Crear la oferta                          
                         InstitucionDAO institucionDAO = new InstitucionDAO();
                         //obtener los datos del jsp
                         String nombreOferta = request.getParameter("nombreOferta");
                         String tipoEstudio = request.getParameter("tipoEstudio");
+                        //FALTA AGREGAR FECHA DE INICIO
                         ofertaBeca.setNombreOferta(nombreOferta);
                         ofertaBeca.setTipoEstudio(tipoEstudio);
                         ofertaBeca.setIdInstitucionEstudio(institucionDAO.consultarIdPorNombre(request.getParameter("institucionEstudio")));

@@ -92,7 +92,7 @@
                         out.write("<li><a style='background-color: #cf2a27; color:white' href='100_Agregar_Becario.jsp'>Agregar Becario</a></li>");
                     }
                     if (t == id_director_consejo || t == id_admin) {
-                        out.write("<li><a style='background-color: #cf2a27; color:white' href=''>Modificar Becario</a></li>");
+                        out.write("<li><a style='background-color: #cf2a27; color:white' href='118_Modificar_Becario_Consulta.jsp'>Modificar Becario</a></li>");
                     }
                     if (t == id_director_consejo || t == id_admin) {
                         out.write("<li><a style='background-color: #cf2a27; color:white' href='203_consulta_suspender_becario.jsp'>Suspender Becario</a></li>");

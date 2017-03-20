@@ -2,20 +2,20 @@ var solicitudApp=angular.module('AgregarBecaApp', []);
 solicitudApp.controller('AgregarBecaCtrl', ['$scope',function ($scope) {
 
     $scope.checkOferta = false;
-    $scope.valorcheck = false;
+    $scope.valorcheck = "false";
     $scope.cambiarCheckTrue= function (){
         $scope.valorcheck = $scope.valorcheck = "true";
     }
     $scope.cambiarCheckFalse= function (){
         $scope.valorcheck = $scope.valorcheck = "false";
     }
-    $scope.mostrarFormularioOferta = function (){
-        if( $scope.checkOferta = $scope.checkOferta != false){
+    $scope.mostrarFormularioOferta = function (){        
             $scope.valorcheck = $scope.valorcheck = "true";
-        }else{
+            $scope.checkOferta = $scope.checkOferta = true;
+    };
+    $scope.ocultarFormularioOferta = function (){        
             $scope.valorcheck = $scope.valorcheck = "false";
-        }
-        
+            $scope.checkOferta = $scope.checkOferta = false;
     };
     
         $scope.verFila = false;

@@ -176,8 +176,23 @@
                         <div class="col-md-4">
                             <label>Ingresar manualmente Oferta </label><br>
                         </div>   
-                        <div class="col-md-1">{{valorcheck}}
-                            <input type="checkBox" name="checkOferta" class="form-control" ng-model="checkOferta" ng-click="mostrarFormularioOferta()"><br> 
+                        <div class="col-md-6">
+                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <label class="form-control-static"> Si</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" name="checkOferta" class="form-control" value="true" ng-click="mostrarFormularioOferta()" ng-required ="true" ng-model="valorcheck">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <label class="form-control-static"> No</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" name="checkOferta" class="form-control" value="false" ng-click="ocultarFormularioOferta()" ng-required ="true" ng-model="valorcheck">
+                                </div>
+                            </div>
                             <input type="hidden" name="valorcheck" ng-value = "{{valorcheck}}" >
 
                         </div>                                                     
