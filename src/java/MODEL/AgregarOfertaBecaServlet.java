@@ -66,6 +66,7 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         //parte de lectura desde el jsp y guardado en bd     
         int idOfertaBeca = ofertaBecaDAO.getSiguienteId();
         ofertaBeca.setIdOfertaBeca(idOfertaBeca);
+        String institucionEstudio = request.getParameter("institucionEstudio");
         ofertaBeca.setIdInstitucionEstudio(institucionDAO.consultarIdPorNombre(request.getParameter("institucionEstudio")));
         ofertaBeca.setIdInstitucionFinanciera(institucionDAO.consultarIdPorNombre(request.getParameter("institucionOferente")));
         //Insertando el pdf
@@ -85,7 +86,14 @@ public class AgregarOfertaBecaServlet extends HttpServlet {
         //asignar valores a oferta de beca
         ofertaBeca.setIdDocumento(idDoc);
         ofertaBeca.setNombreOferta(request.getParameter("nombreOferta"));
-        ofertaBeca.setTipoOfertaBeca(request.getParameter("tipoBeca"));
+        
+        if("UNIVERSIDAD DE EL SALVADOR".equals(institucionEstudio))
+        ofertaBeca.setTipoOfertaBeca("INTERNA");
+        else
+        ofertaBeca.setTipoOfertaBeca("EXTERNA");
+        
+        System.out.println("Tipo de la oferta de beca: "+ofertaBeca.getTipoOfertaBeca());
+        
 
         ofertaBeca.setDuracion(Integer.parseInt(request.getParameter("duracion")));
         //  System.out.println(request.getParameter("fechaCierre"));

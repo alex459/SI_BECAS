@@ -95,8 +95,9 @@
                             <label for="duracion">Duracion (Meses) : </label>                                
                         </div>
                         <div class="col-md-3 text-right">
-                            <input id="duracion" name="duracion" type="number" placeholder="Cambiar" min="1" max="60" class="form-control input-md" ng-model="datos.dur" ng-required="true">    
+                            <input id="duracion" name="duracion" type="number" placeholder="Cambiar" min="1" max="60" class="form-control input-md" ng-model="datos.dur" ng-pattern="/^[0-9]*$/" ng-required="true">    
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.duracion.$error.required">Debe Ingresar la Duración de la Oferta.</span>
+                            <span class="text-danger" ng-show="AgregarOfertaBeca.duracion.$error.pattern">Solo se permiten números enteros.</span>
                         </div>                        
                     </div> 
                     <br>
