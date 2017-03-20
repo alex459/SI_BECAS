@@ -227,21 +227,17 @@
                                
                               //  + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
-                  consultaSql = "SELECT   I.NOMBRE_INSTITUCION, I.PAIS, I.EMAIL, COUNT(P.ESTADO_BECARIO) AS NUMERO_DE_BECARIOS "                      
+                  
+                consultaSql = "SELECT I.NOMBRE_INSTITUCION, I.PAIS, I.EMAIL, COUNT(E.ID_EXPEDIENTE) AS NUMERO_DE_BECARIOS  "
 
-                                + "FROM DOCUMENTO D "
-
-                                + "JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO "
-                                + "JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE   "
-                                + "JOIN BECA B ON B.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
-                                + "JOIN SOLICITUD_DE_BECA SB ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
+                                + "FROM SOLICITUD_DE_BECA SB "
+	
                                 + "JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA "
                                 + "JOIN INSTITUCION I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION "
-                                + "JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO "
-                                + "JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO "
-                                + "JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO "
-                                + "JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD "
-                                + "WHERE P.ESTADO_BECARIO='ACTIVO' AND E.ESTADO_EXPEDIENTE='ABIERTO' ";
+                                + "JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
+	
+
+                                + "WHERE E.ESTADO_EXPEDIENTE='ABIERTO' AND E.ID_PROGRESO IN (9,10,11,20,21,22,25,26) GROUP BY I.NOMBRE_INSTITUCION, I.PAIS, I.EMAIL "; 
 
 // + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
@@ -325,10 +321,10 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>INSTITUCIÓN</th>
-                                        <th>PAÍS</th>
-                                        <th>PÁGINA WEB</th>
-                                        <th>CANTIDAD DE BECARIOS</th>
+                                        <th>Institución</th>
+                                        <th>País</th>
+                                        <th>Páginas Web</th>
+                                        <th>Cantidad de Becarios</th>
                                     </tr>  
                                 </thead>
                                 <tbody>
