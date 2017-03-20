@@ -114,7 +114,7 @@ public class AgregarBecarioServlet extends HttpServlet {
                         solicitud.setFechaSolicitud(sqlDate);
                         boolean ingresarSolicitud = solDao.ingresar(solicitud);
 
-                        if (ingresarSolicitud == true) {
+                        if (ingresarSolicitud == true) { 
                             //Ingresar documentos obligatorios                            
                             //documentos
                             ArrayList<String> documentos = new ArrayList<>();

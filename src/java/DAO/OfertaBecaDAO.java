@@ -270,10 +270,10 @@ public class OfertaBecaDAO extends ConexionBD{
         this.abrirConexion();
         try {
             stmt = conn.createStatement();
-            String sql = "INSERT INTO OFERTA_BECA(ID_OFERTA_BECA,ID_INSTITUCION_ESTUDIO,ID_INSTITUCION_FINANCIERA,"
+            String sql = "INSERT INTO OFERTA_BECA(ID_OFERTA_BECA,ID_INSTITUCION_ESTUDIO,ID_INSTITUCION_FINANCIERA,ID_DOCUMENTO,"
                     + " NOMBRE_OFERTA,TIPO_OFERTA_BECA, TIPO_ESTUDIO,OFERTA_BECA_ACTIVA)"
-                    + " VALUES("+ofertaBeca.getIdOfertaBeca()+", "+ofertaBeca.getIdInstitucionEstudio()+", "+ofertaBeca.getIdInstitucionFinanciera()+","
-                    + ""+ofertaBeca.getNombreOferta()+"','"+ofertaBeca.getTipoOfertaBeca()+"',"
+                    + " VALUES("+ofertaBeca.getIdOfertaBeca()+", "+ofertaBeca.getIdInstitucionEstudio()+", "+ofertaBeca.getIdInstitucionFinanciera()+",0,"
+                    + "'"+ofertaBeca.getNombreOferta()+"','"+ofertaBeca.getTipoOfertaBeca()+"',"
                     + "'"+ofertaBeca.getTipoEstudio()+"',0);";
             System.out.println(sql);
             stmt.execute(sql);
