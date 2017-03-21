@@ -63,24 +63,10 @@
     <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
     <link href="css/customfieldset.css" rel="stylesheet">
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
-        </h3>
-    </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
-<p class="text-right">Rol: <%= rol%></p>
+
+<jsp:include page="cabecera.jsp"></jsp:include>      
+    
+    <p class="text-right">Rol: <%= rol%></p>
     <p class="text-right">Usuario: <%= user%></p>
 
     <%-- todo el menu esta contenido en la siguiente linea
@@ -405,7 +391,7 @@
                         <fieldset class="custom-border">
                         <h5>Resultados de la busqueda</h5>
                         <div class="col-md-12">
-                            <table  id="tablaResultados" class="table text-center">
+                            <table  id="tablaResultados" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
