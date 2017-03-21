@@ -59,24 +59,10 @@
     <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
     <link href="css/customfieldset.css" rel="stylesheet">
-<div class="row">
-    <div class="col-md-4">
-        <img alt="Bootstrap Image Preview" src="img/logo.jpg" align="middle"  class="img-responsive center-block">
-        <h3 class="text-center" >
-            <p class="text-danger">Universidad De El Salvador</p>
-        </h3>
-    </div>
-    <div class="col-md-8">
-        <div class="col-xs-12" style="height:50px;"></div>
-        <h2 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Consejo de Becas y de Investigaciones Científicas <br> Universidad de El Salvador</p>
-        </h2>
-        <h3 class="text-center">
-            <p class="text-danger" style="text-shadow:3px 3px 3px #666;">Sistema informático para la administración de becas de postgrado</p>
-        </h3>
-    </div>
-</div>
-<p class="text-right">Rol: <%= rol%></p>
+
+<jsp:include page="cabecera.jsp"></jsp:include>    
+    
+    <p class="text-right">Rol: <%= rol%></p>
     <p class="text-right">Usuario: <%= user%></p>
 
     <%-- todo el menu esta contenido en la siguiente linea
@@ -227,17 +213,21 @@
                                
                               //  + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
-                  
-                consultaSql = "SELECT I.NOMBRE_INSTITUCION, I.PAIS, I.EMAIL, COUNT(E.ID_EXPEDIENTE) AS NUMERO_DE_BECARIOS  "
+                  consultaSql = "SELECT   I.NOMBRE_INSTITUCION, I.PAIS, I.EMAIL, COUNT(P.ESTADO_BECARIO) AS NUMERO_DE_BECARIOS "                      
 
-                                + "FROM SOLICITUD_DE_BECA SB "
-	
+                                + "FROM DOCUMENTO D "
+
+                                + "JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO "
+                                + "JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE   "
+                                + "JOIN BECA B ON B.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
+                                + "JOIN SOLICITUD_DE_BECA SB ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
                                 + "JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA "
                                 + "JOIN INSTITUCION I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION "
-                                + "JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
-	
-
-                                + "WHERE E.ESTADO_EXPEDIENTE='ABIERTO' AND E.ID_PROGRESO IN (9,10,11,20,21,22,25,26) GROUP BY I.NOMBRE_INSTITUCION, I.PAIS, I.EMAIL "; 
+                                + "JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO "
+                                + "JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO "
+                                + "JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO "
+                                + "JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD "
+                                + "WHERE P.ESTADO_BECARIO='ACTIVO' AND E.ESTADO_EXPEDIENTE='ABIERTO' ";
 
 // + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
@@ -321,10 +311,10 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Institución</th>
-                                        <th>País</th>
-                                        <th>Páginas Web</th>
-                                        <th>Cantidad de Becarios</th>
+                                        <th>INSTITUCIÓN</th>
+                                        <th>PAÍS</th>
+                                        <th>PÁGINA WEB</th>
+                                        <th>CANTIDAD DE BECARIOS</th>
                                     </tr>  
                                 </thead>
                                 <tbody>
@@ -387,16 +377,18 @@
 </div>
 
 <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/angular.min.js"></script>
-        <script src="js/scripts.js"></script>
-        <script src="js/solicitudAcuerdosPendientesComisionBecas.js"></script>
-        <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js.js"></script>
+<script type="text/javascript" src="js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="js/buttons.print.min.js"></script>
+<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-   $(document).ready(function() {
-    $('#tablaInstituciones').DataTable(
+    $(document).ready(function() {
+    var tabla=$('#tablaInstituciones').DataTable(
             {
                  "language": 
 {
@@ -425,11 +417,13 @@
 }
             }
                 );
+        var buttons = new $.fn.dataTable.Buttons(tabla, {
+     buttons: [      
+        'csv', 'excel'
+    ]
+}).container().appendTo($('#buttons'));
 } );
-    
    
-
-    
 </script>
 </body>
 </html>
