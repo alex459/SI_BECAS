@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ceb89b45-73ff-44a0-af67-ef1326fc7d33">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="136"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -14,8 +14,16 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="condicion" class="java.lang.String"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT   I.NOMBRE_INSTITUCION AS "INSTITUCIÓN", I.PAIS AS PAÍS, I.EMAIL AS "PÁGINA WEB", COUNT(P.ESTADO_BECARIO) AS "CANTIDAD DE BECARIOS"                       FROM DOCUMENTO D  JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO  JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE    JOIN BECA B ON B.ID_EXPEDIENTE = E.ID_EXPEDIENTE JOIN SOLICITUD_DE_BECA SB ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA  JOIN INSTITUCION I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD WHERE P.ESTADO_BECARIO='ACTIVO' AND E.ESTADO_EXPEDIENTE='ABIERTO' $P!{condicion}]]>
+	<queryString>
+		<![CDATA[SELECT   I.NOMBRE_INSTITUCION AS "INSTITUCIÓN", I.PAIS AS "PAÍS", I.EMAIL AS "PÁGINA WEB", COUNT(E.ID_EXPEDIENTE) AS "CANTIDAD DE BECARIOS"                        FROM SOLICITUD_DE_BECA SB 
+	
+                                JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA 
+                                JOIN INSTITUCION I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION 
+                                JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE 
+								
+								JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO 
+                                JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO 
+                                WHERE E.ESTADO_EXPEDIENTE='ABIERTO' AND E.ID_PROGRESO IN (9,10,11,20,21,22,25,26) $P!{condicion}]]>
 	</queryString>
 	<field name="INSTITUCIÓN" class="java.lang.String"/>
 	<field name="PAÍS" class="java.lang.String"/>

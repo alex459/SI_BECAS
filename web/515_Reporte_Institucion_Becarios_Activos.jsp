@@ -4,6 +4,8 @@
     Author     : adminPC
 --%>
 
+<%@page import="POJO.Pais"%>
+<%@page import="DAO.PaisDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAO.ConexionBD"%>
 <%@page import="DAO.FacultadDAO"%>
@@ -94,7 +96,7 @@
                                             <div class="col-md-8">
                                                 <br>
                                                 <select id="selectbasic" name="INSTITUCION_ESTUDIO" class="form-control">
-                                                    <option value="0" selected>Seleccione una institución</option>
+                                                    <option value="0" selected>Seleccione una Institución</option>
                                                     <%
                                                             InstitucionDAO institucionDAO = new InstitucionDAO();
                                                             ArrayList<Institucion> listaInstitucion = new ArrayList();
@@ -117,16 +119,15 @@
                                             <div class="col-md-8">
                                                 <br>
                                                 <select id="selectbasic" name="PAIS" class="form-control">
-                                                    <option value="">Seleccione Tipo de País</option>
-                                                    <option value="ALEMANIA">ALEMANIA</option>
-                                                    <option value="ARGENTINA">ARGENTINA</option>
-                                                    <option value="BRASIL">BRASIL</option>
-                                                    <option value="CANADÁ">CANADÁ</option>
-                                                    <option value="EL SALVADOR">EL SALVADOR</option>
-                                                    <option value="ESTADOS UNIDOS">ESTADOS UNIDOS</option>
-                                                    <option value="ESPAÑA">ESPAÑA</option>
-                                                    <option value="JAPÓN">JAPÓN</option>
-                                                    <option value="MÉXICO">MÉXICO</option>
+                                                    <option value="">Seleccione País</option>
+                                                     <%
+                                                        PaisDAO paisDao = new PaisDAO();
+                                                        ArrayList<Pais> listaPais = new ArrayList<Pais>();
+                                                        listaPais = paisDao.consultarTodos();
+                                                        for (int i = 0; i < listaPais.size(); i++) {
+                                                        out.write("<option value=" + listaPais.get(i).getNombrePais() + ">" + listaPais.get(i).getNombrePais() + "</option>");
+                                                        }
+                                        %>     
                                                     
                                                     
                                                     
@@ -144,7 +145,7 @@
                                             <div class="col-md-8">
                                                 <br>
                                                 <select id="selectbasic" name="ID_FACULTAD" class="form-control">
-                                                            <option value="0">Selecione Facultad</option>    
+                                                            <option value="0">Seleccione Facultad</option>    
                                                                 <%
                                                                     FacultadDAO facultadDao = new FacultadDAO();
                                                                     ArrayList<Facultad> listaFacultades = new ArrayList<Facultad>();
@@ -200,7 +201,7 @@
                     tipoEstudio = request.getParameter("TIPO_ESTUDIO");
                     id_institucion_estudio = Integer.parseInt(request.getParameter("INSTITUCION_ESTUDIO"));
                     id_facultad = Integer.parseInt(request.getParameter("ID_FACULTAD"));
-                    pais = request.getParameter("PAIS");
+                   // pais = request.getParameter("PAIS");
                     String consultaSql="";
                     
                    // if(tipoEstudio!=null) {} else {tipoEstudio="";};
@@ -213,21 +214,16 @@
                                
                               //  + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
-                  consultaSql = "SELECT   I.NOMBRE_INSTITUCION, I.PAIS, I.EMAIL, COUNT(P.ESTADO_BECARIO) AS NUMERO_DE_BECARIOS "                      
+                  consultaSql = "SELECT I.NOMBRE_INSTITUCION, I.PAIS, I.EMAIL, COUNT(E.ID_EXPEDIENTE) AS NUMERO_DE_BECARIOS "                      
 
-                                + "FROM DOCUMENTO D "
+                                + "FROM SOLICITUD_DE_BECA SB "
 
-                                + "JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO "
-                                + "JOIN EXPEDIENTE E ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE   "
-                                + "JOIN BECA B ON B.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
-                                + "JOIN SOLICITUD_DE_BECA SB ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
                                 + "JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA "
                                 + "JOIN INSTITUCION I ON OB.ID_INSTITUCION_ESTUDIO = I.ID_INSTITUCION "
-                                + "JOIN PROGRESO P ON E.ID_PROGRESO = P.ID_PROGRESO "
+                                + "JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
                                 + "JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO "
                                 + "JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO "
-                                + "JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD "
-                                + "WHERE P.ESTADO_BECARIO='ACTIVO' AND E.ESTADO_EXPEDIENTE='ABIERTO' ";
+                                + "WHERE E.ESTADO_EXPEDIENTE='ABIERTO' AND E.ID_PROGRESO IN (9,10,11,20,21,22,25,26) ";
 
 // + "AND OF.TIPO_OFERTA_BECA LIKE '%" + tipoBeca + "%' AND P.ESTADO_BECARIO LIKE '%" + tipoBecario + "%'";
                     
@@ -237,7 +233,7 @@
                     if (request.getParameter("TIPO_ESTUDIO").toString().length()>0) {
                            
                             tipoEstudio = request.getParameter("TIPO_ESTUDIO");
-                            consultaSql2 = consultaSql2.concat(" AND OF.TIPO_ESTUDIO = '" + tipoEstudio + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND OB.TIPO_ESTUDIO = '" + tipoEstudio + "' ");
                    
                         }
                      if (request.getParameter("PAIS").toString().length()>0) {
@@ -259,7 +255,7 @@
                     } else {
                         consultaSql2 = consultaSql2.concat(" AND DU.ID_FACULTAD = " + id_facultad);
                     }   
-                
+                consultaSql2 = consultaSql2.concat(" GROUP BY I.NOMBRE_INSTITUCION ");
                 consultaSql = consultaSql.concat(consultaSql2);
                     consultaSql = consultaSql.concat(";");
                 conexionbd = new ConexionBD();
@@ -267,7 +263,7 @@
                 
                 }
                 catch(Exception ex){
-                    
+                    System.out.println("error: " + ex);
                 }
 
 
