@@ -242,7 +242,7 @@
 
                 <div class="col-md-12">
 
-                    <table id="tablaUsuarios" class="table table-bordered text-center"></br>                        
+                    <table id="tablaUsuarios" class="table table-bordered text-center">                      
                         <thead>
                             <tr>
                                 <th>No</th>

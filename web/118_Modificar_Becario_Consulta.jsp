@@ -273,7 +273,7 @@
                                         out.write("<td>" + rs.getString(11) + "</td>");
                                         out.write("<td>");
                                         out.write("<center>");
-                                        out.write("<form style='display:inline;' action='119_Modificar_Becario.jsp' method='post'><input type='hidden' name='nombre2' value='" + rs.getString(2)+"'><input type='hidden' name='nombre1' value='" + rs.getString(1)+"'><input type='hidden' name='apellido1' value='" + rs.getString(3)+"'><input type='hidden' name='apellido2' value='" + rs.getString(4)+"'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='submit' class='btn btn-success' name='submit' value='Modificar Beca'></form> ");
+                                        out.write("<form style='display:inline;' action='119_Modificar_Becario.jsp' method='post'><input type='hidden' name='nombre2' value='" + rs.getString(2)+"'><input type='hidden' name='nombre1' value='" + rs.getString(1)+"'><input type='hidden' name='apellido1' value='" + rs.getString(3)+"'><input type='hidden' name='apellido2' value='" + rs.getString(4)+"'><input type='hidden' name='id_Expediente' value='" + rs.getString(9) + "'><input type='submit' class='btn btn-success' name='submit' value='Modificar Beca'></form> ");
                                         out.write("</center>");
                                         out.write("</td>");
                                         out.write("</tr>");
