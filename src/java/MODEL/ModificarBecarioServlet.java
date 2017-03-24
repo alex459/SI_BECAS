@@ -44,6 +44,7 @@ public class ModificarBecarioServlet extends HttpServlet {
 
             if (accion.equals("becario")) {
                 //Editar el becario
+                UsuarioDAO usuarioDao = new UsuarioDAO();
                 //Obteniendo el idUsuario
                 int idUsuario = Integer.parseInt(request.getParameter("ID_USUARIO"));
                 int idExpediente = Integer.parseInt(request.getParameter("idExpediente"));
@@ -56,13 +57,14 @@ public class ModificarBecarioServlet extends HttpServlet {
                     int idBecarioActual = solicitud.getIdUsuario();
                     solicitud.setIdUsuario(idUsuario);
                     solicitudDao.actualizar(solicitud);
+                    //Agregar el nuevo becario
+                    usuarioDao.actualizarRolPorIdUsuario(idUsuario, 2);
                     //Borrar becario Actual
                     Expediente expediente = new Expediente();
                     ExpedienteDAO expedienteDao = new ExpedienteDAO();
                     expediente = expedienteDao.consultarPorId(idExpediente);
                     if (expediente.getEstadoExpediente().equals("ABIERTO")) {
-                        //Cambiar Becario Actual a Candidato
-                        UsuarioDAO usuarioDao = new UsuarioDAO();
+                        //Cambiar Becario Actual a Candidato                        
                         usuarioDao.actualizarRolPorIdUsuario(idBecarioActual, 1);
                     } else {
                         //Beca cerrada no hacer nada

@@ -223,7 +223,7 @@
             if(carnet!=null) {} else {carnet="";};
             //if(fecha1!=null) {} else {fecha1="";};
             
-            consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO, D.ESTADO_DOCUMENTO, D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO, E.ESTADO_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO = SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('APROBADO', 'DENEGADO', 'REVISION') AND TD.DEPARTAMENTO='"+consejoB+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'   ";
+            consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO, D.ESTADO_DOCUMENTO, D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO, E.ESTADO_EXPEDIENTE, (CASE WHEN(SELECT MAX(ID_DOCUMENTO)FROM DOCUMENTO DOC WHERE DOC.ID_EXPEDIENTE = E.ID_EXPEDIENTE AND DOC.ESTADO_DOCUMENTO IN('APROBADO','DENEGADO','REVISION')) != D.ID_DOCUMENTO THEN 'NO' ELSE 'SI' END) AS ULTIMO_DOCUM FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO = U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO = SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE = E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE = E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO = TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN('APROBADO', 'DENEGADO', 'REVISION') AND TD.DEPARTAMENTO='"+consejoB+"' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%'   ";
              
              if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                             java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
@@ -281,6 +281,7 @@
                                         int idProgreso =0;
                                         String estadoProgreso = "";
                                         String estadoExpediente ="";
+                                        String ultimo = "";
                                         while (rs.next()) {
                                             i = i + 1;
                                             out.write("<tr>");
@@ -293,101 +294,26 @@
                                             out.write("<td>" + rs.getString(10) + "</td>");
                                             out.write("<td>");
                                             out.write("<center>");
-                                            //SWIFT DE ID TIPO DOCUMENTO
+                                            //SWIFT DE ID TIPO DOCUMENTO 
                                             idTipoDoc = rs.getInt(12);
                                             idProgreso = rs.getInt(13);
                                             estadoProgreso = rs.getString(14);
                                             estadoExpediente = rs.getString(15);
-                                            switch (idTipoDoc) {
-                                                case 105:
-                                                        if(estadoExpediente.equals("ABIERTO")){
-                                                            //VERIFICAR PROGRESO
-                                                            if(idProgreso == 2){
-                                                                // ACUERDO DENEGADO O SE HA SOLICITADO REVISION
-                                                                if(estadoProgreso.equals("REVISION") || estadoProgreso.equals("DENEGADO")){
-                                                                    //EDITAR
-                                                                    out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                }else{
-                                                                    //SOLO VER DOCUMENTO
-                                                                }
-                                                            }else{
-                                                                //ACUERDO APROBADO
-                                                                //VER SI SE ENCUENTRA EN EL PROGRESO SIGUIENTE
-                                                                if(idProgreso == 3){
-                                                                    if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("EN PROCESO")){
-                                                                        //NO SE HA REALIZADO O RESUELTO LA SOLICITUD DEL SIGUIENTE DOCUMENTO
-                                                                        //MOSTRAR EDITAR
-                                                                        out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                    }else{
-                                                                        //YA NO SE PUEDE EDITAR
-                                                                    }
-                                                                }else{
-                                                                    //PROGRESO AVANZADO NO SE PUEDE EDITAR
-                                                                }
-                                                            }
-                                                        }else{
-                                                            //SOLO VER DOCUMENTO
-                                                        }
-                                                        //BOTON PARA VER DOCUMENTO
-                                                        out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                    break;
-                                                case 131:
-                                                        if(idProgreso == 7){
-                                                            if(estadoProgreso.equals("EN PROCESO") || estadoProgreso.equals("CORRECCION")){
-                                                              //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                              //VER DOCUMENTO
-                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                            }else{
-                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                            }
-                                                        }else{
-                                                            // no se puede editar
-                                                            //VER DOCUMENTO
-                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                        }
-                                                    break;
-                                                case 141:
-                                                        if(idProgreso == 22){
-                                                            if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")){
-                                                              //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
-                                                              //VER DOCUMENTO
-                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                            }else{
-                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                            }
-                                                        }else{
-                                                            // no se puede editar
-                                                            //VER DOCUMENTO
-                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                        }
-                                                    break;
-                                                case 152:
-                                                    if(idProgreso == 9 || idProgreso ==12){                                                            
-                                                              //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
-                                                              //VER DOCUMENTO
-                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
-                                                        }else{
-                                                            // no se puede editar
-                                                            //VER DOCUMENTO
-                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                        }
-                                                    break;
-                                                case 157:
-                                                    if(idProgreso == 15){
-                                                            
-                                                              //EDITAR                                                                
-                                                              out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-success' name='submit' value='Resolver'></form> ");
-                                                              //VER DOCUMENTO
-                                                              out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");                                                            
-                                                        }else{
-                                                            // no se puede editar
-                                                            //VER DOCUMENTO
-                                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                        }
-                                                    break;                                                
+                                            ultimo = rs.getString(16);
+                                            //Verificar expediente abierto
+                                            if (estadoExpediente.equals("ABIERTO")) {
+                                                //verificar si es el ultimo documento EN PROCESO
+                                                if (ultimo.equals("SI")) {
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post' target='_blank'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                    if (estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")) {
+                                                        //ver boton actualizar
+                                                        out.write("<form style='display:inline;' action='508_Consejo_Becas_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
+                                                    }
+                                                } else {
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post' target='_blank'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                }
+                                            } else {
+                                                out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post' target='_blank'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                             }
                                             out.write("</center>");
                                             out.write("</td>");

@@ -23,7 +23,6 @@
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
 
-    
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
     response.setHeader("Cache-Control", "no-cache");
@@ -41,19 +40,18 @@
     if (!autorizacion || user == null) {
         response.sendRedirect("logout.jsp");
     }
-    
-    
-    Integer idFacultad = 0;    
+
+    Integer idFacultad = 0;
     AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
     try {
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
         idFacultad = DetUsDao.obtenerFacultad(user);
-        
+
     } catch (Exception e) {
         e.printStackTrace();
     }
-   
+
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -76,10 +74,10 @@
         <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
         <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
-        
-    <jsp:include page="cabecera.jsp"></jsp:include>
 
-    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+        <jsp:include page="cabecera.jsp"></jsp:include>
+
+        <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
     <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
 
     <%-- todo el menu esta contenido en la siguiente linea
@@ -148,20 +146,20 @@
                                             <small id="help5"></small>
                                         </div>
 
-                                         <div class="col-md-6 ">
-                                        <div class="col-md-6">          
-                                            <label for="fIngresoIni">Fecha Resolución (Inicio) :</label> 
-                                            <div class="input-group date">
-                                                <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                        <div class="col-md-6 ">
+                                            <div class="col-md-6">          
+                                                <label for="fIngresoIni">Fecha Resolución (Inicio) :</label> 
+                                                <div class="input-group date">
+                                                    <input type="text" name="fIngresoIni" id="fIngresoIni" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">      
+                                                <label for="fIngresoFin">Fecha de Resolución (Fin) :</label>
+                                                <div class="input-group date">
+                                                    <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">      
-                                            <label for="fIngresoFin">Fecha de Resolución (Fin) :</label>
-                                            <div class="input-group date">
-                                                <input type="text" name="fIngresoFin" id="fIngresoFin" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     </div>
                                     <br>
@@ -203,7 +201,7 @@
                     String carnet;
                     Integer id_tipo_documento;
                     String documento;
-                   
+
                     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     ConexionBD conexionbd = null;
 
@@ -226,7 +224,7 @@
                         String aprobado = "APROBADO";
                         String denegado = "DENEGADO";
                         String juntaD = "JUNTA DIRECTIVA";
-                        
+
                         String fIngresoIni = request.getParameter("fIngresoIni");
                         String fIngresoFin = request.getParameter("fIngresoFin");
 
@@ -250,24 +248,20 @@
                         } else {
                             carnet = "";
                         };
-                    
-                    
-                        consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO, E.ESTADO_EXPEDIENTE FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN ('APROBADO','DENEGADO','REVISION') AND TD.DEPARTAMENTO='" + juntaD + "' AND F.ID_FACULTAD='" + idFacultad + "' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' ";
-                        
+
+                        consultaSql = "SELECT U.NOMBRE_USUARIO, DU.NOMBRE1_DU, DU.NOMBRE2_DU, DU.APELLIDO1_DU, DU.APELLIDO2_DU, IFNULL(DU.DEPARTAMENTO, ''), F.FACULTAD, D.FECHA_INGRESO, TD.TIPO_DOCUMENTO,D.ESTADO_DOCUMENTO , D.ID_DOCUMENTO, D.ID_TIPO_DOCUMENTO, E.ID_PROGRESO, E.ESTADO_PROGRESO, E.ESTADO_EXPEDIENTE, (CASE WHEN(SELECT MAX(ID_DOCUMENTO)FROM DOCUMENTO DOC WHERE DOC.ID_EXPEDIENTE = E.ID_EXPEDIENTE AND DOC.ESTADO_DOCUMENTO IN('APROBADO','DENEGADO','REVISION')) != D.ID_DOCUMENTO THEN 'NO' ELSE 'SI' END) AS ULTIMO_DOCUM FROM DETALLE_USUARIO DU JOIN FACULTAD F ON DU.ID_FACULTAD=F.ID_FACULTAD JOIN USUARIO U ON DU.ID_USUARIO=U.ID_USUARIO JOIN SOLICITUD_DE_BECA SB ON U.ID_USUARIO=SB.ID_USUARIO JOIN EXPEDIENTE E ON SB.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN DOCUMENTO D ON D.ID_EXPEDIENTE=E.ID_EXPEDIENTE JOIN TIPO_DOCUMENTO TD ON D.ID_TIPO_DOCUMENTO=TD.ID_TIPO_DOCUMENTO WHERE D.ESTADO_DOCUMENTO IN ('APROBADO','DENEGADO','REVISION') AND TD.DEPARTAMENTO='" + juntaD + "' AND F.ID_FACULTAD='" + idFacultad + "' AND DU.NOMBRE1_DU LIKE '%" + nombre1 + "%' AND DU.NOMBRE2_DU LIKE '%" + nombre2 + "%' AND DU.APELLIDO1_DU LIKE '%" + apellido1 + "%' AND DU.APELLIDO2_DU LIKE '%" + apellido2 + "%' AND DU.CARNET LIKE '%" + carnet + "%' ";
+
                         if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                             java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                             java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
                             consultaSql = consultaSql.concat(" AND D.FECHA_INGRESO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
                         }
-                       
-                        
+
                         if (id_tipo_documento == 0) {
 
                         } else {
                             consultaSql = consultaSql.concat(" AND TD.ID_TIPO_DOCUMENTO = " + id_tipo_documento);
                         }
-                        
-                        
 
                         conexionbd = new ConexionBD();
                         rs = conexionbd.consultaSql(consultaSql);
@@ -288,7 +282,7 @@
                     <h5>Resultados</h5>
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                            <table  id="tablaResultados" class="table table-bordered">
+                        <table  id="tablaResultados" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -302,12 +296,13 @@
                                 </tr>  
                             </thead>
                             <tbody>
-                                <%                                        try {
+                                <%  try {
                                         Integer i = 0;
                                         int idTipoDoc = 0;
-                                        int idProgreso =0;
+                                        int idProgreso = 0;
                                         String estadoProgreso = "";
-                                        String estadoExpediente ="";
+                                        String estadoExpediente = "";
+                                        String ultimo = "";
                                         while (rs.next()) {
                                             i = i + 1;
                                             out.write("<tr>");
@@ -325,233 +320,21 @@
                                             idProgreso = rs.getInt(13);
                                             estadoProgreso = rs.getString(14);
                                             estadoExpediente = rs.getString(15);
-                                            switch (idTipoDoc) {
-                                                case 103:
-                                                        if(estadoExpediente.equals("ABIERTO")){
-                                                            //VERIFICAR PROGRESO
-                                                            if(idProgreso == 1){
-                                                                // ACUERDO DENEGADO O SE HA SOLICITADO REVISION
-                                                                if(estadoProgreso.equals("REVISION") || estadoProgreso.equals("DENEGADO")){
-                                                                    //EDITAR
-                                                                    out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                }else{
-                                                                    //SOLO VER DOCUMENTO
-                                                                }
-                                                            }else{
-                                                                //ACUERDO APROBADO
-                                                                //VER SI SE ENCUENTRA EN EL PROGRESO SIGUIENTE
-                                                                if(idProgreso == 2){
-                                                                    if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("EN PROCESO")){
-                                                                        //NO SE HA REALIZADO O RESUELTO LA SOLICITUD DEL SIGUIENTE DOCUMENTO
-                                                                        //MOSTRAR EDITAR
-                                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                    }else{
-                                                                        //YA NO SE PUEDE EDITAR
-                                                                    }
-                                                                }else{
-                                                                    //PROGRESO AVANZADO NO SE PUEDE EDITAR
-                                                                }
-                                                            }
-                                                        }else{
-                                                            //SOLO VER DOCUMENTO
-                                                        }
-                                                        //BOTON PARA VER DOCUMENTO
-                                                        out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                    break;
-                                                case 120:
-                                                        if(estadoExpediente.equals("ABIERTO")){
-                                                            //VERIFICAR PROGRESO
-                                                            if(idProgreso == 4){
-                                                                // ACUERDO DENEGADO O SE HA SOLICITADO REVISION
-                                                                if(estadoProgreso.equals("REVISION") || estadoProgreso.equals("DENEGADO")){
-                                                                    //EDITAR
-                                                                    out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                }else{
-                                                                    //SOLO VER DOCUMENTO
-                                                                }
-                                                            }else{
-                                                                //ACUERDO APROBADO
-                                                                //VER SI SE ENCUENTRA EN EL PROGRESO SIGUIENTE
-                                                                if(idProgreso == 5){
-                                                                    if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("EN PROCESO")){
-                                                                        //NO SE HA REALIZADO O RESUELTO LA SOLICITUD DEL SIGUIENTE DOCUMENTO
-                                                                        //MOSTRAR EDITAR
-                                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                    }else{
-                                                                        //YA NO SE PUEDE EDITAR
-                                                                    }
-                                                                }else{
-                                                                    //PROGRESO AVANZADO NO SE PUEDE EDITAR
-                                                                }
-                                                            }
-                                                        }else{
-                                                            //SOLO VER DOCUMENTO
-                                                        }
-                                                        //BOTON PARA VER DOCUMENTO
-                                                        out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                    break;
-                                                case 121:
-                                                    
-                                                        if(estadoExpediente.equals("ABIERTO")){
-                                                            //VERIFICAR PROGRESO
-                                                            if(idProgreso == 4){
-                                                                // ACUERDO DENEGADO O SE HA SOLICITADO REVISION
-                                                                if(estadoProgreso.equals("REVISION") || estadoProgreso.equals("DENEGADO")){
-                                                                    //EDITAR
-                                                                    out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                }else{
-                                                                    //SOLO VER DOCUMENTO
-                                                                }
-                                                            }else{
-                                                                //ACUERDO APROBADO
-                                                                //VER SI SE ENCUENTRA EN EL PROGRESO SIGUIENTE
-                                                                if(idProgreso == 5){
-                                                                    if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("EN PROCESO")){
-                                                                        //NO SE HA REALIZADO O RESUELTO LA SOLICITUD DEL SIGUIENTE DOCUMENTO
-                                                                        //MOSTRAR EDITAR
-                                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                    }else{
-                                                                        //YA NO SE PUEDE EDITAR
-                                                                    }
-                                                                }else{
-                                                                    //PROGRESO AVANZADO NO SE PUEDE EDITAR
-                                                                }
-                                                            }
-                                                        }else{
-                                                            //SOLO VER DOCUMENTO
-                                                        }
-                                                        //BOTON PARA VER DOCUMENTO
-                                                        out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                    break;
-                                                    
-                                                case 136:
-                                                    if(estadoExpediente.equals("ABIERTO")){
-                                                            //VERIFICAR PROGRESO
-                                                            if(idProgreso == 9){
-                                                                // ACUERDO DENEGADO O SE HA SOLICITADO REVISION
-                                                                if(estadoProgreso.equals("REVISION") || estadoProgreso.equals("DENEGADO")){
-                                                                    //EDITAR
-                                                                    out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                }else{
-                                                                    //SOLO VER DOCUMENTO
-                                                                }
-                                                            }else{
-                                                                //ACUERDO APROBADO
-                                                                //VER SI SE ENCUENTRA EN EL PROGRESO SIGUIENTE
-                                                                if(idProgreso == 12){
-                                                                    if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("EN PROCESO")){
-                                                                        //NO SE HA REALIZADO O RESUELTO LA SOLICITUD DEL SIGUIENTE DOCUMENTO
-                                                                        //MOSTRAR EDITAR
-                                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                    }else{
-                                                                        //YA NO SE PUEDE EDITAR
-                                                                    }
-                                                                }else{
-                                                                    //PROGRESO AVANZADO NO SE PUEDE EDITAR
-                                                                }
-                                                            }
-                                                        }else{
-                                                            //SOLO VER DOCUMENTO
-                                                        }
-                                                        //BOTON PARA VER DOCUMENTO
-                                                        out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                    break;
-                                                case 140:
-                                                    if(estadoExpediente.equals("ABIERTO")){
-                                                            //VERIFICAR PROGRESO
-                                                            if(idProgreso == 9 || idProgreso == 20){
-                                                                // ACUERDO DENEGADO O SE HA SOLICITADO REVISION
-                                                                if(estadoProgreso.equals("REVISION") || estadoProgreso.equals("DENEGADO")){
-                                                                    //EDITAR
-                                                                    out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                }else{
-                                                                    //SOLO VER DOCUMENTO
-                                                                }
-                                                            }else{
-                                                                //ACUERDO APROBADO
-                                                                //VER SI SE ENCUENTRA EN EL PROGRESO SIGUIENTE
-                                                                if(idProgreso == 21){
-                                                                    if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("EN PROCESO")){
-                                                                        //NO SE HA REALIZADO O RESUELTO LA SOLICITUD DEL SIGUIENTE DOCUMENTO
-                                                                        //MOSTRAR EDITAR
-                                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                    }else{
-                                                                        //YA NO SE PUEDE EDITAR
-                                                                    }
-                                                                }else{
-                                                                    //PROGRESO AVANZADO NO SE PUEDE EDITAR
-                                                                }
-                                                            }
-                                                        }else{
-                                                            //SOLO VER DOCUMENTO
-                                                        }
-                                                        //BOTON PARA VER DOCUMENTO
-                                                        out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                    break;
-                                                case 151:
-                                                    if(estadoExpediente.equals("ABIERTO")){
-                                                            //VERIFICAR PROGRESO
-                                                            if(idProgreso == 9 || idProgreso == 12){
-                                                                // ACUERDO DENEGADO O SE HA SOLICITADO REVISION
-                                                                if(estadoProgreso.equals("REVISION") || estadoProgreso.equals("DENEGADO")){
-                                                                    //EDITAR
-                                                                    out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                }else{
-                                                                    //SOLO VER DOCUMENTO
-                                                                }
-                                                            }else{
-                                                                //ACUERDO APROBADO
-                                                                //VER SI SE ENCUENTRA EN EL PROGRESO SIGUIENTE
-                                                                if(idProgreso == 13){
-                                                                    if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("EN PROCESO")){
-                                                                        //NO SE HA REALIZADO O RESUELTO LA SOLICITUD DEL SIGUIENTE DOCUMENTO
-                                                                        //MOSTRAR EDITAR
-                                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                    }else{
-                                                                        //YA NO SE PUEDE EDITAR
-                                                                    }
-                                                                }else{
-                                                                    //PROGRESO AVANZADO NO SE PUEDE EDITAR
-                                                                }
-                                                            }
-                                                        }else{
-                                                            //SOLO VER DOCUMENTO
-                                                        }
-                                                        //BOTON PARA VER DOCUMENTO
-                                                        out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                    break;
-                                                case 155:
-                                                    if(estadoExpediente.equals("ABIERTO")){
-                                                            //VERIFICAR PROGRESO
-                                                            if(idProgreso == 13){
-                                                                // ACUERDO DENEGADO O SE HA SOLICITADO REVISION
-                                                                if(estadoProgreso.equals("REVISION") || estadoProgreso.equals("DENEGADO")){
-                                                                    //EDITAR
-                                                                    out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                }else{
-                                                                    //SOLO VER DOCUMENTO
-                                                                }
-                                                            }else{
-                                                                //ACUERDO APROBADO
-                                                                //VER SI SE ENCUENTRA EN EL PROGRESO SIGUIENTE
-                                                                if(idProgreso == 14){
-                                                                    if(estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("EN PROCESO")){
-                                                                        //NO SE HA REALIZADO O RESUELTO LA SOLICITUD DEL SIGUIENTE DOCUMENTO
-                                                                        //MOSTRAR EDITAR
-                                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
-                                                                    }else{
-                                                                        //YA NO SE PUEDE EDITAR
-                                                                    }
-                                                                }else{
-                                                                    //PROGRESO AVANZADO NO SE PUEDE EDITAR
-                                                                }
-                                                            }
-                                                        }else{
-                                                            //SOLO VER DOCUMENTO
-                                                        }
-                                                        //BOTON PARA VER DOCUMENTO
-                                                        out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
-                                                    break;
+                                            ultimo = rs.getString(16);
+                                            //Verificar expediente abierto
+                                            if (estadoExpediente.equals("ABIERTO")) {
+                                                //verificar si es el ultimo documento EN PROCESO
+                                                if (ultimo.equals("SI")) {
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post' target='_blank'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                    if (estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")) {
+                                                        //ver boton actualizar
+                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
+                                                    }
+                                                } else {
+                                                    out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post' target='_blank'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
+                                                }
+                                            } else {
+                                                out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post' target='_blank'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                             }
                                             out.write("</center>");
                                             out.write("</td>");
@@ -610,60 +393,60 @@
         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
         <script type="text/javascript">
-   $(document).ready(function() {
-    $('#tablaResultados').DataTable(
-            {
-                 "language": 
-{
-	"sProcessing":     "Procesando...",
-	"sLengthMenu":     "Mostrar _MENU_ registros",
-	"sZeroRecords":    "No se encontraron resultados",
-	"sEmptyTable":     "Ningún dato disponible en esta tabla",
-	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-	"sInfoPostFix":    "",
-	"sSearch":         "Buscar:",
-	"sUrl":            "",
-	"sInfoThousands":  ",",
-	"sLoadingRecords": "Cargando...",
-	"oPaginate": {
-		"sFirst":    "Primero",
-		"sLast":     "Último",
-		"sNext":     "Siguiente",
-		"sPrevious": "Anterior"
-	},
-	"oAria": {
-		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-	}
-}
-            }
-                );
-} );
-    
-                                           $(function () {
-        $('#fIngresoIni').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true,
-            endDate: '-0y'
-        }).on('change.dp', function (e) {
-            $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
-        });
-        $('#fIngresoFin').datepicker({
-            format: 'yyyy-mm-dd',
-            calendarWeeks: true,
-            todayHighlight: true,
-            autoclose: true,
-            endDate: '-0y'
-        }).on('change.dp', function (e) {
-            $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
-        });
-       
-    });
-    
-</script>
-</body>
+                                                $(document).ready(function () {
+                                                    $('#tablaResultados').DataTable(
+                                                            {
+                                                                "language":
+                                                                        {
+                                                                            "sProcessing": "Procesando...",
+                                                                            "sLengthMenu": "Mostrar _MENU_ registros",
+                                                                            "sZeroRecords": "No se encontraron resultados",
+                                                                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                                                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                                                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                                                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                                                            "sInfoPostFix": "",
+                                                                            "sSearch": "Buscar:",
+                                                                            "sUrl": "",
+                                                                            "sInfoThousands": ",",
+                                                                            "sLoadingRecords": "Cargando...",
+                                                                            "oPaginate": {
+                                                                                "sFirst": "Primero",
+                                                                                "sLast": "Último",
+                                                                                "sNext": "Siguiente",
+                                                                                "sPrevious": "Anterior"
+                                                                            },
+                                                                            "oAria": {
+                                                                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                                                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                                                            }
+                                                                        }
+                                                            }
+                                                    );
+                                                });
+
+                                                $(function () {
+                                                    $('#fIngresoIni').datepicker({
+                                                        format: 'yyyy-mm-dd',
+                                                        calendarWeeks: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true,
+                                                        endDate: '-0y'
+                                                    }).on('change.dp', function (e) {
+                                                        $('#fIngresoFin').datepicker('setStartDate', new Date($(this).val()));
+                                                    });
+                                                    $('#fIngresoFin').datepicker({
+                                                        format: 'yyyy-mm-dd',
+                                                        calendarWeeks: true,
+                                                        todayHighlight: true,
+                                                        autoclose: true,
+                                                        endDate: '-0y'
+                                                    }).on('change.dp', function (e) {
+                                                        $('#fIngresoIni').datepicker('setEndDate', new Date($(this).val()));
+                                                    });
+
+                                                });
+
+        </script>
+    </body>
 </html>
