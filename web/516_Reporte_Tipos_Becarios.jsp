@@ -310,7 +310,7 @@
                               
                         if (!request.getParameter("facultad").isEmpty()) {
                             facultad = request.getParameter("facultad");
-                            consultaSql2 = consultaSql2.concat(" AND F.FACULDAD='" + facultad + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND F.FACULTAD='" + facultad + "' ");
                         }  
                               
                        if (!request.getParameter("institucionOferente").isEmpty()) {
@@ -321,7 +321,7 @@
                               
                               consultaSql = consultaSql.concat(consultaSql2);
                                 consultaSql = consultaSql.concat(";");
-                              
+                              System.out.println(consultaSql);
                               conexionbd = new ConexionBD();
                                rs = conexionbd.consultaSql(consultaSql);
                            while (rs.next()) {
