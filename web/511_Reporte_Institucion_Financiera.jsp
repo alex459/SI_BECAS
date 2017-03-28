@@ -172,7 +172,7 @@
                                                     <option value="CONTRACTUAL">Contractual</option>
                                                     <option value="INACTIVO">Inactivo</option>
                                                     <option value="LIBERADO">Liberado</option>
-                                                    <option value="INCUMPLIMIENTO DE CONTRATO">Incumplimiento de Contrato</option>
+                                                    <option value="INCUMPLIMIENTO">Incumplimiento de Contrato</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -207,10 +207,12 @@
                                             <div class="col-md-8">
                                                 <br>
                                                 <select  name="tipoEstudio" id="tipoEstudio" class="form-control">
+                                                    
                                                     <option value="">Seleccione Tipo de Estudio</option>
-                                                    <option value="MAESTRIA">Maestria</option>
                                                     <option value="DOCTORADO">Doctorado</option>
                                                     <option value="ESPECIALIZACION">Especializacion</option>
+                                                    <option value="MAESTRIA">Maestria</option>
+                                                    <option value="POSTDOCTORADO">PostDoctorado</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -241,16 +243,16 @@
                     Documento temp4 = new Documento();
                     Facultad temp5 = new Facultad();
                     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                     String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="", tipoBecario="";
+                    String tipoBeca = "", facultad = "", institucionOferente = "", tipoEstudio="", tipoBecario="";
                     String queryParam=""; 
                     
                     String consultaSql2 = "";  
                     try {
                        
-                         if (!request.getParameter("tipoBecario").isEmpty()) {
+                     /*    if (!request.getParameter("tipoBecario").isEmpty()) {
                             tipoEstudio = request.getParameter("tipoBecario");
                         }
-                        
+                    */    
                         
                         
                        
@@ -263,59 +265,60 @@
                         //formando la consulta
                         String consultaSql = "";
                         
-                        consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE,"
-                                + " FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,"
-                                + " OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,OB.FECHA_INICIO AS FECHA_INICIO,"
-                                + " OB.FECHA_CIERRE AS FECHA_CIERRE,D.OBSERVACION_O AS OBSERVACION_O,INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,"
-                                + " INS.PAIS AS PAIS FROM DETALLE_USUARIO DU, FACULTAD FA, OFERTA_BECA OB, DOCUMENTO D,"
-                                + " INSTITUCION INS, SOLICITUD_DE_BECA SDB, EXPEDIENTE EX, USUARIO US, TIPO_USUARIO TU  "
-                                + " WHERE DU.ID_FACULTAD=FA.ID_FACULTAD "
-                                + " AND DU.ID_USUARIO=SDB.ID_USUARIO AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND "
-                                + " OB.ID_DOCUMENTO=D.ID_DOCUMENTO AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND "
-                                + " OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND US.ID_USUARIO=DU.ID_USUARIO "
-                                + " AND US.ID_TIPO_USUARIO=TU.ID_TIPO_USUARIO "
-                                + " AND US.ID_TIPO_USUARIO= 2 "
-                                + " AND "
-                                + " EX.ESTADO_EXPEDIENTE='ABIERTO' "
-                                + " AND INS.TIPO_INSTITUCION='OFERTANTE' ";
+                        consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU, ' ', IFNULL(DU.NOMBRE2_DU,' ' ), ' ',DU.APELLIDO1_DU,' ',IFNULL(DU.APELLIDO2_DU,' ' )) AS NOMBRE,"
+                                + " OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA, B.FECHA_INICIO AS FECHA_INICIO, B.FECHA_FIN AS FECHA_CIERRE,"
+                                + " ( SELECT I.PAIS FROM INSTITUCION I WHERE I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO) AS PAIS, OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,"
+                                + " INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,"
+                                + " F.FACULTAD AS FACULTAD"
+                                + " FROM DETALLE_USUARIO DU  "
+                                + " JOIN SOLICITUD_DE_BECA SB ON DU.ID_USUARIO = SB.ID_USUARIO "
+                                + " JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA "
+                                + " JOIN EXPEDIENTE EX ON SB.ID_EXPEDIENTE = EX.ID_EXPEDIENTE "
+                                + " JOIN BECA B ON EX.ID_EXPEDIENTE = B.ID_EXPEDIENTE "
+                                + " JOIN INSTITUCION INS ON OB.ID_INSTITUCION_FINANCIERA = INS.ID_INSTITUCION "
+                                + " JOIN FACULTAD F ON DU.ID_FACULTAD = F.ID_FACULTAD "
+                                + " JOIN PROGRESO P ON EX.ID_PROGRESO = P.ID_PROGRESO"
+                                + " WHERE EX.ID_PROGRESO >= 9 ";
+                               
+                       
                         if (request.getParameter("tipoBeca").toString().length()>0) {
                             tipoBeca = request.getParameter("tipoBeca");
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
                         }
-                         
+                       
                         if (request.getParameter("facultad").toString().length()>0) {
                               facultad = request.getParameter("facultad");
-                            consultaSql2 = consultaSql2.concat(" AND FA.FACULTAD='" + facultad + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND F.FACULTAD='" + facultad + "' ");
                         }
                   
                         if (request.getParameter("institucionOferente").toString().length()>0) {
-                             System.out.println("LLLLEEEEEEEEGAAAAÑÑÑÑÑÑ");
-                                institucionOferente = request.getParameter("institucionOferente");
+                            System.out.println("LLLLEEEEEEEEGAAAAÑÑÑÑÑÑ");
+                            institucionOferente = request.getParameter("institucionOferente");
                             consultaSql2 = consultaSql2.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
                         }
-                        
+                       
                               
                         if (request.getParameter("tipoEstudio").toString().length()>0) {
                            
-                                tipoEstudio = request.getParameter("tipoEstudio");
+                            tipoEstudio = request.getParameter("tipoEstudio");
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
                         }
-                  /*      
-                        if (!request.getParameter("tipoBecario").isEmpty()) {
-                            tipoEstudio = request.getParameter("tipoBecario");
-                        }*/
+                       
+                        if (request.getParameter("tipoBecario").toString().length()>0) {
+                            tipoBecario = request.getParameter("tipoBecario");
+                            consultaSql2 = consultaSql2.concat(" AND P.ESTADO_BECARIO='" + tipoBecario + "' ");
+                        }
                   
-                        if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
+                       if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                         java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                         java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
-                        consultaSql2 = consultaSql2.concat(" AND FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND B.FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
                     }
                     if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                         java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                        consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND B.FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                     }
-                    consultaSql2 = consultaSql2.concat(" GROUP BY NOMBRE, FACULTAD, TIPO_OFERTA_BECA, TIPO_ESTUDIO  ");
                     consultaSql = consultaSql.concat(consultaSql2);
                     consultaSql = consultaSql.concat(";");
                     System.out.println(consultaSql);
@@ -340,7 +343,7 @@
                             temp2.setNombreInstitucion(rs.getString("NOMBRE_INSTITUCION"));
                             temp2.setPais(rs.getString("PAIS"));
                             temp3.setNombre1Du(rs.getString("NOMBRE"));
-                            temp4.setObservacion(rs.getString("OBSERVACION_O"));
+                            //temp4.setObservacion(rs.getString("OBSERVACION_O"));
                             temp5.setFacultad(rs.getString("FACULTAD"));
                             
 

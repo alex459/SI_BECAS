@@ -338,7 +338,7 @@
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
                         consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                     }
-                    consultaSql2 = consultaSql2.concat(" GROUP BY NOMBRE, TIPO_OFERTA_BECA, TIPO_ESTUDIO  ");
+                    consultaSql2 = consultaSql2.concat(" GROUP BY NOMBRE , TIPO_OFERTA_BECA, TIPO_ESTUDIO  ");
                      consultaSql = consultaSql.concat(consultaSql2);                                                                                             
                     consultaSql = consultaSql.concat(";");
                     System.out.println(consultaSql);
