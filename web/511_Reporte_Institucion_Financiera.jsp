@@ -274,7 +274,7 @@
                                 + " OB.ID_DOCUMENTO=D.ID_DOCUMENTO AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND "
                                 + " OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND US.ID_USUARIO=DU.ID_USUARIO "
                                 + " AND US.ID_TIPO_USUARIO=TU.ID_TIPO_USUARIO "
-                          //      + " AND US.ID_TIPO_USUARIO= 1 "
+                                + " AND US.ID_TIPO_USUARIO= 2 "
                                 + " AND "
                                 + " EX.ESTADO_EXPEDIENTE='ABIERTO' "
                                 + " AND INS.TIPO_INSTITUCION='OFERTANTE' ";
@@ -315,6 +315,7 @@
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
                         consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                     }
+                    consultaSql2 = consultaSql2.concat(" GROUP BY NOMBRE, FACULTAD, TIPO_OFERTA_BECA, TIPO_ESTUDIO  ");
                     consultaSql = consultaSql.concat(consultaSql2);
                     consultaSql = consultaSql.concat(";");
                     System.out.println(consultaSql);
