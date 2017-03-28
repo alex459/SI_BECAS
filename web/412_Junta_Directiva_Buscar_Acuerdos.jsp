@@ -295,7 +295,7 @@
                                     <th>Acción</th>
                                 </tr>  
                             </thead>
-                            <tbody>
+                            <tbody> 
                                 <%  try {
                                         Integer i = 0;
                                         int idTipoDoc = 0;
@@ -328,7 +328,7 @@
                                                     out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post' target='_blank'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");
                                                     if (estadoProgreso.equals("PENDIENTE") || estadoProgreso.equals("CORRECCION")) {
                                                         //ver boton actualizar
-                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
+                                                        out.write("<form style='display:inline;' action='411_Junta_Directiva_Resolver_Solicitud.jsp' method='post'><input type='hidden' name='ID_DOCUMENTO' value='" + rs.getString(11) + "'><input type='hidden' name='idTipoDocumento' value='" + rs.getString(12) + "'><input type='hidden' name='ACCION' value='actualizar'><input type='submit' class='btn btn-danger' name='submit' value='Editar'></form> ");
                                                     }
                                                 } else {
                                                     out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post' target='_blank'><input type='hidden' name='id' value='" + rs.getString(11) + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Acuerdo'></form> ");

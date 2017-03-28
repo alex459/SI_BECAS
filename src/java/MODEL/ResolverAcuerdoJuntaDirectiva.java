@@ -300,7 +300,7 @@ public class ResolverAcuerdoJuntaDirectiva extends HttpServlet {
                                 prorrogaDao.ingresar(prorroga);
                             }
                             idProgreso = 21;
-                            estado = "EN PROCESO";
+                            estado = "PENDIENTE";
                             break;
                         default:
                             break;

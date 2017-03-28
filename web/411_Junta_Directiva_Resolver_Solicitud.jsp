@@ -43,7 +43,7 @@
     response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
     request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
     Integer idFacultad = 0;
-    String nombreFacultad="";
+    String nombreFacultad = "";
     try {
         DetalleUsuarioDAO DetUsDao = new DetalleUsuarioDAO();
         // Obtener la facultad a la que pertenece el usuario
@@ -100,25 +100,29 @@
         case 1:
             publicos = docComision.consultarJuntaDirectivaExpeProceso1(id_expedie);
             break;
-            
+
         case 2:
             publicos = docComision.consultarJuntaDirectivaExpeProceso1(id_expedie);
-            id_p =1;
+            id_p = 1;
             break;
 
         case 4:
             publicos = docComision.consultarJuntaDirectivaExpeProceso4(id_expedie);
             break;
-        
+
         case 5:
             publicos = docComision.consultarJuntaDirectivaExpeProceso4(id_expedie);
-            id_p =4;
+            id_p = 4;
             break;
-        
+
         case 9:
+            int idTipoDocumento = Integer.parseInt(request.getParameter("idTipoDocumento"));
             //Revisar que tipo de acuerdo es
-            publicos = docComision.consultarJuntaDirectivaExpeProceso12(id_expedie);
-            //publicos = docComision.consultarJuntaDirectivaExpeProceso10(id_expedie);
+            switch (idTipoDocumento) {
+                case 136:
+                    publicos = docComision.consultarJuntaDirectivaExpeProceso10(id_expedie);
+                    break;
+            }
             break;
 
         case 10:
@@ -134,14 +138,18 @@
             break;
         case 14:
             publicos = docComision.consultarJuntaDirectivaExpeProceso13(id_expedie);
-            id_p =13;
+            id_p = 13;
             break;
         case 20:
             publicos = docComision.consultarJuntaDirectivaExpeProceso20(id_expedie);
             break;
         case 21:
             publicos = docComision.consultarJuntaDirectivaExpeProceso20(id_expedie);
-            id_p =20;
+            id_p = 20;
+            break;
+        case 25:
+            publicos = docComision.consultarJuntaDirectivaExpeProceso10(id_expedie);
+            id_p = 10;
             break;
 
         default:
@@ -177,12 +185,12 @@
         <link href="css/menuSolicitudBeca.css" rel="stylesheet">    
         <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css" />
         <link href="css/customfieldset.css" rel="stylesheet">
-        
-    <jsp:include page="cabecera.jsp"></jsp:include>
-    
-    <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
+
+        <jsp:include page="cabecera.jsp"></jsp:include>
+
+        <p class="text-right" style="font-weight:bold;">Rol: <%= rol%></p>
     <p class="text-right" style="font-weight:bold;">Usuario: <%= user%></p>
-    <p class="text-right" style="font-weight:bold;">Facultad: <%= nombreFacultad %></p>
+    <p class="text-right" style="font-weight:bold;">Facultad: <%= nombreFacultad%></p>
 
 
     <%-- todo el menu esta contenido en la siguiente linea
@@ -273,10 +281,10 @@
                                         </tbody>
                                     </table>
                                     <%if (id_p == 20 || id_p == 21 || id_p == 22) {
-                                    
-                                    String fechaFin= becaDao.fechaFinBeca(id_expedie);
-                                    institucion = institucionDao.institucionEstudioBecario(id_expedie);
-                                    String titulo = ofertaDao.obtenerTituloBeca(id_expedie);
+
+                                            String fechaFin = becaDao.fechaFinBeca(id_expedie);
+                                            institucion = institucionDao.institucionEstudioBecario(id_expedie);
+                                            String titulo = ofertaDao.obtenerTituloBeca(id_expedie);
                                     %>
                                     <div class="row">
                                         <table class="table table-bordered text-center">
@@ -569,15 +577,15 @@
     <script src="js/scripts.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript">
-                                                    $(function () {
-                                                        $('.input-group.date').datepicker({
-                                                            format: 'yyyy-mm-dd',
-                                                            calendarWeeks: true,
-                                                            todayHighlight: true,
-                                                            autoclose: true,
-                                                            startDate: new Date()
-                                                        });
-                                                    });
+                                                            $(function () {
+                                                                $('.input-group.date').datepicker({
+                                                                    format: 'yyyy-mm-dd',
+                                                                    calendarWeeks: true,
+                                                                    todayHighlight: true,
+                                                                    autoclose: true,
+                                                                    startDate: new Date()
+                                                                });
+                                                            });
 
     </script>
 

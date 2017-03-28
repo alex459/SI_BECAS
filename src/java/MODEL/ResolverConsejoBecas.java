@@ -159,7 +159,7 @@ public class ResolverConsejoBecas extends HttpServlet {
                                 }//FIN idAcuerdoSolicitado   
                             }// FIN ACTUALIZAR
                             idProgreso = 7;
-                            estado = "EN PROCESO";
+                            estado = "PENDIENTE";
                             break;
                         case 12:
                             //ACUERDO DE INICIO DE CUMPLIMIENTO DE SERVICIO CONTRACTUAL
@@ -243,7 +243,7 @@ public class ResolverConsejoBecas extends HttpServlet {
                                 }
                             }// FIN ACTUALIZAR
                             idProgreso = 22;
-                            estado = "EN PROCESO";
+                            estado = "PENDIENTE";
                             break;
                             case 25:
                             //SOLICITUD DE PRORROGA
@@ -280,7 +280,7 @@ public class ResolverConsejoBecas extends HttpServlet {
                                 }
                             }// FIN ACTUALIZAR
                             idProgreso = 26;
-                            estado = "EN PROCESO";
+                            estado = "PENDIENTE";
                             break;
                         default:
                             break;

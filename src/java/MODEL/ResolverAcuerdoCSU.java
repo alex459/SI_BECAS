@@ -224,9 +224,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             break;
                         case 22:
                             //ACUERDO DE PRORROGA CONSEJO SUPERIOR UNIVERSITARIO
-                            if (accion.equals("insertar")) {
-                                //INSERTAR
-                            } else {
+                            try{
                                 //ACTUALIZAR
                                 //REGRESAR FECHA FIN A LA ANTERIOR               
                                 beca = becaDao.consultarPorExpediente(idExpediente);
@@ -237,12 +235,15 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                                         prorroga.setEstado("DENEGADO");
                                         prorrogaDao.actualizarProrroga(prorroga);
                                         beca.setFechaFin(prorroga.getFechaInicio());
+                                        becaDao.actualizar(beca);
                                     }else{
                                         // FECHA FIN BECA BIEN
                                     }
                                 } else{
                                     //No hacer nada
                                 }
+                            } catch(Exception ex){
+                                ex.printStackTrace();
                             }// FIN ACTUALIZAR
                             idAcuerdoSolicitado = documentoDao.ExisteDocumento(idExpediente, 141);
                             acuerdoAnterior = documentoDao.obtenerInformacionDocumentoPorId(idAcuerdoSolicitado);
@@ -251,7 +252,7 @@ public class ResolverAcuerdoCSU extends HttpServlet {
                             documentoDao.ActualizarEstadoDocumento(acuerdoAnterior);
                             idProgreso = 21;
                             estado = "REVISION";                            
-                            break;
+                            break; 
                             case 26:
                             //ACUERDO DE AÑO CONTRACTUAL
                             if (accion.equals("insertar")) {

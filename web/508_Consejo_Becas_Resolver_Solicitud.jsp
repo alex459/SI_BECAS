@@ -131,12 +131,14 @@
             break;
         case 22:
             publicos = docComision.consultarConsejoBecas21(id_expedie);
+            id_p = 21;
             break;
         case 25:
             publicos = docComision.consultarConsejoBecas25(id_expedie);
             break;
         case 26:
             publicos = docComision.consultarConsejoBecas25(id_expedie);
+            id_p =25;
             break;
         default:
             break;

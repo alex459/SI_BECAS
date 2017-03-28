@@ -113,8 +113,20 @@
             break;
             
         case 9:
-            publicos = docComision.consultarConsejoSuperiorUniversitario22(id_expedie);
-            break;
+            //Revisar que tipo de acuerdo es
+            int idTipoDocumento = Integer.parseInt(request.getParameter("idTipoDocumento"));
+            switch (idTipoDocumento) {
+                case 163:
+                    publicos = docComision.consultarConsejoSuperiorUniversitario26(id_expedie);
+                    id_p = 26;
+                    break;
+                case 142:
+                    publicos = docComision.consultarConsejoSuperiorUniversitario22(id_expedie);
+                    id_p = 22;
+                    break;
+            }
+            //publicos = docComision.consultarConsejoSuperiorUniversitario22(id_expedie);
+            break; 
 
         default:
             break;
@@ -374,7 +386,7 @@
                                             Documento acuerdo = docComision.obtenerInformacionDocumentoPorId(Integer.parseInt(id_documento));
                                         %>
                                         <div class="row">
-                                            <table class="table">
+                                            <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Acuerdo Ingresado</th><th>Observacion</th><th>Documento</th>
