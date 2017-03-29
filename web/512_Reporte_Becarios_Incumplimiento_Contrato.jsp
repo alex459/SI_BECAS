@@ -164,17 +164,17 @@
                                         <div class="col-md-6">
                                             <div class="col-md-4">
                                                 <br>
-                                                <label>Tipo de Becario:</label>
+                                                <label>Tipo de Estudio Realizado:</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <br>
-                                                <select name="tipoBecario" id="tipoBecario" class="form-control">
-                                                    <option value="">Seleccione Tipo de Becario</option>
-                                                    <option value="ACTIVO">Activo</option>
-                                                    <option value="CONTRACTUAL">Contractual</option>
-                                                    <option value="INACTIVO">Inactivo</option>
-                                                    <option value="LIBERADO">Liberado</option>
-                                                    <option value="INCUMPLIMIENTO DE CONTRATO">Incumplimiento de Contrato</option>
+                                                <select  name="tipoEstudio" id="tipoEstudio" class="form-control">
+                                                    <option value="">Seleccione Tipo de Estudio</option>
+                                                    
+                                                    <option value="ESPECIALIZACION">Especializacion</option>
+                                                    <option value="MAESTRIA">Maestria</option>
+                                                    <option value="DOCTORADO">Doctorado</option>
+                                                    <option value="POSTDOCTORADO">PostDoctorado</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -190,7 +190,7 @@
                                                 InstitucionDAO institucionDAO = new InstitucionDAO();
                                                 ArrayList<Institucion> listaInstitucion = new ArrayList();
                                                 listaInstitucion = institucionDAO.consultarActivosPorTipo("OFERTANTE");
-                                            %><option value="" selected>Seleccione una institución</option><%
+                                            %><option value="" selected>Seleccione una Institución</option><%
                                                 for (int i = 0; i < listaInstitucion.size(); i++) {%>
                                             <option value="<%=listaInstitucion.get(i).getNombreInstitucion()%>"> <%=listaInstitucion.get(i).getNombreInstitucion()%></option>
                                             <%   }
@@ -201,21 +201,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="col-md-4">
-                                                <br>
-                                                <label>Tipo de Estudio Realizado:</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <br>
-                                                <select  name="tipoEstudio" id="tipoEstudio" class="form-control">
-                                                    <option value="">Seleccione Tipo de Estudio</option>
-                                                    <option value="MAESTRIA">Maestria</option>
-                                                    <option value="DOCTORADO">Doctorado</option>
-                                                    <option value="ESPECIALIZACION">Especializacion</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="col-md-6 text-center">
                                             <br>
                                              <input type="submit" class="btn btn-primary" name="submit" value="Buscar"> 
@@ -236,7 +222,7 @@
                     ArrayList<DetalleUsuario> listaUser = new ArrayList();
                     ArrayList<Observaciones> listaObs = new ArrayList();
                     ArrayList<Facultad> listaFacultades = new ArrayList();
-                     ArrayList<String> SegBeca = new ArrayList();
+                    ArrayList<String> SegBeca = new ArrayList();
                     ArrayList<String> TomaPos = new ArrayList();
                     OfertaBeca temp = new OfertaBeca();
                     Institucion temp2 = new Institucion();
@@ -251,11 +237,11 @@
                     
                        String consultaSql2 = "";
                     try {
-                       
+                       /*
                          if (!request.getParameter("tipoBecario").isEmpty()) {
                             tipoEstudio = request.getParameter("tipoBecario");
                         }
-                        
+                        */
                         
                         
                        
@@ -267,40 +253,26 @@
                         
                         //formando la consulta
                         String consultaSql = "";
-                        consultaSql = " SELECT DISTINCT   CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) "
-                        +"  AS NOMBRE, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,"
-                        +"  INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION,INS.PAIS AS PAIS,"
-                        +"  OBS.OBSERVACION_O AS OBSERVACION_O, OB.FECHA_INICIO AS FECHA_INICIO, "
-                        +" OB.FECHA_CIERRE AS FECHA_CIERRE , FA.FACULTAD AS FACULTAD,"
-			+" (CASE WHEN (SELECT COUNT(EX.ID_EXPEDIENTE) FROM EXPEDIENTE EX,USUARIO USU, SOLICITUD_DE_BECA SDB "
-			+" WHERE EX.ID_EXPEDIENTE=SDB.ID_EXPEDIENTE "
-			+" AND USU.ID_USUARIO=SDB.ID_USUARIO "
-			+" AND USU.ID_USUARIO=U.ID_USUARIO "
-			+" )>= 2 THEN 'SI' "
-			+" ELSE 'NO' "
-			+" END) AS 'SegundaBeca', "
-                        +" ( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
-			+" WHERE P.ID_PROGRESO >= 9 ) THEN "
-			+" 'SI' "
-			+" ELSE 'NO' "
-			+" END) AS 'ContratoFirmado', "
-                        +" ( CASE WHEN P.ID_PROGRESO IN ( SELECT P.ID_PROGRESO FROM PROGRESO P "
-			+" WHERE P.ID_PROGRESO >=12  ) THEN "
-			+" 'SI' "
-			+" ELSE 'NO' "
-			+" END) AS 'TomaPosesion' "
-			+" FROM "
-                        +"  DETALLE_USUARIO DU,  FACULTAD FA, OFERTA_BECA OB, OBSERVACIONES OBS,iNSTITUCION INS, "
-			+"  USUARIO U,PROGRESO P, SOLICITUD_DE_BECA SB, OFERTA_BECA OF,"
-                        +"  SOLICITUD_DE_BECA SDB,EXPEDIENTE E, USUARIO US, TIPO_USUARIO TU, PROGRESO PR"
-                        +"  WHERE DU.ID_FACULTAD=FA.ID_FACULTAD AND US.ID_USUARIO=DU.ID_USUARIO AND SB.ID_OFERTA_BECA=OF.ID_OFERTA_BECA  AND"
-                        +"  U.ID_USUARIO=SB.ID_USUARIO AND P.ID_PROGRESO=E.ID_PROGRESO AND"
-                        +" DU.ID_USUARIO=SDB.ID_USUARIO AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA"
-                        +" AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND "
-                        +" SDB.ID_EXPEDIENTE=E.ID_EXPEDIENTE AND E.ID_EXPEDIENTE=OBS.ID_EXPEDIENTE"
-                        +" AND E.ID_PROGRESO=PR.ID_PROGRESO AND US.ID_TIPO_USUARIO= 2 "
-                        +" AND E.ESTADO_EXPEDIENTE='ABIERTO' AND INS.TIPO_INSTITUCION='OFERTANTE' "
-                        +" AND PR.ESTADO_BECARIO='INCUMPLIMIENTO'  ";
+                        consultaSql = " SELECT CONCAT(DU.NOMBRE1_DU, ' ', IFNULL(DU.NOMBRE2_DU,''),' ', DU.APELLIDO1_DU, ' ', IFNULL(DU.APELLIDO2_DU,'')) AS NOMBRE, " 
+                                            +" (CASE WHEN (SELECT COUNT(E.ID_EXPEDIENTE) FROM EXPEDIENTE E "
+                                                +" JOIN SOLICITUD_DE_BECA SDB ON SDB.ID_EXPEDIENTE = E.ID_EXPEDIENTE "
+                                                +" WHERE SDB.ID_USUARIO = DU.ID_USUARIO AND E.ID_PROGRESO > 9) >=2 THEN 'SI' ELSE 'NO' END) AS SegundaBeca, " 
+                                            +" OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA, B.FECHA_INICIO AS FECHA_INICIO, B.FECHA_FIN AS FECHA_CIERRE, "
+                                            +" (SELECT PAIS FROM INSTITUCION I WHERE I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO) AS PAIS, "
+                                            +" OB.TIPO_ESTUDIO AS TIPO_ESTUDIO, INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION, "
+                                            +"(CASE WHEN (SELECT ID_PROGRESO FROM EXPEDIENTE E WHERE E.ID_EXPEDIENTE = EX.ID_EXPEDIENTE) IN (12,13,14,15,16) "
+                                            +" THEN 'SI' ELSE 'NO' END) AS TomaPosesion, FACULTAD AS FACULTAD, "
+                                            +"IFNULL((SELECT GROUP_CONCAT(OBSERVACION_O) FROM OBSERVACIONES O WHERE O.ID_EXPEDIENTE = EX.ID_EXPEDIENTE "
+                                            +" GROUP BY ID_EXPEDIENTE),'NINGUNA') AS OBSERVACION_O "
+                                            +" FROM DETALLE_USUARIO DU "
+                                            +" JOIN SOLICITUD_DE_BECA SB ON SB.ID_USUARIO = DU.ID_USUARIO "
+                                            +" JOIN OFERTA_BECA OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA "
+                                            +" JOIN EXPEDIENTE EX ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE "
+                                            +" JOIN BECA B ON B.ID_EXPEDIENTE = EX.ID_EXPEDIENTE "
+                                            +" JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA "
+                                            +" JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD "
+                                            +" WHERE EX.ID_PROGRESO = 23 ";  
+                                                
                         if (request.getParameter("tipoBeca").toString().length()>0) {
                             tipoBeca = request.getParameter("tipoBeca");
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
@@ -308,37 +280,35 @@
                          
                         if (request.getParameter("facultad").toString().length()>0) {
                               facultad = request.getParameter("facultad");
-                            consultaSql2 = consultaSql2.concat(" AND FA.FACULTAD='" + facultad + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND F.FACULTAD='" + facultad + "' ");
                         }
-                  
+                        
                         if (request.getParameter("institucionOferente").toString().length()>0) {
                              System.out.println("LLLLEEEEEEEEGAAAAÑÑÑÑÑÑ");
                                 institucionOferente = request.getParameter("institucionOferente");
                             consultaSql2 = consultaSql2.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
                         }
                         
-                              
+                           
                         if (request.getParameter("tipoEstudio").toString().length()>0) {
                            
                                 tipoEstudio = request.getParameter("tipoEstudio");
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
                         }
-                  /*      
-                        if (!request.getParameter("tipoBecario").isEmpty()) {
-                            tipoEstudio = request.getParameter("tipoBecario");
-                        }*/
+                  
                   
                         if (!fIngresoIni.isEmpty() && !fIngresoFin.isEmpty()) {
                         java.sql.Date sqlFIngresoIni = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoIni).getTime());
                         java.sql.Date sqlFIngresoFin = new java.sql.Date(OfertaServlet.StringAFecha(fIngresoFin).getTime());
-                        consultaSql2 = consultaSql2.concat(" AND FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
-                    }
-                    if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
+                        consultaSql2 = consultaSql2.concat(" AND B.FECHA_INICIO BETWEEN '" + sqlFIngresoIni + "' AND '" + sqlFIngresoFin + "' ");
+                        }
+                        if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                         java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                        consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
-                    }
-                    consultaSql2 = consultaSql2.concat(" GROUP BY NOMBRE , TIPO_OFERTA_BECA, TIPO_ESTUDIO  ");
+                        consultaSql2 = consultaSql2.concat(" AND B.FECHA_FIN BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                    } 
+                    
+                    //consultaSql2 = consultaSql2.concat(" GROUP BY NOMBRE , TIPO_OFERTA_BECA, TIPO_ESTUDIO  ");
                      consultaSql = consultaSql.concat(consultaSql2);                                                                                             
                     consultaSql = consultaSql.concat(";");
                     System.out.println(consultaSql);

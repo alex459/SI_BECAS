@@ -209,9 +209,9 @@
                                                 <select  name="tipoEstudio" id="tipoEstudio" class="form-control">
                                                     
                                                     <option value="">Seleccione Tipo de Estudio</option>
-                                                    <option value="DOCTORADO">Doctorado</option>
                                                     <option value="ESPECIALIZACION">Especializacion</option>
                                                     <option value="MAESTRIA">Maestria</option>
+                                                    <option value="DOCTORADO">Doctorado</option>
                                                     <option value="POSTDOCTORADO">PostDoctorado</option>
                                                 </select>
                                             </div>
@@ -308,7 +308,7 @@
                     if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                         java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                         java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                        consultaSql2 = consultaSql2.concat(" AND B.FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                        consultaSql2 = consultaSql2.concat(" AND B.FECHA_FIN BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                     }
                     consultaSql = consultaSql.concat(consultaSql2);
                     consultaSql = consultaSql.concat(";");
