@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="511_Reporte_Institucion_Financiera" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5973cedc-8fa4-4451-ada3-95a7a86c5e96">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="19"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -15,7 +15,16 @@
 	</style>
 	<parameter name="condicion" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE, FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS 'TIPO OFERTA', OB.TIPO_ESTUDIO AS 'TIPO ESTUDIO',OB.FECHA_INICIO AS 'FECHA INICIO', OB.FECHA_CIERRE AS FECHA_CIERRE,D.OBSERVACION_O AS 'OBSERVACION',INS.NOMBRE_INSTITUCION AS 'NOMBRE INSTITUCION', INS.PAIS AS PAIS FROM DETALLE_USUARIO DU, FACULTAD FA, OFERTA_BECA OB, DOCUMENTO D, INSTITUCION INS, SOLICITUD_DE_BECA SDB, EXPEDIENTE EX, USUARIO US, TIPO_USUARIO TU  WHERE DU.ID_FACULTAD=FA.ID_FACULTAD AND DU.ID_USUARIO=SDB.ID_USUARIO AND SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND OB.ID_DOCUMENTO=D.ID_DOCUMENTO AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION AND US.ID_USUARIO=DU.ID_USUARIO AND US.ID_TIPO_USUARIO=TU.ID_TIPO_USUARIO $P!{condicion};]]>
+		<![CDATA[SELECT CONCAT(DU.NOMBRE1_DU, ' ', IFNULL(DU.NOMBRE2_DU,''),' ', DU.APELLIDO1_DU, ' ', IFNULL(DU.APELLIDO2_DU,'')) AS NOMBRE, 
+(CASE WHEN (SELECT COUNT(E.ID_EXPEDIENTE) FROM EXPEDIENTE E JOIN SOLICITUD_DE_BECA SDB ON SDB.ID_EXPEDIENTE = E.ID_EXPEDIENTE 
+WHERE SDB.ID_USUARIO = DU.ID_USUARIO AND E.ID_PROGRESO > 9) >=2 THEN 'SI' ELSE 'NO' END) AS SEGUNDA_BECA, 
+OB.TIPO_OFERTA_BECA, OB.FECHA_CIERRE, B.FECHA_INICIO, B.FECHA_FIN,(SELECT PAIS FROM INSTITUCION I WHERE I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO) AS PAIS, 
+OB.TIPO_ESTUDIO, INS.NOMBRE_INSTITUCION AS NOMBRE_FINANCIERA, 
+(CASE WHEN (SELECT ID_PROGRESO FROM EXPEDIENTE E WHERE E.ID_EXPEDIENTE = EX.ID_EXPEDIENTE) IN (12,13,14,15,16) THEN 'SI' ELSE 'NO' END) AS TOMA_POSECION, 
+FACULTAD,(SELECT GROUP_CONCAT(OBSERVACION_O) FROM OBSERVACIONES O WHERE O.ID_EXPEDIENTE = EX.ID_EXPEDIENTE GROUP BY ID_EXPEDIENTE) AS OBSERVACION 
+FROM detalle_usuario DU JOIN solicitud_de_beca SB ON SB.ID_USUARIO = DU.ID_USUARIO JOIN oferta_beca OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA 
+JOIN EXPEDIENTE EX ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE JOIN BECA B ON B.ID_EXPEDIENTE = EX.ID_EXPEDIENTE 
+JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD WHERE EX.ID_PROGRESO >= 9 $P!{condicion};]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="FACULTAD" class="java.lang.String">
@@ -33,7 +42,7 @@
 	<field name="FECHA_CIERRE" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="OBSERVACION_O" class="java.lang.String">
+	<field name="OBSERVACION" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="NOMBRE_INSTITUCION" class="java.lang.String">
@@ -157,7 +166,7 @@
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Row" x="578" y="0" width="139" height="15" uuid="291d9afa-97f7-40b1-8cf8-a12c6b18ad5f"/>
-					<textFieldExpression><![CDATA[$F{OBSERVACION_O}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{OBSERVACION}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Row" x="720" y="0" width="177" height="15" uuid="7ab2c888-35a2-4b7a-a7f6-e4645a0e7dbd"/>
