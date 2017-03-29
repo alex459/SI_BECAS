@@ -19,13 +19,13 @@
 	(CASE WHEN (SELECT COUNT(E.ID_EXPEDIENTE) FROM EXPEDIENTE E 
 		JOIN SOLICITUD_DE_BECA SDB ON SDB.ID_EXPEDIENTE = E.ID_EXPEDIENTE 
 		WHERE SDB.ID_USUARIO = DU.ID_USUARIO AND E.ID_PROGRESO > 9) >=2 THEN 'SI' ELSE 'NO' END) AS SEGUNDA_BECA,  
-	OB.TIPO_OFERTA_BECA, OB.FECHA_CIERRE, B.FECHA_INICIO, B.FECHA_FIN,
+	OB.TIPO_OFERTA_BECA, B.FECHA_INICIO, B.FECHA_FIN,
 	(SELECT PAIS FROM INSTITUCION I WHERE I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO) AS PAIS, 
 	OB.TIPO_ESTUDIO, INS.NOMBRE_INSTITUCION AS NOMBRE_FINANCIERA, 
 	(CASE WHEN (SELECT ID_PROGRESO FROM EXPEDIENTE E WHERE E.ID_EXPEDIENTE = EX.ID_EXPEDIENTE) IN (12,13,14,15,16)
 	 	THEN 'SI' ELSE 'NO' END) AS TOMA_POSECION, FACULTAD,
-		(SELECT GROUP_CONCAT(OBSERVACION_O) FROM OBSERVACIONES O WHERE O.ID_EXPEDIENTE = EX.ID_EXPEDIENTE 
-		GROUP BY ID_EXPEDIENTE) AS OBSERVACION	
+	IFNULL((SELECT GROUP_CONCAT(OBSERVACION_O) FROM OBSERVACIONES O WHERE O.ID_EXPEDIENTE = EX.ID_EXPEDIENTE 
+	GROUP BY ID_EXPEDIENTE),'NUNGUNA') AS OBSERVACION	
 	FROM detalle_usuario DU
  	JOIN solicitud_de_beca SB ON SB.ID_USUARIO = DU.ID_USUARIO 
  	JOIN oferta_beca OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA 
@@ -33,7 +33,7 @@
  	JOIN BECA B ON B.ID_EXPEDIENTE = EX.ID_EXPEDIENTE
  	JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA
  	JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD 
- 	WHERE EX.ID_PROGRESO = 23  $P!{condicion}]]>
+ 	WHERE EX.ID_PROGRESO = 23 $P!{condicion}]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="TIPO_OFERTA_BECA" class="java.lang.String">
@@ -51,7 +51,7 @@
 	<field name="FECHA_INICIO" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FECHA_CIERRE" class="java.sql.Date">
+	<field name="FECHA_FIN" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="OBSERVACION" class="java.lang.String">
@@ -135,7 +135,7 @@
 			</staticText>
 			<staticText>
 				<reportElement style="Row" x="528" y="0" width="72" height="15" forecolor="#736343" uuid="ccac8207-ee6c-49a0-909b-741a4ba89620"/>
-				<text><![CDATA[FECHA CIERRE]]></text>
+				<text><![CDATA[FECHA_FIN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Row" x="602" y="0" width="152" height="15" forecolor="#736343" uuid="103ec560-a57d-4b5d-85ba-d4ece54ad68c"/>
@@ -185,7 +185,7 @@
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
 					<reportElement style="Row" x="528" y="0" width="72" height="15" uuid="34d13e6a-7f8f-48aa-87f2-ed02a49c1114"/>
-					<textFieldExpression><![CDATA[$F{FECHA_CIERRE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FECHA_FIN}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Row" x="602" y="0" width="152" height="15" uuid="009bcf1d-f2bd-4dc3-bf8a-1b7f4d98dea0"/>
