@@ -202,7 +202,7 @@
 
                                     <div class="row">
                                         
-                                        <div class="col-md-6 text-center">
+                                        <div class="col-md-12 text-center">
                                             <br>
                                              <input type="submit" class="btn btn-primary" name="submit" value="Buscar"> 
                                         </div>
