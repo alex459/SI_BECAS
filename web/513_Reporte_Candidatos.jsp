@@ -173,9 +173,10 @@
                                         <br>
                                         <select name="tipoEstudio" id="tipoEstudio"  class="form-control">
                                             <option value="">Seleccione una opción</option>
-                                            <option value="MAESTRIA">MAESTRIA</option>
-                                            <option value="DOCTORADO">DOCTORADO</option>
-                                            <option value="ESPECIALIZACIÓN">ESPECIALIZACIÓN</option>
+                                            <option value="ESPECIALIZACION">Especializacion</option>
+                                            <option value="MAESTRIA">Maestria</option>
+                                            <option value="DOCTORADO">Doctorado</option>
+                                            <option value="POSTDOCTORADO">PostDoctorado</option>
                                         </select>
                                     </div>
                                 </div>
@@ -234,31 +235,42 @@
                         //formando la consulta
                         String consultaSql = "";
                        
-                        consultaSql = "SELECT CONCAT(DU.NOMBRE1_DU,' ',DU.NOMBRE2_DU, ' ',DU.APELLIDO1_DU,' ',DU.APELLIDO2_DU) AS NOMBRE"
-                                + ", FA.FACULTAD AS FACULTAD, OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA,SDB.FECHA_SOLICITUD AS FECHA_SOLICITUD"
-                                + ", OB.TIPO_ESTUDIO AS TIPO_ESTUDIO,INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION, "
-                                + " PR.NOMBRE_PROGRESO AS NOMBRE_PROGRESO FROM DETALLE_USUARIO DU, FACULTAD FA, USUARIO U,"
-                                + " OFERTA_BECA OB,INSTITUCION INS, PROGRESO PR, SOLICITUD_DE_BECA SDB, EXPEDIENTE EX "
-                                + " WHERE SDB.ID_USUARIO=U.ID_USUARIO AND DU.ID_FACULTAD=FA.ID_FACULTAD AND DU.ID_USUARIO=SDB.ID_USUARIO AND "
-                                + " SDB.ID_OFERTA_BECA=OB.ID_OFERTA_BECA AND SDB.ID_EXPEDIENTE=EX.ID_EXPEDIENTE AND "
-                                + " EX.ID_PROGRESO=PR.ID_PROGRESO AND OB.ID_INSTITUCION_FINANCIERA=INS.ID_INSTITUCION "
-                                + " AND U.ID_TIPO_USUARIO=1 AND EX.ESTADO_EXPEDIENTE='ABIERTO' ";
+                        consultaSql = " SELECT CONCAT(DU.NOMBRE1_DU, ' ', IFNULL(DU.NOMBRE2_DU,''),' ', DU.APELLIDO1_DU, ' ', IFNULL(DU.APELLIDO2_DU,'')) AS NOMBRE, "
+                                            + " OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA, SB.FECHA_SOLICITUD AS FECHA_SOLICITUD, "
+                                            + " OB.TIPO_ESTUDIO AS TIPO_ESTUDIO, INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION, "
+                                            + " FACULTAD AS FACULTAD, NOMBRE_PROGRESO AS NOMBRE_PROGRESO "
+                                            + " FROM DETALLE_USUARIO DU "
+                                            + " JOIN SOLICITUD_DE_BECA SB ON SB.ID_USUARIO = DU.ID_USUARIO "
+                                            + " JOIN OFERTA_BECA OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA " 
+                                            + " JOIN EXPEDIENTE EX ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE "
+                                            + " JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA " 
+                                            + " JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD "
+                                            + " JOIN PROGRESO P ON P.ID_PROGRESO = EX.ID_PROGRESO "
+                                            + " WHERE EX.ID_PROGRESO <9 ";
+                                
+                                
+                                
+                        
                         if (!request.getParameter("tipoBeca").isEmpty()) {
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_OFERTA_BECA='" + tipoBeca + "' ");
                         }
+                        
                         if (!request.getParameter("facultad").isEmpty()) {
-                            consultaSql2 = consultaSql2.concat(" AND FA.FACULTAD='" + facultad + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND F.FACULTAD='" + facultad + "' ");
                         }
+                        
                         if (!request.getParameter("institucionOferente").isEmpty()) {
                             consultaSql2 = consultaSql2.concat(" AND INS.NOMBRE_INSTITUCION='" + institucionOferente + "' ");
                         }
+                        
                         if (!request.getParameter("tipoEstudio").isEmpty()) {
                             consultaSql2 = consultaSql2.concat(" AND OB.TIPO_ESTUDIO='" + tipoEstudio + "' ");
                         }
+                        
                         if (!fCierreIni.isEmpty() && !fCierreFin.isEmpty()) {
                             java.sql.Date sqlFCierreIni = new java.sql.Date(OfertaServlet.StringAFecha(fCierreIni).getTime());
                             java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
-                            consultaSql2 = consultaSql2.concat(" AND FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
+                            consultaSql2 = consultaSql2.concat(" AND OB.FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                         }
                         consultaSql = consultaSql.concat(consultaSql2);
                         consultaSql = consultaSql.concat(";");
