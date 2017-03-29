@@ -248,15 +248,6 @@
                     
                     String consultaSql2 = "";  
                     try {
-                       
-                     /*    if (!request.getParameter("tipoBecario").isEmpty()) {
-                            tipoEstudio = request.getParameter("tipoBecario");
-                        }
-                    */    
-                        
-                        
-                       
-                       
                         String fIngresoIni = request.getParameter("fIngresoIni");
                         String fIngresoFin = request.getParameter("fIngresoFin");
                         String fCierreIni = request.getParameter("fCierreIni");

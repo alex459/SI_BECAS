@@ -36,12 +36,14 @@ public class ReporteInstitucionBecariosActivosServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+         response.setContentType("text/html;charset=ISO-8859-1"); //lineas importantes para leer tildes y ñ
+            request.setCharacterEncoding("ISO-8859-1"); //lineas importantes para leer tildes y ñ
         //servlet encargado de generar reportes de bitacora
         try {
             //leyendo parametros del jsp
             String opcion_de_salida = request.getParameter("OPCION_DE_SALIDA");
-            String condicion = request.getParameter("CONDICION");
+            //String condicion = request.getParameter("CONDICION");
+            String condicion = new String(request.getParameter("CONDICION").getBytes(),"ISO-8859-1");
             String query="";
             query= request.getParameter("QUERY");
 
@@ -65,7 +67,7 @@ public class ReporteInstitucionBecariosActivosServlet extends HttpServlet {
           parametersMap.put("condicion", condicion);
                // parametersMap=null;
             if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF     
-                
+                System.out.println(condicion);
             /*
                 byte[] bytes = JasperRunManager.runReportToPdf(dir2, null, conexionBD.conn);
               

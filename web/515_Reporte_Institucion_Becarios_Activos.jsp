@@ -16,7 +16,7 @@
 <%@page import="MODEL.Utilidades"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="MODEL.AgregarOfertaBecaServlet"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
@@ -39,8 +39,8 @@
     if (!autorizacion || user == null) {
         response.sendRedirect("logout.jsp");
     }
-    response.setContentType("text/html;charset=UTF-8");
-    request.setCharacterEncoding("UTF-8");
+      response.setContentType("text/html;charset=ISO-8859-1"); //lineas importantes para leer tildes y Ò
+            request.setCharacterEncoding("ISO-8859-1"); //lineas importantes para leer tildes y Ò
     Facultad facultad1 = new Facultad();
     AgregarOfertaBecaServlet OfertaServlet = new AgregarOfertaBecaServlet();
 %>
@@ -51,7 +51,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistema inform√°tico para la administraci√≥n de becas de postgrado</title>
+    <title>Sistema inform·tico para la administraciÛn de becas de postgrado</title>
 
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
@@ -96,7 +96,7 @@
                                             <div class="col-md-8">
                                                 <br>
                                                 <select id="selectbasic" name="INSTITUCION_ESTUDIO" class="form-control">
-                                                    <option value="0" selected>Seleccione una Instituci√≥n</option>
+                                                    <option value="0" selected>Seleccione una InstituciÛn</option>
                                                     <%
                                                             InstitucionDAO institucionDAO = new InstitucionDAO();
                                                             ArrayList<Institucion> listaInstitucion = new ArrayList();
@@ -119,7 +119,7 @@
                                             <div class="col-md-8">
                                                 <br>
                                                 <select id="selectbasic" name="PAIS" class="form-control">
-                                                    <option value="">Seleccione Pa√≠s</option>
+                                                    <option value="">Seleccione PaÌs</option>
                                                      <%
                                                         PaisDAO paisDao = new PaisDAO();
                                                         ArrayList<Pais> listaPais = new ArrayList<Pais>();
@@ -289,7 +289,7 @@
                             
                         </div>
                         <div class="col-md-6">
-                            <label>Hoja de C√°lculo</label>
+                            <label>Hoja de C·lculo</label>
                             <div style="border:1px solid; background-color: #32B232; padding:6px; color:white; " id="buttons"></div>
                             <br>
                         </div>           
@@ -307,9 +307,9 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>INSTITUCI√ìN</th>
-                                        <th>PA√çS</th>
-                                        <th>P√ÅGINA WEB</th>
+                                        <th>INSTITUCI”N</th>
+                                        <th>PAÕS</th>
+                                        <th>P¡GINA WEB</th>
                                         <th>CANTIDAD DE BECARIOS</th>
                                     </tr>  
                                 </thead>
@@ -351,22 +351,22 @@
 <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
     <div class="col-md-6">
         <h3>
-            Direcci√≥n
+            DirecciÛn
         </h3>
         <p>
             2016 Universidad De El Salvador  <br/>
-            Ciudad Universitaria, Final de Av.M√°rtires y H√©roes del 30 julio, San Salvador, El Salvador, Am√©rica Central. 
+            Ciudad Universitaria, Final de Av.M·rtires y HÈroes del 30 julio, San Salvador, El Salvador, AmÈrica Central. 
         </p>
     </div>
     <div class="col-md-6">
         <h3>
-            Informaci√≥n de contacto
+            InformaciÛn de contacto
         </h3>
         <p>
             Universidad De El Salvador
-            T√©l: +(503) 2511-2000 <br/>
+            TÈl: +(503) 2511-2000 <br/>
             Consejo de becas
-            T√©l: +(503) 2511- 2016
+            TÈl: +(503) 2511- 2016
         </p>
     </div>
 </div>    
@@ -391,7 +391,7 @@
 	"sProcessing":     "Procesando...",
 	"sLengthMenu":     "Mostrar _MENU_ registros",
 	"sZeroRecords":    "No se encontraron resultados",
-	"sEmptyTable":     "Ning√∫n dato disponible en esta tabla",
+	"sEmptyTable":     "Ning˙n dato disponible en esta tabla",
 	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
 	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
 	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -402,7 +402,7 @@
 	"sLoadingRecords": "Cargando...",
 	"oPaginate": {
 		"sFirst":    "Primero",
-		"sLast":     "√öltimo",
+		"sLast":     "⁄ltimo",
 		"sNext":     "Siguiente",
 		"sPrevious": "Anterior"
 	},
