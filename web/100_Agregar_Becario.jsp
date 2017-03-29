@@ -397,7 +397,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-7">
-                                    <label>Acuerdo de Permiso de Beca de Junta Directiva</label><br>
+                                    <label>Acuerdo de Permiso de Beca de Junta Directiva:</label><br>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="file" name="acuerdoBecaJD" accept="application/pdf" ng-model="acuerdoBecaJD" valid-file ng-required="true">

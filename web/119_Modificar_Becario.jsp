@@ -86,24 +86,24 @@
         Expediente expediente = new Expediente();
         ExpedienteDAO expedienteDao = new ExpedienteDAO();
         expediente = expedienteDao.consultarPorId(id_Expediente);
-        switch(expediente.getIdProgreso()){
+        switch (expediente.getIdProgreso()) {
             case 9:
-                estado ="estudio";
+                estado = "estudio";
                 break;
             case 12:
-                estado ="servicio";
+                estado = "servicio";
                 break;
             case 13:
-                estado ="compromiso";
+                estado = "compromiso";
                 break;
             case 14:
-                estado ="liberacion";
+                estado = "liberacion";
                 break;
             case 16:
                 //Ver si es finalizada o reintegro
                 break;
             case 23:
-                estado ="reintegro";
+                estado = "reintegro";
                 break;
         }
     } catch (Exception e) {
@@ -410,7 +410,515 @@
                                             <div class="col-md-2"></div>
                                         </div> 
                                     </div>
-                                                    
+
+                                    <div class="row">
+                                        <fieldset class="custom-border">
+                                            <legend class="custom-border">Documentos</legend>
+                                            <div class="row"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Permiso de Gestion de Beca:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accpermisoGestion"  value="ninguna"  ng-model ="accpermisoGestion" ng-required="true" ng-click="NadapermisoGestion()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accpermisoGestion"  value="actualizar"  ng-model ="accpermisoGestion" ng-required="true" ng-click="ActualizarpermisoGestion()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrarpermisoGestion">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="permisoGestion" accept="application/pdf" ng-model="permisoGestion" valid-file ng-required="mostrarpermisoGestion">
+                                                        <span class="text-danger" ng-show="agregarBecario.permisoGestion.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Autorización inicial:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accautorizacionInicial"  value="ninguna"  ng-model ="accautorizacionInicial" ng-required="true" ng-click="NadaautorizacionInicial()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accautorizacionInicial"  value="actualizar"  ng-model ="accautorizacionInicial" ng-required="true" ng-click="ActualizarautorizacionInicial()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrarautorizacionInicial">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="autorizacionInicial" accept="application/pdf" ng-model="autorizacionInicial" valid-file ng-required="mostrarautorizacionInicial">
+                                                        <span class="text-danger" ng-show="agregarBecario.autorizacionInicial.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Dictamen de Propuesta ante Junta Directiva:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accdictamen"  value="ninguna"  ng-model ="accdictamen" ng-required="true" ng-click="Nadadictamen()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accdictamen"  value="actualizar"  ng-model ="accdictamen" ng-required="true" ng-click="Actualizardictamen()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrardictamen">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="dictamen" accept="application/pdf" ng-model="dictamen" valid-file ng-required="mostrardictamen">
+                                                        <span class="text-danger" ng-show="agregarBecario.dictamen.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Permiso de Beca de Junta Directiva:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoBecaJD"  value="ninguna"  ng-model ="accacuerdoBecaJD" ng-required="true" ng-click="NadaacuerdoBecaJD()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoBecaJD"  value="actualizar"  ng-model ="accacuerdoBecaJD" ng-required="true" ng-click="ActualizaracuerdoBecaJD()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraracuerdoBecaJD">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="acuerdoBecaJD" accept="application/pdf" ng-model="acuerdoBecaJD" valid-file ng-required="mostraracuerdoBecaJD">
+                                                        <span class="text-danger" ng-show="agregarBecario.acuerdoBecaJD.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Otorgamiento de Beca:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoBecaCNB"  value="ninguna"  ng-model ="accacuerdoBecaCNB" ng-required="true" ng-click="NadaacuerdoBecaCNB()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoBecaCNB"  value="actualizar"  ng-model ="accacuerdoBecaCNB" ng-required="true" ng-click="ActualizaracuerdoBecaCNB()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraracuerdoBecaCNB">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="acuerdoBecaCNB" accept="application/pdf" ng-model="acuerdoBecaCNB" valid-file ng-required="mostraracuerdoBecaCNB">
+                                                        <span class="text-danger" ng-show="agregarBecario.acuerdoBecaCNB.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Permiso de Beca (CSU):</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoBecaCSU"  value="ninguna"  ng-model ="accacuerdoBecaCSU" ng-required="true" ng-click="NadaacuerdoBecaCSU()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoBecaCSU"  value="actualizar"  ng-model ="accacuerdoBecaCSU" ng-required="true" ng-click="ActualizaracuerdoBecaCSU()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraracuerdoBecaCSU">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="acuerdoBecaCSU" accept="application/pdf" ng-model="acuerdoBecaCSU" valid-file ng-required="mostraracuerdoBecaCSU">
+                                                        <span class="text-danger" ng-show="agregarBecario.acuerdoBecaCSU.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Contrato de Beca:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acccontrato"  value="ninguna"  ng-model ="acccontrato" ng-required="true" ng-click="Nadacontrato()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acccontrato"  value="actualizar"  ng-model ="acccontrato" ng-required="true" ng-click="Actualizarcontrato()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrarcontrato">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="contrato" accept="application/pdf" ng-model="contrato" valid-file ng-required="mostrarcontrato">
+                                                        <span class="text-danger" ng-show="agregarBecario.contrato.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verContractual"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Titulo Obtenido:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acctituloObtenido"  value="ninguna"  ng-model ="acctituloObtenido" ng-required="true" ng-click="NadatituloObtenido()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acctituloObtenido"  value="actualizar"  ng-model ="acctituloObtenido" ng-required="true" ng-click="ActualizartituloObtenido()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrartituloObtenido">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="tituloObtenido" accept="application/pdf" ng-model="tituloObtenido" valid-file ng-required="mostrartituloObtenido">
+                                                        <span class="text-danger" ng-show="agregarBecario.tituloObtenido.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verContractual"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Certificación De Notas:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acccertificacionNotasFin"  value="ninguna"  ng-model ="acccertificacionNotasFin" ng-required="true" ng-click="NadacertificacionNotasFin()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acccertificacionNotasFin"  value="actualizar"  ng-model ="acccertificacionNotasFin" ng-required="true" ng-click="ActualizarcertificacionNotasFin()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrarcertificacionNotasFin">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="certificacionNotasFin" accept="application/pdf" ng-model="certificacionNotasFin" valid-file ng-required="mostrarcertificacionNotasFin">
+                                                        <span class="text-danger" ng-show="agregarBecario.certificacionNotasFin.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verContractual"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acta De Evaluación De Tesis:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accactaEvaluacion"  value="ninguna"  ng-model ="accactaEvaluacion" ng-required="true" ng-click="NadaactaEvaluacion()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accactaEvaluacion"  value="actualizar"  ng-model ="accactaEvaluacion" ng-required="true" ng-click="ActualizaractaEvaluacion()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraractaEvaluacion">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="actaEvaluacion" accept="application/pdf" ng-model="actaEvaluacion" valid-file ng-required="mostraractaEvaluacion">
+                                                        <span class="text-danger" ng-show="agregarBecario.actaEvaluacion.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verContractual"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Constancia de Egresado:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accconstanciaEgresado"  value="ninguna"  ng-model ="accconstanciaEgresado" ng-required="true" ng-click="NadaconstanciaEgresado()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accconstanciaEgresado"  value="actualizar"  ng-model ="accconstanciaEgresado" ng-required="true" ng-click="ActualizarconstanciaEgresado()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrarconstanciaEgresado">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="constanciaEgresado" accept="application/pdf" ng-model="constanciaEgresado" valid-file ng-required="mostrarconstanciaEgresado">
+                                                        <span class="text-danger" ng-show="agregarBecario.constanciaEgresado.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verContractual"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acta De Toma De Posesión:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acctomaPosesion"  value="ninguna"  ng-model ="acctomaPosesion" ng-required="true" ng-click="NadatomaPosesion()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acctomaPosesion"  value="actualizar"  ng-model ="acctomaPosesion" ng-required="true" ng-click="ActualizartomaPosesion()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrartomaPosesion">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="tomaPosesion" accept="application/pdf" ng-model="tomaPosesion" valid-file ng-required="mostrartomaPosesion">
+                                                        <span class="text-danger" ng-show="agregarBecario.tomaPosesion.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verContractual"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Proyecto en que Apoyara:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accproyecto"  value="ninguna"  ng-model ="accproyecto" ng-required="true" ng-click="Nadaproyecto()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accproyecto"  value="actualizar"  ng-model ="accproyecto" ng-required="true" ng-click="Actualizarproyecto()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrarproyecto">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="proyecto" accept="application/pdf" ng-model="proyecto" valid-file ng-required="mostrarproyecto">
+                                                        <span class="text-danger" ng-show="agregarBecario.proyecto.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verCompromiso"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Carta De Oficina De RRHH que cumplió con el tiempo acordado:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acccartaRRHH"  value="ninguna"  ng-model ="acccartaRRHH" ng-required="true" ng-click="NadacartaRRHH()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="acccartaRRHH"  value="actualizar"  ng-model ="acccartaRRHH" ng-required="true" ng-click="ActualizarcartaRRHH()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostrarcartaRRHH">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="cartaRRHH" accept="application/pdf" ng-model="cartaRRHH" valid-file ng-required="mostrarcartaRRHH">
+                                                        <span class="text-danger" ng-show="agregarBecario.cartaRRHH.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verLiberacion"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Gestión de Compromiso Contractual:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoGestionContractual"  value="ninguna"  ng-model ="accacuerdoGestionContractual" ng-required="true" ng-click="NadaacuerdoGestionContractual()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoGestionContractual"  value="actualizar"  ng-model ="accacuerdoGestionContractual" ng-required="true" ng-click="ActualizaracuerdoGestionContractual()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraracuerdoGestionContractual">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="acuerdoGestionContractual" accept="application/pdf" ng-model="acuerdoGestionContractual" valid-file ng-required="mostraracuerdoGestionContractual">
+                                                        <span class="text-danger" ng-show="agregarBecario.acuerdoGestionContractual.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verFinReintegro"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acta de Reintegro de Beca:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accactaReintegro"  value="ninguna"  ng-model ="accactaReintegro" ng-required="true" ng-click="NadaactaReintegro()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accactaReintegro"  value="actualizar"  ng-model ="accactaReintegro" ng-required="true" ng-click="ActualizaractaReintegro()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraractaReintegro">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="actaReintegro" accept="application/pdf" ng-model="actaReintegro" valid-file ng-required="mostraractaReintegro">
+                                                        <span class="text-danger" ng-show="agregarBecario.actaReintegro.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verFinReintegro"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Gestión de Liberación:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoGestionLiberacion2"  value="ninguna"  ng-model ="accacuerdoGestionLiberacion2" ng-required="true" ng-click="NadaacuerdoGestionLiberacion2()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoGestionLiberacion2"  value="actualizar"  ng-model ="accacuerdoGestionLiberacion2" ng-required="true" ng-click="ActualizaracuerdoGestionLiberacion2()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraracuerdoGestionLiberacion2">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="acuerdoGestionLiberacion2" accept="application/pdf" ng-model="acuerdoGestionLiberacion2" valid-file ng-required="mostraracuerdoGestionLiberacion2">
+                                                        <span class="text-danger" ng-show="agregarBecario.acuerdoGestionLiberacion2.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verFinReintegro"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Liberacion del Compromiso Contractual:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoLiberacion2"  value="ninguna"  ng-model ="accacuerdoLiberacion2" ng-required="true" ng-click="NadaacuerdoLiberacion2()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoLiberacion2"  value="actualizar"  ng-model ="accacuerdoLiberacion2" ng-required="true" ng-click="ActualizaracuerdoLiberacion2()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraracuerdoLiberacion2">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="acuerdoLiberacion2" accept="application/pdf" ng-model="acuerdoLiberacion2" valid-file ng-required="mostraracuerdoLiberacion2">
+                                                        <span class="text-danger" ng-show="agregarBecario.acuerdoLiberacion2.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verBecaFinalizada"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Gestión de Liberación:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoGestionLiberacion"  value="ninguna"  ng-model ="accacuerdoGestionLiberacion" ng-required="true" ng-click="NadaacuerdoGestionLiberacion()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoGestionLiberacion"  value="actualizar"  ng-model ="accacuerdoGestionLiberacion" ng-required="true" ng-click="ActualizaracuerdoGestionLiberacion()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraracuerdoGestionLiberacion">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="acuerdoGestionLiberacion" accept="application/pdf" ng-model="acuerdoGestionLiberacion" valid-file ng-required="mostraracuerdoGestionLiberacion">
+                                                        <span class="text-danger" ng-show="agregarBecario.acuerdoGestionLiberacion.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                            <div class="row" ng-show="verBecaFinalizada"><!--DOCUMENTO-->
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-7">
+                                                        <label class="form-control-static">Acuerdo de Liberacion del Compromiso Contractual:</label>
+                                                    </div>   
+                                                    <div class="col-md-4">
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoLiberacion"  value="ninguna"  ng-model ="accacuerdoLiberacion" ng-required="true" ng-click="NadaacuerdoLiberacion()">
+                                                            Ninguna
+                                                        </label>
+                                                        <label class="radio-inline" for="radios-0">
+                                                            <input type="radio" name="accacuerdoLiberacion"  value="actualizar"  ng-model ="accacuerdoLiberacion" ng-required="true" ng-click="ActualizaracuerdoLiberacion()">
+                                                            Actualizar
+                                                        </label> 
+                                                    </div> 
+                                                </div>                            
+                                                <div class="row" ng-show="mostraracuerdoLiberacion">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <input type="file" class="" name="acuerdoLiberacion" accept="application/pdf" ng-model="acuerdoLiberacion" valid-file ng-required="mostraracuerdoLiberacion">
+                                                        <span class="text-danger" ng-show="agregarBecario.acuerdoLiberacion.$invalid">Debe ingresar un documento en formato PDF.</span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- FIN DOCUMENTO-->
+                                        </fieldset>
+                                    </div>
+                                    <div class="row text-center">                                        
+                                        <input type="submit" name="guardar" value="Guardar" class="btn btn-success" ng-disabled="!agregarBecario.$valid">
+                                    </div>
                                 </form>
                             </fieldset>
                         </div>
@@ -455,37 +963,37 @@
     <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">
-                                                                    $(document).ready(function () {
-                                                                        $('#tablaUsuarios').DataTable(
-                                                                                {
-                                                                                    "language":
-                                                                                            {
-                                                                                                "sProcessing": "Procesando...",
-                                                                                                "sLengthMenu": "Mostrar _MENU_ registros",
-                                                                                                "sZeroRecords": "No se encontraron resultados",
-                                                                                                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                                                                                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                                                                                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                                                                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                                                                                                "sInfoPostFix": "",
-                                                                                                "sSearch": "Buscar:",
-                                                                                                "sUrl": "",
-                                                                                                "sInfoThousands": ",",
-                                                                                                "sLoadingRecords": "Cargando...",
-                                                                                                "oPaginate": {
-                                                                                                    "sFirst": "Primero",
-                                                                                                    "sLast": "Último",
-                                                                                                    "sNext": "Siguiente",
-                                                                                                    "sPrevious": "Anterior"
-                                                                                                },
-                                                                                                "oAria": {
-                                                                                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                                                                                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                                                                                                }
-                                                                                            }
-                                                                                }
-                                                                        );
-                                                                    });
+                                $(document).ready(function () {
+                                    $('#tablaUsuarios').DataTable(
+                                            {
+                                                "language":
+                                                        {
+                                                            "sProcessing": "Procesando...",
+                                                            "sLengthMenu": "Mostrar _MENU_ registros",
+                                                            "sZeroRecords": "No se encontraron resultados",
+                                                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                                            "sInfoPostFix": "",
+                                                            "sSearch": "Buscar:",
+                                                            "sUrl": "",
+                                                            "sInfoThousands": ",",
+                                                            "sLoadingRecords": "Cargando...",
+                                                            "oPaginate": {
+                                                                "sFirst": "Primero",
+                                                                "sLast": "Último",
+                                                                "sNext": "Siguiente",
+                                                                "sPrevious": "Anterior"
+                                                            },
+                                                            "oAria": {
+                                                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                                            }
+                                                        }
+                                            }
+                                    );
+                                });
 
     </script>
 </body>

@@ -77,6 +77,11 @@ public class ModificarBecarioServlet extends HttpServlet {
                 }
             } else {
                 //Editar Expediente o datos de la beca
+                //Actualizar datos de la beca
+                //obtener expediente y progreso actual
+                //comparar progreso actual con anterior
+                //si progreso cambio borrar los documentos que no van
+                //agregar o actualizar documentos
             }
         } catch (Exception e) {
             e.printStackTrace();
