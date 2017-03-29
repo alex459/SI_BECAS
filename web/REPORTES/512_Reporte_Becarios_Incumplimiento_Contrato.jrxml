@@ -33,7 +33,7 @@
  	JOIN BECA B ON B.ID_EXPEDIENTE = EX.ID_EXPEDIENTE
  	JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA
  	JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD 
- 	WHERE EX.ID_PROGRESO >= 9  $P!{condicion}]]>
+ 	WHERE EX.ID_PROGRESO = 23  $P!{condicion}]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="TIPO_OFERTA_BECA" class="java.lang.String">
