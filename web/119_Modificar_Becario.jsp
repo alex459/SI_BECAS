@@ -3,6 +3,8 @@
     Created on : 20/03/2017, 09:24:56 AM
     Author     : adminPC
 --%>
+<%@page import="POJO.Documento"%>
+<%@page import="DAO.DocumentoDAO"%>
 <%@page import="DAO.ExpedienteDAO"%>
 <%@page import="POJO.Expediente"%>
 <%@page import="java.sql.ResultSet"%>
@@ -77,7 +79,8 @@
             apellido2 = "";
         }
         nombreCompleto = nombre1 + " " + nombre2 + " " + apellido1 + " " + apellido2;
-        oferta = ofertaDao.consultarPorId(id_Expediente);
+        int idOferta = ofertaDao.consultarPorExpediente(id_Expediente);
+        oferta = ofertaDao.consultarPorId(idOferta);
         institucionEstudio = institucionDao.consultarPorId(oferta.getIdInstitucionEstudio());
         institucionOferente = institucionDao.consultarPorId(oferta.getIdInstitucionFinanciera());
         beca = becaDao.consultarPorExpediente(id_Expediente);
@@ -111,6 +114,14 @@
         response.sendRedirect("118_Modificar_Becario_Consulta.jsp");
     }
 %>
+
+<%
+    DocumentoDAO documentoDao = new DocumentoDAO();
+    ArrayList<Documento> lista = documentoDao.consultarFiscaliaContratoBeca(id_Expediente);
+    int numero = 1;
+
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -262,7 +273,7 @@
                                                     out.write("<td>" + rs.getString(7) + "</td>");
                                                     out.write("<td>");
                                                     out.write("<center>");
-                                                    out.write("<form style='display:inline;' action='ModificarBecarioServlet' method='post'><input type='hidden' name='idExpediente' value='" + id_Expediente + "'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='accion' value='becario'><input type='submit' class='btn btn-success' name='submit' value='Cambiar Becario'></form> ");
+                                                    out.write("<form style='display:inline;' action='ModificarBecarioServlet' method='post' enctype='multipart/form-data'><input type='hidden' name='id_Expediente' value='" + id_Expediente + "'><input type='hidden' name='ID_USUARIO' value='" + rs.getString(8) + "'><input type='hidden' name='accion' value='becario'><input type='submit' class='btn btn-success' name='submit' value='Cambiar Becario'></form> ");
                                                     out.write("</center>");
                                                     out.write("</td>");
                                                     out.write("</tr>");
@@ -280,14 +291,43 @@
                         <div class="col-md-1"></div>                        
                     </div>
                     <!--Fin Editar Becario-->
-
+                    
+                    
+                    <div class="row" ng-show="mostrarExpediente">
+                        <fieldset class="custom-border">
+                                    <legend class="custom-border">Documentos Adjuntados</legend>
+                                    <table class="table table-bordered text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Documento</th>
+                                                <th>Documento Digital</th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% for (int i = 0; i < lista.size(); i++) {%>
+                                        <tr>
+                                            <td><%=numero%></td>
+                                            <td><%=lista.get(i).getIdTipoDocumento().getTipoDocumento()%></td>
+                                            <td>
+                                                <form action="verDocumentoConsejo" method="post" target="_blank">
+                                                    <input type = "hidden" name="id" value="<%= lista.get(i).getIdDocumento()%>">
+                                                    <input type="submit" class="btn btn-success" value="Ver Documento ">
+                                                </form>
+                                            </td>                                            
+                                        </tr>
+                                        <%numero=numero+1;}%>
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                    </div>
                     <!--Editar Expediente-->
                     <div class="row" ng-show="mostrarExpediente">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <fieldset class="custom-border">
                                 <legend class="custom-border">Modificar Expediente</legend>
-                                <form action="ModificarBecarioServlet" method="post" name="agregarBecario" enctype="multipart/form-data" novalidate>
+                                <form action="ModificarBecarioServlet" method="post" name="agregarBecario" enctype="multipart/form-data" novalidate>                                   
                                     <div class="row" ng-init="fechaInicio = '<%=beca.getFechaInicio()%>'; fechaFin = '<%=beca.getFechaFin()%>'; oferta = '<%=oferta.getIdOfertaBeca()%>'; estado = '<%=estado%>';">
 
                                         <div class="row">                    
@@ -916,9 +956,11 @@
                                             </div><!-- FIN DOCUMENTO-->
                                         </fieldset>
                                     </div>
-                                    <div class="row text-center">                                        
+                                    <div class="row text-center">      
+                                        <input type="hidden" name="accion" value="expediente"> 
+                                        <input type="hidden" name="id_Expediente" value="<%=id_Expediente%>">                                                                                
                                         <input type="submit" name="guardar" value="Guardar" class="btn btn-success" ng-disabled="!agregarBecario.$valid">
-                                    </div>
+                                    </div> 
                                 </form>
                             </fieldset>
                         </div>
