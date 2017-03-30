@@ -272,6 +272,7 @@
                             java.sql.Date sqlFCierreFin = new java.sql.Date(OfertaServlet.StringAFecha(fCierreFin).getTime());
                             consultaSql2 = consultaSql2.concat(" AND OB.FECHA_CIERRE BETWEEN '" + sqlFCierreIni + "' AND '" + sqlFCierreFin + "' ");
                         }
+                        consultaSql2 = consultaSql2.concat(" ORDER BY NOMBRE ");
                         consultaSql = consultaSql.concat(consultaSql2);
                         consultaSql = consultaSql.concat(";");
                         queryParam=consultaSql;
