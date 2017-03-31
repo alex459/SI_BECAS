@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ceb89b45-73ff-44a0-af67-ef1326fc7d33">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="321"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -38,10 +38,6 @@
 				<reportElement x="1" y="2" width="87" height="95" uuid="04062630-4bd2-4229-bcd0-5d9238bb54f1"/>
 				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
-			<image>
-				<reportElement x="898" y="2" width="87" height="95" uuid="0c0d0d09-7456-4e1b-bde1-5a86747ff87f"/>
-				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement style="SubTitle" x="264" y="90" width="461" height="22" forecolor="#000000" uuid="21021b96-6225-4767-8a41-04855da66c01"/>
 				<textElement>
@@ -63,6 +59,10 @@
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
+			<image>
+				<reportElement x="869" y="0" width="111" height="95" uuid="cd3d3075-a4b4-466b-b466-603fef68947b"/>
+				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo_becas.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

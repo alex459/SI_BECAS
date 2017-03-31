@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="11_Reporte_Oferta_Becas" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc0ba63b-3581-4fea-9c80-84aab56c2987">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="219"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -64,12 +64,12 @@ OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_
 				<text><![CDATA[REPORTE DE OFERTAS DE BECA]]></text>
 			</staticText>
 			<image>
-				<reportElement x="892" y="0" width="87" height="95" uuid="d2f34a2d-f248-45d4-9419-d588c2627b58"/>
+				<reportElement x="13" y="0" width="87" height="95" uuid="eeb3e885-4b67-4509-a0b3-54ef59deb640"/>
 				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo.jpg"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="13" y="0" width="87" height="95" uuid="eeb3e885-4b67-4509-a0b3-54ef59deb640"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo.jpg"]]></imageExpression>
+				<reportElement x="868" y="2" width="111" height="95" uuid="ca2ac2b8-478a-412b-a431-89d9e8b5704c"/>
+				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo_becas.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

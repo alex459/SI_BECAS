@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="516_ReporteBecariosTipo" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="99e8dd0b-3a17-410b-96ca-0715ecf1ca6d">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="275"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -16,27 +16,27 @@
 	<parameter name="condicion" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT CONCAT(DU.NOMBRE1_DU, ' ', IFNULL(DU.NOMBRE2_DU,''),' ', DU.APELLIDO1_DU, ' ', IFNULL(DU.APELLIDO2_DU,'')) AS NOMBRE, 
-	(CASE WHEN (SELECT COUNT(E.ID_EXPEDIENTE) 
-		FROM EXPEDIENTE E 
-		JOIN SOLICITUD_DE_BECA SDB ON SDB.ID_EXPEDIENTE = E.ID_EXPEDIENTE 
-		WHERE SDB.ID_USUARIO = DU.ID_USUARIO AND E.ID_PROGRESO > 9) >=2 THEN 'SI' ELSE 'NO' END) AS SEGUNDA_BECA,  
-	OB.TIPO_OFERTA_BECA, OB.NOMBRE_OFERTA, OB.FECHA_CIERRE, B.FECHA_INICIO, B.FECHA_FIN,
-	(SELECT PAIS FROM INSTITUCION I WHERE I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO) AS PAIS, 
-	OB.TIPO_ESTUDIO, INS.NOMBRE_INSTITUCION AS NOMBRE_FINANCIERA, 
-	(CASE WHEN (SELECT ID_PROGRESO FROM EXPEDIENTE E WHERE E.ID_EXPEDIENTE = EX.ID_EXPEDIENTE) 
-	IN (12,13,14,15,16) THEN 'SI' ELSE 'NO' END) AS TOMA_POSECION, 
-	FACULTAD, (SELECT GROUP_CONCAT(OBSERVACION_O) FROM OBSERVACIONES O WHERE O.ID_EXPEDIENTE = EX.ID_EXPEDIENTE 
-		GROUP BY ID_EXPEDIENTE) AS OBSERVACION, 
-	P.ESTADO_BECARIO	
-	FROM detalle_usuario DU
- 	JOIN solicitud_de_beca SB ON SB.ID_USUARIO = DU.ID_USUARIO 
- 	JOIN oferta_beca OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA 
- 	JOIN EXPEDIENTE EX ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE
- 	JOIN BECA B ON B.ID_EXPEDIENTE = EX.ID_EXPEDIENTE
- 	JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA
- 	JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD 
- 	JOIN PROGRESO P ON P.ID_PROGRESO = EX.ID_PROGRESO
- 	WHERE EX.ID_PROGRESO >= 9 $P!{condicion}]]>
+                 (CASE WHEN (SELECT COUNT(E.ID_EXPEDIENTE) 
+                     FROM EXPEDIENTE E 
+                     JOIN SOLICITUD_DE_BECA SDB ON SDB.ID_EXPEDIENTE = E.ID_EXPEDIENTE 
+                     WHERE SDB.ID_USUARIO = DU.ID_USUARIO AND E.ID_PROGRESO > 9) >=2 THEN 'SI' ELSE 'NO' END) AS SegundaBeca, 
+                 OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA, OB.NOMBRE_OFERTA, B.FECHA_INICIO AS FECHA_INICIO, B.FECHA_FIN AS FECHA_CIERRE, 
+                 (SELECT PAIS FROM INSTITUCION I WHERE I.ID_INSTITUCION = OB.ID_INSTITUCION_ESTUDIO) AS PAIS, 
+                 OB.TIPO_ESTUDIO AS TIPO_ESTUDIO, INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION, 
+				(CASE WHEN (SELECT ID_PROGRESO FROM EXPEDIENTE E WHERE E.ID_EXPEDIENTE = EX.ID_EXPEDIENTE) 
+					IN (12,13,14,15,16) THEN 'SI' ELSE 'NO' END) AS TomaPosesion, 
+					F.FACULTAD AS FACULTAD, P.ESTADO_BECARIO AS ESTADO_BECARIO,  
+                    IFNULL((SELECT GROUP_CONCAT(OBSERVACION_O) FROM OBSERVACIONES O WHERE O.ID_EXPEDIENTE = EX.ID_EXPEDIENTE 
+                    GROUP BY ID_EXPEDIENTE),'NINGUNA') AS OBSERVACION_O  
+                FROM DETALLE_USUARIO DU 
+				JOIN SOLICITUD_DE_BECA SB ON DU.ID_USUARIO = SB.ID_USUARIO 
+				JOIN OFERTA_BECA OB ON SB.ID_OFERTA_BECA = OB.ID_OFERTA_BECA  
+				JOIN EXPEDIENTE EX ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE 
+                JOIN BECA B ON B.ID_EXPEDIENTE = EX.ID_EXPEDIENTE 
+                JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA 
+				JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD 
+				JOIN PROGRESO P ON P.ID_PROGRESO = EX.ID_PROGRESO  
+				WHERE EX.ID_PROGRESO >= 9 $P!{condicion}]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="FACULTAD" class="java.lang.String">
@@ -66,8 +66,8 @@
 	<field name="ESTADO_BECARIO" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="SEGUNDA_BECA" class="java.lang.String"/>
-	<field name="TOMA_POSECION" class="java.lang.String"/>
+	<field name="SegundaBeca" class="java.lang.String"/>
+	<field name="TomaPosesion" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -75,10 +75,6 @@
 		<band height="136" splitType="Stretch">
 			<image>
 				<reportElement x="2" y="1" width="87" height="95" uuid="b22af643-44db-47f7-a415-2404ffead449"/>
-				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="898" y="1" width="87" height="95" uuid="ab5121d6-c1ef-474f-94e9-19d9a95637ba"/>
 				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
@@ -102,6 +98,10 @@
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
+			<image>
+				<reportElement x="868" y="3" width="111" height="95" uuid="86278b24-10ba-4116-924e-facb905d2063"/>
+				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo_becas.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -120,47 +120,43 @@
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="89" y="0" width="84" height="15" forecolor="#736343" uuid="a3489372-5f2b-44dd-b69e-c9d3b4d4b83f"/>
+				<reportElement style="Row" x="861" y="0" width="104" height="15" forecolor="#736343" uuid="a3489372-5f2b-44dd-b69e-c9d3b4d4b83f"/>
 				<text><![CDATA[FACULTAD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="174" y="0" width="90" height="15" forecolor="#736343" uuid="81441515-88bb-4e46-a685-39f9ed718c80"/>
-				<text><![CDATA[OFERTA DE BECA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Row" x="265" y="0" width="71" height="15" forecolor="#736343" uuid="6072c501-1d08-4d2f-83a0-89b79b34ce08"/>
+				<reportElement style="Row" x="141" y="0" width="71" height="15" forecolor="#736343" uuid="6072c501-1d08-4d2f-83a0-89b79b34ce08"/>
 				<text><![CDATA[TIPO OFERTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="336" y="0" width="66" height="15" forecolor="#736343" uuid="8608adba-950c-4df0-b76e-41fe7d5f8f03"/>
+				<reportElement style="Row" x="449" y="0" width="77" height="15" forecolor="#736343" uuid="8608adba-950c-4df0-b76e-41fe7d5f8f03"/>
 				<text><![CDATA[ESTUDIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="403" y="0" width="66" height="15" forecolor="#736343" uuid="6b8bdc96-d61f-43e0-b23d-abb0ade4c665"/>
+				<reportElement style="Row" x="216" y="0" width="88" height="15" forecolor="#736343" uuid="6b8bdc96-d61f-43e0-b23d-abb0ade4c665"/>
 				<text><![CDATA[FECHA INICIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="471" y="0" width="66" height="15" forecolor="#736343" uuid="bc42c605-a89e-41bf-a776-026f14f6b347"/>
+				<reportElement style="Row" x="304" y="1" width="74" height="15" forecolor="#736343" uuid="bc42c605-a89e-41bf-a776-026f14f6b347"/>
 				<text><![CDATA[FECHA CIERRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="537" y="0" width="113" height="15" forecolor="#736343" uuid="9cdfa4f7-2ee1-495b-bef0-21970f0662b5"/>
+				<reportElement style="Row" x="527" y="0" width="139" height="15" forecolor="#736343" uuid="9cdfa4f7-2ee1-495b-bef0-21970f0662b5"/>
 				<text><![CDATA[iNSTITUCIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="650" y="0" width="68" height="15" forecolor="#736343" uuid="93f13504-8e77-4dad-9221-6bd0e17be3ff"/>
+				<reportElement style="Row" x="379" y="0" width="68" height="15" forecolor="#736343" uuid="93f13504-8e77-4dad-9221-6bd0e17be3ff"/>
 				<text><![CDATA[PAÍS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="718" y="0" width="98" height="15" forecolor="#736343" uuid="41a3afd0-a887-4b8e-841a-6642b9da964e"/>
+				<reportElement style="Row" x="762" y="0" width="98" height="15" forecolor="#736343" uuid="41a3afd0-a887-4b8e-841a-6642b9da964e"/>
 				<text><![CDATA[TIPO BECARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="817" y="1" width="51" height="15" forecolor="#736343" uuid="69e45db0-9a13-4168-a817-6bf8cd1266a4"/>
+				<reportElement style="Row" x="89" y="0" width="51" height="15" forecolor="#736343" uuid="69e45db0-9a13-4168-a817-6bf8cd1266a4"/>
 				<text><![CDATA[2DA BECA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="872" y="1" width="96" height="15" forecolor="#736343" uuid="3ce23fbf-68b8-463d-9b9b-95b0a8daba29"/>
+				<reportElement style="Row" x="666" y="1" width="96" height="15" forecolor="#736343" uuid="3ce23fbf-68b8-463d-9b9b-95b0a8daba29"/>
 				<text><![CDATA[TOMA POSESIÓN]]></text>
 			</staticText>
 		</band>
@@ -174,49 +170,45 @@
 					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="89" y="0" width="84" height="15" uuid="2b2475d5-448b-4650-841e-ed5e5812bbe9"/>
+					<reportElement style="Row" x="861" y="0" width="104" height="15" uuid="2b2475d5-448b-4650-841e-ed5e5812bbe9"/>
 					<textFieldExpression><![CDATA[$F{FACULTAD}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="174" y="0" width="90" height="15" uuid="8703ebef-5004-4934-86c0-d35b981e0a14"/>
-					<textFieldExpression><![CDATA[$F{NOMBRE_OFERTA}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="265" y="0" width="71" height="15" uuid="058679b7-0839-4b45-8b47-7f0a49d5548e"/>
+					<reportElement style="Row" x="145" y="0" width="71" height="15" uuid="058679b7-0839-4b45-8b47-7f0a49d5548e"/>
 					<textFieldExpression><![CDATA[$F{TIPO_OFERTA_BECA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="336" y="0" width="66" height="15" uuid="94b02498-7f7f-4b05-b9cf-dea34913a4b1"/>
+					<reportElement style="Row" x="449" y="0" width="77" height="15" uuid="94b02498-7f7f-4b05-b9cf-dea34913a4b1"/>
 					<textFieldExpression><![CDATA[$F{TIPO_ESTUDIO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-					<reportElement style="Row" x="410" y="0" width="55" height="15" uuid="6f46e4cf-87ac-4434-9e23-543390f25152"/>
+					<reportElement style="Row" x="223" y="0" width="77" height="15" uuid="6f46e4cf-87ac-4434-9e23-543390f25152"/>
 					<textFieldExpression><![CDATA[$F{FECHA_INICIO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-					<reportElement style="Row" x="477" y="0" width="55" height="15" uuid="76fe8f81-3c37-4e50-89ed-fe8a2eb0689b"/>
+					<reportElement style="Row" x="308" y="0" width="63" height="15" uuid="76fe8f81-3c37-4e50-89ed-fe8a2eb0689b"/>
 					<textFieldExpression><![CDATA[$F{FECHA_CIERRE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="537" y="0" width="113" height="15" uuid="e3d96182-4f9c-48cf-962e-69d7b076d500"/>
+					<reportElement style="Row" x="527" y="0" width="139" height="15" uuid="e3d96182-4f9c-48cf-962e-69d7b076d500"/>
 					<textFieldExpression><![CDATA[$F{NOMBRE_INSTITUCION}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="650" y="0" width="68" height="15" uuid="6fec3ff2-38d0-4f29-bb41-3ea7519216f0"/>
+					<reportElement style="Row" x="379" y="0" width="68" height="15" uuid="6fec3ff2-38d0-4f29-bb41-3ea7519216f0"/>
 					<textFieldExpression><![CDATA[$F{PAIS}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="718" y="0" width="98" height="15" uuid="13f9b0ed-18d8-4038-adb4-8334189b0a1c"/>
+					<reportElement style="Row" x="762" y="0" width="98" height="15" uuid="13f9b0ed-18d8-4038-adb4-8334189b0a1c"/>
 					<textFieldExpression><![CDATA[$F{ESTADO_BECARIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="99" y="0" width="41" height="15" uuid="ecb2fbfb-d1f0-4cc0-894a-08b6e24a8e14"/>
+					<textFieldExpression><![CDATA[$F{SegundaBeca}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<textField isStretchWithOverflow="true">
-				<reportElement style="Row" x="908" y="0" width="60" height="15" uuid="893f8e20-8cfb-4730-bd65-929542d35caf"/>
-				<textFieldExpression><![CDATA[$F{TOMA_POSECION}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="Row" x="834" y="0" width="41" height="15" uuid="ecb2fbfb-d1f0-4cc0-894a-08b6e24a8e14"/>
-				<textFieldExpression><![CDATA[$F{SEGUNDA_BECA}]]></textFieldExpression>
+				<reportElement style="Row" x="702" y="0" width="60" height="15" uuid="893f8e20-8cfb-4730-bd65-929542d35caf"/>
+				<textFieldExpression><![CDATA[$F{TomaPosesion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

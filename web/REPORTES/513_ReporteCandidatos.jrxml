@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="513_ReporteCandidatos" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8f31927-d4f1-4725-b7b9-440338c699ae">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="321"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -16,15 +16,17 @@
 	<parameter name="condicion" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT CONCAT(DU.NOMBRE1_DU, ' ', IFNULL(DU.NOMBRE2_DU,''),' ', DU.APELLIDO1_DU, ' ', IFNULL(DU.APELLIDO2_DU,'')) AS NOMBRE, 
-	OB.TIPO_OFERTA_BECA, SB.FECHA_SOLICITUD, OB.TIPO_ESTUDIO, INS.NOMBRE_INSTITUCION, FACULTAD, NOMBRE_PROGRESO 
-	FROM DETALLE_USUARIO DU 
-	JOIN SOLICITUD_DE_BECA SB ON SB.ID_USUARIO = DU.ID_USUARIO 
-	JOIN oferta_beca OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA 
-	JOIN EXPEDIENTE EX ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE 
-	JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA 
-	JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD 
-	JOIN PROGRESO P ON P.ID_PROGRESO = EX.ID_PROGRESO 
-	WHERE EX.ID_PROGRESO <9  $P!{condicion}]]>
+                                             OB.TIPO_OFERTA_BECA AS TIPO_OFERTA_BECA, SB.FECHA_SOLICITUD AS FECHA_SOLICITUD, 
+                                             OB.TIPO_ESTUDIO AS TIPO_ESTUDIO, INS.NOMBRE_INSTITUCION AS NOMBRE_INSTITUCION, 
+                                             FACULTAD AS FACULTAD, NOMBRE_PROGRESO AS NOMBRE_PROGRESO 
+                                             FROM DETALLE_USUARIO DU 
+                                             JOIN SOLICITUD_DE_BECA SB ON SB.ID_USUARIO = DU.ID_USUARIO 
+                                             JOIN OFERTA_BECA OB ON OB.ID_OFERTA_BECA = SB.ID_OFERTA_BECA 
+                                             JOIN EXPEDIENTE EX ON EX.ID_EXPEDIENTE = SB.ID_EXPEDIENTE 
+                                             JOIN INSTITUCION INS ON INS.ID_INSTITUCION = OB.ID_INSTITUCION_FINANCIERA  
+                                             JOIN FACULTAD F ON F.ID_FACULTAD = DU.ID_FACULTAD 
+                                             JOIN PROGRESO P ON P.ID_PROGRESO = EX.ID_PROGRESO 
+                                             WHERE EX.ID_PROGRESO <9 $P!{condicion}]]>
 	</queryString>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="FACULTAD" class="java.lang.String">
@@ -49,7 +51,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="136" splitType="Stretch">
+		<band height="137" splitType="Stretch">
 			<staticText>
 				<reportElement style="Title" x="213" y="34" width="529" height="62" uuid="85e5b11c-428a-4d7b-955b-a592bbf5c63c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -65,10 +67,6 @@
 				<text><![CDATA[REPORTE DE CANDIDATOS A BECA]]></text>
 			</staticText>
 			<image>
-				<reportElement x="898" y="6" width="87" height="95" uuid="c1ea3c31-d7df-4f8d-b3c1-142630ce51ca"/>
-				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
-			</image>
-			<image>
 				<reportElement x="0" y="3" width="87" height="95" uuid="bc47b006-05e8-4001-9f1f-edbe59b961bb"/>
 				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
@@ -79,6 +77,10 @@
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
 			</staticText>
+			<image>
+				<reportElement x="868" y="0" width="111" height="95" uuid="8c6e3973-edc7-4f99-aa6b-47e1122c6885"/>
+				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo_becas.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -97,28 +99,28 @@
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="214" y="0" width="114" height="15" forecolor="#736343" uuid="94df60f2-d56f-4717-bb10-5d63a223d500"/>
-				<text><![CDATA[FACULTAD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Row" x="328" y="0" width="74" height="15" forecolor="#736343" uuid="68bb072f-8506-489b-a462-0be115f6b70e"/>
+				<reportElement style="Row" x="214" y="0" width="74" height="15" forecolor="#736343" uuid="68bb072f-8506-489b-a462-0be115f6b70e"/>
 				<text><![CDATA[TIPO OFERTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="402" y="1" width="104" height="15" forecolor="#736343" uuid="17499725-a3b0-44be-bfa2-b4eada1dfb23"/>
+				<reportElement style="Row" x="288" y="1" width="104" height="15" forecolor="#736343" uuid="17499725-a3b0-44be-bfa2-b4eada1dfb23"/>
 				<text><![CDATA[FECHA SOLICITUD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="507" y="0" width="100" height="15" forecolor="#736343" uuid="8a105cf4-4dc3-4d97-a1b5-bfea5f213cc7"/>
+				<reportElement style="Row" x="392" y="0" width="100" height="15" forecolor="#736343" uuid="8a105cf4-4dc3-4d97-a1b5-bfea5f213cc7"/>
 				<text><![CDATA[TIPO ESTUDIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="607" y="0" width="193" height="15" forecolor="#736343" uuid="74305c28-6d16-4a44-a83c-89b9bed28d56"/>
+				<reportElement style="Row" x="491" y="0" width="193" height="15" forecolor="#736343" uuid="74305c28-6d16-4a44-a83c-89b9bed28d56"/>
 				<text><![CDATA[NOMBRE INSTITUCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Row" x="800" y="0" width="160" height="15" forecolor="#736343" uuid="eba4d4ab-81f2-4345-bce0-4d05c8b01063"/>
-				<text><![CDATA[NOMBRE PROGRESO]]></text>
+				<reportElement style="Row" x="803" y="0" width="160" height="15" forecolor="#736343" uuid="eba4d4ab-81f2-4345-bce0-4d05c8b01063"/>
+				<text><![CDATA[ESTADO DEL PROGRESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Row" x="685" y="1" width="114" height="15" forecolor="#736343" uuid="94df60f2-d56f-4717-bb10-5d63a223d500"/>
+				<text><![CDATA[FACULTAD]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -131,28 +133,28 @@
 					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="214" y="0" width="114" height="15" uuid="eb448829-60e3-4b51-a1e0-4ae950dcbf03"/>
-					<textFieldExpression><![CDATA[$F{FACULTAD}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="328" y="0" width="74" height="15" uuid="8d4cfcbe-766f-4649-b9a8-1c860d182ff1"/>
+					<reportElement style="Row" x="214" y="0" width="74" height="15" uuid="8d4cfcbe-766f-4649-b9a8-1c860d182ff1"/>
 					<textFieldExpression><![CDATA[$F{TIPO_OFERTA_BECA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-					<reportElement style="Row" x="419" y="0" width="87" height="15" uuid="22504e25-b72b-4ce1-b282-883eaf59878b"/>
+					<reportElement style="Row" x="305" y="0" width="87" height="15" uuid="22504e25-b72b-4ce1-b282-883eaf59878b"/>
 					<textFieldExpression><![CDATA[$F{FECHA_SOLICITUD}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="507" y="0" width="100" height="15" uuid="52d1e4d0-e202-43ab-8308-a7d821318df8"/>
+					<reportElement style="Row" x="392" y="0" width="100" height="15" uuid="52d1e4d0-e202-43ab-8308-a7d821318df8"/>
 					<textFieldExpression><![CDATA[$F{TIPO_ESTUDIO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="607" y="0" width="193" height="15" uuid="4c8e328f-b1f7-453a-8288-3c1480a0adac"/>
+					<reportElement style="Row" x="491" y="0" width="193" height="15" uuid="4c8e328f-b1f7-453a-8288-3c1480a0adac"/>
 					<textFieldExpression><![CDATA[$F{NOMBRE_INSTITUCION}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Row" x="800" y="0" width="160" height="15" uuid="350775f3-a056-409f-9fc8-77b80849d24b"/>
+					<reportElement style="Row" x="803" y="0" width="160" height="15" uuid="350775f3-a056-409f-9fc8-77b80849d24b"/>
 					<textFieldExpression><![CDATA[$F{NOMBRE_PROGRESO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Row" x="685" y="0" width="114" height="15" uuid="eb448829-60e3-4b51-a1e0-4ae950dcbf03"/>
+					<textFieldExpression><![CDATA[$F{FACULTAD}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
