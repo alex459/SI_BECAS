@@ -341,8 +341,25 @@
             document.getElementById('tipoBeca').value="EXTERNA";
         }
   });
+        $('#fechaCierre').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fechaInicio').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fechaInicio').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fechaCierre').datepicker('setEndDate', new Date($(this).val()));
+        });
+    
     });
-
+ 
 </script>
 </body>
 </html>
