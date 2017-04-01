@@ -126,7 +126,7 @@
                                                         ArrayList<Pais> listaPais = new ArrayList<Pais>();
                                                         listaPais = paisDao.consultarTodos();
                                                         for (int i = 0; i < listaPais.size(); i++) {
-                                                        out.write("<option value=" + listaPais.get(i).getNombrePais() + ">" + listaPais.get(i).getNombrePais() + "</option>");
+                                                        out.write("<option value='" + listaPais.get(i).getNombrePais() + "'>" + listaPais.get(i).getNombrePais() + "</option>");
                                                         }
                                         %>     
                                                     
@@ -259,6 +259,7 @@
                 consultaSql2 = consultaSql2.concat(" GROUP BY I.NOMBRE_INSTITUCION ");
                 consultaSql = consultaSql.concat(consultaSql2);
                     consultaSql = consultaSql.concat(";");
+                    System.out.println(consultaSql);
                 conexionbd = new ConexionBD();
                 rs = conexionbd.consultaSql(consultaSql);
                 
