@@ -50,40 +50,12 @@ public class ReporteInstitucionFinancieraServlet extends HttpServlet {
             String condicion = request.getParameter("CONDICION");
             String query="";
             query= request.getParameter("QUERY");
-
-            //preparando parametros para el reporte
-            //Map parametersMap = new HashMap();
-            
-            /*parametersMap.put("NOMBRE1", "%");
-            parametersMap.put("NOMBRE2", "%");
-            parametersMap.put("APELLIDO1", "%");
-            parametersMap.put("APELLIDO2", "%");
-            System.out.println(new Date((2016 - 1900), 1, 1));
-            System.out.println(new Date((2016 - 1900), 12, 31));
-            parametersMap.put("FECHA1", new Date((2016 - 1900), 1, 1));
-            parametersMap.put("FECHA2", new Date((2016 - 1900), 12, 31));
-            parametersMap.put("ID_ACCION_MENOR", 0);
-            parametersMap.put("ID_ACCION_MAYOR", 10);
-            parametersMap.put("NOMBRE_USUARIO", "JOSE ALEXIS BELTRAN SERRANO");
-            parametersMap.put("ROL_USUARIO", "ADMINISTRADOR");*/
-          //  PrintStream salida = null
           Map parametersMap=new HashMap();
           parametersMap.put("paramtest", "EXTERNA");
           parametersMap.put("condicion", condicion);
+          System.out.println(condicion);
                // parametersMap=null;
-            if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF     
-                
-            /*
-                byte[] bytes = JasperRunManager.runReportToPdf(dir2, null, conexionBD.conn);
-              
-                conexionBD.cerrarConexion();
-                response.setContentType("application/pdf");
-                response.setContentLength(bytes.length);
-                ServletOutputStream outputstream = response.getOutputStream();
-                outputstream.write(bytes, 0, bytes.length);
-                outputstream.flush();
-                outputstream.close();
-                */
+            if ("1".equals(opcion_de_salida)) { //SALIDA EN PDF  
                  ConexionBD conexionBD = new ConexionBD();
                 conexionBD.abrirConexion();
                 String path = getServletContext().getRealPath("/REPORTES/");
@@ -98,16 +70,6 @@ public class ReporteInstitucionFinancieraServlet extends HttpServlet {
             }
 
             if ("2".equals(opcion_de_salida)) { //SALIDA EN XLS
-                /*JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\next\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\101_reporte_bitacora.jrxml");
-                ConexionBD conexionBD = new ConexionBD();
-                conexionBD.abrirConexion();
-                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametersMap, conexionBD.conn);
-                conexionBD.cerrarConexion();
-                JRXlsExporter exporter = new JRXlsExporter();
-                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "C:\\a.xls");
-                exporter.exportReport();*/
-
             }
 
             if ("3".equals(opcion_de_salida)) { //SALIDA EN XLS

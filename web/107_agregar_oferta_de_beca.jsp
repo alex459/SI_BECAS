@@ -166,7 +166,7 @@
                         </div>
                         <div class="col-md-3">                                                            
                             <div class="input-group date">
-                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control" ng-model="datos.fechaIni" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                              </div>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.fechaInicio.$error.required">Ingrese Fecha de Inicio de Estudio.</span>
 
@@ -192,7 +192,7 @@
                         </div>
                         <div class="col-md-3">                                
                             <div class="input-group date">
-                                <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-model="datos.fechaC" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                                <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" ng-required="true"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                                </div>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.fechaCierre.$error.required">Ingrese una Fecha de Cierre.</span>
     
@@ -318,7 +318,7 @@
     <script src="js/scripts.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
     <script src="js/angular.min.js"></script>
-        <script src="js/agregarModificarOferta.js"></script>
+    <script src="js/agregarModificarOferta.js"></script>
 <script type="text/javascript">
     $(function () {
         $('.input-group.date').datepicker({            
