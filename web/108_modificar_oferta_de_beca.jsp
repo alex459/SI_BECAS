@@ -228,7 +228,7 @@
                     </div>
                     <div class="col-md-3">                                
                         <div class="input-group date">
-                            <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" value="<%=df.format(ofertaActual.getFechaCierre())%>"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ng-model ="data.fecha_nacimiento"></i></span>
+                            <input type="text" name="fechaCierre" id="fechaCierre" class="form-control" value="<%=df.format(ofertaActual.getFechaCierre())%>"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span>
                         </div>
                     </div>              
                 </div>
@@ -368,21 +368,21 @@
 </div>   
 
 <script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
-<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/angular.min.js"></script>
-<script src="js/agregarModificarOferta.js">
-<script type="text/javascript">    
-$(function () {
-$('.input-group.date').datepicker({
-format: 'yyyy-mm-dd',
-calendarWeeks: true,
-todayHighlight: true,
-autoclose: true,
-startDate: new Date()
-});
- $('#institucionEstudio').on('change', function(){
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/agregarModificarOferta.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.input-group.date').datepicker({            
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: new Date()
+        });
+         $('#institucionEstudio').on('change', function(){
           //  $('#tipoBeca option[value="EXTERNA"]').prop('selected', true);
             var selectPais= document.getElementById("#pais");
             var selected2 = $("#pais").find("option:selected").text();
@@ -395,7 +395,25 @@ startDate: new Date()
             document.getElementById('tipoBeca').value="EXTERNA";
         }
   });
-});
+        $('#fechaCierre').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fechaInicio').datepicker('setStartDate', new Date($(this).val()));
+        });
+        $('#fechaInicio').datepicker({
+            format: 'yyyy-mm-dd',
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        }).on('change.dp', function (e) {
+            $('#fechaCierre').datepicker('setEndDate', new Date($(this).val()));
+        });
+    
+    });
+ 
 </script>
 </body>
 </html>
