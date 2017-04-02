@@ -278,10 +278,10 @@
                                 </form>                                    
                             </div>
 
-                            <div class="col-md-6 text-center">                                
-                                <div style="border:1px solid; background-color: #32B232; padding:6px; color:white; " id="buttons"></div>
-                                <br>
-                            </div> 
+                            <div class="col-md-6">                            
+                            <div style="border:1px solid; background-color: #32B232; padding:6px; color:white; " id="buttons"></div>
+                            <br>
+                        </div>  
                         </div>
 
                         <br>                    
@@ -305,7 +305,7 @@
 
                 <div class="col-md-12">
 
-                    <table id="tabla" class="table table-bordered"></br>                        
+                    <table id="tablaResultados" class="table table-bordered"></br>                        
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -408,13 +408,24 @@
                                                 });
 </script>
 
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="js/buttons.print.min.js"></script>
+<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
+
+
+
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
         <script type="text/javascript">
    $(document).ready(function() {
-    $('#tabla').DataTable(
+    var tabla= $('#tablaResultados').DataTable(
             {
                  "language": 
 {
@@ -441,15 +452,18 @@
 		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 	}
 }
-            }
+             }
+                   
                 );
+         var buttons = new $.fn.dataTable.Buttons(tabla, {
+     buttons: [
+        'csv', 'excel'
+    ]
+}).container().appendTo($('#buttons'));
+        
 } );
     
-</script>
 
-
-
-<script>
     $.validator.setDefaults({
         submitHandler: function () {
             alert("submitted!");
