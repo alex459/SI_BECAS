@@ -65,11 +65,11 @@ OFERTA_BECA, INSTITUCION, DOCUMENTO WHERE OFERTA_BECA.ID_DOCUMENTO=DOCUMENTO.ID_
 			</staticText>
 			<image>
 				<reportElement x="13" y="0" width="87" height="95" uuid="eeb3e885-4b67-4509-a0b3-54ef59deb640"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="868" y="2" width="111" height="95" uuid="ca2ac2b8-478a-412b-a431-89d9e8b5704c"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo_becas.png"]]></imageExpression>
+				<imageExpression><![CDATA["logo_becas.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

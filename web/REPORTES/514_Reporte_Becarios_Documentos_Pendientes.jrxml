@@ -91,7 +91,7 @@ AND E.ESTADO_EXPEDIENTE='ABIERTO' $P!{condicion}]]>
 			</staticText>
 			<image>
 				<reportElement x="869" y="0" width="111" height="95" uuid="0884a643-d664-4f73-8e21-9671ea3955e9"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo_becas.png"]]></imageExpression>
+				<imageExpression><![CDATA["logo_becas.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

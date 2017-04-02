@@ -84,7 +84,7 @@
 			</staticText>
 			<image>
 				<reportElement x="868" y="0" width="111" height="95" uuid="95af9525-218e-4b96-be8b-7ff8eaea5c25"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\img\\logo_becas.png"]]></imageExpression>
+				<imageExpression><![CDATA["logo_becas.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

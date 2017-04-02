@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteTipoBecarios" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9ba341de-534f-4ae8-b40b-7eb1bb1ad8bf">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="43"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -72,12 +72,12 @@
 				<text><![CDATA[REPORTE DE BECARIOS POR TIPO]]></text>
 			</staticText>
 			<image>
-				<reportElement x="735" y="2" width="87" height="95" uuid="9f807c74-fcd9-4d7c-853e-84ad28d8ad38"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<reportElement x="717" y="2" width="87" height="95" uuid="9f807c74-fcd9-4d7c-853e-84ad28d8ad38"/>
+				<imageExpression><![CDATA["logo_becas.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="1" y="2" width="87" height="95" uuid="32c46c29-9bc7-46df-8501-36db4a8b8235"/>
-				<imageExpression><![CDATA["C:\\Users\\MauricioBC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="162" y="-4" width="509" height="62" uuid="ad85b753-64e2-427f-a88d-b2ffd3be6ee5"/>
