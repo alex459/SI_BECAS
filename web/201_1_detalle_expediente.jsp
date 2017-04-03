@@ -146,7 +146,7 @@
                                             out.write("<td>" + documentos.get(i).getEstadoDocumento() + "</td>");
                                             out.write("<td>" + documentos.get(i).getObservacion() + "</td>");
                                             out.write("<td>");
-                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + documentos.get(i).getIdDocumento() + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Expediente'></form> ");
+                                            out.write("<form style='display:inline;' action='verDocumentoConsejo' method='post'><input type='hidden' name='id' value='" + documentos.get(i).getIdDocumento() + "'><input type='submit' class='btn btn-success' name='submit' value='Ver Documento'></form> ");
                                             out.write("</td>");
                                             out.write("</tr>");
                                         }%>
