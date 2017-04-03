@@ -56,7 +56,7 @@
 		<band height="111" splitType="Stretch">
 			<image>
 				<reportElement x="23" y="21" width="59" height="89" uuid="c175a611-937a-4b39-a616-d484c1d112c4"/>
-				<imageExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement x="445" y="0" width="102" height="110" uuid="64f56f2f-4b76-42e2-8895-36515a63b080"/>

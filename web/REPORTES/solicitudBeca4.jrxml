@@ -36,7 +36,7 @@
 			</rectangle>
 			<image>
 				<reportElement x="13" y="1" width="98" height="89" uuid="7d2cded7-47aa-44f3-baa9-5927dce57df4"/>
-				<imageExpression><![CDATA["C:\\Users\\adminPC\\Documents\\NetBeansProjects\\SI_BECAS\\web\\REPORTES\\logo_reporte_1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo_reporte_1.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="77" y="11" width="353" height="20" uuid="fd529e67-3439-48b0-8884-31e55d676e80"/>
@@ -50,7 +50,7 @@
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR]]></text>
+				<text><![CDATA[UNIVERSIDAD DE EL SALVADOR ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="2" y="99" width="15" height="20" uuid="818fd9a1-f037-4184-8c0c-783b9adeae5c"/>
