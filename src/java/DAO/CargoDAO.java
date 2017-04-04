@@ -211,4 +211,20 @@ public class CargoDAO extends ConexionBD{
         }
         return cargo;
     }
+    
+    //Elimina los Cargos de un usuario PERMANENTEMENTE de la BD
+        public Boolean eliminarCargos(Integer id) {
+        this.abrirConexion();
+        Boolean exito =false;
+        try {
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM cargo WHERE ID_DETALLE_USUARIO =" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            exito=true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }        
+        return exito;
+    }
 }

@@ -14,6 +14,22 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 public class InvestigacionesDAO extends ConexionBD{
     
+    //Elimina la Investigacion de un usuario PERMANENTEMENTE de la BD
+        public Boolean eliminarInvestigaciones(Integer id) {
+        this.abrirConexion();
+        Boolean exito =false;
+        try {
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM INVESTIGACIONES WHERE ID_DETALLE_USUARIO =" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            exito=true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }        
+        return exito;
+    }
+    
     //Permite consultar una investigacion por id
     public Investigaciones consultarPorId(int id) {
         Investigaciones temp = new Investigaciones();

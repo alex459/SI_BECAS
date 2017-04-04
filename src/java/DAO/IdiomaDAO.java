@@ -184,4 +184,20 @@ public class IdiomaDAO extends ConexionBD{
         }
         return idioma;
     }
+     
+     //Elimina los Idioma de un usuario PERMANENTEMENTE de la BD
+        public Boolean eliminarIdiomas(Integer id) {
+        this.abrirConexion();
+        Boolean exito =false;
+        try {
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM IDIOMA WHERE ID_DETALLE_USUARIO =" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            exito=true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }        
+        return exito;
+    }
 }

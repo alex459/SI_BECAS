@@ -177,4 +177,21 @@ public class AsociacionesDAO extends ConexionBD{
         }
         return asociacion;
     }
+    
+    
+    //Elimina los Asociacion de un usuario PERMANENTEMENTE de la BD
+        public Boolean eliminarAsociaciones(Integer id) {
+        this.abrirConexion();
+        Boolean exito =false;
+        try {
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM asociaciones WHERE ID_DETALLE_USUARIO =" +id;
+            ResultSet rs = stmt.executeQuery(sql);
+            exito=true;
+            this.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }        
+        return exito;
+    }
 }

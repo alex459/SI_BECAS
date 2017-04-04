@@ -164,10 +164,13 @@ public class EditarSolicitudBecaServlet extends HttpServlet {
                             cargoActual.setNombreCargo(cargo);
                             carDao.actualizarCargoActual(cargoActual);
                         }
-
+                        
+                        //Eliminar Educacion
+                        EducacionDao eduDao = new EducacionDao();
+                        eduDao.eliminarEducaciones(detalleUsuario.getIdDetalleUsuario());
                         //Insertar o Actualizar Educacion
                         if (nEducacion > 0) {
-                            EducacionDao eduDao = new EducacionDao();
+                            
                             for (int i = 1; i < nEducacion + 1; i++) {
                                 String vartipoEducacion = "tipoEducacion" + i;
                                 String vargrado = "grado" + i;
@@ -200,12 +203,15 @@ public class EditarSolicitudBecaServlet extends HttpServlet {
                         } else {
                             //No hay educacion agregada
                         }
-
+                        
+                        //Eliminar Investigaciones
+                        InvestigacionesDAO invDao = new InvestigacionesDAO();
+                        invDao.eliminarInvestigaciones(detalleUsuario.getIdDetalleUsuario());
                         //Insertar o Actualizar Investigaciones
                         if (nInvestigacion > 0) {
                             //Recuperando informacion de Investigaciones
                             for (int i = 1; i < nInvestigacion + 1; i++) {
-                                InvestigacionesDAO invDao = new InvestigacionesDAO();
+                                
                                 String vartitulo = "tituloProyecto" + i;
                                 String varpublicado = "publicado" + i;
                                 Investigaciones investigacion = new Investigaciones();
@@ -229,11 +235,14 @@ public class EditarSolicitudBecaServlet extends HttpServlet {
                         } else {
                             //no hay investigaciones
                         }
+                        //Eliminar idiomas
+                        IdiomaDAO idiomaDao = new IdiomaDAO();
+                        idiomaDao.eliminarIdiomas(detalleUsuario.getIdDetalleUsuario());
                         //Insertar o Actualizar Idiomas
                         if (nIdioma > 0) {
                             //Recuperando informacion de Investigaciones
                             for (int i = 1; i < nIdioma + 1; i++) {
-                                IdiomaDAO idiomaDao = new IdiomaDAO();
+                                
                                 String varidioma = "idioma" + i;
                                 String varnivelHabla = "nivelHabla" + i;
                                 String varnivelEscritura = "nivelEscritura" + i;
@@ -269,11 +278,14 @@ public class EditarSolicitudBecaServlet extends HttpServlet {
                         } else {
                             //no hay Idiomas
                         }
+                        
+                        //Eliminar Asociaciones
+                        AsociacionesDAO asociacionDao = new AsociacionesDAO();
+                        asociacionDao.eliminarAsociaciones(detalleUsuario.getIdDetalleUsuario());
                         //Insertar o Actualizar Asociaciones
                         if (nAsociacion > 0) {
                             //Recuperando informacion de Asociaciones
-                            for (int i = 1; i < nAsociacion + 1; i++) {
-                                AsociacionesDAO asociacionDao = new AsociacionesDAO();
+                            for (int i = 1; i < nAsociacion + 1; i++) {                                
                                 String varasociacion = "asociacion" + i;
                                 Asociaciones asociacion = new Asociaciones();
                                 String nombreAsociacion = request.getParameter(varasociacion);
@@ -294,11 +306,15 @@ public class EditarSolicitudBecaServlet extends HttpServlet {
                         } else {
                             //no hay Asociaciones
                         }
+                        
+                        //Eliminar cargos
+                        CargoDAO cargosDao = new CargoDAO();
+                        cargosDao.eliminarCargos(detalleUsuario.getIdDetalleUsuario());
                         //Insertar o Actualizar Cargos
                         if (nCargos > 0) {
                             //Recuperando informacion de Cargos
                             for (int i = 1; i < nCargos + 1; i++) {
-                                CargoDAO cargosDao = new CargoDAO();
+                                
                                 String varlugar = "lugarCargo" + i;
                                 String varcargo = "cargoAnterior" + i;
                                 String varfechaInicio = "fechaInicioCargo" + i;
