@@ -16,10 +16,8 @@ import POJO.Documento;
 import POJO.Expediente;
 import POJO.SolicitudDeBeca;
 import POJO.TipoDocumento;
-import POJO.Usuario;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -141,6 +139,7 @@ public class ModificarBecarioServlet extends HttpServlet {
                             idProgresoNuevo = 16;
                             break;
                     }
+                    
                     //Comparar progreso Anterior con el nuevo
                     int idProgresoAnterior = expediente.getIdProgreso();
                     if (idProgresoAnterior != idProgresoNuevo) {
@@ -211,6 +210,60 @@ public class ModificarBecarioServlet extends HttpServlet {
                         default:
                             break;
                     }
+                    
+                    //Acuerdo de Autorización inicial
+                    String accautorizacionInicial = request.getParameter("accautorizacionInicial");
+                    idDocumento = 105;
+                    switch (accautorizacionInicial) {
+                        case "ninguna":
+                            //No hacer nada
+                            break;
+                        case "eliminar":
+                            //Obteniendo el id del documento
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //eliminar
+                                documentoDao.eliminarDocumento(id_documento);
+                            } else {
+                                //nada
+                            }
+                            break;
+                        case "actualizar":
+                            //Actualizar Documento
+                            //Obteniendo el id del documento y el documento                    
+                            filePart = request.getPart("autorizacionInicial");
+                            if (filePart != null) {
+                                archivo = filePart.getInputStream();
+                            }
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //Actualizar
+                                documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setFechaIngreso(sqlDate);
+                                documentoDao.ActualizarDocDig(documento);
+                            } else {
+                                //Agregar
+                                idDoc = documentoDao.getSiguienteId();
+                                obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                tipo = tipoDao.consultarPorId(idDocumento);
+
+                                documento.setIdDocumento(idDoc);
+                                documento.setIdTipoDocumento(tipo);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setIdExpediente(expediente);
+                                documento.setObservacion(obs);
+                                documento.setEstadoDocumento("INGRESADO");
+                                documentoDao.Ingresar(documento);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    
+                    
+                    
                     //Mostrar mensaje de Exito
                     Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizó el becario satisfactoriamente.");
                 } catch (Exception e) {
