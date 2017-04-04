@@ -167,9 +167,10 @@
                                                 <br>
                                                 <select  name="TIPO_ESTUDIO" id="TIPO_ESTUDIO" class="form-control">
                                                     <option value="">Seleccione Tipo de Estudio</option>
+                                                    <option value="ESPECIALIZACION">Especialización</option>
                                                     <option value="MAESTRIA">Maestria</option>
                                                     <option value="DOCTORADO">Doctorado</option>
-                                                    <option value="ESPECIALIZACION">Especializacion</option>
+                                                    <option value="POSTDOCTORADO">PostDoctorado</option>
                                                 </select>
                                             </div>
                                         </div>

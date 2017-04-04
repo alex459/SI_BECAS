@@ -179,10 +179,11 @@
                         </div>
                         <div class="col-md-3"> 
                             <select id="tipoEstudio" name="tipoEstudio" class="form-control" ng-model="datos.tipoEst" ng-required="true">
-                                <option value="">Seleccione una Opción</option>
-                               <option value="MAESTRIA">MAESTRIA</option>
-                               <option value="DOCTORADO">DOCTORADO</option>
-                               <option value="ESPECIALIZACIÓN">ESPECIALIZACIÓN</option>
+                               <option value="">Seleccione una Opción</option>
+                               <option value="ESPECIALIZACION">Especialización</option>
+                               <option value="MAESTRIA">Maestria</option>
+                               <option value="DOCTORADO">Doctorado</option>
+                               <option value="POSTDOCTORADO">PostDoctorado</option>
                             </select>
                             <span class="text-danger" ng-show="!AgregarOfertaBeca.$pristine && AgregarOfertaBeca.tipoEstudio.$error.required">Seleccione un Tipo de Estudio.</span>
 
