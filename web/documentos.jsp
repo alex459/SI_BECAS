@@ -38,7 +38,8 @@
     <meta name="author" content="LayoutIt!">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">    
+    <link href="css/customfieldset.css" rel="stylesheet">   
     <jsp:include page="cabecera.jsp"></jsp:include>
                 <nav class="navbar navbar-custom" role="navigation">
                     <div class="navbar-header">
@@ -49,12 +50,7 @@
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        
-                        <ul class="nav navbar-nav">
-                            <li>
-                                        <a href="documentos.jsp">Documentos</a>                                   
-                            </li>
-                        </ul>
+                       
                         
                         <ul class="nav navbar-nav navbar-right">						
                             
@@ -142,7 +138,7 @@
 
 
 </div>
-
+</br></br></br></br></br></br></br></br></br>
 <div class="row" style="background:url(img/pie.jpg) no-repeat center top scroll;background-size: 99% auto;">
     <div class="col-md-6">
         <h3>

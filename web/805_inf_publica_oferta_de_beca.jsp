@@ -55,7 +55,8 @@
     <meta name="author" content="LayoutIt!">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">    
+    <link href="css/customfieldset.css" rel="stylesheet">   
 <jsp:include page="cabecera.jsp"></jsp:include>
 <nav class="navbar navbar-custom" role="navigation">
     <div class="navbar-header">
@@ -66,14 +67,7 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="documentos.jsp">Documentos</a>                                   
-            </li>
-            <li>
-                <a href="805_inf_publica_oferta_de_beca.jsp">Ofertas de beca</a>                                   
-            </li>
-        </ul>
+       
 
         <ul class="nav navbar-nav navbar-right">						
 
