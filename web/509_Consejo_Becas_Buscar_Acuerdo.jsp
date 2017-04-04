@@ -14,7 +14,7 @@
 <%@page import="DAO.FacultadDAO"%>
 <%
     //lineas para tildes
-    response.setContentType("text/html;charset=UTF-8");
+   response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
     response.setHeader("Cache-Control", "no-store");
     response.setHeader("Cache-Control", "must-revalidate");
@@ -32,10 +32,7 @@
     boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
     if (!autorizacion || user == null) {
         response.sendRedirect("logout.jsp");
-    
-
-
-
+    }
     
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
