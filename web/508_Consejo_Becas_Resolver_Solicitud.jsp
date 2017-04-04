@@ -34,6 +34,7 @@
     Integer tipo_usuario_logeado = (Integer) actual.getAttribute("id_tipo_usuario");
     ArrayList<String> tipo_usuarios_permitidos = new ArrayList<String>();
     //AGREGAR SOLO LOS ID DE LOS USUARIOS AUTORIZADOS PARA ESTA PANTALLA------
+    tipo_usuarios_permitidos.add("7"); //colaborador
     tipo_usuarios_permitidos.add("8"); //consejo de becas
     tipo_usuarios_permitidos.add("9"); //admin
     boolean autorizacion = Utilidades.verificarPermisos(tipo_usuario_logeado, tipo_usuarios_permitidos);
