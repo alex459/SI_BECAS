@@ -54,14 +54,14 @@
 	<field name="FECHA_FIN" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="OBSERVACION" class="java.lang.String">
+	<field name="OBSERVACION_O" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FACULTAD" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="SEGUNDA_BECA" class="java.lang.String"/>
-	<field name="TOMA_POSECION" class="java.lang.String"/>
+	<field name="SegundaBeca" class="java.lang.String"/>
+	<field name="TomaPosesion" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -119,7 +119,7 @@
 			</staticText>
 			<staticText>
 				<reportElement style="Row" x="320" y="0" width="72" height="15" forecolor="#736343" uuid="ccac8207-ee6c-49a0-909b-741a4ba89620"/>
-				<text><![CDATA[FECHA_FIN]]></text>
+				<text><![CDATA[FECHA FIN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Row" x="731" y="0" width="77" height="15" forecolor="#736343" uuid="3275d841-d939-4386-97d6-060c228a791d"/>
@@ -177,7 +177,7 @@
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Row" x="125" y="0" width="51" height="15" uuid="7ba69824-bcac-4501-9940-1b004e80e307"/>
-					<textFieldExpression><![CDATA[$F{SEGUNDA_BECA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{SegundaBeca}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Row" x="176" y="0" width="72" height="15" uuid="144b084a-ae42-4a0a-8fe8-a407ebeab3ec"/>
@@ -197,11 +197,11 @@
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Row" x="645" y="0" width="82" height="15" uuid="a8022959-9bf6-4020-9c3e-942853ef0872"/>
-					<textFieldExpression><![CDATA[$F{TOMA_POSECION}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TomaPosesion}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Row" x="810" y="0" width="152" height="15" uuid="009bcf1d-f2bd-4dc3-bf8a-1b7f4d98dea0"/>
-					<textFieldExpression><![CDATA[$F{OBSERVACION}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{OBSERVACION_O}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

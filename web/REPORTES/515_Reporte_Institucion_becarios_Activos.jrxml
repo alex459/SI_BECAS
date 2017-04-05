@@ -23,7 +23,7 @@
 								
 								JOIN USUARIO U ON SB.ID_USUARIO = U.ID_USUARIO 
                                 JOIN DETALLE_USUARIO DU ON DU.ID_USUARIO = U.ID_USUARIO 
-                                WHERE E.ESTADO_EXPEDIENTE='ABIERTO' AND E.ID_PROGRESO IN (9,10,11,20,21,22,25,26) AND $P!{condicion}]]>
+                                WHERE E.ESTADO_EXPEDIENTE='ABIERTO' AND E.ID_PROGRESO IN (9,10,11,20,21,22,25,26) $P!{condicion}]]>
 	</queryString>
 	<field name="INSTITUCIÓN" class="java.lang.String"/>
 	<field name="PAÍS" class="java.lang.String"/>
