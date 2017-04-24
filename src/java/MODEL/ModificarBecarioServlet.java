@@ -261,6 +261,57 @@ public class ModificarBecarioServlet extends HttpServlet {
                             break;
                     }
                     
+                    //Dictamen de Propuesta ante Junta Directiva
+                    String accdictamen = request.getParameter("accdictamen");
+                    idDocumento = 112;
+                    switch (accdictamen) {
+                        case "ninguna":
+                            //No hacer nada
+                            break;
+                        case "eliminar":
+                            //Obteniendo el id del documento
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //eliminar
+                                documentoDao.eliminarDocumento(id_documento);
+                            } else {
+                                //nada
+                            }
+                            break;
+                        case "actualizar":
+                            //Actualizar Documento
+                            //Obteniendo el id del documento y el documento                    
+                            filePart = request.getPart("dictamen");
+                            if (filePart != null) {
+                                archivo = filePart.getInputStream();
+                            }
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //Actualizar
+                                documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setFechaIngreso(sqlDate);
+                                documentoDao.ActualizarDocDig(documento);
+                            } else {
+                                //Agregar
+                                idDoc = documentoDao.getSiguienteId();
+                                obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                tipo = tipoDao.consultarPorId(idDocumento);
+
+                                documento.setIdDocumento(idDoc);
+                                documento.setIdTipoDocumento(tipo);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setIdExpediente(expediente);
+                                documento.setObservacion(obs);
+                                documento.setEstadoDocumento("INGRESADO");
+                                documentoDao.Ingresar(documento);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    
                     
                     
                     

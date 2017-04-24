@@ -240,7 +240,7 @@ public class SolicitudBecaPDF extends HttpServlet {
                     String varsemestre = "semestre" + i;
                     String varprograma = "programa" + i;
                     //Recuperando informacion
-                    String semestre = request.getParameter(varsemestre);
+                    String semestre = Integer.toString(i);
                     String programaEstudio = request.getParameter(varprograma);
                     //Agregando a Lista
                     ListaSemestre.add(semestre);

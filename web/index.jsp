@@ -62,7 +62,7 @@
                             <img alt="Bootstrap Image Preview" src="img/minerva2.png" align="middle"  class="img-responsive center-block" style="width:300px;height:500px">
                         </div>				  
                         <div class="col-md-8">
-                            <h2>Consejo de becas e investicaciones cientificas</h2>                            
+                            <h2>Consejo de Becas y de Investigaciones Científicas</h2>                            
                             <p>
                                 El Consejo de Becas ofrece becas de posgrado a docentes, profesionales no docentes que 
                                 laboran en la universidad y a estudiantes graduados. Además, mantiene informada a la comunidad

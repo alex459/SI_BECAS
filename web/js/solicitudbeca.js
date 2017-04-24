@@ -141,7 +141,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Nedu= 2;
     $scope.verAgregarEducacion= true;
     $scope.agregarEducacion = function(){
-    if($scope.Nedu <=7){
+    if($scope.Nedu <=4){
         $scope.data.educacion.push({
             id: $scope.Nedu,
             tipo: "tipoEducacion"+$scope.Nedu,
@@ -151,7 +151,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
         });
     }
         $scope.Nedu=$scope.Nedu+1;
-        if($scope.Nedu >7){
+        if($scope.Nedu >4){
            $scope.verAgregarEducacion = $scope.verAgregarEducacion = false;
        }
     };
@@ -162,7 +162,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
             var index = $scope.data.educacion.indexOf(item);
             $scope.data.educacion.splice(index, 1);
             $scope.Nedu=$scope.Nedu-1;
-            if($scope.Nedu <=7){
+            if($scope.Nedu <=4){
                 $scope.verAgregarEducacion = $scope.verAgregarEducacion = true;
             }
         }
@@ -174,7 +174,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.checkProyecto = false;
     $scope.verAgregarProyecto2= true;
     $scope.agregarProyecto = function(){
-    if($scope.Nproy <=4){
+    if($scope.Nproy <=2){
         $scope.data.proyectos.push({
             id: $scope.Nproy,
             titulo: "tituloProyecto"+$scope.Nproy,
@@ -182,7 +182,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
         });
     }
         $scope.Nproy=$scope.Nproy+1;
-        if($scope.Nproy >4){
+        if($scope.Nproy >2){
            $scope.verAgregarProyecto = $scope.verAgregarProyecto = false;
        }
        $scope.proy.titulo_proyecto ="";
@@ -196,7 +196,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
             var index = $scope.data.proyectos.indexOf(item);
             $scope.data.proyectos.splice(index, 1);
             $scope.Nproy=$scope.Nproy-1;
-            if($scope.Nproy <=4){
+            if($scope.Nproy <=2){
                 $scope.verAgregarProyecto = $scope.verAgregarProyecto = true;
             }
         }
@@ -206,7 +206,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Nidi= 2;
     $scope.verAgregarIdioma= true;
     $scope.agregarIdioma = function(){
-    if($scope.Nidi <=7){
+    if($scope.Nidi <=4){
         $scope.data.idiomas.push({
             id: $scope.Nidi,
             idioma: "idioma"+$scope.Nidi,
@@ -216,7 +216,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
         });
     }
         $scope.Nidi=$scope.Nidi+1;
-        if($scope.Nidi >7){
+        if($scope.Nidi >4){
            $scope.verAgregarIdioma = $scope.verAgregarIdioma = false;
        }
     };
@@ -227,7 +227,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
             var index = $scope.data.idiomas.indexOf(item);
             $scope.data.idiomas.splice(index, 1);
             $scope.Nidi=$scope.Nidi-1;
-            if($scope.Nidi <=7){
+            if($scope.Nidi <=4){
                 $scope.verAgregarIdioma = $scope.verAgregarIdioma = true;
             }
         }
@@ -238,14 +238,14 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Naso= 2;
     $scope.verAgregarAsociacion= true;
     $scope.agregarAsociacion = function(){
-    if($scope.Naso <=3){
+    if($scope.Naso <=2){
         $scope.data.asociaciones.push({
             id: $scope.Naso,
             asociacion: "asociacion"+$scope.Naso
         });
     }
         $scope.Naso=$scope.Naso+1;
-        if($scope.Naso >3){
+        if($scope.Naso >2){
            $scope.verAgregarAsociacion = $scope.verAgregarAsociacion = false;
        }
     };
@@ -256,7 +256,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
             var index = $scope.data.asociaciones.indexOf(item);
             $scope.data.asociaciones.splice(index, 1);
             $scope.Naso=$scope.Naso-1;
-            if($scope.Naso <=3){
+            if($scope.Naso <=2){
                 $scope.verAgregarAsociacion = $scope.verAgregarAsociacion = true;
             }
         }
@@ -266,7 +266,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Ncar= 2;
     $scope.verAgregarCargo= true;
     $scope.agregarCargo = function(){
-    if($scope.Ncar <=3){
+    if($scope.Ncar <=2){
         $scope.data.cargos.push({
             id: $scope.Ncar,
             lugar: "lugarCargo"+$scope.Ncar,
@@ -277,7 +277,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
         });
     }
         $scope.Ncar=$scope.Ncar+1;
-        if($scope.Ncar >3){
+        if($scope.Ncar >2){
            $scope.verAgregarCargo = $scope.verAgregarCargo = false;
        }
     };
@@ -288,7 +288,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
             var index = $scope.data.cargos.indexOf(item);
             $scope.data.cargos.splice(index, 1);
             $scope.Ncar=$scope.Ncar-1;
-            if($scope.Ncar <=3){
+            if($scope.Ncar <=2){
                 $scope.verAgregarCargo = $scope.verAgregarCargo = true;
             }
         }
@@ -298,14 +298,14 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
     $scope.Npro= 2;
     $scope.verAgregarPrograma= true;
     $scope.agregarPrograma = function(){
-    if($scope.Npro <=12){
+    if($scope.Npro <=10){
         $scope.data.programas.push({
             semestre: "semestre"+$scope.Npro,
             programa: "programa"+$scope.Npro
         });
     }
         $scope.Npro=$scope.Npro+1;
-        if($scope.Npro >12){
+        if($scope.Npro >10){
            $scope.verAgregarPrograma = $scope.verAgregarPrograma = false;
        }
     };
@@ -316,7 +316,7 @@ angular.module('solicitudbecaApp', ["ngRoute"]).config(function($routeProvider){
             var index = $scope.data.programas.indexOf(item);
             $scope.data.programas.splice(index, 1);
             $scope.Npro=$scope.Npro-1;
-            if($scope.Npro <=12){
+            if($scope.Npro <=10){
                 $scope.verAgregarPrograma = $scope.verAgregarPrograma = true;
             }
         }
