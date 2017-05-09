@@ -9,6 +9,7 @@ import DAO.BecaDAO;
 import DAO.DocumentoDAO;
 import DAO.SolocitudBecaDAO;
 import DAO.ExpedienteDAO;
+import DAO.OfertaBecaDAO;
 import DAO.TipoDocumentoDAO;
 import DAO.UsuarioDAO;
 import POJO.Beca;
@@ -139,17 +140,18 @@ public class ModificarBecarioServlet extends HttpServlet {
                             idProgresoNuevo = 16;
                             break;
                     }
-                    
+
                     //Comparar progreso Anterior con el nuevo
+                    DocumentoDAO documentoDao = new DocumentoDAO();
                     int idProgresoAnterior = expediente.getIdProgreso();
                     if (idProgresoAnterior != idProgresoNuevo) {
-//if progresoAnterior>Progreso nuevo                    
-//Borrar documentos demas
+                        //Borrar documentos demas
+                        documentoDao.eliminarDocumentosExpediente(idExpediente);
                     }
+
                     //Actualizando los Documentos
                     int idDocumento = 0; //Para obtener Tipo de Documento
-                    int id_documento = 0; //Para ver si existe
-                    DocumentoDAO documentoDao = new DocumentoDAO();
+                    int id_documento = 0; //Para ver si existe                                       
                     Documento documento = new Documento();
                     InputStream archivo = null;
                     Part filePart = null;
@@ -157,9 +159,8 @@ public class ModificarBecarioServlet extends HttpServlet {
                     java.sql.Date sqlDate = new java.sql.Date(fechaHoy.getTime());
                     TipoDocumento tipo = new TipoDocumento();
                     TipoDocumentoDAO tipoDao = new TipoDocumentoDAO();
-                    String obs ="";
+                    String obs = "";
                     int idDoc = 0;
-                    
 
                     //Acuerdo de Permiso de Gestion de Beca
                     String accpermisoGestion = request.getParameter("accpermisoGestion");
@@ -210,7 +211,7 @@ public class ModificarBecarioServlet extends HttpServlet {
                         default:
                             break;
                     }
-                    
+
                     //Acuerdo de Autorización inicial
                     String accautorizacionInicial = request.getParameter("accautorizacionInicial");
                     idDocumento = 105;
@@ -260,7 +261,7 @@ public class ModificarBecarioServlet extends HttpServlet {
                         default:
                             break;
                     }
-                    
+
                     //Dictamen de Propuesta ante Junta Directiva
                     String accdictamen = request.getParameter("accdictamen");
                     idDocumento = 112;
@@ -310,11 +311,441 @@ public class ModificarBecarioServlet extends HttpServlet {
                         default:
                             break;
                     }
-                    
-                    
-                    
-                    
-                    
+
+                    //Acuerdo de Permiso de Beca de Junta Directiva
+                    String accacuerdoBecaJD = request.getParameter("accacuerdoBecaJD");
+                    OfertaBecaDAO ofertaDao = new OfertaBecaDAO();
+                    String TipoBeca = ofertaDao.ObtenerTipoBeca(idExpediente);
+                    if (TipoBeca.equals("INTERNA")) {
+                        idDocumento = 120;
+                    } else {
+                        idDocumento = 121;
+                    }
+                    switch (accacuerdoBecaJD) {
+                        case "ninguna":
+                            //No hacer nada
+                            break;
+                        case "eliminar":
+                            //Obteniendo el id del documento
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //eliminar
+                                documentoDao.eliminarDocumento(id_documento);
+                            } else {
+                                //nada
+                            }
+                            break;
+                        case "actualizar":
+                            //Actualizar Documento
+                            //Obteniendo el id del documento y el documento                    
+                            filePart = request.getPart("acuerdoBecaJD");
+                            if (filePart != null) {
+                                archivo = filePart.getInputStream();
+                            }
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //Actualizar
+                                documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setFechaIngreso(sqlDate);
+                                documentoDao.ActualizarDocDig(documento);
+                            } else {
+                                //Agregar
+                                idDoc = documentoDao.getSiguienteId();
+                                obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                tipo = tipoDao.consultarPorId(idDocumento);
+
+                                documento.setIdDocumento(idDoc);
+                                documento.setIdTipoDocumento(tipo);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setIdExpediente(expediente);
+                                documento.setObservacion(obs);
+                                documento.setEstadoDocumento("INGRESADO");
+                                documentoDao.Ingresar(documento);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    //Acuerdo de Otorgamiento de Beca
+                    String accacuerdoBecaCNB = request.getParameter("accacuerdoBecaCNB");
+                    idDocumento = 131;
+                    switch (accacuerdoBecaCNB) {
+                        case "ninguna":
+                            //No hacer nada
+                            break;
+                        case "eliminar":
+                            //Obteniendo el id del documento
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //eliminar
+                                documentoDao.eliminarDocumento(id_documento);
+                            } else {
+                                //nada
+                            }
+                            break;
+                        case "actualizar":
+                            //Actualizar Documento
+                            //Obteniendo el id del documento y el documento                    
+                            filePart = request.getPart("acuerdoBecaCNB");
+                            if (filePart != null) {
+                                archivo = filePart.getInputStream();
+                            }
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //Actualizar
+                                documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setFechaIngreso(sqlDate);
+                                documentoDao.ActualizarDocDig(documento);
+                            } else {
+                                //Agregar
+                                idDoc = documentoDao.getSiguienteId();
+                                obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                tipo = tipoDao.consultarPorId(idDocumento);
+
+                                documento.setIdDocumento(idDoc);
+                                documento.setIdTipoDocumento(tipo);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setIdExpediente(expediente);
+                                documento.setObservacion(obs);
+                                documento.setEstadoDocumento("INGRESADO");
+                                documentoDao.Ingresar(documento);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    //Acuerdo de Permiso de Beca Consejo Superior Universitario                    
+                    String accacuerdoBecaCSU = request.getParameter("accacuerdoBecaCSU");
+                    if (TipoBeca.equals("INTERNA")) {
+                        idDocumento = 132;
+                    } else {
+                        idDocumento = 133;
+                    }
+                    switch (accacuerdoBecaCSU) {
+                        case "ninguna":
+                            //No hacer nada
+                            break;
+                        case "eliminar":
+                            //Obteniendo el id del documento
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //eliminar
+                                documentoDao.eliminarDocumento(id_documento);
+                            } else {
+                                //nada
+                            }
+                            break;
+                        case "actualizar":
+                            //Actualizar Documento
+                            //Obteniendo el id del documento y el documento                    
+                            filePart = request.getPart("acuerdoBecaCSU");
+                            if (filePart != null) {
+                                archivo = filePart.getInputStream();
+                            }
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //Actualizar
+                                documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setFechaIngreso(sqlDate);
+                                documentoDao.ActualizarDocDig(documento);
+                            } else {
+                                //Agregar
+                                idDoc = documentoDao.getSiguienteId();
+                                obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                tipo = tipoDao.consultarPorId(idDocumento);
+
+                                documento.setIdDocumento(idDoc);
+                                documento.setIdTipoDocumento(tipo);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setIdExpediente(expediente);
+                                documento.setObservacion(obs);
+                                documento.setEstadoDocumento("INGRESADO");
+                                documentoDao.Ingresar(documento);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    //Contrato de Beca
+                    String acccontrato = request.getParameter("acccontrato");
+                    idDocumento = 134;
+                    switch (acccontrato) {
+                        case "ninguna":
+                            //No hacer nada
+                            break;
+                        case "eliminar":
+                            //Obteniendo el id del documento
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //eliminar
+                                documentoDao.eliminarDocumento(id_documento);
+                            } else {
+                                //nada
+                            }
+                            break;
+                        case "actualizar":
+                            //Actualizar Documento
+                            //Obteniendo el id del documento y el documento                    
+                            filePart = request.getPart("contrato");
+                            if (filePart != null) {
+                                archivo = filePart.getInputStream();
+                            }
+                            id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                            if (id_documento != 0) {
+                                //Actualizar
+                                documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setFechaIngreso(sqlDate);
+                                documentoDao.ActualizarDocDig(documento);
+                            } else {
+                                //Agregar
+                                idDoc = documentoDao.getSiguienteId();
+                                obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                tipo = tipoDao.consultarPorId(idDocumento);
+
+                                documento.setIdDocumento(idDoc);
+                                documento.setIdTipoDocumento(tipo);
+                                documento.setDocumentoDigital(archivo);
+                                documento.setIdExpediente(expediente);
+                                documento.setObservacion(obs);
+                                documento.setEstadoDocumento("INGRESADO");
+                                documentoDao.Ingresar(documento);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    //Ingreso de documentos por proceso
+                    switch (estado) {
+                        case "estudio":
+                            break;
+                        case "servicio":
+                            //Titulo Obtenido
+                            String acctituloObtenido = request.getParameter("acctituloObtenido");
+                            idDocumento = 143;
+                            switch (acctituloObtenido) {
+                                case "ninguna":
+                                    //No hacer nada
+                                    break;
+                                case "eliminar":
+                                    //Obteniendo el id del documento
+                                    id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                                    if (id_documento != 0) {
+                                        //eliminar
+                                        documentoDao.eliminarDocumento(id_documento);
+                                    } else {
+                                        //nada
+                                    }
+                                    break;
+                                case "actualizar":
+                                    //Actualizar Documento
+                                    //Obteniendo el id del documento y el documento                    
+                                    filePart = request.getPart("tituloObtenido");
+                                    if (filePart != null) {
+                                        archivo = filePart.getInputStream();
+                                    }
+                                    id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                                    if (id_documento != 0) {
+                                        //Actualizar
+                                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                        documento.setDocumentoDigital(archivo);
+                                        documento.setFechaIngreso(sqlDate);
+                                        documentoDao.ActualizarDocDig(documento);
+                                    } else {
+                                        //Agregar
+                                        idDoc = documentoDao.getSiguienteId();
+                                        obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                        tipo = tipoDao.consultarPorId(idDocumento);
+
+                                        documento.setIdDocumento(idDoc);
+                                        documento.setIdTipoDocumento(tipo);
+                                        documento.setDocumentoDigital(archivo);
+                                        documento.setIdExpediente(expediente);
+                                        documento.setObservacion(obs);
+                                        documento.setEstadoDocumento("INGRESADO");
+                                        documentoDao.Ingresar(documento);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            
+                            //Certificación De Notas
+                            String acccertificacionNotasFin = request.getParameter("acccertificacionNotasFin");
+                            idDocumento = 144;
+                            switch (acccertificacionNotasFin) {
+                                case "ninguna":
+                                    //No hacer nada
+                                    break;
+                                case "eliminar":
+                                    //Obteniendo el id del documento
+                                    id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                                    if (id_documento != 0) {
+                                        //eliminar
+                                        documentoDao.eliminarDocumento(id_documento);
+                                    } else {
+                                        //nada
+                                    }
+                                    break;
+                                case "actualizar":
+                                    //Actualizar Documento
+                                    //Obteniendo el id del documento y el documento                    
+                                    filePart = request.getPart("certificacionNotasFin");
+                                    if (filePart != null) {
+                                        archivo = filePart.getInputStream();
+                                    }
+                                    id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                                    if (id_documento != 0) {
+                                        //Actualizar
+                                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                        documento.setDocumentoDigital(archivo);
+                                        documento.setFechaIngreso(sqlDate);
+                                        documentoDao.ActualizarDocDig(documento);
+                                    } else {
+                                        //Agregar
+                                        idDoc = documentoDao.getSiguienteId();
+                                        obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                        tipo = tipoDao.consultarPorId(idDocumento);
+
+                                        documento.setIdDocumento(idDoc);
+                                        documento.setIdTipoDocumento(tipo);
+                                        documento.setDocumentoDigital(archivo);
+                                        documento.setIdExpediente(expediente);
+                                        documento.setObservacion(obs);
+                                        documento.setEstadoDocumento("INGRESADO");
+                                        documentoDao.Ingresar(documento);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            
+                            //Acta De Evaluación De Tesis
+                            String accactaEvaluacion = request.getParameter("accactaEvaluacion");
+                            idDocumento = 145;
+                            switch (accactaEvaluacion) {
+                                case "ninguna":
+                                    //No hacer nada
+                                    break;
+                                case "eliminar":
+                                    //Obteniendo el id del documento
+                                    id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                                    if (id_documento != 0) {
+                                        //eliminar
+                                        documentoDao.eliminarDocumento(id_documento);
+                                    } else {
+                                        //nada
+                                    }
+                                    break;
+                                case "actualizar":
+                                    //Actualizar Documento
+                                    //Obteniendo el id del documento y el documento                    
+                                    filePart = request.getPart("actaEvaluacion");
+                                    if (filePart != null) {
+                                        archivo = filePart.getInputStream();
+                                    }
+                                    id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                                    if (id_documento != 0) {
+                                        //Actualizar
+                                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                        documento.setDocumentoDigital(archivo);
+                                        documento.setFechaIngreso(sqlDate);
+                                        documentoDao.ActualizarDocDig(documento);
+                                    } else {
+                                        //Agregar
+                                        idDoc = documentoDao.getSiguienteId();
+                                        obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                        tipo = tipoDao.consultarPorId(idDocumento);
+
+                                        documento.setIdDocumento(idDoc);
+                                        documento.setIdTipoDocumento(tipo);
+                                        documento.setDocumentoDigital(archivo);
+                                        documento.setIdExpediente(expediente);
+                                        documento.setObservacion(obs);
+                                        documento.setEstadoDocumento("INGRESADO");
+                                        documentoDao.Ingresar(documento);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }   
+                            
+                            //Constancia de Egresado
+                            String accconstanciaEgresado = request.getParameter("accconstanciaEgresado");
+                            idDocumento = 146;
+                            switch (accconstanciaEgresado) {
+                                case "ninguna":
+                                    //No hacer nada
+                                    break;
+                                case "eliminar":
+                                    //Obteniendo el id del documento
+                                    id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                                    if (id_documento != 0) {
+                                        //eliminar
+                                        documentoDao.eliminarDocumento(id_documento);
+                                    } else {
+                                        //nada
+                                    }
+                                    break;
+                                case "actualizar":
+                                    //Actualizar Documento
+                                    //Obteniendo el id del documento y el documento                    
+                                    filePart = request.getPart("constanciaEgresado");
+                                    if (filePart != null) {
+                                        archivo = filePart.getInputStream();
+                                    }
+                                    id_documento = documentoDao.ExisteDocumento(idExpediente, idDocumento);
+                                    if (id_documento != 0) {
+                                        //Actualizar
+                                        documento = documentoDao.obtenerInformacionDocumentoPorId(id_documento);
+                                        documento.setDocumentoDigital(archivo);
+                                        documento.setFechaIngreso(sqlDate);
+                                        documentoDao.ActualizarDocDig(documento);
+                                    } else {
+                                        //Agregar
+                                        idDoc = documentoDao.getSiguienteId();
+                                        obs = "DOCUMENTO DE BECARIO AGREGADO AL SISTEMA MANUALMENTE";
+                                        tipo = tipoDao.consultarPorId(idDocumento);
+
+                                        documento.setIdDocumento(idDoc);
+                                        documento.setIdTipoDocumento(tipo);
+                                        documento.setDocumentoDigital(archivo);
+                                        documento.setIdExpediente(expediente);
+                                        documento.setObservacion(obs);
+                                        documento.setEstadoDocumento("INGRESADO");
+                                        documentoDao.Ingresar(documento);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            
+                            
+                            break;
+                        case "compromiso":
+                            idProgresoNuevo = 13;
+                            break;
+                        case "liberacion":
+                            idProgresoNuevo = 14;
+                            break;
+                        case "becaFinalizada":
+                            idProgresoNuevo = 16;
+                            break;
+                        case "reintegro":
+                            idProgresoNuevo = 23;
+                            break;
+                        case "finReintegro":
+                            idProgresoNuevo = 16;
+                            break;
+                    }
+
                     //Mostrar mensaje de Exito
                     Utilidades.mostrarMensaje(response, 1, "Exito", "Se actualizó el becario satisfactoriamente.");
                 } catch (Exception e) {
