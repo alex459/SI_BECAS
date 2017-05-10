@@ -758,7 +758,7 @@
                                                 <div class="row">
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-7">
-                                                        <label class="form-control-static">Proyecto en que Apoyara:</label>
+                                                        <label class="form-control-static">Proyecto mediante el cual se compromete a multiplicar los conocimientos adquiridos durante la beca:</label>
                                                     </div>   
                                                     <div class="col-md-4">
                                                         <label class="radio-inline" for="radios-0">
