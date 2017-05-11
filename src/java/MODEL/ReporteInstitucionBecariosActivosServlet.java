@@ -36,8 +36,8 @@ public class ReporteInstitucionBecariosActivosServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=ISO-8859-1"); //lineas importantes para leer tildes y ñ
-            request.setCharacterEncoding("ISO-8859-1"); //lineas importantes para leer tildes y ñ
+         response.setContentType("text/html;charset=UTF-8"); //lineas importantes para leer tildes y ñ
+    request.setCharacterEncoding("UTF-8"); //lineas importantes para leer tildes y ñ
         //servlet encargado de generar reportes de bitacora
         try {
             //leyendo parametros del jsp
